@@ -1,5 +1,5 @@
 create table release (
- name varchar(20) not null,
+ name varchar(50) not null,
  description text,
  primary key (name)
 );
@@ -18,7 +18,7 @@ create table splitoffs (
 );
 
 create table package (
- release varchar(20) not null,
+ release varchar(50) not null,
  fullname varchar(128) not null,
  name varchar(64) not null,
  parentname varchar(64),
