@@ -22,7 +22,7 @@ Si vous créez des paquets pour Fink, vous avez tout intérêt à vous abonner �
 <a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a>.
 Si vous cherchez un moyen d'aider Fink et que vous avez des compétences dans ce domaine, vous pouvez aussi adopter un <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">paquet sans mainteneur</a>.
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li><li><a href="#policy.emacs">3.5 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li><li><a href="#policy.emacs">3.5 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -239,105 +239,73 @@ signe pourcent (%) (ce signe n'est pas interprété en fonction de ce qui le sui
 
 
 
-<h2><a name="policy">3 Packaging Policy</a></h2>
+<h2><a name="policy">3 Règles de distribution des paquets</a></h2>
 
 
 
-<h3><a name="policy.licenses">3.1 Package Licenses</a></h3>
+<h3><a name="policy.licenses">3.1 Licences de paquets</a></h3>
 <p>
-The packages included in Fink come with a wide variety of licenses.
-Most of them place restrictions on redistributing the full source and
-especially on distributing binaries.
-Some packages can not be included in the binary distribution of Fink
-because of these license restrictions.
-Thus it is very important that package maintainers check the license
-of their package carefully.
+Les paquets inclus dans Fink ont différents types de licences.
+La plupart d'entre elles stipulent une restriction sur la redistribution des sources complètes et particulièrement sur la distribution des binaires.
+Certains paquets ne peuvent être inclus dans la distribution binaire de Fink à cause de ces licences restrictives.
+C'est pourquoi il est essentiel que les mainteneurs de paquets vérifient,  scrupuleusement, les licences de leurs paquets.
 </p>
 <p>
-Every package that is to be distributed as a binary package must
-contain a copy of the license.
-It must be installed in the doc directory,
-i.e. in <tt style="white-space: nowrap;">%p/share/doc/%n</tt>.
-(In the InstallScript, %i must be used instead of %p, of course.
-The DocFiles field takes care of the details automatically.)
-If there is no explicit license in the original source, include a
-small text file with a note about the status of the package.
-Most licenses require that the license accompanies any distribution.
-Fink's policy is to always do this, even if it is not explicitly
-required.
+Chaque paquet distribué en tant que binaire doit contenir une copie de la licence.
+Elle doit être installée dans le répertoire de documentation,
+c'est à dire dans <tt style="white-space: nowrap;">%p/share/doc/%n</tt>.
+(Dans InstallScript, il faut, évidemment, utiliser %i au lieu de %p.
+Le champ DocFiles gère les détails automatiquement.)
+S'il n'y a pas de licence explicite dans le source original, placez un fichier texte contenant une note à propos du statut du paquet.
+La plupart des licences requièrent que celle-ci accompagne toute distribution.
+La règle de Fink est de toujours faire ainsi, même si ce n'est pas explicitement requis.
 </p>
 <p>
-To make an automated maintenance of the binary distribution possible,
-any package that is to be distributed must have a <tt style="white-space: nowrap;">License</tt>
-field.
-This field denotes the nature of the license and is used to decide
-which packages make it into the binary distribution and which must be
-held back.
-The field may only be present if the actual license terms are included
-in the binary package, as explained above.
+Pour automatiser le plus possible la maintenance de la distribution binaire, tout paquet distribué doit avoir un champ <tt style="white-space: nowrap;">License</tt>.
+Ce champ indique la nature de la licence et est utilisé pour décider
+quels paquets font partie de la distribution et quels paquets doivent en être exclus.
+Le champ ne peut exister que si les termes réels de la licence sont inclus dans le paquet binaire, comme expliqué ci-dessus.
 </p>
 <p>
-To make the <tt style="white-space: nowrap;">License</tt> field useful, only one of the
-following pre-defined values may be used.
-If you're packaging something that doesn't fit into these categories,
-ask for help on the developer mailing list.
+Pour que le champ <tt style="white-space: nowrap;">License</tt> ait une utilité, n'utilisez qu'une seule des valeurs prédéfinies suivantes.
+Si vous construisez un paquet qui ne rentre pas dans ces catégories, demandez de l'aide sur la liste des développeurs.
 </p>
 <ul>
 
-<li><tt style="white-space: nowrap;">GPL</tt> - the GNU General Public License.
-This license requires that the source is available from the same place
-as the binary.</li>
-<li><tt style="white-space: nowrap;">LGPL</tt> - the GNU Lesser General Public License.
-This license requires that the source is available from the same place
-as the binary.</li>
-<li><tt style="white-space: nowrap;">GPL/LGPL</tt> - this if a special case for packages where
-one part is licensed under the GPL (e.g. the executables) and another
-part is licensed under the LGPL (e.g. the libraries).</li>
+<li><tt style="white-space: nowrap;">GPL</tt> - la licence générale publique GNU.
+Cette licence requiert que le source soit accessible au même endroit que le binaire.</li>
 
-<li><tt style="white-space: nowrap;">BSD</tt> - for BSD-style licenses.
-This includes the so-called "original" BSD license, the "modified" BSD
-license and the MIT license. The Apache license also counts as
-BSD. With these licenses the distribution of source code is
-optional.</li>
+<li><tt style="white-space: nowrap;">LGPL</tt> - la licence publique GNU moins générale.
+Cette licence requiert que le source soit accessible au même endroit que le binaire.</li>
 
-<li><tt style="white-space: nowrap;">Artistic</tt> - for the Artistic license and
-derivatives.</li>
+<li><tt style="white-space: nowrap;">GPL/LGPL</tt> - c'est un cas spécial pour les paquets dans lesquels une partie est sous licence GPL (par exemple les exécutables) et une autre partie est sous licence LGPL (par exemple les librairies).</li>
 
-<li><tt style="white-space: nowrap;">Artistic/GPL</tt> - dual-licensed under the Artistic and GPL
-licenses.</li> 
-
-<li><tt style="white-space: nowrap;">GNU Free Documentation License</tt> and <tt style="white-space: nowrap;">Linux
-Documentation Project</tt> - if the documentation included in a package
-is explicitly included under one of the licenses, then this is indicated by
-appending <tt style="white-space: nowrap;">/GFDL</tt> or <tt style="white-space: nowrap;">/LDP</tt>, giving one of the
-allowed combinations: "GFDL",
-"GPL/GFDL", "LGPL/GFDL", "GPL/LGPL/GFDL", "LDP", or "GPL/LGPL/LDP".
+<li><tt style="white-space: nowrap;">BSD</tt> - pour les licences style BSD.
+Ceci inclue la licence BSD dite "original", la licence BSD "modified" et la licence MIT. La licence Apache compte aussi parmi les licences BSD. Avec ces licences, la distribution du code source est optionnelle.
 </li>
 
-<li><tt style="white-space: nowrap;">OSI-Approved</tt> - for other Open Source licenses
-approved by the <a href="http://www.opensource.org/">Open Source
-Initiative</a>. One of OSI's requirements is that free distribution
-of binaries and sources is allowed. This value can also be used as an
-umbrella for dual-licensed packages.</li>
+<li><tt style="white-space: nowrap;">Artistic</tt> - pour la licence "Artistic" et ses dérivées.</li>
 
-<li><tt style="white-space: nowrap;">Restrictive</tt> - for restrictive licenses.
-Use this for packages that are available from the author in source
-form for free use, but don't allow free redistribution.</li>
+<li><tt style="white-space: nowrap;">Artistic/GPL</tt> - licence duale, combinée Artistic/GPL.</li> 
 
-<li><tt style="white-space: nowrap;">Restrictive/Distributable</tt> - for restrictive licenses which
-permit distribution of source and binaries.
-Use this for packages that are available from the author in source
-form, permit distribution of source and binaries, but have restrictions which
-make them non-open source licenses.</li>
+<li><tt style="white-space: nowrap;">GNU Free Documentation License</tt> et <tt style="white-space: nowrap;">Linux
+Documentation Project</tt> - si la documentation incluse dans un paquet l'est explicitement sous une de ces licences, alors ce sera indiqué par l'ajout de <tt style="white-space: nowrap;">/GFDL</tt> ou <tt style="white-space: nowrap;">/LDP</tt> au code de la licence, ce qui donne l'une des combinaisons autorisées suivantes : "GFDL",
+"GPL/GFDL", "LGPL/GFDL", "GPL/LGPL/GFDL", "LDP", ou "GPL/LGPL/LDP".
+</li>
 
-<li><tt style="white-space: nowrap;">Commercial</tt> - for restrictive, commercial licenses.
-Use this for commercial packages (e.g. Freeware, Shareware) that do
-not allow free redistribution of source or binaries.</li>
+<li><tt style="white-space: nowrap;">OSI-Approved</tt> - pour les autres licences Open Source approuvées par l'Initiative Open Source (OSI) <a href="http://www.opensource.org/"></a>. L'une des règles de l'OSI est que la libre distribution de binaires et de sources est autorisée. Ce code peut aussi servir de cadre aux paquets à licence duale.</li>
 
-<li><tt style="white-space: nowrap;">Public Domain</tt> - for packages that are in the Public
-Domain, i.e. the author has given up his copyright on the code. These
-packages don't have licenses at all and anyone can do anything with
-them.</li>
+<li><tt style="white-space: nowrap;">Restrictive</tt> - pour les licences restrictives.
+Utilisez ceci pour les paquets qui sont accessibles en tant que sources à usage libre auprès de l'auteur, mais dont la libre redistribution n'est pas autorisée. </li>
+
+<li><tt style="white-space: nowrap;">Restrictive/Distributable</tt> - pour des licences restrictives qui admettent une distribution des binaires et du source.
+Utilisez ceci pour les paquets qui sont accessibles en tant que sources
+auprès de l'auteur, autorisent la distribution du source et des binaires, mais ont des restrictions qui en font des licences non open-sources.</li>
+
+<li><tt style="white-space: nowrap;">Commercial</tt> - pour des licences restrictives de type commercial.
+Utilisez ceci pour des paquets  de type commercial ( par exemple graticiels, partagiciels qui n'autorisent pas la libre redistribution du source ou des binaires.</li>
+
+<li><tt style="white-space: nowrap;">Public Domain</tt> - pour des paquets qui sont dans le domaine public, c'est-à-dire que l'auteur a abandonné ses droits sur le code. Ces paquets n'ont aucune licence d'aucune sorte et tout un chacun peut en faire ce que bon lui semble.</li>
 
 </ul>
 
@@ -1928,4 +1896,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.5 2004/03/25 05:00:57 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.6 2004/03/26 01:13:46 michga Exp $</i></p></body></html>
