@@ -28,7 +28,7 @@ perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf 
 
 # Add "missing" language directories to work around a bug in Installer.app
 for lang in Dutch French German Italian Japanese Spanish da fi ko no pt sv zh_CN zh_TW; do
-  if test ! -d ${lang}.lproj ; then
+  if test ! -d $RESDIR/${lang}.lproj ; then
     cp -r $RESDIR/English.lproj $RESDIR/${lang}.lproj
     rm -rf $RESDIR/${lang}.lproj/CVS
   fi
