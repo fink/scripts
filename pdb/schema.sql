@@ -15,7 +15,7 @@ create table splitoffs (
  parentkey varchar(84) not null,
  descshort varchar(80) not null default '',
  primary key(parentkey, name)
-};
+);
 
 create table package (
  release varchar(20) not null,
