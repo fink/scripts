@@ -830,75 +830,74 @@ URL de l'archive tar du source. Ce doit être une URL HTTP ou FTP, mais Fink ne 
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b></td><td>
 <p>
-If a package consists of several tarballs, name them with these additional fields, starting with N = 2. So, the first tarball (which should be some kind of "main" tarball) goes into <tt style="white-space: nowrap;">Source</tt>, the second tarball in <tt style="white-space: nowrap;">Source2</tt> and so on. The rules are the same as for Source, only that the "gnu" and "gnome" shortcuts are not expanded - that would be useless anyway. Starting with a CVS version of fink after 0.19.2, you may use arbitrary (not necessarily consecutive) integer values of N &gt;= 2. However, you still may not have duplicates.
+Quand un paquet est constitué de plusieurs archives tar, vous devez les énumérer en utilisant ces champs supplémentaires, où N commence à 2. Le premier fichier archive tar (sorte d'archive tar "principale") est indiqué dans <tt style="white-space: nowrap;">Source</tt>, le second dans <tt style="white-space: nowrap;">Source2</tt>, et ainsi de suite. Les règles sont les mêmes que celles en vigueur pour le champ Source, mais les raccourcis "gnu" et "gnome" ne sont pas interprétés - cela n'aurait aucune utilité par ailleurs. À partir d'une version CVS de fink postérieure à la version 0.19.2, vous pouvez utiliser n'importe quels nombres entiers N &gt;= 2 (non nécessairement consécutifs). Néanmoins, les doublons ne sont pas autorisés.
 </p>
 </td></tr><tr valign="top"><td>SourceDirectory</td><td>
 <p>
-Must be used when the tarball expands to a single directory, but the directory's name is different from the basename of the tarball. Usually, a tarball named "foo-1.0.tar.gz" will produce a directory named "foo-1.0". If it produces a directory with a different name, specify it with this parameter. Percent expansion is performed on this field.
+Doit être utilisé quand la décompression de l'archive tar aboutit à la création d'un répertoire dont le nom est différent du nom de base de l'archive. En général, une archive tar nommée "foo-1.0.tar.gz" crée un répertoire nommé "foo-1.0". Si le répertoire créé porte un nom différent, indiquez-le dans ce champ. L'interprétation des raccourcis y est effectuée.
 </p>
 </td></tr><tr valign="top"><td>NoSourceDirectory</td><td>
 <p>
-Set this boolean parameter to a true value if the tarball does not expand to a single directory. Usually, a tarball named "foo-1.0.tar.gz" will produce a directory named "foo-1.0". If it just unpacks the files to the current directory, use this parameter and set it to a boolean true value.
+Donnez à ce paramètre booléen la valeur "true" si la décompression de l'archive tar ne crée pas de répertoire. En général, une archive tar nommée "foo-1.0.tar.gz" crée un répertoire nommé "foo-1.0". Si les fichiers sont simplement décompressés dans le répertoire en cours, utilisez ce champ et donnez-lui la valeur "true".
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b>ExtractDir</td><td>
 <p>
-Normally, an auxiliary tarball will be extracted in the same directory as the main tarball. If you need to extract it in a specific subdirectory instead, use this field to specify it. Source2ExtractDir corresponds to the Source2 tarball, as one would expect. See ghostscript, vim and tetex for examples of usage.
+Normalement, une archive tar auxiliaire est extraite dans le même répertoire que l'archive tar principale. Si vous devez l'extraire dans un sous-répertoire spécifique, utilisez ce champ pour l'indiquer. Source2ExtractDir correspond, bien évidemment, à l'archive tar Source2. Voir ghostscript, vim et tetex comme exemples d'utilisation de ce champ.
 </p>
 </td></tr><tr valign="top"><td>SourceRename</td><td>
 <p>
-This field can renames a source tar ball on the fly. This is useful if for example the version of the source is encoded in the directory name on the server, but the tar ball itself has the same name for all versions, e.g. ://www.foobar.org/coolapp/1.2.3/source.tar.gz. To circumvent the problems caused by this, you would then use something like
+Ce champ renomme une archive tar à la volée. Ceci est utile, par exemple, lorsque la version du source est encodée dans le nom du répertoire du serveur, mais que l'archive elle-même porte le même nom pour toutes les versions, comme //www.foobar.org/coolapp/1.2.3/source.tar.gz. Pour résoudre les problèmes que cela cause, vous pouvez utiliser quelque chose de similaire à :
 </p>
 <pre>SourceRename: %n-%v.tar.gz</pre>
 <p>
-In the above example this would result in the tarball being stored under <tt style="white-space: nowrap;">/sw/src/coolapp-1.2.3.tar.gz</tt> as one would expect.
+Dans l'exemple ci-dessus, l'archive tar sera sauvegardée sous <tt style="white-space: nowrap;">/sw/src/coolapp-1.2.3.tar.gz</tt>.
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b>Rename</td><td>
 <p>
-This is just the same as the <tt style="white-space: nowrap;">SourceRename</tt> field, except that it is used to rename the tarball specified by the corresponding <tt style="white-space: nowrap;">Source<b>N</b></tt> field. See context or hyperref for examples of usage.
+Ce champ est semblable au champ <tt style="white-space: nowrap;">SourceRename</tt>, mais il est utilisé pour renommer l'archive tar correspondant au champ <tt style="white-space: nowrap;">Source<b>N</b></tt>. Voir context ou hyperref comme exemples d'utilisation de ce champ.
 </p>
 </td></tr><tr valign="top"><td>Source-MD5</td><td>
 <p>
-<b>Introduced in fink 0.10.0.</b>
-With this field you can specify the MD5 checksum of the source file. This information is then used by Fink to detect incorrect source files, that is, tarballs not matching the one the package creator used. Common causes for this problem include: incompletely downloaded tarballs; upstream maintainers silently replaced a tarball; a trojan or similar attacks; and so on.
+<b>Introduit dans fink 0.10.0.</b>
+Vous pouvez indiquer dans ce champ la somme de contrôle MD5 du fichier source. La valeur sera alors utilisée par Fink pour détecter les fichiers sources incorrects, c'est-à-dire les archives tar qui ne correspondent pas à celles que le créateur du paquet a utilisées. Les causes les plus courantes de ce type de problème sont : téléchargement incomplet de l'archive, mainteneurs en amont ayant changé l'archive sans le signaler, chevaux de Troie ou attaques similaires, etc... 
 </p>
 <p>
-A typical usage example looks like this:
+Exemple :
 </p>
 <pre>Source-MD5: 4499443fa1d604243467afe64522abac</pre>
 <p>
-To compute the checksum, the <tt style="white-space: nowrap;">md5sum</tt> tool is used. If you want to determine the checksum of the tarball <tt style="white-space: nowrap;">/sw/src/apache_1.3.23.tar.gz</tt>, you run the following command (displayed with output here):
+La somme de contrôle est calculée avec l'outil <tt style="white-space: nowrap;">md5sum</tt>. Si vous voulez calculer la somme de contrôle de l'archive tar <tt style="white-space: nowrap;">/sw/src/apache_1.3.23.tar.gz</tt>, exécutez la commande suivante (le résultat est affiché au-dessous) :
 </p>
 <pre>fingolfin% md5sum /sw/src/apache_1.3.23.tar.gz 
 4499443fa1d604243467afe64522abac  /sw/src/apache_1.3.23.tar.gz</pre>
 <p>
-As you can see, the value to the left is exactly the value you need.
+La valeur affichée à gauche correspond à la valeur recherchée.
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b>-MD5</td><td>
 <p>
-<b>Introduced in fink 0.10.0.</b>
-This is just the same as the <tt style="white-space: nowrap;">Source-MD5</tt> field, except that it is used to specify the MD5 checksum of the tarball specified by the corresponding <tt style="white-space: nowrap;">Source<b>N</b></tt> field.
+<b>Introduit dans fink 0.10.0.</b>
+Ce champ est semblable au champ <tt style="white-space: nowrap;">Source-MD5</tt>, mais il est utilisé pour indiquer la somme de contrôle MD5 de l'archive tar correspondant au champ <tt style="white-space: nowrap;">Source<b>N</b></tt>.
 </p>
 </td></tr><tr valign="top"><td>TarFilesRename</td><td>
 <p>
-<b>Introduced in fink 0.10.0.</b>
-This field only applies to source files that are using the tar format
+<b>Introduit dans fink 0.10.0.</b>
+Ce champ ne s'applique qu'aux fichiers sources utilisant le format tar.
 </p>
 <p>
-With this field you can rename files in the given source tarball during the extraction of the tarball. This is very useful to work around the fact that the HFS+ file system is not case sensitive, as files like <tt style="white-space: nowrap;">install</tt> and <tt style="white-space: nowrap;">INSTALL</tt> will collide on a standard Mac OS X system. With this field you can avoid these issues without having to repackage the tarball (as was done in the past in such cases).
+Avec ce champ, vous pouvez renommer les fichiers d'une archive tar donnée durant l'extraction. Ceci est très utile pour gérer les problèmes dus au fait que le système de fichiers HFS+ ne tient pas compte de la casse. En effet, sur un système standard Mac OS X, les fichiers <tt style="white-space: nowrap;">install</tt> et <tt style="white-space: nowrap;">INSTALL</tt> ne sont pas distinguables. L'utilisation de ce champ permet d'éviter ces problèmes sans avoir à changer l'archive tar (comme on le faisait auparavant dans de tels cas).
 </p>
 <p>
-In this field you simply specify a list of files that are to be renamed. You can make use of wildcards. By default any given file will be renamed to its current name with <tt style="white-space: nowrap;">_tmp</tt> appended. You can override this default by using the same syntax as in the <tt style="white-space: nowrap;">Files</tt> and <tt style="white-space: nowrap;">DocFiles</tt> fields, namely by writing the old filename followed by a : and then followed by the new filename. Example:
+Indiquez juste la liste des fichiers à renommer dans ce champ. Vous pouvez utiliser des caractères joker. Par défaut, à tout fichier spécifié dans la liste est ajouté le suffixe <tt style="white-space: nowrap;">_tmp</tt>. Vous pouvez modifier ce comportement en utilisant la même syntaxe que celles des champs <tt style="white-space: nowrap;">Files</tt> et <tt style="white-space: nowrap;">DocFiles</tt>, c'est-à-dire en écrivant l'ancien nom suivi de deux-points, puis du nouveau nom. Exemple :
 </p>
 <pre>TarFilesRename: foo bar.* qux:quux
 Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <p>
-<b>Note:</b> This field is implemented by means of a special feature of BSD tar. GNU tar does not support this feature. Fink by default uses GNU tar (since there are tarballs which can only be expanded by GNU tar), but whenever a package uses TarFilesRename, Fink will use BSD tar by directly invoking <tt style="white-space: nowrap;">/usr/bin/tar</tt>.
+<b>Note :</b> ce champ est implémenté via une fonctionnalité spéciale de l'outil BSD tar. L'outil GNU tar ne gère pas cette fonctionnalité. Fink utilise GNU tar par défaut (car certaines archives tar ne peuvent être décompressées que par GNU tar) ; mais quand un paquet utilise TarFilesRename, Fink utilise BSD tar en invoquant directement <tt style="white-space: nowrap;">/usr/bin/tar</tt>.
 </p>
 </td></tr><tr valign="top"><td>Tar<b>N</b>FilesRename</td><td>
 <p>
-<b>Introduced in fink 0.10.0.</b>
-This is just the same as the <tt style="white-space: nowrap;">TarFilesRename</tt> field, except that it is used for the tarball specified by the corresponding
-<tt style="white-space: nowrap;">Source<b>N</b></tt> field.
+<b>Introduit dans fink 0.10.0.</b>
+Ce champ est similaire au champ <tt style="white-space: nowrap;">TarFilesRename</tt>, mais il est utilisé pour renommer l'archive tar correspondant au champ <tt style="white-space: nowrap;">Source<b>N</b></tt>.
 </p>
 </td></tr></table>
 
@@ -1244,4 +1243,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.21 2004/04/25 00:04:36 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.22 2004/04/26 07:24:15 michga Exp $</i></p></body></html>
