@@ -951,40 +951,40 @@ N'oubliez pas que %n inclut implicitement toutes les variantes %type_. Le cas é
 Liste de commandes à exécuter lors de la phase d'application des rustines. Voir plus bas la note sur les scripts. C'est là où vous pouvez placer les commandes qui modifient le paquet. Il n'existe pas de script par défaut. L'interprétation des raccourcis (voir la section précédente) a lieu avant que les commandes ne soient exécutées.
 </p>
 </td></tr></table>
-<p><b>Compile Phase:</b></p>
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Set<b>ENVVAR</b></td><td>
+<p><b>Phase de compilation :</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>Set<b>ENVVAR</b></td><td>
 <p>
-Causes certain environment variables to be set in the compile and install phases. This can be used to pass compiler flags etc. to configure scripts and Makefiles. Currently supported variables are: CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, LD, LDFLAGS, LIBS, MAKE, MFLAGS, MAKEFLAGS. The value you specify is subject to the percent expansion described in the last section. A common example:
+Définit certaines variables d'environnement pendant les phases de compilation et d'installation. On peut utiliser ce champ pour passer des drapeaux de compilation, etc... aux scripts configure et aux Makefile. Les variables reconnues à l'heure actuelle sont : CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, LD, LDFLAGS, LIBS, MAKE, MFLAGS, MAKEFLAGS. L'interprétation des raccourcis a lieu sur la valeur spécifiée, comme expliquée dans la section précédente. Exemple courant : 
 </p>
 <pre>SetCPPFLAGS: -no-cpp-precomp</pre>
 <p>
-The variables CPPFLAGS and LDFLAGS are special. They default to <tt style="white-space: nowrap;">-I%p/include</tt> and <tt style="white-space: nowrap;">-L%p/lib</tt>, respectively. If you specify a value for one of these, it will be prepended to the default value.
+Les variables CPPFLAGS et LDFLAGS sont spéciales. Elles ont pour valeur par défaut respective : <tt style="white-space: nowrap;">-I%p/include</tt> et <tt style="white-space: nowrap;">-L%p/lib</tt>. Si vous spécifiez une valeur pour l'une de ces deux variables, elle sera ajoutée avant la valeur par défaut.
 </p>
 </td></tr><tr valign="top"><td>NoSet<b>ENVVAR</b></td><td>
 <p>
-When set to a true value, deactivates the default values for CPPFLAGS and LDFLAGS mentioned above. That is, if you want LDFLAGS to remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
+Quand la valeur de ce champ est true (vraie), les valeurs par défaut de CPPFLAGS et LDFLAGS mentionnées ci-dessus sont désactivées. Autrement dit, si vous ne voulez pas que LDFLAGS ait une valeur par défaut, utilisez <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt>.
 </p>
 </td></tr><tr valign="top"><td>ConfigureParams</td><td>
 <p>
-Additional parameters to pass to the configure script. (See CompileScript for details.) As of fink &gt; 0.13.7, this parameter will also work with perl modules <tt style="white-space: nowrap;">Type: Perl</tt>, and will append to the default perl Makefile.PL string.
+Paramètres supplémentaires à passer au script configure. (Voir CompileScript pour de plus amples informations). À partir des versions de fink &gt; 0.13.7, ce champ fonctionne aussi avec les modules perl <tt style="white-space: nowrap;">Type: Perl</tt> ; il ajoute les paramètres à la chaîne perl par défaut Makefile.PL.
 </p>
 </td></tr><tr valign="top"><td>GCC</td><td>
 <p>
-The required version of the gcc compiler to use.  Allowed values are:  <tt style="white-space: nowrap;">2.95.2</tt> or <tt style="white-space: nowrap;">2.95</tt> (for use in the 10.1 package tree only), <tt style="white-space: nowrap;">3.1</tt> (for use in the 10.2 package tree only), and <tt style="white-space: nowrap;">3.3</tt> (for use in the 10.2-gcc3.3 and 10.3 package trees only).
+Version requise du compilateur gcc à utiliser. Les valeurs autorisées sont : <tt style="white-space: nowrap;">2.95.2</tt> ou <tt style="white-space: nowrap;">2.95</tt> (pour l'arborescence des paquets 10.1 uniquement), <tt style="white-space: nowrap;">3.1</tt> (pour l'arborescence des paquets 10.2 uniquement) et <tt style="white-space: nowrap;">3.3</tt> (pour l'arborescence des paquets 10.2-gcc3.3 et 10.3 uniquement).
 </p>
-<p>As of fink 0.13.8, when this flag is present, the version of gcc is tested using <tt style="white-space: nowrap;">gcc_select</tt>, and fink exits with an error if the wrong version is present.
+<p>À partir de la version 0.13.8 de fink, quand ce champ est utilisé, la version de gcc est testée via <tt style="white-space: nowrap;">gcc_select</tt>, et fink se termine avec un message d'erreur si la version requise n'est pas présente.
 </p>
 <p>
-This field was added to fink to aid in the transition between the gcc compilers, which introduced a binary incompatibility between libraries that involve C++ code which is not reflected in the versioning scheme.
+Ce champ a été ajouté pour faciliter la transition entre les compilateurs gcc, qui ont introduit une incompatibilité binaire entre librairies ; cette incompatibilité concerne des parties de code C++ non reproduites dans les différentes versions.
 </p>
 </td></tr><tr valign="top"><td>CompileScript</td><td>
 <p>
-A list of commands that are run in the compile phase. See the note on scripts below. This is the place to put commands that configure and compile the package. Normally the default is:
+Liste de commandes à exécuter durant la phase de compilation. Voir plus bas la note au sujet des scripts. C'est là qu'il faut mettre les commandes de configuration et de compilation du paquet. Normalement, les commandes sont les suivantes :
 </p>
 <pre>./configure %c
 make</pre>
 <p>
-This is appropriate for packages that use GNU autoconf. For packages with of type perl (as specified via the Type field) with the perl version not specified, the default instead is:
+Elles conviennent pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut sont les suivantes :
 </p>
 <pre>perl Makefile.PL PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5 \
@@ -995,7 +995,7 @@ This is appropriate for packages that use GNU autoconf. For packages with of typ
  INSTALLMAN3DIR=%p/share/man/man3
 make
 make test</pre>
-<p>If the type is <tt style="white-space: nowrap;">perl $version</tt> with the version specified (e.g., $version might be 5.6.0), then the default becomes:
+<p>Si le type est du style <tt style="white-space: nowrap;">perl $version</tt> (où $version est, par exemple,  5.6.0), les commandes par défaut sont les suivantes :
 </p>
 <pre>perl$version Makefile.PL \
  PERL=perl$version PREFIX=%p \
@@ -1008,12 +1008,12 @@ make test</pre>
 make
 make test</pre>
 <p>
-Before the commands are executed, percent expansion takes place (see previous section).
+L'interprétation des raccourcis (voir la section précédente) a lieu avant que les commandes soient exécutées.
 </p>
 </td></tr><tr valign="top"><td>NoPerlTests</td><td> 
 <p>
-<b>Introduced in fink &gt; 0.13.7.</b>
-A boolean value, specific for perl module packages. If true, the <tt style="white-space: nowrap;">make test</tt> portion of the <tt style="white-space: nowrap;">CompileScript</tt> will be ignored for that specific perl module package.
+<b>Introduite dans une version de fink &gt; 0.13.7.</b>
+Valeur booléenne spécifique aux paquets de module perl. Si sa valeur est true (vraie), la partie <tt style="white-space: nowrap;">make test</tt> de <tt style="white-space: nowrap;">CompileScript</tt> est ignorée pour ce paquet.
 </p>
 </td></tr></table>
 <p><b>Install Phase:</b></p>
@@ -1253,4 +1253,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.24 2004/05/08 22:28:34 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.25 2004/05/12 23:39:14 michga Exp $</i></p></body></html>
