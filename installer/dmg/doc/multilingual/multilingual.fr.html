@@ -227,8 +227,12 @@ Fran&ccedil;ais |
       <pre>cp constants.fr.inc constants.xx.inc</pre>
       <p>où xx est votre code langue (par exemple de pour l'allemand).
       Ensuite, il vous faudra traduire la partie située entre guillemets simples de chaque ligne commençant par define. Si vous ne comprenez pas l'allemand, voici la traduction en anglais :</p>
+      <p>N'oubliez pas de changer la locale, c'est-à-dire de changer en_US en de_DE pour l'allemand.</p>
 
       <pre>
+/* The Sections.  Used in Menu Navigation Bar */
+define (FINK_LC_ALL, 'en_US');
+
 /* The Sections. Used in Menu Navigation Bar */ 
 define (FINK_SECTION_HOME, 'Home'); 
 define (FINK_SECTION_DOWNLOAD, 'Download');
@@ -265,7 +269,7 @@ define (META_DESCRIPTION, 'The Fink project wants to bring the full world of Uni
 define (HEADER_HOSTED_BY, 'Hosted by {img}');
 define (FOOTER_AVAILABLE_LANGUAGES, 'Available Languages');
 define (FOOTER_GENERATED_DYNAMICALLY, 'Generated dynamically from');
-define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated: %x %X');
+define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated on %a, %d %b %Y,  %R %Z');
 define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %b %Y,  %R %Z');
 </pre>
 <p><b>Note :</b> les premières lignes de la section Footer ont été coupées pour des raisons d'affichage. Ne les coupez pas dans le fichier.</p>
