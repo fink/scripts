@@ -1432,6 +1432,15 @@ installed.
 You'll usually also want to name these packages in the "Conflicts" and
 the "Replaces" field.
 </p>
+<p>
+Note that there is no versioning data associated with Provides
+items. They do not inherit from the parent package that contains the
+Provides list nor is there a syntax for specifing an arbitrary version
+in the Provides field itself. Further, a dependency that contains a
+version specification is not satisfied by a package that Provides that
+needed package name. As a result, having many variants all Provides a
+single surrogate package name may not be very useful in many cases.
+</p>
 </td></tr><tr valign="top"><td>Conflicts</td><td>
 <p>
 A comma-separated list of package names that must not be installed at
@@ -2349,4 +2358,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.56 2004/12/13 23:24:13 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.57 2005/01/31 16:20:27 dmacks Exp $</i></p></body></html>
