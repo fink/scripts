@@ -1,0 +1,18 @@
+#!/bin/sh
+
+source='/Users/chrisp/fink/web/bindist'
+destination='shell1:/home/groups/f/fi/fink/htdocs'
+
+if [ "$1" = "pippin" ]; then
+  destination='pippin:/home/chrisp/fink/web'
+fi
+
+# rsync options
+options="-e ssh -av --partial --progress"
+options="$options --delete"
+# NOTE: data isn't compressed on the fly as practically all data is
+#       already gzip-compressed
+
+rsync $options $source $destination
+
+exit 0

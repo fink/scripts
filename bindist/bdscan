@@ -1,0 +1,28 @@
+#!/bin/sh
+
+cd /Users/chrisp/fink/web/bindist
+
+tree=$1
+if [ -z "$tree" ]; then
+  tree="fink-0.2.5"
+  echo "Defaulting to tree $tree"
+fi
+
+if [ ! -d "dists/$tree" ]; then
+  echo "ERROR: invalid tree '$tree'"
+  exit 1
+fi
+
+set -e
+
+for dir in main crypto ; do
+  basedir=dists/$tree/$dir/binary-darwin-powerpc
+  if [ ! -d $basedir ]; then
+    echo "ERROR: no binary directory for $tree/$dir"
+  else
+    echo "Scanning $basedir"
+    dpkg-scanpackages $basedir override | gzip >$basedir/Packages.gz
+  fi
+done
+
+exit 0

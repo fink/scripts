@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+$| = 1;
+use strict;
+
+chdir "/Users/chrisp/fink/web/bindist";
+
+use File::Find;
+
+sub perdir {
+  my $dir = shift;
+  my ($old, $new, $level, $fn);
+
+  return unless $dir;
+
+  $level = scalar(split(/\//, $dir));
+  $fn = "$dir/index.php";
+
+  $new = "<?\n\$level = $level;\ninclude \"".("../"x$level)."index.php\";\n?>";
+
+  if (-f $fn) {
+    $old = "";
+    open(IN, $fn);
+    $old .= $_ while <IN>;
+    close(IN);
+    if ($old eq $new) {
+      return;
+    }
+  }
+
+  print "Writing $fn\n";
+  open(OUT, ">$fn") or die "can't write \"$fn\": $!";
+  print OUT $new;
+  close(OUT) or die "can't write \"$fn\": $!";
+}
+
+
+my (@dirlist, $dir);
+@dirlist = ();
+
+find(sub {
+       if (! /^\./ && -d) {
+	 if ($File::Find::name =~ /^\.\/(.+)$/) {
+	   push @dirlist, $1;
+	 }
+       }
+     }, ".");
+
+foreach $dir (@dirlist) {
+  &perdir($dir);
+}
+
+exit 0;
