@@ -1387,6 +1387,10 @@ special flags are used to override this.
 A boolean value which indicates that no other packages should Depend on
 this one, they should only BuildDepend.
 </p>
+<p>As of fink 0.20.3, the value of this field is recorded into the .deb
+file when a package is built.  Therefore, <b>if you change the value of
+BuildDependsOnly you must increase the revision number</b> of the package.
+</p>
 </td></tr></table>
 <p><b>Unpack Phase:</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>CustomMirror</td><td>
@@ -2189,4 +2193,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.30 2004/05/22 20:41:52 dmrrsn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.31 2004/06/02 01:56:41 michga Exp $</i></p></body></html>
