@@ -55,9 +55,23 @@ Run this from your local pdb directory (replace 0.4.5 as appropriate):
  ./dumprelease 0.4.5
 
 This will produce a file called 0.4.5-stable.sql. Upload this file to your
-SourceForge account. There, ...
-[TO BE CONTIUNED]
+SourceForge account. Next, you must update the releases.sql file for 0.4.5
+(just replace the current version with the new one). Once you did this, log
+into shell.sf.net, and run these commands (order is important):
 
+ /home/users/f/fi/fingolfin/bin/finksql < releases.sql
+ /home/users/f/fi/fingolfin/bin/finksql < 0.4.5-stable.sql
+
+Now run the "flag" script (which can be found in the same directory as
+this HOWTO); alternatively, just run pdbupdate as outlined above:
+
+ ssh MYSFUSERNAME@shell.sourceforge.net /home/users/f/fi/fingolfin/bin/pdbupdate
+
+Finally, you have to tell the PHP script which renders the package description
+pages to display the information from 0.4.5 along with the current data. To do
+so, edit "pdb/releases.inc" in the "web" CVS module.
+
+That's it.
 
 ---------------------------------------------------------------------------------
 
