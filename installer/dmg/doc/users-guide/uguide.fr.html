@@ -655,9 +655,8 @@ stable/main". Cette liste doit toujours être identique à celle figurant dans l
         </li>
         <li>
           <p>
-            <b>Distribution:</b> 10.1 ou 10.2</p>
-          <p>Fink doit savoir quelle version de Mac OS X est installée sur votre système. La distribution 10.1 est destinée aux utilisateurs de Mac OS X, tandis que la version 10.2 ne fonctionne que sur un système Mac OS X 10.2 "Jaguar".
-Mac OS X 10.0 et les versions antérieures ne sont pas gérées. Il est peu probable que vous ayez à  changer cette valeur.
+            <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, ou 10.3</p>
+          <p>Fink doit savoir quelle version de Mac OS X est installée sur votre système. Mac OS X 10.0 et les versions antérieures ne sont pas gérées, et Mac OS X 10.1 n'est plus maintenue dans cette version de fink. Mac OS X10.2 n'est gérée que si la mise à jour d'août 2003 des Developer Tools a été installée. Ce champ est configuré par l'exécution du script <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>. Il est peu probable que vous ayez à changer cette valeur.
 </p>
         </li>
         <li>
@@ -694,6 +693,12 @@ La valeur par défaut est 3.
             <b>SelfUpdateNoCVS:</b> booléen</p>
           <p>La commande <tt style="white-space: nowrap;">fink selfupdate</tt> met à jour le gestionnaire de paquets Fink. Cette option assure que CVS n'est pas utilisé pour ce faire quand elle a pour valeur True. La valeur de l'option est définie automatiquement par la commande <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>, vous n'avez donc pas besoin de la modifier manuellement.</p>
         </li>
+        	<li>
+	  <p>
+	    <b>Buildpath:</b> chemin</p>
+	  <p>Fink doit créer plusieurs répertoires temporaires pour les paquets compilés à partir du source. Par défaut, ces répertoires sont placés dans <tt style="white-space: nowrap;">/sw/src</tt>, mais si vous voulez qu'ils soient créés ailleurs, indiquez ici le chemin. Voir les définitions des champs <tt style="white-space: nowrap;">KeepRootDir</tt> et <tt style="white-space: nowrap;">KeepBuildDir</tt> ci-dessous pour de plus amples informations sur ces répertoires temporaires.
+	    </p>
+	</li>
       </ul>
     
     <h3><a name="conf.downloading">5.5 Options de téléchargement</a></h3>
@@ -758,7 +763,8 @@ Fink gère des miroirs 'Maîtres', serveurs miroirs des archives tar du code sou
 MasterFirst - Cherche d'abord dans les miroirs "Maîtres".
 MasterLast - Cherche dans les miroirs "Maîtres" à la fin.
 MasterNever - N'utilise jamais les miroirs "Maîtres".
-ClosestFirst - Cherche d'abord dans les miroirs les plus proches (combine tous les miroirs en un seul jeu de miroirs).
+ClosestFirst - Cherche d'abord dans les miroirs les plus proches 
+           (combine tous les miroirs en un seul jeu de miroirs).
 </pre>
         </li>
       </ul>
@@ -961,4 +967,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.fr.xml,v 1.2 2004/03/17 11:18:54 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.fr.xml,v 1.3 2004/03/19 17:48:41 michga Exp $</i></p></body></html>
