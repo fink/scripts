@@ -33,7 +33,7 @@ Package installation and maintenance is covered as well.
 </p>
   <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 What is Fink?</a></li><li><a href="#intro.req">1.2 Requirements</a></li><li><a href="#intro.supported-os">1.3 Supported Systems</a></li><li><a href="#intro.src-vs-bin">1.4 Source vs. Binary</a></li></ul></li><li><a href="#install"><b>2 First Time Installation</b></a><ul><li><a href="#install.bin">2.1 Installing the Binary Distribution</a></li><li><a href="#install.src">2.2 Installing the Source Distribution</a></li><li><a href="#install.setup">2.3 Setting Up Your Environment</a></li></ul></li><li><a href="#packages"><b>3 Installing Packages</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installing Binary Packages with
 dselect</a></li><li><a href="#packages.bin-apt">3.2 Installing Binary Packages with
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Binary and Source Packages with fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li><li><a href="#conf.advanced">5.8 Advanced Settings</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.cleanup">6.19 cleanup</a></li><li><a href="#usage.dumpinfo">6.20 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Binary and Source Packages with fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li><li><a href="#conf.advanced">5.8 Advanced Settings</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.options">6.2 Global options</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.update-all">6.5 update-all</a></li><li><a href="#usage.list">6.6 list</a></li><li><a href="#usage.apropos">6.7 apropos</a></li><li><a href="#usage.describe">6.8 describe</a></li><li><a href="#usage.fetch">6.9 fetch</a></li><li><a href="#usage.fetch-all">6.10 fetch-all</a></li><li><a href="#usage.fetch-missing">6.11 fetch-missing</a></li><li><a href="#usage.build">6.12 build</a></li><li><a href="#usage.rebuild">6.13 rebuild</a></li><li><a href="#usage.reinstall">6.14 reinstall</a></li><li><a href="#usage.configure">6.15 configure</a></li><li><a href="#usage.selfupdate">6.16 selfupdate</a></li><li><a href="#usage.index">6.17 index</a></li><li><a href="#usage.validate">6.18 validate</a></li><li><a href="#usage.scanpackages">6.19 scanpackages</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li><li><a href="#usage.dumpinfo">6.21 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.what">1.1 What is Fink?</a></h3>
@@ -565,7 +565,27 @@ compiles it, and installs the results on your system.
 This can take a long time.
 If you run into errors during that process, please first check the
 <a href="http://fink.sourceforge.net/faq/">FAQ</a>.
-</p>
+      </p>
+      <p>
+For <tt style="white-space: nowrap;">fink</tt> versions since 0.23.0 you can tell it to try to download
+pre-compiled binary packages, if available, instead of building them. Just pass
+the <a href="#usage.options">--use-binary-dist (or -b)
+option</a> to <tt style="white-space: nowrap;">fink</tt>. This can save you a lot of time. E.g.
+calling
+      </p>
+      <pre>fink --use-binary-dist install wget-ssl</pre>
+      <p>or</p>
+      <pre>fink -b install wget-ssl</pre>
+      <p>
+will first download all dependencies for wget-ssl that are available from the
+binary distribution and only build the remainder from source. This option can
+also be enabled permanently in the <a href="#conf">Fink configuration
+file</a> (fink.conf) or by running the command <tt style="white-space: nowrap;">fink configure</tt>.
+      </p>
+      <p>
+More details about the <tt style="white-space: nowrap;">fink</tt> tool are available in the chapter 
+<a href="#usage">"Using the fink Tool from the Command Line"</a>.
+      </p>
     
     <h3><a name="packages.fink-commander">3.5 Fink Commander</a></h3>
       
@@ -743,8 +763,22 @@ That is, first use <tt style="white-space: nowrap;">dselect</tt> or <tt style="w
 the latest versions of the packages that are available as binaries,
 then use <tt style="white-space: nowrap;">fink selfupdate</tt> and <tt style="white-space: nowrap;">fink update-all</tt>
 to get the current package descriptions and to update the remaining
-packages.  If you are using Fink commander, then follow the <a href="#upgrade.bin">binary</a> instructions, followed by those for <a href="#upgrade.src">source</a>.
-</p>
+packages.
+		</p>
+      <p>
+Starting with fink 0.23.0 using the UseBinaryDist option (settable via the
+<a href="#usage.options">--use-binary-dist (or -b) option</a>
+or in the <a href="#conf">Fink configuration file</a>) both source and
+binary descriptions will be updated if you call <tt style="white-space: nowrap;">fink selfupdate</tt>.
+In this case you don't need a separate <tt style="white-space: nowrap;">apt-get</tt> call anymore.
+     </p>
+      <p>
+If you are using Fink Commander select Binary-&gt;Update descriptions to update
+the package list, and then Binary-&gt;Dist-Upgrade packages to update to new
+versions. After that do Source-&gt;Selfupdate to download new package
+information files, and then Source-&gt;Update-all (see previous sections for
+details).
+      </p>
     
   <h2><a name="conf">5 The Fink Configuration File</a></h2>
     
@@ -956,6 +990,34 @@ time. The default value is <b>curl</b>.
 <b>The application you chose as DownloadMethod MUST be installed!</b>
           </p>
         </li>
+        <li>
+          <p>
+            <b>SelfUpdateMethod:</b> point, rsync or cvs</p>
+          <p>
+Fink can use some different methods to update the package info files.
+<b>rsync</b> is the recommended setting, it uses rsync to download only
+modified files in the trees that you have enabled. Note that if you have
+changed or added to files in the stable or unstable trees, using rsync will
+delete them. Make a backup first. <b>cvs</b> will download using anonymous or
+:ext: cvs access from the fink repository. This has the disadvantage that cvs
+can not switch mirrors, if the server is unavailable you will not be able to
+update. <b>point</b> will download only the latest released version of the
+packages. It is not recommended as your packages may be quite out of date.
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>UseBinaryDist:</b> boolean</p>
+          <p>
+Causes fink to try to download pre-compiled binary packages from the binary
+distribution if available and if the binary package is not already on the
+system. This can save a lot of installation time and it is therefore 
+recommended to set this option. Passing fink the 
+<a href="#usage">--use-binary-dist option</a> has the same effect, 
+but only operates on that single fink invocation.
+<b>Only available in fink newer than version 0.23.0</b>.
+          </p>
+        </li>
       </ul>
     
     <h3><a name="conf.mirrors">5.6 Mirror Settings</a></h3>
@@ -1122,7 +1184,34 @@ qualified name with a version number (e.g. gimp-1.2.1) or with both version and 
 version and revision when they are not specified.  Others have different options.</p>
       <p>What follows is a list of the commands for the <tt style="white-space: nowrap;">fink</tt> tool:</p>
     
-    <h3><a name="usage.install">6.2 install</a></h3>
+    <h3><a name="usage.options">6.2 Global options</a></h3>
+      
+      <p>
+There are some options, which apply to all fink fink commands. If you 
+type <tt style="white-space: nowrap;">fink --help</tt> you get the list of options:
+      </p>
+      <pre>
+-h, --help            - display this help text
+-q, --quiet           - causes fink to be less verbose, opposite of --verbose
+-V, --version         - display version information
+-v, --verbose         - causes fink to be more verbose, opposite of --quiet
+-y, --yes             - assume default answer for all interactive questions
+-b, --use-binary-dist - download pre-compiled packages from the binary 
+                          distribution if available
+      </pre>
+      <p>
+Most of these options are self-explanatory. They can also be set in the 
+<a href="#conf">Fink configuration file</a> (fink.conf) if you want 
+to set them permanently and not just for that invocation of <tt style="white-space: nowrap;">fink</tt>.
+      </p>
+      <p>
+The <tt style="white-space: nowrap;">--use-binary-dist</tt> option causes <tt style="white-space: nowrap;">fink</tt> to try to
+download pre-compiled binary packages from the binary distribution if available
+and if the binary package is not already on the system. (Only available in
+<tt style="white-space: nowrap;">fink</tt> newer than version 0.23.0)
+      </p>
+    
+    <h3><a name="usage.install">6.3 install</a></h3>
       
       <p>The install command is used to install packages. It downloads,
 configure, builds and installs the packages you name. It will also
@@ -1135,10 +1224,15 @@ Information about 131 packages read.
 The following additional package will be installed:
  lesstif
 Do you want to continue? [Y/n]</pre>
+      <p>
+If you add the <a href="#usage.options">--use-binary-dist option</a>
+<tt style="white-space: nowrap;">fink</tt> will try to download binary packages, if available, instead 
+of building them. This can save a lot of installation time.
+      </p>
       <p>Aliases for the install command: update, enable, activate, use (most
 of these for historic reasons).</p>
     
-    <h3><a name="usage.remove">6.3 remove</a></h3>
+    <h3><a name="usage.remove">6.4 remove</a></h3>
       
       <p>The remove command removes packages from the system by calling '<tt style="white-space: nowrap;">dpkg --remove</tt>'. The current implementation has some flaws: It only works on
 packages the <tt style="white-space: nowrap;">fink</tt> tool knows about (i.e. where an .info file is present); and it
@@ -1151,13 +1245,17 @@ again. If you need the disk space, you can remove the .deb from the
 <tt style="white-space: nowrap;">/sw/fink/dists</tt> tree.</p>
       <p>Aliases: disable, deactivate, unuse, delete.</p>
     
-    <h3><a name="usage.update-all">6.4 update-all</a></h3>
+    <h3><a name="usage.update-all">6.5 update-all</a></h3>
       
       <p>This command updates all installed packages to the latest version. It
 does not need a package list, so you just type:</p>
       <pre>fink update-all</pre>
+      <p>
+The <a href="#usage.options">--use-binary-dist option</a> is also
+applicable here.
+      </p>
     
-    <h3><a name="usage.list">6.5 list</a></h3>
+    <h3><a name="usage.list">6.6 list</a></h3>
       
       <p>
 This command produces a list of available packages, listing
@@ -1217,7 +1315,7 @@ The quotes in the last example are necessary to stop the shell from
 interpreting the pattern itself.
 </p>
     
-    <h3><a name="usage.apropos">6.6 apropos</a></h3>
+    <h3><a name="usage.apropos">6.7 apropos</a></h3>
       
       <p>
 This command behaves almost identical to <tt style="white-space: nowrap;">fink list</tt>. The most
@@ -1230,7 +1328,7 @@ fink apropos irc          - list all packages for which 'irc' occurs in the name
 fink apropos -s=kde irc   - the same as above, but restricted to packages from the kde section
 </pre>
     
-    <h3><a name="usage.describe">6.7 describe</a></h3>
+    <h3><a name="usage.describe">6.8 describe</a></h3>
       
       <p>
 This command displays a description of the package you name on the
@@ -1242,22 +1340,22 @@ description.
 Aliases: desc, description, info
 </p>
     
-    <h3><a name="usage.fetch">6.8 fetch</a></h3>
+    <h3><a name="usage.fetch">6.9 fetch</a></h3>
       
       <p>Downloads the named packages, but does not install it. This command
 will download the tarballs even if they were downloaded before.</p>
     
-    <h3><a name="usage.fetch-all">6.9 fetch-all</a></h3>
+    <h3><a name="usage.fetch-all">6.10 fetch-all</a></h3>
       
       <p>Downloads <b>all</b> package source files. Like fetch, this downloads the
 tarballs even when they were downloaded before.</p>
     
-    <h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
+    <h3><a name="usage.fetch-missing">6.11 fetch-missing</a></h3>
       
       <p>Downloads <b>all</b> missing package source files. This command will only download
 files that are not present on the system.</p>
     
-    <h3><a name="usage.build">6.11 build</a></h3>
+    <h3><a name="usage.build">6.12 build</a></h3>
       
       <p>Builds a package, but does not install it. As usual, the source
 tarballs are downloaded if they can not be found. The result of this
@@ -1265,22 +1363,28 @@ command is an installable .deb package file, which you can quickly
 install later with the install command. This command will do nothing
 if the .deb already exists. Note that dependencies are still
 <b>installed</b>, not just built.</p>
+      <p>
+The <a href="#usage.options">--use-binary-dist option</a> is applicable here.
+      </p>
     
-    <h3><a name="usage.rebuild">6.12 rebuild</a></h3>
+    <h3><a name="usage.rebuild">6.13 rebuild</a></h3>
       
       <p>Builds a package (like the build command), but ignores and overwrites
 the existing .deb file. If the package is installed, the newly created
 .deb file will also be installed in the system via <tt style="white-space: nowrap;">dpkg</tt>. Very useful
 during package development.</p>
+      <p>
+The <a href="#usage.options">--use-binary-dist option</a> is applicable here.
+      </p>
     
-    <h3><a name="usage.reinstall">6.13 reinstall</a></h3>
+    <h3><a name="usage.reinstall">6.14 reinstall</a></h3>
       
       <p>Same as install, but will install the package via <tt style="white-space: nowrap;">dpkg</tt> even when it is
 already installed. You can use this when you accidentally deleted
 package files or changed configuration files and want to get the
 default settings back.</p>
     
-    <h3><a name="usage.configure">6.14 configure</a></h3>
+    <h3><a name="usage.configure">6.15 configure</a></h3>
       
       <p>
 Reruns the Fink configuration process.
@@ -1288,7 +1392,7 @@ This will let you change your mirror sites and proxy settings, among
 others.
 </p>
     
-    <h3><a name="usage.selfupdate">6.15 selfupdate</a></h3>
+    <h3><a name="usage.selfupdate">6.16 selfupdate</a></h3>
       
       <p>
 	This command automates the process of upgrading to a new Fink
@@ -1299,15 +1403,19 @@ others.
 	directory tree for direct CVS updates.  This means that you then
 	will be able to access the very latest revisions of all packages.
 </p>
+      <p>
+I the <a href="#usage.options">--use-binary-dist option</a> is enabled
+the list of available packages in the binary distribution is also updated.
+      </p>
     
-    <h3><a name="usage.index">6.16 index</a></h3>
+    <h3><a name="usage.index">6.17 index</a></h3>
       
       <p>
    Rebuilds the package cache. You should not normally need to execute
    this manually, as <tt style="white-space: nowrap;">fink</tt> should auto-detect when it needs to be updated.
 </p>
     
-    <h3><a name="usage.validate">6.17 validate</a></h3>
+    <h3><a name="usage.validate">6.18 validate</a></h3>
       
       <p>
    This command performs various checks on .info and .deb files. Package
@@ -1318,20 +1426,24 @@ others.
    Aliases: check
 </p>
     
-    <h3><a name="usage.scanpackages">6.18 scanpackages</a></h3>
+    <h3><a name="usage.scanpackages">6.19 scanpackages</a></h3>
       
       <p>
    Calls dpkg-scanpackages(8) with the specified trees.
 </p>
     
-    <h3><a name="usage.cleanup">6.19 cleanup</a></h3>
+    <h3><a name="usage.cleanup">6.20 cleanup</a></h3>
       
       <p>
    Removes obsolete package files (.info, .patch, .deb) if newer versions are available. 
    This can reclaim large amounts of disk space.
 </p>
+      <p>
+If the <a href="#usage.options">--use-binary-dist option</a> is enabled
+obsolete downloaded binary packages are also deleted.
+      </p>
     
-    <h3><a name="usage.dumpinfo">6.20 dumpinfo</a></h3>
+    <h3><a name="usage.dumpinfo">6.21 dumpinfo</a></h3>
       
       <p>
 Only available in <tt style="white-space: nowrap;">fink</tt> newer than version 0.21.0
@@ -1358,4 +1470,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.17 2004/10/21 08:48:47 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.18 2004/10/21 10:20:09 michga Exp $</i></p></body></html>
