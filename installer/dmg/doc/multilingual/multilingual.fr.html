@@ -3,7 +3,7 @@
     <p><b>Ce document est en cours de rédaction.</b></p>
 
     <p>Voici le guide d'internationalisation du site web de Fink. Ce document a été conçu pour servir de vade mecum aux personnes qui désirent contribuer à l'internationalisation du site.</p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 En quoi consiste ce projet d'internationalisation du site web de Fink ?</a></li><li><a href="#intro.languages">1.2 Langues</a></li><li><a href="#intro.organization">1.3 Organisation</a></li><li><a href="#intro.helping">1.4 Participation</a></li></ul></li><li><a href="#files"><b>2 Fichiers de documentation</b></a><ul><li><a href="#files.requirements">2.1 Conditions requises</a></li><li><a href="#files.setting-up">2.2 Configuration de l'environnement</a></li><li><a href="#files.acquiring">2.3 Récupération  des fichiers de travail</a></li><li><a href="#files.file-standards">2.4 Types de fichiers</a></li><li><a href="#files.updating">2.5 Récupération de la révision la plus récente</a></li><li><a href="#files.initial-translation">2.6 Traduction initiale</a></li><li><a href="#files.check-work">2.7 Vérification du travail</a></li><li><a href="#files.change-checkout">2.8 Après obtention de l'accès au commit (chefs d'équipe)</a></li><li><a href="#files.committing">2.9 Commit des modifications (chefs d'équipe)</a></li><li><a href="#files.website">2.10 Mise à jour de notre site web</a></li></ul></li><li><a href="#procedure"><b>3 Procédure de mise à jour des documents</b></a><ul><li><a href="#procedure.new-translation">3.1 Nouvelles traductions</a></li><li><a href="#procedure.doc-updates">3.2 Mises à jour du contenu des fichiers</a></li><li><a href="#procedure.call-to-translate">3.3 Demande de traduction</a></li><li><a href="#procedure.translate">3.4 Traduction</a></li><li><a href="#procedure.activation">3.5 Activation des changements</a></li></ul></li><li><a href="#resources"><b>4 Autres ressources</b></a><ul><li><a href="#resources.resources">4.1 Liens importants</a></li><li><a href="#resources.editors">4.2 Éditeurs de textes</a></li><li><a href="#resources.moretools">4.3 Outils utiles</a></li></ul></li><li><a href="#appendix"><b>5 Annexe</b></a><ul><li><a href="#appendix.cvs-codes">5.1 Codes CVS</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 En quoi consiste ce projet d'internationalisation du site web de Fink ?</a></li><li><a href="#intro.languages">1.2 Langues</a></li><li><a href="#intro.organization">1.3 Organisation</a></li><li><a href="#intro.helping">1.4 Participation</a></li></ul></li><li><a href="#files"><b>2 Fichiers de documentation</b></a><ul><li><a href="#files.requirements">2.1 Conditions requises</a></li><li><a href="#files.setting-up">2.2 Configuration de l'environnement</a></li><li><a href="#files.acquiring">2.3 Récupération  des fichiers de travail</a></li><li><a href="#files.file-standards">2.4 Types de fichiers</a></li><li><a href="#files.updating">2.5 Récupération de la révision la plus récente</a></li><li><a href="#files.initial-translation">2.6 Traduction initiale</a></li><li><a href="#files.check-work">2.7 Vérification du travail</a></li><li><a href="#files.change-checkout">2.8 Après obtention de l'accès au commit (chefs d'équipe)</a></li><li><a href="#files.committing">2.9 Commit des modifications (chefs d'équipe)</a></li><li><a href="#files.website">2.10 Mise à jour de notre site web</a></li></ul></li><li><a href="#procedure"><b>3 Procédure de mise à jour des documents</b></a><ul><li><a href="#procedure.call-to-translate">3.1 Demande de traduction</a></li><li><a href="#procedure.doc-updates">3.2 Nouveau document :</a></li><li><a href="#procedure.new-translation">3.3 Nouvelles traductions</a></li><li><a href="#procedure.prompt-update">3.4 Mise à jour rapide de la documentation existante :</a></li><li><a href="#procedure.delayed-update">3.5 Mise à jour retardée de la documentation existante (fichiers générés via XML uniquement)</a></li></ul></li><li><a href="#resources"><b>4 Autres ressources</b></a><ul><li><a href="#resources.resources">4.1 Liens importants</a></li><li><a href="#resources.editors">4.2 Éditeurs de textes</a></li><li><a href="#resources.moretools">4.3 Outils utiles</a></li></ul></li><li><a href="#appendix"><b>5 Annexe</b></a><ul><li><a href="#appendix.cvs-codes">5.1 Codes CVS</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
 
     
@@ -446,36 +446,16 @@ Pour les autres documents, les fichiers à ajouter ne sont, bien entendu, pas le
     
 
     
+ <p>Comme la documentation anglaise est la documentation maître, elle doit être mise à jour en premier. Une telle mise à jour peut être effectuée par un membre de l'équipe i18n (par exemple par les rédacteurs anglais) ou directement par les développeurs.</p>
       <p>Pour que tout se passe bien, vous devez suivre les procédures suivantes.</p>
     
-
-    <h3><a name="procedure.new-translation">3.1 Nouvelles traductions</a></h3>
+    <h3><a name="procedure.call-to-translate">3.1 Demande de traduction</a></h3>
       
 
-      <p>Quand une nouvelle langue est ajoutée, un gel de la mise à jour de tous les fichiers de documentation (anglais ou autres) est déclaré, de façon à ce que la nouvelle équipe de traduction ne soit pas perturbée par un changement sur les fichiers qu'elle est en train de traduire. Dans ce cas, les documents sont mis en ligne et activés dès qu'ils sont prêts.</p>
-    
-
-    <h3><a name="procedure.doc-updates">3.2 Mises à jour du contenu des fichiers</a></h3>
-      
-
-      <p>Comme la documentation anglaise est la documentation maître, elle doit être mise à jour en premier. Une telle mise à jour peut être effectuée par un membre de l'équipe i18n (par exemple par les rédacteurs anglais) ou directement par les développeurs.</p>
-
-      <p>Voici les catégories de mises à jour utilisées pour la documentation :</p>
-
-      <ol>
-        <li><b>Urgent (sécurité, bogues résolus, etc...) :</b> La documentation anglaise est mise à jour immédiatement, les traducteurs mettent à jour les fichiers correspondants dans leur langue et les mettent en ligne le plus vite possible.</li>
-
-        <li><b>Non urgent :</b> Dans ce cas, la documentation anglaise est mise à jour, mais n'est pas mise en ligne immédiatement. Les traducteurs ont un à deux jours pour mettre à jour leur traduction, puis toutes les versions sont mises en ligne au même moment.</li>
-      </ol>
-    
-
-    <h3><a name="procedure.call-to-translate">3.3 Demande de traduction</a></h3>
-      
-
-      <p>Quand les fichiers anglais sont prêts, les traducteurs sont prévenus par un message envoyé sur la liste de diffusion fink-18n. Le message doit contenir les informations suivantes :</p>
+      <p>Quand un nouveau document est mis en ligne ou que des changements ont lieu dans la documentation anglaise, les traducteurs sont prévenus par un message envoyé sur la liste de diffusion fink-18n. Le message doit contenir les informations suivantes :</p>
 
       <ul>
-        <li>Une note dans l'objet du message indiquant qu'il s'agit d'une demande de traduction, par exemple : "[translation]", ou "[translation-urgent]" pour les documents anglais qui sont mis immédiatement en ligne.</li>
+        <li>Une note dans l'objet du message indiquant qu'il s'agit d'une demande de traduction, par exemple : "[translation]", ou "[translation-delayed]" pour les documents anglais qui ne sont pas mis en ligne immédiatement.</li>
 
         <li>De plus, le nom du fichier concerné doit être inclus dans le corps du message.</li>
 
@@ -484,27 +464,36 @@ Pour les autres documents, les fichiers à ajouter ne sont, bien entendu, pas le
 </li>
       </ul>
 
-      <p>Note : comme la simple exécution du commit d'un fichier XML génère un message sur la liste de diffusion fink-commits qui remplit tous les critères mentionnés ci-dessus, le plus simple est de rediriger le message en changeant son objet.</p>
+      <p>Note : comme la simple exécution du commit d'un fichier XML génère un message sur la liste de diffusion fink-commits qui remplit tous les critères mentionnés ci-dessus, le plus simple est de faire suivre le message en changeant son objet. Néanmoins, cela ne fonctionne pas bien, si le nombre de changements est important.</p>
     
-
-    <h3><a name="procedure.translate">3.4 Traduction</a></h3>
-      
-
-      <p>Une fois cela fait, le travail de traduction peut commencer. On effectue un commit sur chaque fichier dès qu'il est traduit.</p>
+   <h3><a name="procedure.doc-updates">3.2 Nouveau document :</a></h3>
+       
+      <p>On fait un <a href="#files.committing">commit</a> sur la version anglaise du document et on l'<a href="#files.website">active</a>, il est ensuite <a href="#procedure.new-translations">traduit</a> comme expliqué ci-dessous.</p>
     
-
-    <h3><a name="procedure.activation">3.5 Activation des changements</a></h3>
+  <h3><a name="procedure.new-translation">3.3 Nouvelles traductions</a></h3>
       
-
-      <p>Il y a deux façon d'activer les changements selon l'urgence des modifications :</p>
-
+      <p>Le chef d'équipe de la langue concernée (ou une autre personne ayant un accès CVS) fait un <a href="#files.committing">commit</a> et <a href="#files.website">active</a> les documents dès qu'ils sont prêts.</p>
+      <p>On entend par nouvelle traduction :</p>
+      <ul>
+        <li>la première traduction d'un document existant,</li>
+        <li>toute traduction partielle d'un document existant,</li>
+        <li>la traduction d'un nouveau document anglais.</li>
+      </ul>
+    
+    <h3><a name="procedure.prompt-update">3.4 Mise à jour rapide de la documentation existante :</a></h3>
+      
+      <p>On fait un <a href="#files.committing">commit</a> et l'on <a href="#files.website">active</a> immédiatement la documentation maître anglaise, ensuite les équipes de traduction mettent à jour leurs versions, font un <a href="#files.committing">commit</a> de <b>tous</b> les fichiers (XML et PHP), puis <a href="#files.activate">activent</a> les changements.</p>
+      <p><b>Notes :</b></p>
       <ol>
-        <li>Pour les modifications urgentes, les changements sont activés dès que le fichier a été modifié.</li>
-
-        <li>Pour les modifications non urgentes, les changements sont activés après que toutes les versions du fichier ont été modifiées.</li>
+        <li>Les modifications du guide d'internationalisation (ce document) sont <b>toujours</b> faites suivant ce schéma, car les changements affectent l'ensemble des équipes de traduction.</li>
+        <li>Les modifications des documents statiques (fichiers PHP non générés via XML) sont <b>toujours</b> faites suivant ce schéma, car il est difficile de <a href="#procedure.delayed-update">retarder</a> leur activation.</li>
       </ol>
     
-  <h2><a name="resources">4 Autres ressources</a></h2>
+    <h3><a name="procedure.delayed-update">3.5 Mise à jour retardée de la documentation existante (fichiers générés via XML uniquement)</a></h3>
+      
+      <p>Dans ce case, on fait le <a href="#files.committing">commit</a> de la version anglaise du fichier XML, mais <b>pas</b> des fichiers PHP et HTML, c'est-à-dire que l'on s'arrête à l'étape 5 de la section Fichiers dynamiques en <a href="#files.committing">2.9</a>. Tous les traducteurs traduisent dans leurs langues respectives et font le <a href="#files.committing">commit</a> du <b>seul</b> fichier XML (c'est-à-dire le même fichier que pour l'anglais) dans un laps de temps prévu d'avance. La génération, le commit et <a href="#files.website">l'activation</a> de tous les fichiers PHP et HTML sont faits en même temps par un des chefs du projet i18n quand le délai est écoulé.</p>
+    
+ <h2><a name="resources">4 Autres ressources</a></h2>
     
 
     
