@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>Fink Documentation - Creating Fink Packages</title></head><body><h1 style="text-align: center;">Creating Fink Packages</h1>
 <p>
 This manual documents how to create package descriptions for the Fink
@@ -1424,6 +1424,24 @@ As of fink &gt; 0.13.7, this parameter will also work with perl modules
 <tt style="white-space: nowrap;">Type: Perl</tt>, and will append to the default perl Makefile.PL
 string.
 </p>
+</td></tr><tr valign="top"><td>GCC</td><td>
+<p>
+The required version of the gcc compiler to use.  Allowed values are: 
+<tt style="white-space: nowrap;">2.95.2</tt> or <tt style="white-space: nowrap;">2.95</tt>
+(for use in the 10.1 package tree only), <tt style="white-space: nowrap;">3.1</tt>
+(for use in the 10.2 package tree only), and <tt style="white-space: nowrap;">3.3</tt>
+(for use in the 10.2-gcc3.3 and 10.3 package trees only).
+</p>
+<p>As of fink 0.13.8, when this flag is present, the version of gcc
+is tested using <tt style="white-space: nowrap;">gcc_select</tt>, and fink exits with an error
+if the wrong version is present.
+</p>
+<p>
+This field was added to fink to aid in the transition between the gcc
+compilers, which introduced a binary incompatibility between libraries
+that involve C++ code which is not reflected in the versioning
+scheme.
+</p>
 </td></tr><tr valign="top"><td>CompileScript</td><td>
 <p>
 A list of commands that are run in the compile phase. See the note
@@ -1840,4 +1858,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.53 2003/11/13 05:33:01 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.54 2003/12/09 23:04:49 dmrrsn Exp $</i></p></body></html>
