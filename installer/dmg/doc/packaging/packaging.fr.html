@@ -1228,8 +1228,7 @@ should be some kind of "main" tarball) goes into <tt style="white-space: nowrap;
 second tarball in <tt style="white-space: nowrap;">Source2</tt> and so on. The rules are the same
 as for Source, only that the "gnu" and "gnome" shortcuts are not
 expanded - that would be useless anyway. Starting with a CVS version
-of fink after 0.19.2, you may use arbitrary integer values of N,
-rather than numbering upwards from N = 2. However, you still may not have
+of fink after 0.19.2, you may use arbitrary integer values of N, (not necessarily consecutive) integer values of N &gt;= 2. However, you still may not have
 duplicates.
 </p>
 </td></tr><tr valign="top"><td>SourceDirectory</td><td>
@@ -1273,7 +1272,7 @@ In the above example this would result in the tarball being stored under
 </td></tr><tr valign="top"><td>Source<b>N</b>Rename</td><td>
 <p>
 This is just the same as the <tt style="white-space: nowrap;">SourceRename</tt> field, except that it
-is used to rename the tarball specified by the <tt style="white-space: nowrap;">Source<b>N</b></tt>
+is used to rename the tarball specified by the corresponding <tt style="white-space: nowrap;">Source<b>N</b></tt>
 field. See context or hyperref for examples of usage.
 </p>
 </td></tr><tr valign="top"><td>Source-MD5</td><td>
@@ -1660,7 +1659,7 @@ For details about how this works, see the separate
 <b>Introduced in fink 0.9.9.</b>
 This is the same as <tt style="white-space: nowrap;">SplitOff</tt>, used to generate a third,
 fourth, etc. package from the same compile/install run. Starting with a
-CVS version of fink after 0.19.2, you may use arbitrary integer values
+CVS version of fink after 0.19.2, you may use arbitrary (not necessarily consecutive) integer values of N &gt;= 2integer values
 of N, rather than numbering upwards from N = 2. However, you still
 may not have duplicates.
 </p>
@@ -1930,4 +1929,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.2 2004/03/25 01:19:43 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.3 2004/03/25 04:48:26 michga Exp $</i></p></body></html>
