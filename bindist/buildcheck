@@ -1,0 +1,35 @@
+#!/usr/bin/perl -w
+
+$| = 1;
+require 5.006;  # perl 5.6.0 or newer required
+use strict;
+
+use Fink::Package;
+use Fink::PkgVersion;
+use Fink::Config qw($config $basepath);
+
+my ($config, $configpath);
+$configpath = "/sw/etc/fink.conf";
+if (-f $configpath) {
+    $config = &Fink::Services::read_config($configpath);
+} else {
+    print "ERROR: Configuration file \"$configpath\" not found.\n";
+    exit 1;
+}
+
+Fink::Package->require_packages();
+
+my $LOGDIR = $ENV{LOGDIR} or die "You must set the environment variable LOGDIR before running this script";
+
+my $pkgspec = shift;
+my $package = Fink::PkgVersion->match_package($pkgspec);
+unless (defined $package) {
+    die "no package found for specification '$pkgspec'!\n";
+  }
+unless ($package->is_present()) {
+    open(NOTBUILT,">>$LOGDIR/NotBuilt")  or die "can't open file for writing: $LOGDIR/NotBuilt\n";
+    my $pkgname = $package->get_name();
+    print NOTBUILT "$pkgname\n";
+    close(NOTBUILT) or die "can't write file: $LOGDIR/NotBuilt\n";
+}
+

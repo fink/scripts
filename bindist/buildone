@@ -5,4 +5,4 @@ system "./purge-nonbase.sh";
 print "Non-essential files purged...\n";
 print "printf '\\n\\n' | sudo fink --yes build $filename > $LOGDIR/$filename.log 2>&1\n";
 my $output = system "printf '\n\n' | sudo fink --yes build $filename > $LOGDIR/$filename.log 2>&1";
-
+system "sudo ./buildcheck $filename";
