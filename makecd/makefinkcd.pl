@@ -328,11 +328,13 @@ sub make_cd_image {
 }
 
 sub run {
-	system("echo \"@_\" >> /tmp/makefinkcd.log");
-	system(join(" ", @_) . '>> /tmp/makefinkcd.log 2>&1');
+	my $command = join(" ", @_);
+	$command .= '>> /tmp/makefinkcd.log 2>&1' unless ($command =~ />/);
+	system("echo \"$command\" >> /tmp/makefinkcd.log");
+	system($command);
 	$? >>= 8 if defined $? and $? >= 256;
 	if ($?) {
-		print "failed command: @_\n";
+		print "failed command: $command\n";
 		exit $?;
 	}
 }
