@@ -6,13 +6,28 @@ tag=release_`echo $release | sed 's/\./_/g'`
 
 echo "Updating from CVS..."
 if [ ! -d fink ]; then
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists/10.2
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
 fi
 cd fink
 cvs -z3 -q update -r $tag
 cd ..
 
-echo "Dumping stable..."
-./dump stable $release-stable >$release-stable.sql
+#./dump stable $release-stable >$release-stable.sql
+if [ -f var/db/fink.db ]; then
+ rm var/db/fink.db
+fi
+touch fink/dists
+rm fink/dists
+#for 0.6.1 we are calling it one bindist, 10.2-gcc3.3 tree
+ln -s 10.2-gcc3.3 fink/dists
+echo "Dumping 10.2-gcc3.3/stable..."
+./dump 10.2-gcc3.3 stable $release-stable >$release-stable.sql
+if [ -f var/db/fink.db ]; then
+ rm var/db/fink.db
+fi
+#rm fink/dists
+#ln -s 10.3 fink/dists
+#echo "Dumping 10.3/stable..."
+#./dump 10.3 stable $release-10.3-stable >$release-10.3-stable.sql
 
 exit 0

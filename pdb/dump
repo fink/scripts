@@ -19,7 +19,7 @@
 #
 
 $| = 1;
-use v5.6.0;  # perl 5.6.0 or newer required
+use 5.006;  # perl 5.6.0 or newer required
 use strict;
 
 ### now load the useful modules
@@ -33,9 +33,9 @@ use Fink::Package;
 my $config = &read_config("fink.conf");
 
 ### get parameters
-
+my $distribution = shift || "10.3";
 my $tree = shift || "stable";
-my $release = shift || "current-$tree";
+my $release = shift || "current-$distribution-$tree";
 
 $config->set_param("Trees", "$tree/main $tree/crypto");
 # this is a volatile change, we don't (and mustn't) call save()

@@ -1,18 +1,33 @@
 #!/bin/sh
 set -e
-
 echo "Updating from CVS..."
 if [ -d fink ]; then
   cd fink
   cvs -z3 -q update -A
   cd ..
 else
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists/10.2
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
 fi
 
-echo "Dumping stable..."
-./dump stable >current.sql
-echo "Dumping unstable..."
-./dump unstable >>current.sql
+if [ -f var/db/fink.db ]; then
+ rm var/db/fink.db
+fi
+touch fink/dists
+rm fink/dists
+ln -s 10.2-gcc3.3 fink/dists
+echo "Dumping 10.2-gcc3.3/stable..."
+./dump 10.2-gcc3.3 stable current-10.2-gcc3.3-stable >current.sql
+echo "Dumping 10.2-gcc3.3/unstable..."
+./dump 10.2-gcc3.3 unstable current-10.2-gcc3.3-unstable >>current.sql
+if [ -f var/db/fink.db ]; then
+ rm var/db/fink.db
+fi
+rm fink/dists
+ln -s 10.3 fink/dists
+echo "Dumping 10.3/stable..."
+./dump 10.3 stable current-10.3-stable >>current.sql
+echo "Dumping 10.3/unstable..."
+./dump 10.3 unstable current-10.3-unstable >>current.sql
+
 
 exit 0
