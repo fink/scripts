@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+echo "Executing current.sql..."
+$HOME/bin/finksql <current.sql
+
+echo "Calculating flags..."
+./flag
+
+echo "Copying timestamp.inc..."
+if [ -d /home/groups/f/fi/fink/htdocs/pdb ]; then
+  install -m 664 timestamp.inc /home/groups/f/fi/fink/htdocs/pdb/
+fi
+
+exit 0
+
