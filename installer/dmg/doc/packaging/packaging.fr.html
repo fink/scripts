@@ -22,7 +22,7 @@ Les informations contenues dans ce document correspondent à la description du f
 Si vous créez des paquets pour Fink, vous avez tout intérêt à vous abonner à la liste de diffusion <a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a>.
 Si vous cherchez un moyen d'aider Fink et que vous avez des compétences dans ce domaine, vous pouvez aussi adopter un <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">paquet sans mainteneur</a>.
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Modules Perl</a></li><li><a href="#policy.emacs">3.5 Règles Emacs</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Modules Perl</a></li><li><a href="#policy.emacs">3.5 Règles Emacs</a></li></ul></li><li><a href="#fslayout"><b>4 Organisation des fichiers</b></a><ul><li><a href="#fslayout.fhs">4.1 Hiérarchie standard des fichiers</a></li><li><a href="#fslayout.dirs">4.2 Répertoires</a></li><li><a href="#fslayout.avoid">4.3 À éviter</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -556,84 +556,83 @@ Il existe deux différences dans les règles de Fink. Premièrement, ces règles
 </p>
 
 
-<h2><a name="fslayout">4 Filesystem Layout</a></h2>
+<h2><a name="fslayout">4 Organisation des fichiers</a></h2>
 
 
 
 
 <p>
-The following file system layout guidelines are part of the Fink packaging policy.
+Les règles d'organisation des fichiers suivantes font partie intégrante des règles de construction des paquets de Fink.
 </p>
 
 
-<h3><a name="fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></h3>
+<h3><a name="fslayout.fhs">4.1 Hiérarchie standard des fichiers</a></h3>
 <p>
-Fink follows the spirit of the <a href="http://www.pathname.com/fhs/">Filesystem Hierarchy Standard</a>, or FHS for short. It can only follow it in spirit because the FHS was created for system vendors that have control over the <tt style="white-space: nowrap;">/</tt> and <tt style="white-space: nowrap;">/usr</tt> hierarchies. Fink is an add-on distribution that controls only its install directory (or prefix). The examples use the default prefix of <tt style="white-space: nowrap;">/sw</tt>.
+Fink suit l'esprit de <a href="http://www.pathname.com/fhs/">Filesystem Hierarchy Standard</a> - Norme de hiérarchie du système de fichiers, ou FHS en raccourci. Il ne peut qu'en suivre l'esprit car FHS a été conçu pour les vendeurs de systèmes qui ont le contrôle des arborescences <tt style="white-space: nowrap;">/</tt> et <tt style="white-space: nowrap;">/usr</tt>. Fink n'est qu'une distribution supplémentaire qui ne contrôle que son répertoire (ou préfixe) d'installation. Les exemples ci-dessous utilisent le préfixe par défaut, soit <tt style="white-space: nowrap;">/sw</tt>.
 </p>
 
 
-<h3><a name="fslayout.dirs">4.2 The Directories</a></h3>
+<h3><a name="fslayout.dirs">4.2 Répertoires</a></h3>
 <p>
-Files should go into the following subdirectories of the hierarchy:
+Les fichiers doivent être placés dans les sous-répertoires suivant de l'arborescence :
 </p>
 
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/bin</tt></td><td>
 <p>
-This directory is for general executable programs. There are no subdirectories.
-</p>
+Ce répertoire est dédié aux exécutables généraux. Il n'existe pas de sous-répertoire.</p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/sbin</tt></td><td>
 <p>
-This directory is for executable programs that are intended to be used by administrators only. Background daemons go here. There are no subdirectories.
+Ce répertoire correspond aux exécutables pour administrateurs système. Les démons lancés en tâche de fond y sont placés. Il n'y a pas de sous-répertoire.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/include</tt></td><td>
 <p>
-This directory is for C and C++ header files. Subdirectories can be created as necessary. If a package installs header files that can be confused with standard C headers, those headers <b>must</b> go to a subdirectory.
+Ce répertoire stocke les headers C et C++. On peut créer autant de sous-répertoires que nécessaire. Si un paquet installe des headers qui peuvent être confondus avec des headers standard C, les headers du paquet <b>doivent</b> être installés dans un sous-répertoire.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/lib</tt></td><td>
 <p>
-This directory is for architecture-dependent data files and libraries. Static and shared libraries should be placed directly in <tt style="white-space: nowrap;">/sw/lib</tt> unless there is a good reason not to. This is also the place for executables that should not be executed directly by the user (which would otherwise be placed in libexec).
+Ce répertoire est destiné aux fichiers de données et librairies dépendants de l'architecture du système. Les librairies statiques et partagées doivent être placées dans <tt style="white-space: nowrap;">/sw/lib</tt>, sauf s'il existe une bonne raison pour ne pas le faire. C'est également là que sont placés les exécutables qui ne  doivent pas être directement lancés par l'utilisateur (dans le cas contraire, ils sont placés dans libexec).
 </p>
 <p>
-A package is free to create a subdirectory to store private data or loadable modules. Make sure to use directory names that make sense for compatibility. It is wise to use the package major version in the directory name or as an additional hierarchy level, e.g. <tt style="white-space: nowrap;">/sw/lib/perl5</tt> or <tt style="white-space: nowrap;">/sw/lib/apache/1.3</tt>. Care should be taken when the host type is used to create directories. A <tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> directory is bad for compatibility, <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> or just <tt style="white-space: nowrap;">powerpc-apple-darwin</tt> are better choices.
+On peut créer un sous-répertoire spécifique à un paquet, afin d'y mettre des données privées ou des modules chargeables. Pensez à utiliser des noms de répertoire qui garantissent la compatibilité entre versions. Il est bon d'utiliser le numéro de version majeur du paquet dans le nom du sous-répertoire ou à un niveau inférieur de la hiérarchie ; par exemple, <tt style="white-space: nowrap;">/sw/lib/perl5</tt> ou <tt style="white-space: nowrap;">/sw/lib/apache/1.3</tt>. Faites attention si vous utilisez le type d'hôte dans le nom des répertoires créés. Un sous-répertoire nommé <tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> ne garantit pas la compatibilité entre versions ; utilisez plutôt <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> ou <tt style="white-space: nowrap;">powerpc-apple-darwin</tt>.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share</tt></td><td>
 <p>
-This directory is for architecture-independent data files. The same rules as for <tt style="white-space: nowrap;">/sw/lib</tt> apply. Some common subdirectories are described below.
+Ce répertoire sert aux fichiers de données indépendants de l'architecture. Les mêmes règles que celles en vigueur pour <tt style="white-space: nowrap;">/sw/lib</tt> s'appliquent ici. Quelques sous-répertoires courants sont décrits ci-dessous.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/man</tt></td><td>
 <p>
-This directory contains manual pages. It is organized into the usual section tree. Every program in <tt style="white-space: nowrap;">/sw/bin</tt> and <tt style="white-space: nowrap;">/sw/sbin</tt> should have an associated manual page here.
+Ce répertoire contient les pages de manuel. Son arborescence suit celle des sections courantes. Chaque programme installé dans <tt style="white-space: nowrap;">/sw/bin</tt> et <tt style="white-space: nowrap;">/sw/sbin</tt> doit avoir une page de manuel associée dans ce répertoire.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/info</tt></td><td>
 <p>
-This directory contains documentation in the Info format (produced from Texinfo sources). Maintenance of the <tt style="white-space: nowrap;">dir</tt> file is automated through Debian's version of <tt style="white-space: nowrap;">install-info</tt> (part of the <tt style="white-space: nowrap;">dpkg</tt> package). Use the <tt style="white-space: nowrap;">InfoDocs</tt> description field to automatically generate appropriate code for the <tt style="white-space: nowrap;">postinst</tt> and <tt style="white-space: nowrap;">prerm</tt> package scripts. Fink makes sure that no package installs a <tt style="white-space: nowrap;">dir</tt> file of its own. There are no subdirectories.
+Ce répertoire contient la documentation en format Info (produit à partir de sources Texinfo). La maintenance du fichier <tt style="white-space: nowrap;">dir</tt> est automatisée par la version Debian du programme <tt style="white-space: nowrap;">install-info</tt> (qui fait partie du paquet <tt style="white-space: nowrap;">dpkg</tt>). Utilisez le champ de description <tt style="white-space: nowrap;">InfoDocs</tt> pour générer le code approprié utilisé par les scripts de paquet <tt style="white-space: nowrap;">postinst</tt> et <tt style="white-space: nowrap;">prerm</tt>. Fink s'assure qu'aucun paquet n'installe un fichier <tt style="white-space: nowrap;">dir</tt> de lui-même. Il n'y a pas de sous-répertoire.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/doc</tt></td><td>
 <p>
-This directory contains documentation that is neither a man page nor an Info document. README, LICENSE and COPYING files go here. Every package must create a subdirectory here, named after the package. The subdirectory name must not contain any version numbers (unless they are a part of the package name proper). Hint: Just use <tt style="white-space: nowrap;">%n</tt>.
+Ce répertoire contient la documentation autre que les pages de manuel ou les documents Info. Les fichiers README, LICENSE et COPYING sont placés dans ce répertoire. Chaque paquet doit y créer un sous-répertoire, dont le nom est basé sur celui du paquet. Le nom du sous-répertoire ne doit pas contenir de numéro de version (sauf s'il fait lui-même partie du nom du paquet). Conseil : utilisez <tt style="white-space: nowrap;">%n</tt>.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/locale</tt></td><td>
 <p>
-This directory contains message catalogs for internationalization.
+Ce répertoire contient les catalogues de messages de traduction.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/var</tt></td><td>
 <p>
-The <tt style="white-space: nowrap;">var</tt> directory stores variable data. This includes spool directories, lock files, state databases, game high scores and log files.
+Le répertoire <tt style="white-space: nowrap;">var</tt> contient les données variables. Ceci inclut les répertoires spool (fichiers en attente de traitement), les fichiers verrous (lock), les bases de données des variables d'état (db), les données variables des jeux (games) et les fichiers d'historique (log).
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/etc</tt></td><td>
 <p>
-This directory holds configuration files. For packages that have more than one or two files here a subdirectory should be made. The subdirectory must have the name of the package or program in it so that it is identifiable.
+Ce répertoire contient les fichiers de configuration. Quand un paquet possède plus d'un ou deux fichiers de configuration, un sous-répertoire doit être créé. Le nom du sous-répertoire doit être celui du paquet ou d'un de ses programmes, de façon à l'identifier facilement.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/src</tt></td><td>
 <p>
-This directory is for storing and building source code. Nothing should be installed here by a package.
+Ce répertoire sert à stocker et compiler le code source. Un paquet ne doit rien installer dans ce répertoire.
 </p>
 </td></tr></table>
 
 
-<h3><a name="fslayout.avoid">4.3 Things to Avoid</a></h3>
+<h3><a name="fslayout.avoid">4.3 À éviter</a></h3>
 <p>
-No other directories than the ones mentioned above should exist in <tt style="white-space: nowrap;">/sw</tt>. In particular, the following should not be used: <tt style="white-space: nowrap;">/sw/man</tt>, <tt style="white-space: nowrap;">/sw/info</tt>, <tt style="white-space: nowrap;">/sw/doc</tt>, <tt style="white-space: nowrap;">/sw/libexec</tt>, <tt style="white-space: nowrap;">/sw/lib/locale</tt>.
+Aucun autre répertoire que ceux mentionnés ci-dessus ne doit être créé dans <tt style="white-space: nowrap;">/sw</tt>. En particulier, les répertoires suivant ne doivent pas être utilisés : <tt style="white-space: nowrap;">/sw/man</tt>, <tt style="white-space: nowrap;">/sw/info</tt>, <tt style="white-space: nowrap;">/sw/doc</tt>, <tt style="white-space: nowrap;">/sw/libexec</tt> et <tt style="white-space: nowrap;">/sw/lib/locale</tt>.
 </p>
 
 
@@ -1246,4 +1245,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.14 2004/04/17 06:45:22 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.15 2004/04/17 20:51:30 michga Exp $</i></p></body></html>
