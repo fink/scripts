@@ -22,6 +22,9 @@ rm -f $DMGDIR/.cvsignore
 rm -Rf $DMGDIR/*/CVS
 rm -Rf $DMGDIR/*/*/CVS
 
+# Create symlinks for documentation
+ln -s doc/doc.html $DMGDIR/Documentation.html
+ln -s faq/faq.html $DMGDIR/FAQ.html
 
 # Substitute the version for IN_VERSION where appropriate
 perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
