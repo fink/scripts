@@ -1,4 +1,4 @@
-1) Build tarballs of base-files, packages and fink, as appropriate
+1) Build tarballs of base-files and fink, as appropriate
 (see the srcdist HOWTO)
 
 2) Release them via the SourceForge FR system. Do *not* send out
@@ -8,7 +8,7 @@ the notice emails
 and add them to CVS
 
 4) Clean system:
-  rm -rf /sw /usr/X11R6 /etc/X11 /Application/XDarwin.app)
+  rm -rf /sw /usr/X11R6 /etc/X11 /Application/XDarwin.app
 
 5) Perform a fink bootstrap using the tarballs you created in 1)
 
@@ -24,7 +24,8 @@ no .info/.patch files are missing.
   fink scanpackages
 then undo your changes to fink.conf again
 
-9) Copy /sw to /fink-image/sw (or any other empty directoy)
+9) Copy /sw to /fink-image/sw (or any other empty directoy). Remove
+everything from the src dir, and all .debs.
 
 10) Create an Installer-Package using the data from the old
 binary installer (TODO: put these files into CVS, along with more
@@ -38,7 +39,7 @@ Welcome.rtf, ReadMe.rtf, and License.rtf.
 13) Unless SourceForge finally added the proper file type for .dmgs,
 compress the diskimage with gzip.
 
-14) Release binary installer via the FRS.
+14) Release package tarball, fink-full tarball and binary installer via the FRS.
 
 15) Update the package database
 
@@ -48,4 +49,5 @@ compress the diskimage with gzip.
  * notify FRS watchers
  * SF news item
  * Versiontracker
+ * freshmeat
  
