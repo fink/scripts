@@ -880,7 +880,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     <a name="comp-general.gcc2">
       <div class="question"><p><b>Q6.17: Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> or gcc3.1 but I can't seem to
         install it.</b></p></div>
-      <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> and <tt style="white-space: nowrap;">gcc3.3</tt> are  virtual packages to
+      <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> and <tt style="white-space: nowrap;">gcc3.1</tt> are  virtual packages to
         indicate the presence of gcc-2.95 and gcc-3.1, respectively, on your system. Install the gcc2.95 and/or the gcc3.1
         package from the XCode Tools (earlier OS versions have gcc-2.95 and gcc-3.1as
         part of their main Developer Tools installation).</p></div>
@@ -903,7 +903,8 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.compile-options">
       <div class="question"><p><b>Q6.22: I want Fink to use different options in building a package.</b></p></div>
-      <div class="answer"><p><b>A:</b> The first thing to do is to contact the package maintainer to request a variant.  It may be relatively easy to do it.  If you don't hear from the maintainer or see the new packages, or want to try a different option yourself, check out the <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> and <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>.</p><p><b>Note:  </b>Fink is deliberately set up such that all official binaries are identical regardless of what machine they are built on, so things like G5 optimization won't happen with an official package.  If you want them, you'll have to do it yourself.</p></div>
+      <div class="answer"><p><b>A:</b> The first thing to do is to contact the package maintainer to request a variant.  It may be relatively easy to do it.  If you don't hear from the maintainer or see the new packages, or want to try a different option yourself, check out the <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> and <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>.</p><p>
+          <b>Note:  </b>Fink is deliberately set up such that all official binaries are identical regardless of what machine they are built on, so things like G5 optimization won't happen with an official package.  If you want them, you'll have to do it yourself.</p></div>
     </a>
   <h2><a name="comp-packages">7 Compile Problems - Specific Packages</a></h2>
     
@@ -965,14 +966,12 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
         "<tt style="white-space: nowrap;">apt-get install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for
         binaries.</p></div>
     </a>
-    
     <a name="comp-packages.cctools">
       <div class="question"><p><b>Q7.4: "When I try to install KDE, I get the following message: 'Can't
         resolve dependency "cctools (&gt;= 446-1)"'</b></p></div>
       <div class="answer"><p><b>A:</b> This somewhat cryptic message means you need to install the
         December 2002 Developer Tools.</p></div>
     </a>
-    
     <a name="comp-packages.libiconv-gettext">
       <div class="question"><p><b>Q7.5: I can't update <tt style="white-space: nowrap;">libiconv</tt>.</b></p></div>
       <div class="answer"><p><b>A:</b> If you get errors of the form:</p><pre>libtool: link: cannot find the library `/sw/lib/libiconv.la'</pre><p>you can solve this problem by running</p><pre>fink remove gettext-dev
@@ -1069,14 +1068,20 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
       <div class="answer"><p><b>A:</b> All are variants on XFree86 (they're all based on the XFree86
         code), but have some slight differences between them. There are
   different options under Panther and under Jaguar.</p><p>Under Panther you have the choice between:</p><ul>
-          <li><p>     Apple's X11 (on the third disk). Don't forget to install the
+          <li>
+            <p>     Apple's X11 (on the third disk). Don't forget to install the
   X11 SDK
   (on the XCode disk) if you want to compile programs or if you plan to
-  install other X11-related Fink packages from source.</p></li>
-          <li><p>        4.4.x built via Fink: install the <tt style="white-space: nowrap;">xfree86</tt> and
-  <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages </p></li>
-          <li><p>       X.org built via Fink: install the <tt style="white-space: nowrap;">xorg</tt> and
-  <tt style="white-space: nowrap;">xorg-shlibs</tt> packages </p></li>
+  install other X11-related Fink packages from source.</p>
+          </li>
+          <li>
+            <p>        4.4.x built via Fink: install the <tt style="white-space: nowrap;">xfree86</tt> and
+  <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages </p>
+          </li>
+          <li>
+            <p>       X.org built via Fink: install the <tt style="white-space: nowrap;">xorg</tt> and
+  <tt style="white-space: nowrap;">xorg-shlibs</tt> packages </p>
+          </li>
         </ul><p>Under Jaguar, the most popular choices, and the Fink packages to
           make them work are:</p><ul>
           <li>
@@ -1152,7 +1157,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      <tt style="white-space: nowrap;">perlXXX-core</tt> according to the version X.X.X
 	      of that perl interpreter.
 	    </p>
-	  </li>
+          </li>
           <li>system-javaXXX: [virtual package representing Java X.X.X]
 	    <p>
 	      Represents the Java Runtime Environment, which is part of OS
@@ -1160,7 +1165,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      <a href="http://www.apple.com/java">Apple's Java
 	      page</a> for more information.
 	    </p>
-	  </li>
+          </li>
           <li>system-javaXXX-dev: [virtual package representing Java X.X.X development headers]
 	    <p>
 	      Represents the Java SDK, which must be manually
@@ -1173,7 +1178,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      Runtime Environment. See also <a href="#comp-general.system-java">this FAQ
 	      entry</a>.
 	    </p>
-	  </li>
+          </li>
           <li>system-java3d: [virtual package representing Java3D]</li>
           <li>system-javaai: [virtual package representing Java Advanced Imaging]
 	    <p>
@@ -1182,7 +1187,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      and installed. See <a href="http://docs.info.apple.com/article.html?artnum=120289">Apple'
 	      webpage</a> for more information.
 	    </p>
-	  </li>
+          </li>
           <li>system-xfree86: [placeholder for user installed x11]</li>
           <li>system-xfree86-shlibs: [placeholder for user installed x11 shared libraries]
 	    <p>
@@ -1191,14 +1196,14 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      and <tt style="white-space: nowrap;">x11-shlibs</tt>, respectively. See
 	      also <a href="#comp-packages.cant-install-xfree">this FAQ entry</a>.
 	    </p>
-	  </li>
+          </li>
           <li>system-xfree86-dev [placeholder for user installed x11 development tools]
 	    <p>
 	      Represents Apple's X11/XDarwin SDK, an optional part of
 	      OS X (X11SDK.pkg). This package provides
 	      <tt style="white-space: nowrap;">x11-dev</tt>. See also <a href="#comp-packages.cant-install-xfree">this FAQ entry</a>.
 	    </p>
-	  </li>
+          </li>
         </ul></div>
     </a>
   <h2><a name="usage-packages">9 Package Usage Problems - Specific Packages</a></h2>
@@ -1257,7 +1262,6 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
         xfree86-rootless</tt>. If that doesn't work, verify that you have
         <tt style="white-space: nowrap;">/usr/bin/X11R6</tt> in your PATH.</p></div>
     </a>
-    
     <a name="usage-packages.xterm-error">
       <div class="question"><p><b>Q9.5: xterm fails with "dyld: xterm Undefined symbols: xterm undefined
         reference to _tgetent expected to be defined in
@@ -1334,16 +1338,26 @@ exec metacity &amp; exec gnome-session</pre><p>Note:  this is no longer true for
         XFree86 or X.org.</b></p></div>
       <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
           <li>
-            <b>You are installing from binaries:</b>   <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt> (&gt;=0.18.3-1), typically what you need to do is reinstall the X11User package, since the installer application occasionally misses installing a file.  You may need to do this multiple times.</p>Running
-<pre>fink list -i system-xfree86</pre>should show that the <tt style="white-space: nowrap;">system-xfree86</tt> and <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> packages are installed.<p>If reinstalling the X11User package doesn't work, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p><p>If you are running an earlier version of the <tt style="white-space: nowrap;">fink</tt> package, then
+            <b>You are installing from binaries:</b>
+            <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt> (&gt;=0.18.3-1), typically what you need to do is reinstall the X11User package, since the installer application occasionally misses installing a file.  You may need to do this multiple times.</p>Running
+<pre>fink list -i system-xfree86</pre>should show that the <tt style="white-space: nowrap;">system-xfree86</tt> and <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> packages are installed.<p>If reinstalling the X11User package doesn't work, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p>
+            <p>If you are running an earlier version of the <tt style="white-space: nowrap;">fink</tt> package, then
           updating <tt style="white-space: nowrap;">fink</tt> may solve your problem immediately, e.g.
-          via</p> <pre>sudo apt-get update
-sudo apt-get install fink</pre></li>
+          via</p>
+            <pre>sudo apt-get update
+sudo apt-get install fink</pre>
+          </li>
           <li>
             <b>You are installing from source: </b>If you have a current version of <tt style="white-space: nowrap;">fink</tt>, then typically this error means that you need to (re)install the X11SDK, which is <b>mandatory</b> if you want to build packages from source. It is on the Xcode CD, and is <b>not</b> installed by default. Even if you install XCode, the X11SDK is <b>not</b> installed by default. It has to be installed either with a custom Xcode install, or by clicking on the X11SDK pkg in the <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.
-<p>If you are still having problems, run </p><pre>fink list -i system-xfree86  </pre><p>It should show the <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt> packages as installed.  If the <tt style="white-space: nowrap;">-dev</tt> package is missing, reinstall the X11SDK, since sometimes the Apple Installer misses a file.  You may need to keep doing this.  If either of the other two are missing, then reinstall the X11User package (same reason).</p>
-<p><b>Note for Jaguar (X11 beta 3) users</b>:  As you aren't using XCode, you need to have already downloaded a copy of the proper X11SDK package on your system.  Since X11 beta 3 is expired, its X11SDK package (as well as the X11User package) is no longer available for download.  You'll either have to restrict yourself to installing X11 applications via the binary distribution, install XFree86 or X.org, or update to Panther.</p><p>If you are running a version of <tt style="white-space: nowrap;">fink</tt> prior to 0.17 then you should update
-          <tt style="white-space: nowrap;">fink</tt>, e.g. via a </p><pre>fink selfupdate</pre>(assuming that you have either CVS or rsync updating turned on and aren't just using point releases).<p>If you're still having problems, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p></li>
+<p>If you are still having problems, run </p>
+            <pre>fink list -i system-xfree86  </pre>
+            <p>It should show the <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt> packages as installed.  If the <tt style="white-space: nowrap;">-dev</tt> package is missing, reinstall the X11SDK, since sometimes the Apple Installer misses a file.  You may need to keep doing this.  If either of the other two are missing, then reinstall the X11User package (same reason).</p>
+            <p>
+              <b>Note for Jaguar (X11 beta 3) users</b>:  As you aren't using XCode, you need to have already downloaded a copy of the proper X11SDK package on your system.  Since X11 beta 3 is expired, its X11SDK package (as well as the X11User package) is no longer available for download.  You'll either have to restrict yourself to installing X11 applications via the binary distribution, install XFree86 or X.org, or update to Panther.</p>
+            <p>If you are running a version of <tt style="white-space: nowrap;">fink</tt> prior to 0.17 then you should update
+          <tt style="white-space: nowrap;">fink</tt>, e.g. via a </p>
+            <pre>fink selfupdate</pre>(assuming that you have either CVS or rsync updating turned on and aren't just using point releases).<p>If you're still having problems, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p>
+          </li>
         </ul></div>
     </a>
     <a name="usage-packages.wants-xfree86-on-upgrade">
@@ -1376,4 +1390,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.34 2004/10/13 16:25:54 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.35 2004/10/14 01:01:47 alexkhansen Exp $</i></p></body></html>
