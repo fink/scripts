@@ -9,6 +9,4 @@ fi
 $BDDATA/bdlist $tree | cut -f1 -d_ > /tmp/fink_bindist
 cat $BDDATA/excludes >> /tmp/fink_bindist
 
-to_be_added=`ls /sw/fink/debs/ | cut -f1 -d_ | sort | fgrep -v -f /tmp/fink_bindist` | uniq
-
-echo "Packages to be added: $to_be_added"
+ls /sw/fink/debs/ | cut -f1 -d_ | sort | fgrep -v -f /tmp/fink_bindist | uniq
