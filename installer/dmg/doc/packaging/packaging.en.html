@@ -6,6 +6,7 @@
 Available Languages:  | 
 English | 
 <a href="packaging.fr.html">Fran&ccedil;ais</a> | 
+<a href="packaging.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
 <a href="packaging.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
 </tr>
@@ -1175,7 +1176,7 @@ Type: -x11 (boolean)
 Depends: (%type_raw[-x11] = -x11) x11
 CompileScript:  &lt;&lt;
   #!/bin/bash -ev
-  if ["%type_raw[-x11]" eq "-x11"]; then
+  if [ "%type_raw[-x11]" == "-x11" ]; then
     ./configure %c --with-x11
   else
     ./configure %c --without-x11
@@ -2100,4 +2101,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.18 2004/03/29 06:31:32 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.19 2004/03/30 09:46:19 dmacks Exp $</i></p></body></html>
