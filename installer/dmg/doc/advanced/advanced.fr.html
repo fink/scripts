@@ -10,15 +10,15 @@ Fran&ccedil;ais |
 </tr>
 </table>
 <h1 style="text-align: center;">Notions complexes dans Fink</h1>
-<p>Ce document évoque quelques complexes qui ne se trouvent pas dans le <a href="http://fink.sourceforge.net/doc/users-guide/">Guide de l'utilisateur</a>.</p>
-<h2>Contents</h2><ul><li><a href="#bindist"><b>1 Mise en place d'un serveur de distribution binaire</b></a><ul><li><a href="#bindist.intro">1.1 Introduction</a></li><li><a href="#bindist.master">1.2 Étapes sur le serveur "maître" (serveur de compilation) </a></li><li><a href="#bindist.client">1.3 Étapes sur les machines clients</a></li><li><a href="#bindist.remarks">1.4 Remarques</a></li></ul></li></ul><h2><a name="bindist">1 Mise en place d'un serveur de distribution binaire</a></h2>
+<p>Ce document aborde quelques notions complexes qui ne se trouvent pas dans le <a href="http://fink.sourceforge.net/doc/users-guide/">Guide de l'utilisateur</a>.</p>
+<h2>Contents</h2><ul><li><a href="#bindist"><b>1 Mise en place d'un serveur de distribution binaire</b></a><ul><li><a href="#bindist.intro">1.1 Introduction</a></li><li><a href="#bindist.master">1.2 Étapes sur le serveur "maître" (serveur de compilation) </a></li><li><a href="#bindist.client">1.3 Étapes sur les machines clientes</a></li><li><a href="#bindist.remarks">1.4 Remarques</a></li></ul></li></ul><h2><a name="bindist">1 Mise en place d'un serveur de distribution binaire</a></h2>
 
 
 <h3><a name="bindist.intro">1.1 Introduction</a></h3>
 
-<p>Cette section décrit une méthode d'utilisation d'un serveur central de compilation ( serveur "maître") pour distribuer des paquets binaires à tous les clients des stations de travail. Elle s'applique aux stations de travail utilisant plusieurs installation de Fink.</p>
-<p><b>Note :</b> dans les instructions suivantes, on a supposé que toutes les machines clients ont une version de fink &gt;= 0.24.0. Voir plus loin la section <a href="#bindist.remarks">remarques</a> si les machines ont une version de fink antérieure.</p>
-<p>La méthode se compose des étapes suivantes sur le <a href="#bindist.master">serveur "maître"</a> et sur les <a href="#bindist.client">machines clients</a>:</p>
+<p>Cette section décrit une méthode d'utilisation d'un serveur central de compilation ( serveur "maître") pour distribuer des paquets binaires à tous les clients des stations de travail. Elle s'applique aux stations de travail utilisant plusieurs installations de Fink.</p>
+<p><b>Note :</b> dans les instructions suivantes, on a supposé que toutes les machines clientes ont une version de fink supérieure ou égale à la version 0.24.0. Voir plus loin la section <a href="#bindist.remarks">remarques</a> si les machines ont une version de fink antérieure.</p>
+<p>La méthode se compose des étapes suivantes sur le <a href="#bindist.master">serveur "maître"</a> et sur les <a href="#bindist.client">machines clientes</a> :</p>
 
 <h3><a name="bindist.master">1.2 Étapes sur le serveur "maître" (serveur de compilation) </a></h3>
 
@@ -27,7 +27,7 @@ Fran&ccedil;ais |
 <li>Construisez les paquets comme d'habitude. Il n'est pas nécessaire de les installer.</li>
 <li><p>Exécutez <tt style="white-space: nowrap;">fink scanpackages</tt> chaque fois que le jeu de paquets construits change. Fink génèrera alors des indexs apt pour tous les arbres activés.</p>
 <p>Au lieu de la commande précédente, vous pouvez exécuter <tt style="white-space: nowrap;">fink cleanup</tt>. Les paquets sources et binaires obsolètes seront alors supprimés. La commande <tt style="white-space: nowrap;">scanpackages</tt> est appelée automatiquement à la fin du processus de nettoyage.</p></li>
-<li>Démarrez un serveur web : vous pouvez, par exemple, activer "Partage Web personnel" dans la section Partage des Préférences Système, puis configurer <tt style="white-space: nowrap;">httpd</tt> de telle sorte qu'il serve le répertoire <tt style="white-space: nowrap;">/sw/fink</tt> en ajoutant les lignes suivantes au fichier <tt style="white-space: nowrap;">/etc/httpd/httpd.conf</tt>. 
+<li>Démarrez un serveur web : vous pouvez, par exemple, activer "Partage Web personnel" dans la section Partage des Préférences Système, puis configurer <tt style="white-space: nowrap;">httpd</tt> de telle sorte qu'il serve le répertoire <tt style="white-space: nowrap;">/sw/fink</tt> en ajoutant les lignes suivantes au fichier <tt style="white-space: nowrap;">/etc/httpd/httpd.conf</tt> :
 <pre>
 Alias /fink /sw/fink
 &lt;Directory /sw/fink&gt;
@@ -39,9 +39,9 @@ Alias /fink /sw/fink
 <p>N'oubliez pas de réexécuter <tt style="white-space: nowrap;">fink scanpackages</tt> (ou <tt style="white-space: nowrap;">fink cleanup</tt>) chaque fois que vous construisez ou mettez à jour des paquets sur le serveur "maître", de façon à ce qu'ils soient disponibles sur les machines éloignées.</p>
 <p><b>Notes</b> :</p>
 <p>Vous pouvez aussi créer un utilisateur "fink" et ajouter les lignes ci-dessus au fichier <tt style="white-space: nowrap;">/etc/httpd/users/fink.conf</tt>.</p>
-<p>Si vous utiliser le paquet apache2 de Fink, vous devrez modifier les chemins ci-dessus.</p>
+<p>Si vous utilisez le paquet apache2 de Fink, vous devrez modifier les chemins ci-dessus.</p>
 
-<h3><a name="bindist.client">1.3 Étapes sur les machines clients</a></h3>
+<h3><a name="bindist.client">1.3 Étapes sur les machines clientes</a></h3>
 
 <ol>
 <li>Installez Fink sur <tt style="white-space: nowrap;">/sw</tt> (chemin de base par défaut).</li>
@@ -60,16 +60,16 @@ Hit http://192.168.42.7 stable/main Release
 Hit http://192.168.42.7 stable/crypto Packages
 ...
 </pre>
-à la fin du processus de mise à jour, si le niveau de verbosité est &gt;= 1.</li>
+à la fin du processus de mise à jour, si le niveau de verbosité est supérieur ou égal à 1.</li>
 </ol>
 <p>L'exécution de <tt style="white-space: nowrap;">fink update-all</tt> ou de <tt style="white-space: nowrap;">fink install &lt;paquet&gt;</tt> téléchargera alors les paquets en tant que paquets binaires s'ils sont disponibles sur le serveur "maître".</p>
 
 <h3><a name="bindist.remarks">1.4 Remarques</a></h3>
 
 <ul>
-<li>Le serveur "maître" doit utiliser une version de X11 identique à la plus ancienne version installée sur l'ensemble des clients. Par exemple, si toutes les machines clientes utilisent X11 d'Apple, le serveur "mâitre" doit l'utiliser lui aussi.</li>
-<li>Vous pouvez supprimer les paquets qui ne sont que des dépendances de compilation (c'est-à-dire qui ne sont pas nécessaire à l'exécution d'autres paquets). Le paquet <tt style="white-space: nowrap;">debfoster</tt> permet de le faire facilement. Faîtes toutefois attention à ne pas supprimer de paquets essentiels, tel <tt style="white-space: nowrap;">apt</tt>.</li>
-<li>Si vous utilisez une version de fink inférieure à la version 0.24.0 sur une machine client, vous devez exécuter <tt style="white-space: nowrap;">sudo apt-get update</tt> au lieu de <tt style="white-space: nowrap;">fink selfupdate</tt>. Vous devez alors installer les paquets binaires via <tt style="white-space: nowrap;">sudo apt-get install &lt;package&gt;</tt>. </li>
+<li>Le serveur "maître" doit utiliser une version de X11 identique à la plus ancienne version installée sur l'ensemble des clients. Par exemple, si l'une des machines clientes utilise X11 d'Apple, le serveur "maître" doit l'utiliser lui aussi.</li>
+<li>Vous pouvez supprimer les paquets qui ne sont que des dépendances de compilation (c'est-à-dire qui ne sont pas nécessaires à l'exécution d'autres paquets). Le paquet <tt style="white-space: nowrap;">debfoster</tt> permet de le faire facilement. Faîtes toutefois attention à ne pas supprimer de paquets essentiels, tel <tt style="white-space: nowrap;">apt</tt>.</li>
+<li>Si vous utilisez une version de fink inférieure à la version 0.24.0 sur une machine client, vous devez exécuter <tt style="white-space: nowrap;">sudo apt-get update</tt> au lieu de <tt style="white-space: nowrap;">fink selfupdate</tt>. Vous devez alors installer les paquets binaires via <tt style="white-space: nowrap;">sudo apt-get install &lt;paquet&gt;</tt>. </li>
 </ul>
 <p>Ce document est adapté pour part de <a href="http://ranger.befunk.com/blog/archives/000258.html">"Sharing the Fink"</a> par RangerRick. Merci !</p>
 
@@ -79,4 +79,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: advanced.fr.xml,v 1.2 2005/03/02 05:22:33 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: advanced.fr.xml,v 1.3 2005/03/02 06:32:51 michga Exp $</i></p></body></html>
