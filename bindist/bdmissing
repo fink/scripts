@@ -1,0 +1,14 @@
+#!/bin/sh
+
+tree=$1
+if [ -z "$tree" ]; then
+  tree="fink-`cat $BDDATA/current`"
+  echo "Defaulting to tree $tree"
+fi
+
+$BDDATA/bdlist $tree | cut -f1 -d_ > /tmp/fink_bindist
+cat $BDDATA/excludes >> /tmp/fink_bindist
+
+to_be_added=`ls /sw/fink/debs/ | cut -f1 -d_ | sort | fgrep -v -f /tmp/fink_bindist` | uniq
+
+echo "Packages to be added: $to_be_added"
