@@ -72,7 +72,7 @@ foreach $package (Fink::Package->list_packages()) {
   $vo = $po->get_version($version);
   
   # Skip splitoffs
-  #next if $vo->{_type} eq "splitoff";
+  #next if exists $vo->{parent};
 
   # gather fields
   $maintainer = $vo->param_default("Maintainer", "(not set)");
@@ -97,7 +97,7 @@ foreach $package (Fink::Package->list_packages()) {
 	  );
 	    
   # Determine the splitoff parent of this package
-  if ($vo->{_type} eq "splitoff") {
+  if (exists $vo->{parent}) {
 		$data{"parentname"} = $vo->{parent}->get_name();  # package is a splitoff
   } 
 
@@ -115,7 +115,7 @@ foreach $package (Fink::Package->list_packages()) {
   print "# $package-$version\n";
   print "$q\n";
 
-  if ($vo->{_type} eq "splitoff") {  
+  if (exists $vo->{parent}) {  
 	  %splitoffdata = ('name' => $vo->get_name(),
 					   'parentkey' => $release . $data{"parentname"},
 					   'descshort' => $vo->get_shortdescription()
