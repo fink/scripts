@@ -13,7 +13,7 @@ Step 1:
 Step 2:
  Download fink-IN_VERSION-full.tar.gz from sourceforge (or use the copy
  you generated when building the srcdist), unpack it and run ./bootstrap.sh,
- installing into /sw. 
+ installing into /sw.  Choose the "Quiet" option during configuration.
 
 Step 3:
  Run "fink update-all" in case there were updates to base-packages since
@@ -30,7 +30,8 @@ Step 5:
  Remove /sw/src/*
 
 Step 6:
- Run "fink scanpackages" to properly prepare for distribution.
+ Run "fink scanpackages", and then "sudo apt-get update" to properly
+ prepare for distribution. 
 
 Step6a:
  Run "fink list --installed" to be ready with the information when needed
