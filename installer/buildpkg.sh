@@ -1,6 +1,6 @@
 #!/bin/sh
-RESDIR=$IN_BASEDIR/resources$IN_VERSION;
-DMGDIR=$IN_BASEDIR/dmg$IN_VERSION;
+RESDIR=$IN_BASEDIR/resources-$IN_VERSION;
+DMGDIR=$IN_BASEDIR/dmg-$IN_VERSION;
 
 echo "basedir: $IN_BASEDIR version: $IN_VERSION";
 rm -rf $RESDIR
