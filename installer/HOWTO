@@ -23,7 +23,8 @@ Step 4:
  Remove /sw/fink/dists/local/bootstrap as well as any .deb's in
  /sw/fink/dists/crypto/binary-darwin-powerpc/ or 
  /sw/fink/dists/main/binary-darwin-powerpc/* , and then remove all symlinks
- from /sw/fink/debs
+ from /sw/fink/debs - you can do this by doing:
+ "sudo find /sw/fink -name '*.deb' -exec rm -rf {} \;"
 
 Step 5:
  Remove /sw/src/*
