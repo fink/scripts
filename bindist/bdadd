@@ -4,10 +4,10 @@ $| = 1;
 use v5.6.0;  # perl 5.6.0 or newer required
 use strict;
 
-my $base = "/Users/chrisp/fink/web/bindist";
-chdir $base;
+my $base = $ENV{BDBASE};
+chdir $base or die "bindist base \"$base\" is bogus, set env var BDBASE\n";
 
-my $dest = "dists/fink-0.2.5/main";
+my $dest = "dists/fink-0.2.6/main";
 
 ### now load the useful modules
 
@@ -72,7 +72,5 @@ foreach $pkgspec (@ARGV) {
     }
   }
 }
-
-&execute("./genindex.pl");
 
 exit 0;
