@@ -221,9 +221,9 @@ English |
       with hard coded items in the PHP include files. They are mostly menu
       items and such, located on top and left of the pages. You should
       separate them from the scripts and create a constants.xx.inc file for your language. To do this, just issue the following command in a terminal window:</p>
-      <pre>cp constants.de.inc constants.xx.inc</pre>
-      <p>where xx is your language code (e.g.: fr for French language).
-      Next, you'll want to translate the single quoted part of the define lines into your language. In case you don't understand German, here is the translation into English:</p>
+      <pre>cp constants.fr.inc constants.xx.inc</pre>
+      <p>where xx is your language code (e.g.: de for German language).
+      Next, you'll want to translate the single quoted part of the define lines into your language. In case you don't understand French, here is the translation into English:</p>
       <pre>
 /* The Sections. Used in Menu Navigation Bar */ 
 define (FINK_SECTION_HOME, 'Home'); 
@@ -245,7 +245,21 @@ define (FINK_SECTION_HOME_LINKS, 'Links');
 define (FINK_SECTIONS, 'Sections'); 
       
 /* Contents as Table of Contents. Used in FAQ/Documentation Sections */ 
-define (FINK_CONTENTS, 'Contents');</pre>
+define (FINK_CONTENTS, 'Contents');
+
+/* Printer */
+define (FINK_PRINTER, 'Printer');
+define (FINK_PRINT_VERSION, 'Print Version');
+
+/* Footer */
+define (META_KEYWORDS, 'Mac OS X, Fink, Debian, Macintosh, Apple, UNIX, Open Source, download, free software, port, development, package management');
+define (META_DESCRIPTION, 'The Fink project wants to bring the full world of Unix Open Source software to Darwin and Mac OS X. We modify Unix software so that it compiles and runs on Mac OS X and make it available for download as a coherent distribution.');
+define (HEADER_HOSTED_BY, 'Hosted by {img}');
+define (FOOTER_AVAILABLE_LANGUAGES, 'Available Languages');
+define (FOOTER_GENERATED_DYNAMICALLY, 'Generated dynamically from');
+define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated: %x %X');
+define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %b %Y,  %R %Z');
+</pre>
       <p>When you translate, you normally follow the steps as below (suppose
       you are translating the Running X11 document into
       French):</p>

@@ -217,6 +217,8 @@ Fink ディレクトリ階層にインストールされたソフトウェア、
 これはコマンドを使って
 </p>
 <pre>open /sw/bin/pathsetup.command</pre>
+<p><tt style="white-space: nowrap;">fink-0.18.3</tt> あるいは <tt style="white-space: nowrap;">fink-0.19.2</tt> の場合は (下記の通り正確に)</p>
+<pre>/sw/bin/pathsetup.sh</pre>
 <p>
 として下さい。
 これが効かない場合は手動で設定することができますが、シェルによってやり方が異なります。
@@ -731,12 +733,13 @@ stable/main" です。
 </li>
 <li>
 <p>
-<b>Distribution:</b> 10.1 または 10.2</p>
+<b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, 10.3</p>
 <p>Fink はどのバージョンの Mac OS X を使っているか知る必要があります。
-10.1 ディストリビューションは Mac OS X 10.1 を指します。
-10.2 ディストリビューションは Mac OS X 10.2 "Jaguar" を指します。
-Mac OS X 10.0 以前はサポートされていません。
-この値は変える必要はありません。
+10.0 以前はサポートされていません。
+10.1 は現バージョンからサポート対象外となりました。
+10.2 は August 2003 Developer Tools に更新している場合のみサポートされています。
+このフィールドは <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt> を実行することで設定されます。
+ユーザーがこの値を変えてはいけません。
 </p>
 </li>
 <li>
@@ -780,6 +783,15 @@ High (全て報告する)
 <p><tt style="white-space: nowrap;">fink selfupdate</tt> コマンドは、 Fink パッケージマネージャーを最新版にアップグレードします。
 このオプションは True の時、 Concurrent Version System (CVS) を使わないことを保証します。
 これは <tt style="white-space: nowrap;">fink selfupdate-cvs</tt> コマンドが自動的に設定するので、手動では変更しないで下さい。
+</p>
+</li>
+<li>
+<p>
+<b>Buildpath:</b> パス</p>
+<p>
+Fink はソースからコンパイルする場合、パッケージごとに仮ディレクトリを作成します。
+デフォルトでは <tt style="white-space: nowrap;">/sw/src</tt> 内に作成しますが、別の場所を使いたい場合はここでパスを指定します。
+仮ディレクトリについては、後述の <tt style="white-space: nowrap;">KeepRootDir</tt> と <tt style="white-space: nowrap;">KeepBuildDir</tt> のフィールドの解説をご覧下さい。
 </p>
 </li>
 </ul>
@@ -1124,4 +1136,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.ja.xml,v 1.4 2004/03/11 23:56:35 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.ja.xml,v 1.5 2004/03/24 13:09:17 babayoshihiko Exp $</i></p></body></html>
