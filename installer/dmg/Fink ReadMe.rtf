@@ -40,33 +40,35 @@ Apart from that, the installer is pretty safe to use. It will not touch your sys
 
 \f1\b \cf0 Configuration
 \f0\b0 \
-At the end of the installation, a Terminal.app window will be launched, and the pathsetup.command script will automatically be run.  You will be asked for permission before your shell's configuration files are edited.  If anything goes wrong during this process, you can try again by launching 
-\f2\b\fs26 pathsetup.command 
-\f0\b0\fs28 file which appears on the installer disk, or by running (from the command line in a Terminal.app window)\
+During the installation, your shell's configuration files will be examined, and if a change is needed (such as during a first-time installation), you will be presented with a dialog window asking for permission to alter these files.  If anything goes wrong during this process, you can try again by launching 
+\f2\b\fs26 pathsetup 
+\f0\b0\fs28 application which appears on the installer disk, or by running (from the command line in a Terminal.app window)\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
 
 \f2\b\fs16 \cf0 \
 
-\fs26 open /sw/bin/pathsetup.command <RETURN>
+\fs26 /sw/bin/pathsetup.sh <RETURN>
 \fs16 \
 \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 
-\f0\b0\fs28 \cf0 (This step should also be repeated by any other users on your system: each user must run  
-\f2\b\fs26 pathsetup.command
-\f0\b0\fs28  in his or her own account.)\
+\f0\b0\fs28 \cf0 (This step should also be repeated by any other users on your system: each user must either run the  
+\f2\b\fs26 pathsetup
+\f0\b0\fs28  application, or the  
+\f2\b\fs26 /sw/bin/pathsetup.sh
+\f0\b0\fs28  command in his or her own account, in order to use Fink.)\
 \
-If 
-\f2\b\fs26 pathsetup.command 
-\f0\b0\fs28 generates errors messages, consult the documentation, particularly section 2.3 "Setting Up Your Environment" of the User's Guide.\
+If the 
+\f2\b\fs26 pathsetup 
+\f0\b0\fs28 application generates error messages, consult the documentation, particularly section 2.3 "Setting Up Your Environment" of the User's Guide.\
 \
 More detailed instructions can be found in Documentation.html and FAQ.html provided on the Fink IN_VERSION Installer disk.  The same information (and more) can be found on the Fink website:\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
-\cf0 \ul http://fink.sourceforge.net/\
+\cf0 \ul \ulc0 http://fink.sourceforge.net/\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 \cf0 \ulnone In particular, you\'d5ll be interested in the Fink User\'d5s Guide and the Running X11 document, available as links from Documentation.html on the Fink IN_VERSION Installer disk, or online at:\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
-\cf0 \ul http://fink.sourceforge.net/doc/users-guide/\ulnone \
+\cf0 \ul \ulc0 http://fink.sourceforge.net/doc/users-guide/\ulnone \
 \ul http://fink.sourceforge.net/doc/x11/\ulnone \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 \cf0 \
@@ -108,7 +110,7 @@ These tools require administrative privileges, like the installer. On the comman
 \f0\b0 \
 You can download the source code for the programs contained in the installer from the same place as the installer itself. Failing that, visit the Fink download pages at\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
-\cf0 \ul http://fink.sourceforge.net/download/\ulnone \
+\cf0 \ul \ulc0 http://fink.sourceforge.net/download/\ulnone \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 \cf0 \
 \
