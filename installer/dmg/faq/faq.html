@@ -19,7 +19,7 @@ Fink supports?</a></li><li><a href="#usage-fink.proxy">4.2 I'm behind a firewall
 configure Fink to use an HTTP proxy?</a></li><li><a href="#usage-fink.firewalled-cvs">4.3 How do I update available packages from CVS when I am behind a firewall?</a></li><li><a href="#usage-fink.moving">4.4 Can I move Fink to another
 location after installation?</a></li><li><a href="#usage-fink.moving-symlink">4.5 If I move Fink after
 installation and provide a symlink from the old location, will it
-work?</a></li><li><a href="#usage-fink.removing">4.6 How can I remove all of Fink?</a></li><li><a href="#usage-fink.bindist">4.7 The package database at the
+work?</a></li><li><a href="#usage-fink.removing">4.6 How can I uninstall all of Fink?</a></li><li><a href="#usage-fink.bindist">4.7 The package database at the
 website lists package xxx, but apt-get and dselect know nothing about
 it. Who's lying?</a></li><li><a href="#usage-fink.unstable">4.8 There's this package in
 unstable that I want to install, but the fink command just says 'no
@@ -322,14 +322,23 @@ hidden traps somewhere.
 </p></div>
 </a>
 <a name="usage-fink.removing">
-<div class="question"><p><b>Q4.6: How can I remove all of Fink?</b></p></div>
+<div class="question"><p><b>Q4.6: How can I uninstall all of Fink?</b></p></div>
 <div class="answer"><p><b>A:</b> 
 Almost all files installed by Fink are in /sw (or wherever you chose
 to install it). Thus in order to get rid of Fink, enter this command:
 </p><pre>sudo rm -rf /sw</pre><p>
-The only exception to this rule is XFree86. If you also need to remove
-XFree86, additionally enter this:
-</p><pre>sudo rm -rf /usr/X11R6 /etc/X11 /Applications/XDarwin.app</pre><p>You also will want to remove the "source /sw/bin/init.csh" or line you added to your .cshrc file or the "source /sw/bin/init.sh" you added to your .bashrc file using a text editor.</p></div>
+The only exception to this rule is XFree86. If you installed XFree86 through
+Fink (i.e., you installed the <tt style="white-space: nowrap;">xfree86</tt> or 
+<tt style="white-space: nowrap;">xfree86-rootless</tt> packages,
+instead of using <tt style="white-space: nowrap;">system-xfree86</tt>) and want to remove it, you 
+will need additionally to enter this:
+</p><pre>sudo rm -rf /usr/X11R6 /etc/X11 /Applications/XDarwin.app</pre><p>If you aren't planning to reinstall Fink you also will want to remove 
+the "<tt style="white-space: nowrap;">source 
+/sw/bin/init.csh</tt>" line you added to your 
+<tt style="white-space: nowrap;">.cshrc</tt> file or the 
+"<tt style="white-space: nowrap;">source /sw/bin/init.sh</tt>" line you added to your 
+<tt style="white-space: nowrap;">.bashrc</tt> file, whichever is appropriate to your setup,  
+using a text editor.</p></div>
 </a>
 <a name="usage-fink.bindist">
 <div class="question"><p><b>Q4.7: The package database at the
@@ -956,4 +965,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.152 2003/12/02 02:38:24 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.154 2003/12/03 17:25:19 alexkhansen Exp $</i></p></body></html>
