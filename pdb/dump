@@ -56,12 +56,13 @@ open(STDOUT, ">&OLDOUT");
 
 print "# delete old rows\n";
 print "DELETE FROM package WHERE release='$release';\n";
+print "DELETE FROM splitoffs;\n";
 
 ### loop over packages
 
 my ($package, $po, $version, $vo);
-my ($maintainer, $email, $desc);
-my ($q, $v, $s, $key, %data);
+my ($maintainer, $email, $desc, $parent);
+my ($q, $v, $s, $key, $parentkey, %data, %splitoffdata);
 
 foreach $package (Fink::Package->list_packages()) {
   $po = Fink::Package->package_by_name($package);
@@ -70,7 +71,7 @@ foreach $package (Fink::Package->list_packages()) {
   $vo = $po->get_version($version);
   
   # Skip splitoffs
-  next if $vo->{_type} eq "splitoff";
+  #next if $vo->{_type} eq "splitoff";
 
   # gather fields
   $maintainer = $vo->param_default("Maintainer", "(not set)");
@@ -80,7 +81,13 @@ foreach $package (Fink::Package->list_packages()) {
   $desc =~ s/\n/<\/p><p>/s;
   $desc =~ s/\n\s*\.\n/<\/p><p>/sg;
   $desc .= "</p>";
-
+  
+  # Determine the splitoff parent of this package
+  if ($vo->{_type} eq "splitoff") {
+		$parent = $vo->{parent}->get_name();  # package is a splitoff
+  } else {
+  		$parent = " ";
+  }    
   %data = ( 'release' => $release,
 	    'fullname' => $vo->get_fullname(),
 	    'name' => $vo->get_name(),
@@ -90,7 +97,8 @@ foreach $package (Fink::Package->list_packages()) {
 	    'desclong' => $desc,
 	    'maintainer' => $maintainer,
 	    'homepage' => $vo->param_default("Homepage", ""),
-	    'section' => $vo->get_section()
+	    'section' => $vo->get_section(),
+	    'parentname' => $parent
 	  );
 
   # generate SQL query
@@ -103,10 +111,28 @@ foreach $package (Fink::Package->list_packages()) {
     $v .= "'$s',";
   }
   $q = substr($q,0,-1).substr($v,0,-1).");";
-
   # write it
   print "# $package-$version\n";
   print "$q\n";
+
+  if ($vo->{_type} eq "splitoff") {  
+	  %splitoffdata = ('name' => $vo->get_name(),
+					   'parentkey' => $release . $parent,
+					   'descshort' => $vo->get_shortdescription()
+					   );
+	  
+	  # generate SQL query
+	  $q = "INSERT INTO splitoffs (";
+	  $v = ") VALUES (";
+	  foreach $key (keys %splitoffdata) {
+		$q .= "$key,";
+		$s = $splitoffdata{$key};
+		$s =~ s/'/\\'/g;
+		$v .= "'$s',";
+	  }
+	  $q = substr($q,0,-1).substr($v,0,-1).");";
+  	  print "$q\n";
+  }
 }
 
 
