@@ -52,7 +52,7 @@ English |
         cause build problems for Fink. Is this true?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 When I try to build a package, I get a message that a "table of
         contents" is out of date. What do I need to do?</a></li><li><a href="#comp-general.fc-atlas">6.11 Fink Commander hangs when I try to install atlas.</a></li><li><a href="#comp-general.basic-headers">6.12 I get messages saying that I'm missing <tt style="white-space: nowrap;">stddef.h</tt>, <tt style="white-space: nowrap;">wchar.h</tt>, or <tt style="white-space: nowrap;">crt1.o</tt>. Where do I find them?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 I can't update, because Fink is "unable to resolve version conflict
         on multiple dependencies".</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 I can't install anything because I get "dpkg: parse error, in file
-        `/sw/var/lib/dpkg/status'"!</a></li><li><a href="#comp-general.freetype-problems">6.15 I get errors involving freetype.</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 I get build errors involving `Dl_info'.</a></li><li><a href="#comp-general.gcc2">6.17 Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> or gcc3.1 but I can't seem to
+        `/sw/var/lib/dpkg/status'"!</a></li><li><a href="#comp-general.freetype-problems">6.15 I get errors involving freetype.</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 I get build errors involving `Dl_info'.</a></li><li><a href="#comp-general.gcc2">6.17 Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> or <tt style="white-space: nowrap;">gcc3.1</tt> but I can't seem to
         install it.</a></li><li><a href="#comp-general.system-java">6.18 Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</a></li><li><a href="#comp-general.dpkg-split">6.19 When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</a></li><li><a href="#comp-general.xml-parser">6.20 I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</a></li><li><a href="#comp-general.master-problems">6.21 I'm trying to download a package, but Fink goes to some weird site with <q>distfiles</q> in its name, and the file isn't there.</a></li><li><a href="#comp-general.compile-options">6.22 I want Fink to use different options in building a package.</a></li></ul></li><li><a href="#comp-packages"><b>7 Compile Problems - Specific Packages</b></a><ul><li><a href="#comp-packages.libgtop">7.1 A package fails to build with errors involving
         <tt style="white-space: nowrap;">sed</tt>.</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 I want to switch to Fink's XFree86 packages, but I can't install
         <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt>, because it conflicts
@@ -878,11 +878,11 @@ make[1]: *** [unix_dl.lo] Error 1</pre><p>then most likely you have a header fil
 sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.gcc2">
-      <div class="question"><p><b>Q6.17: Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> or gcc3.1 but I can't seem to
+      <div class="question"><p><b>Q6.17: Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> or <tt style="white-space: nowrap;">gcc3.1</tt> but I can't seem to
         install it.</b></p></div>
       <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> and <tt style="white-space: nowrap;">gcc3.1</tt> are  virtual packages to
         indicate the presence of gcc-2.95 and gcc-3.1, respectively, on your system. Install the gcc2.95 and/or the gcc3.1
-        package from the XCode Tools (earlier OS versions have gcc-2.95 and gcc-3.1as
+        package from the XCode Tools (earlier OS versions have gcc-2.95 and gcc-3.1 as
         part of their main Developer Tools installation).</p></div>
     </a>
     <a name="comp-general.system-java">
@@ -1368,7 +1368,7 @@ You can check your installation by running</p><pre>fink list -i system-xfree86</
     </a>
     <a name="usage-packages.special-x11-debug">
       <div class="question"><p><b>Q9.13: I'm still having problems with X11 and Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> entries don't help, or aren't applicable to your situtation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
+      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> entries don't help, or aren't applicable to your situation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
 xorg xorg-shlibs xfree86 xfree86-shlibs \
 xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
@@ -1390,4 +1390,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.35 2004/10/14 01:01:47 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.36 2004/10/14 02:57:18 michga Exp $</i></p></body></html>
