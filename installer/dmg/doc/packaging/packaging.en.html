@@ -60,7 +60,7 @@ i.e. executables, data files, message catalogs, libraries, include
 files, etc.
 The package file also contains some meta-data for the package.
 Installing a binary package mainly consists of unpacking its contents
-as it is already in an ready-to-use form.
+as it is already in a ready-to-use form.
 Since Fink builds on the dpkg package manager, the binary package
 files are in the dpkg format and have the extension .deb.
 </p>
@@ -302,8 +302,7 @@ and 'i386' for x86 machines. (Introduced in a post-0.12.1 CVS version of fink.)
 </p>
 </td></tr><tr valign="top"><td>%%</td><td>
 <p>
-the percent character (one that will not be expanded according
-according to whatever follows it).  Expansion occurs strictly
+the percent character (one that will not be expanded according to whatever follows it).  Expansion occurs strictly
 left-to-right, so %%n is not anything related to the package name, but
 rather is the string %n.  (Introduced in fink-0.18.0)
 </p>
@@ -481,10 +480,7 @@ For some packages, everything can be accomplished with a main package and a
 -shlibs package; in other cases you also need a third package.  The new
 <tt style="white-space: nowrap;">SplitOff</tt> field actually makes this quite easy.
 </p><p>
-When three packages are needed, there are two different ways they could be
-named, depending on whether the libraries or the binaries
-are the most important feature of
-the package, or the binaries are the most important feature.  For option 1, 
+When three packages are needed, there are two different ways they could be named, depending on whether the libraries (option1) or the binaries (option 2) are the most important feature of the package.  For option 1, 
 use the layout:
 </p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Package</th><th align="left">Contents</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-shlibs</tt></td><td><p>Shared libraries</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo</tt></td><td><p>Headers</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-bin</tt></td><td><p>Binaries, etc.</p></td></tr></table>
@@ -683,7 +679,7 @@ a declaration</p>
   &lt;&lt;
 </pre>
 <p>indicates that a library with <tt style="white-space: nowrap;">-install_name</tt> %p/lib/bar.1.dylib
-and <tt style="white-space: nowrap;">-compatibiliary_version</tt> 2.1.0 has been installed since
+and <tt style="white-space: nowrap;">-compatibility_version</tt> 2.1.0 has been installed since
 version 1.1-2 of the <b>bar1</b> package.  In addition, this declaration
 amounts to  a promise
 from the maintainer that a library with this name and a compatibility-version
@@ -2091,4 +2087,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.12 2004/03/25 09:29:32 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.13 2004/03/27 12:31:08 michga Exp $</i></p></body></html>
