@@ -2,7 +2,8 @@
 $| = 1;
 use strict;
 
-chdir "/Users/chrisp/fink/web/bindist";
+my $base = $ENV{BDBASE};
+chdir $base or die "bindist base \"$base\" is bogus, set env var BDBASE\n";
 
 use File::Find;
 
