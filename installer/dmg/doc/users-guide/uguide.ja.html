@@ -28,7 +28,7 @@ Fink ユーザーズガイドへようこそ。
 このガイドでは、ソースからとバイナリからの両方について、初めてのインストールとアップグレードの仕方について書かれています。
 パッケージインストールとメンテナンスのことも書かれています。
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 Global オプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.update-all">6.5 update-all</a></li><li><a href="#usage.list">6.6 list</a></li><li><a href="#usage.apropos">6.7 apropos</a></li><li><a href="#usage.describe">6.8 describe</a></li><li><a href="#usage.fetch">6.9 fetch</a></li><li><a href="#usage.fetch-all">6.10 fetch-all</a></li><li><a href="#usage.fetch-missing">6.11 fetch-missing</a></li><li><a href="#usage.build">6.12 build</a></li><li><a href="#usage.rebuild">6.13 rebuild</a></li><li><a href="#usage.reinstall">6.14 reinstall</a></li><li><a href="#usage.configure">6.15 configure</a></li><li><a href="#usage.selfupdate">6.16 selfupdate</a></li><li><a href="#usage.index">6.17 index</a></li><li><a href="#usage.validate">6.18 validate</a></li><li><a href="#usage.scanpackages">6.19 scanpackages</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li><li><a href="#usage.dumpinfo">6.21 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 グローバルオプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.update-all">6.5 update-all</a></li><li><a href="#usage.list">6.6 list</a></li><li><a href="#usage.apropos">6.7 apropos</a></li><li><a href="#usage.describe">6.8 describe</a></li><li><a href="#usage.fetch">6.9 fetch</a></li><li><a href="#usage.fetch-all">6.10 fetch-all</a></li><li><a href="#usage.fetch-missing">6.11 fetch-missing</a></li><li><a href="#usage.build">6.12 build</a></li><li><a href="#usage.rebuild">6.13 rebuild</a></li><li><a href="#usage.reinstall">6.14 reinstall</a></li><li><a href="#usage.configure">6.15 configure</a></li><li><a href="#usage.selfupdate">6.16 selfupdate</a></li><li><a href="#usage.index">6.17 index</a></li><li><a href="#usage.validate">6.18 validate</a></li><li><a href="#usage.scanpackages">6.19 scanpackages</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li><li><a href="#usage.dumpinfo">6.21 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
 
 
 <h3><a name="intro.what">1.1 Fink とは何ですか?</a></h3>
@@ -874,14 +874,14 @@ FTP サーバーやネットワークによっては、このオプションが 
 </li>
 <li>
 <p>
-<b>SelfUpdateMethod:</b> point, rsync あるいは cvs</p>
+<b>SelfUpdateMethod:</b> point, rsync または cvs</p>
 <p>
 Fink は、数種類の手段でパッケージ情報ファイルを更新することができます。
 <b>rsync</b> が推奨される設定で、 rsync を用いて、ユーザーにより指定されたツリー中の、変更されたファイルだけをダウンロードします。
 stable や unstable 中のファイルを編集したり、新たに追加していた場合、削除されることに注意してください。
 これらのファイルを必ず事前にバックアップしてください。
 <b>cvs</b> では、 anonymous か :ext: cvs アクセスを使用して fink レポジトリから ダウンロードします。
-cvs はミラーを使えないという欠点があるため、 CVS サーバに接続することができない時は更新できません。
+cvs はミラーを使えないという欠点があるため、 CVS サーバーに接続することができない時は更新できません。
 <b>point</b> は最近リリースされたものだけをダウンロードします。
 ユーザのパッケージがかなり古い場合は更新されないので、おすすめはできません。
 </p>
@@ -1058,7 +1058,7 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 </p>
 <p>以下は、 <tt style="white-space: nowrap;">fink</tt> ツールのコマンド一覧です:</p>
 
-<h3><a name="usage.options">6.2 Global オプション</a></h3>
+<h3><a name="usage.options">6.2 グローバルオプション</a></h3>
 
 <p>
 全ての fink コマンドに共通のオプションがあります。
@@ -1080,8 +1080,8 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 で設定することができます。
 </p>
 <p>
-<tt style="white-space: nowrap;">--use-binary-dist</tt> を使用すると， <tt style="white-space: nowrap;">fink</tt> to try to
-コンパイル済みバイナリがあり、システムにインストールされていない場合、バイナリ版をダウンロードします
+<tt style="white-space: nowrap;">--use-binary-dist</tt> を使用すると， <tt style="white-space: nowrap;">fink</tt> は
+コンパイル済みバイナリがあり、システムにインストールされていない場合、バイナリ版をダウンロードしようとします
 (<tt style="white-space: nowrap;">fink</tt> バージョン 0.23.0 以降で有効)。
 </p>
 
@@ -1312,7 +1312,6 @@ Fink のウェブサイトへ新しいバージョンがあるか確認し、 <t
 	  注記: 0.21.0 以降の <tt style="white-space: nowrap;">fink</tt> で有効。
 	  </p>
 	  <p>
-	Shows how Fink parses parts of a package's .info file.
 	Fink がどのようにパッケージの .info ファイルを構文解析するかを表示します。
 	以下の<b>オプション引数</b>に応じて、各種フィールドとパーセント展開も表示されます。
       </p>
@@ -1333,4 +1332,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.ja.xml,v 1.11 2004/08/12 15:01:33 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.ja.xml,v 1.12 2004/11/04 02:09:30 babayoshihiko Exp $</i></p></body></html>
