@@ -70,6 +70,11 @@ if [ ! -d pkginfo ]; then
   exit 1
 fi
 
+### remove any .cvsignore files
+
+find $fullname -name .cvsignore -exec rm {} \;
+find pkginfo -name .cvsignore -exec rm {} \;
+
 ### versioning
 
 echo $fversion >$fullname/VERSION

@@ -63,6 +63,10 @@ if [ ! -d $fullname ]; then
   exit 1
 fi
 
+### remove any .cvsignore files
+
+find $fullname -name .cvsignore -exec rm {} \;
+
 ### versioning
 
 if [ -f $fullname/VERSION ]; then
