@@ -50,15 +50,18 @@ Step 7:
  finished).
 
 Step 8.
- Use TextEdit to examine the files in the resources and dmg
- subdirs of this directory, editing if necessary. You will need to edit the list of   
+ Use TextEdit to examine the files in the resources and dmg subdirs of this
+ directory, editing if necessary. You will need to edit the list of 
  installed packages which appears at the end of resources/ReadMe.rtf. 
  Leave IN_VERSION variables as-is, these will be replaced by script.  
- Additionally you may need to update the InstallationCheck file and localized error .strings   
- files to contain the minimum supported system version. (eg, 6C115 for 10.2.0)
+ Additionally you may need to update the InstallationCheck file and
+ localized error .strings files to contain the minimum supported system
+ version. (eg, 6C115 for 10.2.0) 
 
 Step 9.
- Run ./buildpkg.sh. This should copy the resources and dmg directories, subsituting versions in the various read me files. It will then create the pkg file in the dmgIN_VERSION directory.
+ Run ./buildpkg.sh. This should copy the resources and dmg directories,
+ subsituting versions in the various read me files. It will then create the
+ pkg file in the dmgIN_VERSION directory. 
 
 Step 10.
  Use DiskCopy to create an empty .dmg, 40 MB in size.  The Volume name should
