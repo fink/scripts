@@ -8,7 +8,11 @@ my $base = $ENV{BDBASE};
 chdir $base or die "bindist base \"$base\" is bogus, set env var BDBASE\n";
 
 my ($currel, $dest);
-chomp($currel = `cat $ENV{BDDATA}/current`);
+if (exists $ENV{CURREL} and defined $ENV{CURREL}) {
+  $currel = $ENV{CURREL};
+} else {
+  chomp($currel = `cat $ENV{BDDATA}/current`);
+}
 my $dest = "dists/fink-$currel/main";
 my $dest_crypto = "dists/fink-$currel/crypto";
 
@@ -69,6 +73,7 @@ foreach $pkgspec (@ARGV) {
     last if $fn eq "-";
 
     if (not -f "source/$fn") {
+      system('mkdir -p source');
       $fn = $po->find_tarball($i);
       if (not defined($fn)) {
 	print "WARNING: can't find source package \"".$po->get_tarball($i)."\" for $pkgname\n";

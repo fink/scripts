@@ -14,9 +14,11 @@ Environment variables:
 BDBASE
   Description:
     Set to the location where you store the bindist tree on you local HD.
-    The online bindist will be synced using rsync against this tree.
+    The online bindist will be synced using rsync against this tree.  Note
+    that bdsync will probably not work correctly if you don't have the
+    trailing slash.
   Example:
-    /bindist
+    /bindist/
 
 BDDATA
   Description:
@@ -24,6 +26,13 @@ BDDATA
     I.e. it points to your checkout of the Fink scripts module, subdir "bindist"
   Example:
     /Users/maxhorn/Documents/fink-cvs/scripts/bindist
+
+SFUSER
+  Description:
+    Your SourceForge username -- used to sync the sources to the public binary
+    distribution.  Defaults to the current dist maintainer.
+  Example:
+    fingolfin
 
 ---------------------------------------------------------------------------------
 

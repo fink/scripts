@@ -7,9 +7,14 @@ if [ -z "$BDBASE" ]; then
 fi
 cd "$BDBASE"
 
+if [ -z "$SFUSER" ]; then
+  SFUSER="fingolfin"
+fi
+
 # locations
 source="$BDBASE"
-destination='fingolfin@shell.sourceforge.net:/home/groups/f/fi/fink/htdocs/bindist'
+
+destination="${SFUSER}@shell.sourceforge.net:/home/groups/f/fi/fink/htdocs/bindist"
 
 # rsync options
 options="-e ssh -av --partial --progress"
