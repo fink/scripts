@@ -32,7 +32,7 @@ in this area, you might consider adopting a
 <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">package which
 currently has no maintainer.</a>
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li><li><a href="#policy.emacs">3.5 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.4 Shared Libraries</a></li><li><a href="#policy.perlmods">3.5 Perl Modules</a></li><li><a href="#policy.emacs">3.6 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -445,8 +445,25 @@ them.</li>
 
 
 
+<h3><a name="policy.openssl">3.2 The GPL and OpenSSL</a></h3>
+<p>
+(Policy change effective April, 2005.)
+</p>
+<p>
+Due to the apparent incompatibilty of the OpenSSL license with the GPL and 
+LGPL licenses, fink packages which link to openssl but are licensed under 
+the GPL or LGPL are marked as "Restrictive."  As a consequence, the Fink 
+project will not distribute binaries of such packages, although users are 
+free to compile them from source at their discretion.
+</p>
+<p>
+Package maintainers are encouraged to record the original package license in 
+the <tt style="white-space: nowrap;">DescPackaging</tt> field.
+</p>
 
-<h3><a name="policy.prefix">3.2 Base System Interference</a></h3>
+
+
+<h3><a name="policy.prefix">3.3 Base System Interference</a></h3>
 <p>
 Fink is an add-on distribution that is installed in a directory
 separate from the base system.
@@ -466,7 +483,7 @@ for existence before calling them and the like).
 </p>
 
 
-<h3><a name="policy.sharedlibs">3.3 Shared Libraries</a></h3>
+<h3><a name="policy.sharedlibs">3.4 Shared Libraries</a></h3>
 <p>
 Fink has a new policy about shared libraries, effective in February 2002.
 This section of the documentation discusses version 4
@@ -845,7 +862,7 @@ which depend on <tt style="white-space: nowrap;">foo</tt>.
 
 
 
-<h3><a name="policy.perlmods">3.4 Perl Modules</a></h3>
+<h3><a name="policy.perlmods">3.5 Perl Modules</a></h3>
 <p>Fink's policy about perl modules, originally implemented in
 May 2003,  has been revised as of April 2004.
 </p><p>
@@ -906,7 +923,7 @@ directory, and will issue a warning if so.
 
 
 
-<h3><a name="policy.emacs">3.5 Emacs Policy</a></h3>
+<h3><a name="policy.emacs">3.6 Emacs Policy</a></h3>
 <p> The Fink project has chosen to follow the Debian project's policy
 regarding emacs, with a few small differences.
 (The Debian policy document can be found at
@@ -2357,4 +2374,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.58 2005/02/01 08:29:31 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.59 2005/04/05 03:04:00 dmrrsn Exp $</i></p></body></html>
