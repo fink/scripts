@@ -988,8 +988,18 @@ Cela vous permet de changer les sites miroirs et les configurations proxy, entre
         <h3><a name="usage.dumpinfo">6.21 dumpinfo - analyse des fichiers info</a></h3>
       
       <p>
-	Affiche l'analyse syntaxique des différentes parties d'un fichier .info d'un paquet.
+	Affiche l'analyse syntaxique des différentes parties d'un fichier .info d'un paquet. Les <b>options</b> suivantes permettent de moduler l'affichage des champs et l'interprétation des raccourcis :
       </p>
+      <pre>
+-h, --help           - Affiche les options disponibles.
+-a, --all            - Affiche tous les champs de description du paquet.
+                       C'est le mode par défaut quand aucune option 
+                       --field ou --percent n'est utilisée.
+-f nomchamp,         - Affiche le contenu des champs indiqués
+  --field=nomchamp     dans leur ordre d'apparition après l'option -f.
+-p clé,              - Affiche l'interprétation des clés fournies
+   --percent=clé       dans leur ordre d'apparition après l'option -p.
+     </pre>
     
 
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
@@ -997,4 +1007,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.fr.xml,v 1.7 2004/04/14 02:31:00 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.fr.xml,v 1.8 2004/04/26 03:33:01 michga Exp $</i></p></body></html>
