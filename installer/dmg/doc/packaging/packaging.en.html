@@ -20,7 +20,7 @@ in this area, you might consider adopting a
 <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">package which
 currently has no maintainer.</a>
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li><li><a href="#policy.emacs">3.5 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -102,7 +102,7 @@ directories.
 The directories in top-down order:
 </p>
 <ul>
-<li><tt style="white-space: nowrap;">dists</tt> is where is starts. The <tt style="white-space: nowrap;">dists</tt>
+<li><tt style="white-space: nowrap;">dists</tt> is where it starts. The <tt style="white-space: nowrap;">dists</tt>
 directory is necessary for the Debian tools.</li>
 <li>The distribution. There is <tt style="white-space: nowrap;">stable</tt>,
 <tt style="white-space: nowrap;">unstable</tt> and <tt style="white-space: nowrap;">local</tt>. The <tt style="white-space: nowrap;">local</tt>
@@ -642,7 +642,7 @@ a declaration</p>
 and <tt style="white-space: nowrap;">-compatibiliary_version</tt> 2.1.0 has been installed since
 version 1.1-2 of the <b>bar1</b> package.  In addition, this declaration
 amounts to  a promise
-from the maintainer that a libary with this name and a compatibility-version
+from the maintainer that a library with this name and a compatibility-version
 of at least 2.1.0 will always be found in later versions of the <b>bar1</b> 
 package.
 </p><p>
@@ -766,7 +766,7 @@ A version-dependent perl module must be built using a versioned binary
 of perl, such as <tt style="white-space: nowrap;">perl5.6.0</tt>, and must store its files in
 versioned subdirectories of the standard perl directories, such as
 <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> and <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt>.  A new convention
-is being introducted of using the suffix <tt style="white-space: nowrap;">-pm560</tt> for
+is being introduced of using the suffix <tt style="white-space: nowrap;">-pm560</tt> for
 a perl module of version 5.6.0.  Similar storage and naming conventions
 are in force for other versions of perl, which will soon include 
 perl 5.6.1 and perl 5.8.0.  
@@ -784,6 +784,22 @@ Effective with version 0.13.0 of fink, the <tt style="white-space: nowrap;">fink
 command when applied to a <tt style="white-space: nowrap;">.deb</tt> file will check to see if
 the fink package is an XS module which has been installed in a non-versioned 
 directory, and will issue a warning if so.
+</p>
+
+
+
+<h3><a name="policy.emacs">3.5 Emacs Policy</a></h3>
+<p> The Fink project has chosen to follow the Debian project's policy
+regarding emacs, with a few small differences.
+(The Debian policy document can be found at
+<a href="http://www.debian.org/doc/packaging-manuals/debian-emacs-policy">
+http://www.debian.org/doc/packaging-manuals/debian-emacs-policy</a>.)
+There are two differences in the Fink policy.  First, 
+this policy only applies to the emacs20 and
+emacs21 packages in fink at the moment, not to the xemacs package.  (This
+may change some day in the future.)    And second, unlike the Debian policy,
+ Fink packages are allowed to install things directly into 
+/sw/share/emacs/site-lisp.
 </p>
 
 
@@ -1069,6 +1085,19 @@ This field is required, and there must be exactly one name and address
 in the following format:
 </p>
 <pre>Firstname Lastname &lt;user@host.domain.com&gt;</pre>
+</td></tr><tr valign="top"><td>InfoN</td><td>
+<p>
+This field allows fink to implement backward-incompatible syntax
+changes in package description files. A given version of fink is
+configured with the maximum integer "N" that it can handle. Any
+package in a higher InfoN field will be ignored, so this mechanism
+should only be used when necessary, lest people with older versions of
+fink be needlessly alienated. The documentation of other fields will
+note when a specific InfoN must be used. To use this mechanism, embed
+the entire package description in the desired InfoN field. See the
+"File Format" section earlier in this document for a description of
+the syntax for multiline fields.
+</p>
 </td></tr></table>
 <p><b>Dependencies:</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Depends</td><td>
@@ -1241,7 +1270,9 @@ additional fields, starting with N = 2. So, the first tarball (which
 should be some kind of "main" tarball) goes into <tt style="white-space: nowrap;">Source</tt>, the
 second tarball in <tt style="white-space: nowrap;">Source2</tt> and so on. The rules are the same
 as for Source, only that the "gnu" and "gnome" shortcuts are not
-expanded - that would be useless anyway.
+expanded - that would be useless anyway. Starting with a CVS version
+of fink after 0.19.1, you no longer need to use consecutive values for
+N. However, you still may not have duplicates.
 </p>
 </td></tr><tr valign="top"><td>SourceDirectory</td><td>
 <p>
@@ -1341,7 +1372,7 @@ the new filename.
 Example:
 </p>
 <pre>TarFilesRename: foo bar.* qux:quux
-Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
+Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <p>
 <b>Note:</b> This field is implemented by means of a special feature of
 BSD tar. GNU tar does not support this feature. Fink by default uses GNU tar
@@ -1670,7 +1701,9 @@ For details about how this works, see the separate
 <p>
 <b>Introduced in fink 0.9.9.</b>
 This is the same as <tt style="white-space: nowrap;">SplitOff</tt>, used to generate a third,
-fourth, etc. package from the same compile/install run.
+fourth, etc. package from the same compile/install run. Starting with
+a CVS version of fink after 0.19.1, you no longer need to use
+consecutive values for N. However, you still may not have duplicates.
 </p>
 </td></tr><tr valign="top"><td>Files</td><td>
 <p>
@@ -1934,4 +1967,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.1 2004/03/05 03:26:56 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.5 2004/03/15 05:05:33 dmacks Exp $</i></p></body></html>
