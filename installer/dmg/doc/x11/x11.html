@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>Fink Documentation - Running X11 on Darwin and Mac OS X</title></head><body><h1 style="text-align: center;">Running X11 on Darwin and Mac OS X</h1>
 <p>
 This document is about running X11 / XFree86 / Xtools on Apple's Mac
@@ -7,8 +7,7 @@ It gives an introduction and a history of development, then goes on to
 describe the current situation and the many options you have to use
 X11 with or without Fink.
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 What is X11?</a></li><li><a href="#intro.def-macosx">1.2 What is Mac OS X?</a></li><li><a href="#intro.def-darwin">1.3 What is Darwin?</a></li><li><a href="#intro.def-xfree86">1.4 What is XFree86?</a></li><li><a href="#intro.def-xtools">1.5 What is Xtools?</a></li><li><a href="#intro.client-server">1.6 Client and Server</a></li><li><a href="#intro.rootless">1.7 What does rootless mean?</a></li><li><a href="#intro.wm">1.8 What is a window manager?</a></li><li><a href="#intro.desktop">1.9 What are Quartz/Aqua, Gnome, and KDE?</a></li></ul></li><li><a href="#history"><b>2 History</b></a><ul><li><a href="#history.early">2.1 The early days</a></li><li><a href="#history.xonx-forms">2.2 XonX forms</a></li><li><a href="#history.root-or-not">2.3 To root or not to root</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Getting and Installing XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installing through Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Apple's Binaries</a></li><li><a href="#inst-xfree86.official-binary">3.3 The Official Binaries</a></li><li><a href="#inst-xfree86.official-source">3.4 The Official Source</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 The Latest Development Source</a></li><li><a href="#inst-xfree86.xonx-bin">3.6 The XonX binary test releases (XAqua,
-XDarwin)</a></li><li><a href="#inst-xfree86.macgimp">3.7 MacGimp</a></li><li><a href="#inst-xfree86.rootless">3.8 Roaming Rootless Servers</a></li><li><a href="#inst-xfree86.switching-x11">3.9 Replacing X11</a></li><li><a href="#inst-xfree86.fink-summary">3.10 Fink package summary</a></li></ul></li><li><a href="#run-xfree86"><b>4 Starting XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.0</a></li><li><a href="#run-xfree86.xinitrc">4.3 The .xinitrc File</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installing Xtools</a></li><li><a href="#xtools.run">5.2 Running Xtools</a></li><li><a href="#xtools.opengl">5.3 OpenGL Notes</a></li></ul></li><li><a href="#other"><b>6 Other X11 Possibilities</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Troubleshooting XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 When I launch XDarwin, it quits
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 What is X11?</a></li><li><a href="#intro.def-macosx">1.2 What is Mac OS X?</a></li><li><a href="#intro.def-darwin">1.3 What is Darwin?</a></li><li><a href="#intro.def-xfree86">1.4 What is XFree86?</a></li><li><a href="#intro.def-xtools">1.5 What is Xtools?</a></li><li><a href="#intro.client-server">1.6 Client and Server</a></li><li><a href="#intro.rootless">1.7 What does rootless mean?</a></li><li><a href="#intro.wm">1.8 What is a window manager?</a></li><li><a href="#intro.desktop">1.9 What are Quartz/Aqua, Gnome, and KDE?</a></li></ul></li><li><a href="#history"><b>2 History</b></a><ul><li><a href="#history.early">2.1 The early days</a></li><li><a href="#history.xonx-forms">2.2 XonX forms</a></li><li><a href="#history.root-or-not">2.3 To root or not to root</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Getting and Installing XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installing through Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Apple's Binaries</a></li><li><a href="#inst-xfree86.official-binary">3.3 The Official Binaries</a></li><li><a href="#inst-xfree86.official-source">3.4 The Official Source</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 The Latest Development Source</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Replacing X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Fink package summary</a></li></ul></li><li><a href="#run-xfree86"><b>4 Starting XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.0</a></li><li><a href="#run-xfree86.xinitrc">4.3 The .xinitrc File</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installing Xtools</a></li><li><a href="#xtools.run">5.2 Running Xtools</a></li><li><a href="#xtools.opengl">5.3 OpenGL Notes</a></li></ul></li><li><a href="#other"><b>6 Other X11 Possibilities</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Troubleshooting XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 When I launch XDarwin, it quits
 or crashes almost immediately</a></li><li><a href="#trouble.black">7.2 Black icons in the GNOME panel or in the
 menu of a GNOME application</a></li><li><a href="#trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></li><li><a href="#trouble.delete-key">7.4 The Backspace key doesn't work</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Usage Tips</b></a><ul><li><a href="#tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
@@ -275,6 +274,7 @@ version had been completely integrated into the main XFree86 distribution.
 
 <h3><a name="inst-xfree86.fink">3.1 Installing through Fink</a></h3>
 
+<p><b>Please bear with us while this section is being updated.</b></p>
 <p>
 Fink will let you install X11 in any way you like,
 but it also provides XFree86 packages of its own. If you
@@ -299,32 +299,33 @@ install the server yourself; see below.  In this case, you should
 only install <tt style="white-space: nowrap;">xfree86-base</tt>, or you'll risk that Fink
 overwrites your manually installed server.  Note that the current stable version of<tt style="white-space: nowrap;"> xfree86-base</tt> (4.2.1.1-3) generates the <tt style="white-space: nowrap;">xfree86-rootless</tt>, <tt style="white-space: nowrap;">xfree86-base-shlibs</tt>, and <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt> during its build process.  In this case, all four packages must be installed for you to have a working XFree86 setup.
 </p>
-<p>The<tt style="white-space: nowrap;"> xfree86-base-threaded</tt> and <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> packages are essentially the same thing, but have been modified to support threading, which is required by a few applications, such as <tt style="white-space: nowrap;">xine</tt>.  One thing to note is that if you switch to Apple's X11 (which doesn't support threading), you won't be able to run binaries that you compiled against the threaded version.</p>
-<p>XFree86 4.2.11 (unthreaded) is considered to be the stable, baseline XFree86 version to use with fink.  XFree86 4.3.0 is also available, but is considered to be more experimental, and as of this writing is only available in the unstable tree.  It has threading support built in, and is faster than 4.2.1.1 .  To install this version, you should install the <tt style="white-space: nowrap;">xfree86</tt> package.  Note that for this version, there are no longer separate -base and -rootless packages, although the libraries are splitoff into <tt style="white-space: nowrap;">xfree86-shlibs</tt>.  If you build binaries against 4.3, they may not work on 4.2.1.1 or Apple X11, so be warned.</p>
+<p>The<tt style="white-space: nowrap;"> xfree86-base-threaded</tt> and <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> packages are essentially the same thing, but have been modified to support threading, which is required by a few applications, such as <tt style="white-space: nowrap;">xine</tt>.</p>
+<p>XFree86 4.2.11 (unthreaded) is considered to be the stable, baseline XFree86 version to use with Fink on 10.2.  XFree86 4.3.0 is also available, but is considered to be more experimental, and as of this writing is only available in the unstable tree.  It has threading support built in, and is faster than 4.2.1.1 .  To install this version, you should install the <tt style="white-space: nowrap;">xfree86</tt> package.  Note that for this version, there are no longer separate -base and -rootless packages, although the libraries are splitoff into <tt style="white-space: nowrap;">xfree86-shlibs</tt>.  If you build binaries against 4.3, they may not work on 4.2.1.1 or Apple X11, so be warned.</p>
+<p><b>Note for 10.3 users:</b>  you will need to install <tt style="white-space: nowrap;">xfree86-4.3.99.15-1</tt> or later (currently in <tt style="white-space: nowrap;">10.3/unstable</tt>).  This is a prerelease for XFree86-4.4 .</p>
 
 <h3><a name="inst-xfree86.apple-binary">3.2 Apple's Binaries</a></h3>
 
 <p>
 On January 7, 2003, Apple released <a href="http://www.apple.com/macosx/x11/">a custom
-X11 implementation based on XFree86</a> which includes Quartz rendering and accelerated
-OpenGL.  A new version was released on February 10, 2003 with additional features and bugfixes.  A third release was made on March 17, 2003 with further additional features and bugfixes. 
+X11 implementation based on XFree86-4.2</a> which includes Quartz rendering and accelerated
+OpenGL.  A new version was released on February 10, 2003 with additional features and bugfixes.  A third release (i.e. Beta 3) was made on March 17, 2003 with further additional features and bugfixes.  This version is usable on Jaguar.
+</p>
+<p>On October 24, 2003, Apple released Panther (10.3), which includes the release version of their X11 distribution.  This version is based on XFree86-4.3.</p>
+<p>
+To use the Apple binaries, you need to make sure the <b>X11 User</b> package is installed, and you should also 
+<a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php">update</a> Fink.</p>  
+<p>Under <tt style="white-space: nowrap;">fink-0.16.2</tt>, you will need to install the <b>X11 SDK</b> package, as well.  After you do this, Fink will
+create a <tt style="white-space: nowrap;">system-xfree86</tt> virtual package.</p>
+<p>Under <tt style="white-space: nowrap;">fink-0.17.0</tt> and later (currently in unstable), installing the X11 SDK is only necessary if 
+you want to build packages from source.  In this case, even if you don't have the SDK, there will be a <tt style="white-space: nowrap;">system-xfree86</tt>
+virtual package.  If you do install the SDK, there will also be a <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> package and a 
+<tt style="white-space: nowrap;">system-xfree86-dev</tt> package, representing the libraries and headers, respectively.
 </p>
 <p>
-As of the time of this writing, to use the Apple binaries you will need to make sure you
-have the Fink <tt style="white-space: nowrap;">system-xfree86</tt> package, version 4.2-11 or higher, installed.
-Also, make sure you download BOTH the SDK (linked from the main site), and the public
-beta files.  Do not download the "common toolkits" from OpenDarwin, they will likely
-interact poorly with Fink's installation.
-</p>
-<p>
-If you have existing xfree86 packages installed, be it through Fink or otherwise, you
+If you have an existing XFree86 distribution installed, be it through Fink or otherwise, you
 can follow the <a href="#inst-xfree86.switching-x11">instructions on
 replacing one X11 package with another</a>.  Make sure that you remove your existing
-packages, and then install <tt style="white-space: nowrap;">system-xfree86</tt>.  Be sure you first remove
-your old X11 packages, then install Apple's X11 and X11 SDK, and then run
-either '<tt style="white-space: nowrap;">sudo apt-get update; sudo apt-get install system-xfree86</tt>' (for
-binaries) or '<tt style="white-space: nowrap;">fink selfupdate-cvs; fink install system-xfree86</tt>' (to
-get the latest system-xfree86 package from CVS).
+packages, then install Apple's X11 (and X11 SDK, if needed or desired).
 </p>
 <p>
 Some notes on using Apple's X11:
@@ -337,7 +338,12 @@ Some notes on using Apple's X11:
 <li>
 <p>Apple's X11 uses your existing <tt style="white-space: nowrap;">~/.xinitrc</tt> file.  If you want the
   full effect of Quartz integration, you should use <tt style="white-space: nowrap;">/usr/X11R6/bin/quartz-wm</tt>
-  as your window manager, or delete your ~/.xinitrc completely.</p>
+  as your window manager, or delete your <tt style="white-space: nowrap;">~/.xinitrc</tt> completely.</p>  
+<p>If you just want cut-and-paste integration, but want to use a different window manager, you can do 
+this as in the following example:</p>
+<pre>/usr/X11R6/bin/quartz-wm --only-proxy &amp;
+exec /sw/bin/fvwm2</pre>
+ <p>You may, of course, call any other window manager, <tt style="white-space: nowrap;">startkde</tt>, etc.</p>
 </li>
 <li>
 <p>
@@ -354,7 +360,7 @@ initial "<tt style="white-space: nowrap;">#!/bin/sh</tt>", but before you run an
 <p>so that the Fink environment is initialized.  Note:  <tt style="white-space: nowrap;">init.sh</tt> is used rather than <tt style="white-space: nowrap;">init.csh</tt> because <tt style="white-space: nowrap;">.xinitrc</tt> is run by <tt style="white-space: nowrap;">sh</tt> rather than <tt style="white-space: nowrap;">tcsh</tt>.</p>
 </li>
 <li>
-<p>Applications that require calling other programs under /sw for some of their functions need special treatment to get them to work when called from the Application menu.  Instead of putting just the full path to the filename, e.g.</p>
+<p>Applications that require calling other programs which reside within your Fink tree for some of their functions need special treatment to get them to work when called from the Application menu.  Instead of putting just the full path to the filename, e.g.</p>
 <pre>/sw/bin/emacs</pre>
 <p>you'll want to use something like the following:</p>
 <pre>. /sw/bin/init.sh ; emacs</pre>
@@ -366,6 +372,10 @@ initial "<tt style="white-space: nowrap;">#!/bin/sh</tt>", but before you run an
 defined in indirectly referenced dynamic library 
 /usr/X11R6/lib/libX11.6.dylib</pre>
 <p>then you'll need to make sure to that <tt style="white-space: nowrap;">-lX11</tt> is present during linking.  Check your package's configuration options to see how to feed it the extra argument.</p>
+</li>
+<li>
+<p>If you use the <tt style="white-space: nowrap;">xfree86</tt> package, and later switch to Apple's X11 (on either 10.2.x or 10.3.x), any
+packages you have built against <tt style="white-space: nowrap;">xfree86</tt> will need to be rebuilt, as the binaries are incompatible.</p>
 </li>
 </ul>
 
@@ -446,27 +456,8 @@ CVS</a> instructions to download the <tt style="white-space: nowrap;">xc</tt> mo
 Then, follow the source build instructions above.
 </p>
 
-<h3><a name="inst-xfree86.xonx-bin">3.6 The XonX binary test releases (XAqua,
-XDarwin)</a></h3>
 
-<p>
-In the time before 4.1.0 was released, the XonX team put out a series
-of binary test releases with the name XAqua.
-These releses are obsolete and should not be used.
-</p>
-<p>
-With the introduction of rootless mode into XFree86's mainline CVS
-(after 4.1.0 was released), the XonX team once again started to
-put out binary test releases, this time under the name XDarwin.
-This eventually resulted in the XDarwin released with 4.2.0.
-</p>
-<p>The <a href="http://www.mrcla.com/XonX/">XonX
-web page</a> indicates that post-4.2.0 testing versions of XDarwin may
-someday be released, but none have been as yet.  They would presumably be 
-installed on top of XFree86 4.2.0 (or later).
-</p>
-
-<h3><a name="inst-xfree86.macgimp">3.7 MacGimp</a></h3>
+<h3><a name="inst-xfree86.macgimp">3.6 MacGimp</a></h3>
 
 <p>
 The downloadable installer which was offered by the MacGimp people 
@@ -483,15 +474,8 @@ The server does rootless mode, using a patch from the time before
 4.1.0.
 </p>
 
-<h3><a name="inst-xfree86.rootless">3.8 Roaming Rootless Servers</a></h3>
 
-<p>
-There are various rootless server binaries roaming around
-the net.  With the release of the official 4.2.0 binaries
-this should not be a desirable way to install XFree86.
-</p>
-
-<h3><a name="inst-xfree86.switching-x11">3.9 Replacing X11</a></h3>
+<h3><a name="inst-xfree86.switching-x11">3.7 Replacing X11</a></h3>
 
 <p>
 If you have already installed one of the Fink X11 packages but for one reason or another
@@ -530,8 +514,9 @@ xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
   </p>
 </li>
 </ol>
+ 
 
-<h3><a name="inst-xfree86.fink-summary">3.10 Fink package summary</a></h3>
+<h3><a name="inst-xfree86.fink-summary">3.8 Fink package summary</a></h3>
 
 <p>
 A quick summary of the install options and the Fink packages you
@@ -547,16 +532,19 @@ should install:
 </p>
 </td></tr><tr valign="top"><td>4.x official binaries</td><td>
 <p>
-<tt style="white-space: nowrap;">system-xfree86</tt> only</p>
+<tt style="white-space: nowrap;">system-xfree86</tt> only (+splitoffs)</p>
 </td></tr><tr valign="top"><td>4.x built from source, or from the latest CVS source</td><td>
 <p>
-<tt style="white-space: nowrap;">system-xfree86</tt> only</p>
+<tt style="white-space: nowrap;">system-xfree86</tt> only (+splitoffs)</p>
 </td></tr><tr valign="top"><td>4.2.x base system built via Fink + binary rootless server</td><td>
 <p>
 <tt style="white-space: nowrap;">xfree86-base</tt> only</p>
 </td></tr><tr valign="top"><td>4.2.x from Apple</td><td>
 <p>
-<tt style="white-space: nowrap;">system-xfree86</tt>
+<tt style="white-space: nowrap;">system-xfree86</tt> only (+splitoffs)
+</p>
+</td></tr><tr valign="top"><td>4.3.x from Apple</td><td><p>
+<tt style="white-space: nowrap;">system-xfree86</tt> only (+splitoffs)
 </p>
 </td></tr></table>
 
@@ -1226,4 +1214,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.38 2003/08/30 20:26:12 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.39 2003/11/24 19:49:02 alexkhansen Exp $</i></p></body></html>
