@@ -361,8 +361,11 @@ initial "<tt style="white-space: nowrap;">#!/bin/sh</tt>", but before you run an
 <li>
 <p>Applications that require calling other programs which reside within your Fink tree for some of their functions need special treatment to get them to work when called from the Application menu.  Instead of putting just the full path to the filename, e.g.</p>
 <pre>/sw/bin/emacs</pre>
-<p>you'll want to use something like the following:</p>
+<p>you'll want to use something like the following, if you're using bash as your
+default shell:</p>
 <pre>. /sw/bin/init.sh ; emacs</pre>
+<p>and if you're using tcsh:</p>
+<pre>source /sw/bin/init.csh ; emacs</pre> 
 <p>This makes sure that the application has the correct PATH information.  You can use this syntax for any Fink-installed application.</p>
 </li>
 <li>
