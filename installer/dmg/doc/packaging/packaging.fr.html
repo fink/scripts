@@ -1065,40 +1065,40 @@ Ce champ fournit un moyen simple d'installer les fichiers README et COPYING dans
 </p>
 </td></tr><tr valign="top"><td>Shlibs</td><td>
 <p>
-<b>Introduuit dans la version 0.11.0 de fink.</b>
-This field declares the shared libraries which are installed in the package.  There is one line for each shared library, which contains three items separated by whitespace: the <tt style="white-space: nowrap;">-install_name</tt> of the library, the <tt style="white-space: nowrap;">-compatibility_version</tt>, and versioned  dependency information specifying the Fink package which provides this library at this compatibility version.  The dependency should be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> where  <tt style="white-space: nowrap;">version-revision</tt> refers to the <b>first</b> version of a Fink package which made this library (with this compatibility version) available. The Shlibs declaration amounts to a promise from the maintainer that a libary with this name and a  <tt style="white-space: nowrap;">-compatibility_version</tt> of at least this number will always be found in later versions of this Fink package.
+<b>Introduit dans la version 0.11.0 de fink.</b>
+Ce champ déclare les librairies partagées installées dans le paquet. Il y a une ligne par librairie partagée, cette ligne est constituée de trois éléments séparés par des blancs : le nom d'installation de la librairie <tt style="white-space: nowrap;">-install_name</tt>, le numéro de version de compatibilité de la librairie <tt style="white-space: nowrap;">-compatibility_version</tt> et des informations de dépendance de version qui indiquent quel paquet de Fink fournit la librairie à cette version de compatibilité. Les informations de dépendance doivent être spécifiées sous la forme <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt>, où  <tt style="white-space: nowrap;">version-revision</tt> représente la <b>première</b> version d'un paquet Fink qui rend disponible cette librairie (avec cette version de compatibilité). La déclaration Shlibs revient à dire que le mainteneur du paquet garantit qu'une librairie portant ce nom et ayant une version de compatibilité au moins égale à <tt style="white-space: nowrap;">-compatibility_version</tt> sera présente dans toutes les versions postérieures de ce paquet Fink.
 </p></td></tr><tr valign="top"><td>RuntimeVars</td><td>
 <p>
-<b>Introduced in fink 0.10.0.</b>
-This field provides a convenient way to set environment variables to some static value at runtime (if you need more flexibility, refer to the <a href="#reference.profile.d">profile.d scripts section</a>). As long as your package is installed, these variables will be set via the <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt> scripts.
+<b>Introduit dans fink 0.10.0.</b>
+Ce champ fournit un moyen pratique de donner une valeur statique à des variables d'environnement pendant l'exécution (si vous voulez avoir plus de latitude dans ce domaine, voir la <a href="#reference.profile.d">section scripts profile.d</a>). À partir du moment où le paquet est installé, ces variables sont définies par les scripts <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt>.
 </p>
 <p>
-The value of your variable can contain spaces (trailing ones are trimmed); also, percent expansion takes place. For example:
+La valeur de la variable peut contenir des espaces (seuls les espaces de fin de chaîne sont supprimés) ; l'interprétation des raccourcis a eu lieu sur ce champ. Exemple :
 </p>
 <pre>RuntimeVars: &lt;&lt;
- SomeVar: %p/Value
- AnotherVar: foo bar
+ UneVariable: %p/Valeur
+ UneAutreVariable: toto tata
 &lt;&lt;</pre>
 <p>
-will set two environment variables 'SomeVar' and 'AnotherVar' and their values will be respectively '/sw/Value' (or whatever your prefix is) and 'foo bar'.
+définit deux variables d'environnement 'UneVariable' et 'UneAutreVariable' ; leurs valeurs seront respectivement '/sw/Valeur' (si votre préfixe est /sw) et 'toto tata'.
 </p>
 <p>
-This field works by appending appropriate commands to the InstallScript. These commands add a setenv/export line for each variable to the package profile.d scripts, so you can provide your own ones, they won't be overwritten. The lines are prepended to the scripts, you can thus use these variables in your scripts.
+Ce champ ajoute les commandes appropriées au script InstallScript. Ces commandes ajoutent une ligne setenv/export pour chaque variable aux scripts profile.d du paquet ; vous pouvez donc spécifier vos propres commandes, elles ne seront pas remplacées. Les lignes sont ajoutées en début de scripts, vous pouvez donc utiliser ces variables dans vos scripts.
 </p>
 </td></tr><tr valign="top"><td>SplitOff</td><td>
 <p>
-<b>Introduced in fink 0.9.9.</b>
-Generate a second package from the same compile/install run. For details about how this works, see the separate <a href="#splitoffs">splitoff section</a> below.
+<b>Introduit dans fink 0.9.9.</b>
+Génère un second paquet à partir d'une seule exécution du couple compilation/installation. Pour avoir de plus amples informations sur la façon dont ce champ fonctionne, voir la <a href="#splitoffs">section splitoff</a> ci-dessous.
 </p>
 </td></tr><tr valign="top"><td>SplitOff<b>N</b></td><td>
 <p>
-<b>Introduced in fink 0.9.9.</b>
-This is the same as <tt style="white-space: nowrap;">SplitOff</tt>, used to generate a third, fourth, etc. package from the same compile/install run. Starting with a CVS version of fink after 0.19.2, you may use arbitrary (not necessarily consecutive) integer values of N &gt;= 2. However, you still may not have duplicates.
+<b>Introduit dans fink 0.9.9.</b>
+Similaire au champ <tt style="white-space: nowrap;">SplitOff</tt>, utilisé pour générer un N-ième paquet à partir d'une seule exécution du couple compilation/installation. À partir d'une version CVS de fink postérieure à la version 0.19.2, vous pouvez utiliser des valeurs entières (non nécessairement consécutives) de N &gt;= 2. Néanmoins, il ne peut pas y avoir de doublons.
 </p>
 </td></tr><tr valign="top"><td>Files</td><td>
 <p>
-<b>Introduced in fink 0.9.9.</b>
-Used <b>only</b> within a <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field, this designates which files and directories should be moved from the parent package's  installation directory %I to the current installation directory %i.  Note that this is executed after the InstallScript and the DocFiles of the parent package, but before the InstallScript and Docfiles of the current package.
+<b>Introduit dans fink 0.9.9.</b>
+Utilisé <b>uniquement</b> avec un champ <tt style="white-space: nowrap;">SplitOff</tt> ou <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>, ce champ indique quels fichiers et répertoires doivent être déplacés du répertoire d'installation %I du paquet parent vers le répertoire d'installation en cours %i. Notez que le déplacement a lieu après l'exécution des scripts InstallScript et DocFiles du paquet parent, mais avant l'exécution des mêmes scripts du paquet en cours d'installation.
 </p>
 </td></tr></table>
 <p><b>Build Phase:</b></p>
