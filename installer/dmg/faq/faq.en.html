@@ -75,7 +75,7 @@
         <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 I upgraded to Apple's X11 in Panther and now my window title bars
         are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 I installed Apple's X11 in Panther but Fink keeps asking to install
         xfree86.</a></li><li><a href="#usage-packages.apple-x11-beta-wants-xfree86">9.12 I installed Apple's X11 with the 10.2-gcc3.3 version of Fink but
-        Fink keeps asking to install xfree86.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
+        Fink keeps asking to install xfree86.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.13 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
     
     
     <a name="general.what">
@@ -1304,9 +1304,15 @@ sudo apt-get install fink</pre></li>
           <li>Run it in a terminal window via <pre>perl fink-x11-debug</pre></li>
         </ul></div>
     </a>
+    <a name="usage-packages.wants-xfree86-on-upgrade">
+      <div class="question"><p><b>Q9.13: I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</b></p></div>
+      <div class="answer"><p><b>A:</b> You may need to remove one of the old place-holder packages: <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt>, or <tt style="white-space: nowrap;">system-xfree86-43</tt>.  Fink now figures out if you have a manually installed X11 flavor, e.g. Apple's, and generates virtual packages. Because other packages depend on <tt style="white-space: nowrap;">system-xfree86</tt>, you must use the command</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>to remove the out-of-date versions.
+
+You can check your installation by running</p><pre>fink-virtual-pkgs</pre><p>and checking to see that the <tt style="white-space: nowrap;">Package: system-xfree86</tt> and <tt style="white-space: nowrap;">Package: system-xfree86-shlibs</tt> sections are present and their provides: lines contains <tt style="white-space: nowrap;">x11</tt> and <tt style="white-space: nowrap;">x11-shlibs</tt>, respectively.  If you installed the X11SDK, then you should also see <tt style="white-space: nowrap;">Package: system-xfree86-dev</tt>.</p><p>If you are still having problems then refer to the <a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86 on 10.3</a> or <a href="#usage-packages.apple-x11-beta-wants-xfree86">Fink wants Xfree86 on 10.2-gcc3.3</a> entries, above.</p></div>
+    </a>
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.4 2004/03/17 03:20:24 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.5 2004/03/18 01:53:37 alexkhansen Exp $</i></p></body></html>
