@@ -39,7 +39,7 @@ English |
         the change.</a></li><li><a href="#usage-fink.seg-fault">5.26 I get errors with <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
         applications from the<tt style="white-space: nowrap;"> fileutils </tt>package! Help!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 When I open a Terminal window, I get a message that "Your
         environment seems to be correctly set up for Fink already.", and it
-        logs out.</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
+        logs out.</a></li><li><a href="#usage-fink.ext-drive">5.28 I have Fink installed way from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
         What's that?</a></li><li><a href="#comp-general.cvs">6.2 When I try a "fink selfupdate-cvs" I get this message: "cvs:
         Command not found."</a></li><li><a href="#comp-general.missing-make">6.3 I'm getting an error message involving <tt style="white-space: nowrap;">make</tt>
         </a></li><li><a href="#comp-general.head">6.4 I'm getting a strange usage message from the head command. What's
@@ -618,6 +618,21 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>or se
         <tt style="white-space: nowrap;">~/Library/Preferences/com.apple.Terminal.plist</tt>.</p><p>If you have other preferences that you want to keep, you can edit
         the file with a text editor and remove the reference to
         <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt>.</p></div>
+    </a>
+    <a name="usage-fink.ext-drive">
+      <div class="question"><p><b>Q5.28: I have Fink installed way from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</b></p></div>
+      <div class="answer"><p><b>A:</b> If your error looks like:</p><pre>This first test is designed to die, so please ignore the error
+message on the next line.
+# Looks like your test died before it could output anything.
+./00compile............................ok
+./Base/initialize......................ok
+./Base/param...........................ok
+./Base/param_boolean...................ok
+./Command/cat..........................ok
+./Command/chowname.....................#     
+Failed test (./Command/chowname.t at line 27)
+#          got: 'root'
+#     expected: 'nobody'</pre><p>then you need to run <b>Get Info</b> on the drive/partition where Fink is installed and unselect the "Ignore ownership" button.</p></div>
     </a>
   <h2><a name="comp-general">6 Compile Problems - General</a></h2>
     
@@ -1391,4 +1406,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.14 2004/04/30 04:57:48 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.15 2004/05/04 01:23:53 alexkhansen Exp $</i></p></body></html>
