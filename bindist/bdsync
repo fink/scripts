@@ -11,6 +11,7 @@ cd $BDBASE
 source=$BDBASE
 destination='shell1:/home/groups/f/fi/fink/htdocs'
 if [ "$1" = "pippin" ]; then
+  shift
   destination='pippin:/home/chrisp/fink/web'
 fi
 
@@ -24,6 +25,6 @@ options="$options --delete"
 $BDDATA/bdindex
 
 # upload
-rsync $options $source $destination
+rsync "$@" $options $source $destination
 
 exit 0
