@@ -659,11 +659,7 @@ endif</pre></div>
       <div class="question"><p><b>Q7.2: 我想改用 Fink　的 XFree86 软件包，但我不能安装 <tt style="white-space: nowrap;">xfree86-base</tt> 或 <tt style="white-space: nowrap;">xfree86</tt>，因为它和 <tt style="white-space: nowrap;">system-xfree86</tt> 冲突。</b></p></div>
       <div class="answer"><p><b>A:</b> 很不幸，各种 X11 都不可避免地要安装在 /usr/X11R6 中。因此 Fink 的 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 软件包也需要安装在那里。不过，由于 Fink 不会删除任何没有在它数据库里面的文件，它不会自动替换非 Fink 安装的 X11。</p><p></p><p>下面是应该怎么做：</p><p></p><p>
           <b>注意：安装了新版（0.16.2 或更新）Fink 的 10.2.x 用户和 10.3.x 的用户应该跳过下面的步骤 1（事实上，他们也做不了步骤 1）。</b>
-        </p><p>1. 删除 <tt style="white-space: nowrap;">system-xfree86</tt>。如果你暂时还没有依赖于 X11 的软件包，这很简单。但通常情况是，已经安装了需要依赖于 X11 的软件包。如果不想全部删除他们，你可以使用：</p><p>
-          <tt style="white-space: nowrap;">sudo dpkg --remove --force-depends system-xfree86</tt>
-        </p><p>来进行删除，而保持其它软件包仍然存在。如果你没有安装 <tt style="white-space: nowrap;">system-xfree86</tt>，那么跳到步骤 3。</p><p>2. 手工删除所有 XFree86。可以这么做：</p><p>
-          <tt style="white-space: nowrap;">sudo rm -rf /Applications/XDarwin.app /usr/X11R6 /etc/X11</tt>
-        </p><p>如果你正在使用的是苹果的 X11，同时也删除 X11 程序。</p><p>3. 要获取 XFree86-4.2.1，用通常的办法安装 Fink 的 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 软件包：对使用源代码安装的用户　"<tt style="white-space: nowrap;">fink install</tt>"；对二进制安装的用户 "<tt style="white-space: nowrap;">apt-get install</tt>" 或 <tt style="white-space: nowrap;">dselect</tt>。</p><p>或</p><p>3a. 要获取 XFree86-4.3.x，使用 "fink install xfree86" 安装 Fink 的 <tt style="white-space: nowrap;">xfree86</tt> 软件包，这个版本目前还没有二进制安装版发布，而且仅有未稳定的版本[FAQ 3.9]。</p></div>
+        </p><p>1. 删除 <tt style="white-space: nowrap;">system-xfree86</tt>。如果你暂时还没有依赖于 X11 的软件包，这很简单。但通常情况是，已经安装了需要依赖于 X11 的软件包。如果不想全部删除他们，你可以使用：</p><pre>sudo dpkg --remove --force-depends system-xfree86</pre><p>来进行删除，而保持其它软件包仍然存在。如果你没有安装 <tt style="white-space: nowrap;">system-xfree86</tt>，那么跳到步骤 3。</p><p>2. 手工删除所有 XFree86。可以这么做：</p><pre>sudo rm -rf /Applications/XDarwin.app /usr/X11R6 /etc/X11</pre><p>如果你正在使用的是苹果的 X11，同时也删除 X11 程序。</p><p>3. 要获取 XFree86-4.2.1，用通常的办法安装 Fink 的 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 软件包：对使用源代码安装的用户　"<tt style="white-space: nowrap;">fink install</tt>"；对二进制安装的用户 "<tt style="white-space: nowrap;">apt-get install</tt>" 或 <tt style="white-space: nowrap;">dselect</tt>。</p><p>或</p><p>3a. 要获取 XFree86-4.3.x 或更高版本，使用 "fink install xfree86" 安装 Fink 的 <tt style="white-space: nowrap;">xfree86</tt> 软件包，最新版本(2004年5月25日的 XFree86-4.4.x 版本)目前还没有二进制安装版发布，而且仅有未稳定的版本[参阅 <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">how to install unstable package</a>]。</p></div>
     </a>
     <a name="comp-packages.change-thread-nothread">
       <div class="question"><p><b>Q7.3: 怎么把 Fink 的 XFree86 从非线程化的版本改为线程化的版本（或相反）？</b></p></div>
@@ -704,14 +700,14 @@ X11 文档有更多的<a href="http://fink.sourceforge.net/doc/x11/trouble.php#l
       <div class="answer"><p><b>A:</b> 
 你用 Fink 安装了一些软件包，这些软件包依赖于另外一个叫 passwd 的软件包。passwd 出于安全的原因在你的系统上增加了一些额外的用户－Unix 系统上，文件和进程由一些（不同的） "owners" 所有，这可以使得系统管理员可以微调系统的权限和安全性设置。
 象 Apache 和 MySQL 这样的程序需要有 "owner"，把这些守护进程由 root 来运行是不安全的（想像一下如果 Apache 被攻破而它又有对系统所有文件的写权限的情况）。
-因此，passwd 软件按照 Fink 软件包的需要建立了这些额外的用户。</p><p>如果在你的"系统预置：用户"面板里面突然出现了这些用户，那么要警惕，但不要那么着急去删除它们：
+因此，passwd 软件按照 Fink 软件包的需要建立了这些额外的用户。</p><p>如果在你的"系统预置：用户"(对 10.2)或"系统预置：帐号"(对 10.3)面板里面突然出现了这些用户，那么要警惕，但不要那么着急去删除它们：
 </p><ul>
           <li>首先，很明显你选择安装了那些需要这些用户的软件包，所以删除它们是不合情理的，不是吗？</li>
           <li>事实上，在 Mac OS X 里面已经有很多这些你不是很清楚的额外用户：www，daemon，nobody，只是其中的一部分。
 这些额外用户的存在是标准的 Unix 运行某些服务的方式；passwd 软件包只是添加了一些苹果没有提供的一些额外的用户。你可以在 NetInfo管理器程序或运行
 <tt style="white-space: nowrap;">niutil -list . /users</tt> 命令看到这些苹果定义的用户。
           </li>
-          <li>如果你的确决定要删除这些用户，那么你要很小心如何去做。使用 "系统预置：用户" 面板去删除会把它们拥有的文件随机分配给一个管理员帐号，而且的确已经发生过因此而造成的使用管理员帐号的大混乱。这是系统预置的一个软件缺陷，并已经被提交给苹果公司。一个从你的系统中删除这些用户的安全的办法是使用 NetInfo管理器程序或使用命令行工具 <tt style="white-space: nowrap;">niutil</tt>。阅读 <tt style="white-space: nowrap;">niutil</tt> 的帮助页可以获得关于 NetInfo　的更多信息。</li>
+          <li>如果你的确决定要删除这些用户，那么你要很小心如何去做。使用 "系统预置：用户" (对 10.2)或"系统预置：帐号"(对 10.3)面板去删除会把它们拥有的文件随机分配给一个管理员帐号，而且的确已经发生过因此而造成的使用管理员帐号的大混乱。这是系统预置的一个软件缺陷，并已经被提交给苹果公司。一个从你的系统中删除这些用户的安全的办法是使用 NetInfo管理器程序或使用命令行工具 <tt style="white-space: nowrap;">niutil</tt>。阅读 <tt style="white-space: nowrap;">niutil</tt> 的帮助页可以获得关于 NetInfo　的更多信息。</li>
         </ul><p>Fink 在你安装 passwd 软件包的时候<b>确实</b>曾经向你要求安装这些额外用户的许可， 所以这些用户的存在本不应该觉得奇怪的。
 </p></div>
     </a>
@@ -741,7 +737,10 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>
     </a>
     <a name="usage-general.x-options">
       <div class="question"><p><b>Q8.5: 我被 X11 的选择弄糊涂了：苹果 X11，XFree86，等等。我应该安装哪一个？</b></p></div>
-      <div class="answer"><p><b>A:</b> 这些都是 XFree86 的变种（它们都基于 XFree86 的代码），但之前有一些轻微的差别。苹果的 X11，从 XFree86-4.2.1 修改而来，而 XFree86-4.3 比标准的 XFree86-4.2.1.1 要快，但后者就更稳定。另外，还有对 4.2.1.1 的修订来添加进线程的支持，这对一些软件包来说是必须的。</p><p>现在，在 Panther 下，苹果的 X11 （在第三张光盘上）是唯一的选择。不要忘记同时安装 X11 SDK （在 XCode 光盘上），如果你希望编译程序。</p><p>在 Jaguar 下，多数的选择是通过 Fink 安装的：</p><ul>
+      <div class="answer"><p><b>A:</b> 这些都是 XFree86 的变种（它们都基于 XFree86 的代码），但相互之间有一些轻微的差别。对于在 Panther 和 Jaguar 下有不同的可选方式。在 Panther 下你可以选择：</p><ul>
+        <li><p>苹果的 X11 （在第三张光盘上）。不要忘记同时安装 X11 SDK （在 XCode 光盘上），如果你希望编译程序，或着你希望用 Fink 从源代码安装和 X 有关的软件包。</p></li>
+        <li><p>Fink 的 4.4.x 版本。安装 xfree86 和 xfree86-shlibs 软件包。</p></li>
+        </ul><p>在 Jaguar 下，多数的选择是通过 Fink 安装的：</p><ul>
           <li>
             <p>Fink 的 4.2.x 版：安装 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 或 <tt style="white-space: nowrap;">xfree86-base-threaded</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> （以及相应的 <tt style="white-space: nowrap;">-shlibs</tt>）</p>
           </li>
@@ -749,7 +748,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>
             <p>Fink 的 4.3.x 版：安装 <tt style="white-space: nowrap;">xfree86</tt> 和 <tt style="white-space: nowrap;">xfree86-shlibs</tt> 软件包</p>
           </li>
           <li>
-            <p>苹果的 4.2.x 版（安装了用户和 SDK 软件包）： 安装 <tt style="white-space: nowrap;">system-xfree86</tt> 软件包</p>
+            <p>苹果的 4.2.x 版（假设你安装了用户和 SDK 软件包）： system-xfree86 软件包是自动产生的，不要去安装它。(注意苹果的 X11 Jaguar 公开测试版已经不再提供，所以除非你在以前可以获得的时候已经安装了它，这才可以是一个选择。</p>
           </li>
         </ul><p>还有另外一些选择。在 <a href="http://fink.sourceforge.net/doc/x11/index.php">运行 X11 的文档</a>里面有专门的叙述。</p></div>
     </a>
@@ -965,4 +964,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.zh.xml,v 1.12 2004/05/10 02:20:50 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.zh.xml,v 1.13 2004/05/31 19:53:35 jeff_yecn Exp $</i></p></body></html>
