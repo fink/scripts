@@ -88,6 +88,7 @@ foreach $package (Fink::Package->list_packages()) {
 	    'name' => $vo->get_name(),
 	    'version' => $vo->get_version(),
 	    'revision' => $vo->get_revision(),
+	    'epoch' => $vo->{_epoch},
 	    'descshort' => $vo->get_shortdescription(),
 	    'desclong' => $desc,
 	    'maintainer' => $maintainer,

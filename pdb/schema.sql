@@ -24,6 +24,7 @@ create table package (
  parentname varchar(64),
  version varchar(64) not null,
  revision varchar (16) not null,
+ epoch tinyint not null default '0',
  section varchar(32) not null,
  descshort varchar(80) not null default '',
  desclong text,
