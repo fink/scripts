@@ -86,7 +86,7 @@ finkdev% fink validate /sw/fink/dists/local/main/binary-darwin-powerpc/nomdupaqu
 finkdev% fink install nomdupaquet
 </pre>
 <p>et testez les fonctionnalités de votre paquet.</p>
-<p>Si le processus échoue lors d'une des étapes ci-dessus, essayez de corriger les erreurs et recommencez le processus à partir de l'étape fink validate step.</p>
+<p>Si le processus échoue lors d'une des étapes ci-dessus, essayez de corriger les erreurs et recommencez le processus à partir de l'étape fink validate.</p>
 
 <h3><a name="howtostart.Submitt">1.4 Soumission de votre paquet</a></h3>
 <p>Si toutes les étapes de vérification de votre paquet énoncées ci-dessus ont réussi, vous pouvez soumettre le fichier info (et le fichier patch s'il existe) au <a href="http://sourceforge.net/tracker/?func=add&amp;group_id=17203&amp;atid=414256">Traqueur de soumissions de paquets</a>.</p>
@@ -95,8 +95,8 @@ finkdev% fink install nomdupaquet
 <ul>
 <li>Si possible, ajoutez plusieurs éléments à la fois à la même soumission (c'est-à-dire les fichiers info et patch).</li>
 <li>Ajoutez un commentaire mentionnant que votre paquet est prévu pour l'arborescence 10.2-gcc3.3, 10.3  ou pour les deux</li>
-<li>dans quelle section (graphics, sci, etc...) vous pensez qu'il doit être mis</li>
-<li>que vous avez exécuté fink validate sur les fichiers info et .deb.</li>
+<li>Indiquez dans quelle section (graphics, sci, etc...) vous pensez qu'il doit être mis</li>
+<li>Notez que vous avez exécuté fink validate sur les fichiers info et .deb.</li>
 <li>Positionnez le champ Group de l'élément sur Undergoing Validation à la création de l'élément. Repositionnez-le sur Undergoing Validation quand vous modifiez les fichiers après qu'un examinateur de soumissions de paquets vous ait demandé de corriger des problèmes dans votre paquet.</li>
 </ul>
 
@@ -107,7 +107,7 @@ finkdev% fink install nomdupaquet
 
 
 <h3><a name="example.Basics">2.1 Préparation</a></h3>
-<p>Tout d'abord Maxwell. Ouvrez votre éditeur de text et commençons. Nous connaissons le nom du paquet, sa version et l'endroit où est situé l'archive tar source. Entrons donc ces informations dans la fenêtre de l'éditeur de texte :</p>
+<p>Tout d'abord Maxwell. Ouvrez votre éditeur de texte et commençons. Nous connaissons le nom du paquet, sa version et l'endroit où est située l'archive tar source. Entrons donc ces informations dans la fenêtre de l'éditeur de texte :</p>
 <pre>
 Package: maxwell
 Version: 0.5.1
@@ -149,7 +149,7 @@ Reading package info...
 Updating package index... done.
 Information about 3377 packages read in 30 seconds.
 WARNING: No MD5 specified for Source of package maxwell-0.5.1-1 \
-Maintainer: John Doe &lt;jdoe@example.com&gt;
+Maintainer: Paul Dupont &lt;pdupont@exemple.com&gt;
 curl -f -L -O http://distfiles.opendarwin.org/maxwell-0.5.1.tar.gz
   % Total    % Received % Xferd  Average Speed          Time             Curr.
                                  Dload  Upload Total    Current  Left    Speed
@@ -170,7 +170,7 @@ curl -f -L -O http://west.dl.sourceforge.net/sourceforge/maxwell/maxwell-0.5.1.t
                                  Dload  Upload Total    Current  Left    Speed
 100  7856  100  7856    0     0  19838      0  0:00:00  0:00:00  0:00:00 6511k
 </pre>
-<p>L'archive tar ne peut être téléchargée à partir des miroirs de Fink, car le paquet n'a pas encore été ajoutée à la distribution. C'est pourquoi il faut changer de miroir et sélectionner l'option 5. Voir les <a href="http://fink.sourceforge.net/faq/comp-general.php#master-problems">Q.F.P.</a> pour de plus amples informations à ce sujet.</p>
+<p>L'archive tar ne peut être téléchargée à partir des miroirs de Fink, car le paquet n'a pas encore été ajouté à la distribution. C'est pourquoi il faut changer de miroir et sélectionner l'option 5. Voir les <a href="http://fink.sourceforge.net/faq/comp-general.php#master-problems">Q.F.P.</a> pour de plus amples informations à ce sujet.</p>
 <p>Maintenant nous pouvons calculer la somme de contrôle md5 en exécutant md5 /sw/src/maxwell-0.5.1.tar.gz, et l'ajouter à notre fichier .info</p>
 <pre>
 Source-MD5: ce5c354b2fed4e237524ad0bc59997a3
@@ -264,8 +264,8 @@ dpkg-deb -b root-maxwell-0.5.1-1 /sw/fink/dists/local/main/binary-darwin-powerpc
 dpkg-deb: building package `maxwell' in \
 `/sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb'.
 </pre>
-<p>Fink semble avoir tout installé au bon endroit : /sw/src/root-maxwell-0.5.1-1 à partir de l'emplacement où le paquet binairemaxwell_0.5.1-1_darwin-powerpc.deb a été construit.</p>
-<p>Notez aussi que fink inclue automatiquement certains drapeaux de compilation pour lui permettre d'accéder à d'autres paquets fink (par exemple -I/sw/include).</p>
+<p>Fink semble avoir tout installé au bon endroit : /sw/src/root-maxwell-0.5.1-1 à partir de l'emplacement où le paquet binaire maxwell_0.5.1-1_darwin-powerpc.deb a été construit.</p>
+<p>Notez aussi que fink inclut automatiquement certains drapeaux de compilation pour lui permettre d'accéder à d'autres paquets fink (par exemple -I/sw/include).</p>
 <p>Regardons ce qu'il y a à l'intérieur du paquet binaire :</p>
 <pre>
 finkdev% dpkg -c \
@@ -309,7 +309,7 @@ Warning: File installed into deprecated directory /sw/man/
 Warning: File installed into deprecated directory /sw/man/
                                         Offender is /sw/man/man8/maxwell.8
 </pre>
-<p>Heu ! Quelque chose ne va pas. Consultons encore le <a href="http://fink.sourceforge.net/doc/packaging/fslayout.php#fhs">Guide de construction des paquets</a>. On y voit que les pages man doivent être installées dans /sw/share/man et les fichiersREADME dans /sw/share/doc/%n. Si nous ouvrons le Makefile de maxwell, nous voyons que nous pouvons définir les répertoires mandir et datadir :</p>
+<p>Heu ! Quelque chose ne va pas. Consultons encore le <a href="http://fink.sourceforge.net/doc/packaging/fslayout.php#fhs">Guide de construction des paquets</a>. On y voit que les pages man doivent être installées dans /sw/share/man et les fichiers README dans /sw/share/doc/%n. Si nous ouvrons le Makefile de maxwell, nous voyons que nous pouvons définir les répertoires mandir et datadir :</p>
 <pre>
 prefix = /usr/local
 mandir = ${prefix}/man
@@ -326,7 +326,7 @@ make install prefix=%i mandir=%i/share/man datadir=%i/share/doc/%n
 finkdev% fink rebuild maxwell
 </pre>
 <p>(On utilise fink rebuild car fink build ne ferait rien du tout, puisque le paquet a déjà été construit.)</p>
-<p>Revérifiez le contenu du fichier .deb (avec dpkg -c) pour voir où les fichiers sont installés maintenant. Puis validez de nouveau le fichier .deb fink validate. Si tout se passe bien, vous pouvez installer le nouveau paquet avec :</p>
+<p>Revérifiez le contenu du fichier .deb (avec dpkg -c) pour voir où les fichiers sont installés maintenant. Puis validez de nouveau le fichier .deb avec fink validate. Si tout se passe bien, vous pouvez installer le nouveau paquet avec :</p>
 <pre>
 finkdev% fink install maxwell
 /usr/bin/sudo /sw/bin/fink  install maxwell
@@ -351,4 +351,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.1 2004/07/16 08:49:17 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.2 2004/07/16 10:52:49 michga Exp $</i></p></body></html>
