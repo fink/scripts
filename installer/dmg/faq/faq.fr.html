@@ -284,7 +284,9 @@ sudo dpkg -i fink_0.22.4-1_darwin-powerpc.deb
 rm fink_0.22.4-1_darwin-powerpc.deb
 fink selfupdate</pre></li>
 <li><b>10.2.x :</b> (distribution 0.6.3)
-<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.6.3/release/main/binary-darwin-powerpc/base/fink_0.18.3-1_darwin-powerpc.deb
+<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/\
+fink-0.6.3/release/main/binary-darwin-powerpc/base\
+/fink_0.18.3-1_darwin-powerpc.deb
 sudo dpkg -i fink_0.18.3-1_darwin-powerpc.deb
 rm fink_0.18.3-1_darwin-powerpc.deb
 fink selfupdate</pre></li>
@@ -500,13 +502,13 @@ undefined reference to _FT_Access_Frame</pre><p>vous êtes probablement en prés
 <a name="comp-general.dlfcn-from-oo">
 <div class="question"><p><b>Q6.16: Messages d'erreur concernant `Dl_info'.</b></p></div>
 <div class="answer"><p><b>A:</b> Si vous avez des messages d'erreur similaire à celui-ci :</p><pre>unix_dl.c: In function `rep_open_dl_library':
-unix_dl.c:328: warning: assignment discards qualifiers from pointer \
-target type 
+unix_dl.c:328: warning: assignment discards qualifiers from \
+pointer target type 
 unix_dl.c: In function `rep_find_c_symbol': 
 unix_dl.c:466: error: `Dl_info' undeclared (first use in this \
 function)
-unix_dl.c:466: error: (Each undeclared identifier is reported only \
-once 
+unix_dl.c:466: error: (Each undeclared identifier is reported \
+only once 
 unix_dl.c:466: error: for each function it appears in.)
 unix_dl.c:466: error: parse error before "info" 
 unix_dl.c:467: error: `info' undeclared (first use in this function) 
@@ -749,8 +751,8 @@ sudo apt-get install fink</pre>
 </a>
 <a name="usage-packages.special-x11-debug">
 <div class="question"><p><b>Q9.13: Problèmes persistents entre X11 et Fink</b></p></div>
-<div class="answer"><p><b>A:</b> Si les solutions données aux sections <a href="#usage-packages.apples-x11-wants-xfree86">Fink continue à vouloir installer XFree86 ou X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">Fink veut installer XFree86</a> ne résolvent pas votre problème, ou ne sont pas applicables à votre cas, vous devrez supprimer entièrement X11 et tous les paquets fantômes antérieurs ainsi que les paquets relatifs à X11, qu'ils soient installés partiellement ou non  :</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
-xorg xorg-shlibs xfree86 xfree86-shlibs \
+<div class="answer"><p><b>A:</b> Si les solutions données aux sections <a href="#usage-packages.apples-x11-wants-xfree86">Fink continue à vouloir installer XFree86 ou X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">Fink veut installer XFree86</a> ne résolvent pas votre problème, ou ne sont pas applicables à votre cas, vous devrez supprimer entièrement X11 et tous les paquets fantômes antérieurs ainsi que les paquets relatifs à X11, qu'ils soient installés partiellement ou non  :</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 \
+system-xfree86-43 xorg xorg-shlibs xfree86 xfree86-shlibs \
 xfree86-base xfree86-base-shlibs xfree86-rootless \
 xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
@@ -771,4 +773,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.44 2005/02/23 07:50:12 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.45 2005/02/23 08:22:31 michga Exp $</i></p></body></html>
