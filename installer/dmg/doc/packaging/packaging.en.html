@@ -1787,6 +1787,20 @@ As of fink &gt; 0.13.7, this parameter will also work with perl modules
 <tt style="white-space: nowrap;">Type: Perl</tt>, and will append to the default perl Makefile.PL
 string.
 </p>
+<p>
+  Starting in fink-0.22.0, this field supports conditionals. The
+  syntax is the same as that used in the <tt style="white-space: nowrap;">Depends</tt> and
+  other package-list fields. The conditional expression only applies
+  to the whitespace-delimited "word" immediately following
+  it. For example
+</p>
+<pre>
+Type: -x11 (boolean)
+ConfigureParams: --mandir=%p/share/man (%type_pkg[-x11]) --with-x11 --disable-shared
+</pre>
+<p>
+  will always pass the <tt style="white-space: nowrap;">--mandir</tt> and <tt style="white-space: nowrap;">--disable-shared</tt> flags, but only pass <tt style="white-space: nowrap;">--with-x11</tt> in the -x11 variant.
+</p>
 </td></tr><tr valign="top"><td>GCC</td><td>
 <p>
 The required version of the gcc compiler to use.  Allowed values are: 
@@ -2300,4 +2314,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.48 2004/09/07 11:52:24 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.49 2004/09/07 12:28:47 dmacks Exp $</i></p></body></html>
