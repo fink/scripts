@@ -536,25 +536,24 @@ SplitOff: &lt;&lt;
 
 
 <h3><a name="policy.perlmods">3.4 Perl 模块</a></h3>
-<p>Fink 对 perl 模块有一个新的规则，它从 2003 年 5 月开始生效。
+<p>Fink 从 2003 年 5 月开始实施的对 perl 模块的规则，在 2004 年 4 月进行了修改。
 </p><p>
 传统上，关于 perl 模块的 Fink 软件包具有
 <tt style="white-space: nowrap;">-pm</tt> 后缀，并使用 <tt style="white-space: nowrap;">Type: perl</tt> 
 指令来构建，它把 perl 模块的文件保存在 <tt style="white-space: nowrap;">/sw/lib/perl5</tt> 和/或
-<tt style="white-space: nowrap;">/sw/lib/perl5/darwin</tt>中。而在新的规则下，这个存储位置仅允许用于那些与编译它们的 perl 程序版本无关的 perl 模块。
+<tt style="white-space: nowrap;">/sw/lib/perl5/darwin</tt>中。按照现行规则，这个存储位置仅允许用于那些与编译它们的 perl 程序版本无关的 perl 模块(同时也不应该依赖于那些不具备版本无关性的其它模块)。
 </p><p>
 那些版本相关的 perl 模块称为 XS 模块，
 通常除了纯粹的 perl 子程序外，还包括编译好的 C 代码。有很多办法可以识别这个情况，包括存在带有 <tt style="white-space: nowrap;">.bundle</tt> 后缀的文件等。
 </p><p>
 版本相关的 perl 模块必须使用标明版本号的 perl 程序来编译，比方说 <tt style="white-space: nowrap;">perl5.6.0</tt>，而且必须把它的文件标准 perl 目录下面的一个标明版本号的子目录中，例如
-<tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> 和 <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt>。一个使用后缀 <tt style="white-space: nowrap;">-pm560</tt> 的新命名约定被引入来代表针对 5.6.0 的 perl 模块。类似的存储和命名约定也会用于其它版本的 perl，如果说很快会包括的 
-perl 5.6.1 和 perl 5.8.0。  
+<tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> 和 <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt>。习惯上，使用后缀 <tt style="white-space: nowrap;">-pm560</tt> 的命名约定来代表针对 5.6.0 的 perl 模块。类似的存储和命名约定也会用于其它版本的 perl，包括 perl 5.6.1 (仅用于 10.2 代码树)和 perl 5.8.0，perl 5.8.1 和 perl 5.8.4(即将使用)。  
 </p><p>
-新的 <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> 指令会自动使用相应标定版本的 perl 程序，并把文件存储在正确的子目录中。
-(这个指令从 fink 0.13.0 版本开始提供)。</p><p>
-可以允许创建一个 <tt style="white-space: nowrap;">-pm</tt> 软件包，它实际是去加载 <tt style="white-space: nowrap;">-pm560</tt> 或其它存在的相应版本的"束"软件包。我们通过提供一个平滑升级的方法，来鼓励对现存的 XS 模块使用这个策略，。
-</p><p>
-从 fink 0.13.0 版本开始，对 <tt style="white-space: nowrap;">.deb</tt> 文件使用 <tt style="white-space: nowrap;">fink validate</tt> 命令的时候，将会检查这个 fink 软件包是否一个安装在没有标定版本的目录中的 XS 模块，如果是的话，将给出一个警告信息。
+<tt style="white-space: nowrap;">Type: perl 5.6.0</tt> 指令会自动使用相应标定版本的 perl 程序，并把文件存储在正确的子目录中。
+(这个指令从 fink 0.13.0 版本开始提供)。</p>
+<p>按照 2003 年 5 月的规则，可以允创建一个 <tt style="white-space: nowrap;">-pm</tt> 软件包，它实际是去加载 <tt style="white-space: nowrap;">-pm560</tt> 或其它存在的相应版本的"束"软件包。按照 2004 年 4 月的规则，不再鼓励这样做，而且经过一个过渡期后，将会完全放弃这种做法。(唯一的例外是 <tt style="white-space: nowrap;">storable-pm</tt> 软件包因为自举的需要仍然需要保持这种形式)。</p>
+<p>对于 fink 0.20.1，如果当前 perl 版本号至少是 5.8.0 的时候，system-perl 虚拟软件包会自动”提供”一些 perl 模块。对于 system-perl-5.8.1-1，它们是：<b>attribute-handlers-pm, cgi-pm, digest-md5-pm581, file-spec-pm, file-temp-pm, filter-simple-pm581, filter-util-pm581, getopt-long-pm, i18n-langtags-pm, libnet-pm, locale-maketext-pm, memoize-pm, mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm, test-simple-pm, time-hires-pm581。</b></p>
+<p>从 fink 0.13.0 版本开始，对 <tt style="white-space: nowrap;">.deb</tt> 文件使用 <tt style="white-space: nowrap;">fink validate</tt> 命令的时候，将会检查这个 fink 软件包是否一个安装在没有标定版本的目录中的 XS 模块，如果是的话，将给出一个警告信息。
 </p>
 
 
@@ -860,11 +859,13 @@ CompileScript:  &lt;&lt;
 注意，其实没有办法去表达真正的可选依赖关系。
 如果一个软件包在有和没有另外一个软件包的情况下都可以工作，你必需要么确定即使有那个软件包存在的情况下都不会去使用它，或者把它添加到依赖关系字段中。
 如果你想提供给用户两种选择，你应该使用两个软件包，例如：wget 和 wget-ssl。
-</p><p>
+</p>
+<p>操作顺序：在逗号分隔的列表中的每个软件包(或替代关系的集合)中，逻辑"OR"(可替代项的列表)具有比逻辑"AND"更优先的操作次序。不象算术中可以使用括号，没有办法特别在 <tt style="white-space: nowrap;">Depends</tt> 或类似的字段中指明某个软件包组具有优先的次序。</p>
+<p>
 从 fink 的 0.18.2 后 CVS 版本开始，你可以使用条件依赖关系。它通过在软件包名字前面放置
-<tt style="white-space: nowrap;">(string1 op string2)</tt> 来指定。首先会对这两个字符串进行通常的百分号展开，然后这两个字符串会按照 <tt style="white-space: nowrap;">op</tt> 运算符进行比较：&lt;&lt;， &lt;=，=，!=，&gt;&gt;，&gt;=。只有在比较的结果为真的时候，后面的软件包才会被认为是一个依赖关系。
+<tt style="white-space: nowrap;">(string1 op string2)</tt> 来指定。首先会对这两个字符串进行通常的百分号展开，然后这两个字符串(都不能为空)会按照 <tt style="white-space: nowrap;">op</tt> 运算符进行比较：&lt;&lt;， &lt;=，=，!=，&gt;&gt;，&gt;=。只有在比较的结果为真的时候，后面的软件包才会被认为是一个依赖关系。
 </p><p>
-你可以使用这个格式来简化维护几个类似的软件包的工作。例如，elinks 和 elinks-ssl 里面都可以这样写：
+你可以使用这个格式来简化维护几个类似的软件包的工作。例如，elinks 和 elinks-ssl 包里面都可以这样写：
 </p>
 <pre>Depends: (%n = elinks-ssl) openssl097-shlibs, expat-shlibs</pre>
 <p>
@@ -875,7 +876,15 @@ CompileScript:  &lt;&lt;
 elinks-ssl 中写：
 </p>
 <pre>Depends: openssl097-shlibs, expat-shlibs</pre>
-<p>是等价的。</p></td></tr><tr valign="top"><td>BuildDepends</td><td>
+<p>是等价的。</p>
+<p>作为替代的语法格式，如果 <tt style="white-space: nowrap;">string</tt> 不为空的话，你也可以指定 <tt style="white-space: nowrap;">(string)</tt> 为"true"。例如：</p>
+<pre>
+package: nethack%type_pkg[-x11]
+Type: -x11 (boolean)
+Depends: (%type_pkg[-x11]) x11
+</pre>
+<p>会把软件包 X11 设为 nethack-x11 变量的一个依赖关系，而不是 nethack。</p>
+</td></tr><tr valign="top"><td>BuildDepends</td><td>
 <p>
 <b>从 fink 0.9.0 开始。</b>
 只在编译时需要的依赖关系的清单。
@@ -1501,4 +1510,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.10 2004/04/19 13:04:44 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.11 2004/05/17 22:43:19 jeff_yecn Exp $</i></p></body></html>
