@@ -90,7 +90,7 @@ mv pkginfo $fullname/
 
 echo "Creating tarball $fullname.tar:"
 rm -f $fullname.tar $fullname.tar.gz
-tar -cvf $fullname.tar $fullname
+gnutar -cvf $fullname.tar $fullname
 echo "Compressing tarball $fullname.tar.gz..."
 gzip -9 $fullname.tar
 
