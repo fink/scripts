@@ -45,9 +45,10 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 	</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
 これは何ですか?</a></li><li><a href="#comp-general.cvs">6.2 "fink selfupdate-cvs" をしようとしたら、このメッセージが出てきました: "cvs: Command not found."
 </a></li><li><a href="#comp-general.missing-make">6.3 <tt style="white-space: nowrap;">make</tt> に関連したエラーがでました。</a></li><li><a href="#comp-general.head">6.4 head コマンドから変な使用方法メッセージが出ています。何がおかしいのですか?</a></li><li><a href="#comp-general.also_in">6.5 あるパッケージをインストールしようとすると、他のパッケージのファイルを上書きしようとしているというエラーメッセージが出ました。
-</a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: I get messages about "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local にインストールされているライブラリやヘッダが 
+</a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local にインストールされているライブラリやヘッダが 
 	Fink のビルドの問題を起こすことがあると聞いたけど、本当ですか?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
-</a></li><li><a href="#comp-general.fc-atlas">6.11 atlas をインストールしようとすると、 Fink Commander がハングアップします。</a></li><li><a href="#comp-general.basic-headers">6.12 <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからないというメッセージが出ます。
+</a></li><li><a href="#comp-general.fc-atlas">6.11 atlas をインストールしようとすると、 Fink Commander がハングアップします。</a></li><li><a href="#comp-general.basic-headers">6.12 <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
+あるいは、"C compiler cannot create executables" というメッセージが出ます。
 これはどこにありますか?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
 というメッセージが出て、何もインストールできません!</a></li><li><a href="#comp-general.freetype-problems">6.15 freetype に関係したエラーが出ます。</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 `Dl_info' のエラーが出ます。</a></li><li><a href="#comp-general.gcc2">6.17 Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</a></li><li><a href="#comp-general.system-java">6.18 Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
 と言っていますが、そのようなパッケージはありません。
@@ -367,7 +368,6 @@ unstable を使用する場合、何か上手くいったら（上手くいか�
 これで Fink のパッケージリストがアップデートされます。
 この後、 rsync に戻したい場合、 <tt style="white-space: nowrap;">fink selfupdate-rsync</tt> を実行します。</p></div>
 </a>
-
 <a name="usage-fink.sudo">
 <div class="question"><p><b>Q5.9: sudo でパスワードを何度も何度も入力するのは疲れます。何か良い方法はありませんか?</b></p></div>
 <div class="answer"><p><b>A:</b> sudo がパスワードを聞いてこないように設定することができます。
@@ -414,7 +414,8 @@ Failed: Updating using CVS failed. Check the error messages above.</pre><p>あ�
 cvs update: cannot open CVS/Entries for reading: No such file or directory
 cvs server: Updating 10.2/stable/main
 cvs update: cannot write 10.2/stable/main/.cvsignore: Permission denied
-cvs [update aborted]: cannot make directory 10.2/stable/main/finkinfo: No such file or directory
+cvs [update aborted]: cannot make directory 10.2/stable/main/finkinfo: No 
+such file or directory
 ### execution of su failed, exit code 1
 Failed: Updating using CVS failed. Check the error messages above.
 </pre><p>が出ます。この場合は cvs ディレクトリをリセットする必要があります。コマンド:</p><pre>sudo find /sw/fink -type d -name 'CVS' -exec rm -rf {} \;
@@ -516,15 +517,16 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 。この時点ではまだインストールはされていません。</p><p>.deb ファイルを作成したら、ファイルを再構築することができます。
 まず、 root になるために <tt style="white-space: nowrap;">sudo -s</tt> と入力します (必要があれば管理ユーザーパスワードを入力する) 。
 次に、このコマンドを入力します (一行で - 画面上では複数行になっていますが)
-</p><pre>dpkg -c <b>full-path-to-debfile</b>
-  | awk '{if ($6 == "./"){ print "/."; } else if (substr($6, length($6), 1) == "/")
-    {print substr($6, 2, length($6) - 2); } else { print substr($6, 2, length($6) - 1);}}'
-  &gt; /sw/var/lib/dpkg/info/<b>packagename</b>.list</pre><p>例えば、</p><pre>dpkg -c
-        /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb | awk '{if
-        ($6 == "./") { print "/."; } else if (substr($6, length($6), 1) ==
-        "/") {print substr($6, 2, length($6) - 2); } else { print substr($6,
-        2, length($6) - 1);}}' &gt;
-        /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p>このコマンドは、 .deb ファイルの中身を解凍して、ファイル名以外を除いて .list ファイルに書き込んでいます。</p></div>
+</p><pre>dpkg -c <b>full-path-to-debfile</b>  | awk '{if ($6 == "./"){ print "/."; } \
+else if (substr($6, length($6), 1) == "/") \
+{print substr($6, 2, length($6) - 2); } \
+else { print substr($6, 2, length($6) - 1);}}' \
+&gt; /sw/var/lib/dpkg/info/<b>packagename</b>.list</pre><p>例えば、</p><pre>dpkg -c /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb | awk \
+'{if ($6 == "./") { print "/."; } \
+else if (substr($6, length($6), 1) == "/") \
+{print substr($6, 2, length($6) - 2); } \
+else { print substr($6, 2, length($6) - 1);}}' \
+&gt; /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p>このコマンドは、 .deb ファイルの中身を解凍して、ファイル名以外を除いて .list ファイルに書き込んでいます。</p></div>
 </a>
 <a name="usage-fink.error-nineteen">
 <div class="question"><p><b>Q5.19: Fink バイナリインストーラを使うと、ウィンドウ中に大きく "19" と出て、何もインストールできません。</b></p></div>
@@ -655,7 +657,6 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 「<b>情報を見る</b>」し、 "所有権を無視する" を外します。
 </p></div>
 </a>
-
 <a name="usage-fink.mirror-gnu">
 <div class="question"><p><b>Q5.29: 
 	Fink がパッケージを更新しません。
@@ -678,7 +679,6 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 	これを削除するには:
 	</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
 </a>
-
 <h2><a name="comp-general">6 コンパイルの問題 - 一般</a></h2>
 
 
@@ -725,7 +725,7 @@ Fink を使うには、オリジナルの方の <tt style="white-space: nowrap;"
 </pre><p>ここで <b>filename</b> はインストールしようとしているパッケージ用の .deb ファイルです。</p></div>
 </a>
 <a name="comp-general.weak_lib">
-<div class="question"><p><b>Q6.6: December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: I get messages about "weak libraries"</b></p></div>
+<div class="question"><p><b>Q6.6: December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</b></p></div>
 <div class="answer"><p><b>A:</b> これは December 2002 Tools のものです。
 次のようなメッセージが出ることがあります (libgdk-pixbuf を例に選んでいます):</p><p>
 <tt style="white-space: nowrap;">ld: warning dynamic shared library: /sw/lib/libgdk-pixbuf.dylib not made a weak library in output with MACOSX_DEPLOYMENT_TARGET environment variable set to: 10.1</tt>
@@ -778,7 +778,8 @@ Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-s
 <div class="question"><p><b>Q6.10: パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
 </b></p></div>
 <div class="answer"><p><b>A:</b> このメッセージは重要なヒントです。
-メッセージはこのようなものだと思われます:</p><pre>ld: table of contents for archive: /sw/lib/libintl.a is out of date; rerun ranlib(1) (can't load from it)</pre><p>この問題を起こしているライブラリに (root で) ranlib を実行する必要があります。
+メッセージはこのようなものだと思われます:</p><pre>ld: table of contents for archive: /sw/lib/libintl.a is out of date; 
+rerun ranlib(1) (can't load from it)</pre><p>この問題を起こしているライブラリに (root で) ranlib を実行する必要があります。
 例えば、この例では:</p><pre>sudo ranlib /sw/lib/libintl.a</pre></div>
 </a>
 <a name="comp-general.fc-atlas">
@@ -787,10 +788,11 @@ Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-s
 代わりに <tt style="white-space: nowrap;">fink install atlas</tt> とする必要があります。</p></div>
 </a>
 <a name="comp-general.basic-headers">
-<div class="question"><p><b>Q6.12: <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからないというメッセージが出ます。
+<div class="question"><p><b>Q6.12: <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
+あるいは、"C compiler cannot create executables" というメッセージが出ます。
 これはどこにありますか?</b></p></div>
-<div class="answer"><p><b>A:</b> このヘッダは Developer Tools の DevSDK によって提供されるファイルです。
-<tt style="white-space: nowrap;">/Library/Receipts/DevSDK.pkg</tt> がシステムにあるか確認し、なければ  Dev Tools インストーラを起動してカスタムインストールを選択、 DevSDK パッケージをインストールして下さい。</p></div>
+<div class="answer"><p><b>A:</b> これらの問題は、いずれも Developer Tools の DevSDK によって提供されるヘッダファイルがないためです。
+<tt style="white-space: nowrap;">/Library/Receipts/DevSDK.pkg</tt> がシステムにあるか確認し、なければ  Dev Tools インストーラを起動してカスタムインストールを選択、 DevSDK パッケージをインストールして下さい。</p><p>"cannot create executables" エラーは、Developer Tools のバージョンが 以前のバージョンの OS 用である場合にも発生します。</p></div>
 </a>
 <a name="comp-general.multiple-dependencies">
 <div class="question"><p><b>Q6.13: Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</b></p></div>
@@ -803,9 +805,7 @@ Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-s
 <div class="question"><p><b>Q6.14: "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
 というメッセージが出て、何もインストールできません!</b></p></div>
 <div class="answer"><p><b>A:</b> これは dpkg データベースが壊れてしまったか、クラッシュか他のリカバーできないエラーが原因です。
-以前のバージョンのデータベースをコピーして直すことができます:</p><pre>
-sudo cp /sw/var/lib/dpkg/status-old /sw/var/lib/dpkg/status
-</pre><p>この問題が起きた最後の二つのパッケージを再インストールしたほうがよいでしょう。</p></div>
+以前のバージョンのデータベースをコピーして直すことができます:</p><pre>sudo cp /sw/var/lib/dpkg/status-old /sw/var/lib/dpkg/status</pre><p>この問題が起きた最後の二つのパッケージを再インストールしたほうがよいでしょう。</p></div>
 </a>
 <a name="comp-general.freetype-problems"> 
 <div class="question"><p><b>Q6.15: freetype に関係したエラーが出ます。</b></p></div> 
@@ -915,11 +915,11 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
 	</b></p></div>
 <div class="answer"><p><b>A:</b> 
-		これは、 Fink が <q>Master</q> と呼ばれるものを使おうとしたために発生しています。
+		これは、 Fink が <q>マスター</q> と呼ばれるものを使おうとしたために発生しています。
 		上流サイトが移動しても Fink パッケージのソースが入手できるための仕組みです。
 		この問題は、新しい上流バージョンのパッケージがリリースされたが、
 		まだ Master ミラーに反映されていない場合によくおこります。
-	</p><p>To remedy this, run <tt style="white-space: nowrap;">fink configure</tt> and set the search order to use Master mirrors last.</p></div>
+	</p><p>これを直すには、 <tt style="white-space: nowrap;">fink configure</tt> を実行し、マスターミラーを最後に検索するように設定を変更します。</p></div>
 </a>
 <a name="comp-general.compile-options">
 	<div class="question"><p><b>Q6.22: パッケージをビルドするときに、 Fink に違うオプションを使わせたい</b></p></div>
@@ -929,7 +929,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 			メンテナから反応がなかったり、新しいバージョンが出てしまったり、自分で違うオプションを試してみたい場合、
 			<a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> 
 			と <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a> をお読みください。
-		</p><p><b>Note:  </b>Fink is deliberately set up such that all official binaries are identical regardless of what machine they are built on, so things like G5 optimization won't happen with an official package.  If you want them, you'll have to do it yourself.</p></div>
+		</p><p><b>注記:</b>Fink は、ビルドされたマシンに依存しないよう、全ての公式パッケージにはG5 最適化などのことはされません。このようなことをしたい場合、各自でする必要があります。</p></div>
 </a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
 
@@ -939,7 +939,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 <div class="answer"><p><b>A:</b> これはログインスクリプト (例 <tt style="white-space: nowrap;">~/.cshrc</tt>) が "<tt style="white-space: nowrap;">echo Hello</tt>" であるとか <tt style="white-space: nowrap;">xttitle</tt> といったことをターミナルに書くと発生します。
 いちばん簡単な解決方法は、問題の行をコメントアウトすることです。
 </p><p>もし echo を残しておきたいなら、次のようにすることもできます:</p><pre>if ( $?prompt) then
-echo Hello
+       echo Hello
 endif</pre></div>
 </a>
 <a name="comp-packages.cant-install-xfree">
@@ -982,7 +982,6 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
 <div class="question"><p><b>Q7.4: KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</b></p></div>
 <div class="answer"><p><b>A:</b> このなんとも暗号のようなメッセージは、 December 2002 Developer Tools をインストールしろという意味です。</p></div>
 </a>
-
 <a name="comp-packages.libiconv-gettext">
 <div class="question"><p><b>Q7.5: <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</b></p></div>
 <div class="answer"><p><b>A:</b> 下記の形式のエラーでしたら:</p><pre>libtool: link: cannot find the library `/sw/lib/libiconv.la'</pre><p>以下のように実行して直すことが出来ます</p><pre>fink remove gettext-dev
@@ -1109,7 +1108,6 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>これを起動ファイル (
 	これ以外の選択は、 <a href="http://fink.sourceforge.net/doc/x11/index.php">Running X11 document</a> を参照してください。
 	</p></div>
 </a>
-
 <a name="usage-general.no-display">
 <div class="question"><p><b>Q8.6: アプリケーションを実行しようとすると、
 "cannot open display:"
@@ -1125,7 +1123,6 @@ Fink に推薦したいのですが、どうしたら良いですか?</b></p></d
 <div class="answer"><p><b>A:</b> <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Package Request Tracker</a>
 の Fink プロジェクトページから推薦してください。</p><p>注記: SourceFourge の ID が必要です。</p></div>
 </a>
-
 <a name="usage-general.virtpackage">
 <div class="question"><p><b>Q8.8: 
 	  <tt style="white-space: nowrap;">system-*</tt> "virtual packages" というのを時々見かけますが、
@@ -1202,7 +1199,6 @@ Fink に推薦したいのですが、どうしたら良いですか?</b></p></d
 	  </li>
 	</ul></div>
 </a>
-
 <h2><a name="usage-packages">9 パッケージ使用上の問題 - 特定のパッケージ</a></h2>
 
 
@@ -1370,7 +1366,6 @@ sudo apt-get install fink</pre>
 		</li>
 	</ul></div>
 </a>
-
 <a name="usage-packages.wants-xfree86-on-upgrade">
 <div class="question"><p><b>Q9.12: 
     10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
@@ -1394,7 +1389,6 @@ sudo apt-get install fink</pre>
     を参照してください。
     </p></div>
 </a>
-
 <a name="usage-packages.special-x11-debug">
 <div class="question"><p><b>Q9.13: まだ X11 と Fink の問題が解決されません。</b></p></div>
 <div class="answer"><p><b>A:</b> 
@@ -1411,7 +1405,7 @@ xfree86-rootless-threaded xfree86-rootless-threaded-shlibs
 rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg
 fink selfupdate; fink index</pre><p>
 		(最初の行で存在しないパッケージを削除しようとしているという警告が出ます)
-		次に、Apple X11 (および必要に応じて X11SDK) または XFree86 や X.org のような代替物を再インストールします。
+		次に、Apple X11 (および必要に応じて X11SDK) または XFree86 や X.org のようなX互換パッケージを再インストールします。
 		</p><p>
 		これでも問題があり、 <tt style="white-space: nowrap;">fink-0.19.0</tt> 以降を使っている場合、
 		</p><pre>fink-virtual-pkgs --debug</pre><p>で何が不足しているかの情報が得られます。</p><p>
@@ -1425,7 +1419,6 @@ fink selfupdate; fink index</pre><p>
           </li>
         </ul></div>
 </a>
-
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
