@@ -23,6 +23,31 @@
 
 ### configuration
 
+#!/bin/sh -e
+#
+# dist-module.sh - make release tarballs for one CVS module
+#
+# Fink - a package manager that downloads source and installs it
+# Copyright (c) 2001 Christoph Pfisterer
+# Copyright (c) 2001-2003 The Fink Package Manager Team
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+
+### configuration
+
 cvsroot=':pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink'
 
 ### init
@@ -39,7 +64,8 @@ tag=$4
 if [ -z "$tag" ]; then
   tag=release_`echo $version | sed 's/\./_/g'`
 fi
-fullname="$module-$version"
+modulename=`echo $module | sed 's/\//-/g'`
+fullname="$modulename-$version"
 
 echo "packaging $module release $version, CVS tag $tag"
 
@@ -99,16 +125,16 @@ ls -l *.tar.gz
 ### create package description file
 
 echo " "
-echo "Creating package description file $module.info:"
+echo "Creating package description file $modulename.info:"
 
 md5=`/sbin/md5 -q $fullname.tar.gz`
-/usr/bin/sed -e 's/\@VERSION\@/'$version'/' -e 's/\@REVISION\@/1/' -e 's/\@MD5\@/'$md5'/' -e 's,%n-%v.tar,mirror:custom:fink/%n-%v.tar.gz,' -e 's/NoSourceDirectory: true//' <$fullname/$module.info.in >$module.info
+/usr/bin/sed -e 's/\@VERSION\@/'$version'/' -e 's/\@REVISION\@/1/' -e 's/\@MD5\@/'$md5'/' -e 's,%n-%v.tar,mirror:custom:fink/%n-%v.tar.gz,' -e 's/NoSourceDirectory: true//' <$fullname/$modulename.info.in >$modulename.info
 
-echo "CustomMirror: <<"  >> $module.info
-echo " Primary: http://west.dl.sourceforge.net/sourceforge/" >> $module.info
-echo " nam-US: http://us.dl.sourceforge.net/sourceforge/" >> $module.info
-echo " eur: http://eu.dl.sourceforge.net/sourceforge/" >> $module.info
-echo "<<" >> $module.info
+echo "CustomMirror: <<"  >> $modulename.info
+echo " Primary: http://west.dl.sourceforge.net/sourceforge/" >> $modulename.info
+echo " nam-US: http://us.dl.sourceforge.net/sourceforge/" >> $modulename.info
+echo " eur: http://eu.dl.sourceforge.net/sourceforge/" >> $modulename.info
+echo "<<" >> $modulename.info
 
 echo "Done:"
 ls -l *.info

@@ -23,24 +23,25 @@ A: Done in exactly the same way.
 
 Q: How do I make a full distribution source release?
 
-A: Assume you want to release the distribution release 0.5.0, and also assume
-that the current version of the package manager is 0.11.0. 
+A: Assume you want to release the distribution release 0.7.1, under 
+distribution 10.3, and also assume that the current version of the package 
+manager is 0.21.2. 
 
 In the following I assume you are in the directory containing the checkouts.
 
 
-  cd dists
-  echo "0.5.0.cvs" >VERSION
+  cd dists/10.3
+  echo "0.7.1.cvs" >VERSION
    -> now edit the ChangeLog as well
   cvs commit
-  cvs tag release_0_5_0
+  cvs tag release_0_7_1
   cd ../scripts/srcdist
-  ./dist-module.sh dists 0.5.0
-    -> this produces /tmp/dists-0.5.0.tar.gz
-  ./dist-full.sh 0.5.0 0.11.0
-    -> this produces /tmp/fink-0.5.0-full.tar.gz
+  ./dist-module.sh dists/10.3 0.7.1
+    -> this produces /tmp/dists-10.3-0.7.1.tar.gz
+  ./dist-full.sh 0.7.1 0.21.2 10.3
+    -> this produces /tmp/fink-0.7.1-full.tar.gz
 
 ---------------------------------------------------------------------------------
 
 This HOWTO was written by Max Horn, largely based on some instructions given
-by Christoph Pfisterer. Use at your own risk.
+by Christoph Pfisterer. Use at your own risk.  Modified by Dave Morrison.

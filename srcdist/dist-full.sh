@@ -27,13 +27,14 @@ cvsroot=':pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink'
 ### init
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $0 <dist-version> <fink-version> [<temporary-directory>]"
+  echo "Usage: $0 <dist-version> <fink-version> <distribution> [<temporary-directory>]"
   exit 1
 fi
 
 dversion=$1
 fversion=$2
-tmpdir=${3:-/tmp}
+distribution=$3
+tmpdir=${4:-/tmp}
 ptag=release_`echo $dversion | sed 's/\./_/g'`
 ftag=release_`echo $fversion | sed 's/\./_/g'`
 
@@ -41,6 +42,7 @@ fullname="fink-$dversion-full"
 
 echo "packaging full release $dversion, CVS tag $ptag"
 echo "using package manager $fversion, CVS tag $ftag"
+echo "and restricting files to the $distribution distribution"
 
 ### setup temp directory
 
@@ -63,8 +65,8 @@ if [ ! -d $fullname ]; then
   exit 1
 fi
 
-echo "Exporting module dists, tag $ptag from CVS:"
-cvs -d "$cvsroot" export -r "$ptag" -d pkginfo dists
+echo "Exporting module dists/$distribution, tag $ptag from CVS:"
+cvs -d "$cvsroot" export -r "$ptag" -d pkginfo "dists/$distribution"
 if [ ! -d pkginfo ]; then
   echo "CVS export failed, directory pkginfo doesn't exist!"
   exit 1
