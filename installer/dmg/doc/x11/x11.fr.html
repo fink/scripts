@@ -16,8 +16,7 @@ Fran&ccedil;ais |
 Ce document traite de l'utilisation de X11 / XFree86 / Xtools sur les systèmes Mac OS X et Darwin d'Apple.
 Il commence par une introduction et l'historique du développement, puis décrit la situation actuelle et les nombreuses options d'utilisation de X11 avec ou sans Fink.
 </p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 Qu'est-ce que X11 ?</a></li><li><a href="#intro.def-macosx">1.2 Qu'est-ce que Mac OS X ?</a></li><li><a href="#intro.def-darwin">1.3 Qu'est-ce que Darwin ?</a></li><li><a href="#intro.def-xfree86">1.4 Qu'est-ce que XFree86 ?</a></li><li><a href="#intro.def-xtools">1.5 Qu'est-ce que Xtools ?</a></li><li><a href="#intro.client-server">1.6 Client et Serveur</a></li><li><a href="#intro.rootless">1.7 Que signifie sans racine (rootless) ?</a></li><li><a href="#intro.wm">1.8 Qu'est-ce qu'un gestionnaire de fenêtres ?</a></li><li><a href="#intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></li></ul></li><li><a href="#history"><b>2 Historique</b></a><ul><li><a href="#history.early">2.1 Genèse</a></li><li><a href="#history.xonx-forms">2.2 Création de XonX</a></li><li><a href="#history.root-or-not">2.3 Être ou ne pas être racine</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Récupération et installation de XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installation via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Binaires d'Apple</a></li><li><a href="#inst-xfree86.official-binary">3.3 Binaires officiels</a></li><li><a href="#inst-xfree86.official-source">3.4 Source Officiel</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 Source le plus récent</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Remplacement de X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Résumé des paquets Fink disponibles</a></li></ul></li><li><a href="#run-xfree86"><b>4 Lancement de XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 Fichier .xinitrc</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installation de Xtools</a></li><li><a href="#xtools.run">5.2 Lancement de Xtools</a></li><li><a href="#xtools.opengl">5.3 Notes sur OpenGL</a></li></ul></li><li><a href="#other"><b>6 Autres possibilités pour X11</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Résolution de problèmes engendrés par XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 Après lancement, XDarwin se termine ou se plante quasi immédiatement</a></li><li><a href="#trouble.black">7.2 Black icons in the GNOME panel or in the
-menu of a GNOME application</a></li><li><a href="#trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></li><li><a href="#trouble.delete-key">7.4 The Backspace key doesn't work</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Usage Tips</b></a><ul><li><a href="#tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 Qu'est-ce que X11 ?</a></li><li><a href="#intro.def-macosx">1.2 Qu'est-ce que Mac OS X ?</a></li><li><a href="#intro.def-darwin">1.3 Qu'est-ce que Darwin ?</a></li><li><a href="#intro.def-xfree86">1.4 Qu'est-ce que XFree86 ?</a></li><li><a href="#intro.def-xtools">1.5 Qu'est-ce que Xtools ?</a></li><li><a href="#intro.client-server">1.6 Client et Serveur</a></li><li><a href="#intro.rootless">1.7 Que signifie sans racine (rootless) ?</a></li><li><a href="#intro.wm">1.8 Qu'est-ce qu'un gestionnaire de fenêtres ?</a></li><li><a href="#intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></li></ul></li><li><a href="#history"><b>2 Historique</b></a><ul><li><a href="#history.early">2.1 Genèse</a></li><li><a href="#history.xonx-forms">2.2 Création de XonX</a></li><li><a href="#history.root-or-not">2.3 Être ou ne pas être racine</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Récupération et installation de XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installation via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Binaires d'Apple</a></li><li><a href="#inst-xfree86.official-binary">3.3 Binaires officiels</a></li><li><a href="#inst-xfree86.official-source">3.4 Source Officiel</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 Source le plus récent</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Remplacement de X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Résumé des paquets Fink disponibles</a></li></ul></li><li><a href="#run-xfree86"><b>4 Lancement de XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 Fichier .xinitrc</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installation de Xtools</a></li><li><a href="#xtools.run">5.2 Lancement de Xtools</a></li><li><a href="#xtools.opengl">5.3 Notes sur OpenGL</a></li></ul></li><li><a href="#other"><b>6 Autres possibilités pour X11</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Résolution de problèmes engendrés par XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 Après lancement, XDarwin se termine ou se plante quasi immédiatement</a></li><li><a href="#trouble.black">7.2 Icônes noires dans le panneau GNOME ou dans le menu d'une application GNOME</a></li><li><a href="#trouble.keyboard">7.3 Le clavier ne fonctionne pas sous XFree86</a></li><li><a href="#trouble.delete-key">7.4 La touche retour arrière ne fonctionne pas</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Conseils d'utilisation</b></a><ul><li><a href="#tips.terminal-app">8.1 Lancement d'applications X11 à partir de Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.def-x11">1.1 Qu'est-ce que X11 ?</a></h3>
@@ -120,7 +119,7 @@ Les plus populaires sont ceux qui permettent à l'utilisateur de personnaliser l
 La plupart des gestionnaires de fenêtres fournissent d'autres fonctionnalités, comme les menus déroulant dans la fenêtre racine, les docks et les boutons de lancement.
 </p>
       <p>
-De nombreux gestionnaires de fenêtres ont été compilés pour Fink ; en voici la <a href="http://fink.sourceforge.net/pdb/section.php/x11-wm/">liste actuelle</a>.
+De nombreux gestionnaires de fenêtres ont été compilés pour Fink ; en voici la <a href="http://fink.sourceforge.net/pdb/section.php/x11-wm">liste actuelle</a>.
       </p>
     
     <h3><a name="intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></h3>
@@ -679,7 +678,7 @@ Cannot establish any listening sockets - Make sure an X server isn't already
 running</pre>
       <p>
 Sévérité : fatal.
-Ceci arrive quand vous lancez involontairement plusieurs instances de XDarwin en même temps, ou après une déconnexion sauvage (un crash) de XDarwin. Cela peut provenir aussi d'un problème de permission sur les fichiers sockets utilisés pour les connexions locales. Vous pouvez tenter de résoudre le problème en exécutant <tt style="white-space: nowrap;">rm -rf /tmp/.X11-unix</tt>. Le redémarrage de l'ordinateur résout aussi le problème dans la plupart des cas (Mac OS X vide automatiquement le répertoire /tmp lors du démarrage, et la pile réseau est redéfinie).
+Ceci arrive quand vous lancez involontairement plusieurs instances de XDarwin en même temps, ou après une terminaison anormale (un plantage) de XDarwin. Cela peut provenir aussi d'un problème de permission sur les fichiers sockets utilisés pour les connexions locales. Vous pouvez tenter de résoudre le problème en exécutant <tt style="white-space: nowrap;">rm -rf /tmp/.X11-unix</tt>. Le redémarrage de l'ordinateur résout aussi le problème dans la plupart des cas (Mac OS X vide automatiquement le répertoire /tmp lors du démarrage, et la pile réseau est redéfinie).
 </p>
       <pre>Xlib: connection to ":0.0" refused by server
 Xlib: Client is not authorized to connect to Server</pre>
@@ -694,125 +693,76 @@ touch .Xauthority</pre>
 Une autre cause fréquente d'échec de démarrage de XFree86 est un fichier <tt style="white-space: nowrap;">.xinitrc</tt> incorrect. Le fichier <tt style="white-space: nowrap;">.xinitrc</tt> est lancé et, pour une raison inconnue, se termine quasi immédiatement. <tt style="white-space: nowrap;">xinit</tt> interprète cette fin comme "une fin de session demandée par l'utilisateur" et tue XDarwin. Voir la <a href="#run-xfree86.xinitrc">section Fichier .xinitrc</a> pour de plus amples informations. N'oubliez pas de définir le PATH et de choisir comme dernière commande un programme de longue durée ne tournant pas en arrière-plan. Conseil : ajoutez <tt style="white-space: nowrap;">exec xterm</tt> comme roue de secours pour le cas où il serait impossible de trouver votre gestionnaire de fenêtres ou un programme équivalent.
 </p>
     
-    <h3><a name="trouble.black">7.2 Black icons in the GNOME panel or in the
-menu of a GNOME application</a></h3>
+    <h3><a name="trouble.black">7.2 Icônes noires dans le panneau GNOME ou dans le menu d'une application GNOME</a></h3>
       
       <p>
-A common problem is that icons or other images are displayed as black
-rectangles or black outlines.
-Ultimately, this is caused by limitations in the operating system
-kernel.
-The problem has been reported to Apple, but so far they seem unwilling
-to fix it; see the filed <a href="http://www.opensource.apple.com/bugs/X/Kernel/2691632.html">Darwin
-bug report</a> for details.
+Les icônes ou images sont affichées sous forme de rectangles noirs ou ont une bordure noire. Ceci est dû aux limitations du noyau du système opératoire. Le problème a été rapporté à Apple, mais, pour l'instant, il ne semble pas qu'il y ait une réelle volonté de le résoudre ; voir le <a href="http://www.opensource.apple.com/bugs/X/Kernel/2691632.html">rapport de bogue Darwin</a> pour de plus amples informations.
 </p>
       <p>
-The current situation is that the MIT-SHM extension of the X11
-protocol is practically unusable on Darwin and Mac OS X.
-There are two ways to turn the protocol extension off: in the server
-or in the clients.
-The XFree86 servers installed by Fink (i.e. the xfree86-server and
-xfree86-rootless packages) have it turned off.
-The GIMP and the GNOME panel have been inoculated as well.
-If you experience black icons in another application, start that
-application with the <tt style="white-space: nowrap;">--no-xshm</tt> command line option.
+À l'heure actuelle, l'extension MIT-SHM du protocole X11 est inutilisable sous Darwin et Mac OS X. Il y a deux façons de désactiver l'extension : dans le serveur ou dans les clients. Les serveurs XFree86 installés par Fink (les paquets xfree86-server et xfree86-rootless) désactivent cette extension. The GIMP et le panneau GNOME aussi. Si vous voyez apparaître des icônes noires dans d'autres applications, démarrez-les avec l'option <tt style="white-space: nowrap;">--no-xshm</tt>.
 </p>
     
-    <h3><a name="trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></h3>
+    <h3><a name="trouble.keyboard">7.3 Le clavier ne fonctionne pas sous XFree86</a></h3>
       
       <p>
-This is a known problem that so far seems to affect only portables
-(PowerBook, iBook).
-To work around this, the "Load from file" keymapping option was
-implemented.
-Nowadays it has become the default because the old method (reading the
-mapping from the kernel) stopped working with Mac OS X 10.1.
-If you haven't enabled the option already, you can do so in the
-XDarwin preferences dialog.
-Check the "Load from file" checkbox and select the keymapping file to
-load.
-After restarting XDarwin, your keyboard should mostly work (see
-below).
+C'est un problème qui ne semble affecter que les portables (PowerBook, iBook).
+Pour corriger ce problème, on a implémenté l'option de mappage de clavier "Load from file". Maintenant, cette méthode est devenue la méthode par défaut, car l'ancienne méthode (de lecture du mappage à partir du noyau) a cessé de fonctionner à partir de Mac OS X 10.1. Si vous n'avez pas encore activé cette option, vous pouvez le faire dans le dialogue de préférences de XDarwin. N'oubliez pas de cocher la case "Load from file" et sélectionnez le fichier de mappage à charger. Après redémarrage de XDarwin, votre clavier devrait fonctionner à peu près correctement (voir plus bas).
 </p>
       <p>
-If you're starting XFree86 from the command line, you can pass the
-name of the keymapping file to load as an option, as in:
+Si vous démarrez XFree86 en ligne de commande, vous pouvez passer le nom du fichier de mappage en option, de la façon suivante :
 </p>
       <pre>startx -- -quartz -keymap USA.keymapping</pre>
     
-    <h3><a name="trouble.delete-key">7.4 The Backspace key doesn't work</a></h3>
+    <h3><a name="trouble.delete-key">7.4 La touche retour arrière ne fonctionne pas</a></h3>
       
       <p>
-This can happen when you use the "Load keymapping from file" option
-described above.
-The mapping files describe the backspace key as "Delete", not as
-"Backspace".
-You can correct that by putting the following line in your .xinitrc
-file:
+Ceci survient quand vous utilisez l'option "Load keymapping from file" décrite ci-dessus. Les fichiers de mappage font correspondre la touche retour arrière à "Suppression", et non pas à "Retour arrière". Vous pouvez modifier cette correspondance en insérant la ligne suivante dans votre fichier .xinitrc.
 </p>
       <pre>xmodmap -e "keycode 59 = BackSpace"</pre>
       <p>
-If I remember correctly, XDarwin 1.0a2 and later have code that
-correctly maps the Backspace key automatically.
+Si mes souvenirs sont bons, XDarwin 1.0a2 et les versions ultérieures assurent une correspondance correcte de la touche retour arrière.
 </p>
     
     <h3><a name="trouble.locale">7.5 "Warning: locale not supported by C library"</a></h3>
       
       <p>
-These messages are quite common, but harmless.
-It just means what it says - internationalization is not supported
-through the standard C library, the program will use the default
-English messages, date formats, and so on.
-There are several ways to deal with this:
+Ces messages sont courants, et inoffensifs. Cela signifie simplement que l'internationalisation n'est pas gérée par la librairie standard C, le programme utilisera donc, par défaut, l'anglais pour les messages, les formats de date, etc... Il y a plusieurs façons de résoudre le problème :
 </p>
       <ul>
         <li>
           <p>
-Just ignore the messages.
+Ignorer ces messages.
 </p>
         </li>
         <li>
           <p>
-Get rid of the messages by unsetting the environment variable LANG.
-Note that this will also turn internationalization off in programs
-that actually support it (via gettext/libintl).
-Example for .xinitrc:
+Supprimer ces messages en supprimant la définition de la variable d'environnement LANG. Notez que cela désactivera aussi l'internationalisation des programmes (pour les programmes qui la gèrent via gettext/libintl). Exemple pour .xinitrc :
 </p>
           <pre>unset LANG</pre>
           <p>
-Example for .cshrc:
+Exemple pour .cshrc :
 </p>
           <pre>unsetenv LANG</pre>
         </li>
         <li>
           <p>
-(10.1 only) Use the <tt style="white-space: nowrap;">libxpg4</tt> Fink package.
-It builds a small library that contains working locale functions and
-arranges that it is loaded before the system libraries (using the
-DYLD_INSERT_LIBRARIES environment variable).
-You may have to set the LANG environment variable to a fully qualified
-value, e.g. <tt style="white-space: nowrap;">de_DE.ISO_8859-1</tt> instead of <tt style="white-space: nowrap;">de</tt>
-or <tt style="white-space: nowrap;">de_DE</tt>.
+(10.1 uniquement) Utiliser le paquet Fink <tt style="white-space: nowrap;">libxpg4</tt>. Il construit une petite librairie qui contient des fonctions locales et gère leur chargement avant celui des librairies système (en utilisant la variable d'environnement DYLD_INSERT_LIBRARIES). Vous devrez peut-être donner à la variable d'environnement LANG une valeur complète, par exemple : <tt style="white-space: nowrap;">de_DE.ISO_8859-1</tt> au lieu de <tt style="white-space: nowrap;">de</tt> ou <tt style="white-space: nowrap;">de_DE</tt>.
 </p>
         </li>
         <li>
           <p>
-Ask Apple to include proper locale support in a future version of Mac
-OS X.
+Demander à Apple d'inclure une gestion correcte des locales dans une version ultérieure de Mac OS X.
 </p>
         </li>
       </ul>
     
-  <h2><a name="tips">8 Usage Tips</a></h2>
+  <h2><a name="tips">8 Conseils d'utilisation</a></h2>
     
     
-    <h3><a name="tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></h3>
+    <h3><a name="tips.terminal-app">8.1 Lancement d'applications X11 à partir de Terminal.app</a></h3>
       
       <p>
-To launch X11 applications from a Terminal.app window, you must set
-the environment variable "DISPLAY".
-This variable tells the applications where to find the X11 window
-server.
+Pour lancer des applications X11 à partir d'une fenêtre de Terminal.app, vous devez définir la variable d'environnement "DISPLAY". Cette variable indique aux applications l'emplacement du serveur de fenêtres X11. 
 In the default setup - XDarwin runs on the same machine, your shell is
 tcsh - you can set the variable as follows:
 </p>
