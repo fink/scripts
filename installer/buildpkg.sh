@@ -15,6 +15,8 @@ chmod a+x $IN_BASEDIR/resources/VolumeCheck
 
 cp -R $IN_BASEDIR/resources $RESDIR
 /Developer/Tools/CpMac -r $IN_BASEDIR/dmg $DMGDIR
+cp $IN_BASEDIR/resources/ReadMe.rtf $DMGDIR/Fink\ ReadMe.rtf
+cp $IN_BASEDIR/resources/License.rtf $DMGDIR
 cp -R $IN_BASEDIR/contents $CONDIR
 chown -R root:admin $CONDIR
 chmod 1755 $CONDIR
@@ -32,7 +34,7 @@ ln -s doc/doc.en.html $DMGDIR/Documentation.html
 ln -s faq/faq.en.html $DMGDIR/FAQ.html
 
 # Put the correct pathsetup script into pathsetup.app
-cp contents/sw/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
+cp $IN_BASEDIR/contents/sw/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 chmod a+x $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 
 # permissions for pathsetup.app
