@@ -1,0 +1,37 @@
+Q: How do I make a new source release of the Fink package manager?
+
+A: Assume you want to release fink 0.9.8, you first need to get the "fink" and
+"scripts" modules from the fink cvs. In the following I assume you are in the
+directory containing the checkouts.
+
+ cd fink
+ echo "0.9.8.cvs" >VERSION
+ cvs commit
+ cvs tag release_0_9_8
+ cd ../scripts/srcdist
+ dist-module.sh fink 0.9.8
+
+This will create the file /tmp/fink-0.9.8.tar.gz
+
+---------------------------------------------------------------------------------
+
+Q: How do I make a full distribution source release?
+
+A: Assume you want to release the distribution release 0.4.5, and also assume
+that the current version of the package manager is 0.9.8. 
+
+The first thing you should do is to make a new release of base-files, and 
+update the "fink-release" in there to have the correct version. Then, do this:
+
+  cd packages
+  cvs tag release_0_4_5
+  cd ../scripts/srcdist
+  dist-module.sh packages 0.4.5
+    -> this produces /tmp/packages-0.4.5.tar.gz
+  dist-full.sh 0.4.5 0.9.8 release_0_9_8
+    -> this produces /tmp/fink-0.4.5-full.tar.gz
+
+---------------------------------------------------------------------------------
+
+This HOWTO was written by Max Horn, largely based on some instructions given
+by Christoph Pfisterer. Use at your own risk.
