@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Création d'un paquet pour Fink - Tutoriel</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="pkg.en.html">English</a> | 
+Fran&ccedil;ais | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">Création d'un paquet pour Fink - Tutoriel</h1>
+<p>Ce document est fait pour les personnes qui souhaitent créer un paquet pour Fink. Il vient en complément du <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de construction de paquets</a>, plus détaillé.</p>
+<p>Nous allons vous expliquer le processus de création d'un paquet pour Fink.
+
+
+
+
+
+Nous commencerons par les généralités, puis nous verrons en détail la création d'un paquet <a href="http://maxwell.sourceforge.net">maxwell</a> pour Fink.
+</p>
+<h2>Contents</h2><ul><li><a href="#howtostart"><b>1 Préliminaires</b></a><ul><li><a href="#howtostart.Learn">1.1 Apprentissage des bases</a></li><li><a href="#howtostart.Make">1.2 Création d'un paquet</a></li><li><a href="#howtostart.Validate">1.3 Validation d'un paquet</a></li><li><a href="#howtostart.Submitt">1.4 Soumission de votre paquet</a></li></ul></li><li><a href="#example"><b>2 Exemple - le paquet Maxwell</b></a><ul><li><a href="#example.Basics">2.1 Préparation</a></li><li><a href="#example.build">2.2 Construction</a></li></ul></li></ul><h2><a name="howtostart">1 Préliminaires</a></h2>
+
+
+
+<h3><a name="howtostart.Learn">1.1 Apprentissage des bases</a></h3>
+<p>
+<b>Note :</b> dans ce document, nous supposons que fink est installé dans /sw - son emplacement par défaut. Quand vous verrez un bloc de code semblable à celui-ci :
+</p>
+<pre>
+finkdev% unecommandequelconque
+</pre>
+<p>vous devrez alors saisir unecommandequelconque dans Terminal.app ou dans tout autre terminal sur votre Mac.</p>
+<p>Vous devez d'abord assimiler quelques concepts de base sur la création de paquets pour Fink. Nous nous suggérons :</p>
+<ul>
+<li>de lire <a href="http://fink.sourceforge.net/doc/UsingFink.pdf">Utilisation de Fink : un guide pour le développeur</a> (fichier pdf 2MB) - diapositives d'une présentation lors de la <a href="http://conferences.oreillynet.com/macosx2002/">Conférence O'Reilly Mac OS X</a>.
+</li>
+<li>
+
+
+
+
+de lire et de tenter de comprendre l'<a href="#example.basics">exemple donné ici</a>.</li>
+<li>d'étudier d'autres paquets situés dans le répertoire /sw/fink/dists/unstable/main/finkinfo/ ou dans le <a href="http://cvs.sourceforge.net/viewcvs.py/fink/dists/10.3/unstable/">répertoire central CVS en ligne</a> et de prendre un (ou plusieurs) fichier(s) info comme point de départ.</li>
+<li>de rechercher dans le <a href="http://sourceforge.net/tracker/?atid=414256&amp;group_id=17203">Traqueur de soumissions de paquets</a> si quelqu'un a déjà essayé de construire le même paquet ou dans le <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Traqueur de demandes de paquets</a> s'il existe déjà une requête pour ce paquet. Vous y trouverez une mine de renseignements.</li>
+<li>de feuilleter le <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de création de paquets</a> si vous souhaitez de plus amples informations sur un sujet particulier.</li>
+</ul>
+
+<h3><a name="howtostart.Make">1.2 Création d'un paquet</a></h3>
+<p>Sauvegardez le nouveau fichier info (et le fichier rustine si nécessaire) dans le répertoire /sw/fink/dists/local/main/finkinfo/. Le fichier doit avoir pour nom nomdupaquet.info (et la rustine doit s'appeler nomdupaquet.patch), où nomdupaquet est le nom de votre paquet. Si ce répertoire n'existe pas, vous devez le créer.</p>
+<p>Vérifiez que fink trouve votre paquet en exécutant :</p>
+<pre>
+finkdev% fink list nomdupaquet
+</pre>
+<p>S'il n'apparaît pas, vous devez modifier le <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a>, de sorte que l'arborescence locale soit prise en compte.</p>
+<p>Vous devrez peut-être réindexer les paquets en exécutant :</p>
+<pre>
+finkdev% fink index
+</pre>
+<p>Si vous souhaitez de plus amples informations, lisez le <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de création de paquets</a> ou utilisez l'une ou l'autre des différentes <a href="http://fink.sourceforge.net/help/index.php">sources d'aide</a>. Vous devez aussi vous abonner à la liste de diffusion <a href="http://fink.sourceforge.net/lists/index.php">fink-devel</a>.</p>
+
+<h3><a name="howtostart.Validate">1.3 Validation d'un paquet</a></h3>
+<p>Pendant le processus de validation de votre paquet, vous devez régler le niveau de verbosité de fink à la plus haute valeur possible. Voir la section <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a> pour savoir comment le changer.</p>
+<p>Vérifiez que votre paquet est valide en exécutant :</p>
+<pre>
+finkdev% fink validate nomdupaquet.info
+</pre>
+<p>Si c'est le cas, essayez de construire le paquet en exécutant :</p>
+<pre>
+finkdev% fink build nomdupaquet
+</pre>
+<p>Observez attentivement les messages d'erreur or d'attention du processus de construction. Assurez-vous, en particulier, que tout s'installe dans le répertoire de destination (qui est /sw/src/root-nomdupaquet-%v-%r/sw) à partir duquel fink construit le paquet binaire. Rien ne doit être installé directement dans /sw.</p>
+<p>Si vous utilisez l'option --keep-build-dir ou -k de fink, le répertoire de construction sera conservé. C'est là que fink décompresse le fichier source téléchargé et que le paquet est construit. Cela vous aidera à déboguer le processus de construction. Voir man fink pour de plus amples informations.</p>
+<p>Vous pouvez aussi utiliser l'option --keep-root-dir ou -K, elle permet de conserver le répertoire de destination. C'est là que fink construit l'arborescence d'installation du paquet. La comparaison entre les répertoires de construction et d'installation peut aider à déboguer la phase d'installation.</p>
+<p>Si la construction du paquet se passe bien, vérifiez le contenu du paquet binaire en exécutant :</p>
+<pre>
+finkdev% dpkg -c /sw/fink/dists/local/main/binary-darwin-powerpc/nomdupaquet.deb
+</pre>
+<p>Vérifiez que tous les fichiers qui sont censés être dans le paquet se trouvent bien dans le fichier .deb. Rappel : assurez-vous que rien n'est installé directement dans /sw.</p>
+<p>Vous pouvez maintenant valider le paquet binaire en exécutant :</p>
+<pre>
+finkdev% fink validate /sw/fink/dists/local/main/binary-darwin-powerpc/nomdupaquet.deb
+</pre>
+<p>Si tout est correct, installez le paquet avec :</p>
+<pre>
+finkdev% fink install nomdupaquet
+</pre>
+<p>et testez les fonctionnalités de votre paquet.</p>
+<p>Si le processus échoue lors d'une des étapes ci-dessus, essayez de corriger les erreurs et recommencez le processus à partir de l'étape fink validate step.</p>
+
+<h3><a name="howtostart.Submitt">1.4 Soumission de votre paquet</a></h3>
+<p>Si toutes les étapes de vérification de votre paquet énoncées ci-dessus ont réussi, vous pouvez soumettre le fichier info (et le fichier patch s'il existe) au <a href="http://sourceforge.net/tracker/?func=add&amp;group_id=17203&amp;atid=414256">Traqueur de soumissions de paquets</a>.</p>
+<p>Une personne se chargera d'examiner votre soumission et d'ajouter le paquet à la branche instable de Fink, si le paquet semble correct. Sinon, on vous demandera de mettre le paquet en accord avec les règles de Fink.</p>
+<p><b>Note :</b></p>
+<ul>
+<li>Si possible, ajoutez plusieurs éléments à la fois à la même soumission (c'est-à-dire les fichiers info et patch).</li>
+<li>Ajoutez un commentaire mentionnant que votre paquet est prévu pour l'arborescence 10.2-gcc3.3, 10.3  ou pour les deux</li>
+<li>dans quelle section (graphics, sci, etc...) vous pensez qu'il doit être mis</li>
+<li>que vous avez exécuté fink validate sur les fichiers info et .deb.</li>
+<li>Positionnez le champ Group de l'élément sur Undergoing Validation à la création de l'élément. Repositionnez-le sur Undergoing Validation quand vous modifiez les fichiers après qu'un examinateur de soumissions de paquets vous ait demandé de corriger des problèmes dans votre paquet.</li>
+</ul>
+
+<h2><a name="example">2 Exemple - le paquet Maxwell</a></h2>
+
+
+
+
+
+<h3><a name="example.Basics">2.1 Préparation</a></h3>
+<p>Tout d'abord Maxwell. Ouvrez votre éditeur de text et commençons. Nous connaissons le nom du paquet, sa version et l'endroit où est situé l'archive tar source. Entrons donc ces informations dans la fenêtre de l'éditeur de texte :</p>
+<pre>
+Package: maxwell
+Version: 0.5.1
+Revision: 1
+Source: mirror:sourceforge:%n/%n-%v.tar.gz
+</pre>
+<p>Les champs nom (Package) et version sont faciles à comprendre, mais qu'en est-il des autres champs ? Le champ Revision correspond à la "version" du paquet dans Fink, tandis que le champ Version correspond à la version du source en amont. Comme c'est la première fois que nous tentons de construire un paquet maxwell-0.5.1 dans Fink, son numéro de révision est 1.</p>
+<p>Le champ Source donne l'adresse à partir de laquelle fink téléchargera l'archive tar source. Comme <a href="http://sourceforge.net">Sourceforge</a> comprend un système mondial de miroirs pour les paquets et que fink le connaît, on utilise mirror:sourceforge:. %n est un raccourci pour le nom du paquet, maxwell, et %v un raccourci pour la version du paquet, 0.5.1.</p>
+<p>Nous pouvons maintenant sauvegarder ceci sous le nom maxwell.info dans le répertoire /sw/fink/dists/local/main/finkinfo/. Ceci fait, voyons ce que cela donne avec fink validate.</p>
+<pre>
+finkdev% fink validate maxwell.info 
+Validating package file maxwell.info...
+Error: Required field "Maintainer" missing. (maxwell.info)
+</pre>
+<p>Heu ! On dirait que nous avons oublié un certain nombre de champs. Ajoutons-en quelques-uns :</p>
+<pre>
+Maintainer: Paul Dupont &lt;pdupont@exemple.com&gt;
+HomePage: http://maxwell.sourceforge.net
+License: MIT
+</pre>
+<p>Nous ajoutons notre nom en tant que mainteneur du paquet maxwell dans Fink ainsi que l'url de sa page d'accueil. En regardant sur la page sourceforge du projet, on voit que maxwell est distribué sous licence MIT, nous ajoutons également cette information. Maintenant, réessayons :</p>
+<pre>
+finkdev% fink validate maxwell.info
+Validating package file maxwell.info...
+Warning: Unknown license "MIT". (maxwell.info)
+Error: No MD5 checksum specified for "source". (maxwell.info)
+Error: No package description supplied. (maxwell.info)
+</pre>
+<p>Grrr ! On dirait que c'est de pire en pire, pas de panique, rabattons-nous sur le <a href="http://fink.sourceforge.net/doc/packaging/policy.php#licenses">Guide de construction de paquets</a> pour voir quelles sont les licences autorisées. On voit que l'on peut remplacer MIT par OSI-Approved, car la licence MIT a été approuvée par <a href="http://www.opensource.org/">OSI</a>. On peut aussi copier une courte description du paquet à partir de sa page d'accueil. Voici les changements que nous opérons :</p>
+<pre>
+License: OSI-Approved
+Description: Mac OS X S.M.A.R.T. Tool
+</pre>
+<p>Mais que faire de l'erreur concernant les sommes de contrôle MD5 ? Pourquoi ne pas tout simplement demander à fink de récupérer le source ?</p>
+<pre>
+finkdev% fink fetch maxwell
+/usr/bin/sudo /sw/bin/fink  fetch maxwell
+Reading package info...
+Updating package index... done.
+Information about 3377 packages read in 30 seconds.
+WARNING: No MD5 specified for Source of package maxwell-0.5.1-1 \
+Maintainer: John Doe &lt;jdoe@example.com&gt;
+curl -f -L -O http://distfiles.opendarwin.org/maxwell-0.5.1.tar.gz
+  % Total    % Received % Xferd  Average Speed          Time             Curr.
+                                 Dload  Upload Total    Current  Left    Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:00 --:--:--     0
+curl: (22) The requested URL returned error: 404
+### execution of curl failed, exit code 22
+Downloading the file "maxwell-0.5.1.tar.gz" failed.
+
+(1)      Give up
+(2)      Retry the same mirror
+(3)      Retry another mirror from your continent
+(4)      Retry another mirror
+(5)      Retry using next mirror set "sourceforge"
+
+How do you want to proceed? [3] 5
+curl -f -L -O http://west.dl.sourceforge.net/sourceforge/maxwell/maxwell-0.5.1.tar.gz
+  % Total    % Received % Xferd  Average Speed          Time             Curr.
+                                 Dload  Upload Total    Current  Left    Speed
+100  7856  100  7856    0     0  19838      0  0:00:00  0:00:00  0:00:00 6511k
+</pre>
+<p>L'archive tar ne peut être téléchargée à partir des miroirs de Fink, car le paquet n'a pas encore été ajoutée à la distribution. C'est pourquoi il faut changer de miroir et sélectionner l'option 5. Voir les <a href="http://fink.sourceforge.net/faq/comp-general.php#master-problems">Q.F.P.</a> pour de plus amples informations à ce sujet.</p>
+<p>Maintenant nous pouvons calculer la somme de contrôle md5 en exécutant md5 /sw/src/maxwell-0.5.1.tar.gz, et l'ajouter à notre fichier .info</p>
+<pre>
+Source-MD5: ce5c354b2fed4e237524ad0bc59997a3
+</pre>
+<p>Maintenant fink validate marche, youpi !</p>
+
+<h3><a name="example.build">2.2 Construction</a></h3>
+<p>Désormais, nous pouvons construire le paquet, essayons :</p>
+<pre>
+finkdev% fink build maxwell
+/usr/bin/sudo /sw/bin/fink  build maxwell
+Reading package info...
+Updating package index... done.
+Information about 3498 packages read in 32 seconds.
+The following package will be built:
+ maxwell
+gzip -dc /sw/src/maxwell-0.5.1.tar.gz | /sw/bin/tar -xvf -  \
+--no-same-owner --no-same-permissions 
+maxwell-0.5.1/
+maxwell-0.5.1/LICENSE
+maxwell-0.5.1/Makefile
+maxwell-0.5.1/maxwell.8
+maxwell-0.5.1/maxwell.c
+maxwell-0.5.1/README
+./configure --prefix=/sw 
+Can't exec "./configure": No such file or directory at \
+/sw/lib/perl5/Fink/Services.pm line 403.
+</pre>
+<p>Hum ! Ça ne marche pas très bien. Lisons le README (situé dans /sw/src/maxwell-0.5.1-1/maxwell-0.5.1/README) et voyons ce qu'il dit...</p>
+<pre>
+To build type 'make'.
+
+To install in /usr/local type 'sudo make install', to install elsewhere, type 
+'sudo make install prefix=/elsewhere'
+</pre>
+<p>Ah ! Nous ne pouvons pas utiliser les scripts par défaut CompileScript et InstallScript, nous devons créer nos propres scripts, allons-y, c'est facile :</p>
+<pre>
+CompileScript: make
+InstallScript: &lt;&lt;
+#! /bin/sh -ev
+make install prefix=%i
+&lt;&lt;
+</pre>
+<p>Nous devons utiliser prefix=%i car fink construit le fichier binaire à partir des fichiers se trouvant dans %i. Ces fichiers seront ensuite installés dans %p (qui correspond par défaut à /sw) quand on exécutera fink install maxwell. Pour de plus amples informations sur %p et %i, consultez le <a href="http://fink.sourceforge.net/doc/packaging/format.php#percent">Guide de construction des paquets</a>.</p>
+<p>Normalement, les lignes des champs Script sont passées au shell ligne après ligne. Mais la ligne  #! /bin/sh -ev permet à fink d'exécuter l'ensemble comme un script séparé. Le paramètre -e correspond à  "die on error" et -v à "verbose".</p>
+<p>Validons de nouveau le paquet et tentons de le construire :</p>
+<pre>
+finkdev% fink validate maxwell.info 
+Validating package file maxwell.info...
+Package looks good!
+finkdev% fink build maxwell
+/usr/bin/sudo /sw/bin/fink  build maxwell
+Reading package info...
+Updating package index... done.
+Information about 3498 packages read in 32 seconds.
+The following package will be built:
+ maxwell
+gzip -dc /sw/src/maxwell-0.5.1.tar.gz | /sw/bin/tar -xvf -  \
+--no-same-owner --no-same-permissions 
+maxwell-0.5.1/
+maxwell-0.5.1/LICENSE
+maxwell-0.5.1/Makefile
+maxwell-0.5.1/maxwell.8
+maxwell-0.5.1/maxwell.c
+maxwell-0.5.1/README
+make
+cc  -L/sw/lib -c -o maxwell.o maxwell.c
+cc  -I/sw/include -o maxwell -framework IOKit -framework CoreFoundation maxwell.o
+/bin/rm -rf /sw/src/root-maxwell-0.5.1-1
+/bin/mkdir -p /sw/src/root-maxwell-0.5.1-1/sw
+/bin/mkdir -p /sw/src/root-maxwell-0.5.1-1/DEBIAN
+/var/tmp/tmp.1.A3sRc2
+#! /bin/sh -ev
+make install prefix=/sw/src/root-maxwell-0.5.1-1/sw
+/usr/bin/install -d -m 755 /sw/src/root-maxwell-0.5.1-1/sw/doc/maxwell
+/usr/bin/install -m 644 LICENSE /sw/src/root-maxwell-0.5.1-1/sw/doc/maxwell/LICENSE
+/usr/bin/install -m 644 README /sw/src/root-maxwell-0.5.1-1/sw/doc/maxwell/README
+/usr/bin/install -d -m 755 /sw/src/root-maxwell-0.5.1-1/sw/bin
+/usr/bin/install -m 755 maxwell /sw/src/root-maxwell-0.5.1-1/sw/bin/maxwell
+/usr/bin/install -d -m 755 /sw/src/root-maxwell-0.5.1-1/sw/man/man8
+/usr/bin/install -m 644 maxwell.8 /sw/src/root-maxwell-0.5.1-1/sw/man/man8/maxwell.8
+/bin/rm -f /sw/src/root-maxwell-0.5.1-1/sw/info/dir \
+/sw/src/root-maxwell-0.5.1-1/sw/info/dir.old \
+/sw/src/root-maxwell-0.5.1-1/sw/share/info/dir \
+/sw/src/root-maxwell-0.5.1-1/sw/share/info/dir.old
+Writing control file...
+Finding prebound objects...
+Writing dependencies...
+Writing package script postinst...
+dpkg-deb -b root-maxwell-0.5.1-1 /sw/fink/dists/local/main/binary-darwin-powerpc
+dpkg-deb: building package `maxwell' in \
+`/sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb'.
+</pre>
+<p>Fink semble avoir tout installé au bon endroit : /sw/src/root-maxwell-0.5.1-1 à partir de l'emplacement où le paquet binairemaxwell_0.5.1-1_darwin-powerpc.deb a été construit.</p>
+<p>Notez aussi que fink inclue automatiquement certains drapeaux de compilation pour lui permettre d'accéder à d'autres paquets fink (par exemple -I/sw/include).</p>
+<p>Regardons ce qu'il y a à l'intérieur du paquet binaire :</p>
+<pre>
+finkdev% dpkg -c \
+/sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb
+drwxr-xr-x root/admin        0 2004-07-15 09:40:38 ./
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/bin/
+-rwxr-xr-x root/admin    29508 2004-07-15 09:40:39 ./sw/bin/maxwell
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/doc/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/doc/maxwell/
+-rw-r--r-- root/admin     1076 2004-07-15 09:40:39 ./sw/doc/maxwell/LICENSE
+-rw-r--r-- root/admin     1236 2004-07-15 09:40:39 ./sw/doc/maxwell/README
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/man/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/man/man8/
+-rw-r--r-- root/admin     1759 2004-07-15 09:40:39 ./sw/man/man8/maxwell.8
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/var/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/var/lib/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/var/lib/fink/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/var/lib/fink/prebound/
+drwxr-xr-x root/admin        0 2004-07-15 09:40:39 ./sw/var/lib/fink/prebound/files/
+-rw-r--r-- root/admin       16 2004-07-15 09:40:39 ./sw/var/lib/fink/prebound/files/maxwell.pblist
+</pre>
+<p>Cela semble correct, non ? Mais il faut vérifier que les règles de construction des paquets dans Fink sont respectées. Validons le paquet avec :</p>
+<pre>
+finkdev% fink validate \
+/sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb 
+Validating .deb file \
+/sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb...
+Warning: File installed into deprecated directory /sw/doc/
+                                        Offender is /sw/doc/
+Warning: File installed into deprecated directory /sw/doc/
+                                        Offender is /sw/doc/maxwell/
+Warning: File installed into deprecated directory /sw/doc/
+                                        Offender is /sw/doc/maxwell/LICENSE
+Warning: File installed into deprecated directory /sw/doc/
+                                        Offender is /sw/doc/maxwell/README
+Warning: File installed into deprecated directory /sw/man/
+                                        Offender is /sw/man/
+Warning: File installed into deprecated directory /sw/man/
+                                        Offender is /sw/man/man8/
+Warning: File installed into deprecated directory /sw/man/
+                                        Offender is /sw/man/man8/maxwell.8
+</pre>
+<p>Heu ! Quelque chose ne va pas. Consultons encore le <a href="http://fink.sourceforge.net/doc/packaging/fslayout.php#fhs">Guide de construction des paquets</a>. On y voit que les pages man doivent être installées dans /sw/share/man et les fichiersREADME dans /sw/share/doc/%n. Si nous ouvrons le Makefile de maxwell, nous voyons que nous pouvons définir les répertoires mandir et datadir :</p>
+<pre>
+prefix = /usr/local
+mandir = ${prefix}/man
+man8dir = ${mandir}/man8
+bindir = ${prefix}/bin
+datadir = ${prefix}/doc/maxwell
+</pre>
+<p>On peut régler facilement le problème en changeant le script InstallScript :</p>
+<pre>
+make install prefix=%i mandir=%i/share/man datadir=%i/share/doc/%n
+</pre>
+<p>et reconstruire le paquet avec :</p>
+<pre>
+finkdev% fink rebuild maxwell
+</pre>
+<p>(On utilise fink rebuild car fink build ne ferait rien du tout, puisque le paquet a déjà été construit.)</p>
+<p>Revérifiez le contenu du fichier .deb (avec dpkg -c) pour voir où les fichiers sont installés maintenant. Puis validez de nouveau le fichier .deb fink validate. Si tout se passe bien, vous pouvez installer le nouveau paquet avec :</p>
+<pre>
+finkdev% fink install maxwell
+/usr/bin/sudo /sw/bin/fink  install maxwell
+Information about 3377 packages read in 30 seconds.
+The following package will be installed or updated:
+ maxwell
+dpkg -i /sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb
+Selecting previously deselected package maxwell.
+(Reading database ... 56046 files and directories currently installed.)
+Unpacking maxwell (from .../maxwell_0.5.1-1_darwin-powerpc.deb) ...
+Setting up maxwell (0.5.1-1) ...
+</pre>
+<p>Et faire tourner le paquet avec :</p>
+<pre>
+finkdev% maxwell
+</pre>
+<p>Félicitations ! Vous venez de construire votre premier paquet Fink. Maintenant, essayez de construire un autre paquet tout seul en suivant le <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Tutoriel d'empaquetage</a> à partir du début.</p>
+<p>Nous attendons impatiemment vos premières contributions à Fink !</p>
+
+<hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.1 2004/07/16 08:49:17 michga Exp $</i></p></body></html>
