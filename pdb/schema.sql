@@ -29,6 +29,7 @@ create table package (
  desclong text,
  maintainer varchar(255),
  homepage varchar(255),
+ license varchar(64),
  latest tinyint not null default '0',
  needtest tinyint not null default '0',
  primary key (release,name),

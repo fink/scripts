@@ -91,6 +91,7 @@ foreach $package (Fink::Package->list_packages()) {
 	    'descshort' => $vo->get_shortdescription(),
 	    'desclong' => $desc,
 	    'maintainer' => $maintainer,
+	    'license' => $vo->param_default("License", ""),
 	    'homepage' => $vo->param_default("Homepage", ""),
 	    'section' => $vo->get_section()
 	  );
