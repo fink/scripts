@@ -231,7 +231,10 @@ the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;"
 </td></tr><tr valign="top"><td>%d</td><td>
 <p>
 the <b>d</b>estination directory where the tree to be packaged is built, e.g.
-<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>
+<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>. You must not assume that
+<tt style="white-space: nowrap;">root-%f</tt> will be in <tt style="white-space: nowrap;">%p/src</tt> since
+a user can change that directory using the <tt style="white-space: nowrap;">Buildpath</tt> field
+in <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
 </p>
 </td></tr><tr valign="top"><td>%D</td><td>
 <p>
@@ -253,7 +256,11 @@ the path where the p<b>a</b>tches can be found
 </p>
 </td></tr><tr valign="top"><td>%b</td><td>
 <p>
-the <b>b</b>uild directory, e.g. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>
+the <b>b</b>uild directory, e.g. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.
+You must not assume that
+<tt style="white-space: nowrap;">root-%f</tt> will be in <tt style="white-space: nowrap;">%p/src</tt> since
+a user can change that directory using the <tt style="white-space: nowrap;">Buildpath</tt> field
+in <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
 </p>
 <p>
 Note: Use this only when there is no other way. The build directory is the
@@ -1900,7 +1907,11 @@ of the packages by using <tt style="white-space: nowrap;">DocFiles</tt> several 
 <h3><a name="reference.scripts">5.4 Scripts</a></h3>
 
 <p>The PatchScript, CompileScript and InstallScript fields allow you
-to specify shell commands to be executed. Two forms are supported.
+to specify shell commands to be executed. The build directory
+(<tt style="white-space: nowrap;">%b</tt> is the current directory when scripts are
+executed. You should always use relative pathnames or
+percent-expansions for files and directories in the fink hierarchy,
+not complete absolute pathnames. Two forms are supported.
 </p><p>
 This field can be a simple list of commands. This is sort of like a
 shell script. However, the commands are executed via system(), one
@@ -1967,4 +1978,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.5 2004/03/15 05:05:33 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.6 2004/03/22 02:55:00 dmacks Exp $</i></p></body></html>
