@@ -14,7 +14,7 @@ chmod a+x $IN_BASEDIR/resources/VolumeCheck
 cp -R $IN_BASEDIR/resources $RESDIR
 cp -R $IN_BASEDIR/dmg $DMGDIR
 rm -Rf $IN_BASEDIR/contents/CVS
-rm -Rf $IN_BASEDIR/.cvsignore
+rm -f $IN_BASEDIR/contents/.cvsignore
 rm -Rf $RESDIR/CVS
 rm -Rf $RESDIR/*/CVS
 rm -Rf $DMGDIR/CVS
@@ -24,7 +24,7 @@ rm -Rf $DMGDIR/*/*/CVS
 
 
 # Substitute the version for IN_VERSION where appropriate
-perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/English.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
+perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
 
 # Add "missing" language directories to work around a bug in Installer.app
 for lang in Dutch French German Italian Japanese Spanish da fi ko no pt sv zh_CN zh_TW; do
