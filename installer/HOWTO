@@ -62,18 +62,11 @@ Step 8.
 Step 9.
  Run sudo ./buildpkg.sh. This should copy the resources and dmg directories,
  subsituting versions in the various read me files. It will then create the
- pkg file in the dmg-IN_VERSION directory. 
-
+ pkg file in the dmg-IN_VERSION directory. Then, a .dmg will be created and 
+ end up in the IN_BASEDIR. The Volume name should be "Fink IN_VERSION Installer". 
+ 
 Step 10.
- Use DiskCopy to create an empty .dmg, 40 MB in size.  The Volume name should
- be "Fink IN_VERSION Installer" and the file name doesn't matter.  When
- the volume has been created, open it in the Finder, copy the contents of 
- the dmg-IN_VERSION subdirectory to it, and then drag it to the Trash.
-
-Step 11.
- Launch DiskCopy again, and select "Convert Image".  You want to convert
- the .dmg you just created to "read/only", and give it the new name
- Fink-IN_VERSION-Installer.dmg.
+ Mount and test the .dmg. Send it to someone else to test before release as well.
 
 That's it, you're done!  Be sure to commit your revised versions of the .rtf
 files to CVS for the benefit of future releases.
