@@ -530,22 +530,30 @@ Ceci forcera l'installation de foo-bin sur la plupart des systèmes, jusqu'au mo
 
 
 <h3><a name="policy.perlmods">3.4 Modules Perl</a></h3>
-<p>Fink a une nouvelle réglementation pour les modules perl, effective à partir de mai 2003.
+<p>La réglementation de Fink pour les modules perl, effective à partir de mai 2003, a été modifiée en avril 2004.
 </p><p>
-Traditionnellement, les paquets Fink pour les modules Perl ont un suffixe <tt style="white-space: nowrap;">-pm</tt>, et ont été compilés en utilisant la directive <tt style="white-space: nowrap;">Type: perl</tt>, qui place les modules Perl dans <tt style="white-space: nowrap;">/sw/lib/perl5</tt> et/ou dans <tt style="white-space: nowrap;">/sw/lib/perl5/darwin</tt>.  Avec la nouvelle réglementation, cet emplacement n'est autorisé que pour les modules perl qui sont indépendants de la version de perl utilisée pour les compiler.
+Traditionnellement, les paquets Fink pour les modules Perl avaient un suffixe <tt style="white-space: nowrap;">-pm</tt>, et  étaient compilés en utilisant la directive <tt style="white-space: nowrap;">Type: perl</tt>, qui place les modules Perl dans <tt style="white-space: nowrap;">/sw/lib/perl5</tt> et/ou dans <tt style="white-space: nowrap;">/sw/lib/perl5/darwin</tt>.  Avec la nouvelle réglementation, cet emplacement n'est autorisé que pour les modules perl qui sont indépendants de la version de perl utilisée pour les compiler (et qui ne dépendent pas d'autres modules perl dépendants des versions).
 </p><p>
 Les modules Perl qui sont dépendants des versions sont les modules dits XS, qui contiennent fréquemment du code C compilé ainsi que des routines écrites en langage Perl.
 Il y a de nombreuses façons de les reconnaître, notamment par la présence d'un fichier avec un suffixe <tt style="white-space: nowrap;">.bundle</tt>.
 </p><p>
 Un module perl qui dépend des versions doit être construit en utilisant un binaire dont le nom comporte le numéro de version de perl, comme <tt style="white-space: nowrap;">perl5.6.0</tt>, et doit stocker ses fichiers dans des sous-répertoires des répertoires standards de perl ; les noms de ces sous-répertoires doivent comporter le numéro de version de perl, comme <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> et <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt>.
-Une nouvelle convention, en cours d'introduction,  consiste à utiliser le suffixe <tt style="white-space: nowrap;">-pm560</tt> pour un module Perl de version 5.6.0.  Des conventions de stockage et de nommage similaires s'imposent pour les autres versions de perl, qui bientôt incluront perl 5.6.1 et perl 5.8.0.  
+Par convention, les noms des paquets utilisent le suffixe <tt style="white-space: nowrap;">-pm560</tt> pour un module Perl de version 5.6.0.  Des conventions de stockage et de nommage similaires s'imposent pour les autres versions de perl, qui incluent perl 5.6.1 (dans les seules branches 10.2), perl 5.8.0, perl 5.8.1 et perl 5.8.4 (bientôt disponible).  
 </p><p>
-La nouvelle directive <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> utilise automatiquement le binaire dont le nom comporte le numéro de version de perl et stocke les fichiers dans les bons sous-répertoires.
+La directive <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> utilise automatiquement le binaire dont le nom comporte le numéro de version de perl et stocke les fichiers dans les bons sous-répertoires.
 (Cette directive est disponible à partir de la version 0.13.0 de fink.)
 </p><p>
-Il est permis de créer un paquet <tt style="white-space: nowrap;">-pm</tt>, qui est essentiellement un paquet "lot", qui charge la variante <tt style="white-space: nowrap;">-pm560</tt> ou une autre variante existante.
-Cette stratégie est encouragée pour les paquets existants de Fink contenant des modules XS, afin d'assurer une mise à jour sans problème.
-</p><p>
+Sous la réglementation de mai 2003, il était permis de créer un paquet <tt style="white-space: nowrap;">-pm</tt>, qui est essentiellement un paquet "lot", qui charge la variante <tt style="white-space: nowrap;">-pm560</tt> ou une autre variante existante.
+Cette stratégie est déconseillée sous la réglementation d'avril 2004, et sera complètement interdite après une période de transition. (La seule exception sera la paquet <tt style="white-space: nowrap;">storable-pm</tt> qui doit se présenter sous cette forme pour le bootstrap).
+</p>
+<p>À partir de la version 0.20.1 de fink, le paquet virtuel system-perl "fournit" automatiquement certains modules perl quand la version de Peerl présente sur le système est supérieure ou égale à 5.8.0. Dans le cas de system-perl-5.8.1-1, ces modules sont les suivants : 
+<b>attribute-handlers-pm, cgi-pm, digest-md5-pm581, file-spec-pm, 
+file-temp-pm, filter-simple-pm581, filter-util-pm581, getopt-long-pm, 
+i18n-langtags-pm, libnet-pm, locale-maketext-pm, memoize-pm, 
+mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm, test-simple-pm, 
+time-hires-pm581.</b>
+</p>
+<p>
 Effective à partir de la version 0.13.0 de fink, la commande <tt style="white-space: nowrap;">fink validate</tt>, quand elle est appliquée à un fichier <tt style="white-space: nowrap;">.deb</tt>, teste si le paquet fink est un module XS qui a été installé dans un répertoire dont le nom ne comporte pas le numéro de version, et, génère, dans ce cas, une alerte.
 </p>
 
@@ -1245,4 +1253,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.23 2004/05/08 19:40:08 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.24 2004/05/08 22:28:34 michga Exp $</i></p></body></html>
