@@ -451,6 +451,34 @@ La commande <tt style="white-space: nowrap;">DocFiles</tt> place ensuite une cop
 Notez que nous avons inclus la version courante exacte de barN-shlibs comme dépendance du paquet principal barN (qui peut être abrégé en %N-shlibs (= %v-%r) ).
 Ceci assure que les versions correspondent, et garantit aussi que barN "hérite" automatiquement de toutes les dépendances de barN-shlibs.
 </p>
+<p><b>Le champ BuildDependsOnly</b>
+</p><p>
+Lors de mises à jour de librairies, il est souvent nécessaire d'avoir deux versions des headers pendant une période de transition. L'une d'entre elles est utilisée pour compiler certaines choses, l'autre pour en compiler d'autres. C'est pouquoi, les paquets contenant des headers doivent être construits avec soin. Si foo-dev et bar-dev contiennent tous les deux des headers qui se recouvrent, alors foo-dev doit déclarer :
+</p>
+<pre>
+  Conflicts: bar-dev
+  Replaces: bar-dev
+</pre>
+<p>de même, bar-dev déclare des Conflicts/Replaces sur foo-dev.
+</p><p>
+De plus, les deux paquets doivent déclarer :
+</p>
+<pre>
+  BuildDependsOnly: True
+</pre>
+<p>Ceci empêche d'autres paquets de dépendre de foo-dev ou de bar-dev, car de telles dépendances enrayeraient le mécanisme du Conflicts/Replaces.
+</p><p>
+Il existe certains paquets contenant des headers et pour lesquels il ne semble pas approprié de déclarer une valeur "true" pour BuildDependsOnly to be true. Dans ce cas, le paquet doit déclarer : 
+</p>
+<pre>
+  BuildDependsOnly: False
+</pre>
+<p>et la raison pour laquelle cela est fait doit être mentionnée dans le champ DescPackaging.
+</p><p>
+Le champ BuildDependsOnly ne doit être mentionné dans le fichier .info du paquet que si ce paquet contient des headers installés dans /sw/include.
+</p><p>
+À partir de la version 0.20.5 de fink, "fink validate" affichage un message pour tout .deb qui contient des headers et au moins une dylib, et qui ne donne pas la valeur "true" ou "false" au champ BuildDependsOnly. (Il est possible que, dans les versions postérieures de fink, ce message soit étendu aux cas des .deb contenant des headers et une librairie statique). 
+</p>
 <p><b>Le champ Shlibs :</b>
 </p><p>
 En sus de placer les librairies partagées dans le bon paquet, suivant en cela la version 4 de cette règle, vous devez également déclarer toutes les librairies partagées en utilisant le champ <tt style="white-space: nowrap;">Shlibs</tt>.
