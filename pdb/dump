@@ -56,7 +56,7 @@ open(STDOUT, ">&OLDOUT");
 
 print "# delete old rows\n";
 print "DELETE FROM package WHERE release='$release';\n";
-print "DELETE FROM splitoffs WHERE release='$release';\n";
+print "DELETE FROM splitoffs WHERE parentkey REGEXP '^$release';\n";
 
 ### loop over packages
 
