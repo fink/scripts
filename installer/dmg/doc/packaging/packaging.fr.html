@@ -205,7 +205,7 @@ chemin des rustines
 </p>
 </td></tr><tr valign="top"><td>%b</td><td>
 <p>
-répertoire de compilation, exemple : <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.Vous ne devez pas partir du principe que <tt style="white-space: nowrap;">root-%f</tt> est dans <tt style="white-space: nowrap;">%p/src</tt>, car l'utilisateur peut changer ce répoertoire en utilisant le champ <tt style="white-space: nowrap;">Buildpath</tt> de <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
+répertoire de compilation, exemple : <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.Vous ne devez pas partir du principe que <tt style="white-space: nowrap;">%f</tt> est dans <tt style="white-space: nowrap;">%p/src</tt>, car l'utilisateur peut changer ce répoertoire en utilisant le champ <tt style="white-space: nowrap;">Buildpath</tt> de <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
 </p>
 <p>
 Note: ne l'utilisez que s'il n'y a pas d'autres possibilités. Le répertoire de compilation est
@@ -1198,7 +1198,7 @@ Each package being built is required to document the licensing arrangement in %i
 <h3><a name="reference.scripts">5.4 Scripts</a></h3>
 
 <p>
-The PatchScript, CompileScript and InstallScript fields allow you to specify shell commands to be executed. The build directory (<tt style="white-space: nowrap;">%b</tt> is the current directory when scripts are executed. You should always use relative pathnames or percent-expansions for files and directories in the fink hierarchy, not complete absolute pathnames. Two forms are supported.
+The PatchScript, CompileScript and InstallScript fields allow you to specify shell commands to be executed. The build directory (<tt style="white-space: nowrap;">%b</tt>) is the current directory when scripts are executed. You should always use relative pathnames or percent-expansions for files and directories in the fink hierarchy, not complete absolute pathnames. Two forms are supported.
 </p>
 <p>
 This field can be a simple list of commands. This is sort of like a shell script. However, the commands are executed via system(), one line at a time, so setting variables or changing the directory only affects commands on that same line. Starting in a CVS version of fink after 0.18.2, you can wrap long lines similar to normal shell scripts: a backslash (<tt style="white-space: nowrap;">\</tt>) at the end of a line indicates that the next line is a continuation.
@@ -1245,4 +1245,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.11 2004/04/03 16:17:09 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.13 2004/04/16 01:06:34 dmacks Exp $</i></p></body></html>

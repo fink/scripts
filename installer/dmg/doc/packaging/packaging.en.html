@@ -281,9 +281,13 @@ the path where the p<b>a</b>tches can be found
 <p>
 the <b>b</b>uild directory, e.g. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.
 You must not assume that
-<tt style="white-space: nowrap;">root-%f</tt> will be in <tt style="white-space: nowrap;">%p/src</tt> since
+<tt style="white-space: nowrap;">%f</tt> will be in <tt style="white-space: nowrap;">%p/src</tt> since
 a user can change that directory using the <tt style="white-space: nowrap;">Buildpath</tt> field
 in <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
+The innermost directory is named based on the <tt style="white-space: nowrap;">Source</tt>
+filename, or is the value of the <tt style="white-space: nowrap;">SourceDirectory</tt> field
+(if present), or is not used if <tt style="white-space: nowrap;">NoSourceDirectory</tt>
+is <tt style="white-space: nowrap;">true</tt>.
 </p>
 <p>
 Note: Use this only when there is no other way. The build directory is the
@@ -2044,7 +2048,7 @@ of the packages by using <tt style="white-space: nowrap;">DocFiles</tt> several 
 
 <p>The PatchScript, CompileScript and InstallScript fields allow you
 to specify shell commands to be executed. The build directory
-(<tt style="white-space: nowrap;">%b</tt> is the current directory when scripts are
+(<tt style="white-space: nowrap;">%b</tt>) is the current directory when scripts are
 executed. You should always use relative pathnames or
 percent-expansions for files and directories in the fink hierarchy,
 not complete absolute pathnames. Two forms are supported.
@@ -2114,4 +2118,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.20 2004/03/31 20:08:34 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.23 2004/04/16 01:42:15 dmacks Exp $</i></p></body></html>
