@@ -10,7 +10,7 @@ X11 with or without Fink.
 <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 What is X11?</a></li><li><a href="#intro.def-macosx">1.2 What is Mac OS X?</a></li><li><a href="#intro.def-darwin">1.3 What is Darwin?</a></li><li><a href="#intro.def-xfree86">1.4 What is XFree86?</a></li><li><a href="#intro.def-xtools">1.5 What is Xtools?</a></li><li><a href="#intro.client-server">1.6 Client and Server</a></li><li><a href="#intro.rootless">1.7 What does rootless mean?</a></li><li><a href="#intro.wm">1.8 What is a window manager?</a></li><li><a href="#intro.desktop">1.9 What are Quartz/Aqua, Gnome, and KDE?</a></li></ul></li><li><a href="#history"><b>2 History</b></a><ul><li><a href="#history.early">2.1 The early days</a></li><li><a href="#history.xonx-forms">2.2 XonX forms</a></li><li><a href="#history.root-or-not">2.3 To root or not to root</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Getting and Installing XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installing through Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Apple's Binaries</a></li><li><a href="#inst-xfree86.official-binary">3.3 The Official Binaries</a></li><li><a href="#inst-xfree86.official-source">3.4 The Official Source</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 The Latest Development Source</a></li><li><a href="#inst-xfree86.xonx-bin">3.6 The XonX binary test releases (XAqua,
 XDarwin)</a></li><li><a href="#inst-xfree86.macgimp">3.7 MacGimp</a></li><li><a href="#inst-xfree86.rootless">3.8 Roaming Rootless Servers</a></li><li><a href="#inst-xfree86.switching-x11">3.9 Replacing X11</a></li><li><a href="#inst-xfree86.fink-summary">3.10 Fink package summary</a></li></ul></li><li><a href="#run-xfree86"><b>4 Starting XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.0</a></li><li><a href="#run-xfree86.xinitrc">4.3 The .xinitrc File</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installing Xtools</a></li><li><a href="#xtools.run">5.2 Running Xtools</a></li><li><a href="#xtools.opengl">5.3 OpenGL Notes</a></li></ul></li><li><a href="#other"><b>6 Other X11 Possibilities</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Troubleshooting XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 When I launch XDarwin, it quits
 or crashes almost immediately</a></li><li><a href="#trouble.black">7.2 Black icons in the GNOME panel or in the
-menu of a GNOME application</a></li><li><a href="#trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></li><li><a href="#trouble.delete-key">7.4 The Backspace key doesn't work</a></li><li><a href="#trouble.locale">7.5 &quot;Warning: locale not supported by C library&quot;</a></li></ul></li><li><a href="#tips"><b>8 Usage Tips</b></a><ul><li><a href="#tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+menu of a GNOME application</a></li><li><a href="#trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></li><li><a href="#trouble.delete-key">7.4 The Backspace key doesn't work</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Usage Tips</b></a><ul><li><a href="#tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 <h3><a name="intro.def-x11">1.1 What is X11?</a></h3>
@@ -87,7 +87,7 @@ which often results in confusion over the terms.
 In an environment with workstations and servers, you will run the X11
 display server on the workstation machine and the applications (the X
 clients) on the server machine.
-So when talking about the &quot;server&quot;, that means the X11 display server
+So when talking about the "server", that means the X11 display server
 program, not the machine hidden in your wardrobe.
 </p>
 
@@ -99,8 +99,8 @@ X11 models the screen as a hierarchy of windows contained in each
 other.
 At the top of the hierarchy is a special window which is the size of
 the screen and contains all other windows.
-This window contains the desktop background and is called the &quot;root
-window&quot;.
+This window contains the desktop background and is called the "root
+window".
 </p>
 <p>
 Now back on topic:
@@ -123,7 +123,7 @@ This eliminates the need to switch between two screens.
 It also eliminates the X11 root window, because Quartz already takes
 care of the desktop background.
 Because there is no (visible) root window, this mode is called
-&quot;rootless&quot;.  It is the most comfortable way to use X11 on Mac OS X.
+"rootless".  It is the most comfortable way to use X11 on Mac OS X.
 </p>
 
 <h3><a name="intro.wm">1.8 What is a window manager?</a></h3>
@@ -132,7 +132,7 @@ Because there is no (visible) root window, this mode is called
 In most graphical environments the look of window frames (title bar,
 close button, etc.) is defined by the system.
 X11 is different.
-With X11, the window frames (also called &quot;decoration&quot;) are provided by
+With X11, the window frames (also called "decoration") are provided by
 a separate program, called the window manager.
 In most respects, the window manager is just another client
 application; it is started the same way and talks to the X server
@@ -313,7 +313,7 @@ OpenGL.  A new version was released on February 10, 2003 with additional feature
 As of the time of this writing, to use the Apple binaries you will need to make sure you
 have the Fink <tt style="white-space: nowrap;">system-xfree86</tt> package, version 4.2-11 or higher, installed.
 Also, make sure you download BOTH the SDK (linked from the main site), and the public
-beta files.  Do not download the &quot;common toolkits&quot; from OpenDarwin, they will likely
+beta files.  Do not download the "common toolkits" from OpenDarwin, they will likely
 interact poorly with Fink's installation.
 </p>
 <p>
@@ -348,7 +348,7 @@ Some notes on using Apple's X11:
 <p>Apple X11 doesn't honor the Fink environment settings by default.  In order to call up startup applications 
 that you have installed with fink (e.g. window managers, gnome-session, other apps under 
 <tt style="white-space: nowrap;">/sw/bin</tt>) put the following near the top of <tt style="white-space: nowrap;">~/.xinitrc</tt> (i.e. after the 
-initial &quot;<tt style="white-space: nowrap;">#!/bin/sh</tt>&quot;, but before you run any programs):</p>
+initial "<tt style="white-space: nowrap;">#!/bin/sh</tt>", but before you run any programs):</p>
 <pre> . /sw/bin/init.sh
 </pre>
 <p>so that the Fink environment is initialized.  Note:  <tt style="white-space: nowrap;">init.sh</tt> is used rather than <tt style="white-space: nowrap;">init.csh</tt> because <tt style="white-space: nowrap;">.xinitrc</tt> is run by <tt style="white-space: nowrap;">sh</tt> rather than <tt style="white-space: nowrap;">tcsh</tt>.</p>
@@ -425,7 +425,7 @@ with the following commands:
 <pre>make World
 sudo make install install.man</pre>
 <p>To update to 4.2.1.1, follow the instructions in the <a href="#inst-xfree86.official-binary">Official Binaries</a> section.</p>
-<p>To install 4.3.0, follow the above instructions, replacing &quot;2&quot; with &quot;3&quot;, but don't do the 4.2.1.1 update procedure.</p>
+<p>To install 4.3.0, follow the above instructions, replacing "2" with "3", but don't do the 4.2.1.1 update procedure.</p>
 <p>
 As with the official binaries, you've now got XFree86 with a server
 that can do fullscreen, or rootless under Mac OS X.
@@ -678,18 +678,18 @@ but there are some caveats.
 First, the shell that interprets the file will by default wait for
 every program to finish before it starts the next one.
 If you want several programs to run in parallel, you must tell the
-shell to put them &quot;in the background&quot; by adding a <tt style="white-space: nowrap;">&amp;</tt> at
+shell to put them "in the background" by adding a <tt style="white-space: nowrap;">&amp;</tt> at
 the end of the line.
 </p>
 <p>
 Second, <tt style="white-space: nowrap;">xinit</tt> waits for the <tt style="white-space: nowrap;">.xinitrc</tt>
-script to finish and interprets that as &quot;the session has ended, I should
-kill the X server now, too&quot;.
+script to finish and interprets that as "the session has ended, I should
+kill the X server now, too".
 This means that the last command of your <tt style="white-space: nowrap;">.xinitrc</tt>
 must not be run in the background and it should be a long-living program.
 Customarily, the window manager is used for this purpose.
 In fact, most window managers assume that <tt style="white-space: nowrap;">xinit</tt> is
-waiting for them to finish and use this to make the &quot;Log out&quot; entry in
+waiting for them to finish and use this to make the "Log out" entry in
 their menus work.
 (Note: To save some memory and CPU cycles, you can put an
 <tt style="white-space: nowrap;">exec</tt> before the last line like in the examples below.)
@@ -807,10 +807,10 @@ But first, you need to gather two important pieces of information:
 <p>
 <b>XDarwin version.</b>
 You can find the XDarwin version in the Finder by clicking
-<b>once</b> on the XDarwin icon and then selecting &quot;Show Info&quot;
+<b>once</b> on the XDarwin icon and then selecting "Show Info"
 from the menu.
 The version is only incremented when a new binary test release is made
-by the XonX project, so &quot;1.0a1&quot; may actually be any version between
+by the XonX project, so "1.0a1" may actually be any version between
 1.0a1 and 1.0a2.
 </p>
 <p>
@@ -833,7 +833,7 @@ We'll start with a list of the messages you may see:
 <pre>_IceTransmkdir: Owner of /tmp/.ICE-unix should be set to root</pre>
 <p>
 Class: Harmless.
-X11 creates hidden directories in /tmp to store the socket &quot;files&quot; for
+X11 creates hidden directories in /tmp to store the socket "files" for
 local connections.
 For security reasons, X11 prefers if these directories are owned by
 root, but since they are world-writable anyway it will still run
@@ -887,12 +887,12 @@ Most applications will still work, GNU Emacs is a noteable exception.
 Reverting to kernel keymapping.</pre>
 <p>
 Class: Often fatal.
-This can happen with XDarwin 1.0a1, with the &quot;Load from file&quot;
+This can happen with XDarwin 1.0a1, with the "Load from file"
 keymapping option enabled.
 That version needs a full path when the file to load is set via the
 Preferences dialog, but searches automatically when it is passed on
 the command line.
-The message will usually be followed by the &quot;assert&quot; message shown
+The message will usually be followed by the "assert" message shown
 below.
 To fix this, follow the directions below.
 </p>
@@ -905,9 +905,9 @@ Class: Fatal.
 Changes Apple made in Mac OS X 10.1 broke the code in XFree86 that
 reads the keyboard layout from the operating system kernel;
 the message above is the result of that.
-You must use the &quot;Load from file&quot; keymapping option on Mac OS X 10.1.
+You must use the "Load from file" keymapping option on Mac OS X 10.1.
 The setting is in the XDarwin Preferences dialog.
-Be sure that a file is selected (i.e. use the &quot;Pick file&quot; button) -
+Be sure that a file is selected (i.e. use the "Pick file" button) -
 simply activating the check box may not be sufficient with some
 versions of XDarwin.
 If you can't get to the Preferences dialog because XDarwin closes
@@ -958,9 +958,9 @@ See the <a href="#inst-xfree86.rootless">Roaming
 Rootless Servers</a> section for more hints.
 </p>
 <pre>The XKEYBOARD keymap compiler (xkbcomp) reports:
-&gt; Error:            Can't find file &quot;unknown&quot; for geometry include
+&gt; Error:            Can't find file "unknown" for geometry include
 &gt;                   Exiting
-&gt;                   Abandoning geometry file &quot;(null)&quot;
+&gt;                   Abandoning geometry file "(null)"
 Errors from xkbcomp are not fatal to the X server</pre>
 <p>
 Class: Mostly harmless.
@@ -996,7 +996,7 @@ Restarting the computer also helps in most cases (Mac OS X
 automatically cleans up /tmp when it boots, and the network stack is
 reset).
 </p>
-<pre>Xlib: connection to &quot;:0.0&quot; refused by server
+<pre>Xlib: connection to ":0.0" refused by server
 Xlib: Client is not authorized to connect to Server</pre>
 <p>
 Class: Fatal.
@@ -1017,7 +1017,7 @@ Another common cause for XFree86 startup failures is an incorrect
 <tt style="white-space: nowrap;">.xinitrc</tt> file.
 What happens is that the <tt style="white-space: nowrap;">.xinitrc</tt> is run and for some
 reason terminates almost immediately.
-<tt style="white-space: nowrap;">xinit</tt> interprets this as &quot;the user's session has ended&quot;
+<tt style="white-space: nowrap;">xinit</tt> interprets this as "the user's session has ended"
 and kills XDarwin.
 See the <a href="#run-xfree86.xinitrc">.xinitrc
 section</a> for more details.
@@ -1056,13 +1056,13 @@ application with the <tt style="white-space: nowrap;">--no-xshm</tt> command lin
 <p>
 This is a known problem that so far seems to affect only portables
 (PowerBook, iBook).
-To work around this, the &quot;Load from file&quot; keymapping option was
+To work around this, the "Load from file" keymapping option was
 implemented.
 Nowadays it has become the default because the old method (reading the
 mapping from the kernel) stopped working with Mac OS X 10.1.
 If you haven't enabled the option already, you can do so in the
 XDarwin preferences dialog.
-Check the &quot;Load from file&quot; checkbox and select the keymapping file to
+Check the "Load from file" checkbox and select the keymapping file to
 load.
 After restarting XDarwin, your keyboard should mostly work (see
 below).
@@ -1076,20 +1076,20 @@ name of the keymapping file to load as an option, as in:
 <h3><a name="trouble.delete-key">7.4 The Backspace key doesn't work</a></h3>
 
 <p>
-This can happen when you use the &quot;Load keymapping from file&quot; option
+This can happen when you use the "Load keymapping from file" option
 described above.
-The mapping files describe the backspace key as &quot;Delete&quot;, not as
-&quot;Backspace&quot;.
+The mapping files describe the backspace key as "Delete", not as
+"Backspace".
 You can correct that by putting the following line in your .xinitrc
 file:
 </p>
-<pre>xmodmap -e &quot;keycode 59 = BackSpace&quot;</pre>
+<pre>xmodmap -e "keycode 59 = BackSpace"</pre>
 <p>
 If I remember correctly, XDarwin 1.0a2 and later have code that
 correctly maps the Backspace key automatically.
 </p>
 
-<h3><a name="trouble.locale">7.5 &quot;Warning: locale not supported by C library&quot;</a></h3>
+<h3><a name="trouble.locale">7.5 "Warning: locale not supported by C library"</a></h3>
 
 <p>
 These messages are quite common, but harmless.
@@ -1143,7 +1143,7 @@ OS X.
 
 <p>
 To launch X11 applications from a Terminal.app window, you must set
-the environment variable &quot;DISPLAY&quot;.
+the environment variable "DISPLAY".
 This variable tells the applications where to find the X11 window
 server.
 In the default setup - XDarwin runs on the same machine, your shell is
@@ -1194,15 +1194,15 @@ Copy and paste from Classic to X11 doesn't work.
 Anyway, the trick is to use the respective methods of the environment
 you're in.
 To transfer text from Aqua to X11, use Cmd-C in Aqua, then bring the
-destination window to the front and use the &quot;middle mouse button&quot;, i.e. Option-click
+destination window to the front and use the "middle mouse button", i.e. Option-click
 on a single-button mouse (this can be configured 
 under XDarwin's Preferences), to paste.
 To transfer text from X11 to Aqua, simply select the text with the
 mouse in X11, then use Cmd-V in Aqua to paste it.
 </p>
 <p>
-The X11 system actually has several separate clipboards (called &quot;cut
-buffers&quot; in X11 speak), and some applications have weird views which
+The X11 system actually has several separate clipboards (called "cut
+buffers" in X11 speak), and some applications have weird views which
 one should be used.
 In particular, pasting into GNU Emacs or XEmacs sometimes doesn't work
 because of this.

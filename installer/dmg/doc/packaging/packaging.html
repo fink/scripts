@@ -5,7 +5,7 @@ This manual documents how to create package descriptions for the Fink
 package manager.
 It also provides a policy and guidelines for the Fink distribution.
 Both the description format and the distribution policy are still
-evolving, so watch the &quot;Last changed&quot; info and the CVS tag on this
+evolving, so watch the "Last changed" info and the CVS tag on this
 page to detect updates.
 What you're reading right now is a description of the format and
 policy used in post-0.9.0 development versions of the fink
@@ -89,10 +89,10 @@ dashes in between, e.g. openssh-2.9p1-2.
 <p>
 Package descriptions are read from the <tt style="white-space: nowrap;">finkinfo</tt>
 directories below the <tt style="white-space: nowrap;">/sw/fink/dists</tt> directory.
-The &quot;Trees&quot; setting in <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> controls
+The "Trees" setting in <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> controls
 which directories are read.
 The name of package description files must be the full package name
-plus the extension &quot;.info&quot;.
+plus the extension ".info".
 </p>
 <p>
 The package description tree is organized with several levels of
@@ -186,7 +186,7 @@ Keys (field names) are case-insensitive in Fink, so you can write
 <tt style="white-space: nowrap;">InstallScript</tt>, <tt style="white-space: nowrap;">installscript</tt> or
 <tt style="white-space: nowrap;">INSTALLSCRIPT</tt> as you please.
 The first form is preferred for readability, though.
-Some fields take a boolean value - any of &quot;true&quot;, &quot;yes&quot;, &quot;on&quot;, &quot;1&quot;
+Some fields take a boolean value - any of "true", "yes", "on", "1"
 (case-insensitive) are treated as true, all other values are treated
 as false.
 </p>
@@ -326,7 +326,7 @@ one part is licensed under the GPL (e.g. the executables) and another
 part is licensed under the LGPL (e.g. the libraries).</li>
 
 <li><tt style="white-space: nowrap;">BSD</tt> - for BSD-style licenses.
-This includes the so-called &quot;original&quot; BSD license, the &quot;modified&quot; BSD
+This includes the so-called "original" BSD license, the "modified" BSD
 license and the MIT license. The Apache license also counts as
 BSD. With these licenses the distribution of source code is
 optional.</li>
@@ -341,8 +341,8 @@ licenses.</li>
 Documentation Project</tt> - if the documentation included in a package
 is explicitly included under one of the licenses, then this is indicated by
 appending <tt style="white-space: nowrap;">/GFDL</tt> or <tt style="white-space: nowrap;">/LDP</tt>, giving one of the
-allowed combinations: &quot;GFDL&quot;,
-&quot;GPL/GFDL&quot;, &quot;LGPL/GFDL&quot;, &quot;GPL/LGPL/GFDL&quot;, &quot;LDP&quot;, or &quot;GPL/LGPL/LDP&quot;.
+allowed combinations: "GFDL",
+"GPL/GFDL", "LGPL/GFDL", "GPL/LGPL/GFDL", "LDP", or "GPL/LGPL/LDP".
 </li>
 
 <li><tt style="white-space: nowrap;">OSI-Approved</tt> - for other Open Source licenses
@@ -485,7 +485,7 @@ but libpng-shlibs and libpng3-shlibs can be installed at the same time.
 (Note that only two .info files are required to build these four packages.)
 </p><p>
 The shared library itself and certain related files will be put into 
-the package barN-shlibs; the &quot;include&quot; files and certain other files will
+the package barN-shlibs; the "include" files and certain other files will
 be put into the package barN.  There can be no overlapping files
 between these two packages, and everything stored in barN-shlibs must have
 a pathname which somehow includes the major version number N.  In many
@@ -521,7 +521,7 @@ could be called barN-bin.  Other packages are allowed to depend on
 barN-bin as well as barN-shlibs.
 </p><p>
 When building shared libraries under major version N, it is important that
-the &quot;install_name&quot; of the library be <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt>.  
+the "install_name" of the library be <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt>.  
 (You can
 find the install_name by running <tt style="white-space: nowrap;">otool -L</tt> on your library.)  The
 actual library file should be installed at
@@ -605,7 +605,7 @@ Notice that we have included the exact current version of barN-shlibs as a
 dependency of the main package barN (which can be abbreviated 
 %N-shlibs (= %v-%r) ).
 This ensures that the versions match, and also guarantees that barN
-automatically &quot;inherits&quot; all the dependencies of barN-shlibs.
+automatically "inherits" all the dependencies of barN-shlibs.
 </p>
 <p><b>The Shlibs field:</b>
 </p><p>
@@ -682,12 +682,12 @@ say
 </pre>
 <p>
 so that upgrading will be transparent to users.  (You should <b>not</b>
-say &quot;Conflicts: foo&quot; because this will prevent the upgrade.)
+say "Conflicts: foo" because this will prevent the upgrade.)
 </p><p>
-After your upgrade, packages which say &quot;Depends: foo&quot; will continue to
+After your upgrade, packages which say "Depends: foo" will continue to
 function normally.  However, you should contact the fink maintainers
 of all such packages and urge them to modify their packages to say 
-&quot;Depends: foo-shlibs, BuildDepends: foo&quot; as soon as possible.  You will 
+"Depends: foo-shlibs, BuildDepends: foo" as soon as possible.  You will 
 not be able to create new packages fooM, fooM-shlibs which implement a 
 new major version of the shared library until they have done so.
 </p><p>
@@ -764,7 +764,7 @@ versioned perl binary and stores the files in the correct subdirectories.
 (This directive is available starting with version 0.13.0 of fink.)
 </p><p>
 It is permitted to create a <tt style="white-space: nowrap;">-pm</tt> package which is essentially
-a &quot;bundle&quot; package that loads the <tt style="white-space: nowrap;">-pm560</tt> variant or any
+a "bundle" package that loads the <tt style="white-space: nowrap;">-pm560</tt> variant or any
 others which may be exist.  This strategy is encouraged for existing
 Fink packages for XS modules, in order to provide a smooth upgrade path.
 </p><p>
@@ -952,7 +952,7 @@ compiled. Usually this means calling the <tt style="white-space: nowrap;">config
 with some parameters and then issuing a <tt style="white-space: nowrap;">make</tt> command. See the
 CompileScript field description for details.</p>
 <p>In the <b>install phase</b> the package is installed to a temporary
-directory, /sw/src/root-gimp-1.2.1-1 (= %d). (Note the &quot;root-&quot; part.)
+directory, /sw/src/root-gimp-1.2.1-1 (= %d). (Note the "root-" part.)
 All files that would normally be installed to /sw are installed in
 /sw/src/root-gimp-1.2.1-1/sw (= %i = %d%p) instead. See the
 InstallScript field description for details.</p>
@@ -1083,12 +1083,12 @@ Supports the same syntax as Depends.
 </td></tr><tr valign="top"><td>Provides</td><td>
 <p>
 A comma-separated list of package names that this package is
-considered to &quot;provide&quot;.
-If a package named &quot;pine&quot; specifies <tt style="white-space: nowrap;">Provides: mailer</tt>,
-then any dependency on &quot;mailer&quot; is considered satisfied when &quot;pine&quot; is
+considered to "provide".
+If a package named "pine" specifies <tt style="white-space: nowrap;">Provides: mailer</tt>,
+then any dependency on "mailer" is considered satisfied when "pine" is
 installed.
-You'll usually also want to name these packages in the &quot;Conflicts&quot; and
-the &quot;Replaces&quot; field.
+You'll usually also want to name these packages in the "Conflicts" and
+the "Replaces" field.
 </p>
 </td></tr><tr valign="top"><td>Conflicts</td><td>
 <p>
@@ -1106,7 +1106,7 @@ In summary, it only effects run-time, not build-time.
 </p>
 </td></tr><tr valign="top"><td>Replaces</td><td>
 <p>
-This is used together with &quot;Conflicts&quot;, when this package not only
+This is used together with "Conflicts", when this package not only
 takes over the function of the conflicting package, but also has some
 common files.
 Without this field, dpkg may generate errors when installing the
@@ -1190,25 +1190,25 @@ download).
 <p>
 If a package consists of several tarballs, name them with these
 additional fields, starting with N = 2. So, the first tarball (which
-should be some kind of &quot;main&quot; tarball) goes into <tt style="white-space: nowrap;">Source</tt>, the
+should be some kind of "main" tarball) goes into <tt style="white-space: nowrap;">Source</tt>, the
 second tarball in <tt style="white-space: nowrap;">Source2</tt> and so on. The rules are the same
-as for Source, only that the &quot;gnu&quot; and &quot;gnome&quot; shortcuts are not
+as for Source, only that the "gnu" and "gnome" shortcuts are not
 expanded - that would be useless anyway.
 </p>
 </td></tr><tr valign="top"><td>SourceDirectory</td><td>
 <p>
 Must be used when the tarball expands to a single directory, but
 the directory's name is different from the basename of the tarball.
-Usually, a tarball named &quot;foo-1.0.tar.gz&quot; will produce a directory
-named &quot;foo-1.0&quot;. If it produces a directory with a different name,
+Usually, a tarball named "foo-1.0.tar.gz" will produce a directory
+named "foo-1.0". If it produces a directory with a different name,
 specify it with this parameter. Percent expansion is performed on this
 field.
 </p>
 </td></tr><tr valign="top"><td>NoSourceDirectory</td><td>
 <p>
 Set this boolean parameter to a true value if the tarball does not
-expand to a single directory. Usually, a tarball named &quot;foo-1.0.tar.gz&quot;
-will produce a directory named &quot;foo-1.0&quot;. If it just unpacks the files
+expand to a single directory. Usually, a tarball named "foo-1.0.tar.gz"
+will produce a directory named "foo-1.0". If it just unpacks the files
 to the current directory, use this parameter and set it to a boolean
 true value.
 </p>
@@ -1318,7 +1318,7 @@ A boolean value. If true, the files config.guess and config.sub
 in the build directory will be replaced with versions that know about
 Darwin. This happens in the patch phase and before the PatchScript
 is run. <b>Only</b> use this when you know it is necessary,
-i.e. when the configure script fails with a &quot;unknown host&quot;
+i.e. when the configure script fails with a "unknown host"
 message.
 </p>
 </td></tr><tr valign="top"><td>UpdateConfigGuessInDirs</td><td>
@@ -1417,6 +1417,10 @@ remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
 <p>
 Additional parameters to pass to the configure script. (See
 CompileScript for details.)
+
+As of fink &gt; 0.13.7, this parameter will also work with perl modules
+<tt style="white-space: nowrap;">Type: Perl</tt>, and will append to the default perl Makefile.PL
+string.
 </p>
 </td></tr><tr valign="top"><td>CompileScript</td><td>
 <p>
@@ -1458,6 +1462,14 @@ make test</pre>
 <p>
 Before the commands are executed, percent expansion takes place
 (see previous section).
+</p>
+</td></tr><tr valign="top"><td>NoPerlTests</td><td> 
+<p>
+<b>Introduced in fink &gt; 0.13.7.</b>
+A boolean value, specific for perl module packages.
+If true, the <tt style="white-space: nowrap;">make test</tt> portion
+of the <tt style="white-space: nowrap;">CompileScript</tt> will be ignored
+for that specific perl module package.
 </p>
 </td></tr></table>
 <p><b>Install Phase:</b></p>
@@ -1655,9 +1667,9 @@ The named files will receive special treatment by dpkg.
 When a package is upgraded and the file has changed both on disk and
 in the package, the user is asked which version to use and backups
 of the file will be made.
-When a package is &quot;remove&quot;d, the configuration files will remain on
+When a package is "remove"d, the configuration files will remain on
 disk.
-Only a &quot;purge&quot; also removes the configuration files.
+Only a "purge" also removes the configuration files.
 </p>
 </td></tr><tr valign="top"><td>InfoDocs</td><td>
 <p>
@@ -1701,19 +1713,19 @@ Multiple lines allowed.
 </td></tr><tr valign="top"><td>DescUsage</td><td>
 <p>
 This is for information that is needed to use the package (how do
-I use it?). As in &quot;run wmaker.inst once before using WindowMaker&quot;.
+I use it?). As in "run wmaker.inst once before using WindowMaker".
 Multiple lines allowed.
 </p>
 </td></tr><tr valign="top"><td>DescPackaging</td><td>
 <p>
-Notes about the packaging. Stuff like &quot;patches the Makefile to put
-everything in place&quot; goes here. Multiple lines allowed.
+Notes about the packaging. Stuff like "patches the Makefile to put
+everything in place" goes here. Multiple lines allowed.
 </p>
 </td></tr><tr valign="top"><td>DescPort</td><td>
 <p>
 Notes that are specific to porting the package to Darwin. Stuff
-like &quot;config.guess and libtool scripts are updated, -no-cpp-precomp
-is necessary&quot; goes here. Multiple lines allowed.
+like "config.guess and libtool scripts are updated, -no-cpp-precomp
+is necessary" goes here. Multiple lines allowed.
 </p>
 </td></tr></table>
 
@@ -1796,7 +1808,7 @@ line. This may be fixed one day in the future.</p>
 
 <p>If your package needs a patch to compile on Darwin (or to work with
 fink), name the patch with the full package name plus the extension
-&quot;.patch&quot; and put it in the same directory as the .info file. Specify
+".patch" and put it in the same directory as the .info file. Specify
 either one of these (they are equivalent):</p>
 <pre>Patch: %f.patch</pre>
 <pre>PatchScript: patch -p1 &lt;%a/%f.patch</pre>
@@ -1824,4 +1836,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.46 2003/05/20 19:51:27 dmrrsn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.48 2003/09/04 16:46:22 thesin Exp $</i></p></body></html>
