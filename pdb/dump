@@ -42,9 +42,15 @@ $config->set_param("Trees", "$tree/main $tree/crypto");
 
 ### read package info
 
-print "# ";
-Fink::Package->scan_all();
-print "\n";
+# temporarily send stdout to stderr
+open(OLDOUT, ">&STDOUT");
+open(STDOUT, ">&STDERR") or die "Can't dup stderr";
+select(OLDOUT); select(STDOUT);  # keep 'use strict' happy
+
+Fink::Package->require_packages();
+
+# restore stdout
+open(STDOUT, ">&OLDOUT");
 
 ### drop the previous data
 
