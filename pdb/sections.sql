@@ -5,7 +5,7 @@ insert into sections values ('database', 'SQL database software');
 insert into sections values ('devel', 'Software for software development');
 insert into sections values ('editors', 'Text editors');
 insert into sections values ('games', 'Games and other fun stuff');
-insert into sections values ('gnome', 'The GNOME desktop environment (version 1.2)');
+insert into sections values ('gnome', 'The GNOME desktop environment (version 1.4)');
 insert into sections values ('graphics', 'Graphics applications and libraries');
 insert into sections values ('languages', 'Programming languages (compilers, interpreters)');
 insert into sections values ('libs', 'General purpose libraries');
