@@ -451,8 +451,12 @@ La valeur par défaut est 1.</p>
 <p><b>MirrorOrder:</b> MasterFirst, MasterLast, MasterNever ou ClosestFirst</p>
 <p>Fink gère des miroirs 'Maîtres', serveurs miroirs des archives tar du code source de tous les paquets Fink. L'utilisation d'un miroir maître a pour avantage que les URL de téléchargement du source ne sont jamais obsolètes. Les utilisateurs peuvent choisir d'utiliser ces miroirs maintenus par l'équipe Fink, ou de n'utiliser que les URL initiales du source et des miroirs externes tels les miroirs gnome, KDE ou debian. De plus, on peut combiner les deux jeux de miroirs ; la recherche aura lieu alors par ordre de proximité de la zone de téléchargement, comme cela a été expliqué ci-dessus. Avec les options MasterFirst et MasterLast, l'utilisateur va directement au jeu de miroirs maîtres (ou au jeu de miroirs non maîtres) si un téléchargement échoue. Les options sont les  suivantes :</p>
 <pre>
-MasterFirst - Cherche d'abord dans les miroirs "Maîtres". MasterLast - Cherche dans les miroirs "Maîtres" à la fin. MasterNever - N'utilise jamais les miroirs "Maîtres". ClosestFirst - Cherche d'abord dans les miroirs les plus proches 
-  (combine tous les miroirs en un seul jeu de miroirs). </pre>
+MasterFirst - Cherche d'abord dans les miroirs "Maîtres". 
+MasterLast - Cherche dans les miroirs "Maîtres" à la fin. 
+MasterNever - N'utilise jamais les miroirs "Maîtres". 
+ClosestFirst - Cherche d'abord dans les miroirs les plus proches 
+  (combine tous les miroirs en un seul jeu de miroirs). 
+</pre>
 </li>
 </ul>
 
@@ -510,7 +514,7 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/release main crypto
 deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 
 # Put local modifications to this file below this line, or at the top. </pre>
-<p>Pour la bonne compréhension de fonctionnement de ce fichier, voici la traduction en français</p>
+<p>Pour la bonne compréhension du fonctionnement de ce fichier, voici la traduction en français :</p>
 <pre>
 # Les modifications locales doivent se faire soit au-dessus de cette ligne,
 # soit tout-à-fait à la fin du fichier. #
@@ -548,12 +552,18 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 
 <p>Ce sont des options qui s'appliquent à toutes les commandes fink. Pour obtenir la liste des options, exécutez <tt style="white-space: nowrap;">fink --help</tt> :</p>
 <pre>
--h, --help            - affiche ce message d'aide
--q, --quiet           - diminue le niveau de verbosité de fink, effet contraire à celui de --verbose
--V, --version         - affiche les informations de version
--v, --verbose         - augmente le niveau de verbosité de fink, effet contraire à celui de --quiet
--y, --yes             - applique la réponse par défaut à toutes les questions interactives
--b, --use-binary-dist - télécharge les paquets pré-compilés de la distribution binaire s'ils sont disponibles
+-h, --help
+ - affiche ce message d'aide
+-q, --quiet
+ - diminue le niveau de verbosité de fink, effet contraire à celui de --verbose
+-V, --version
+ - affiche les informations de version
+-v, --verbose
+ - augmente le niveau de verbosité de fink, effet contraire à celui de --quiet
+-y, --yes
+ - applique la réponse par défaut à toutes les questions interactives
+-b, --use-binary-dist 
+ - télécharge les paquets pré-compilés de la distribution binaire s'ils sont disponibles
 </pre>
 <p>La plupart de ces options ne nécessite pas d'explication supplémentaire. Elles peuvent être configurées dans le <a href="#conf">fichier de configuration de Fink</a> (fink.conf) si vous souhaitez les rendre permanentes et non pas restreindre leur effet à une seule invocation de <tt style="white-space: nowrap;">fink</tt>.</p>
 <p>L'option <tt style="white-space: nowrap;">--use-binary-dist</tt> force <tt style="white-space: nowrap;">fink</tt> à télécharger les paquets binaires à partir de la distribution binaire, s'ils sont disponibles et qu'ils ne sont pas déjà sur votre système. Disponible à partir de la version 0.23.0 de <tt style="white-space: nowrap;">fink</tt>.</p>
@@ -563,7 +573,8 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 <p>La commande install est utilisée pour installer des paquets. Elle télécharge, configure, compile et installe les paquets désirés. Elle installe aussi automatiquement les dépendances requises, mais vous demande confirmation avant de le faire. Exemple :</p>
 <pre>fink install nedit
 
-Reading package info... Information about 131 packages read. The following additional package will be installed:
+Reading package info... Information about 131 packages read. 
+The following additional package will be installed:
  lesstif
 Do you want to continue? [Y/n]</pre>
 <p>Ici fink lit les fichiers d'information des paquets, donne le nombre de fichiers lus, signale que le paquet lesstif sera téléchargé si vous donnez votre accord.</p>      
@@ -598,25 +609,37 @@ Do you want to continue? [Y/n]</pre>
 <p>Voici quelques-unes des options de la commande <tt style="white-space: nowrap;">fink list</tt> :</p>
 <pre>
 -h,--help
-  Affiche les options disponibles. -t,--tab
+  Affiche les options disponibles. 
+-t,--tab
   Affiche la liste en séparant les divers éléments d'une ligne par une tabulation,
-  utile en cas d'utilisation à l'intérieur d'un script. -i,--installed
-  N'affiche que les paquets installés. -o,--outdated
-  N'affiche que les paquets obsolètes. -u,--uptodate
-  N'affiche que les paquets à jour. -n,--notinstalled
-  Affiche les paquets qui ne sont pas installés. -s=expr,--section=expr
+  utile en cas d'utilisation à l'intérieur d'un script. 
+-i,--installed
+  N'affiche que les paquets installés. 
+-o,--outdated
+  N'affiche que les paquets obsolètes. 
+-u,--uptodate
+  N'affiche que les paquets à jour. 
+-n,--notinstalled
+  Affiche les paquets qui ne sont pas installés. 
+-s=expr,--section=expr
   Affiche les paquets dans les sections correspondant à l'expression régulière
-  fournie. -w=xyz,--width=xyz
+  fournie. 
+-w=xyz,--width=xyz
   Fixe la largeur de l'affichage. xyz est soit une valeur numérique, soit auto. 
   auto correspond à la largeur du terminal. 
-  La valeur par défaut est auto. </pre>
+  La valeur par défaut est auto.</pre>
 <p>Quelques exemples d'utilisation :</p>
 <pre>
-fink list                 - affiche tous les paquets
-fink list bash            - vérifie si bash est installé et affiche la version installée
-fink list --outdated      - affiche les paquets obsolètes
-fink list --section=kde   - affiche les paquets de la section kde
-fink list "gnome*"         - affiche tous les paquets dont le nom commence par 'gnome'
+fink list
+ - affiche tous les paquets
+fink list bash
+ - vérifie si bash est installé et affiche la version installée
+fink list --outdated
+ - affiche les paquets obsolètes
+fink list --section=kde 
+ - affiche les paquets de la section kde
+fink list "gnome*"
+ - affiche tous les paquets dont le nom commence par 'gnome'
 </pre>
 <p>Dans le dernier exemple, les guillemets sont nécessaires pour empêcher le shell d'interpréter le modèle lui-même.</p>
 
@@ -624,10 +647,10 @@ fink list "gnome*"         - affiche tous les paquets dont le nom commence par '
 
 <p>Cette commande est presque identique à la commande <tt style="white-space: nowrap;">fink list</tt>. La différence la plus notable est que <tt style="white-space: nowrap;">fink apropos</tt> recherche aussi dans les fichiers de descriptions de paquets pour trouver les paquets. La seconde différence est que la chaîne de recherche n'est pas optionnelle, elle doit être fournie.</p>
 <pre>
-fink apropos irc          - affiche tous les paquets où 'irc' apparaît soit dans le nom, 
- soit dans la description
-fink apropos -s=kde irc   - identique au précèdent, mais restreint aux paquets de la 
- section kde
+fink apropos irc
+ - affiche tous les paquets où 'irc' apparaît soit dans le nom, soit dans la description
+fink apropos -s=kde irc
+ - identique au précèdent, mais restreint aux paquets de la section kde
 </pre>
 
 <h3><a name="usage.describe">6.9 describe - description</a></h3>
@@ -693,10 +716,18 @@ fink apropos -s=kde irc   - identique au précèdent, mais restreint aux paquets
 <p>Note : disponible dans une version de fink postérieure à la version 0.21.0.</p>
 <p>Affiche l'analyse syntaxique des différentes parties d'un fichier .info d'un paquet. Les <b>options</b> suivantes permettent de moduler l'affichage des champs et l'interprétation des raccourcis :</p>
 <pre>
--h, --help           - Affiche les options disponibles. -a, --all            - Affiche tous les champs de description du paquet.   C'est le mode par défaut quand aucune option 
-  --field ou --percent n'est utilisée. -f nomchamp,         - Affiche le contenu des champs indiqués
-  --field=nomchamp     dans leur ordre d'apparition après l'option -f. -p clé,              - Affiche l'interprétation des clés fournies
---percent=clé       dans leur ordre d'apparition après l'option -p. </pre>
+-h, --help           
+ - Affiche les options disponibles. 
+-a, --all
+ - Affiche tous les champs de description du paquet.
+ C'est le mode par défaut quand aucune option 
+ --field ou --percent n'est utilisée. 
+-f nomchamp, --field=nomchamp
+ - Affiche le contenu des champs indiqués
+ dans leur ordre d'apparition après l'option -f. 
+-p clé, --percent=clé
+ - Affiche l'interprétation des clés fournies
+ dans leur ordre d'apparition après l'option -p.</pre>
 
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
@@ -705,4 +736,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.fr.xml,v 1.20 2005/02/01 08:33:58 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.fr.xml,v 1.21 2005/02/09 21:05:41 michga Exp $</i></p></body></html>
