@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+release=$1
+tag=release_`echo $release | sed 's/\./_/g'`
+
+echo "Updating from CVS..."
+if [ ! -d fink ]; then
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink packages
+fi
+cd fink
+cvs -z3 -q update -r $tag
+cd ..
+
+echo "Dumping stable..."
+./dump stable $release-stable >$release-stable.sql
+
+exit 0
