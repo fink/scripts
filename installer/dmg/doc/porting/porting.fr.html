@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Portage de logiciel sur Darwin et Mac OS X</title></head><body><h1 style="text-align: center;">Portage de logiciel sur Darwin et Mac OS X</h1>
 		<p>Ce document contient des indications pour réaliser le portage d'applications Unix vers Darwin et Mac OS X. Ces informations s'appliquent à Mac OS X version 10.0.x et Darwin 1.3.x. Nous ferons référence aux deux systèmes sous le nom de Darwin, puisque Mac OS X est actuellement un sur-ensemble de Darwin.</p>
-	<h2>Contents</h2><ul><li><a href="#basics"><b>1 Notions de base</b></a><ul><li><a href="#basics.heritage">1.1 D'où vient Darwin ?</a></li><li><a href="#basics.compiler">1.2 Le compilateur et les outils</a></li><li><a href="#basics.host-type">1.3 Le type de la machine hôte</a></li><li><a href="#basics.librairies">1.4 Librairies</a></li><li><a href="#basics.other-sources">1.5 Autres sources d'information</a></li></ul></li><li><a href="#shared"><b>2 Shared Code</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Shared Libraries vs. Loadable Modules</a></li><li><a href="#shared.version">2.2 Version Numbering</a></li><li><a href="#shared.cflags">2.3 Compiler Flags</a></li><li><a href="#shared.build-lib">2.4 Building a Shared Library</a></li><li><a href="#shared.build-mod">2.5 Building a Module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 The Situation</a></li><li><a href="#libtool.patch-135">3.2 The 1.3.5 Patch</a></li><li><a href="#libtool.fixing-14x">3.3 Fixing 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 Fixing version strings for libtool generated dylibs</a></li><li><a href="#libtool.notes">3.5 Further Notes</a></li></ul></li><li><a href="#preparing"><b>4 Preparing for 10.2</b></a><ul><li><a href="#preparing.bash">4.1 The bash shell</a></li><li><a href="#preparing.gcc3">4.2 The gcc3 compiler</a></li></ul></li></ul><h2><a name="basics">1 Notions de base</a></h2>
+	<h2>Contents</h2><ul><li><a href="#basics"><b>1 Notions de base</b></a><ul><li><a href="#basics.heritage">1.1 D'où vient Darwin ?</a></li><li><a href="#basics.compiler">1.2 Le compilateur et les outils</a></li><li><a href="#basics.host-type">1.3 Le type de la machine hôte</a></li><li><a href="#basics.librairies">1.4 Librairies</a></li><li><a href="#basics.other-sources">1.5 Autres sources d'information</a></li></ul></li><li><a href="#shared"><b>2 Code partagé</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Librairies partagées ou modules chargeables</a></li><li><a href="#shared.version">2.2 Numérotation de version</a></li><li><a href="#shared.cflags">2.3 Options de compilation</a></li><li><a href="#shared.build-lib">2.4 Construction d'une librairie partagée</a></li><li><a href="#shared.build-mod">2.5 Construction d'un module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 The Situation</a></li><li><a href="#libtool.patch-135">3.2 The 1.3.5 Patch</a></li><li><a href="#libtool.fixing-14x">3.3 Fixing 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 Fixing version strings for libtool generated dylibs</a></li><li><a href="#libtool.notes">3.5 Further Notes</a></li></ul></li><li><a href="#preparing"><b>4 Preparing for 10.2</b></a><ul><li><a href="#preparing.bash">4.1 The bash shell</a></li><li><a href="#preparing.gcc3">4.2 The gcc3 compiler</a></li></ul></li></ul><h2><a name="basics">1 Notions de base</a></h2>
 		
 		
 
@@ -57,46 +57,46 @@
 
 		
 
-	<h2><a name="shared">2 Shared Code</a></h2>
+	<h2><a name="shared">2 Code partagé</a></h2>
 		
 		
 
-		<h3><a name="shared.lib-and-mod">2.1 Shared Libraries vs. Loadable Modules</a></h3>
+		<h3><a name="shared.lib-and-mod">2.1 Librairies partagées ou modules chargeables</a></h3>
 			
 			
 
-			<p>One Mach-O feature that hits many people by surprise is the strict distinction between shared libraries and dynamically loadable modules. On ELF systems both are the same; any piece of shared code can be used as a library and for dynamic loading.</p>
+			<p>Une caractéristique de Mach-O, qui surprend beaucoup de gens, est la distinction stricte entre les librairies partagées et les modules chargeables dynamiquement. Sur les systèmes ELF, cette distinction n'existe pas ;  n'importe quelle partie de code partagé peut être utilisée comme librairie ou chargée dynamiquement.</p>
 
-			<p>Mach-O shared libraries have the file type MH_DYLIB and carry the extension <tt style="white-space: nowrap;">.dylib</tt>. They can be linked against with the usual static linker flags, e.g. <tt style="white-space: nowrap;">-lfoo</tt> for libfoo.dylib. However, they can not be loaded as a module. (Side note: Shared libraries can be loaded dynamically through an API. However, that API is different from the API for bundles and the semantics make it useless for an dlopen() emulation. Most notably, shared libraries can not be unloaded.)</p>
+			<p>Les librairies partagées de Mach-O ont un type de fichier MH_DYLIB et une extension <tt style="white-space: nowrap;">.dylib</tt>. Elles peuvent être liées avec les options statiques habituelles de l'éditeur de liens, par exemple <tt style="white-space: nowrap;">-lfoo</tt> pour libfoo.dylib. Toutefois, elles ne peuvent pas être chargées en tant que modules. (Note subsidiaire : les librairies partagées peuvent être chargées dynamiquement par le biais d'une API. Néanmoins, cette API est différente de l'API pour les lots et sa sémantique la rend inutilisable pour une émulation dlopen(). En particulier,  les librairies partagées ne peuvent être déchargées).</p>
 
-			<p>Loadable modules are called "bundles" in Mach-O speak. They have the file type MH_BUNDLE. Since no component involved cares about it, they can carry any extension. The extension <tt style="white-space: nowrap;">.bundle</tt> is recommended by Apple, but most ported software uses <tt style="white-space: nowrap;">.so</tt> for the sake of compatibility. Bundles can be dynamically loaded and unloaded via dyld APIs, and there is a wrapper that emulates <tt style="white-space: nowrap;">dlopen()</tt> on top of that API. It is not possible to link against bundles as if they were shared libraries. However, it is possible that a bundle is linked against real shared libraries; those will be loaded automatically when the bundle is loaded.</p>
+			<p>Les modules chargeables sont appelés "lots" dans le jargon Mach-O. Ils ont un type de fichier MH_BUNDLE. Ils peuvent avoir n'importe quelle extension, car aucun des éléments concernés n'en tient compte. Apple recommande l'extension <tt style="white-space: nowrap;">.bundle</tt>, mais la plupart des logiciels portés utilisent <tt style="white-space: nowrap;">.so</tt> au nom de la compatibilité. Les lots peuvent être chargés dynamiquement et déchargés via les API dyld, et il existe une interface qui émule <tt style="white-space: nowrap;">dlopen()</tt> au sommet de l'API. Il est impossible de lier des lots comme s'ils étaient des librairies partagées. Toutefois, il est possible de lier un lot avec des librairies partagées réelles ; celles-ci sont automatiquement chargées lorsque le lot est chargé.</p>
 
 		
 
-		<h3><a name="shared.version">2.2 Version Numbering</a></h3>
+		<h3><a name="shared.version">2.2 Numérotation de version</a></h3>
 			
 
-			<p>On an ELF system, version numbers are usually appended to the file name of the shared library, e.g. <tt style="white-space: nowrap;">libqt.so.2.3.0</tt>. On Darwin, the version numbers are placed between the library name and the extension, e.g. <tt style="white-space: nowrap;">libqt.2.3.0.dylib</tt>. Note that this allows you to request a specific version of the library when linking, using <tt style="white-space: nowrap;">-lqt.2.3.0</tt> for the example above.</p>
+			<p>Sur un système ELF, les numéros de versions sont, en général, ajoutés au nom de la librairie partagée, par exemple : <tt style="white-space: nowrap;">libqt.so.2.3.0</tt>. Sur Darwin, les numéros de version sont placés entre le nom de la librairie et l'extension, par exemple : <tt style="white-space: nowrap;">libqt.2.3.0.dylib</tt>. Notez que cela vous permet de demander une version spécifique de librairie à l'édition de liens, en utilisant <tt style="white-space: nowrap;">-lqt.2.3.0</tt> dans l'exemple ci-dessus.</p>
 
-			<p>When creating a shared library, you can specify a name to be used when searching for the library at run time. This is usual practice and allows several major versions of a library to be installed at the same time. On ELF systems this is called the <tt style="white-space: nowrap;">soname</tt>. What's different on Darwin is that you can (and should) specify a full path along with the file name. This eliminates the need for "rpath" options and the ldconfig/ld.so.cache system. To use a library that is not yet installed, you can set the DYLD_LIBRARY_PATH environment variable; see the dyld man page for details.</p>
+			<p>Lorsque vous créez une librairie partagée, vous pouvez indiquer un nom à utiliser lors de la recherche de la librairie à l'exécution. C'est une pratique usuelle et cela permet d'installer plusieurs versions majeures d'une librairie en même temps. C'est ce qu'on appelle le <tt style="white-space: nowrap;">soname</tt> sur les systèmes ELF. Sur Darwin, la différence est que vous pouvez (et devez) indiquer le chemin complet en même temps que le nom du fichier. Ceci élimine la nécessité des options "rpath" et du système de cache ldconfig/ld.so.cache. Pour utiliser une librairie qui n'est pas encore installée, vous pouvez définir la valeur de la variable d'environnement DYLD_LIBRARY_PATH ; voir la man page dyld pour de plus amples informations.</p>
 
-			<p>The Mach-O format also offers real minor version checking, unknown on ELF systems. Every Mach-O library carries two version numbers: a "current" version and a "compatibility" version. Both version numbers are written as three numbers separated by dots, e.g. 1.4.2. The first number must be non-zero. The second and third number can be omitted and default to zero. When no version is specified, it will default to 0.0.0, which is some kind of wildcard value.</p>
+			<p>Le format Mach-O permet aussi un vrai contrôle du numéro de version mineure, inconnu sur les systèmes ELF. Chaque librairie Mach-O portent deux numéros de versions : une version "courante" et une version "compatible". Les deux numéros de versions sont constitués de trois chiffres séparés par des points, par exemple 1.4.2. Le premier chiffre ne peut être nul. Les second et troisième peuvent être omis, ils ont alors la valeur zéro. Quand aucune version n'est spécifiée, le numéro par défaut est 0.0.0, ce qui est une sorte de valeur passe-partout.</p>
 
-			<p>The "current" version is for informational purposes only. The "compatibility" version is used for checking as follows. When an executable is linked, the version information from the library is copied into the executable. When the executable is run, that version information is checked against the used library. dyld generates a run time error and terminates the program unless the used library version is equal to or newer than the one used during linking.</p>
+			<p>La version "courante" n'est donnée qu'à titre d'information. La version "compatible" sert au contrôle décrit ci-après. Quand un exécutable est lié, le numéro de version de la librairie est copié dans l'exécutable. Lorsque l'exécutable est lancé, le numéro de version copié dans l'exécutable est comparé à celui de la librairie utilisée. dyld génère une erreur d'exécution et arrête l'exécution du programme, sauf si le numéro de version de la librairie utilisée est égal ou supérieur à celui utilisé durant l'édition de liens.</p>
 
 		
 
-		<h3><a name="shared.cflags">2.3 Compiler Flags</a></h3>
+		<h3><a name="shared.cflags">2.3 Options de compilation</a></h3>
 			
 
-			<p>The generation of position-independent code (PIC) is the default is the default on Darwin. Actually, PowerPC code is position-independent by design, so there is no performance or space penalty involved. So, you don't need to specify a PIC option when compiling code for a shared library or module. However, the linker doesn't allow "common" symbols in shared libraries, so you must use the <tt style="white-space: nowrap;">-fno-common</tt> compiler option.</p>
+			<p>Par défaut, Darwin génère du code indépendant de la position (PIC). En fait, le code PowerPC est indépendant de la position par construction, si bien qu'il n'y a ni perte de place, ni dégradation de performance. Vous n'avez donc pas besoin de spécifier l'option PIC lors de la compilation d'une librairie partagée ou d'un module. Toutefois, l'éditeur de liens n'admet pas les symboles "common" dans les librairies partagées, si bien que vous devez utiliser l'option de compilation <tt style="white-space: nowrap;">-fno-common</tt>.</p>
 
 		
 
-		<h3><a name="shared.build-lib">2.4 Building a Shared Library</a></h3>
+		<h3><a name="shared.build-lib">2.4 Construction d'une librairie partagée</a></h3>
 			
 
-			<p>To build a shared library, you invoke the compiler driver with the <tt style="white-space: nowrap;">-dynamiclib</tt> option. This is best demonstrated by a comprehensive example. We'll build a library called libfoo, composed of the source files source.c and code.c. The version number is 2.4.5, where 2 is the major revision (incompatible API change), 4 is the minor revision (backwards-compatible API change) and 5 is the bugfix revision count (some people call this the "teeny" revision, it denotes fully compatible changes). The library depends on no other shared libraries and will be installed in /usr/local/lib.</p>
+			<p>Pour construire une librairie partagée, vous invoquez le compilateur avec l'option <tt style="white-space: nowrap;">-dynamiclib</tt>. Voici un exemple qui permettre de mieux comprendre le processus. Nous allons construire une librairie appelée libfoo, composée des fichiers sources source.c et code.c. Le numéro de version est 2.4.5, où 2 est le numéro de révision majeure (changement d'API incompatible), 4 est le numéro de révision mineure (compatible avec un retour à une API antérieure) et 5 est le compteur de révision des bogues (on l'appelle parfois une  mini-révision, elle indique des changements totalement compatibles avec l'API). La librairie ne dépend d'aucune autre librairie partagée et sera installée dans /usr/local/lib.</p>
 
 <pre>cc -fno-common -c source.c
 cc -fno-common -c code.c
@@ -107,35 +107,29 @@ rm -f libfoo.2.dylib libfoo.dylib
 ln -s libfoo.2.4.5.dylib libfoo.2.dylib
 ln -s libfoo.2.4.5.dylib libfoo.dylib</pre>
 <p>
-Note which parts of the version are used where.
-Also note that the static linker will use the libfoo.dylib symlink,
-while the dynamic linker will use the libfoo.2.dylib symlink.
-It is possible to point these symlinks at different minor revisions of
-the library.
+Observez quelles sont les parties du numéro de version qui sont utilisées et où elles le sont.
+Notez aussi que l'éditeur de liens statiques utilisera le lien symbolique libfoo.dylib,
+tandis que l'éditeur de liens dynamique utilisera le lien symbolique libfoo.2.dylib.
+Il est possible de faire pointer ces liens symboliques sur différentes révisions mineures de la librairie.
 </p>
 
 
 
-<h3><a name="shared.build-mod">2.5 Building a Module</a></h3>
+<h3><a name="shared.build-mod">2.5 Construction d'un module</a></h3>
 <p>
-To build a loadable module, you invoke the compiler driver with the
-<tt style="white-space: nowrap;">-bundle</tt> option.
-If the module uses symbols from the host program, you'll have to
-specify <tt style="white-space: nowrap;">-undefined suppress</tt> to allow undefined symbols,
-and <tt style="white-space: nowrap;">-flat_namespace</tt> along with it to make the new linker
-in Mac OS X 10.1 happy.
-A comprehensive example:
+Pour construire un module chargeable, vous invoquez le compilateur avec l'option <tt style="white-space: nowrap;">-bundle</tt>.
+Si le module utilise des symboles provenant du programme hôte, vous aurez à spécifier <tt style="white-space: nowrap;">-undefined suppress</tt> pour autoriser des symboles non définis, ainsi que <tt style="white-space: nowrap;">-flat_namespace</tt>, indispensable avec le nouvel éditeur de liens de Mac OS X 10.1.
+Petit exemple explicatif :
 </p>
 <pre>cc -fno-common -c source.c
 cc -fno-common -c code.c
 cc -bundle -flat_namespace -undefined suppress \
  -o mymodule.so source.o code.o</pre>
 <p>
-Note that no version numbering is used.
-It is possible to use it in theory, but in practice it's pointless.
-Also note that there are no naming restrictions for bundles.
-Some packages prefer to prepend a "lib" anyway because some other
-systems require it; this is harmless.
+Remarquez qu'aucun numéro de version n'est utilisé.
+Il est possible, en théorie, d'en utiliser un, mais, en pratique, cela ne présente aucun intérêt.
+Notez aussi qu'il n'y a pas de restriction de nom pour les lots.
+Quelques paquets placent un "lib" avant le nom, car certains systèmes l'exigent ; cela ne présente aucun risque.
 </p>
 
 
@@ -542,4 +536,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.fr.xml,v 1.1 2004/03/18 03:37:37 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.fr.xml,v 1.2 2004/03/19 21:27:32 michga Exp $</i></p></body></html>
