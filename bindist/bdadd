@@ -10,7 +10,7 @@ chdir $base or die "bindist base \"$base\" is bogus, set env var BDBASE\n";
 my ($currel, $dest);
 chomp($currel = `cat $ENV{BDDATA}/current`);
 my $dest = "dists/fink-$currel/main";
-my $dest_crytpo = "dists/fink-$currel/crytpo";
+my $dest_crypto = "dists/fink-$currel/crypto";
 
 ### now load the useful modules
 
@@ -46,7 +46,7 @@ foreach $pkgspec (@ARGV) {
   }
   $section = $po->get_section();
   if ($section eq "crypto") {
-    $todir = $dest_crytpo."/binary-darwin-powerpc";
+    $todir = $dest_crypto."/binary-darwin-powerpc";
   } else {
     $todir = $dest."/binary-darwin-powerpc/".$section;
   }
@@ -79,7 +79,7 @@ foreach $pkgspec (@ARGV) {
     }
 
     if ($section eq "crypto") {
-      $todir = $dest_crytpo."/source";
+      $todir = $dest_crypto."/source";
     } else {
       $todir = $dest."/source/".$section;
     }
