@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Comment poster sur une liste de diffusion de Fink</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="netiquette.en.html">English</a> | 
+Fran&ccedil;ais | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">Comment poster sur une liste de diffusion de Fink</h1>
+    <p><b>Ce document est en cours de rédaction.</b></p>
+    <p>Ce document est un guide pour les nouveaux abonnés aux listes de diffusion de Fink. L'idée est de leur apprendre comment écrire des messages adéquats, de façon à susciter des réponses appropriées. </p>
+    <p>On peut vous renvoyer à une page en réponse à votre message. Ne le prenez pas mal ! Il est plus que probable que vous deviez fournir de plus amples informations pour que l'on puisse trouver la cause de votre problème. Ce sont ces informations qui sont détaillées ci-dessous.</p>
+  <h2>Contents</h2><ul><li><a href="#before-post"><b>1 Phase de préparation</b></a><ul><li><a href="#before-post.research">1.1 Recherche préalable.</a></li></ul></li><li><a href="#first-post"><b>2 Premier message</b></a><ul><li><a href="#first-post.system">2.1 Description de votre installation</a></li><li><a href="#first-post.problem-description">2.2 Description du problème</a></li><li><a href="#first-post.remedies">2.3 Essais préalables</a></li><li><a href="#first-post.future-plans">2.4 Tentatives futures</a></li></ul></li><li><a href="#reply"><b>3 Réponses aux messages</b></a><ul><li><a href="#reply.reply-to-list">3.1 Vérifiez que vous répondez bien à la liste de diffusion</a></li></ul></li><li><a href="#unsubscribe"><b>4 Résiliation d'abonnemnent aux listes de diffusion</b></a><ul><li><a href="#unsubscribe.unsubscribing">4.1 Résiliation d'abonnement</a></li></ul></li></ul><h2><a name="before-post">1 Phase de préparation</a></h2>
+    
+    
+    <h3><a name="before-post.research">1.1 Recherche préalable.</a></h3>
+      
+      <p>Vous devez d'abord rechercher si votre problème n'a pas déjà été résolu. Par exemple dans :</p>
+      <ul>
+        <li>la documentation en ligne</li>
+        <li>les archives de la liste de diffusion</li>
+        <li>Google</li>
+      </ul>
+    
+  <h2><a name="first-post">2 Premier message</a></h2>
+    
+    
+    <h3><a name="first-post.system">2.1 Description de votre installation</a></h3>
+      
+      <p>Si vous avez un problème lors de l'installation d'un paquet, vous devez fournir les informations suivantes sur votre système :</p>
+      <ul>
+        <li>La version de votre système d'exploitation.</li>
+        <li>La version de Fink installée. Le plus simple est de poster le résultat de la commande <pre>fink --version</pre> lancée dans une fenêtre de terminal.</li>
+        <li>Vous devez indiquez si l'installation se fait à partir de paquets binaires, c'est-à-dire si vous utilisez <tt style="white-space: nowrap;">apt-get</tt>, ou à partir de sources, c'est-à-dire si vous utilisez  <tt style="white-space: nowrap;">fink install</tt>.<p>Dans ce dernier cas, vous devez aussi mentionner la version des Developer Tools que vous utilisez.</p></li>
+        <li><p>Si vous installez un paquet qui nécessite X11, vous devez indiquer lequel vous utilisez : X11 d'Apple ou XFree86.  Dans ce dernier cas, indiquez la version.</p><p>En cas de doute, fournissez ces informations.</p></li>
+      </ul>
+    
+    <h3><a name="first-post.problem-description">2.2 Description du problème</a></h3>
+      
+      <ul>
+        <li><b>Indiquez le nom et la version du paquet à l'origine de votre problème.</b>  <p>Cette information doit se trouver dans l'objet du message.</p><p>Si vous avez un problème avec <tt style="white-space: nowrap;">foo-3.141-6</tt>, n'indiquez pas juste <tt style="white-space: nowrap;">foo</tt>.</p><p>Si vous installez un paquet (par exemple, <tt style="white-space: nowrap;">baz-2.18-1</tt>) qui dépend d'autres paquets (<tt style="white-space: nowrap;">foo-3.141-6</tt>, <tt style="white-space: nowrap;">bar-16.0-9</tt>, ...), et que vous avez un problème avec <tt style="white-space: nowrap;">foo</tt>, vous devez mentionner <tt style="white-space: nowrap;">foo-3.141-6</tt>, et non <tt style="white-space: nowrap;">baz-2.18-1</tt>.</p></li>
+        <li><b>Décrivez le problème.</b>  <p>Cela signifie que vous devez poster un extrait des messages d'erreurs.</p><ol>
+            <li>Pour les problèmes issus d'installation de binaires, commencez à partir du dépaquetage du paquet :
+<pre>...
+Selecting previously deselected package foo
+error unpacking foo
+...</pre>et allez jusqu'à la fin.<p></p></li>
+            <li>Il peut y avoir quelques problèmes avec les installations à partir du source :<ol>
+                <li>si la compilation échoue pendant la phase initiale de configuration, c'est en général assez rapide. Postez des derniers tests juste avant le message d'erreur jusqu'à la fin :<pre>....
+Checking for bar-config...no
+Error:  bar-config not found
+....</pre><p>Si vous pensez que cela peut aider, vous pouvez poster la partie correspondante du fichier log de configuration, par exemple <tt style="white-space: nowrap;">/sw/src/foo-3.141-6/foo-3.141/config.log</tt>. <b>Ne postez pas le fichier dans son entier, car il peut être très gros.</b></p></li>
+                <li>Ou l'erreur peut apparaître immédiatement après le début de la construction du paquet. Dans ce cas, postez de la dernière ligne de compilation jusqu'à la fin :<pre>...
+gcc &lt;drapeaux, fichiers, etc...&gt;
+&lt;messages d'erreur&gt;
+...</pre></li>
+                <li>Si vous avez une erreur du genre <tt style="white-space: nowrap;">execution of mv failed</tt>, on vous dira de chercher dans le résultat de compilation une erreur antérieure à ce message. Vous avez donc intérêt à la chercher avant de poster.</li>
+              </ol></li>
+          </ol>    </li>
+      </ul>
+    
+    <h3><a name="first-post.remedies">2.3 Essais préalables</a></h3>
+      
+      <p>Mentionnez ce que vous avez essayé de faire pour résoudre le problème, par exemple :</p>
+      <ul>
+        <li>Appliquer les instructions trouvées dans les QFP ou d'autre partie de la documentation</li>
+        <li>Supprimer les paquets qui semblent entrer en conflit avec celui que vous vouliez installer</li>
+        <li>Reconstruire / réinstaller le paquet</li>
+        <li>Mettre à jour les descriptions de paquets</li>
+        <li>etc...</li>
+      </ul>
+      <p>De cette façon, on ne vous suggérera pas de faire ce que vous avez déjà fait.</p>
+    
+    <h3><a name="first-post.future-plans">2.4 Tentatives futures</a></h3>
+      
+      <p>Dans cette catégorie tombent :</p>
+      <ul>
+        <li>Poster ce que vous envisagez de faire si vous n'obtenez une réponse immédiate.</li>
+        <li>Demander si telle ou telle procédure paraît convenir.</li>
+      </ul>
+    
+  <h2><a name="reply">3 Réponses aux messages</a></h2>
+    
+    
+    
+      <p>Ce chapitre décrit ce que vous devez faire quand vous répondez à des messages.</p>
+    
+    <h3><a name="reply.reply-to-list">3.1 Vérifiez que vous répondez bien à la liste de diffusion</a></h3>
+      
+      <p>Contrairement à certaines listes de diffusion auxquelles vous vous êtes peut-être abonné, les listes de diffusion de Fink sont paramétrées de telle sorte que si vous répondez à un message, vous ne répondez qu'à la personne qui a émis le message, mais <b>non</b> à la liste de diffusion. Assurez que vous répondez à la liste :</p>
+      <ul>
+        <li>Il y aura ainsi plus de gens qui essaieront de résoudre votre problème.</li>
+        <li>Vous ne monopoliserez pas le temps d'une personne. Rappelez-vous que les gens qui répondent sur les listes de diffusion sont tous bénévoles.</li>
+        <li>D'autres personnes pourront bénéficier des solutions. Le fait d'avoir l'ensemble d'un échange de courriers accessible publiquement permet de le mettre dans les archives de la liste de diffusion et éventuellement dans la documentation.</li>
+      </ul>
+      <p>Pour ce faire, vous pouvez utiliser <q>Répondre à tous...</q> :</p>
+      <ul>
+        <li>C'est tout aussi simple que de cliquer sur "Répondre".</li>
+        <li>Même si cela expédie la réponse à la fois à la liste et à l'auteur du message précédent, cela peut être utile, car l'envoi des messages via la liste de diffusion peut être retardé, par exemple lors du filtrage des messages à l'issue d'une grave infection par virus. La réponse arrivera ainsi à l'expéditeur précédent plus rapidement.</li>
+      </ul>
+      <p>Néanmoins, si vous le faites, pensez à supprimer tout autre destinataire (postes croisés ou autres personnes ayant répondu au fil de discussion).</p>
+    
+  <h2><a name="unsubscribe">4 Résiliation d'abonnemnent aux listes de diffusion</a></h2>
+    
+    
+    <h3><a name="unsubscribe.unsubscribing">4.1 Résiliation d'abonnement</a></h3>
+      
+      <p><b>N</b>'envoyez pas de message sur la liste pour résilier votre abonnement.</p>
+      <ol>
+        <li>Allez sur la page des <a href="http://fink.sourceforge.net/lists/index.php">Listes de diffusion</a>.  <p>Note :  n'utilisez pas la version MacOSX d'Internet Explorer.</p></li>
+        <li>Sélectionnez le lien de la liste dont vous voulez résilier l'abonnement.</li>
+        <li>Allez au bas la page, où il est indiqué :  <q>To change your subscription (set options like digest and delivery modes, get a reminder of your password, or unsubscribe), enter your subscription email address:</q>, et saisissez l'adresse email sur laquelle vous recevez le courrier Fink, puis cliquez sur le bouton <q>Edit Options</q>.</li>
+        <li>En haut à gauche de la page qui s'ouvrira, vous trouverez un champ dans lequel vous pourrez résilier votre abonnement.</li>
+      </ol>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: netiquette.fr.xml,v 1.1 2004/03/31 00:31:55 michga Exp $</i></p></body></html>
