@@ -40,7 +40,7 @@ English |
         the change.</a></li><li><a href="#usage-fink.seg-fault">5.26 I get errors with <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
         applications from the<tt style="white-space: nowrap;"> fileutils </tt>package! Help!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 When I open a Terminal window, I get a message that "Your
         environment seems to be correctly set up for Fink already.", and it
-        logs out.</a></li><li><a href="#usage-fink.ext-drive">5.28 I have Fink installed way from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
+        logs out.</a></li><li><a href="#usage-fink.mirror-gnu">5.28 Fink won't update my packages because it says it can't find the 'gnu' mirror.</a></li><li><a href="#usage-fink.cant-move-fink">5.29 I can't update Fink, because it can't move /sw/fink out of the way.</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
         What's that?</a></li><li><a href="#comp-general.cvs">6.2 When I try a "fink selfupdate-cvs" I get this message: "cvs:
         Command not found."</a></li><li><a href="#comp-general.missing-make">6.3 I'm getting an error message involving <tt style="white-space: nowrap;">make</tt>
         </a></li><li><a href="#comp-general.head">6.4 I'm getting a strange usage message from the head command. What's
@@ -48,10 +48,9 @@ English |
         to overwrite a file that is in another package.</a></li><li><a href="#comp-general.weak_lib">6.6 After I installed the December 2002 Development Tools I get
         messages about "weak libraries".</a></li><li><a href="#comp-general.mv-failed">6.7 What does "execution of mv failed, exit code 1" mean when I try to
         build a package?</a></li><li><a href="#comp-general.node-exists">6.8 I can't install a package | update because I get a message that a
-        "node" already exists.</a></li><li><a href="#comp-general.usr-local-libs">6.9 I've heard that libraries installed in /usr/local/lib sometimes
+        "node" already exists.</a></li><li><a href="#comp-general.usr-local-libs">6.9 I've heard that libraries and headers installed under /usr/local sometimes
         cause build problems for Fink. Is this true?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 When I try to build a package, I get a message that a "table of
-        contents" is out of date. What do I need to do?</a></li><li><a href="#comp-general.fc-atlas">6.11 Fink Commander hangs when I try to install atlas.</a></li><li><a href="#comp-general.basic-headers">6.12 I get messages saying that I'm missing stddef.h. Where do I find
-        it?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 I can't update, because Fink is "unable to resolve version conflict
+        contents" is out of date. What do I need to do?</a></li><li><a href="#comp-general.fc-atlas">6.11 Fink Commander hangs when I try to install atlas.</a></li><li><a href="#comp-general.basic-headers">6.12 I get messages saying that I'm missing stddef.h | whar.h | crt.o. Where do I find them?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 I can't update, because Fink is "unable to resolve version conflict
         on multiple dependencies".</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 I can't install anything because I get "dpkg: parse error, in file
         `/sw/var/lib/dpkg/status'"!</a></li><li><a href="#comp-general.freetype-problems">6.15 I get errors involving freetype.</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 I get build errors involving `Dl_info'.</a></li><li><a href="#comp-general.gcc2">6.17 Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> but I can't seem to
         install it.</a></li><li><a href="#comp-general.system-java">6.18 Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</a></li><li><a href="#comp-general.dpkg-split">6.19 When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</a></li><li><a href="#comp-general.xml-parser">6.20 I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</a></li></ul></li><li><a href="#comp-packages"><b>7 Compile Problems - Specific Packages</b></a><ul><li><a href="#comp-packages.libgtop">7.1 A package fails to build with errors involving
@@ -59,12 +58,12 @@ English |
         <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt>, because it conflicts
         with <tt style="white-space: nowrap;">system-xfree86</tt>.</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 How do I change from the non-threaded version of Fink's XFree86
         packages to the threaded version (or vice-versa)?</a></li><li><a href="#comp-packages.cctools">7.4 "When I try to install KDE, I get the following message: 'Can't
-        resolve dependency "cctools (&gt;= 446-1)"'</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
+        resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.xml-parser-pm">7.5 <tt style="white-space: nowrap;">intltool</tt> says that I need XML::Parser.  I have xml-parser-pm installed.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
         library". Is that bad?</a></li><li><a href="#usage-general.passwd">8.2 There are suddenly a number of strange users on my system, with
         names like "mysql", "pgsql", and "games". Where did they come
         from?</a></li><li><a href="#usage-general.compile-myself">8.3 How do I compile something myself using Fink-installed
         software?</a></li><li><a href="#usage-general.apple-x11-applications-menu">8.4 I can't run any of my Fink-installed applications using the
-        Applications menu in Apple X11.</a></li><li><a href="#usage-general.x-options">8.5 I'm bewildered by the X11 options: Apple's X11, XFree86, etc. What
+        Applications menu in Apple X11.</a></li><li><a href="#usage-general.x-options">8.5 I'm bewildered by the X11 options: Apple X11, XFree86, etc. What
         should I install?</a></li><li><a href="#usage-general.no-display">8.6 When I try to run an application, I get a message that says "cannot
         open display:". What do I need to do?</a></li><li><a href="#usage-general.suggest-package">8.7 I don't see my favorite program in Fink. How do I suggest a new
         package for inclusion in Fink?</a></li><li><a href="#usage-general.virtpackage">8.8 What are all these <tt style="white-space: nowrap;">system-*</tt> "virtual
@@ -79,9 +78,8 @@ English |
         X11, and now everything's crashing!</a></li><li><a href="#usage-packages.apple-x-delete">9.8 I want the delete key in Apple's X11.app to behave like that in
         XDarwin.</a></li><li><a href="#usage-packages.gnome-two">9.9 I upgraded from GNOME 1.x to GNOME 2.x and now
         <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 I upgraded to Apple's X11 in Panther and now my window title bars
-        are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 I installed Apple's X11 in Panther but Fink keeps asking to install
-        xfree86.</a></li><li><a href="#usage-packages.apple-x11-beta-wants-xfree86">9.12 I installed Apple's X11 with the 10.2-gcc3.3 version of Fink but
-        Fink keeps asking to install xfree86.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.13 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
+        are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 I installed Apple's X11 but Fink keeps asking to install
+        xfree86.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</a></li><li><a href="#usage-packages.special-x11-debug">9.13 I'm still having problems with X11 and Fink.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
     
     
     <a name="general.what">
@@ -620,20 +618,13 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>or se
         the file with a text editor and remove the reference to
         <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt>.</p></div>
     </a>
-    <a name="usage-fink.ext-drive">
-      <div class="question"><p><b>Q5.28: I have Fink installed way from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</b></p></div>
-      <div class="answer"><p><b>A:</b> If your error looks like:</p><pre>This first test is designed to die, so please ignore the error
-message on the next line.
-# Looks like your test died before it could output anything.
-./00compile............................ok
-./Base/initialize......................ok
-./Base/param...........................ok
-./Base/param_boolean...................ok
-./Command/cat..........................ok
-./Command/chowname.....................#     
-Failed test (./Command/chowname.t at line 27)
-#          got: 'root'
-#     expected: 'nobody'</pre><p>then you need to run <b>Get Info</b> on the drive/partition where Fink is installed and unselect the "Ignore ownership" button.</p></div>
+    <a name="usage-fink.mirror-gnu">
+      <div class="question"><p><b>Q5.28: Fink won't update my packages because it says it can't find the 'gnu' mirror.</b></p></div>
+      <div class="answer"><p><b>A:</b> If you get an error that ends with</p><pre>Failed: No mirror site list file found for mirror 'gnu'.</pre><p>then most likely you need to update the <tt style="white-space: nowrap;">fink-mirrors</tt> package, e.g. via:</p><pre>fink install fink-mirrors</pre></div>
+    </a>
+    <a name="usage-fink.cant-move-fink">
+      <div class="question"><p><b>Q5.29: I can't update Fink, because it can't move /sw/fink out of the way.</b></p></div>
+      <div class="answer"><p><b>A:</b> This error:</p><pre>Failed: Can't move "/sw/fink" out of the way.</pre><p>is usually due, in spite of what it says, to permissions errors in one of the temporary directories that get created during a <tt style="white-space: nowrap;">selfupdate</tt>.  Remove these:</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
     </a>
   <h2><a name="comp-general">6 Compile Problems - General</a></h2>
     
@@ -710,7 +701,7 @@ MACOSX_DEPLOYMENT_TARGET environment variable set to: 10.1</pre><p>You may regar
         pane in the System Preferences tool, and disable "ArchiveViaRealName"
         if it's enabled. It contains a buggy reimplementation of a few
         important system calls that will cause a number of strange and
-        transient errors such as this.</p><p>Otherwise, an <tt style="white-space: nowrap;">mv</tt> error typically means that
+        transient errors such as this.</p><p>Otherwise, am <tt style="white-space: nowrap;">mv</tt> error typically means that
         another error happened earlier in the build, but the build process
         didn't stop. To track down the offending file(s), search in the output
         of the build for the nonexistent file, e.g. if you have something
@@ -741,14 +732,14 @@ Failed: installing foo-0.1.2-3 failed</pre><p>then you should look for <tt style
         </ul></div>
     </a>
     <a name="comp-general.usr-local-libs">
-      <div class="question"><p><b>Q6.9: I've heard that libraries installed in /usr/local/lib sometimes
+      <div class="question"><p><b>Q6.9: I've heard that libraries and headers installed under /usr/local sometimes
         cause build problems for Fink. Is this true?</b></p></div>
       <div class="answer"><p><b>A:</b> This is a frequent source of problems, because the package
-        configuration script finds libraries under
-        <tt style="white-space: nowrap;">/usr/local/lib</tt> before searching in the Fink path.
+        configuration script finds headers and libraries in 
+        <tt style="white-space: nowrap;">/usr/local</tt> and decides to use them rather than using those in the Fink path.
         If you are having problems with a build that aren't covered by another
         FAQ entry, you should check whether you have libraries in
-        <tt style="white-space: nowrap;">/usr/local/lib</tt>. If so, then try renaming
+        <tt style="white-space: nowrap;">/usr/local/lib</tt> or headers in /usr/local/include. If so, then try renaming
         <tt style="white-space: nowrap;">/usr/local</tt> to something else, e.g.:</p><pre>sudo mv /usr/local /usr/local.moved</pre><p>do your build, and then put <tt style="white-space: nowrap;">/usr/local</tt>
         back:</p><pre>sudo mv /usr/local.moved /usr/local</pre></div>
     </a>
@@ -770,9 +761,8 @@ rerun ranlib(1) (can't load from it)</pre><p>What you need to do is run ranlib (
         instead.</p></div>
     </a>
     <a name="comp-general.basic-headers">
-      <div class="question"><p><b>Q6.12: I get messages saying that I'm missing stddef.h. Where do I find
-        it?</b></p></div>
-      <div class="answer"><p><b>A:</b> This header, and many others, are provided by the DevSDK package of
+      <div class="question"><p><b>Q6.12: I get messages saying that I'm missing stddef.h | whar.h | crt.o. Where do I find them?</b></p></div>
+      <div class="answer"><p><b>A:</b> These headers, and many others, are provided by the DevSDK package of
         the Developer Tools. Check whether
         <tt style="white-space: nowrap;">/Library/Receipts/DevSDK.pkg</tt> exists on your
         system. If not, then run the Dev Tools Installer again, and install
@@ -874,7 +864,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
       <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> is a virtual package to
         indicate the presence of gcc-2.95 on your system. Install the gcc2.95
         package from the XCode Tools (earlier OS versions have gcc-2.95 as
-        part of their main Developer Tools installation).</p></div>
+        part of their main Developer Tools installation.</p></div>
     </a>
     <a name="comp-general.system-java">
       <div class="question"><p><b>Q6.18: Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</b></p></div>
@@ -917,15 +907,19 @@ endif</pre></div>
         </p><p>1. Remove <tt style="white-space: nowrap;">system-xfree86</tt>. If you don't have any
         packages that depend on X11, this is straightforward. Frequently,
         however, many packages that depend on X11 are installed. Rather than
-        uninstalling all of them, you can use</p><pre>sudo dpkg --remove --force-depends system-xfree86</pre><p>to remove it, leaving everything in place. If you don't have
-        <tt style="white-space: nowrap;">system-xfree86</tt> installed then proceed to step 3.</p><p>2. Manually remove all of XFree86. This can be done with</p><pre>sudo rm -rf /Applications/XDarwin.app /usr/X11R6
-        /etc/X11</pre><p>If you are switching from Apple X11, remove the X11 application,
-        too.</p><p>3. To get XFree86-4.2.1, install Fink's <tt style="white-space: nowrap;">xfree86-base</tt>
+        uninstalling all of them, you can use</p><p>
+          <tt style="white-space: nowrap;">sudo dpkg --remove --force-depends system-xfree86</tt>
+        </p><p>to remove it, leaving everything in place. If you don't have
+        <tt style="white-space: nowrap;">system-xfree86</tt> installed then proceed to step 3.</p><p>2. Manually remove all of XFree86. This can be done with</p><p>
+          <tt style="white-space: nowrap;">sudo rm -rf /Applications/XDarwin.app /usr/X11R6
+        /etc/X11</tt>
+        </p><p>If you are switching from Apple X11, remove the X11 application,
+        too.</p><p>3. To get XFree86-4.2.1, Install Fink's <tt style="white-space: nowrap;">xfree86-base</tt>
         and <tt style="white-space: nowrap;">xfree86-rootless</tt> packages by the usual means:
         "<tt style="white-space: nowrap;">fink install</tt>" for source users, "<tt style="white-space: nowrap;">apt-get
-        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x and above, install Fink's <tt style="white-space: nowrap;">xfree86</tt>
-        package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004 isn't in the binary
-        distro yet, and is currently only in the unstable tree [see <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">how to install unstable package</a>].</p></div>
+        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x, install Fink's <tt style="white-space: nowrap;">xfree86</tt>
+        package, with "fink install xfree86"--this version isn't in the binary
+        distro yet, and is currently only in the unstable tree [FAQ 3.9].</p></div>
     </a>
     <a name="comp-packages.change-thread-nothread">
       <div class="question"><p><b>Q7.3: How do I change from the non-threaded version of Fink's XFree86
@@ -959,6 +953,10 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
         December 2002 Developer Tools.</p></div>
     </a>
     
+    <a name="comp-packages.xml-parser-pm">
+      <div class="question"><p><b>Q7.5: <tt style="white-space: nowrap;">intltool</tt> says that I need XML::Parser.  I have xml-parser-pm installed.</b></p></div>
+      <div class="answer"><p><b>A:</b> This most frequently happens on updates.  You need to make sure that you also have <tt style="white-space: nowrap;">xml-parser-pmXXX</tt> installed, where 'XXX" corresponds to the correct version of Perl for your system, e.g. 560 for Jaguar's built in Perl, and  581 for Panther's. </p></div>
+    </a>
   <h2><a name="usage-general">8 Package Usage Problems - General</a></h2>
     
     
@@ -983,7 +981,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
         compromised and suddenly had write permission to all files on the
         system). Thus, the passwd package takes the work out of setting up
         these extra users for Fink packages that require this.</p><p>It can be alarming to suddenly discover a number of unexpected
-        users in your "System Preferences: Users" pane (on 10.2.x) or "System Preferences: Accounts" pane (on 10.3.x), but suppress the urge
+        users in your "System Preferences: Users" pane, but suppress the urge
         to delete them:</p><ul>
           <li>First of all, you have obviously chosen to install a package
           which requires their use, so deleting the user doesn't make much
@@ -997,7 +995,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
           running <tt style="white-space: nowrap;">niutil -list . /users</tt>
           </li>
           <li>If you do decide to delete these users, be very careful of how
-          you go about it. Using the "System Preferences: Users" pane (on 10.2.x) or "System Preferences: Accounts" pane (on 10.3.x) will
+          you go about it. Using the "System Preferences: Users" pane will
           assign all of their files to a random administrator account, and
           there have been reports of havoc played with the administrator
           account's permissions. This is a bug with System Preferences, and
@@ -1046,20 +1044,20 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
         add:</p><pre>source /sw/bin/init.sh</pre><p>after the first line.</p></div>
     </a>
     <a name="usage-general.x-options">
-      <div class="question"><p><b>Q8.5: I'm bewildered by the X11 options: Apple's X11, XFree86, etc. What
+      <div class="question"><p><b>Q8.5: I'm bewildered by the X11 options: Apple X11, XFree86, etc. What
         should I install?</b></p></div>
       <div class="answer"><p><b>A:</b> All are variants on XFree86 (they're all based on the XFree86
-        code), but they have some slight differences between them. There are
-different options under Panther and under Jaguar.
-Under Panther you have the choice between:</p><ul>
-    <li><p>     Apple's X11 (on the third disk). Don't forget to install the
-X11 SDK
-(on the XCode disk) if you want to compile programs or if you plan to
-install other X11-related Fink packages from source.</p></li>
+        code), but have some slight differences between them. There are
+  different options under Panther and under Jaguar.
+  Under Panther you have the choice between:</p><ul>
+     <li><p>     Apple's X11 (on the third disk). Don't forget to install the
+  X11 SDK
+  (on the XCode disk) if you want to compile programs or if you plan to
+  install other X11-related Fink packages from source.</p></li>
 <li><p>        4.4.x built via Fink: install the xfree86 and
-xfree86-shlibs packages </p></li>
+  xfree86-shlibs packages </p></li>
 </ul><p>Under Jaguar, the most popular choices, and the Fink packages to
-        make them work are:</p><ul>
+          make them work are:</p><ul>
           <li>
             <p>4.2.x built via Fink: install <tt style="white-space: nowrap;">xfree86-base</tt> and
           <tt style="white-space: nowrap;">xfree86-rootless</tt> or <tt style="white-space: nowrap;">xfree86-base-threaded</tt>
@@ -1071,14 +1069,7 @@ xfree86-shlibs packages </p></li>
           <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages</p>
           </li>
           <li>
-            <p>4.2.x from Apple (assuming you have the User + SDK packages installed): 
-the
-system-xfree86
-package is automatically generated, do NOT install it.
-(Note that the public beta of Apple's X11 for Jaguar is no longer
-available, so this is only an option for you if you already have this 
-installed, from the time in which it
-was available.)</p>
+            <p>4.2.x from Apple (assuming you have the User + SDK packages installed): the system-xfree86 package is automatically generated, do NOT install it. (Note that the public beta of Apple's X11 for Jaguar is no longer available, so this is only an option for you if you already have this installed, from the time in which it was available.)</p>
           </li>
         </ul><p>There are other options, as well. There is a more extensive
         treatment in the <a href="http://fink.sourceforge.net/doc/x11/index.php">Running X11
@@ -1116,7 +1107,7 @@ was available.)</p>
 	  certain locations, and if they are found, considers that
 	  virtual package "installed".
 	</p><p>
-	  You can run the program <tt style="white-space: nowrap;">fink-virtual-pkgs</tt>
+	  You can run the program <tt style="white-space: nowrap;">fink-virtual-packages</tt>
 	  (part of the fink package) to get a listing of exactly what
 	  fink thinks is installed. Adding the <tt style="white-space: nowrap;">--debug</tt>
 	  flag will give lots of diagnostic information about exactly
@@ -1318,79 +1309,44 @@ exec metacity &amp; exec gnome-session</pre><p>Note:  this is no longer true for
         included with Panther. You can install X11 from X11.pkg on Disk 3.</p></div>
     </a>
     <a name="usage-packages.apple-x11-wants-xfree86">
-      <div class="question"><p><b>Q9.11: I installed Apple's X11 in Panther but Fink keeps asking to install
+      <div class="question"><p><b>Q9.11: I installed Apple's X11 but Fink keeps asking to install
         xfree86.</b></p></div>
       <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
           <li>
-            <b>You are installing from binaries:</b> If you are running a
-          version of the <tt style="white-space: nowrap;">fink</tt> package that is earlier than 0.17.0
-          (such as the version that comes with the Fink-0.6.2 installer), then
-          updating fink may solve your problem immediately, e.g.
-          via<pre>sudo apt-get update
-sudo apt-get install fink</pre>
+            <b>You are installing from binaries:</b>   <p>If you are running a
+          version of the <tt style="white-space: nowrap;">fink</tt> package that is earlier than 0.17.0, then
+          updating <tt style="white-space: nowrap;">fink</tt> may solve your problem immediately, e.g.
+          via</p><pre>sudo apt-get update
+sudo apt-get install fink</pre><p>If this fails, or if you have a later version of Fink, then typically what you need to do is reinstall the X11User package, since the installer application occasionally misses installing a file.</p>Running
+<pre>fink list -i system-xfree86</pre>should show that the <tt style="white-space: nowrap;">system-xfree86</tt> and <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> pacakges are installed.<p>If reinstalling the X11User package doesn't work, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p>
           </li>
           <li>
-            <b>You are installing from source: </b>You should first update
-          <tt style="white-space: nowrap;">fink</tt>, e.g. via a <pre>fink selfupdate</pre>Then you need to (re)install the X11SDK, which
+            <b>You are installing from source: </b><p>If you are running a version of <tt style="white-space: nowrap;">fink</tt> prior to 0.17 then you should update
+          <tt style="white-space: nowrap;">fink</tt>, e.g. via a </p><pre>fink selfupdate</pre>(assuming that you have either CVS or rsync updating turned on and aren't just using point releases).  
+<p>Once you have a current version of <tt style="white-space: nowrap;">fink</tt>, running </p><pre>fink list -i system-xfree86</pre>should show the <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt> packages as installed.  If either of the first two are missing, then you need to reinstall the X11User package.  If the <tt style="white-space: nowrap;">-dev</tt> package is missing, then you need to (re)install the X11SDK, which
           is on the Xcode CD, and is <b>not</b> installed by default. Even
           if you install XCode, the X11SDK is <b>not</b> installed by
           default. It has to be installed either with a custom Xcode install,
           or by clicking on the <tt style="white-space: nowrap;">X11SDK</tt> pkg in the
-          <tt style="white-space: nowrap;">Packages</tt> folder.</li>
-        </ul><p>For either case, you can check your installation by running</p><pre>fink-virtual-pkgs</pre><p>and checking to see that the
-        <tt style="white-space: nowrap;">Package: system-xfree86 </tt>and <tt style="white-space: nowrap;">Package: system-xfree86-shlibs</tt> (as well as the <tt style="white-space: nowrap;">Package: system-xfree86-dev</tt>, if you've installed the SDK) sections are
-        present and that the <tt style="white-space: nowrap;">Provides:</tt> lines contain
-        <tt style="white-space: nowrap;">x11 </tt>and <tt style="white-space: nowrap;">x11-shlibs</tt> (and
-        <tt style="white-space: nowrap;">x11-dev</tt>), respectively</p><p>If you don't see everything properly installed, the safest way to
-        fix this error is to remove all older copies of xfree86 or
-        system-xfree86 and reinstall Apple's X11 (and the X11SDK, if you're
-        going to be installing packages from source). You may see warnings
-        from the first line, which you can ignore:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \ 
-xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg \
-/Library/Receipts/X11User.pkg; fink selfupdate; fink index</pre><p>Then, reinstall X11 from the third Panther CD (and the X11SDK from the
-        Xcode CD).</p><p>Note: <tt style="white-space: nowrap;">system-xfree86</tt> no longer requires the X11SDK for
-        binary installs if you have <tt style="white-space: nowrap;">fink-0.17.0</tt> or later.</p><p>If you are still having problems and you are running
-        <tt style="white-space: nowrap;">fink-0.19.0</tt> or later then you can run</p><pre>fink-virtual-pkgs --debug</pre><p>to get information about what's missing. </p><p>If you are running an earlier version of <tt style="white-space: nowrap;">fink</tt>, then
-        there is a Perl script (courtesy of Martin Costabel) that you can
-        download and run to get the same information.</p><ul>
-          <li>Get it here: <a href="http://perso.wanadoo.fr/costabel/fink-x11-debug">http://perso.wanadoo.fr/costabel/fink-x11-debug</a>
-          </li>
-          <li>Save it wherever you like.</li>
-          <li>Run it in a terminal window via <pre>perl fink-x11-debug</pre>
-          </li>
+          <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.  
+<p><b>Note for Jaguar (X11 beta 3) users</b>:  As you aren't using XCode, you need to have already download a copy of the proper X11SDK package on your system.  Since X11 beta 3 is expired, its X11SDK package (as well as the X11User package) is no longer available for download.  You'll either have to restrict yourself to installing X11 applications via the binary distribution, install XFree86, or update to Panther.</p><p>If you're still having problems, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p></li>
         </ul></div>
     </a>
-    <a name="usage-packages.apple-x11-beta-wants-xfree86">
-      <div class="question"><p><b>Q9.12: I installed Apple's X11 with the 10.2-gcc3.3 version of Fink but
-        Fink keeps asking to install xfree86.</b></p></div>
-      <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
-          <li>
-            <b>You are installing from binaries:</b> If you are running a
-          version of the <tt style="white-space: nowrap;">fink</tt> package that is earlier than 0.17.0
-          (such as the version that comes with the Fink-0.6.2 installer), then
-          updating fink may solve your problem immediately, e.g.
-          via<pre>sudo apt-get update 
-sudo apt-get install fink</pre>
-          </li>
-          <li>
-            <b>You are installing from source: </b>You should first update
-          <tt style="white-space: nowrap;">fink</tt>, e.g. via a <pre>fink selfupdate</pre>Then you need to (re)install the X11SDK, which
-          you should have downloaded when you downloaded your beta copy of
-          Apple's X11.</li>
-        </ul><p>For either case, you can check your installation by running</p><pre>fink-virtual-pkgs</pre><p>and checking to see that the
-        <tt style="white-space: nowrap;">Package: system-xfree86</tt>and <tt style="white-space: nowrap;">Package:
-        system-xfree86-shlibs</tt> (as well as the <tt style="white-space: nowrap;">Package:
-        system-xfree86-dev</tt>, if you've installed the SDK) sections are
-        present and the <tt style="white-space: nowrap;">provides:</tt> lines contain
-        <tt style="white-space: nowrap;">x11 </tt>and <tt style="white-space: nowrap;">x11-shlibs</tt> (and
-        <tt style="white-space: nowrap;">x11-dev</tt>), respectively</p><p>If you don't see everything properly installed, the safest way to
-        fix this error is to remove all older copies of xfree86 or
-        system-xfree86 and reinstall Apple's X11 (and the X11SDK, if you're
-        going to be installing packages from source). You may see warnings
-        from the first line, which you can ignore:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
-xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg \
-/Library/Receipts/X11User.pkg; fink selfupdate; fink index</pre><p>Then, reinstall X11 (and the X11SDK, if needed).</p><p>Note: <tt style="white-space: nowrap;">system-xfree86</tt> no longer requires the X11SDK for
-        binary installs if you have <tt style="white-space: nowrap;">fink-0.17.0</tt> or later.</p><p>If you are still having problems and you are running
+    <a name="usage-packages.wants-xfree86-on-upgrade">
+      <div class="question"><p><b>Q9.12: I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</b></p></div>
+      <div class="answer"><p><b>A:</b> You may need to remove one of the old place-holder packages: <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt>, or <tt style="white-space: nowrap;">system-xfree86-43</tt>.  Fink now figures out if you have a manually installed X11 flavor, e.g. Apple's, and generates virtual packages. Because other packages depend on <tt style="white-space: nowrap;">system-xfree86</tt>, you must use the command</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>to remove the out-of-date versions.
+
+You can check your installation by running</p><pre>fink list -i system-xfree86</pre><p>and checking to see that the <tt style="white-space: nowrap;">system-xfree86</tt> and <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> packages are present.  If you installed the X11SDK, then you should also see <tt style="white-space: nowrap;">system-xfree86-dev</tt>.</p><p>If you are still having problems then refer to the <a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86</a> entry, above.</p></div>
+    </a>
+    <a name="usage-packages.special-x11-debug">
+      <div class="question"><p><b>Q9.13: I'm still having problems with X11 and Fink.</b></p></div>
+      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> entries don't help, or aren't applicable to your situtation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
+xfree86 xfree86-shilbs \
+xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
+xfree86-base-threaded xfree86-base-threaded-shlibs \
+xfree86-rootless-threaded xfree86-rootless-threaded-shlibs
+rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg
+fink selfupdate; fink index</pre><p>(the first line may give you warnings about trying to remove nonexistent packages).  Then, reinstall Apple's X11 (and the X11SDK, if needed), or XFree86.</p><p>If you are still having problems and you are running
         <tt style="white-space: nowrap;">fink-0.19.0</tt> or later then you can run</p><pre>fink-virtual-pkgs --debug</pre><p>to get information about what's missing.</p><p>If you are running an earlier version of <tt style="white-space: nowrap;">fink</tt>, then
         there is a Perl script (courtesy of Martin Costabel) that you can
         download and run to get the same information.</p><ul>
@@ -1401,15 +1357,9 @@ xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg \
           </li>
         </ul></div>
     </a>
-    <a name="usage-packages.wants-xfree86-on-upgrade">
-      <div class="question"><p><b>Q9.13: I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</b></p></div>
-      <div class="answer"><p><b>A:</b> You may need to remove one of the old place-holder packages: <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt>, or <tt style="white-space: nowrap;">system-xfree86-43</tt>.  Fink now figures out if you have a manually installed X11 flavor, e.g. Apple's, and generates virtual packages. Because other packages depend on <tt style="white-space: nowrap;">system-xfree86</tt>, you must use the command</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>to remove the out-of-date versions.
-
-You can check your installation by running</p><pre>fink-virtual-pkgs</pre><p>and checking to see that the <tt style="white-space: nowrap;">Package: system-xfree86</tt> and <tt style="white-space: nowrap;">Package: system-xfree86-shlibs</tt> sections are present and their provides: lines contains <tt style="white-space: nowrap;">x11</tt> and <tt style="white-space: nowrap;">x11-shlibs</tt>, respectively.  If you installed the X11SDK, then you should also see <tt style="white-space: nowrap;">Package: system-xfree86-dev</tt>.</p><p>If you are still having problems then refer to the <a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86 on 10.3</a> or <a href="#usage-packages.apple-x11-beta-wants-xfree86">Fink wants Xfree86 on 10.2-gcc3.3</a> entries, above.</p></div>
-    </a>
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.19 2004/05/29 13:44:24 dmrrsn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.22 2004/06/10 13:20:25 alexkhansen Exp $</i></p></body></html>
