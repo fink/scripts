@@ -1704,15 +1704,15 @@ is necessary" goes here. Multiple lines allowed.
 multiple packages.  
 The install phase begins as usual, with the execution of the 
 <tt style="white-space: nowrap;">InstallScript</tt> and <tt style="white-space: nowrap;">DocFiles</tt> commands.
-A <tt style="white-space: nowrap;">SplitOff</tt> field, if present, then triggers the
-creation of a
-second install directory.  Within the 
-<tt style="white-space: nowrap;">SplitOff</tt> field, the new install directory is referred to as %i,
+A <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field, if present, then triggers the
+creation of an
+additional install directory.  Within the 
+<tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field, the new install directory is referred to as %i,
 while the original install directory of the parent 
 package is referred to as %I.
 </p>
 <p>
-The <tt style="white-space: nowrap;">SplitOff</tt> field must contain a number of fields of its
+Each <tt style="white-space: nowrap;">SplitOff</tt> and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field must contain a number of fields of its
 own.  In fact, it resembles a complete package description, but with
 certain fields missing.  Here is what belongs in the sub-description
 (by category):
@@ -1721,32 +1721,45 @@ certain fields missing.  Here is what belongs in the sub-description
 <li>Initial Data: Only the <tt style="white-space: nowrap;">Package</tt> needs to be specified,
 everything else is inherited from the parent package.  You may modify
 <tt style="white-space: nowrap;">Type</tt> and <tt style="white-space: nowrap;">License</tt> by declaring the field
-within the <tt style="white-space: nowrap;">SplitOff</tt>.  Percent expansion can be used, and
+within the <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>.  Percent expansion can be used, and
 it is often convenient to refer to the name %N of the parent
 package.</li>
 <li>Dependencies: All of these are allowed.</li>
 <li>Unpack Phase, Patch Phase, Compile Phase: These fields are irrelevant
 and will be ignored.</li>
 <li>Install Phase, Build Phase: Any of these fields are allowed (except
-that <tt style="white-space: nowrap;">SplitOff</tt> should not be used within a <tt style="white-space: nowrap;">SplitOff</tt>
-field).</li>
+that SplitOffs cannot themselves contain additional SplitOffs).</li>
 <li>Additional Data: These are inherited from the parent package but may
-be modified by declaring the field within the <tt style="white-space: nowrap;">SplitOff</tt>.</li>
+be modified by declaring the field within the <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>.</li>
 </ul>
 <p>
 During the install phase, the <tt style="white-space: nowrap;">InstallScript</tt> and 
 <tt style="white-space: nowrap;">DocFiles</tt> of the parent package are executed first.
-Next comes the <tt style="white-space: nowrap;">Files</tt> command specified in the
-<tt style="white-space: nowrap;">SplitOff</tt> field, which causes the listed files and directories
+Next comes processing of the <tt style="white-space: nowrap;">SplitOff</tt> and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> fields. For each such field in turn, the <tt style="white-space: nowrap;">Files</tt> command causes the listed files and directories
 to be moved from the parent's installation directory %I to the
 current installation directory %i.  Then the <tt style="white-space: nowrap;">InstallScript</tt>
-and <tt style="white-space: nowrap;">DocFiles</tt> of the <tt style="white-space: nowrap;">SplitOff</tt> package are
+and <tt style="white-space: nowrap;">DocFiles</tt> of the given <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> package are
 executed.  
 </p><p>
-If there are additional sub-packages specified with <tt style="white-space: nowrap;">SplitOff2</tt>,
-<tt style="white-space: nowrap;">SplitOff3</tt>, etc., this same sequence of commands
-(<tt style="white-space: nowrap;">Files</tt>, <tt style="white-space: nowrap;">InstallScript</tt>, <tt style="white-space: nowrap;">DocFiles</tt>)
-is executed for each of them in turn.
+At this time, the <tt style="white-space: nowrap;">SplitOff</tt> is processed first (if
+present), followed by each <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> in
+numerical order by N. However, this may change in the future, so, for
+example, instead of:
+</p>
+<pre>
+SplitOff: &lt;&lt;
+  Description: Some header files
+  Files: include/foo.h include/bar.h
+&lt;&lt;
+SplitOff2: &lt;&lt;
+  Description: All other header files
+  Files: include/*
+&lt;&lt;
+</pre>
+<p>
+which only works correctly if <tt style="white-space: nowrap;">SplitOff</tt> is processed
+before <tt style="white-space: nowrap;">SplitOff2</tt> it's safer to list explicitly the files
+for each (or use more specific filename globs).
 </p><p>
 During the build phase, the pre/post install/remove scripts for each of
 the packages is constructed by using the build phase commands which
@@ -1830,11 +1843,9 @@ Also, their executable and read bits have to be set (i.e. install them with -m 7
 If you just need to set some environment variables (for example, QTDIR to '/sw'), you can use the RuntimeVars field which is provided as a convenient way to achieve exactly this.
 </p>
 
-
-
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.9 2004/03/30 22:09:55 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.10 2004/03/31 22:50:09 michga Exp $</i></p></body></html>
