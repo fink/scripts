@@ -2,6 +2,7 @@
 set -e
 
 release=$1
+tree=$2
 tag=release_`echo $release | sed 's/\./_/g'`
 
 echo "Updating from CVS..."
@@ -17,17 +18,16 @@ if [ -f var/db/fink.db ]; then
  rm var/db/fink.db
 fi
 touch fink/dists
+
+# As of 0.6.3 / 0.7.0.. you need to specify the tree you want 'stable' to be. 
+# That is, './dumprelease 0.6.3 10.2-gcc3.3' and './dumprelease 0.7.0 10.3'
+# This may be temporary till we find a better solution.
 rm fink/dists
-#for 0.6.1 we are calling it one bindist, 10.2-gcc3.3 tree
-ln -s 10.2-gcc3.3 fink/dists
-echo "Dumping 10.2-gcc3.3/stable..."
-./dump 10.2-gcc3.3 stable $release-stable >$release-stable.sql
+ln -s $tree fink/dists
+echo "Dumping $tree/stable to $release-stable.sql..."
+./dump $tree stable $release-stable >$release-stable.sql
 if [ -f var/db/fink.db ]; then
  rm var/db/fink.db
 fi
-#rm fink/dists
-#ln -s 10.3 fink/dists
-#echo "Dumping 10.3/stable..."
-#./dump 10.3 stable $release-10.3-stable >$release-10.3-stable.sql
 
 exit 0

@@ -44,22 +44,27 @@ the above Q&A for information on how to do it.
 Now change into the PDB directory:
   cd /home/groups/f/fi/fink/pdb/
 
-Next dump the list of packages in the release (replace 0.4.5 as appropriate):
- ./dumprelease 0.4.5
+Next dump the list of packages in the release. Replace 0.7.0 as appropriate, and the
+'10.3' with the Fink tree you want to count as stable:
+ ./dumprelease 0.7.0 10.3
+ 
+or for the 0.6.3 (10.2-gcc3.3 for stable count):
 
-This will produce a file called 0.4.5-stable.sql. Next, you must update the
-releases.sql file for 0.4.5 (just replace the current version with the new
+ ./dumprelease 0.6.3 10.2-gcc3.3
+
+This will produce a file called 0.7.0-stable.sql. Next, you must update the
+releases.sql file for 0.7.0 (just replace the current version with the new
 one). You best do that in CVS using a developer checkout on your local machine,
 then check the change in, and run "cvs up" on the shell server.
 Once you did this, run these commands (order is important):
   ~/bin/finksql < releases.sql
-  ~/bin/finksql < 0.4.5-stable.sql
+  ~/bin/finksql < 0.7.0-stable.sql
 
 Now run the "flag" script:
   ./flag
 
 Finally, you have to tell the PHP script which renders the package description
-pages to display the information from 0.4.5 along with the current data. To do
+pages to display the information from 0.7.0 along with the current data. To do
 so, edit "pdb/releases.inc" in the "web" CVS module.
 
 That's it.
