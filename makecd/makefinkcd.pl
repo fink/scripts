@@ -91,14 +91,14 @@ $dirname = make_cd_image("${VOLNAME}${cdnum}") or die "can't make disk image for
 		$dirname,
 		'http://sourceforge.net/project/showfiles.php?group_id=17203',
 		'href=.*\.sourceforge\.net/fink/(fink-[^\-]+-installer.dmg)',
-		'http://us.dl.sf.net/fink',
+		'http://us.dl.sourceforge.net/fink',
 		'Fink Installer',
 	);
 	get_installers(
 		$dirname,
 		'http://sourceforge.net/project/showfiles.php?group_id=48896',
 		'href=.*\.sourceforge\.net/finkcommander/(finkcommander-[^\-]+-bin.dmg(.gz)?)',
-		'http://us.dl.sf.net/finkcommander',
+		'http://us.dl.sourceforge.net/finkcommander',
 		'Fink Commander',
 	);
 }
