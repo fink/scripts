@@ -13,7 +13,6 @@ Fran&ccedil;ais |
 </tr>
 </table>
 <h1 style="text-align: center;">Fink - Q.F.P.</h1>
-<p><b>En cours de traduction</b></p>
 <p>Voici la liste des questions fréquemment posées sur Fink. Comme la plupart des QFP, une partie correspond à des questions réelles, d'autres ont été élaborées spécialement pour ces QFP. Il s'agit en fait d'un document écrit dans le style question-réponse.</p>
 <p>Ces QFP comprennent plusieurs pages, une par chapitre. Le sommaire ci-dessous donne la liste de toutes les questions ainsi qu'un lien pour chacune d'elles.</p>
 <h2>Contents</h2><ul><li><a href="#general"><b>1 Questions générales</b></a><ul><li><a href="#general.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#general.naming">1.2 Que signifie Fink ?</a></li><li><a href="#general.bsd-ports">1.3 En quoi Fink se différencie-t-il du mécanisme de portage BSD (qui comprend OpenPackages et GNU-Darwin) ?</a></li><li><a href="#general.usr-local">1.4 Pourquoi Fink n'installe rien dans /usr/local ?</a></li><li><a href="#general.why-sw">1.5 Pourquoi avoir choisi /sw ?</a></li></ul></li><li><a href="#relations"><b>2 Relations avec d'autres projets</b></a><ul><li><a href="#relations.upstream">2.1 Envoyez-vous aux mainteneurs situés en amont de vous les rustines que vous faites ?</a></li><li><a href="#relations.debian">2.2 Quelles sont vos relations avec le projet Debian ? Portez-vous Debian Linux sur Mac OS X ?</a></li><li><a href="#relations.apple">2.3 Quelles sont vos relations avec Apple ?</a></li><li><a href="#relations.openosx">2.4 Quelles sont vos relations avec OpenOSX.com ?</a></li><li><a href="#relations.forked">2.5 Quelles sont vos relations avec macosx.forked.net ?</a></li><li><a href="#relations.darwinports">2.6 Quelles sont vos relations avec Darwinports ?</a></li></ul></li><li><a href="#mirrors"><b>3 Miroirs de Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Qu'est-ce qu'un miroir Fink ?</a></li><li><a href="#mirrors.why">3.2 Pourquoi utiliser des miroirs rsync ?</a></li><li><a href="#mirrors.where">3.3 Où trouver de plus amples informations sur les miroirs Fink ?</a></li><li><a href="#mirrors.when-not">3.4 Impossible de se connecter au serveur rsync. Que faire ?</a></li><li><a href="#mirrors.otherinfogone">3.5 Après passage à la méthode rsync, tous les fichiers info des arborescences inutilisées ont disparu.</a></li><li><a href="#mirrors.howswitch">3.6 Comment passer d'une méthode à une autre à volonté ?</a></li><li><a href="#mirrors.status">3.7 Comment connaître l'état actuel des miroirs rsync ?</a></li><li><a href="#mirrors.Master">3.8 Qu'est-ce qu'un miroir Distfiles ?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Mise à jour de Fink (Résolution de problèmes spécifiques à une version donnée)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 Après passage à la version 0.16.0, fink considère la version du compilateur gcc 3.3 installée sur le système comme obsolète. Que faire ?</a></li></ul></li><li><a href="#usage-fink"><b>5 Installer, Utiliser et Entretenir Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Comment savoir quels sont les paquets gérés par Fink ?</a></li><li><a href="#usage-fink.proxy">5.2 Comment configurer fink pour utiliser un proxy HTTP quand on est derrière un mur pare-feu ?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 Comment mettre à jour les paquets disponibles sur CVS lorsqu'on utilise un firewall ?</a></li><li><a href="#usage-fink.moving">5.4 Est-il possible de déplacer Fink vers un autre dossier après
@@ -645,27 +644,20 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>Il est souvent plus simple d'
     </a>
     <a name="usage-general.x-options">
       <div class="question"><p><b>Q8.5: Il y a de nombreuses options pour X11 : X11 d'Apple, XFree86, etc... Laquelle installer ?</b></p></div>
-      <div class="answer"><p><b>A:</b> Sera traduit quand la version anglaise aura été mise à jour.</p><p>Toutes ces options sont des variantes de XFree86 (elles sont toutes basées sur le code de XFree86), mais il y a de légères différences entre elles. X11 d'Apple, qui est une version modifiée de XFree86+4.2.1, et XFree86-4.3 sont plus rapides que le standard XFree86-4.2.1.1, mais cette dernière version est plus stable. Il existe aussi une version modifiée de la version 4.2.1.1 qui permet de gérer les processus légers, nécessaires pour certains paquets.</p><p>Currently, under Panther, Apple's X11 (on the third disk) is the
-        only choice. Don't forget to install the X11 SDK (on the XCode disk)
-        if you want to compile programs.</p><p>Under Jaguar, the most popular choices, and the Fink packages to
-        make them work are:</p><ul>
+      <div class="answer"><p><b>A:</b> Toutes ces options sont des variantes de XFree86 (elles sont toutes basées sur le code de XFree86), mais il y a de légères différences entre elles. Il existe des options différentes sous Panther et sous Jaguar.</p><p>Sous Panther, vous avez le choix entre :</p><ul>
+    <li><p>X11 d'Apple (sur le disque numéro 3). N'oubliez pas d'installer X11 SDK (situé sur le disque XCode) si vous voulez compiler des programmes ou si vous avez l'intention d'installer d'autres paquets Fink reliés à X11 à partir des sources </p></li>
+<li><p>4.4.x compilé via via Fink : installez les paquets xfree86 et xfree86-shlibs</p></li>
+</ul><p>Sous Jaguar, les choix les plus populaires et les paquets Fink qui leur correspondent sont les suivants :</p><ul>
           <li>
-            <p>4.2.x built via Fink: install <tt style="white-space: nowrap;">xfree86-base</tt> and
-          <tt style="white-space: nowrap;">xfree86-rootless</tt> or <tt style="white-space: nowrap;">xfree86-base-threaded</tt>
-          and <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> (and the respective
-          <tt style="white-space: nowrap;">-shlibs</tt>)</p>
+            <p>4.2.x compilé via Fink : installez <tt style="white-space: nowrap;">xfree86-base</tt> et <tt style="white-space: nowrap;">xfree86-rootless</tt> ou <tt style="white-space: nowrap;">xfree86-base-threaded</tt> et <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> (et les paquets <tt style="white-space: nowrap;">-shlibs</tt> correspondants)</p>
           </li>
           <li>
-            <p>4.3.x built via Fink: install the <tt style="white-space: nowrap;">xfree86</tt> and
-          <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages</p>
+            <p>4.3.x compilé via Fink : installez les paquets <tt style="white-space: nowrap;">xfree86</tt> et <tt style="white-space: nowrap;">xfree86-shlibs</tt></p>
           </li>
           <li>
-            <p>4.2.x from Apple (User+SDK packages installed): install the
-          <tt style="white-space: nowrap;">system-xfree86</tt> package</p>
+            <p>4.2.x d'Apple (en supposant que vous avez installé les paquets User et SDK) : le paquet system-xfree86 est généré automatiquement, NE l'installez PAS. (Notez que la version bêta publique de X11 d'Apple pour Jaguar n'est plus disponible, aussi ce n'est une option que pour ceux d'entre eux qui l'avez déjà installé au temps où elle était encore disponible).</p>
           </li>
-        </ul><p>There are other options, as well. There is a more extensive
-        treatment in the <a href="http://fink.sourceforge.net/doc/x11/index.php">Running X11
-        document</a>.</p></div>
+        </ul><p>Il existe encore d'autres options. Vous trouverez tous les détails dans le <a href="http://fink.sourceforge.net/doc/x11/index.php">document Utilisation de X11</a>.</p></div>
     </a>
     <a name="usage-general.no-display">
       <div class="question"><p><b>Q8.6: Au lancement d'une application, le message suivant apparaît : "cannot
@@ -817,4 +809,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.24 2004/05/25 21:29:34 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.25 2004/05/29 01:24:15 michga Exp $</i></p></body></html>
