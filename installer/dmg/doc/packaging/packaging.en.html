@@ -833,15 +833,17 @@ and after a transitional period it will be outlawed entirely.  (The
 one exception will be the package <tt style="white-space: nowrap;">storable-pm</tt> which needs
 to be in this form for bootstrapping purposes.)
 </p>
-<p>As of fink 0.20.1, the system-perl virtual package automatically
+<p>As of fink 0.20.2, the system-perl virtual package automatically
 "Provides" certain perl modules when the version of Perl present on
 the system is at
 least 5.8.0.  In the case of system-perl-5.8.1-1, these are:
-<b>attribute-handlers-pm, cgi-pm, digest-md5-pm581, file-spec-pm, 
-file-temp-pm, filter-simple-pm581, filter-util-pm581, getopt-long-pm, 
-i18n-langtags-pm, libnet-pm, locale-maketext-pm, memoize-pm, 
-mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm, test-simple-pm, 
-time-hires-pm581.</b>
+<b>attribute-handlers-pm581, cgi-pm581, digest-md5-pm581, file-spec-pm581, 
+file-temp-pm581, filter-simple-pm581, filter-util-pm581, getopt-long-pm581, 
+i18n-langtags-pm581, libnet-pm581, locale-maketext-pm581, memoize-pm581, 
+mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm581, 
+test-simple-pm581, time-hires-pm581.</b>
+(This list was slightly different in fink 0.20.1: package maintainers are
+encouraged to check to be sure that they are assuming the correct list.)
 </p>
 <p>
 Effective with version 0.13.0 of fink, the <tt style="white-space: nowrap;">fink validate</tt>
@@ -1705,7 +1707,7 @@ make</pre>
 This is appropriate for packages that use GNU autoconf.
 For packages with of type perl (as specified via the Type field)
 with the perl version not specified,
-the default instead is:
+the default instead (as of fink 0.13.4) is:
 </p>
 <pre>perl Makefile.PL PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5 \
@@ -1713,23 +1715,36 @@ the default instead is:
  INSTALLSITELIB=%p/lib/perl5 \
  INSTALLSITEARCH=%p/lib/perl5/darwin \
  INSTALLMAN1DIR=%p/share/man/man1 \
- INSTALLMAN3DIR=%p/share/man/man3
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
 <p>If the type is <tt style="white-space: nowrap;">perl $version</tt> with the version specified
-(e.g., $version might be 5.6.0),
+(e.g., <tt style="white-space: nowrap;">$version</tt> might be 5.6.0),
 then the default becomes:
 </p>
 <pre>perl$version Makefile.PL \
  PERL=perl$version PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5/$version \
- INSTALLARCHLIB=%p/lib/perl5/$version/darwin \
+ INSTALLARCHLIB=%p/lib/perl5/$version/$perlarchdir \
  INSTALLSITELIB=%p/lib/perl5/$version \
- INSTALLSITEARCH=%p/lib/perl5/$version/darwin \
+ INSTALLSITEARCH=%p/lib/perl5/$version/$perlarchdir \
  INSTALLMAN1DIR=%p/share/man/man1 \
- INSTALLMAN3DIR=%p/share/man/man3
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
+<p>where <tt style="white-space: nowrap;">$perlarchdir</tt> is "darwin" for versions 5.8.0 and 
+earlier, and is 
+"darwin-thread-multi-2level" for versions 5.8.1 and later.</p>
 <p>
 Before the commands are executed, percent expansion takes place
 (see previous section).
@@ -1769,24 +1784,39 @@ default is:
 The default is appropriate for packages that use GNU autoconf.
 For packages with of type perl (as specified via the Type field)
 with the perl version not specified,
-the default instead is:
+the default instead (as of fink 0.13.4) is:
 </p>
 <pre>make install INSTALLPRIVLIB=%i/lib/perl5 \
  INSTALLARCHLIB=%i/lib/perl5/darwin \
  INSTALLSITELIB=%i/lib/perl5 \
  INSTALLSITEARCH=%i/lib/perl5/darwin \
  INSTALLMAN1DIR=%i/share/man/man1 \
- INSTALLMAN3DIR=%i/share/man/man3</pre>
+ INSTALLMAN3DIR=%i/share/man/man3 \
+ INSTALLSITEMAN1DIR=%i/share/man/man1 \
+ INSTALLSITEMAN3DIR=%i/share/man/man3 \
+ INSTALLBIN=%i/bin \
+ INSTALLSITEBIN=%i/bin \
+ INSTALLSCRIPT=%i/bin
+</pre>
 <p>If the type is <tt style="white-space: nowrap;">perl $version</tt> with the version specified
-(e.g., $version might be 5.6.0),
+(e.g., <tt style="white-space: nowrap;">$version</tt> might be 5.6.0),
 then the default becomes:
 </p>
 <pre>make install INSTALLPRIVLIB=%i/lib/perl5/$version \
- INSTALLARCHLIB=%i/lib/perl5/$version/darwin \
+ INSTALLARCHLIB=%i/lib/perl5/$version/$perlarchdir \
  INSTALLSITELIB=%i/lib/perl5/$version \
- INSTALLSITEARCH=%i/lib/perl5/$version/darwin \
+ INSTALLSITEARCH=%i/lib/perl5/$version/$perlarchdir \
  INSTALLMAN1DIR=%i/share/man/man1 \
- INSTALLMAN3DIR=%i/share/man/man3</pre>
+ INSTALLMAN3DIR=%i/share/man/man3 \
+ INSTALLSITEMAN1DIR=%i/share/man/man1 \
+ INSTALLSITEMAN3DIR=%i/share/man/man3 \
+ INSTALLBIN=%i/bin \
+ INSTALLSITEBIN=%i/bin \
+ INSTALLSCRIPT=%i/bin
+</pre>
+<p>where <tt style="white-space: nowrap;">$perlarchdir</tt> is "darwin" for versions 5.8.0 and 
+earlier, and is 
+"darwin-thread-multi-2level" for versions 5.8.1 and later.</p>
 <p>
 If the package supports it, it is preferably to use <tt style="white-space: nowrap;">make install
 DESTDIR=%d</tt> instead. Before the commands are executed, percent
@@ -2159,4 +2189,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.29 2004/05/19 15:04:47 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.30 2004/05/22 20:41:52 dmrrsn Exp $</i></p></body></html>
