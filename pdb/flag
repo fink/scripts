@@ -33,7 +33,7 @@ my @prio = ( "current-unstable", "current-stable" );
 my ($dbh, $sth, $sth2, $q, $mysql_datafile, $mysql_data);
 $mysql_datafile = $ENV{HOME}."/.finkdbi";
 chomp($mysql_data = `cat $mysql_datafile`);
-$dbh = DBI->connect(split(/|/, $mysql_data);
+$dbh = DBI->connect(split(/\|/, $mysql_data));
 
 ### reset all flags
 
