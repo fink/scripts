@@ -44,7 +44,10 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
      <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
      というエラーが出ます。
      どうしたらいいですか?
-    </a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
+    </a></li><li><a href="#comp-general.xml-parser">6.20 
+	次のメッセージが出ます:<q>configure: error: XML::Parser perl module is required for intltool</q>。
+	どうしたら良いでしょうか?
+	</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
 ユーザー名は、 "mysql", "pgsql", "games" などです。
@@ -53,7 +56,11 @@ Apple X11, XFree86 などなど、どれをインストールしたら良いの�
 "cannot open display:"
 というメッセージがでます。
 どうしたら良いですか?</a></li><li><a href="#usage-general.suggest-package">8.7 自分の好きなプログラムが Fink にありません。
-Fink に推薦したいのですが、どうしたら良いですか?</a></li></ul></li><li><a href="#usage-packages"><b>9 パッケージ使用上の問題 - 特定のパッケージ</b></a><ul><li><a href="#usage-packages.xmms-quiet">9.1 XMMS から音がでません。</a></li><li><a href="#usage-packages.nedit-window-locks">9.2 nedit でファイルを編集していると、他のファイルを開く時にウィンドウが出ますが、反応がありません。</a></li><li><a href="#usage-packages.xdarwin-start">9.3 助けて!
+Fink に推薦したいのですが、どうしたら良いですか?</a></li><li><a href="#usage-general.virtpackage">8.8 
+	  <tt style="white-space: nowrap;">system-*</tt> "virtual packages" というのを時々見かけますが、
+	  インストールも削除もできません。
+	  これはいったいなんですか?
+	</a></li></ul></li><li><a href="#usage-packages"><b>9 パッケージ使用上の問題 - 特定のパッケージ</b></a><ul><li><a href="#usage-packages.xmms-quiet">9.1 XMMS から音がでません。</a></li><li><a href="#usage-packages.nedit-window-locks">9.2 nedit でファイルを編集していると、他のファイルを開く時にウィンドウが出ますが、反応がありません。</a></li><li><a href="#usage-packages.xdarwin-start">9.3 助けて!
 XDarwin を起動してもすぐ終了しちゃう!</a></li><li><a href="#usage-packages.no-server">9.4 XDarwin を起動しようとすると、このメッセージがでます
 "xinit: No such file or directory (errno 2): no server "/usr/X11R6/bin/X" in PATH"。
 </a></li><li><a href="#usage-packages.xterm-error">9.5 xterm が "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib" といって終了します。</a></li><li><a href="#usage-packages.libXmuu">9.6 XFree86 を起動しようとすると、下記のエラーのひとつがでます。
@@ -812,6 +819,20 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
     参照: <a href="#usage-fink.fink-not-found">この FAQ 項目</a>
     </p></div>
 </a>
+<a name="comp-general.xml-parser">
+<div class="question"><p><b>Q6.20: 
+	次のメッセージが出ます:<q>configure: error: XML::Parser perl module is required for intltool</q>。
+	どうしたら良いでしょうか?
+	</b></p></div>
+<div class="answer"><p><b>A:</b> 
+	自分のシステムの Perl のバージョンに合った xml-parser-pm パッケージがあるか確認する必要があります。
+	例えば、 Panther の場合、
+	<tt style="white-space: nowrap;">xml-parser-pm581</tt> であって、
+	<tt style="white-space: nowrap;">xml-parser-pm560</tt> ではありません
+	(<tt style="white-space: nowrap;">xml-parser-pm</tt> 代替パッケージでも可)。
+	Perl のバージョンが <tt style="white-space: nowrap;">Perl-5.8.1</tt> であって <tt style="white-space: nowrap;">Perl-5.6.0</tt> ではないからです。
+	</p></div>
+</a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
 
 
@@ -967,6 +988,84 @@ Fink に推薦したいのですが、どうしたら良いですか?</b></p></d
 <div class="answer"><p><b>A:</b> <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Package Request Tracker</a>
 の Fink プロジェクトページから推薦してください。</p><p>注記: SourceFourge の ID が必要です。</p></div>
 </a>
+
+<a name="usage-general.virtpackage">
+<div class="question"><p><b>Q8.8: 
+	  <tt style="white-space: nowrap;">system-*</tt> "virtual packages" というのを時々見かけますが、
+	  インストールも削除もできません。
+	  これはいったいなんですか?
+	</b></p></div>
+<div class="answer"><p><b>A:</b> 
+	  <tt style="white-space: nowrap;">system-perl</tt> のような名前のパッケージは代替パッケージです。
+	  これは、実際にはファイル等を含んでいる訳ではなく、
+	  fink 外で手動でインストールされたプログラムを fink に伝えるための仕組みとして存在します。
+	</p><p>
+	  この仕組みは10.3 ディストリビューションから導入されました。
+	  ほとんどの代替パッケージは自分でインストールや削除できるものではありません。
+	  その代わりに、手動でインストールされたプログラム一覧を元に fink プログラム自体が作成する
+	  "Virtual Packages" パッケージデータ構造となっています。
+	  fink は、それぞれのパッケージについて特定の場所の特定のファイルを確認し、
+	  見つかった場合はバーチャルパッケージがインストール済みと判断します。
+	</p><p>
+	  fink が認識しているインストール済みの一覧は、
+	  <tt style="white-space: nowrap;">fink-virtual-packages</tt> を実行することで見ることができます。
+	  <tt style="white-space: nowrap;">--debug</tt> フラグを追加すると、具体的にどのファイルを見ているのかという診断情報も確認できます。
+	</p><p>
+	  任意のプログラムを (fink 外で) インストールし、 fink にこれを認識させる仕組みは残念ながらありません。
+	  configure やコンパイルフラグ、パス名などを確認するのは非常に困難なためです。
+	</p><p>
+	  以下は、 fink が定義するバーチャルパッケージのうち最も重要なものです (fink-0.19.2 時点) :
+	</p><ul>
+	  <li>system-perl: [virtual package representing perl]
+	    <p>
+		  これの実体は <tt style="white-space: nowrap;">/usr/bin/perl</tt> で、デフォルトの OS X インストールの一部になっています。
+		  このパッケージは、 perl インタープリータのバージョン X.X.X である
+		  <tt style="white-space: nowrap;">system-perlXXX</tt> と <tt style="white-space: nowrap;">perlXXX-core</tt> も提供します。
+	    </p>
+	  </li>
+	  <li>system-javaXXX: [virtual package representing Java X.X.X]
+	    <p>
+		  これの実体は Java Runtime Environment で、 OS X (および Apple Software Update) の一部です。
+		  詳細は、 <a href="http://www.apple.co.jp/java">Apple の Java のページ</a> をご覧ください。
+	    </p>
+	  </li>
+	  <li>system-javaXXX-dev: [virtual package representing Java X.X.X development headers]
+	    <p>
+		  これの実体は Java SDK で、 <a href="http://connect.apple.com">connect.apple.com</a>
+		  (登録が必要) からダウンロードし、インストールする必要があります。
+		  Java Runtime Environment を更新した場合、 SDK は自動的に更新されません (削除されることもあります!) 。
+		  Runtime Environment をインストールや更新した場合、 SDK を確認 (し、必要に応じてダウンロード、インストール)
+		  してください。
+		  <a href="#comp-general.system-java">この FAQ</a> も合わせてお読みください。
+	    </p>
+	  </li>
+	  <li>system-java3d: [virtual package representing Java3D]</li>
+	  <li>system-javaai: [virtual package representing Java Advanced Imaging]
+	    <p>
+		  これの実体は、 Java の 3D 画像処理の機能拡張です。
+		  Apple からダウンロードし、インストールします。
+		  <a href="http://docs.info.apple.com/article.html?artnum=120289">Apple のページ</a>
+		  をお読みください。
+	    </p>
+	  </li>
+	  <li>system-xfree86: [placeholder for user installed x11]</li>
+	  <li>system-xfree86-shlibs: [placeholder for user installed x11 shared libraries]
+	    <p>
+		  これの実体は Apple X11/XDarwin で、  OS X のオプション (X11User.pkg) です。
+		  二つのパッケージは、それぞれ <tt style="white-space: nowrap;">x11</tt> と <tt style="white-space: nowrap;">x11-shlibs</tt>
+		  になります。
+		  <a href="#comp-packages.cant-install-xfree">この FAQ</a> も合わせてお読みください。
+	    </p>
+	  </li>
+	  <li>system-xfree86-dev [placeholder for user installed x11 development tools]
+	    <p>
+		  これの実体は Apple X11/XDarwin SDK で、  OS X のオプション (X11SDK.pkg) です。
+		  <a href="#comp-packages.cant-install-xfree">この FAQ</a> も合わせてお読みください。
+	    </p>
+	  </li>
+	</ul></div>
+</a>
+
 <h2><a name="usage-packages">9 パッケージ使用上の問題 - 特定のパッケージ</a></h2>
 
 
@@ -1164,4 +1263,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.13 2004/04/11 00:17:34 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.14 2004/04/16 21:23:54 babayoshihiko Exp $</i></p></body></html>
