@@ -82,13 +82,7 @@ foreach $package (Fink::Package->list_packages()) {
   $desc =~ s/\n/<\/p><p>/s;
   $desc =~ s/\n\s*\.\n/<\/p><p>/sg;
   $desc .= "</p>";
-  
-  # Determine the splitoff parent of this package
-  if ($vo->{_type} eq "splitoff") {
-		$parent = $vo->{parent}->get_name();  # package is a splitoff
-  } else {
-  		$parent = " ";
-  }    
+ 
   %data = ( 'release' => $release,
 	    'fullname' => $vo->get_fullname(),
 	    'name' => $vo->get_name(),
@@ -98,9 +92,13 @@ foreach $package (Fink::Package->list_packages()) {
 	    'desclong' => $desc,
 	    'maintainer' => $maintainer,
 	    'homepage' => $vo->param_default("Homepage", ""),
-	    'section' => $vo->get_section(),
-	    'parentname' => $parent
+	    'section' => $vo->get_section()
 	  );
+	    
+  # Determine the splitoff parent of this package
+  if ($vo->{_type} eq "splitoff") {
+		$data{"parentname"} = $vo->{parent}->get_name();  # package is a splitoff
+  } 
 
   # generate SQL query
   $q = "INSERT INTO package (";
@@ -118,7 +116,7 @@ foreach $package (Fink::Package->list_packages()) {
 
   if ($vo->{_type} eq "splitoff") {  
 	  %splitoffdata = ('name' => $vo->get_name(),
-					   'parentkey' => $release . $parent,
+					   'parentkey' => $release . $data{"parentname"},
 					   'descshort' => $vo->get_shortdescription()
 					   );
 	  
