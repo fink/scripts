@@ -26,16 +26,16 @@ cvsroot=':pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink'
 
 ### init
 
-if [ $# -lt 3 ]; then
-  echo "Usage: $0 <dist-version> <fink-version> <fink-tag> [<temporary-directory>]"
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <dist-version> <fink-version> [<temporary-directory>]"
   exit 1
 fi
 
 dversion=$1
 fversion=$2
-ftag=$3
-tmpdir=${4:-/tmp}
+tmpdir=${3:-/tmp}
 ptag=release_`echo $dversion | sed 's/\./_/g'`
+ftag=release_`echo $fversion | sed 's/\./_/g'`
 
 fullname="fink-$dversion-full"
 
