@@ -60,7 +60,7 @@ print "DELETE FROM package WHERE release='$release';\n";
 ### loop over packages
 
 my ($package, $po, $version, $vo);
-my ($maintainer, $desc);
+my ($maintainer, $email, $desc);
 my ($q, $v, $s, $key, %data);
 
 foreach $package (Fink::Package->list_packages()) {
@@ -71,8 +71,6 @@ foreach $package (Fink::Package->list_packages()) {
 
   # gather fields
   $maintainer = $vo->param_default("Maintainer", "(not set)");
-  $maintainer =~ s/\s*<\S+>//g;
-  $maintainer =~ s/\s*(\S+)\@\S+/\"$1\"/g;
 
   $desc = "<p>".$vo->get_description(1);
   $desc =~ s/\s+$//s;
