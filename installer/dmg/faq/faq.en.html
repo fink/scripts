@@ -439,14 +439,24 @@ fink selfupdate-cvs</pre></div>
     <a name="usage-fink.fink-not-found">
       <div class="question"><p><b>Q5.15: I get "command not found" errors when I run Fink or anything that I
         installed with Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> If this always happens, then you may have inadvertently modified (or failed to modify) your startup scripts. Run the
-        <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt> script (either by
-        double-clicking in the Finder or in a terminal), which will attempt to
-        detect your startup configuration. You'll then need to open a new
-        terminal session so that your environment settings are loaded.  <b>Note:</b>  for <tt style="white-space: nowrap;">fink-0.18.3</tt> and <tt style="white-space: nowrap;">fink-0.19.2</tt>, the script has been changed to <tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt>, and must be run in a terminal.</p><p>On the other hand, if you only have problems in the Apple X11
+      <div class="answer"><p><b>A:</b> If this always happens, then you may have inadvertently
+        modified (or failed to modify) your startup scripts. Run the
+        <tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt> script in a terminal
+        window. This program will attempt to detect your default shell
+        and add a command to load Fink's shell initialization script
+        into your shell's configuration. You'll then need to open a
+        new terminal session so that your environment settings are
+        loaded. <b>Note:</b> Some older versions fink called this
+        script <tt style="white-space: nowrap;">pathsetup.command</tt> instead
+        of <tt style="white-space: nowrap;">pathsetup.sh</tt>. Alternately, you can run
+        the <tt style="white-space: nowrap;">pathsetup.app</tt> application on the Fink
+        binary distribution disk image.</p><p>On the other hand, if you only have problems in the Apple X11
         terminal, this probably means that you need to create a <a href="http://fink.sourceforge.net/doc/x11/run-xfree86.php#xinitrc">.xinitrc</a>
         file and add the line</p><pre>. /sw/bin/init.sh</pre><p>near the beginning (i.e. before any programs get run). Restart X11
-        (if running) after you do this.</p></div>
+        (if running) after you do this.</p><p>These <tt style="white-space: nowrap;">/sw/bin/init.*</tt> scripts do much
+	more than just add <tt style="white-space: nowrap;">/sw/bin</tt> to your PATH.
+	Many packages will not work correctly without these additional
+	actions.</p></div>
     </a>
     <a name="usage-fink.invisible-sw">
       <div class="question"><p><b>Q5.16: I want to hide /sw in the Finder to keep users from damaging the
@@ -1405,4 +1415,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.42 2005/01/24 20:57:39 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.43 2005/03/01 19:18:38 dmacks Exp $</i></p></body></html>
