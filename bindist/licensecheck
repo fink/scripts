@@ -41,7 +41,7 @@ foreach $pname (@ARGV) {
 $package = Fink::PkgVersion->match_package($pname);
 #print "$package\n";
 if (not $license = $package->param("License")) {
-    if ($package->{_type} eq "bundle") {
+    if ($package->is_type('bundle')) {
 	$license = "Bundle";
     } else {
 	$license = "No license";
