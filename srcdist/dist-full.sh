@@ -63,8 +63,8 @@ if [ ! -d $fullname ]; then
   exit 1
 fi
 
-echo "Exporting module packages, tag $ptag from CVS:"
-cvs -d "$cvsroot" export -r "$ptag" -d pkginfo packages
+echo "Exporting module dists, tag $ptag from CVS:"
+cvs -d "$cvsroot" export -r "$ptag" -d pkginfo dists
 if [ ! -d pkginfo ]; then
   echo "CVS export failed, directory pkginfo doesn't exist!"
   exit 1
