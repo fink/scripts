@@ -7,7 +7,9 @@ use strict;
 my $base = $ENV{BDBASE};
 chdir $base or die "bindist base \"$base\" is bogus, set env var BDBASE\n";
 
-my $dest = "dists/fink-0.2.6/main";
+my ($currel, $dest);
+chomp($currel = `cat $ENV{BDDATA}/current`);
+my $dest = "dists/fink-$currel/main";
 
 ### now load the useful modules
 
@@ -45,6 +47,9 @@ foreach $pkgspec (@ARGV) {
   $tofn = $todir."/".&filename($fn);
   if (not -d $todir) {
     &execute("mkdir -p $todir");
+  }
+  if (-e $tofn) {
+    &execute("rm -f $tofn");
   }
   &execute("cp $fn $tofn");
 
