@@ -22,7 +22,7 @@ Si vous créez des paquets pour Fink, vous avez tout intérêt à vous abonner �
 <a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a>.
 Si vous cherchez un moyen d'aider Fink et que vous avez des compétences dans ce domaine, vous pouvez aussi adopter un <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">paquet sans mainteneur</a>.
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li><li><a href="#policy.emacs">3.5 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li><li><a href="#policy.emacs">3.5 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -306,61 +306,40 @@ auprès de l'auteur, autorisent la distribution du source et des binaires, mais 
 Utilisez ceci pour des paquets  de type commercial ( par exemple graticiels, partagiciels qui n'autorisent pas la libre redistribution du source ou des binaires.</li>
 
 <li><tt style="white-space: nowrap;">Public Domain</tt> - pour des paquets qui sont dans le domaine public, c'est-à-dire que l'auteur a abandonné ses droits sur le code. Ces paquets n'ont aucune licence d'aucune sorte et tout un chacun peut en faire ce que bon lui semble.</li>
-
 </ul>
 
 
-
-
-<h3><a name="policy.prefix">3.2 Base System Interference</a></h3>
+<h3><a name="policy.prefix">3.2 Interférence avec le système de base</a></h3>
 <p>
-Fink is an add-on distribution that is installed in a directory
-separate from the base system.
-It is crucial that a package does not install files outside of Fink's
-directory.
+Fink est une distribution additionnelle qui est installée dans un répertoire distinct du système de base.
+Il est essentiel qu'un paquet n'installe aucun fichier en dehors du répertoire de Fink.
 </p>
 <p>
-Exceptions can be made when there is no other possibility, e.g. with
-XFree86.
-In this case the package must check for existing files before
-installation and refuse to install if it would overwrite existing
-files.
-The package must make sure that all files it installed outside of the
-Fink directory are deleted when the package is removed, or that they
-cause no harm if they are left there (i.e. they need to check binaries
-for existence before calling them and the like).
+Il peut y avoir des exceptions quand on ne peut faire autrement, par exemple avec XFree86.
+Dans ce cas, le paquet doit tester l'existence de fichiers avant l'installation
+et refuser de s'installer si cela amène à écraser des fichiers déjà existants.
+Le paquet doit s'assurer que tous les fichiers qu'il aura installés en dehors 
+du répertoire de Fink seront supprimés lorsque le paquet lui-même sera éliminé, ou que ces fichiers ne causeront aucun problème s'ils sont laissés sur place (c'est-à-dire qu'ils devront tester l'existence des binaires avant de les appeler, etc...).
 </p>
 
 
-<h3><a name="policy.sharedlibs">3.3 Shared Libraries</a></h3>
+<h3><a name="policy.sharedlibs">3.3 Librairies partagées</a></h3>
 <p>
-Fink has a new policy about shared libraries, effective in February 2002.
-This section of the documentation discusses version 4
-of the policy, which coincides with the release of Fink's 0.5.0 distribution.
-We begin with a quick summary, and then discuss things in more detail.
+Fink a de nouvelles règles en ce qui concerne les librairies partagées, règles qui prennent effet à compter de février 2002.
+Cette partie de la documentation donne des explications sur la version 4 de ces règles, qui coïncide avec la publication de la distribution 0.5.0 de Fink.
+Nous commencerons par un bref résumé, puis nous passerons à une revue de détails.
 </p><p>
-Any package which builds shared libraries and is either (1) being put into
-  the stable tree, or (2) a new package in Fink, should treat its shared
-  libraries according to Fink's policy.  This means:</p>
+Tout paquet qui construit des librairies partagées et qui, soit (1) est placé  dans la branche stable, soit (2) est un nouveau paquet de Fink, doit gérer ses librairies partagées conformément aux règles de Fink. Ceci signifie :</p>
 <ul>
-<li>   verify, using <tt style="white-space: nowrap;">otool -L</tt>, that 
-       the install_name of each library and
-       its compatibility and current version numbers are correct </li>
-<li>   put the shared libraries in a separate package (except for the
-       links from libfoo.dylib to the install_name), and include
-       the <tt style="white-space: nowrap;">Shlibs</tt> field in that package</li>
-<li>   put the headers and the final links from libfoo.dylib into a package
-       which is classified as <tt style="white-space: nowrap;">BuildDependsOnly: True</tt>, and plan
-        to have
-       no other package depend on this one.</li>
+<li>vérifier, à l'aide de <tt style="white-space: nowrap;">otool -L</tt>, que le nom d'installation de chaque librairie, ses numéros de versions compatible et actuel sont corrects</li>
+<li>mettre les librairies partagées dans un paquet séparé (exception faite pour les liens de libfoo.dylib vers nom d'installation), et inclure le champ <tt style="white-space: nowrap;">Shlibs</tt> dans ce paquet</li>
+<li>mettre les headers et les liens finaux venant de libfoo.dylib dans un paquet caractérisé par <tt style="white-space: nowrap;">BuildDependsOnly: True</tt>, et prévoir qu'aucun autre paquet ne dépendra de lui.</li>
 </ul>
 <p>
-  A maintainer who has reasons to deviate from this policy and not split the
-  package should explain the reasons in the DescPackaging field.
+Un mainteneur, qui a de bonnes raisons de s'écarter de ces règles et ne 
+scinde pas le paquet, devra expliquer pourquoi dans le champ DescPackaging.
 </p><p>
-For some packages, everything can be accomplished with a main package and a
--shlibs package; in other cases you also need a third package.  The new
-<tt style="white-space: nowrap;">SplitOff</tt> field actually makes this quite easy.
+Pour certains paquets, tout peut être fait avec un paquet principal et un paquet -shlibs ; dans d'autres cas, vous aurez besoin d'un troisième paquet. Le nouveau champ <tt style="white-space: nowrap;">SplitOff</tt> facilite ce processus.
 </p><p>
 When three packages are needed, there are two different ways they could be
 named, depending on whether the libraries or the binaries
@@ -1896,4 +1875,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.6 2004/03/26 01:13:46 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.8 2004/03/27 10:08:26 michga Exp $</i></p></body></html>
