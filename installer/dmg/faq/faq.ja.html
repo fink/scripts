@@ -22,7 +22,7 @@ Available Languages:  |
 <h2>Contents</h2><ul><li><a href="#general"><b>1 一般的な質問</b></a><ul><li><a href="#general.what">1.1 Fink とは何ですか?</a></li><li><a href="#general.naming">1.2 Fink とはどういう意味ですか?</a></li><li><a href="#general.bsd-ports">1.3 
 Fink と BSD の port メカニズムはどう違うのですか (OpenPackages や GNU-Darwin も含めて)?
 </a></li><li><a href="#general.usr-local">1.4 なぜ Fink は /usr/local にインストールしないのですか?</a></li><li><a href="#general.why-sw">1.5 ではなぜ /sw を選んだのですか?</a></li></ul></li><li><a href="#relations"><b>2 他のプロジェクトとの関係</b></a><ul><li><a href="#relations.upstream">2.1 パッチを送るなど、本家のメンテナに貢献していますか?</a></li><li><a href="#relations.debian">2.2 Debian プロジェクトとは関係がありますか。 Debian Linux を Mac OS X に移植しようとしているのですか?</a></li><li><a href="#relations.apple">2.3 Apple とは関係がありますか?</a></li><li><a href="#relations.openosx">2.4 OpenOSX.com とは関係がありますか?</a></li><li><a href="#relations.forked">2.5 macosx.forked.net とは関係がありますか?</a></li><li><a href="#relations.darwinports">2.6 Darwinports とは関係がありますか?</a></li></ul></li><li><a href="#mirrors"><b>3 Fink ミラー</b></a><ul><li><a href="#mirrors.when-use">3.1 Fink ミラーとは何ですか?</a></li><li><a href="#mirrors.why">3.2 なぜ rsync ミラーを使わないといけないのですか?</a></li><li><a href="#mirrors.where">3.3 Fink ミラーの情報はどこにありますか?</a></li><li><a href="#mirrors.when-not">3.4 rsync サーバーに接続できません。どうしたら良いですか?</a></li><li><a href="#mirrors.otherinfogone">3.5 rsync 方式に変えたら、unused ツリーの info ファイルが全て消えてしまいました。</a></li><li><a href="#mirrors.howswitch">3.6 どのように方式を切り替えるのですか?</a></li><li><a href="#mirrors.status">3.7 rsync ミラーの現在の状態は見ることが出来ますか?</a></li><li><a href="#mirrors.Master">3.8 Distfiles ミラーとは何ですか?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Fink のアップグレード (バージョン固有の問題対処法)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 バージョン0.16.0にアップグレードして "Your version of the
-gcc 3.3 compiler is out of date." と言われました。どうしたらいいですか?</a></li></ul></li><li><a href="#usage-fink"><b>5 Fink のインストール、使用、メンテナンス</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Fink がサポートしているパッケージはどのように探せますか?</a></li><li><a href="#usage-fink.proxy">5.2 ファイヤーウォールの内側にいます。どう設定したら Fink で HTTP プロキシが使えますか?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 ファイヤーウォールの内側から CVS でパッケージをアップデートするにはどうしたらいいですか?</a></li><li><a href="#usage-fink.moving">5.4 インストール後に Fink を他の場所に移動できますか?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Fink をインストール後、他の場所に移動してシンボリックリンクを張ったら、動きますか?</a></li><li><a href="#usage-fink.removing">5.6 Fink を全てアンインストールするには?</a></li><li><a href="#usage-fink.bindist">5.7 ウェブのパッケージデータベースは、パッケージ xxx を表示しているのに、 apt-get と dselect は何もしない。どっちが嘘をついてるのですか?
+gcc 3.3 compiler is out of date." と言われました。どうしたらいいですか?</a></li><li><a href="#upgrade-fink.fink-0220">4.2 長いこと Fink からのパッケージ更新がありませんでしたが</a></li></ul></li><li><a href="#usage-fink"><b>5 Fink のインストール、使用、メンテナンス</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Fink がサポートしているパッケージはどのように探せますか?</a></li><li><a href="#usage-fink.proxy">5.2 ファイヤーウォールの内側にいます。どう設定したら Fink で HTTP プロキシが使えますか?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 ファイヤーウォールの内側から CVS でパッケージをアップデートするにはどうしたらいいですか?</a></li><li><a href="#usage-fink.moving">5.4 インストール後に Fink を他の場所に移動できますか?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Fink をインストール後、他の場所に移動してシンボリックリンクを張ったら、動きますか?</a></li><li><a href="#usage-fink.removing">5.6 Fink を全てアンインストールするには?</a></li><li><a href="#usage-fink.bindist">5.7 ウェブのパッケージデータベースは、パッケージ xxx を表示しているのに、 apt-get と dselect は何もしない。どっちが嘘をついてるのですか?
 </a></li><li><a href="#usage-fink.unstable">5.8 unstable にあるパッケージをインストールしようとすると、 fink が 'no package found' といいます。どうしたらインストールできるのですか?</a></li><li><a href="#usage-fink.sudo">5.9 sudo でパスワードを何度も何度も入力するのは疲れます。何か良い方法はありませんか?</a></li><li><a href="#usage-fink.exec-init-csh">5.10 init.csh or init.sh を実行しようとすると、 "Permission denied" エラーが出ます。
 何がおかしいのですか?</a></li><li><a href="#usage-fink.dselect-access">5.11 うぎゃ! dselect で "[A]ccess" メニューを使ったら、パッケージをダウンロードできなくなった!</a></li><li><a href="#usage-fink.cvs-busy">5.12 <q>fink selfupdate</q> か "fink selfupdate-cvs" を実行しようとした時、  "<tt style="white-space: nowrap;">Updating using CVS failed. Check the error messages above.</tt>" エラーが出ました。</a></li><li><a href="#usage-fink.kernel-panics">5.13 Fink を使うと、マシンがフリーズする/カーネルパニックする/固まる。助けて!</a></li><li><a href="#usage-fink.not-found">5.14 パッケージをインストールしようとすると、 Fink がダウンロードできません。
 ダウンロードサイトとは Fink よりも新しいバージョンを示しています。
@@ -62,7 +62,7 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 	</a></li><li><a href="#comp-general.master-problems">6.21 
 		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
-	</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
+	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
 ユーザー名は、 "mysql", "pgsql", "games" などです。
@@ -80,8 +80,8 @@ XDarwin を起動してもすぐ終了しちゃう!</a></li><li><a href="#usage-
 "xinit: No such file or directory (errno 2): no server "/usr/X11R6/bin/X" in PATH"。
 </a></li><li><a href="#usage-packages.xterm-error">9.5 xterm が "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib" といって終了します。</a></li><li><a href="#usage-packages.libXmuu">9.6 XFree86 を起動しようとすると、下記のエラーのひとつがでます。
 "dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib"
-または "dyld: xinit can't open library: /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">9.7 Fink の XFree86 を Apple X11 に置き換えたのですが、なんでもかんでもクラッシュするようになりました!</a></li><li><a href="#usage-packages.apple-x-delete">9.8 Apple X11 の delete キーを、 XDarwin のように使いたいのです。</a></li><li><a href="#usage-packages.gnome-two">9.9 GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 Apple X11 をインストールしたけれども、 Fink が XFree86 をインストールしろといい続けます。</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 
-    10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 をインストールしろと言われます。
+または "dyld: xinit can't open library: /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">9.7 Fink の XFree86 を Apple X11 に置き換えたのですが、なんでもかんでもクラッシュするようになりました!</a></li><li><a href="#usage-packages.apple-x-delete">9.8 Apple X11 の delete キーを、 XDarwin のように使いたいのです。</a></li><li><a href="#usage-packages.gnome-two">9.9 GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 Apple X11 をインストールしたけれども、 Fink が XFree86 か X.org をインストールしろといい続けます。</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 
+    10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
     </a></li><li><a href="#usage-packages.special-x11-debug">9.13 まだ X11 と Fink の問題が解決されません。</a></li></ul></li></ul><h2><a name="general">1 一般的な質問</a></h2>
 
 
@@ -255,6 +255,16 @@ Mac OS X 10.2 の December 2002 developer tools 用 XCode ベータ・アップ�
 2003年10月24日時点で build 1493 かそれ以上が必要です。</p><p>10.2 ユーザーは、 August 2003 Updater を <a href="http://developer.apple.com/">Apple Developer Connection</a> からダウンロードできます (無料登録が必要)。</p><p>10.3 ユーザーは、 Panther 互換のディベロッパーツール (Xcode など) にアップグレードする必要があります。
 XCode の入った CD が Panther に同梱されているはずです。</p></div>
 </a>
+<a name="upgrade-fink.fink-0220">
+	<div class="question"><p><b>Q4.2: 長いこと Fink からのパッケージ更新がありませんでしたが</b></p></div>
+	<div class="answer"><p><b>A:</b> バージョンを確認してください:</p><pre>fink --version</pre><p>
+			rsync selfupdate が動作しないという既知の問題が <tt style="white-space: nowrap;">fink-0.22.0</tt> にあります。
+			これを直すために、 CVS selfupdate を行います
+		</p><pre>fink selfupdate-cvs  </pre><p>
+			これにより <tt style="white-space: nowrap;">fink</tt> が新しくなります。
+			この語、 rsync selfupdate に戻すようおすすめします。
+		</p><pre>fink selfupdate-rsync</pre></div>
+</a>
 <h2><a name="usage-fink">5 Fink のインストール、使用、メンテナンス</a></h2>
 
 
@@ -321,8 +331,8 @@ dselect からパッケージを選択してインストールする場合、 ro
 <a name="usage-fink.removing">
 <div class="question"><p><b>Q5.6: Fink を全てアンインストールするには?</b></p></div>
 <div class="answer"><p><b>A:</b> Fink でインストールしたファイルはほとんど /sw (あるいはインストール時に選択した場所) にあります。
-なので、 Fink を削除するには、通常このコマンドを入力します:</p><pre>sudo rm -rf /sw</pre><p>唯一の例外は XFree86 です。もし XFree86 を Fink でインストールした (<tt style="white-space: nowrap;">xfree86</tt> または
-<tt style="white-space: nowrap;">xfree86-rootless</tt> パッケージ) なら、次のコマンドも必要です:
+なので、 Fink を削除するには、通常このコマンドを入力します:</p><pre>sudo rm -rf /sw</pre><p>唯一の例外は XFree86 または X.org です。もし X サーバを Fink でインストールした (<tt style="white-space: nowrap;">xfree86</tt> 、
+<tt style="white-space: nowrap;">xfree86-rootless</tt> または <tt style="white-space: nowrap;">xorg</tt> パッケージ) なら、次のコマンドも必要です:
 </p><pre>sudo rm -rf /usr/X11R6 /etc/X11 /Applications/XDarwin.app</pre><p>Fink をインストールし直すことがないのでしたら、テキストエディタを使い、 <tt style="white-space: nowrap;">.cshrc</tt> ファイルの中の "<tt style="white-space: nowrap;">source /sw/bin/init.csh</tt>" と書かれている行、あるいは <tt style="white-space: nowrap;">.bashrc</tt> ファイルの中の "<tt style="white-space: nowrap;">source /sw/bin/init.sh</tt>" と書かれている行を削除して下さい。</p></div>
 </a>
 <a name="usage-fink.bindist">
@@ -911,6 +921,16 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 		まだ Master ミラーに反映されていない場合によくおこります。
 	</p><p>To remedy this, run <tt style="white-space: nowrap;">fink configure</tt> and set the search order to use Master mirrors last.</p></div>
 </a>
+<a name="comp-general.compile-options">
+	<div class="question"><p><b>Q6.22: パッケージをビルドするときに、 Fink に違うオプションを使わせたい</b></p></div>
+	<div class="answer"><p><b>A:</b> 
+			まず最初に、バリエーションを作成するようにパッケージメンテナに伝えてみてください。
+			これが比較的簡単な方法です。
+			メンテナから反応がなかったり、新しいバージョンが出てしまったり、自分で違うオプションを試してみたい場合、
+			<a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> 
+			と <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a> をお読みください。
+		</p><p><b>Note:  </b>Fink is deliberately set up such that all official binaries are identical regardless of what machine they are built on, so things like G5 optimization won't happen with an official package.  If you want them, you'll have to do it yourself.</p></div>
+</a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
 
 
@@ -1050,32 +1070,37 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>これを起動ファイル (
 		<p>
 		Apple X11 (3枚目のディスク):
 		X11 関連のプログラムをコンパイルや Fink でソースインストールする場合、 
-		X11SDK (XCode ディスク) も忘れずにインストールする。
+		X11SDK (XCode ディスク) も忘れずにインストールする
 		</p>
 		</li>
 		<li>
 		<p>4.4.x built via Fink: 
 		<tt style="white-space: nowrap;">xfree86</tt> と
-		<tt style="white-space: nowrap;">xfree86-shlibs</tt> のパッケージをインストールする。
+		<tt style="white-space: nowrap;">xfree86-shlibs</tt> のパッケージをインストールする
 		</p>
+		</li>
+		<li>
+			<p> X.org built via Fink: <tt style="white-space: nowrap;">xorg</tt> と
+			<tt style="white-space: nowrap;">xorg-shlibs</tt> のパッケージをインストールする
+			</p>
 		</li>
 	</ul><p>Jaguar では、一番使われていて Fink パッケージが使えるのは:</p><ul>
 		<li>
 		<p>Fink でビルドする 4.2.x: <tt style="white-space: nowrap;">xfree86-base</tt> と 
 		<tt style="white-space: nowrap;">xfree86-rootless</tt> または <tt style="white-space: nowrap;">xfree86-base-threaded</tt> 
-		と <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> (および、それぞれの <tt style="white-space: nowrap;">-shlibs</tt>) をインストール。
+		と <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> (および、それぞれの <tt style="white-space: nowrap;">-shlibs</tt>) をインストール
 		</p>
 		</li>
 		<li>
 		<p>Fink でビルドする 4.3.x: <tt style="white-space: nowrap;">xfree86</tt> と <tt style="white-space: nowrap;">xfree86-shlibs</tt> 
-		パッケージをインストール。
+		パッケージをインストール
 		</p>
 		</li>
 		<li>
 		<p>
 		Apple の 4.2.x (User+SDK パッケージがインストールされている場合): 
 		<tt style="white-space: nowrap;">system-xfree86</tt> パッケージが自動的にインストールされる。
-		ユーザーはインストールを行わない。
+		ユーザーはインストールを行わない
 		(注記: Jaguar 用の Apple X11 Public Beta は既に入手不可能です。
 		この方法は以前入手した人のみに有効です。)
 		</p>
@@ -1279,7 +1304,7 @@ exec gnome-session</pre><p>
 Disk 3 の X11.pkg から X11 をインストールできます。</p></div>
 </a>
 <a name="usage-packages.apple-x11-wants-xfree86">
-<div class="question"><p><b>Q9.11: Apple X11 をインストールしたけれども、 Fink が XFree86 をインストールしろといい続けます。</b></p></div>
+<div class="question"><p><b>Q9.11: Apple X11 をインストールしたけれども、 Fink が XFree86 か X.org をインストールしろといい続けます。</b></p></div>
 <div class="answer"><p><b>A:</b> 二つの可能性があります。</p><ul>
 		<li><b>バイナリからのインストール:</b> 
 		<p>
@@ -1328,7 +1353,7 @@ sudo apt-get install fink</pre>
 		Jaguar では XCode は使用していないため、ダウンロード済みの X11SDK が必要になります。
 		X11 beta 3 は既に期限が切れているため、X11SDK パッケージ (および X11User パッケージ)
 		はダウンロードできません。
-		X11 アプリケーションをインストールするには、バイナリ配布を利用するか、 XFree86 
+		X11 アプリケーションをインストールするには、バイナリ配布を利用するか、 XFree86  または X.org
 		をインストールするか、 Panther にアップグレードするしかありません。
 		</p>
 		<p>
@@ -1348,7 +1373,7 @@ sudo apt-get install fink</pre>
 
 <a name="usage-packages.wants-xfree86-on-upgrade">
 <div class="question"><p><b>Q9.12: 
-    10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 をインストールしろと言われます。
+    10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
     </b></p></div>
 <div class="answer"><p><b>A:</b> 
     以下の古い代替パッケージのうちいずれかを削除する必要があります:
@@ -1365,7 +1390,7 @@ sudo apt-get install fink</pre>
     X11SDK もインストールされている場合、 <tt style="white-space: nowrap;">system-xfree86-dev</tt> も確認します。
     </p><p>
     これでも問題が解決されない場合、上の
-    <a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86</a>
+    <a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86 or X.org</a>
     を参照してください。
     </p></div>
 </a>
@@ -1373,20 +1398,20 @@ sudo apt-get install fink</pre>
 <a name="usage-packages.special-x11-debug">
 <div class="question"><p><b>Q9.13: まだ X11 と Fink の問題が解決されません。</b></p></div>
 <div class="answer"><p><b>A:</b> 
-		<a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86</a> や
+		<a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> や
 		<a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> 
 		のヒントで問題が解決されないか、自分の問題と異なる場合、
 		X11 をきれいに削除し、代替パッケージと X11 関連パッケージを削除します:
 		<a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86</a>
 		</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
-xfree86 xfree86-shilbs \
+xorg xorg-shlibs xfree86 xfree86-shilbs \
 xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
 xfree86-rootless-threaded xfree86-rootless-threaded-shlibs
 rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg
 fink selfupdate; fink index</pre><p>
 		(最初の行で存在しないパッケージを削除しようとしているという警告が出ます)
-		次に、Apple X11 (および必要に応じて X11SDK) または XFree86 を再インストールします。
+		次に、Apple X11 (および必要に応じて X11SDK) または XFree86 や X.org のような代替物を再インストールします。
 		</p><p>
 		これでも問題があり、 <tt style="white-space: nowrap;">fink-0.19.0</tt> 以降を使っている場合、
 		</p><pre>fink-virtual-pkgs --debug</pre><p>で何が不足しているかの情報が得られます。</p><p>
