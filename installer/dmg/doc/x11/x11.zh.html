@@ -459,9 +459,10 @@ xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
 最后，可以有些选项设置 <tt style="white-space: nowrap;">xdm</tt>；请阅读它的手册页面获取详细信息。
 </p>
       <p>
-注意：如果你使用 Mac OS X，你可以在登录窗口输入 <tt style="white-space: nowrap;">&gt;console</tt>　来获得一个和纯 Darwin 环境等效的纯文本控制台。
+注意：如果你使用 Mac OS X Panther 之前的版本，你可以在登录窗口输入 <tt style="white-space: nowrap;">&gt;console</tt>　来获得一个和纯 Darwin 环境等效的纯文本控制台。如果你在登录窗口看不到输入用户的地方，你可以按下随便一个用户名的第一个字母，然后按 Option+Return 组合键。
 然后，你可以使用上面描述的启动方法，除了 <tt style="white-space: nowrap;">xdm</tt> 作为一个例外。
 </p>
+<p>如果你运行的是 Panther，你不能从控制台窗口启动 XFree86。</p>
     
     <h3><a name="run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></h3>
       
@@ -526,12 +527,12 @@ xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
       <p>
 关于启动 GNOME 的一个简单例子：
 </p>
-      <pre>source /sw/bin/init.sh
+      <pre>. /sw/bin/init.sh
 exec gnome-session</pre>
       <p>
-一个稍微复杂一点的例子会关闭 X11 响铃，启动一些客户程序，最后运行 Enlightenment 窗口管理器：
+一个稍微复杂一点的针对 bash 用户的例子会关闭 X11 响铃，启动一些客户程序，最后运行 Enlightenment 窗口管理器：
 </p>
-      <pre>source /sw/bin/init.sh
+      <pre>. /sw/bin/init.sh
 
 xset b off
 
@@ -540,6 +541,31 @@ xterm &amp;
 xterm &amp;
 
 exec enlightenment</pre>
+
+<p>要在苹果的 X11 下启动 GNOME 2.2，使用下面的命令：</p>    
+ <pre>. /sw/bin/init.sh
+quartz-wm --only-proxy &amp;
+metacity &amp;
+exec gnome-session
+</pre> 
+
+<p>要在苹果的 X11 下启动 GNOME 2.4，metacity 会自动被启动，所以命令应该修改为：</p>    
+ <pre>. /sw/bin/init.sh
+quartz-wm --only-proxy &amp;
+exec gnome-session
+</pre>
+ 
+<p>在苹果的 X11 下启动 KDE 3.2 (版本大于 3.2.2-21)：</p>
+<pre>. /sw/bin/init.sh
+export KDEWM=kwin
+quartz-wm --only-proxy &amp;
+/sw/bin/startkde &lt;/tmp/kde.log 2&lt;&amp;1
+</pre>
+
+<p>最后，在苹果的 X11 下启动最新的非稳定版 KDE：</p>
+<pre>. /sw/bin/init.sh
+/sw/bin/startkde &lt;/tmp/kde.log 2&lt;&amp;1
+</pre>
     
   <h2><a name="xtools">5 Xtools</a></h2>
     
@@ -727,7 +753,7 @@ failed to connect as window server!</pre>
 以及 <tt style="white-space: nowrap;">XDarwinStartup</tt>，一个很小的可执行文件。
 如果任意的一个不存在或指向另外的文件，你需要修正它。
 应该如何做取决于你安装 XFree86 的方式。
-参考 <a href="#inst-xfree86.rootless">《无根模式服务器介绍》</a>部分获取更多的提示。
+如果你通过 Fink 安装 XFree86，那么你需要重新安装 <tt style="white-space: nowrap;">xfree86</tt> 软件包(或对于 OS X 10.2 及更早版本，安装 <tt style="white-space: nowrap;">xfree86-rootless</tt>)。如果你自己安装 Xfree86，那么从 Xquartz.tgz 中解压出这些文件。
 </p>
       <pre>The XKEYBOARD keymap compiler (xkbcomp) reports:
 &gt; Error:            Can't find file "unknown" for geometry include
@@ -875,15 +901,26 @@ DYLD_INSERT_LIBRARIES 环境变量）。
       <p>
 要从终端程序窗口启动 X11 程序，你需要设置 "DISPLAY" 环境变量。
 这个变量告诉程序在哪里找到 X11 窗口服务器。
-默认设置－XDarwin 运行在相同的机器上，你的 shell 是 tcsh－的情况下，你可以这样设置环境变量：
+默认设置 XDarwin 运行在相同的机器上的情况下，你可以这样设置环境变量：
 </p>
-      <pre>setenv DISPLAY :0.0</pre>
+<ul>
+<li><p>对于 tcsh 用户：</p>
+      <pre>setenv DISPLAY :0.0</pre></li>
+<li><p>对于 bash 用户：</p>
+<pre>export DISPLAY=":0.0"</pre>
+</li>
+</ul>
       <p>
-一个不错的设置办法是在你登录的时候让 XDarwin.app 程序自动启动（可以在系统设置的登录面板中设置），并在你的 .cshrc 中加进：
+一个不错的设置办法是在你登录的时候让 XDarwin.app 程序自动启动（对于 ;OS X 10.2，可以在系统设置的登录面板中设置；对于 OS X 10.3,在用户帐号面板，启动项里面设置）。
 </p>
+<ul><li><p>对于 tcsh 用户，把下面的内容添加到你的 .cshrc 文件中：</p>
       <pre>if (! $?DISPLAY) then
   setenv DISPLAY :0.0
-endif</pre>
+endif</pre> 
+</li>
+<li><p>对 bash 用户，添加下述内容到你的 .bashrc 文件：</p>
+<pre>[[ -z $DISPLAY ]] &amp;&amp; export DISPLAY=":0.0"</pre>
+</li></ul>
       <p>
 这会在每个 shell 中自动设置 DISPLAY 变量。但它不会覆盖已经设置的 DISPLAY 值。这样你仍然可以远程地运行 X11 程序或通过 ssh X11 隧道来使用它。
 </p>
@@ -921,13 +958,14 @@ X11 系统实际上有几个单独的剪贴板（X11 中称为 "剪切缓冲区�
 </p>
       <pre>autocutsel &amp;</pre>
       <p>
-（要把它放在运行窗口管理器<b>之前</b>，否则它不会被运行！不要把它添加在末尾，那样它不会被运行）。
+（要把它放在运行窗口管理器<b>之前</b>，否则它不会被运行！不要把它添加在末尾，那样它不会被运行）。请注意现在对于苹果的 X11 已经不需要这样做(参考 <a href="#inst-xfree86.apple-binary">关于使用苹果的 X11 的一些注意事项</a>).
 </p>
-      <p>如果你使用苹果的 X11，你可以使用 Command-C 或 编辑-&gt;拷贝，就象一般的 mac 程序一样，来拷贝文本到剪贴板。不过，暂时你还不能用 Command-V 粘贴剪贴板里面的内容。</p>
+      <p>如果你使用苹果的 X11，你可以使用 Command-C 或 编辑-&gt;拷贝，就象一般的 mac 程序一样，来拷贝文本到剪贴板。并可以使用鼠标中键或 Command-V 来从剪贴板粘贴内容到苹果的 X11.</p>
+<p>任何情况下，如果你碰到从 Aqua 拷贝粘贴到 X11 或相反的问题，首先你可以尝试粘贴两次(有些时候拷贝操作不是立刻进行)，其次你可以使用中间终须，也就是说，在 Aqua 的一边使用TextEdit 或 Terminal.app，在 X11 一边则使用 nedit 或 xterm。在我的经验中，总是可以找到解决的办法。</p>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.zh.xml,v 1.3 2004/03/07 01:55:46 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.zh.xml,v 1.4 2004/07/06 19:14:48 jeff_yecn Exp $</i></p></body></html>
