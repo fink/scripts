@@ -394,6 +394,7 @@ defined in indirectly referenced dynamic library
 packages you have built against <tt style="white-space: nowrap;">xfree86</tt> will need to be rebuilt, as the binaries are incompatible.</p>
         </li>
       </ul>
+      <p>For more information on using Apple's X11, check out this <a href="http://developer.apple.com/darwin/runningx11.html">article</a> at the Apple Developer Connection.</p>
     
     <h3><a name="inst-xfree86.official-binary">3.3 The Official Binaries</a></h3>
       
@@ -472,6 +473,7 @@ CVS</a> instructions to download the <tt style="white-space: nowrap;">xc</tt> mo
 Then, follow the source build instructions above.
 </p>
     
+    
     <h3><a name="inst-xfree86.macgimp">3.6 MacGimp</a></h3>
       
       <p>
@@ -488,6 +490,7 @@ It's not quite clear what version it is; it may be a mix of
 The server does rootless mode, using a patch from the time before
 4.1.0.
 </p>
+    
     
     <h3><a name="inst-xfree86.switching-x11">3.7 Replacing X11</a></h3>
       
@@ -611,10 +614,10 @@ In case you don't see a field to enter a user's name in the login window, just t
 You can use all of the start methods outlined above, with the
 exception of <tt style="white-space: nowrap;">xdm</tt>.
 </p>
-<p>
+      <p>
 Note: If you are running Mac OS X Panther, you cannot start XFree86 from the console window.
 </p>
-
+    
     <h3><a name="run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></h3>
       
       <p>
@@ -706,7 +709,7 @@ A simple example that starts up GNOME:
 </p>
       <pre>. /sw/bin/init.sh
 exec gnome-session</pre>
-<p>A more complex example for bash users that turns the X11 bell off, starts some clients and finally executes the Enlightenment window manager:</p>
+      <p>A more complex example for bash users that turns the X11 bell off, starts some clients and finally executes the Enlightenment window manager:</p>
       <pre>. /sw/bin/init.sh
 
 xset b off
@@ -716,28 +719,28 @@ xterm &amp;
 xterm &amp;
 
 exec enlightenment</pre>
- <p>To start GNOME 2.2 under Apple's X11, use the following sequence:</p>    
- <pre>. /sw/bin/init.sh
+      <p>To start GNOME 2.2 under Apple's X11, use the following sequence:</p>
+      <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 metacity &amp;
 exec gnome-session
-</pre> 
-<p>To start GNOME 2.4 under Apple's X11, metacity is started up automatically, so the sequence is:</p>    
- <pre>. /sw/bin/init.sh
+</pre>
+      <p>To start GNOME 2.4 under Apple's X11, metacity is started up automatically, so the sequence is:</p>
+      <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 exec gnome-session
-</pre> 
-<p>To start KDE 3.2 (version &lt; 3.2.2-21) under Apple's X11</p>
-<pre>. /sw/bin/init.sh
+</pre>
+      <p>To start KDE 3.2 (version &lt; 3.2.2-21) under Apple's X11</p>
+      <pre>. /sw/bin/init.sh
 export KDEWM=kwin
 quartz-wm --only-proxy &amp;
 /sw/bin/startkde &gt;/tmp/kde.log 2&gt;&amp;1
 </pre>
-<p>And finally to start the latest unstable version of KDE under Apple's X11:</p>
-<pre>. /sw/bin/init.sh
+      <p>And finally to start the latest unstable version of KDE under Apple's X11:</p>
+      <pre>. /sw/bin/init.sh
 /sw/bin/startkde &gt;/tmp/kde.log 2&gt;&amp;1
 </pre>
-   
+    
   <h2><a name="xtools">5 Xtools</a></h2>
     
     
@@ -1039,6 +1042,7 @@ file:
       <pre>cd
 rm .Xauthority
 touch .Xauthority</pre>
+      
       <p>
 Another common cause for XFree86 startup failures is an incorrect
 <tt style="white-space: nowrap;">.xinitrc</tt> file.
@@ -1053,6 +1057,7 @@ not started in the background.
 It is a good idea to add <tt style="white-space: nowrap;">exec xterm</tt> as a fallback when
 your window manager or similar can't be found.
 </p>
+      
     
     <h3><a name="trouble.black">7.2 Black icons in the GNOME panel or in the
 menu of a GNOME application</a></h3>
@@ -1175,26 +1180,28 @@ This variable tells the applications where to find the X11 window
 server.
 In the default setup - XDarwin runs on the same machine -, you can set the variable as follows:
 </p>
-<ul>
-<li><p>For tcsh users:</p>
+      <ul>
+        <li><p>For tcsh users:</p>
       <pre>setenv DISPLAY :0.0</pre>
 </li>
-<li><p>For bash users:</p>
+        <li><p>For bash users:</p>
 <pre>export DISPLAY=":0.0"</pre>
 </li>
-</ul>
+      </ul>
       <p>
 A nice setup is to have XDarwin.app started when you log in (settable
 in the Login panel of the System Preferences on Mac OS 10.2, in the Accounts panel, Startup items on Mac OS 10.3):
 </p>
-<ul><li><p>For tcsh users, add the following to your .cshrc file:</p>
+      <ul>
+        <li><p>For tcsh users, add the following to your .cshrc file:</p>
       <pre>if (! $?DISPLAY) then
   setenv DISPLAY :0.0
 endif</pre>
 </li>
-<li><p>For bash users, add the following to your .bashrc file:</p>
+        <li><p>For bash users, add the following to your .bashrc file:</p>
 <pre>[[ -z $DISPLAY ]] &amp;&amp; export DISPLAY=":0.0"</pre>
-</li></ul>
+</li>
+      </ul>
       <p>
 This sets DISPLAY automatically in every shell.
 It doesn't override the current value when DISPLAY is already set,
@@ -1255,7 +1262,7 @@ manager and never returns! Don't just add it at the end, it won't
 be executed.) And remember that it is no more necessary for Apple's X11 (see <a href="#inst-xfree86.apple-binary">Some notes on using Apple's X11</a>).
 </p>
       <p>If you are using Apple's X11, then you can use Command-C or Edit-&gt;Copy, as usual for Mac apps, to copy text to the clipboard, and the middle-mouse button or Command-V to paste from the clipboard to Apple X11.</p>
-<p>In any case, if you encounter problems copying or pasting from Aqua to X11 and vice-versa, you may first try to do the pasting part twice (it may happen that the copy does not occur at once), then use intermediate applications, e.g. TextEdit or Terminal.app on the Aqua side, nedit or an xterm on the X11 side. In my experience, there is always a solution.</p>
+      <p>In any case, if you encounter problems copying or pasting from Aqua to X11 and vice-versa, you may first try to do the pasting part twice (it may happen that the copy does not occur at once), then use intermediate applications, e.g. TextEdit or Terminal.app on the Aqua side, nedit or an xterm on the X11 side. In my experience, there is always a solution.</p>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
@@ -1263,4 +1270,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: x11.en.xml,v 1.11 2004/05/22 03:06:12 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: x11.en.xml,v 1.12 2005/01/24 01:00:01 alexkhansen Exp $</i></p></body></html>
