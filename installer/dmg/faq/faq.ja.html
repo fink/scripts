@@ -1282,50 +1282,66 @@ Disk 3 の X11.pkg から X11 をインストールできます。</p></div>
 <div class="question"><p><b>Q9.11: Apple X11 をインストールしたけれども、 Fink が XFree86 をインストールしろといい続けます。</b></p></div>
 <div class="answer"><p><b>A:</b> 二つの可能性があります。</p><ul>
 		<li><b>バイナリからのインストール:</b> 
-		お使いの <tt style="white-space: nowrap;">fink</tt> パッケージのバージョンが 0.17.0 より前のものであれば
-		(Fink-0.6.2 インストーラに含まれていたものも)
-		fink を更新することで直ります。
-		<pre>sudo apt-get update
-sudo apt-get install fink</pre>
 		<p>
-		これで駄目なら、 X11User パッケージを再インストールする必要があります。
-		インストーラがファイルをインストールしないことがあるためです。</p>
+		<tt style="white-space: nowrap;">fink</tt> が最新 (&gt;=0.18.3-1) であれば、通常は X11User 
+		パッケージを再インストールする必要があります。
+		</p>
+		<p>
+		これは、インストーラがしばしばファイルをインストールをし忘れることがあるためです。
+		インストールは何回かする必要があるかもしれません。
+		</p>
 		<pre>fink list -i system-xfree86</pre> 
-		<p>で
-		<tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>
-		のパッケージがインストールされているかはわかります。
+		<p>を実行することで、
+		<tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> 
+		がインストールされたかが分かります。
 		</p>
 		<p>
-		X11User パッケージの再インストールができない場合、
-		<a href="#usage-packages.special-x11-debug">special debug</a> 解決法を参照。
+		X11User パッケージを再インストールしても問題がある場合、下記の
+		<a href="#usage-packages.special-x11-debug">特殊なデバグ</a> の手順を試してみてください。
 		</p>
+		<p>
+		古い<tt style="white-space: nowrap;">fink</tt> を使っている場合、 <tt style="white-space: nowrap;">fink</tt> を更新することで直ります。
+		</p>
+<pre>sudo apt-get update
+sudo apt-get install fink</pre>
 		</li>
 		<li><b>ソースからのインストール: </b>
-		<tt style="white-space: nowrap;">fink</tt> のバージョンが 0.17 以前であれば、
-		<tt style="white-space: nowrap;">fink</tt> を更新します。
-		<pre>fink selfupdate</pre>
-		(CVS または rsync 更新が有効になっている必要があります。)
-		<p>最新版の fink により、</p>
-		<pre>fink list -i system-xfree86</pre>
 		<p>
-		を実行することで，<tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, 
-		and <tt style="white-space: nowrap;">system-xfree86-dev</tt> がインストールされているか分かります。
-		最初の二つのうちいずれかがない場合、 X11User パッケージを再インストールします。
-		<tt style="white-space: nowrap;">-dev</tt> がない場合、 X11SDK を(再)インストールします。
-		これは、 Xcode CD に入っていますが、デフォルトではインストール<b>されません</b>。
-		Xcode をインストールしても、 X11SDK はデフォルトではインストール<b>されません</b>。
-		Xcode のインストール時にカスタムを選択するか、<tt style="white-space: nowrap;">Packages</tt> フォルダ内の
-		<tt style="white-space: nowrap;">X11SDK</tt> pkg をダブルクリックします。
+		<tt style="white-space: nowrap;">fink</tt> が最新であれば、 X11SDK を(再)インストールする必要があります。
+		これは、パッケージをソースからビルドする際に必須です。
+		X11SDK は Xcode CD にありますが、XCode をインストールしても、デフォルトではインストール<b>されません</b>。
+		インストール時にカスタムを選択してパッケージを選択するか、
+		XCode の CD 内の <tt style="white-space: nowrap;">Packages</tt> フォルダから X11SDK pkg をダブルクリックします。
 		</p>
- 		<p>
-		<b>Jaguar (X11 beta 3) ユーザーへの注記</b>:  
-		XCode を使っていないため、ダウンロード済みの X11SDK パッケージが必要です。
-		X11 beta 3 は既に有効期限が切れ、X11SDK パッケージ (と X11User パッケージ)
+		<p>
+		これでも問題がある場合、
+		</p>
+		<pre>fink list -i system-xfree86</pre> 
+		<p>を実行をし、
+		<tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> と <tt style="white-space: nowrap;">system-xfree86-dev</tt>
+		がインストールされているか確認します。
+		<tt style="white-space: nowrap;">-dev</tt> が無い場合は X11SDK を再インストールします。
+		Apple のインストーラはファイルをインストールし忘れることがあるようです。
+		他の二つのうちどちらかが無い場合、 X11User パッケージをインストールします (理由は同じ)。
+		</p>
+		<p><b>Jaguar (X11 beta 3) の利用者への注記</b>:
+		Jaguar では XCode は使用していないため、ダウンロード済みの X11SDK が必要になります。
+		X11 beta 3 は既に期限が切れているため、X11SDK パッケージ (および X11User パッケージ)
 		はダウンロードできません。
-		バイナリ版をインストールするか、 Panther に更新する必要があります。
+		X11 アプリケーションをインストールするには、バイナリ配布を利用するか、 XFree86 
+		をインストールするか、 Panther にアップグレードするしかありません。
 		</p>
-		<p>これで問題が解決されない場合、
-		<a href="#usage-packages.special-x11-debug">special debug</a> 解決法を参照。</p>
+		<p>
+		<tt style="white-space: nowrap;">fink</tt> 0.17 以前を使っている場合、更新します。
+		</p>
+		<pre>fink selfupdate</pre>
+		<p>
+		(ポイントリリースではなく、CVS または rsync 更新ができる場合)
+		</p>
+		<p>
+		これでも問題が発生する場合、下記の
+		<a href="#usage-packages.special-x11-debug">特殊なデバグ</a> の手順を試してみてください。
+		</p>
 		</li>
 	</ul></div>
 </a>
@@ -1390,4 +1406,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.19 2004/07/24 14:10:18 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.20 2004/08/12 01:26:11 babayoshihiko Exp $</i></p></body></html>
