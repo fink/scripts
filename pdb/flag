@@ -1,0 +1,95 @@
+#!/usr/bin/perl -w
+#
+# flag - housekeeping for Fink's online package database
+# Copyright (c) 2001 Christoph Pfisterer
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+
+$| = 1;
+use 5.005;  # perl 5.5 or newer required
+use strict;
+
+use DBI;
+
+### settings
+
+my @prio = ( "current-unstable", "current-stable" );
+
+### connect to database
+
+my ($dbh, $sth, $sth2, $q, $mysql_datafile, $mysql_data);
+$mysql_datafile = $ENV{HOME}."/.finkdbi";
+chomp($mysql_data = `cat $mysql_datafile`);
+$dbh = DBI->connect(split(/|/, $mysql_data);
+
+### reset all flags
+
+$q = "UPDATE package SET latest=0,needtest=0";
+$dbh->do($q);
+
+### iterate over package names
+
+$q = "SELECT DISTINCT name FROM package";
+$sth = $dbh->prepare($q);
+$sth->execute();
+
+my ($pkgname, $release, $version, $chosen, %vlist);
+
+while (1) {
+  ($pkgname) = $sth->fetchrow_array;
+  last unless defined($pkgname);
+
+  %vlist = ();
+  $q = "SELECT name,release,version FROM package WHERE name='$pkgname'";
+  $sth2 = $dbh->prepare($q);
+  $sth2->execute();
+  while (1) {
+    (undef, $release, $version) = $sth2->fetchrow_array;
+    last unless defined($release);
+    $vlist{$release} = $version;
+  }
+  $sth2->finish;
+
+  $chosen = "";
+  foreach $release (@prio) {
+    if (exists $vlist{$release}) {
+      $chosen = $release;
+      last;
+    }
+  }
+  if ($chosen eq "") {
+    ($chosen) = keys %vlist;
+  }
+
+  if ($chosen ne "") {
+    $q = "UPDATE package SET latest=1 WHERE name='$pkgname' AND release='$chosen'";
+    $dbh->do($q);
+  } else {
+    print "No release chosen for $pkgname\n";
+  }
+
+  if (exists $vlist{$prio[0]} and
+      (not exists $vlist{$prio[1]} or $vlist{$prio[0]} ne $vlist{$prio[1]})) {
+    $q = "UPDATE package SET needtest=1 WHERE name='$pkgname' AND release='".$prio[0]."'";
+    $dbh->do($q);
+  }
+}
+$sth->finish;
+
+### done
+
+$dbh->disconnect;
+exit 0;
