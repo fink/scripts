@@ -20,7 +20,7 @@ in this area, you might consider adopting a
 <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">package which
 currently has no maintainer.</a>
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.prefix">3.2 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.3 Shared Libraries</a></li><li><a href="#policy.perlmods">3.4 Perl Modules</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#reference"><b>5 Reference</b></a><ul><li><a href="#reference.build">5.1 The Build Process</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -260,6 +260,12 @@ in commands.
 the parameters for <b>c</b>onfigure: <tt style="white-space: nowrap;">--prefix=%p</tt> plus anything
 specified with ConfigureParams
 </p>
+</td></tr><tr valign="top"><td>%m</td><td>
+<p>
+the <b>m</b>achine architecture string.  This is the same as 
+<tt style="white-space: nowrap;">uname -p</tt> output.  Current values are 'powerpc' for ppc machines
+and 'i386' for x86 machines. (Introduced in a post-0.12.1 CVS version of fink.)
+</p>
 </td></tr></table>
 
 
@@ -328,6 +334,17 @@ optional.</li>
 <li><tt style="white-space: nowrap;">Artistic</tt> - for the Artistic license and
 derivatives.</li>
 
+<li><tt style="white-space: nowrap;">Artistic/GPL</tt> - dual-licensed under the Artistic and GPL
+licenses.</li> 
+
+<li><tt style="white-space: nowrap;">GNU Free Documentation License</tt> and <tt style="white-space: nowrap;">Linux
+Documentation Project</tt> - if the documentation included in a package
+is explicitly included under one of the licenses, then this is indicated by
+appending <tt style="white-space: nowrap;">/GFDL</tt> or <tt style="white-space: nowrap;">/LDP</tt>, giving one of the
+allowed combinations: &quot;GFDL&quot;,
+&quot;GPL/GFDL&quot;, &quot;LGPL/GFDL&quot;, &quot;GPL/LGPL/GFDL&quot;, &quot;LDP&quot;, or &quot;GPL/LGPL/LDP&quot;.
+</li>
+
 <li><tt style="white-space: nowrap;">OSI-Approved</tt> - for other Open Source licenses
 approved by the <a href="http://www.opensource.org/">Open Source
 Initiative</a>. One of OSI's requirements is that free distribution
@@ -339,9 +356,9 @@ Use this for packages that are available from the author in source
 form for free use, but don't allow free redistribution.</li>
 
 <li><tt style="white-space: nowrap;">Restrictive/Distributable</tt> - for restrictive licenses which
-permit distribution of binaries.
+permit distribution of source and binaries.
 Use this for packages that are available from the author in source
-form, permit distribution of binaries, but have restrictions which
+form, permit distribution of source and binaries, but have restrictions which
 make them non-open source licenses.</li>
 
 <li><tt style="white-space: nowrap;">Commercial</tt> - for restrictive, commercial licenses.
@@ -354,13 +371,7 @@ packages don't have licenses at all and anyone can do anything with
 them.</li>
 
 </ul>
-<p>
-If the documentation included in a package is explicitly put under the
-GNU Free Documentation License, a <tt style="white-space: nowrap;">/GFDL</tt> may be appended to
-the License field, e.g. <tt style="white-space: nowrap;">GPL/GFDL</tt>. If the documentation
-included in a package is explicitly put under the Linux Documentation
-Project license, the same applies, e.g. <tt style="white-space: nowrap;">GPL/LDP</tt>.
-</p>
+
 
 
 
@@ -723,6 +734,48 @@ which depend on <tt style="white-space: nowrap;">foo</tt>.
 </p>
 
 
+
+<h3><a name="policy.perlmods">3.4 Perl Modules</a></h3>
+<p>Fink has a new policy about perl modules, effective in May, 2003.
+</p><p>
+Traditionally, the Fink packages for perl modules have the suffix 
+<tt style="white-space: nowrap;">-pm</tt>, and have been build using the <tt style="white-space: nowrap;">Type: perl</tt> 
+directive, which stores the perl module's files in /sw/lib/perl5 and/or
+/sw/lib/perl5/darwin.  Under the new policy, this storage location is only 
+permitted for perl modules which are independent of the version of perl 
+being used to compile them.
+</p><p>
+The perl modules which are version-dependent are the so-called XS modules,
+which frequently contain compiled C code as well as pure perl routines.
+There are a number of ways of recognizing these, including the presence
+of a file with a suffix <tt style="white-space: nowrap;">.bundle</tt>.
+</p><p>
+A version-dependent perl module must be built using a versioned binary
+of perl, such as <tt style="white-space: nowrap;">perl5.6.0</tt>, and must store its files in
+versioned subdirectories of the standard perl directories, such as
+/sw/lib/perl5/5.6.0 and /sw/lib/perl5/5.6.0/darwin.  A new convention
+is being introducted of using the suffix <tt style="white-space: nowrap;">-pm560</tt> for
+a perl module of version 5.6.0.  Similar storage and naming conventions
+are in force for other versions of perl, which will soon include 
+perl 5.6.1 and perl 5.8.0.  
+</p><p>
+The new directive <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> automatically uses the
+versioned perl binary and stores the files in the correct subdirectories. 
+(This directive is available starting with version 0.13.0 of fink.)
+</p><p>
+It is permitted to create a <tt style="white-space: nowrap;">-pm</tt> package which is essentially
+a &quot;bundle&quot; package that loads the <tt style="white-space: nowrap;">-pm560</tt> variant or any
+others which may be exist.  This strategy is encouraged for existing
+Fink packages for XS modules, in order to provide a smooth upgrade path.
+</p><p>
+Effective with version 0.13.0 of fink, the <tt style="white-space: nowrap;">fink validate</tt>
+command when applied to a <tt style="white-space: nowrap;">.deb</tt> file will check to see if
+the fink package is an XS module which has been installed in a non-versioned 
+directory, and will issue a warning if so.
+</p>
+
+
+
 <h2><a name="fslayout">4 Filesystem Layout</a></h2>
 
 
@@ -897,7 +950,7 @@ order.</p>
 <p>In the <b>compile phase</b> the source is configured and
 compiled. Usually this means calling the <tt style="white-space: nowrap;">configure</tt> script
 with some parameters and then issuing a <tt style="white-space: nowrap;">make</tt> command. See the
-ConfigureScript field description for details.</p>
+CompileScript field description for details.</p>
 <p>In the <b>install phase</b> the package is installed to a temporary
 directory, /sw/src/root-gimp-1.2.1-1 (= %d). (Note the &quot;root-&quot; part.)
 All files that would normally be installed to /sw are installed in
@@ -977,6 +1030,10 @@ some directories in the InstallScript.
 <p>
 Finally since fink 0.9.5 there is type <tt style="white-space: nowrap;">perl</tt> which causes
 alternate default values for the compile and install scripts to be used. 
+Beginning in fink 0.13.0, there is a new variant of this type,
+<tt style="white-space: nowrap;">perl $version</tt>, where $version is a specific version of perl 
+consisting of three numbers separated by periods, e.g., 
+<tt style="white-space: nowrap;">perl 5.6.0</tt>.
 </p>
 </td></tr><tr valign="top"><td>License</td><td>
 <p>
@@ -1371,16 +1428,31 @@ compile the package. Normally the default is:
 make</pre>
 <p>
 This is appropriate for packages that use GNU autoconf.
-For packages with of type perl (as specified via the Type field),
+For packages with of type perl (as specified via the Type field)
+with the perl version not specified,
 the default instead is:
 </p>
-<pre>perl Makefile.PL PREFIX=\%p \
- INSTALLPRIVLIB=\%p/lib/perl5 \
- INSTALLARCHLIB=\%p/lib/perl5/darwin \
- INSTALLSITELIB=\%p/lib/perl5 \
- INSTALLSITEARCH=\%p/lib/perl5/darwin \
- INSTALLMAN1DIR=\%p/share/man/man1 \
- INSTALLMAN3DIR=\%p/share/man/man3
+<pre>perl Makefile.PL PREFIX=%p \
+ INSTALLPRIVLIB=%p/lib/perl5 \
+ INSTALLARCHLIB=%p/lib/perl5/darwin \
+ INSTALLSITELIB=%p/lib/perl5 \
+ INSTALLSITEARCH=%p/lib/perl5/darwin \
+ INSTALLMAN1DIR=%p/share/man/man1 \
+ INSTALLMAN3DIR=%p/share/man/man3
+make
+make test</pre>
+<p>If the type is <tt style="white-space: nowrap;">perl $version</tt> with the version specified
+(e.g., $version might be 5.6.0),
+then the default becomes:
+</p>
+<pre>perl$version Makefile.PL \
+ PERL=perl$version PREFIX=%p \
+ INSTALLPRIVLIB=%p/lib/perl5/$version \
+ INSTALLARCHLIB=%p/lib/perl5/$version/darwin \
+ INSTALLSITELIB=%p/lib/perl5/$version \
+ INSTALLSITEARCH=%p/lib/perl5/$version/darwin \
+ INSTALLMAN1DIR=%p/share/man/man1 \
+ INSTALLMAN3DIR=%p/share/man/man3
 make
 make test</pre>
 <p>
@@ -1396,7 +1468,11 @@ A boolean value, specific for perl module packages.
 If true, this will add code to the install, postrm and postinst
 scripts that maintains the .pod files provided by perl packages.
 This includes adding and removing the .pod date from the central
-<tt style="white-space: nowrap;">/sw/lib/perl5/darwin/perllocal.pod</tt> file
+<tt style="white-space: nowrap;">/sw/lib/perl5/darwin/perllocal.pod</tt> file.
+(If the type has been given as <tt style="white-space: nowrap;">perl $version</tt> with a
+specific version of perl such as 5.6.0,
+then these scripts are adapted to deal with the central .pod file
+<tt style="white-space: nowrap;">/sw/lib/perl5/$version/perllocal.pod</tt>.)
 </p>
 </td></tr><tr valign="top"><td>InstallScript</td><td>
 <p>
@@ -1408,15 +1484,26 @@ default is:
 <pre>make install prefix=%i</pre>
 <p>
 The default is appropriate for packages that use GNU autoconf.
-For packages with of type perl (as specified via the Type field),
+For packages with of type perl (as specified via the Type field)
+with the perl version not specified,
 the default instead is:
 </p>
-<pre>make install INSTALLPRIVLIB=\%i/lib/perl5 \
- INSTALLARCHLIB=\%i/lib/perl5/darwin \
- INSTALLSITELIB=\%i/lib/perl5 \
- INSTALLSITEARCH=\%i/lib/perl5/darwin \
- INSTALLMAN1DIR=\%i/share/man/man1 \
- INSTALLMAN3DIR=\%i/share/man/man3</pre>
+<pre>make install INSTALLPRIVLIB=%i/lib/perl5 \
+ INSTALLARCHLIB=%i/lib/perl5/darwin \
+ INSTALLSITELIB=%i/lib/perl5 \
+ INSTALLSITEARCH=%i/lib/perl5/darwin \
+ INSTALLMAN1DIR=%i/share/man/man1 \
+ INSTALLMAN3DIR=%i/share/man/man3</pre>
+<p>If the type is <tt style="white-space: nowrap;">perl $version</tt> with the version specified
+(e.g., $version might be 5.6.0),
+then the default becomes:
+</p>
+<pre>make install INSTALLPRIVLIB=%i/lib/perl5/$version \
+ INSTALLARCHLIB=%i/lib/perl5/$version/darwin \
+ INSTALLSITELIB=%i/lib/perl5/$version \
+ INSTALLSITEARCH=%i/lib/perl5/$version/darwin \
+ INSTALLMAN1DIR=%i/share/man/man1 \
+ INSTALLMAN3DIR=%i/share/man/man3</pre>
 <p>
 If the package supports it, it is preferably to use <tt style="white-space: nowrap;">make install
 DESTDIR=%d</tt> instead. Before the commands are executed, percent
@@ -1737,4 +1824,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.39 2003/03/01 01:03:59 fingolfin Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.46 2003/05/20 19:51:27 dmrrsn Exp $</i></p></body></html>

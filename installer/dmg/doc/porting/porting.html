@@ -378,12 +378,12 @@ happens to be the majority of libtool-using packages out there) need a
 patch to build shared libraries on Darwin.
 Apple includes a patched version of libtool 1.3.5 in Mac OS X, but it
 will not work correctly in most cases.
-I have improved that patch to hardcode the correct path and to do full
-versioning.
-The changes have been incorporated into upstream libtool releases and
+Christoph Pfisterer improved that patch to hardcode the correct path and to 
+do full versioning.
+The changes were incorporated into upstream libtool releases and
 development versions starting with 1.4.
-I continue to make improvements and forward them to the libtool
-maintainers.
+Members of the Fink team continue to make improvements and forward them to 
+the libtool maintainers.
 The versioning scheme is compatible across all libtool versions.
 </p>
 <p>
@@ -396,11 +396,13 @@ on Darwin when dlcompat is installed.
 
 <h3><a name="libtool.patch-135">3.2 The 1.3.5 Patch</a></h3>
 <p>
-After applying <a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">this
-patch</a> <b>[updated 2001-08-30]</b> to the libtool 1.3.5 source, you
-must delete the files ltconfig and ltmain.sh.
-They will be recreated from the appropriate .in files when you run
-configure and make.
+If you are building libtool 1.3.5 for yourself, you will need to apply
+<a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">this
+patch</a> <b>[updated 2002-06-09]</b> to the libtool 1.3.5 source and
+then delete the files ltconfig and ltmain.sh.
+(They will be recreated from the appropriate .in files when you run
+configure and make.)  This is done automatically, by the way, in the 
+current Fink package for libtool 1.3.5.</p><p>
 But that's only half the work - every package using libtool comes with
 its own copies of ltconfig and ltmain.sh.
 So you must replace these in every package that you want to build as a
@@ -409,7 +411,7 @@ Note that you must do this before running the configure script.
 For your convenience, you can get the two files right here:
 <a href="http://fink.sourceforge.net/files/ltconfig">ltconfig</a> (98K) and
 <a href="http://fink.sourceforge.net/files/ltmain.sh">ltmain.sh</a> (110K)
-<b>[both updated 2001-08-30]</b>.</p>
+<b>[both updated 2002-06-09]</b>.</p>
 
 
 <h3><a name="libtool.fixing-14x">3.3 Fixing 1.4.x</a></h3>
@@ -713,4 +715,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.xml,v 1.25 2003/01/02 15:29:21 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.xml,v 1.27 2003/04/26 17:21:23 dmrrsn Exp $</i></p></body></html>

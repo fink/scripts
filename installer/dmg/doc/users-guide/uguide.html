@@ -19,7 +19,7 @@ Package installation and maintenance is covered as well.
 </p>
 <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 What is Fink?</a></li><li><a href="#intro.req">1.2 Requirements</a></li><li><a href="#intro.supported-os">1.3 Supported Systems</a></li><li><a href="#intro.src-vs-bin">1.4 Source vs. Binary</a></li></ul></li><li><a href="#install"><b>2 First Time Installation</b></a><ul><li><a href="#install.bin">2.1 Installing the Binary Distribution</a></li><li><a href="#install.src">2.2 Installing the Source Distribution</a></li><li><a href="#install.setup">2.3 Setting Up Your Environment</a></li></ul></li><li><a href="#packages"><b>3 Installing Packages</b></a><ul><li><a href="#packages.x11">3.1 Getting X11 Sorted Out</a></li><li><a href="#packages.bin-dselect">3.2 Installing Binary Packages with
 dselect</a></li><li><a href="#packages.bin-apt">3.3 Installing Binary Packages with
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.4 Installing Dependent Packages that are Unvailable in the Binary Distribution</a></li><li><a href="#packages.src">3.5 Installing Packages from Source</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloding">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li></ul></li><li><a href="#usage"><b>6 Controlling Fink from the command line</b></a><ul><li><a href="#usage.using">6.1 Using Fink</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.4 Installing Dependent Packages that are Unvailable in the Binary Distribution</a></li><li><a href="#packages.src">3.5 Installing Packages from Source</a></li><li><a href="#packages.">3.6 Available versions</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloding">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li></ul></li><li><a href="#usage"><b>6 Controlling Fink from the command line</b></a><ul><li><a href="#usage.using">6.1 Using Fink</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 <h3><a name="intro.what">1.1 What is Fink?</a></h3>
@@ -260,7 +260,11 @@ When the bootstrap is finished, proceed with the
 To use the software installed in Fink's directory hierarchy, including
 the package management programs themselves, you must set your PATH
 environment variable (and some others) accordingly.
-Shell scripts are provided to make this easy.
+In most cases, you can do this via the command
+</p>
+<pre>open /sw/bin/pathsetup.command</pre>
+<p>
+However, if that doesn't work for some reason, try the following.
 If you use tcsh (the default on Mac OS X), add the following line to
 the file <tt style="white-space: nowrap;">.cshrc</tt> in your home directory:
 </p>
@@ -280,25 +284,28 @@ press Control-O, Return, Control-X to get out of the editor.
 </p>
 <p>There are a couple of common situations where you may need to edit additional files:</p>
 <ol>
-
-<li><p>You have a <tt style="white-space: nowrap;">~/.tcshrc</tt>.</p>
+<li>
+<p>You have a <tt style="white-space: nowrap;">~/.tcshrc</tt>.</p>
 <p>Such a file occasionally gets created by third-party applications, or 
 you may have done it yourself.
 In any case what will happen is that <tt style="white-space: nowrap;">~/.tcshrc</tt> gets read and 
 <tt style="white-space: nowrap;">~/.cshrc</tt> is ignored.
 The recommended procedure is to edit <tt style="white-space: nowrap;">~/.tcshrc</tt> in a similar 
 manner to how you edited
-<tt style="white-space: nowrap;">~/.cshrc</tt> above, and add the following line at the end 
-(replace 
-&quot;/Users/you&quot; with your actual home
-directory):</p>
-<pre>source /Users/you/.cshrc</pre>
-<p>That way, if you ever need to remove <tt style="white-space: nowrap;">~/.tcshrc</tt>, you will be able to run Fink.</p></li>
-
-<li><p>You followed the instructions under <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
-<p>These instructions tell you to create a <tt style="white-space: nowrap;">~/.tcshrc</tt> and a<tt style="white-space: nowrap;"> ~/.login</tt> .  The problem in this case is with <tt style="white-space: nowrap;">~/.login</tt>, which gets run after <tt style="white-space: nowrap;">~/.tcshrc</tt>, and sources <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  The latter contains a line that overwrites your previous PATH setup.  What you should do in this case is modify <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt> (create it if necessary), and add (once again, replace &quot;/Users/you&quot; with your actual home directory):</p> 
-<pre>source /Users/you/.cshrc</pre>
-<p>to it.</p></li>
+<tt style="white-space: nowrap;">~/.cshrc</tt> above, and add the following line at the end:</p>
+<pre>source ~/.cshrc</pre>
+<p>That way, if you ever need to remove <tt style="white-space: nowrap;">~/.tcshrc</tt>, you will be able to run Fink.</p>
+</li>
+<li>
+<p>You followed the instructions under <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
+<p>These instructions tell you to create a <tt style="white-space: nowrap;">~/.tcshrc</tt> and a<tt style="white-space: nowrap;"> ~/.login</tt> .  The problem in this case is with <tt style="white-space: nowrap;">~/.login</tt>, which gets run after <tt style="white-space: nowrap;">~/.tcshrc</tt>, and sources <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  The latter contains a line that overwrites your previous PATH setup.  What you should do in this case is create <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>:</p>
+<pre>mkdir ~/Library/init
+mkdir ~/Library/init/tcsh
+pico ~/library/init/tcsh/path</pre>
+<p>and put:</p>
+<pre>source ~/.cshrc</pre>
+<p>in it.  You should also modify your .tcshrc as in item 1 above, to make sure that your PATH is set correctly for situations where <tt style="white-space: nowrap;">~/.login</tt> doesn't get read.</p>
+</li>
 </ol>
 <p>
 Editing .cshrc (and other startup files) will only affect new shells (i.e. newly opened Terminal
@@ -555,6 +562,31 @@ If you run into errors during that process, please first check the
 <a href="http://fink.sourceforge.net/faq/">FAQ</a>.
 </p>
 
+<h3><a name="packages.">3.6 Available versions</a></h3>
+
+<p>When you want to install a package, you should first check the <a href="http://fink.sourceforge.net/pdb/index.php">package database</a> and see if it is available at all through Fink.  The available version(s) of the package will be shown in the following fields:</p>
+<ul>
+<li>
+<p>
+<b>In 0.4.1-stable:</b>  this is the latest version that can be installed from binaries for OS 10.1 only.</p>
+</li>
+<li>
+<p>
+<b>In 0.5.3-stable:</b>  this is the latest version that can be installed from binaries for OS 10.2 .  If you don't see this version of the package as available,  you probably need to <a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php">upgrade</a> Fink.</p>
+</li>
+<li>
+<p>
+<b>In current-stable:</b>  this is the most recent stable version that can be installed from source (for OS 10.2).  To be able to install this version, you'll need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS access</a>.</p>
+<p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see below).  Enabling CVS gives you access to new stable versions of packages before the binary distribution is updated. 
+</p>
+</li>
+<li>
+<p>
+<b>In latest-unstable:</b>  This is the latest unstable version that can be installed from source.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstahle packages.</p>
+<p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
+</p></li>
+</ul>
+
 <h2><a name="upgrade">4 Upgrading Fink</a></h2>
 
 
@@ -611,6 +643,9 @@ CVS is a version-controlled repository where the package descriptions
 are stored and managed.
 Using CVS has the advantage that it is updated continuously.
 </p>
+<p>(If you are having trouble upgrading a source installation, consult
+<a href="http://fink.sourceforge.net/download/fix-upgrade.php">these
+special instructions</a>.)</p>
 <p>
 If you have a version of Fink older than 0.2.5, you must download the
 package descriptions manually.
@@ -923,8 +958,8 @@ fill your hard-disk quickly!</b>
 <h2><a name="usage">6 Controlling Fink from the command line</a></h2>
 
 
-
 <h3><a name="usage.using">6.1 Using Fink</a></h3>
+
 <p>Fink has several commands that work on packages. All of them need at
 least one package name, and all can handle several package names at
 once. You can specify just the package name (e.g. gimp), or a fully
@@ -933,8 +968,8 @@ gimp-1.2.1-3). Fink will automatically choose the latest available
 version and revision when they are not specified.</p>
 <p>What follows is a list of commands that Fink understands:</p>
 
-
 <h3><a name="usage.install">6.2 install</a></h3>
+
 <p>The install command is used to install packages. It downloads,
 configure, builds and installs the packages you name. It will also
 install required dependencies automatically, but will ask you for
@@ -949,8 +984,8 @@ Do you want to continue? [Y/n]</pre>
 <p>Aliases for the install command: update, enable, activate, use (most
 of these for historic reasons).</p>
 
-
 <h3><a name="usage.remove">6.3 remove</a></h3>
+
 <p>The remove command removes packages from the system by calling 'dpkg
 --remove'. The current implementation has some flaws: It only works on
 packages Fink knows about (i.e. where an .info file is present); and it
@@ -963,14 +998,14 @@ again. If you need the disk space, you can remove the .deb from the
 /sw/fink/dists tree.</p>
 <p>Aliases: disable, deactivate, unuse, delete.</p>
 
-
 <h3><a name="usage.update-all">6.4 update-all</a></h3>
+
 <p>This command updates all installed packages to the latest version. It
 does not need a package list, so you just type:</p>
 <pre>fink update-all</pre>
 
-
 <h3><a name="usage.list">6.5 list</a></h3>
+
 <p>
 This command produces a list of available packages, listing
 installation status, the latest version and a short description.
@@ -1029,8 +1064,8 @@ The quotes in the last example are necessary to stop the shell from
 interpreting the pattern itself.
 </p>
 
-
 <h3><a name="usage.apropos">6.6 apropos</a></h3>
+
 <p>
 This command behaves almost identical to <tt style="white-space: nowrap;">fink list</tt>. The most
 notable difference is that <tt style="white-space: nowrap;">fink apropos</tt> also searches
@@ -1042,8 +1077,8 @@ fink apropos irc          - list all packages for which 'irc' occurs in the name
 fink apropos -s=kde irc   - the same as above, but restricted to packages from the kde section
 </pre>
 
-
 <h3><a name="usage.describe">6.7 describe</a></h3>
+
 <p>
 This command displays a description of the package you name on the
 command line.
@@ -1054,23 +1089,23 @@ description.
 Aliases: desc, description, info
 </p>
 
-
 <h3><a name="usage.fetch">6.8 fetch</a></h3>
+
 <p>Downloads the named packages, but does not install it. This command
 will download the tarballs even if they were downloaded before.</p>
 
-
 <h3><a name="usage.fetch-all">6.9 fetch-all</a></h3>
+
 <p>Downloads <b>all</b> package source files. Like fetch, this downloads the
 tarballs even when they were downloaded before.</p>
 
-
 <h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
+
 <p>Downloads <b>all</b> package source files. This command will only download
 files that are not present on the system.</p>
 
-
 <h3><a name="usage.build">6.11 build</a></h3>
+
 <p>Builds a package, but does not install it. As usual, the source
 tarballs are downloaded if they can not be found. The result of this
 command is an installable .deb package file, which you can quickly
@@ -1078,30 +1113,30 @@ install later with the install command. This command will do nothing
 if the .deb already exists. Note that dependencies are still
 <b>installed</b>, not just built.</p>
 
-
 <h3><a name="usage.rebuild">6.12 rebuild</a></h3>
+
 <p>Builds a package (like the build command), but ignores and overwrites
 the existing .deb file. If the package is installed, the newly created
 .deb file will also be installed in the system via dpkg. Very useful
 during package development.</p>
 
-
 <h3><a name="usage.reinstall">6.13 reinstall</a></h3>
+
 <p>Same as install, but will install the package via dpkg even when it is
 already installed. You can use this when you accidentally deleted
 package files or changed configuration files and want to get the
 default settings back.</p>
 
-
 <h3><a name="usage.configure">6.14 configure</a></h3>
+
 <p>
 Reruns the Fink configuration process.
 This will let you change your mirror sites and proxy settings, among
 others.
 </p>
 
-
 <h3><a name="usage.selfupdate">6.15 selfupdate</a></h3>
+
 <p>
 	This command automates the process of upgrading to a new Fink
 	release. It checks the Fink website to see if a new version is
@@ -1112,15 +1147,15 @@ others.
 	will be able to access the very latest revisions of all packages.
 </p>
 
-
 <h3><a name="usage.index">6.16 index</a></h3>
+
 <p>
    Rebuilds the package cache. You should not normally need to execute
    this manually, as fink should auto-detect when it needs to be updated.
 </p>
 
-
 <h3><a name="usage.validate">6.17 validate</a></h3>
+
 <p>
    This command performs various checks on .info and .deb files. Package
    maintainers should run this on their package descriptions and
@@ -1130,30 +1165,28 @@ others.
    Aliases: check
 </p>
 
-
 <h3><a name="usage.scanpackages">6.18 scanpackages</a></h3>
+
 <p>
    Calls dpkg-scanpackages(8) with the specified trees.
 </p>
 
-
 <h3><a name="usage.checksums">6.19 checksums</a></h3>
+
 <p>
    Validates the MD5 digest of all tarballs in <tt style="white-space: nowrap;">/sw/src</tt>, where possible.
 </p>
 
-
 <h3><a name="usage.cleanup">6.20 cleanup</a></h3>
+
 <p>
    Removes obsolete package files (.info, .patch, .deb) if newer versions are available. 
    This can reclaim large amounts of disk space.
 </p>
-
-
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.xml,v 1.19 2003/04/09 23:52:04 fingolfin Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.xml,v 1.24 2003/05/18 03:20:07 alexkhansen Exp $</i></p></body></html>

@@ -357,7 +357,7 @@ initial &quot;<tt style="white-space: nowrap;">#!/bin/sh</tt>&quot;, but before 
 <p>Applications that require calling other programs under /sw for some of their functions need special treatment to get them to work when called from the Application menu.  Instead of putting just the full path to the filename, e.g.</p>
 <pre>/sw/bin/emacs</pre>
 <p>you'll want to use something like the following:</p>
-<pre>./sw/bin/init.sh ; emacs</pre>
+<pre>. /sw/bin/init.sh ; emacs</pre>
 <p>This makes sure that the application has the correct PATH information.  You can use this syntax for any Fink-installed application.</p>
 </li>
 </ul>
@@ -655,18 +655,18 @@ xinit will still know how to run it through a shell.
 <p>
 When there is no <tt style="white-space: nowrap;">.xinitrc</tt> file in your home
 directory, XFree86 will use its default file,
-<tt style="white-space: nowrap;">/usr/X11R6/lib/X11/xinit/xinitrc</tt>.
+<tt style="white-space: nowrap;">/private/etc/xinit/xinitrc</tt>.
 You can use the default file as a starting point for your own
 .xinitrc:
 </p>
-<pre>cp /usr/X11R6/lib/X11/xinit/xinitrc ~/.xinitrc</pre>
+<pre>cp /private/etc/xinit/xinitrc ~/.xinitrc</pre>
 <p>
 If you're using Fink, you should source <tt style="white-space: nowrap;">init.sh</tt>
 right at the beginning to make sure the environment is set up correctly.
 </p>
 <p>
 You can put fairly arbitrary commands in an <tt style="white-space: nowrap;">.xinitrc</tt>,
-but there are some cheavats.
+but there are some caveats.
 First, the shell that interprets the file will by default wait for
 every program to finish before it starts the next one.
 If you want several programs to run in parallel, you must tell the
@@ -1218,4 +1218,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.29 2003/04/12 22:14:08 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.35 2003/06/19 12:11:07 dmrrsn Exp $</i></p></body></html>
