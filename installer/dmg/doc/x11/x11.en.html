@@ -676,7 +676,7 @@ You can use the default file as a starting point for your own
 </p>
       <pre>cp /private/etc/X11/xinit/xinitrc ~/.xinitrc</pre>
       <p>
-If you're using Fink, you should source <tt style="white-space: nowrap;">init.sh</tt> (if you use bash shell) or <tt style="white-space: nowrap;">init.csh</tt> (if you use tcsh shell) right at the beginning to make sure the environment is set up correctly.
+If you're using Fink, you should source <tt style="white-space: nowrap;">init.sh</tt> right at the beginning to make sure the environment is set up correctly.
 </p>
       <p>
 You can put fairly arbitrary commands in an <tt style="white-space: nowrap;">.xinitrc</tt>,
@@ -705,10 +705,6 @@ A simple example that starts up GNOME:
 </p>
       <pre>. /sw/bin/init.sh
 exec gnome-session</pre>
-      <p>for bash users and:</p>
-       <pre>source /sw/bin/init.csh
-exec gnome-session</pre>
-<p>for tcsh users.</p>
 <p>A more complex example for bash users that turns the X11 bell off, starts some clients and finally executes the Enlightenment window manager:</p>
       <pre>. /sw/bin/init.sh
 
@@ -719,28 +715,23 @@ xterm &amp;
 xterm &amp;
 
 exec enlightenment</pre>
-<p>For tcsh users, just change the first line to:</p>
-      <pre>source /sw/bin/init.csh</pre>
  <p>To start GNOME 2.2 under Apple's X11, use the following sequence:</p>    
  <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 metacity &amp;
 exec gnome-session
 </pre> 
-<p>Note: same change on the first line for tcsh users as stated above.</p>
 <p>To start GNOME 2.4 under Apple's X11, metacity is started up automatically, so the sequence is:</p>    
  <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 exec gnome-session
 </pre> 
-<p>Note: same change on the first line for tcsh users as stated above.</p>
 <p>To start KDE 3.2 (version &lt; 3.2.2-21) under Apple's X11</p>
 <pre>. /sw/bin/init.sh
 export KDEWM=kwin
 quartz-wm --only-proxy &amp;
 /sw/bin/startkde &gt;/tmp/kde.log 2&gt;&amp;1
 </pre>
-<p>Note: same change on the first line for tcsh users as stated above.</p>
 <p>And finally to start the latest unstable version of KDE under Apple's X11:</p>
 <pre>. /sw/bin/init.sh
 /sw/bin/startkde &gt;/tmp/kde.log 2&gt;&amp;1

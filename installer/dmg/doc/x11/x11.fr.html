@@ -468,7 +468,7 @@ Vous pouvez vous servir de ce fichier comme base pour votre propre fichier .xini
 </p>
       <pre>cp /private/etc/X11/xinit/xinitrc ~/.xinitrc</pre>
       <p>
-Si vous utilisez Fink, vous devez sourcer <tt style="white-space: nowrap;">init.sh</tt> (si vous utilisez le shell bash) ou <tt style="white-space: nowrap;">init.csh</tt> (si vous utilisez le shell tcsh) en début de fichier pour garantir une définition corrrecte de votre environnement.
+Si vous utilisez Fink, vous devez sourcer <tt style="white-space: nowrap;">init.sh</tt> en début de fichier pour garantir une définition corrrecte de votre environnement.
 </p>
       <p>
 Vous pouvez mettre à peu près n'importe quelle commande dans un fichier <tt style="white-space: nowrap;">.xinitrc</tt>, mais il faut tenir compte des éléments suivants.
@@ -488,10 +488,6 @@ En fait, la plupart des gestionnaires de fenêtres partent du principe que <tt s
 </p>
       <pre>. /sw/bin/init.sh
 exec gnome-session</pre>
-      <p>pour les utilisateurs de bash et :</p>
-       <pre>source /sw/bin/init.csh
-exec gnome-session</pre>
-<p>pour les utilisateurs de tcsh.</p>
 <p>Exemple plus complexe pour les utilisateurs de bash qui suppriment les alertes X11, lance un certain nombre de clients et le gestionnaire de fenêtres Enlightenment :</p>
       <pre>. /sw/bin/init.sh
 
@@ -502,28 +498,23 @@ xterm &amp;
 xterm &amp;
 
 exec enlightenment</pre>
-<p>Les utilisateurs de tcsh doivent changer la première ligne de la manière suivante :</p>
-      <pre>source /sw/bin/init.csh</pre>
- <p>Pour démarrer GNOME 2.2 sous X11 d'Apple, utilisez les commandes suivantes :</p>    
+<p>Pour démarrer GNOME 2.2 sous X11 d'Apple, utilisez les commandes suivantes :</p>    
  <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 metacity &amp;
 exec gnome-session
 </pre> 
-<p>Note : même changement sur la première ligne pour les utilisateurs de tcshs que celle indiquée ci-dessus.</p>
 <p>Pour GNOME 2.4 sous X11 d'Apple, metacity est lancée automatiquement, les commandes sont donc réduiteq à :</p>    
  <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 exec gnome-session
 </pre> 
-<p>Note : même changement sur la première ligne pour les utilisateurs de tcshs que celle indiquée ci-dessus.</p>
 <p>Pour lancer KDE 3.2 (version &lt; 3.2.2-21) sous X11 d'Apple :</p>
 <pre>. /sw/bin/init.sh
 export KDEWM=kwin
 quartz-wm --only-proxy &amp;
 /sw/bin/startkde &gt;/tmp/kde.log 2&gt;&amp;1
 </pre>
-<p>Note : même changement sur la première ligne pour les utilisateurs de tcshs que celle indiquée ci-dessus.</p>
 <p>Et enfin pour lancer la toute dernière version de KDE sous X11 d'Apple :</p>
 <pre>. /sw/bin/init.sh
 /sw/bin/startkde &gt;/tmp/kde.log 2&gt;&amp;1
