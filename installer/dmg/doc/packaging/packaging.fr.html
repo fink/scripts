@@ -22,7 +22,7 @@ Les informations contenues dans ce document correspondent à la description du f
 Si vous créez des paquets pour Fink, vous avez tout intérêt à vous abonner à la liste de diffusion <a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a>.
 Si vous cherchez un moyen d'aider Fink et que vous avez des compétences dans ce domaine, vous pouvez aussi adopter un <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">paquet sans mainteneur</a>.
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Modules Perl</a></li><li><a href="#policy.emacs">3.5 Règles Emacs</a></li></ul></li><li><a href="#fslayout"><b>4 Organisation des fichiers</b></a><ul><li><a href="#fslayout.fhs">4.1 Hiérarchie standard des fichiers</a></li><li><a href="#fslayout.dirs">4.2 Répertoires</a></li><li><a href="#fslayout.avoid">4.3 À éviter</a></li></ul></li><li><a href="#reference"><b>5 Référence</b></a><ul><li><a href="#reference.build">5.1 Construction d'un paquet</a></li><li><a href="#reference.fields">5.2 Fields</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Modules Perl</a></li><li><a href="#policy.emacs">3.5 Règles Emacs</a></li></ul></li><li><a href="#fslayout"><b>4 Organisation des fichiers</b></a><ul><li><a href="#fslayout.fhs">4.1 Hiérarchie standard des fichiers</a></li><li><a href="#fslayout.dirs">4.2 Répertoires</a></li><li><a href="#fslayout.avoid">4.3 À éviter</a></li></ul></li><li><a href="#reference"><b>5 Référence</b></a><ul><li><a href="#reference.build">5.1 Construction d'un paquet</a></li><li><a href="#reference.fields">5.2 Champs</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -651,42 +651,41 @@ Aucun autre répertoire que ceux mentionnés ci-dessus ne doit être créé dans
 <p>Lors de la <b>phase de construction</b>, un fichier binaire (.deb) est construit à partir du répertoire temporaire. On ne peut agir directement sur cette étape, néanmoins différentes informations issues de la description du paquet sont utilisées afin de générer un fichier de  <tt style="white-space: nowrap;">contrôle</tt> pour dpkg.</p>
 
 
-<h3><a name="reference.fields">5.2 Fields</a></h3>
+<h3><a name="reference.fields">5.2 Champs</a></h3>
 
-<p>We have divided the list of fields into several categories. The list of fields is not necessarily complete. <tt style="white-space: nowrap;">:-)</tt></p>
-<p><b>Initial Data:</b></p>
+<p>Nous avons classé les champs en plusieurs catégories. Cette liste n'est pas forcément exhaustive. <tt style="white-space: nowrap;">:-)</tt></p>
+<p><b>Données initiales :</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Package</td><td>
 <p>
-The package name. May contain lowercase letters, numbers and the special characters '.', '+' and '-'. No underscores ('_'), no capital letters. Required field.
+Nom du paquet. Peut contenir des minuscules, des nombres ou les caractères spéciaux suivants : '.', '+' et '-'. Pas de trait de soulignement ('_'), ni de majuscules. Champ obligatoire.
 </p>
-<p>Percent expansion is applied to this field for %N, %Ni, %type_raw[], and %type_pkg[] only.</p>
+<p>Seuls les raccourcis %N, %Ni, %type_raw[] et %type_pkg[] sont applicables à ce champ.</p>
 <p>
-As per Fink packaging policy, a given package must always compile with the same options enabled. If you have multiple variants for a package (see documentation for the <tt style="white-space: nowrap;">Type</tt> field), you must encode the specific variant info into the <tt style="white-space: nowrap;">Package</tt> field (see documentation for the %type_pkg[] percent expansion). That way each variant has a unique name the package name indicates which variant option(s) are included. Note that use of the %type_pkg[] and %type_raw[] percent expansions in the <tt style="white-space: nowrap;">Package</tt> field is new and severely incompatible with older versions of fink, so such package descriptions must be embedded in a <tt style="white-space: nowrap;">InfoN</tt> field with N&gt;=2.
+Selon les règles de Fink, un paquet donné doit toujours être compilé avec les mêmes options activées. Si un paquet peut avoir plusieurs variantes (voir la documentation sur le champ <tt style="white-space: nowrap;">Type</tt>), vous devez encoder les informations concernant la variante dans le champ <tt style="white-space: nowrap;">Package</tt> (voir la documentation sur le raccourci  %type_pkg[]). De cette façon, chaque variante possèdera un nom unique. Le nom du paquet indique quelles variantes sont incluses. Notez que l'usage des raccourcis %type_pkg[] et %type_raw[] dans le nom du paquet est récent et grandement incompatible avec les anciennes versions de fink ; les descriptions de ces paquets doivent être insérés dans un champ <tt style="white-space: nowrap;">InfoN</tt> avec N&gt;=2.
 </p>
 </td></tr><tr valign="top"><td>Version</td><td>
 <p>
-The upstream version number. Same limitations as the Package field. Required field.
-</p>
+Le numéro de version en amont. Même limitations que pour champ Package. Champ obligatoire.</p>
 </td></tr><tr valign="top"><td>Revision</td><td>
 <p>
-The package revision. Increase this when you make a new description for the same upstream version. Revision numbers start at 1. Required field.
+Le numéro de révision du paquet. Incrémentez ce numéro quand vous faites une nouvelle description pour la même version en amont. Les numéros de révision commencent à 1. Champ obligatoire.
 </p>
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p>
-<b>Introduced in fink 0.12.0.</b>
-This optional field can be used to specify the epoch of the package (which defaults to 0 if not specified). For more information refer to the <a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version">Debian Policy Manual</a>.
+<b>Introduit à partir de fink 0.12.0.</b>
+Ce champ facultatif peut être utilisé pour spécifier l'ère du paquet (défaut 0 si ce champ n'est pas renseigné). Pour de plus amples informations, voir <a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version">Debian Policy Manual</a>.
 </p>
 </td></tr><tr valign="top"><td>Description</td><td>
 <p>
-A short description of the package (what is it?). This is a one-line description that will be displayed in lists, so it must be short and informative. It should be less than 45 chars and must be less than 60. It is not necessary to repeat the package name in this field - it will always be displayed in proper context. Required field.
+Courte description du paquet (répond à la question qu'est-ce c'est ?). C'est une description d'une ligne qui est affichée sous forme de liste, elle doit donc être courte et bien ciblée. Elle peut avoir moins de 45 caractères, mais ne peut dépasser 60 caractères. Il n'est pas nécessaire d'indiquer le nom du paquet, il sera affiché de toute façon. Champ obligatoire.
 </p>
 </td></tr><tr valign="top"><td>Type</td><td>
 <p>
-This can be set to <tt style="white-space: nowrap;">bundle</tt>. Bundle packages are used to group a set of related packages together. They only have dependencies, but no code and no installed files. The fields Source, PatchScript, CompileScript, InstallScript and related ones are ignored for bundle packages.
+Peut être <tt style="white-space: nowrap;">bundle</tt>. Les paquets lots sont utilisés pour regrouper plusieurs paquets. Ils n'ont que des dépendances, mais ni code ni fichiers installés. Les champs Source, PatchScript, CompileScript, InstallScript et ceux qui leur sont liés sont ignorés pour ce type de paquets.
 </p>
 <p>
-<tt style="white-space: nowrap;">nosource</tt> is a very similar type.
-It indicates that there is no source tarball, so nothing is fetched and the unpack phase creates just an empty directory. However, the patch, compile and install phases are executed normally. This way you can bring in all the code with a patch, or just create some directories in the InstallScript. Since fink 0.18.0, you can get the same behavior by setting <tt style="white-space: nowrap;">Source: none</tt>. This allows you to use "Type" for other purposes (<tt style="white-space: nowrap;">Type: perl</tt>, etc.)
+<tt style="white-space: nowrap;">nosource</tt> est un type très voisin.
+Il sert à indiquer qu'il n'y a pas d'archive tar source. Rien n'est téléchargé et la phase de décompression crée simplement un répertoire vide. Néanmoins, les phases d'application de rustine, de compilation et d'installation sont exécutées normalement. De cette façon, on peut incorporer tout le code avec une rustine, ou créer quelques répertoires avec InstallScript. À partir de la version 0.18.0 de fink, on peut utiliser <tt style="white-space: nowrap;">Source: none</tt> pour obtenir le même résultat. Ceci permet d'utiliser "Type" pour d'autres usages (<tt style="white-space: nowrap;">Type: perl</tt>, etc...).
 </p>
 <p>
 Since fink 0.9.5 there is type <tt style="white-space: nowrap;">perl</tt> which causes alternate default values for the compile and install scripts to be used.  Beginning in fink 0.13.0, there is a new variant of this type, <tt style="white-space: nowrap;">perl $version</tt>, where $version is a specific version of perl consisting of three numbers separated by periods, e.g., 
@@ -1245,4 +1244,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.17 2004/04/19 21:34:28 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.18 2004/04/19 22:20:26 michga Exp $</i></p></body></html>
