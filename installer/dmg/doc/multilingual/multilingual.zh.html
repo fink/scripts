@@ -1,0 +1,640 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Fink 国际化(i18n) 指南</title></head><body><h1 style="text-align: center;">Fink 国际化(i18n) 指南</h1>
+    <p><b>这是一份这在编写中的文档。</b></p>
+
+    <p>欢迎阅读 Fink 网站国际化指南。
+    本文档的编写目录目的是给那些希望帮助 Fink 网站的国际工作的人提供一个工作指引。</p>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.what">1.1 现在 Fink 网站的国际化工作进展如何？</a></li><li><a href="#intro.languages">1.2 语言</a></li><li><a href="#intro.organization">1.3 组织</a></li><li><a href="#intro.helping">1.4 提供帮助。</a></li></ul></li><li><a href="#files"><b>2 文档文件</b></a><ul><li><a href="#files.requirements">2.1 需求</a></li><li><a href="#files.setting-up">2.2 环境设置</a></li><li><a href="#files.acquiring">2.3 获取需要翻译的文件。</a></li><li><a href="#files.file-standards">2.4 文件格式</a></li><li><a href="#files.updating">2.5 更新到最新修订版</a></li><li><a href="#files.initial-translation">2.6 初始翻译</a></li><li><a href="#files.check-work">2.7 检查你的工作</a></li><li><a href="#files.change-checkout">2.8 当你获得提交修改的权限（团队领导）</a></li><li><a href="#files.committing">2.9 提交修改（团队领导）</a></li><li><a href="#files.website">2.10 更新我们的网站</a></li></ul></li><li><a href="#procedure"><b>3 更新文档的流程</b></a><ul><li><a href="#procedure.new-translation">3.1 新翻译作品</a></li><li><a href="#procedure.doc-updates">3.2 内容更新</a></li><li><a href="#procedure.call-to-translate">3.3 通知进行翻译</a></li><li><a href="#procedure.translate">3.4 翻译</a></li><li><a href="#procedure.activation">3.5 激活修改</a></li></ul></li><li><a href="#resources"><b>4 附加的资源</b></a><ul><li><a href="#resources.resources">4.1 重要链接</a></li><li><a href="#resources.editors">4.2 编辑器</a></li><li><a href="#resources.moretools">4.3 一些有用的工具</a></li></ul></li><li><a href="#appendix"><b>5 附录</b></a><ul><li><a href="#appendix.cvs-codes">5.1 CVS 代号。</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+    
+
+    
+
+    <h3><a name="intro.what">1.1 现在 Fink 网站的国际化工作进展如何？</a></h3>
+      
+
+      <p>Fink 项目已经付出了很多努力来为它的网站添加完全的国际化支持，使得它的网站可以被全球的人所利用。
+      感谢马场美彦先生的工作，现在已经有了一个可以支持多语言的网页架构。</p>
+    
+
+    <h3><a name="intro.languages">1.2 语言</a></h3>
+      
+
+      <p>我们现在有志愿者在进行提供下面语言的工作：</p>
+
+      <ul>
+        <li>丹麦语</li>
+
+        <li>荷兰语</li>
+
+        <li>英语 (文档的基准语言)</li>
+
+        <li>法语</li>
+
+        <li>德语</li>
+
+        <li>意大利语</li>
+
+        <li>日语</li>
+
+        <li>西班牙语</li>
+
+        <li>简体中文</li>
+      </ul>
+    
+
+    <h3><a name="intro.organization">1.3 组织</a></h3>
+      
+
+      <p>i18n 团队的组织架构图可以在<a href="http://micmacfr.homeunix.org/web/organisation/">这里</a>获得。</p>
+    
+
+    <h3><a name="intro.helping">1.4 提供帮助。</a></h3>
+      
+
+      <p>如果你愿意给我们的国际化工作提供帮助，下面有几件事情是你可以做的：</p>
+
+      <ul>
+        <li>参加<a href="http://fink.sourceforge.net/lists/fink-i18n.php">fink-i18n 邮件列表</a>的讨论。
+        这是我们讨论国际化的机制，发布文档更新的通知的地方。</li>
+
+        <li>检查你的语言的翻译版本。你可能会发现一个比我们的更好的译法，发现一个翻译错误，或者其它可能。</li>
+
+        <li>成为一个翻译者。如果你的语言当前还没有(或者即使已经有了)，而你有认为你能够提供一个有效的翻译，那么你可以考虑成为你自己语言的一个志愿翻译者。
+        <p>不过请注意，如果你是你语言的第一个翻译者，那么在一开始的时候，你会有不少的文件需要翻译。
+        做完这些以后，后面的通常就是一些小的修改。</p></li>
+      </ul>
+    
+  <h2><a name="files">2 文档文件</a></h2>
+    
+
+    
+
+    
+      <p>本章的目的是对 Fink 的文档文件进行介绍，如何去访问它们，如何把你的修改通知 Fink 网站以及如何激活你的修改。</p>
+    
+
+    <h3><a name="files.requirements">2.1 需求</a></h3>
+      
+
+      <p>要作为翻译团队的一员，开始对文档的翻译，你需要：</p>
+
+      <ul>
+        <li>一个 CVS 客户端软件。用于从 Fink 网站下载网页的 xml 文件树。</li>
+
+        <li>一个 UTF-8 兼容的纯文本编辑器──专门的 XML 编辑器会更好，因为 Fink 网站的许多文件都是从 XML 文件生成的。</li>
+
+        <li>Fink 网页 xml 文件树的签出版本，如下面<a href="#files.acquiring">指南</a>的介绍。</li>
+
+        <li>关译 Fink 的实践只是会是有益的。</li>
+      </ul>
+
+      <p><b>附注：</b>“团队成员”定义为负责翻译但不对最终上载文件到 Fink 站点负责的人。</p>
+
+      <p>团队领导必需符合上述要求，同时要：</p>
+
+      <ul>
+        <li>有一个 SourceForge 帐号(免费注册)</li>
+
+        <li>对 Fink 文档树的修改权限。
+        要获取这个权限，发一份邮件到 fink-18n 邮件列表，提供你的 SourceForge 用户名。
+        i18n 核心团队的一位成员会为你安排对文档部分 CVS 提交修改的权限事宜。</li>
+      </ul>
+
+      <p><b>附注：</b>“团队领导”在这里定义为负责实际上传修改过的文件到 Fink 网站，并激活有关修改的一个团队成员。</p>
+    
+
+    <h3><a name="files.setting-up">2.2 环境设置</a></h3>
+      
+
+      <p>你也许会希望事先设置好一些环境。
+      下面的讨论假设你在使用 Mac OS X 或其它类 Unix 系统的内置命令行工具。</p>
+
+      <ol>
+        <li><b>仅对团队领导</b>：修改你的登录文件添加一个 CVS_RSH 环境变量。
+        <ol>
+            <li>如果你使用的是 <tt style="white-space: nowrap;">bash</tt> 或 <tt style="white-space: nowrap;">zsh</tt> 添加下面一行：
+            <pre>export CVS_RSH=ssh</pre>
+            到你的 <tt style="white-space: nowrap;">.profile</tt> 文件中。</li>
+
+            <li>如果你正在使用 <tt style="white-space: nowrap;">tcsh</tt>，添加下面一行：
+            <pre>setenv CVS_RSH ssh</pre>
+            到你的 <tt style="white-space: nowrap;">.cshrc</tt> 文件中。
+            <p>这会告诉 <tt style="white-space: nowrap;">cvs</tt> 程序使用 ssh 来下载文件。
+            这个步骤是必需的。</p></li>
+          </ol></li>
+
+        <li><b>对所有成员</b>：在你的主目录中创建一个称为 <tt style="white-space: nowrap;">.cvsrc</tt> 的文件，里面包括下面一行：
+        <pre>cvs -z3</pre>
+        这样，CVS 会默认使用第三级的压缩（这是个好东西！）。
+        </li>
+      </ol>
+
+      <p>这样做完以后，你需要重新开启一个新的终端窗口以使得你的 CVS_RSH 环境变量生效。</p>
+    
+
+    <h3><a name="files.acquiring">2.3 获取需要翻译的文件。</a></h3>
+      
+
+      <p>现在，你需要签出网站的 xml 分支：</p>
+
+      <ol>
+        <li>打开终端窗口</li>
+
+        <li>创建一个你打算保存 Fink 网页文件树 XML 分支的目录，比如：
+        <pre>mkdir -p ~/Documents/Fink-i18n</pre></li>
+
+        <li>进入这个目录：
+        <pre>cd ~/Documents/Fink-i18n</pre></li>
+
+        <li><b>对于非团队领导的成员（或仍在等待修改许可的团队领导）：
+        </b>以匿名方式登录 cvs.sourceforge.net：<ol>
+            <li><pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink login</pre></li>
+
+            <li>按回车键（匿名方式不需要密码）</li>
+
+            <li>签出 xml 模块：
+            <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co xml</pre></li>
+          </ol><b>对团队领导：</b>用你的用户帐号来签出：<ol>
+            <li>你不需要上面的登录步骤，而直接：
+            <pre>cvs -d:ext:yourusername@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
+            其中 <b>yourusername</b> 是你的 SourceForge 用户名。</li>
+
+            <li>这时，在提示输入密码的时候，你需要输入你的 SourceForge 用户密码。你也许会得到一个服务器的 DSA 密钥不能识别的警告信息，回答 yes 就可以了。</li>
+          </ol></li>
+      </ol>
+    
+
+    <h3><a name="files.file-standards">2.4 文件格式</a></h3>
+      
+
+      <p>作为一个翻译者，你需要处理两种格式的文件：</p>
+
+      <ol>
+        <li><b>静态文件（仅PHP）</b> 
+        <p>这些文档的结构（比如文本项的数目）不会每天改变。
+        这种文档只使用 PHP 文件，你翻译它就可以了。</p></li>
+
+        <li><b>动态文件（由 XML 产生的 PHP 和 HTML）</b> 
+        <p>这些文档（比如，FAQ 部分）会经常更新和调整结构，所以它需要一种可以动态重新组织的机制。
+        这类文档使用 XML 文件作为产生 PHP 和 HTML 文件的基础，我们可以通过一个脚本从它生成需要的文件。
+        作为翻译者，你的职责是翻译 XML 文件。</p></li>
+      </ol>
+    
+
+    <h3><a name="files.updating">2.5 更新到最新修订版</a></h3>
+      
+
+      <p>由于其它翻译者可能会在你签出文件以后，又对一些文件进行了修改（不用担心这一点，我们的 CVS 程序能够很好地处理它）。所以经常更新的版本到最新的修订版是一个好主意。</p>
+
+		<p>对于非团队领导的成员：</p>
+      <ol>
+        <li>进入包含你签出的文件的目录，例如：
+        <pre>cd ~/Documents/Fink-i18n/xml</pre></li>
+        
+        <li><p>按照 2.3 中关于登录的步骤说明，登录到 CVS。</p></li>
+
+        <li>进行更新，例如：
+        <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink update -dP</pre></li>
+      </ol>
+      <p>对于团队领导：</p>
+      <ol>
+        <li>进入包含你签出的文件的目录，例如：
+        <pre>cd ~/Documents/Fink-i18n/xml</pre></li>
+        <li>进行更新，例如：
+        <pre>cvs update -dP</pre>
+        在提示的时候，输入你的 SourceForge 密码。</li>
+      </ol>
+
+      <p>当你更新的时候，你会发现显示的信息中，有些文件前面又一个字母。
+      查阅<a href="#appendix">《附录》</a>或 CVS 的帮助页获取更多的信息。 </p>
+    
+
+    <h3><a name="files.initial-translation">2.6 初始翻译</a></h3>
+      
+
+      <p>要翻译的文件，按照优先次序是：</p>
+
+      <p>标题（英语版本文件）</p>
+
+      <ol>
+        <li>常数文件（<tt style="white-space: nowrap;">xml/web/constants.*.inc</tt>）（参考下面）</li>
+
+        <li>静态 PHP 文件（例如：<tt style="white-space: nowrap;">xml/web/*.en.php</tt>）</li>
+
+        <li>用户指南（<tt style="white-space: nowrap;">xml/uguide.en.xml</tt>）</li>
+
+        <li>FAQ（<tt style="white-space: nowrap;">xml/faq.en.xml</tt>）</li>
+
+        <li>运行 X11 （<tt style="white-space: nowrap;">xml/x11/x11.en.xml</tt>）</li>
+
+        <li>文档目录（<tt style="white-space: nowrap;">xml/doc/doc.en.xml</tt>，但由于尚余的 xslt 问题，它的 PHP 文件还不能用运行 <tt style="white-space: nowrap;">make</tt> 的方法生成）</li>
+
+        <li>打包（<tt style="white-space: nowrap;">xml/packaging/packaging.en.xml</tt>）</li>
+
+        <li>移植（<tt style="white-space: nowrap;">xml/porting/porting.en.xml</tt>）</li>
+
+        <li>新闻（<tt style="white-space: nowrap;">xml/news/news.en.xml</tt>）</li>
+      </ol>
+
+      <p><tt style="white-space: nowrap;">constants.*.inc</tt> 文件是用于被 PHP 文件引用的固定编码的常数。
+      它们主要是一些菜单项的内容，位于页面的上方或左方。你应该从脚本中分离它们，并创建一个你的语言的 constant.xx.inc 文件。你可以在终端窗口输入类似下面的命令：</p>
+      <pre>cp constants.de.inc constants.xx.inc</pre>
+      <p>这个 xx 是你的语言代码（例如：zh 是简体中文）。
+      然后，你需要把 define 语句中的单引号内的内容翻译到你的语言。
+      如果你不懂德语的化，下面是那个文件的英语版本：</p>
+
+      <pre>/* The Sections. Used in Menu Navigation Bar */ define (FINK_SECTION_HOME, 'Home'); 
+define (FINK_SECTION_DOWNLOAD, 'Download');
+define (FINK_SECTION_PACKAGE, 'Packages'); 
+define (FINK_SECTION_HELP, 'Help'); 
+define (FINK_SECTION_FAQ, 'F.A.Q.'); 
+define (FINK_SECTION_DOCUMENTATION, 'Documentation'); 
+define (FINK_SECTION_MAILING_LISTS, 'Mailing Lists'); 
+
+/* The Home Subsections. Used in Menu Navigation Bar */ 
+define (FINK_SECTION_HOME_INDEX, 'Index'); 
+define (FINK_SECTION_HOME_NEWS, 'News'); 
+define (FINK_SECTION_HOME_ABOUT, 'About'); 
+define (FINK_SECTION_HOME_CONTRIBUTORS, 'Contributors'); 
+define (FINK_SECTION_HOME_LINKS, 'Links'); 
+
+/* The word 'Sections'. Used in Menu Navigation Bar */ 
+define (FINK_SECTIONS, 'Sections'); 
+
+/* Contents as Table of Contents. Used in FAQ/Documentation Sections */ 
+define (FINK_CONTENTS, 'Contents');</pre>
+
+      <p>在你翻译的时候，你通常会按照下面的步骤（
+      假设你正在翻译《运行 X11》这份文档到简体中文）：</p>
+
+      <ol>
+        <li>拷贝 xml 文件
+        <pre>cp x11.en.xml x11.zh.xml</pre></li>
+
+        <li>编辑文件里面的这行来声明它是简体中文，以及它的字符编码是 UTF-8
+        <pre>&lt;?xml version='1.0' encoding='utf-8' ?&gt; ...
+&lt;document filename="index" lang="zh" &gt; ...</pre></li>
+
+        <li>保存为 UTF-8。注意字符编码格式必需为 utf-8，除了真正的文本内容以外，不要去修改任何其它内容（也就是那些尖括号里面的内容）。</li>
+
+        <li>翻译完成以后，或者你希望测试一下的话，编辑
+        <tt style="white-space: nowrap;">Makefile</tt> 来包括你的语言：
+        <pre>LANGUAGES = en ja zh
+include $(basedir)/Makefile.i18n.common</pre> 
+        <p>然后在这个目录里面运行 <tt style="white-space: nowrap;">make</tt> 命令。这应该会生成中文的 PHP 文件（可能还有一些其它文件），同时还有英语和其它已经在 Makefile 中添加了的语言版本。</p></li>
+      </ol>
+
+      <p>注意：如果你发现英文文件的一些错误，不要修改它，而应该报告到 <a href="http://fink.sourceforge.net/lists/fink-i18n.php">fink-i18n
+邮件列表</a>，这样英语主版本会得到更新。</p>
+    
+
+    <h3><a name="files.check-work">2.7 检查你的工作</a></h3>
+      
+
+      <p>在你的工作被上传到 Fink 网站之前，你应该检查文档看起来是否正常。</p>
+
+      <ul>
+        <li><b>简单的办法：</b>
+        在你的浏览器里面打开 HTML 和 PHP 文件。
+        不过，这样看的 PHP 文件和你在网站看到不完全相同。</li>
+
+        <li><b>最好的办法：</b>
+        你可以使用你的内置 web 服务器，使得你看到这个文档应该在 Fink 网站尚的显示效果。
+        假设你使用内置的服务器：<ol>
+            <li>编辑 <tt style="white-space: nowrap;">/etc/httpd/httpd.conf</tt> 文件，比如通过：
+            <pre>sudo pico /etc/httpd/httpd.conf</pre>
+            </li>
+
+            <li>寻找这样一行：
+<pre>#LoadModule php4_module libexec/httpd/libphp4.so</pre>
+				然后删除它前面的 # 号。</li>
+
+            <li>继续寻找这样一行：
+<pre>#AddModule mod_php4.c</pre>
+				删除它前面的 # 号</li>
+
+            <li>如果你使用的 Apache 的版本比 Panther 内置的版本旧的话，你还需要寻找这样的一行：
+<pre>AddType application/x-httpd-php.php</pre>
+				并在前面放一个 # 号。</li>
+
+            <li>存盘退出。</li>
+
+            <li>在系统预置里面起动“个人网页共享”──如果它已经运行，那么关闭它然后再重新起动。</li>
+
+            <li>使得所有的东西都可以被看得到的最简单的办法是把你签出的 <tt style="white-space: nowrap;">xml</tt> 文件树移到你主目录下的
+            <tt style="white-space: nowrap;">Sites</tt> 文件夹。
+            然后你可以通过下面的 URL 打开你的网页：
+<pre>http://127.0.0.1/~<b>USERNAME</b>/xml/web/index.php</pre>
+				这里 <tt style="white-space: nowrap;">USERNAME </tt> 应该替换为你的用户名。</li>
+          </ol></li>
+      </ul>
+    
+
+    <h3><a name="files.change-checkout">2.8 当你获得提交修改的权限（团队领导）</a></h3>
+      
+
+      <p>当你被授予提交修改的权限以后，你应该</p>
+
+      <ul>
+        <li>为你的 SourceForge 帐号设置一个 SSH 密钥。<ol>
+            <li>按照 SourceForge 上<a href="http://sourceforge.net/docman/display_doc.php?docid=761&amp;group_id=1#keygenopenssh">《指南》</a>的介绍，在你的机器上设置好密钥。</li>
+
+            <li>在终端窗口输入：
+<pre>cat ~/.ssh/id_dsa.pub | pbcopy</pre>
+            这会把文件的内容直接拷贝到你的剪贴版，而避免那些讨厌的换行符问题。
+            注意在你完成下一步操作之前，不要再拷贝其它东西到剪贴板。</li>
+
+            <li>登录你的 SourceForge 帐号。</li>
+
+            <li>选择 “Account Options”</li>
+
+            <li>找到 “Host Access Information” 设置的地方，点击 “Edit
+            SSH Keys for Shell/CVS”</li>
+
+            <li>点击输入框，按 Cmd-A，Cmd-V</li>
+
+            <li>点击按钮。</li>
+          </ol></li>
+
+        <li>用你的用户名签出 <tt style="white-space: nowrap;">xml</tt> 代码树。<ol>
+            <li>如果以前已经签出了整个 <tt style="white-space: nowrap;">xml</tt> 代码树，那么你应该先重命令你本地的文件。你可以用 Finder 来做。</li>
+
+            <li>在终端窗口进入那个目录：
+<pre>cd ~/Documents/Fink-i18n</pre></li>
+
+            <li>签出 xml 代码树：
+<pre>cvs -d:ext:yourusername@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
+				这里 <b>yourusername</b> 当然是你的 SourceForge 用户名。在提示的时候输入你的密码。</li>
+
+            <li>把你正在翻译的文件从旧的文件树拷贝回新的代码树。
+            你可以使用 Finder，要注意它们应该被拷贝到同样的目录位置。</li>
+          </ol></li>
+      </ul>
+    
+
+    <h3><a name="files.committing">2.9 提交修改（团队领导）</a></h3>
+      
+
+      <p>现在你需要把你的修改发送到主服务器。
+      要这样做，你需要有提交修改的权限。
+      你还需要确保你使用的未稳定树里面的最新的 XSLT 版本，写本文档时用的是 Fink 的 <tt style="white-space: nowrap;">xslt-1.1.2-2</tt>。</p>
+
+      <p>对于静态和动态的文档，根据它们的性质不同，提交方法也有不同：</p>
+
+      <ul>
+        <li><b>静态：</b>（仅 PHP 文件）。要提交对这些文件的修改，可以这样：
+        <ol>
+            <li>打开一个终端程序。</li>
+
+            <li>进入你包含你打算提交的文件所在的目录：
+<pre>cd ~/Documents/Fink-i18n/xml/web</pre>
+            <p>上面假设你把你的 <tt style="white-space: nowrap;">xml</tt> 代码树建立在你主目录下的 <tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> 文件夹下，并且你打算提交 xml/web 目录里面的 PHP 文件。</p></li>
+
+            <li>如果这是一个你新创建的文件，那么你需要先把它添加到文件清单中，例如：
+<pre>cvs add download.ru.php</pre>
+				在提示的时候输入你的 SourceForge 密码。
+				你也许会获得一个未知的服务器的 DSA 密钥的警告。
+				输入 yes 就好了。
+				<p>如果是一个现有的文件，你可以跳过这一步而进入下一步。</p></li>
+
+            <li>提交文件，例如，对于上面的例子：
+<pre>cvs ci -m "message" download.ru.php</pre>
+
+				这里 <b>message</b> 应该能够描述你大概做了什么修改。
+				在提示的时候输入你的 SourceForge 密码。
+            <p>附注：你可以一次提交多个文件。</p></li>
+          </ol></li>
+
+        <li><b>动态：</b>（XML 和 PHP）在修改了 XML 文件以后，按照下面那样做：<ol>
+            <li>打开一个终端程序</li>
+
+            <li>进入包含你要添加和修改的文件的目录，例如：
+<pre>cd ~/Documents/Fink-i18n/xml/faq</pre>
+				如果你是在翻译 FAQ 部分的话。</li>
+
+            <li>现在运行 <pre>make check</pre> 验证文件的格式是正确的。</li>
+
+            <li>如果这个 XML 文件是你新创建的，那么你需要把它添加到文件清单中，例如：
+<pre>cvs add faq.ru.xml</pre>
+				在提示的时候输入你的 SourceForge 密码。
+				<p>如果是一个现有的文件，你可以跳过这一步而进入下一步。</p></li>
+
+            <li>提交文件。例如：
+<pre>cvs ci -m "message" faq.ru.xml</pre><p> 
+				<b>message</b> 是一个关于你的操作的描述性信息。
+				在提示的时候输入你的 SourceForge 密码。
+				如果你修改过 Makefile 文件（例如，你在里面添加了你的语言），不要忘记也要提交它。</p></li>
+
+            <li>现在运行
+<pre>make &amp;&amp; make install</pre></li>
+
+            <li>进入网站 XML 代码树的目录中，例如：
+<pre>cd ~/Documents/Fink-i18n/xml</pre> 
+				<p>上面假设你把你的 <tt style="white-space: nowrap;">xml</tt> 代码树建立在你主目录下的 <tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> 文件夹下。</p></li>
+
+            <li>如果 XML 是一个新文件，你需要把它先添加到 CVS 中。
+            例如，如果你在翻译 FAQ 部分，那么，你需要运行：
+<pre>cvs add web/faq/index.en.php web/faq/general.ru.php \
+web/faq/relations.ru.php web/faq/usage-fink.ru.php \
+web/comp-general.ru.php web/faq/comp-packages.ru.php \
+web/faq/usage-general.ru.php web/faq/usage-packages.ru.php \
+web/faq/upgrade-fink.ru.php web/faq/mirrors.ru.php \
+web/faq/faq.ru.html web/faq/header.ru.inc \
+scripts/installer/dmg/faq.ru.html</pre>
+				对于其它文档，文件当然会不同──你应该添加
+				<tt style="white-space: nowrap;">make install</tt> 命令所新产生的和你语言有关的文件。</li>
+				<li>不要忘记添加和提交你所创建的所有文件（它们可能还包括 constants.xx.inc，header.xx.inc，nav.xx.inc，等等）
+          <p>如果这些文件原来已经有，你可以跳过这一步。</p></li>
+
+            <li>提交整个文件树：
+<pre>cvs ci -m "message"</pre> 
+				<p>这里 <b>message</b> 也是一个描述性的日志信息（你可能会使用你提交 XML 文件相同的信息）。
+				在提示的时候输入你的 SourceForge 密码。</p>
+				<p>要分两次进行 commit 的原因是只有这样才能在生成的网页上正确显示修改时间和最后修改者的名字。</p></li>
+          </ol></li>
+      </ul>
+    
+
+    <h3><a name="files.website">2.10 更新我们的网站</a></h3>
+      
+
+      <p>想现在我们的网站上就看到你的成果吗？你只需要这样做：</p>
+
+      <ol>
+        <li>打开一个终端程序</li>
+
+        <li>用 ssh 登录网页服务器：
+<pre>ssh username@shell.sourceforge.net</pre>
+			你会需要输入你的 SourceForge 密码。</li>
+
+        <li>进入包含我们网页文件的目录：
+<pre>cd /home/groups/f/fi/fink/htdocs</pre></li>
+
+        <li>根据 CVS 的内容更新网页：
+        <pre>./update.sh</pre></li>
+
+        <li>从服务器上注销：
+        <pre>exit</pre></li>
+
+        <li>检查你的成果：
+        <pre>open http://fink.sourceforge.net/</pre></li>
+      </ol>
+    
+  <h2><a name="procedure">3 更新文档的流程</a></h2>
+    
+
+    
+
+    
+      <p>为了使得整个更新过程顺畅进行，应该遵循下面的流程。</p>
+    
+
+    <h3><a name="procedure.new-translation">3.1 新翻译作品</a></h3>
+      
+
+      <p>在一种新的语言的翻译过程中，我们会冻结对英文和其它语言文档的修改，这样新语言的翻译团队就不用担心它们在翻译过程中文档又发生了变化。这种情况下，每种文档会在准备好的情况上线，并激活。</p>
+    
+
+    <h3><a name="procedure.doc-updates">3.2 内容更新</a></h3>
+      
+
+      <p>因为英文文档是基准，所以它必需被首先更新。
+      这个更新可能来自于 i18n 团队（比如英文文档作者）或核心开发人员。</p>
+
+      <p>对于文档更新有些分类：</p>
+
+      <ol>
+        <li><b>紧急（安全性，错误修复，等）：</b>基准的英文文档会立刻获得更新，翻译者应该尽快更新它们自己的文档并放上线。</li>
+
+        <li><b>非紧急：</b>这种情况下，基准英文文档会被更新，但不会立刻被放上线。
+        所有的翻译者各自进行翻译，并在一两天内上传他们的版本，然后所有文档会同时被放上线。</li>
+      </ol>
+    
+
+    <h3><a name="procedure.call-to-translate">3.3 通知进行翻译</a></h3>
+      
+
+      <p>在英文文档准备好以后，会有一个消息发到 fink-18n 邮件列表通知所有翻译者。
+      这个通知包括下面的内容：</p>
+
+      <ul>
+        <li>邮件主题中一个注解指明这是一个要求翻译的通知，例如：“[translation]”，或对于那些要立即上线的英文文档是：“[translation-urgent]”。</li>
+
+        <li>除此以外，在消息中应该包含基准文档的文件名。</li>
+
+        <li>一个完整的 diff （例如：<tt style="white-space: nowrap;">diff -Nru3 -r<b>last_revision</b> r<b>head</b></tt>）来表明所做的修改。</li>
+      </ul>
+
+      <p>附注：由于提交对 XML 文件的修改后会自动在 fink-commits 邮件列表中产生满足这个条件的邮件，所以一个方便的办法是修改这个邮件的主题然后把它重新发送作为通知。</p>
+    
+
+    <h3><a name="procedure.translate">3.4 翻译</a></h3>
+      
+
+      <p>现在是实际进行的翻译工作。在翻译完成后，把它提交到 CVS。</p>
+    
+
+    <h3><a name="procedure.activation">3.5 激活修改</a></h3>
+      
+
+      <p>有两种激活修改的可能：</p>
+
+      <ol>
+        <li>对于紧急的修改，在完成文档以后，立即激活修改。</li>
+
+        <li>对非紧急的修改，会在全部语言的文档完成以后激活修改。</li>
+      </ol>
+    
+  <h2><a name="resources">4 附加的资源</a></h2>
+    
+
+    
+
+    <h3><a name="resources.resources">4.1 重要链接</a></h3>
+      
+
+      <p>国际化是个复杂的题目。
+      下面提供的资源可以作为很有加值的辅助信息。
+      如果你愿意深入研究这个课题，建议你仔细地阅读它。</p>
+
+      <ol>
+        <li><a href="http://www.w3.org/TR/unicode-xml/">在 XML 和其它标柱语言中使用 Unicode</a></li>
+
+        <li><a href="http://www.w3.org/International/tutorials/tutorial-char-enc.html">教程：字符集以及编码</a></li>
+
+        <li><a href="http://www.w3.org/International/">W3C 国际化工作</a></li>
+
+        <li><a href="http://www.cl.cam.ac.uk/~mgk25/unicode.html">Unix/Linux 中有关 UTF-8 和 Unicode 的常见疑问</a></li>
+      </ol>
+    
+
+    <h3><a name="resources.editors">4.2 编辑器</a></h3>
+      
+
+      <p>有几种编辑器你可以用来编辑文件。
+      这时一个关于推荐的编辑器的简单列表。
+      有些编辑器使用很复杂或者仅有命令行版本，因此不适用于每个人。
+      我们试图提供一个清单，每个人都能从中找到适合自己的编辑器。</p>
+
+      <ul>
+        <li><a href="http://www.codingmonkeys.de/subethaedit/">SubEthaEdit</a>───一个现代的具有 Rendezvous 支持的 Mac OS X 下的图形界面编辑器。</li>
+
+        <li><a href="http://www.barebones.com/products/bbedit/index.shtml">BBEdit</a>──一个多用途的著名的非免费编辑器。</li>
+
+        <li><a href="http://www.morphon.com/xmleditor/index.shtml">Morphon
+        XML-Editor</a>──免费，专门的 XML 编辑器。很适合用于编辑 XML 文件。</li>
+
+        <li><a href="http://free.abracode.com/cyclone/">Cyclone</a>──一个苹果文本编码转换程序的图形界面程序。</li>
+
+        <li><a href="http://www.macalester.edu/~jaas/linebreak.html">LineBreak</a>──一个 Mac OS X 下的简单工具，可以转换文本文档里面的换行符。</li>
+      </ul>
+    
+
+    <h3><a name="resources.moretools">4.3 一些有用的工具</a></h3>
+      
+
+      <p>命令行界面不是每个人都适应的。
+      下面的清单是一些有用的工具，它们通常是命令行工具的图形化前端界面。
+      我们把它们列在这里方便你查找。</p>
+
+      <ul>
+        <li><a href="http://www.wincvs.org/download.html">MacCvsX 3.3</a>── CVS 的图形化前端工具。（只建议团队领导使用！）</li>
+      </ul>
+    
+  <h2><a name="appendix">5 附录</a></h2>
+    
+
+    
+
+    <h3><a name="appendix.cvs-codes">5.1 CVS 代号。</a></h3>
+      
+
+      <p>当你更新你的 CVS 签出文件的时候，你会看到文件名之前的一些字母。
+      这代表下面的一些情况：</p>
+
+      <ul>
+        <li><b>P：</b>通过补丁的方式更新到一个新的版本。</li>
+
+        <li><b>U：</b>通过下载的方式更新到一个新的版本。</li>
+
+        <li><b>M：</b>你本地的文件已经被修改。</li>
+
+        <li><b>C：</b>你的版本和服务器上存储的新版本冲突。
+        你应该通过编辑冲突的文件并汇入你的修改来消除冲突。
+        <p>你可以使用 </p><pre>rm file;cvs update file</pre>
+        <p>来消除冲突。这里 <tt style="white-space: nowrap;">file</tt> 是指发生冲突的文件。然后在根据名为 <tt style="white-space: nowrap;">.#file-version</tt></p> 的备份文件把你的修改重新汇入其中，这里 <b>version</b> 是你开始修改文件时候的修订版号。</li>
+
+        <li><b>?：</b>文件既不在远端服务器的文件库中，也不在本地的忽略清单中。</li>
+
+        <li><b>A：</b>文件已被添加，但还没有被提交。</li>
+
+        <li><b>R：</b>文件已被清除，但还有被提交。</li>
+      </ul>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: multilingual.xml,v 1.13 2004/03/10 02:23:16 alexkhansen Exp
+  $</i></p></body></html>
