@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>Fink Documentation - Creating Fink Packages</title></head><body><h1 style="text-align: center;">Creating Fink Packages</h1>
 <p>
 This manual documents how to create package descriptions for the Fink
@@ -1041,6 +1041,9 @@ and the unpack phase creates just an empty directory.
 However, the patch, compile and install phases are executed normally.
 This way you can bring in all the code with a patch, or just create
 some directories in the InstallScript.
+Since fink 0.18.0, you can get the same behavior by setting
+<tt style="white-space: nowrap;">Source: none</tt>. This allows you to use "Type" for other
+purposes (<tt style="white-space: nowrap;">Type: perl</tt>, etc.)
 </p>
 <p>
 Finally since fink 0.9.5 there is type <tt style="white-space: nowrap;">perl</tt> which causes
@@ -1192,6 +1195,9 @@ configuration, append the <b>relative-path</b> part and use that as
 the actual URL. Alternatively, using <tt style="white-space: nowrap;">custom</tt> as the
 <b>mirror-name</b> will cause Fink to use the <tt style="white-space: nowrap;">CustomMirror</tt>
 field.
+Since fink 0.18.0, <tt style="white-space: nowrap;">Source: none</tt> has the special meaning
+that there is no source to fetch. See the description of the
+<tt style="white-space: nowrap;">Type</tt> field for more information.
 </p>
 <p>
 Before the URL is used, percent expansion takes place.
