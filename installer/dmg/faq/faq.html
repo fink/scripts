@@ -797,13 +797,14 @@ myself using fink-installed software?</b></p></div>
 <div class="answer"><p><b>A:</b> When compiling something yourself outside of fink, the compiler and
 linker need to be told where to find the fink-installed libraries and
 headers. For a package that uses standard configure/make process, you
-need to set the CFLAGS, CPPFLAGS, CXXFLAGS, and LDFLAGS environment
-variables:
+need to set some environment variables:
 </p><pre>
 setenv CFLAGS -I/sw/include
 setenv LDFLAGS -L/sw/lib
 setenv CXXFLAGS $CFLAGS
 setenv CPPFLAGS $CXXFLAGS
+setenv ACLOCAL_FLAGS "-I/sw/share/aclocal"
+setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"
 </pre><p>
 It is often easiest just to add these to your .tcshrc or .cshrc so they
 are set automatically.
