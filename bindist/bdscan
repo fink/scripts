@@ -9,7 +9,7 @@ cd $BDBASE
 
 tree=$1
 if [ -z "$tree" ]; then
-  tree="fink-0.2.6"
+  tree="fink-`cat $BDDATA/current`"
   echo "Defaulting to tree $tree"
 fi
 
