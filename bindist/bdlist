@@ -35,4 +35,15 @@ else
     sed -e 's,.*/,,' -e 's,_darwin-powerpc.deb,,' | sort
 fi
 
+basecryptodir="dists/$tree/crypto/binary-darwin-powerpc"
+if [ ! -d "$basecryptodir" ]; then
+  echo "ERROR: no binary directory for $tree/crypto"
+elif [ $showall -eq 1 ]; then
+  find "$basecryptodir" -name \*.deb -print | \
+    sed -e 's,.*/,,' -e 's,_darwin-powerpc.deb,,' | sort
+else
+  find "$basecryptodir" -type f -and -name \*.deb -print | \
+    sed -e 's,.*/,,' -e 's,_darwin-powerpc.deb,,' | sort
+fi
+
 exit 0
