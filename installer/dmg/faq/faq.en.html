@@ -53,7 +53,7 @@ English |
         it?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 I can't update, because Fink is "unable to resolve version conflict
         on multiple dependencies".</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 I can't install anything because I get "dpkg: parse error, in file
         `/sw/var/lib/dpkg/status'"!</a></li><li><a href="#comp-general.freetype-problems">6.15 I get errors involving freetype.</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 I get build errors involving `Dl_info'.</a></li><li><a href="#comp-general.gcc2">6.17 Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> but I can't seem to
-        install it.</a></li><li><a href="#comp-general.system-java">6.18 Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</a></li><li><a href="#comp-general.dpkg-split">6.19 When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</a></li></ul></li><li><a href="#comp-packages"><b>7 Compile Problems - Specific Packages</b></a><ul><li><a href="#comp-packages.libgtop">7.1 A package fails to build with errors involving
+        install it.</a></li><li><a href="#comp-general.system-java">6.18 Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</a></li><li><a href="#comp-general.dpkg-split">6.19 When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</a></li><li><a href="#comp-general.xml-parser">6.20 I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</a></li></ul></li><li><a href="#comp-packages"><b>7 Compile Problems - Specific Packages</b></a><ul><li><a href="#comp-packages.libgtop">7.1 A package fails to build with errors involving
         <tt style="white-space: nowrap;">sed</tt>.</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 I want to switch to Fink's XFree86 packages, but I can't install
         <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt>, because it conflicts
         with <tt style="white-space: nowrap;">system-xfree86</tt>.</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 How do I change from the non-threaded version of Fink's XFree86
@@ -868,6 +868,10 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
       <div class="question"><p><b>Q6.19: When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</b></p></div>
       <div class="answer"><p><b>A:</b> Generally, this can be fixed by setting your environment up correctly, cf. <a href="#usage-fink.fink-not-found">this FAQ entry</a>.</p></div>
     </a>
+    <a name="comp-general.xml-parser">
+      <div class="question"><p><b>Q6.20: I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</b></p></div>
+      <div class="answer"><p><b>A:</b> You need to make sure that you have the right variant of the xml-parser-pm package to match the Perl version for your system.  For example, if you're on Panther you should have <tt style="white-space: nowrap;">xml-parser-pm581</tt> rather than <tt style="white-space: nowrap;">xml-parser-pm560</tt> (you may also have the <tt style="white-space: nowrap;">xml-parser-pm</tt> placeholder), since you have <tt style="white-space: nowrap;">Perl-5.8.1</tt> rather than <tt style="white-space: nowrap;">Perl-5.6.0</tt>.</p></div>
+    </a>
   <h2><a name="comp-packages">7 Compile Problems - Specific Packages</a></h2>
     
     
@@ -1072,7 +1076,6 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
       <div class="answer"><p><b>A:</b> Make the request on the <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Package
         Request Tracker</a> on the Fink project page.</p><p>Note that you must have a SourceForge id to do so.</p></div>
     </a>
-
     <a name="usage-general.virtpackage">
       <div class="question"><p><b>Q8.8: What are all these <tt style="white-space: nowrap;">system-*</tt> "virtual
 	  packages" that are sometimes present, but that I can't
@@ -1108,7 +1111,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	  Here are the most important virtual packages that fink
 	  defines (as of fink-0.19.2):
 	</p><ul>
-	  <li>system-perl: [virtual package representing perl]
+          <li>system-perl: [virtual package representing perl]
 	    <p>
 	      Represents <tt style="white-space: nowrap;">/usr/bin/perl</tt>, which is
 	      part of the default OS X installation. This package also
@@ -1117,7 +1120,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      of that perl interpreter.
 	    </p>
 	  </li>
-	  <li>system-javaXXX: [virtual package representing Java X.X.X]
+          <li>system-javaXXX: [virtual package representing Java X.X.X]
 	    <p>
 	      Represents the Java Runtime Environment, which is part of OS
 	      X (and Apple's Software Update). See
@@ -1125,7 +1128,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      page</a> for more information.
 	    </p>
 	  </li>
-	  <li>system-javaXXX-dev: [virtual package representing Java X.X.X development headers]
+          <li>system-javaXXX-dev: [virtual package representing Java X.X.X development headers]
 	    <p>
 	      Represents the Java SDK, which must be manually
 	      downloaded from <a href="http://connect.apple.com">connect.apple.com</a>
@@ -1138,8 +1141,8 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      entry</a>.
 	    </p>
 	  </li>
-	  <li>system-java3d: [virtual package representing Java3D]</li>
-	  <li>system-javaai: [virtual package representing Java Advanced Imaging]
+          <li>system-java3d: [virtual package representing Java3D]</li>
+          <li>system-javaai: [virtual package representing Java Advanced Imaging]
 	    <p>
 	      Represent Java extensions for 3D graphics and image
 	      processing, which must be manually downloaded from Apple
@@ -1147,8 +1150,8 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      webpage</a> for more information.
 	    </p>
 	  </li>
-	  <li>system-xfree86: [placeholder for user installed x11]</li>
-	  <li>system-xfree86-shlibs: [placeholder for user installed x11 shared libraries]
+          <li>system-xfree86: [placeholder for user installed x11]</li>
+          <li>system-xfree86-shlibs: [placeholder for user installed x11 shared libraries]
 	    <p>
 	      Represent Apple's X11/XDarwin, an optional part of OS X
 	      (X11User.pkg). These packages provide <tt style="white-space: nowrap;">x11</tt>
@@ -1156,16 +1159,15 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
 	      also <a href="#comp-packages.cant-install-xfree">this FAQ entry</a>.
 	    </p>
 	  </li>
-	  <li>system-xfree86-dev [placeholder for user installed x11 development tools]
+          <li>system-xfree86-dev [placeholder for user installed x11 development tools]
 	    <p>
 	      Represents Apple's X11/XDarwin SDK, an optional part of
 	      OS X (X11SDK.pkg). This package provides
 	      <tt style="white-space: nowrap;">x11-dev</tt>. See also <a href="#comp-packages.cant-install-xfree">this FAQ entry</a>.
 	    </p>
 	  </li>
-	</ul></div>
+        </ul></div>
     </a>
-
   <h2><a name="usage-packages">9 Package Usage Problems - Specific Packages</a></h2>
     
     
@@ -1389,4 +1391,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.12 2004/04/11 21:43:35 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.13 2004/04/15 13:28:38 alexkhansen Exp $</i></p></body></html>
