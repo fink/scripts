@@ -5,3 +5,4 @@ if(! -e "/sw")
  # Only make the link if we didn't install on the root volume
  `/bin/ln -s \"$ARGV[1]/sw\" /sw`;
 }
+system "open /sw/bin/pathsetup.command"
