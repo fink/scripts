@@ -68,6 +68,10 @@ fi
 if [ -f $fullname/VERSION ]; then
   echo $version >$fullname/VERSION
 fi
+if [ -f $fullname/stamp-cvs-live ]; then
+  rm -f $fullname/stamp-cvs-live
+  touch $fullname/stamp-rel-$version
+fi
 
 ### roll the tarball
 
