@@ -32,11 +32,15 @@ Step 5:
 Step 6:
  Run "fink scanpackages" to properly prepare for distribution.
 
-Step 6:
+Step6a:
+ Run "fink list --installed" to be ready with the information when needed
+ in step 8.
+
+Step 6b:
  Check permissions in your /sw directory to verify things are world-readable 
  when appropriate
 
-Step 6a:
+Step 6c:
  Run "chmod 1755 IN_BASEDIR/contents" to get the permissions of the 
  "contents" directory to match those of / on the target machine.
 
