@@ -5,9 +5,6 @@
 <td align="center">
 Available Languages:  | 
 English | 
-<a href="packaging.fr.html">Fran&ccedil;ais</a> | 
-<a href="packaging.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
-<a href="packaging.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
 </tr>
 </table>
@@ -1147,6 +1144,24 @@ The upstream version number.
 Same limitations as the Package field.
 Required field.
 </p>
+<p>
+  Note that some programs use nonstandard version numbering schemes
+  that may cause sorting confusion or that contain characters that are
+  not allowed in this field. In these situations, when writing the
+  Fink package, you must convert the upstream value to one that is
+  acceptable and that allows the versions to be arranged in the
+  correct order. When in doubt about how version strings will be
+  sorted, you can use the <tt style="white-space: nowrap;">dpkg</tt> command at a shell
+  prompt. For example,
+</p>
+<pre>
+  dpkg --compare-versions 1.2.1 lt 1.3 &amp;&amp; echo "true"
+</pre>
+<p>
+  will print "true" because version string "1.2.1"
+  is less than "1.3". See the <tt style="white-space: nowrap;">dpkg</tt> manpage for
+  more details.
+</p>
 </td></tr><tr valign="top"><td>Revision</td><td>
 <p>
 The package revision.
@@ -2241,4 +2256,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.45 2004/08/04 08:16:59 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.46 2004/08/06 11:55:57 dmacks Exp $</i></p></body></html>
