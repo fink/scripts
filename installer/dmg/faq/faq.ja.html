@@ -59,9 +59,10 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
     </a></li><li><a href="#comp-general.xml-parser">6.20 
 	次のメッセージが出ます:<q>configure: error: XML::Parser perl module is required for intltool</q>。
 	どうしたら良いでしょうか?
-	</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.xml-parser-pm">7.5 <tt style="white-space: nowrap;">intltool</tt> が XML::Parser が必要と言っていますが、
-	xml-parser-pm は既にインストールされています。
-	</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
+	</a></li><li><a href="#comp-general.master-problems">6.21 
+		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
+		と書いてあるだけで、しかもそのファイルはそこに存在しません。
+	</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
 ユーザー名は、 "mysql", "pgsql", "games" などです。
@@ -533,7 +534,7 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 </a>
 <a name="usage-fink.perl-undefined-symbol">
 <div class="question"><p><b>Q5.21: なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</b></p></div>
-<div class="answer"><p><b>A:</b> このようなエラー:</p><pre>dyld: perl Undefined symbols: 
+<div class="answer"><p><b>A:</b> 古すぎる情報</p><p>このようなエラー:</p><pre>dyld: perl Undefined symbols: 
 _Perl_safefree
 _Perl_safemalloc
 _Perl_saferealloc
@@ -889,13 +890,26 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 	どうしたら良いでしょうか?
 	</b></p></div>
 <div class="answer"><p><b>A:</b> 
-	自分のシステムの Perl のバージョンに合った xml-parser-pm パッケージがあるか確認する必要があります。
-	例えば、 Panther の場合、
-	<tt style="white-space: nowrap;">xml-parser-pm581</tt> であって、
-	<tt style="white-space: nowrap;">xml-parser-pm560</tt> ではありません
-	(<tt style="white-space: nowrap;">xml-parser-pm</tt> 代替パッケージでも可)。
-	Perl のバージョンが <tt style="white-space: nowrap;">Perl-5.8.1</tt> であって <tt style="white-space: nowrap;">Perl-5.6.0</tt> ではないからです。
+	自分のシステムにある Perl に合った、正しいバージョンの xml-parser-pm が必要です。
+	例えば、 Panther では <tt style="white-space: nowrap;">xml-parser-pm581</tt> が正しく、 <tt style="white-space: nowrap;">xml-parser-pm560</tt> 
+	ではありません
+	( <tt style="white-space: nowrap;">xml-parser-pm</tt> 代替パッケージでも可)。
+	システムにあるのが、 <tt style="white-space: nowrap;">Perl-5.8.1</tt> であり、 <tt style="white-space: nowrap;">Perl-5.6.0</tt> ではないためです。
+	Jaguar でデフォルトのシステム Perl バージョンを使っている場合、 <tt style="white-space: nowrap;">pm560</tt> で、
+	<tt style="white-space: nowrap;">Perl 5.8.0</tt> をインストールしている場合は <tt style="white-space: nowrap;">pm580</tt> でも構いません。
 	</p></div>
+</a>
+<a name="comp-general.master-problems">
+<div class="question"><p><b>Q6.21: 
+		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
+		と書いてあるだけで、しかもそのファイルはそこに存在しません。
+	</b></p></div>
+<div class="answer"><p><b>A:</b> 
+		これは、 Fink が <q>Master</q> と呼ばれるものを使おうとしたために発生しています。
+		上流サイトが移動しても Fink パッケージのソースが入手できるための仕組みです。
+		この問題は、新しい上流バージョンのパッケージがリリースされたが、
+		まだ Master ミラーに反映されていない場合によくおこります。
+	</p><p>To remedy this, run <tt style="white-space: nowrap;">fink configure</tt> and set the search order to use Master mirrors last.</p></div>
 </a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
 
@@ -930,17 +944,13 @@ X11 に依存するパッケージがない場合、これは単純です。
 <a name="comp-packages.change-thread-nothread">
 <div class="question"><p><b>Q7.3: non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</b></p></div>
 <div class="answer"><p><b>A:</b> Fink 版の xfree86 を使っていて、 threaded と non-threaded を切替えたいのなら、 手動で古いバージョンを削除する必要があります。
-これは、コマンドラインで:</p><pre>
-sudo dpkg -r --force-depends xfree86-base
+これは、コマンドラインで:</p><pre>sudo dpkg -r --force-depends xfree86-base
 sudo dpkg -r --force-depends xfree86-shlibs
 sudo dpkg -r --force-depends xfree86-rootless
-sudo dpkg -r --force-depends xfree86-rootless-shlibs
-</pre><p>threaded 版の場合:</p><pre>
-sudo dpkg -r --force-depends xfree86-base-threaded
+sudo dpkg -r --force-depends xfree86-rootless-shlibs</pre><p>threaded 版の場合:</p><pre>sudo dpkg -r --force-depends xfree86-base-threaded
 sudo dpkg -r --force-depends xfree86-shlibs-threaded
 sudo dpkg -r --force-depends xfree86-rootless-threaded
-sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs
-	</pre><p>FinkCommander でもパッケージを削除することができます。
+sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkCommander でもパッケージを削除することができます。
 ソース画面で、パッケージを選択し、次に <tt style="white-space: nowrap;">Source Menu</tt> で "<tt style="white-space: nowrap;">Force Remove</tt>." を選択します。
 </p><p>system-xfree86 を使っている場合、 前の質問を参照して削除してください。</p><p>希望するバージョンの xfree86 をインストールします: </p><p>
 <tt style="white-space: nowrap;">xfree86-base</tt> と <tt style="white-space: nowrap;">xfree86-rootless</tt>
@@ -953,16 +963,10 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs
 <div class="answer"><p><b>A:</b> このなんとも暗号のようなメッセージは、 December 2002 Developer Tools をインストールしろという意味です。</p></div>
 </a>
 
-<a name="comp-packages.xml-parser-pm">
-<div class="question"><p><b>Q7.5: <tt style="white-space: nowrap;">intltool</tt> が XML::Parser が必要と言っていますが、
-	xml-parser-pm は既にインストールされています。
-	</b></p></div>
-<div class="answer"><p><b>A:</b> 
-	これは更新時によく発生します。
-	<tt style="white-space: nowrap;">xml-parser-pmXXX</tt> がインストールされている確認してください。
-	'XXX' は、システム上の Perl のバージョンで、 Jaguar に入っている Perl は 560 、
-	Panther は 581 です。
-	</p></div>
+<a name="comp-packages.libiconv-gettext">
+<div class="question"><p><b>Q7.5: <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</b></p></div>
+<div class="answer"><p><b>A:</b> 下記の形式のエラーでしたら:</p><pre>libtool: link: cannot find the library `/sw/lib/libiconv.la'</pre><p>以下のように実行して直すことが出来ます</p><pre>fink remove gettext-dev
+fink install libiconv</pre></div>
 </a>
 <h2><a name="usage-general">8 パッケージ使用上の問題 - 一般</a></h2>
 
@@ -1386,4 +1390,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.18 2004/06/19 15:34:09 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.19 2004/07/24 14:10:18 babayoshihiko Exp $</i></p></body></html>
