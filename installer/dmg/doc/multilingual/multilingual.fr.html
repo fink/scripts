@@ -11,162 +11,164 @@ Fran&ccedil;ais |
 </tr>
 </table>
 <h1 style="text-align: center;">Guide d'internationalisation de Fink (i18n)</h1>
-    <p><b>Ce document est en cours de rédaction.</b></p>
-    <p>Voici le guide d'internationalisation du site web de Fink. Ce document a été conçu pour servir de vade mecum aux personnes qui désirent contribuer à l'internationalisation du site.</p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 En quoi consiste ce projet d'internationalisation du site web de Fink ?</a></li><li><a href="#intro.languages">1.2 Langues</a></li><li><a href="#intro.organization">1.3 Organisation</a></li><li><a href="#intro.helping">1.4 Participation</a></li></ul></li><li><a href="#files"><b>2 Fichiers de documentation</b></a><ul><li><a href="#files.requirements">2.1 Conditions requises</a></li><li><a href="#files.setting-up">2.2 Configuration de l'environnement</a></li><li><a href="#files.acquiring">2.3 Récupération  des fichiers de travail</a></li><li><a href="#files.file-standards">2.4 Types de fichiers</a></li><li><a href="#files.updating">2.5 Récupération de la révision la plus récente</a></li><li><a href="#files.initial-translation">2.6 Traduction initiale</a></li><li><a href="#files.check-work">2.7 Vérification du travail</a></li><li><a href="#files.change-checkout">2.8 Après obtention de l'accès au commit (chefs d'équipe)</a></li><li><a href="#files.committing">2.9 Commit des modifications (chefs d'équipe)</a></li><li><a href="#files.website">2.10 Mise à jour de notre site web</a></li></ul></li><li><a href="#procedure"><b>3 Procédure de mise à jour des documents</b></a><ul><li><a href="#procedure.call-to-translate">3.1 Demande de traduction</a></li><li><a href="#procedure.doc-updates">3.2 Nouveau document</a></li><li><a href="#procedure.new-translation">3.3 Nouvelles traductions</a></li><li><a href="#procedure.prompt-update">3.4 Mise à jour rapide de la documentation existante</a></li><li><a href="#procedure.delayed-update">3.5 Mise à jour retardée de la documentation existante (fichiers générés via XML uniquement)</a></li><li><a href="#procedure.summary">3.6 Pour les développeurs et les documentalistes anglais</a></li></ul></li><li><a href="#resources"><b>4 Autres ressources</b></a><ul><li><a href="#resources.resources">4.1 Liens importants</a></li><li><a href="#resources.editors">4.2 Éditeurs de textes</a></li><li><a href="#resources.moretools">4.3 Outils utiles</a></li></ul></li><li><a href="#appendix"><b>5 Annexe</b></a><ul><li><a href="#appendix.cvs-codes">5.1 Codes CVS</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
-    
-    
-    <h3><a name="intro.what">1.1 En quoi consiste ce projet d'internationalisation du site web de Fink ?</a></h3>
-      
-      <p>Le projet Fink a entrepris la tâche d'internationaliser son site web pour le rendre plus accessible au monde entier. Grâce à Yoshihiko Baba, il existe maintenant une structure qui permet l'utilisation de pages en plusieurs langues.</p>
-    
-    <h3><a name="intro.languages">1.2 Langues</a></h3>
-      
-      <p>Des volontaires travaillent déjà sur les langues suivantes :</p>
-      <ul>
-        <li>Allemand</li>
-        <li>Anglais (la documentation maître)</li>
-        <li>Chinois simplifié</li>
-        <li>Danois</li>
-        <li>Espagnol</li>
-        <li>Flamand</li>
-        <li>Français</li>
-        <li>Italien</li>
-        <li>Japonais</li>
-      </ul>
-    
-    <h3><a name="intro.organization">1.3 Organisation</a></h3>
-      
-      <p>Vous trouverez l'organigramme de l'équipe i18n <a href="http://micmacfr.homeunix.org/web/organisation/">ici</a>.</p>
-    
-    <h3><a name="intro.helping">1.4 Participation</a></h3>
-      
-      <p>Si vous désirez nous aider à internationaliser le site, voici ce que vous pouvez faire :</p>
-      <ul>
-        <li>Participer aux discussions sur la <a href="http://fink.sourceforge.net/lists/fink-i18n.php">liste de discussion fink-i18n</a>. C'est là que nous parlons des mécanismes d'internationalisation, que nous annonçons les mises à jour des documents, etc...</li>
-        <li>Réviser la traduction dans votre propre langue. Il se peut que vous trouviez des tournures plus élégantes que celles qui existent actuellement, des erreurs de traduction, etc...</li>
-        <li>Devenir traducteur vous-même. Si votre langue ne figure pas encore au fronton du site (ou même si elle y figure) et que vous pensez pouvoir faire une bonne traduction, vous pouvez vous porter volontaire pour traduire dans votre propre langue. <p>Prenez en compte, toutefois, que si vous êtes la première personne à traduire dans votre langue, il y a un bon nombre de documents à traduire au départ. Ensuite, il ne devrait y avoir que peu de changements.</p></li>
-      </ul>
-    
-  <h2><a name="files">2 Fichiers de documentation</a></h2>
-    
-    
-    
-      <p>Le but de ce chapitre est de vous expliquer quels sont les fichiers de documentation de Fink, comment y accéder et comment envoyer et activer les modifications que vous y faites sur le site web de Fink.</p>
-    
-    <h3><a name="files.requirements">2.1 Conditions requises</a></h3>
-      
-      <p>Pour travailler sur les fichiers de documentation en tant que membre d'une équipe de traduction, il vous faut :</p>
-      <ul>
-        <li>Un client CVS qui vous permette de télécharger la documentation à partir de la branche xml de Fink.</li>
-        <li>Un éditeur de texte qui gère l'encodage UTF-8 ; éventuellement un éditeur XML, car de nombreux fichiers du site web de Fink sont générés à partir de fichiers XML.</li>
-        <li>Faire un check out de l'arbre xml de Fink, comme expliqué dans les <a href="#files.acquiring">instructions</a> ci-dessous.</li>
-        <li>Le cas échéant, une bonne connaissance de Fink.</li>
-      </ul>
-      <p><b>Note :</b> un "membre de l'équipe" est une personne qui traduit, mais n'est pas responsable du téléchargement des fichiers sur le site web de Fink.</p>
-      <p>En plus de remplir les conditions ci-dessus, les chefs d'équipe doivent avoir :</p>
-      <ul>
-        <li>Un compte SourceForge (enregistrement gratuit).</li>
-        <li>Un accès de commit  à la branche documentation de Fink. Pour l'obtenir, envoyez un message à la liste de diffusion fink-18n dans lequel vous indiquez votre nom d'utilisateur SourceForge. L'un des chefs de projet i18n entreprendra les démarches pour que vous ayez un accès CVS à la branche documentation.</li>
-      </ul>
-      <p><b>Note : </b>un "chef d'équipe" est une personne qui est responsable du téléchargement des fichiers modifiés sur le site web et de l'activation des modifications.</p>
-    
-    <h3><a name="files.setting-up">2.2 Configuration de l'environnement</a></h3>
-      
-      <p>Vous pouvez configurer votre environnement pour réduire au maximum les saisies répétitives. Les directives suivantes supposent que vous utilisez les outils en ligne de commande de Mac OS X ou d'un autre système opératoire à base d'Unix.</p>
-      <ol>
-        <li><b>Chefs d'équipe :</b> modifiez votre fichier de login pour ajouter la variable d'environnement CVS_RSH.<ol>
-            <li>Si vous utilisez <tt style="white-space: nowrap;">bash</tt> ou
-            <tt style="white-space: nowrap;">zsh</tt>, ajoutez la ligne suivante :
-            <pre>export CVS_RSH=ssh</pre>
-            au fichier <tt style="white-space: nowrap;">.profile</tt>.</li>
-            <li>Si vous utilisez <tt style="white-space: nowrap;">tcsh</tt>, ajoutez la ligne suivante : 
-            <pre>setenv CVS_RSH ssh</pre>
-            au fichier <tt style="white-space: nowrap;">.cshrc</tt>. <p>
-            <tt style="white-space: nowrap;">cvs</tt> utilisera alors ssh pour accéder aux fichiers. Ceci est absolument nécessaire.</p></li>
-          </ol></li>
-        <li><b>Tout membre :</b> créez un fichier nommé .cvsrc dans votre répertoire utilisateur et ajoutez-lui la ligne suivante :
-       <pre>cvs -z3</pre>
-       De cette façon, CVS utilisera le niveau de compression 3 par défaut (ce qui est une bonne chose !).</li>
-      </ol>
-      <p>Ensuite, ouvrez une nouvelle fenêtre de terminal pour que la variable d'environnement CVS_RSH soit réellement prise en compte.</p>
-    
-    <h3><a name="files.acquiring">2.3 Récupération  des fichiers de travail</a></h3>
-      
-      <p>Pour l'instant, vous devez exécuter un check out de la branche xml du site web :</p>
-      <ol>
-        <li>Ouvrez un terminal</li>
-        <li>Créez un répertoire pour accueillir la branche xml de Fink, par exemple :
-        <pre>mkdir -p ~/Documents/Fink-i18n</pre></li>
-        <li>Déplacez vous dans ce répertoire :
-        <pre>cd ~/Documents/Fink-i18n</pre></li>
-        <li><b>Pour les membres d'une équipe (ou les chefs d'équipe n'ayant pas encore d'accès commit) :
-        </b>Connectez-vous anonymement à cvs.sourceforge.net : <ol>
-            <li><pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink login</pre></li>
-            <li>Appuyez sur la touche retour chariot (pas de mot de passe, anonyme par défaut)</li>
-            <li>Faites un check out du module xml : 
-            <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co xml</pre></li>
-          </ol><b>Chefs d'équipe : </b>faites un check out en utilisant votre nom d'utilisateur :<ol>
-            <li>Vous n'avez pas à vous connecter, exécutez directement :
-            <pre>cvs -d:ext:votrenomutilisateur@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
-            où <b>votrenomutilisateur</b> est, bien sûr, votre nom d'utilisateur sur SourceForge. Il se peut que vous ayez un message vous disant que la clé DSA du serveur est inconnue. Répondez "yes" à ce message. </li>
-            <li>Dans ce cas, vous devez saisir votre phrase d'authentification SourceForge à l'invite.</li>
-          </ol></li>
-      </ol>
-    
-    <h3><a name="files.file-standards">2.4 Types de fichiers</a></h3>
-      
-      <p>En tant que traducteur, vous devrez distinguer deux types de fichiers :</p>
-      <ol>
-        <li><b>Fichiers statiques (fichiers PHP seuls)</b> <p>Ce sont des documents dont l'organisation (c'est-à-dire la numérotation des articles) a peu de chances de varier d'un jour sur l'autre. Dans ce cas, le document est représenté par un fichier PHP, que vous devez traduire.</p></li>
-        <li><b>Fichiers dynamiques (fichiers XML générant des fichiers PHP et HTML)</b> <p>Ces documents (par exemple les QFP) sont mis à jour et restructurés plus souvent, il faut donc pouvoir les réorganiser dynamiquement. Ils ont pour base un fichier XML à partir duquel sont créés des fichiers PHP et HTML au moyen d'un script. En tant que traducteur, vous devez traduire le fichier XML.</p></li>
-      </ol>
-      <p>De plus, vous devrez traduire ou modifier d'autres fichiers, tels les Makefile, les fichiers de type nac.xx.inc et constants.xx.inc. En leur absence, soit les pages n'apparaîtront sur le site web, soit elles n'apparaîtront pas correctement.</p>
-      <p>Tous les fichiers sont <b>encodés en utf-8</b>. Il en résulte que vous ne devez pas changer l'encodage à moins qu'il ne soit incorrect. De même vous ne devez utiliser aucune entité html autre que celles existant déjà dans les fichiers anglais.</p>
-    
-    <h3><a name="files.updating">2.5 Récupération de la révision la plus récente</a></h3>
-      
-      <p>Comme d'autres traducteurs vont changer certains fichiers (ne paniquez pas, CVS gère très bien les changements),  il vous est conseillé de mettre à jour fréquemment votre copie de travail après le premier check out. Pour mettre à jour, suivez les étapes suivantes :</p>
-      <ol>
-         <li>Déplacez-vous dans le répertoire qui contient les fichiers récupérés, par exemple :
-        <pre>cd ~/Documents/Fink-i18n/xml</pre></li>
-        <li>Mettez-les à jour :
-        <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink update -dP</pre>
-        pour les membres d'équipe sans accès commit, ou :
-        <pre>cvs update -dP</pre>
-        pour les chefs d'équipe.</li>
-      </ol>
-      <p>Vous verrez peut-être une lettre devant un ou plusieurs noms de fichiers lors de la mise à jour.  Consultez l'<a href="#appendix">Annexe</a> pour de plus amples informations, ainsi que la man page cvs.</p>
-    
-    <h3><a name="files.initial-translation">2.6 Traduction initiale</a></h3>
-      
-      <p>Voici les fichiers à traduire, classés par ordre de priorité :</p>
-      <p>Noms (des fichiers de la version anglaise)</p>
-      <ol>
-        <li>Fichiers de constantes ( par exemple <tt style="white-space: nowrap;">xml/web/constants.*.inc</tt>) (voir ci-dessous)</li>
-       <li>Fichiers statiques PHP ( par exemple <tt style="white-space: nowrap;">xml/web/*.en.php</tt>)</li>
-     <li>Fichiers de navigation dans la documentation (par exemple <tt style="white-space: nowrap;">xml/web/doc/nav.*.inc</tt>) (même traitement que constants.*.inc)</li>
-       <li>Index de la documentation (<tt style="white-space: nowrap;">xml/doc/doc.en.xml</tt>)</li>
-       <li>Guide utilisateur (<tt style="white-space: nowrap;">xml/uguide.en.xml</tt>)</li>
-       <li>QFP (<tt style="white-space: nowrap;">xml/faq.en.xml</tt>)</li>
-       <li>Utilisation de X11 (<tt style="white-space: nowrap;">xml/x11/x11.en.xml</tt>)</li>
-       <li>Accès CVS (<tt style="white-space: nowrap;">xml/cvsaccess/cvs.en.xml</tt>)</li>
-       <li>ReadMe (<tt style="white-space: nowrap;">xml/fink-readme/readme.en.xml</tt>)</li>
-       <li>Étiquette net (<tt style="white-space: nowrap;">xml/netiquette/netiquette.en.xml</tt>)</li>
-       <li>Sécurité (<tt style="white-space: nowrap;">xml/security/security.en.xml</tt>)</li>
-       <li>Tutoriel d'empaquetage (<tt style="white-space: nowrap;">xml/quick-start-pkg/quick-start-pkg.en.xml</tt>)</li>
-       <li>Construction de paquets (<tt style="white-space: nowrap;">xml/packaging/packaging.en.xml</tt>)</li>
-       <li>Portage (<tt style="white-space: nowrap;">xml/porting/porting.en.xml</tt>)</li>
-       <li>Dernières nouvelles (<tt style="white-space: nowrap;">xml/news/news.xml</tt>)</li>
-      </ol>
-      <p>Vérifiez qu'il n'y a pas d'autres fichiers php, constantes ou navigation à traduire dans les sous-répertoires du répertoire <tt style="white-space: nowrap;">xml/web</tt></p>
-      <p>Ne traduisez et ne modifiez aucun fichier php situé dans le répertoire <tt style="white-space: nowrap;">xml/web</tt> ou ses sous-répertoires, s'il existe au début de ce fichier une ligne contenant "Generated from". Vous trouverez le fichier xml correspondant à traduire ou à modifier dans l'arborescence <tt style="white-space: nowrap;">xml</tt>.</p>
-      <p>Les fichiers <tt style="white-space: nowrap;">constants.*.inc</tt> servent à traduire des mots inclus tels quels dans les fichiers PHP. La plupart correspondent à des articles de menu, situés en haut et à gauche des pages. Il vous faut les isoler des scripts  et créer un fichier constants.xx.inc pour votre langue. Pour ce faire, exécutez la commande suivante dans une fenêtre de terminal :</p>
-      <pre>cp constants.fr.inc constants.xx.inc</pre>
-      <p>où xx est votre code langue (par exemple de pour l'allemand).
-      Ensuite, il vous faudra traduire la partie située entre guillemets simples de chaque ligne commençant par define. Si vous ne comprenez pas l'allemand, voici la traduction en anglais :</p>
-      <p>N'oubliez pas de changer la locale, c'est-à-dire de changer en_US en de_DE pour l'allemand.</p>
-      <pre>
+<p><b>Ce document est en cours de rédaction.</b></p>
+<p>Voici le guide d'internationalisation du site web de Fink. Ce document a été conçu pour servir de vade mecum aux personnes qui désirent contribuer à l'internationalisation du site.</p>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 En quoi consiste ce projet d'internationalisation du site web de Fink ?</a></li><li><a href="#intro.languages">1.2 Langues</a></li><li><a href="#intro.organization">1.3 Organisation</a></li><li><a href="#intro.helping">1.4 Participation</a></li></ul></li><li><a href="#files"><b>2 Fichiers de documentation</b></a><ul><li><a href="#files.requirements">2.1 Conditions requises</a></li><li><a href="#files.setting-up">2.2 Configuration de l'environnement</a></li><li><a href="#files.acquiring">2.3 Récupération  des fichiers de travail</a></li><li><a href="#files.file-standards">2.4 Types de fichiers</a></li><li><a href="#files.updating">2.5 Récupération de la révision la plus récente</a></li><li><a href="#files.initial-translation">2.6 Traduction initiale</a></li><li><a href="#files.check-work">2.7 Vérification du travail</a></li><li><a href="#files.change-checkout">2.8 Après obtention de l'accès au commit (chefs d'équipe)</a></li><li><a href="#files.committing">2.9 Commit des modifications (chefs d'équipe)</a></li><li><a href="#files.website">2.10 Mise à jour de notre site web</a></li></ul></li><li><a href="#procedure"><b>3 Procédure de mise à jour des documents</b></a><ul><li><a href="#procedure.call-to-translate">3.1 Demande de traduction</a></li><li><a href="#procedure.doc-updates">3.2 Nouveau document</a></li><li><a href="#procedure.new-translation">3.3 Nouvelles traductions</a></li><li><a href="#procedure.prompt-update">3.4 Mise à jour rapide de la documentation existante</a></li><li><a href="#procedure.delayed-update">3.5 Mise à jour retardée de la documentation existante (fichiers générés via XML uniquement)</a></li><li><a href="#procedure.summary">3.6 Pour les développeurs et les documentalistes anglais</a></li></ul></li><li><a href="#resources"><b>4 Autres ressources</b></a><ul><li><a href="#resources.resources">4.1 Liens importants</a></li><li><a href="#resources.editors">4.2 Éditeurs de textes</a></li><li><a href="#resources.moretools">4.3 Outils utiles</a></li></ul></li><li><a href="#appendix"><b>5 Annexe</b></a><ul><li><a href="#appendix.cvs-codes">5.1 Codes CVS</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+
+
+<h3><a name="intro.what">1.1 En quoi consiste ce projet d'internationalisation du site web de Fink ?</a></h3>
+
+<p>Le projet Fink a entrepris la tâche d'internationaliser son site web pour le rendre plus accessible au monde entier. Grâce à Yoshihiko Baba, il existe maintenant une structure qui permet l'utilisation de pages en plusieurs langues.</p>
+
+<h3><a name="intro.languages">1.2 Langues</a></h3>
+
+<p>Des volontaires travaillent déjà sur les langues suivantes :</p>
+<ul>
+<li>Allemand</li>
+<li>Anglais (la documentation maître)</li>
+<li>Chinois simplifié</li>
+<li>Danois</li>
+<li>Espagnol</li>
+<li>Flamand</li>
+<li>Français</li>
+<li>Italien</li>
+<li>Japonais</li>
+</ul>
+
+<h3><a name="intro.organization">1.3 Organisation</a></h3>
+
+<p>Vous trouverez l'organigramme de l'équipe i18n <a href="http://micmacfr.homeunix.org/web/organisation/">ici</a>.</p>
+
+<h3><a name="intro.helping">1.4 Participation</a></h3>
+
+<p>Si vous désirez nous aider à internationaliser le site, voici ce que vous pouvez faire :</p>
+<ul>
+<li>Participer aux discussions sur la <a href="http://fink.sourceforge.net/lists/fink-i18n.php">liste de discussion fink-i18n</a>. C'est là que nous parlons des mécanismes d'internationalisation, que nous annonçons les mises à jour des documents, etc...</li>
+<li>Réviser la traduction dans votre propre langue. Il se peut que vous trouviez des tournures plus élégantes que celles qui existent actuellement, des erreurs de traduction, etc...</li>
+<li>Devenir traducteur vous-même. Si votre langue ne figure pas encore au fronton du site (ou même si elle y figure) et que vous pensez pouvoir faire une bonne traduction, vous pouvez vous porter volontaire pour traduire dans votre propre langue. <p>Prenez en compte, toutefois, que si vous êtes la première personne à traduire dans votre langue, il y a un bon nombre de documents à traduire au départ. Ensuite, il ne devrait y avoir que peu de changements.</p></li>
+</ul>
+
+<h2><a name="files">2 Fichiers de documentation</a></h2>
+
+
+
+<p>Le but de ce chapitre est de vous expliquer quels sont les fichiers de documentation de Fink, comment y accéder et comment envoyer et activer les modifications que vous y faites sur le site web de Fink.</p>
+
+<h3><a name="files.requirements">2.1 Conditions requises</a></h3>
+
+<p>Pour travailler sur les fichiers de documentation en tant que membre d'une équipe de traduction, il vous faut :</p>
+<ul>
+<li>Un client CVS qui vous permette de télécharger la documentation à partir de la branche xml de Fink.</li>
+<li>Un éditeur de texte qui gère l'encodage UTF-8 ; éventuellement un éditeur XML, car de nombreux fichiers du site web de Fink sont générés à partir de fichiers XML.</li>
+<li>Faire un check out de l'arbre xml de Fink, comme expliqué dans les <a href="#files.acquiring">instructions</a> ci-dessous.</li>
+<li>Le cas échéant, une bonne connaissance de Fink.</li>
+</ul>
+<p><b>Note :</b> un "membre de l'équipe" est une personne qui traduit, mais n'est pas responsable du téléchargement des fichiers sur le site web de Fink.</p>
+<p>En plus de remplir les conditions ci-dessus, les chefs d'équipe doivent avoir :</p>
+<ul>
+<li>Un compte SourceForge (enregistrement gratuit).</li>
+<li>Un accès de commit  à la branche documentation de Fink. Pour l'obtenir, envoyez un message à la liste de diffusion fink-18n dans lequel vous indiquez votre nom d'utilisateur SourceForge. L'un des chefs de projet i18n entreprendra les démarches pour que vous ayez un accès CVS à la branche documentation.</li>
+</ul>
+<p><b>Note : </b>un "chef d'équipe" est une personne qui est responsable du téléchargement des fichiers modifiés sur le site web et de l'activation des modifications.</p>
+
+<h3><a name="files.setting-up">2.2 Configuration de l'environnement</a></h3>
+
+<p>Vous pouvez configurer votre environnement pour réduire au maximum les saisies répétitives. Les directives suivantes supposent que vous utilisez les outils en ligne de commande de Mac OS X ou d'un autre système opératoire à base d'Unix.</p>
+<ol>
+<li><b>Chefs d'équipe :</b> modifiez votre fichier de login pour ajouter la variable d'environnement CVS_RSH.<ol>
+<li>Si vous utilisez <tt style="white-space: nowrap;">bash</tt> ou
+<tt style="white-space: nowrap;">zsh</tt>, ajoutez la ligne suivante :
+<pre>export CVS_RSH=ssh</pre>
+au fichier <tt style="white-space: nowrap;">.profile</tt>.</li>
+<li>Si vous utilisez <tt style="white-space: nowrap;">tcsh</tt>, ajoutez la ligne suivante : 
+<pre>setenv CVS_RSH ssh</pre>
+au fichier <tt style="white-space: nowrap;">.cshrc</tt>. <p>
+<tt style="white-space: nowrap;">cvs</tt> utilisera alors ssh pour accéder aux fichiers. Ceci est absolument nécessaire.</p></li>
+</ol></li>
+<li><b>Tout membre :</b> créez un fichier nommé .cvsrc dans votre répertoire utilisateur et ajoutez-lui la ligne suivante :
+ <pre>cvs -z3</pre>
+ De cette façon, CVS utilisera le niveau de compression 3 par défaut (ce qui est une bonne chose !).</li>
+</ol>
+<p>Ensuite, ouvrez une nouvelle fenêtre de terminal pour que la variable d'environnement CVS_RSH soit réellement prise en compte.</p>
+
+<h3><a name="files.acquiring">2.3 Récupération  des fichiers de travail</a></h3>
+
+<p>Pour l'instant, vous devez exécuter un check out de la branche xml du site web :</p>
+<ol>
+<li>Ouvrez un terminal</li>
+<li>Créez un répertoire pour accueillir la branche xml de Fink, par exemple :
+<pre>mkdir -p ~/Documents/Fink-i18n</pre></li>
+<li>Déplacez vous dans ce répertoire :
+<pre>cd ~/Documents/Fink-i18n</pre></li>
+<li><b>Pour les membres d'une équipe (ou les chefs d'équipe n'ayant pas encore d'accès commit) :
+</b>Connectez-vous anonymement à cvs.sourceforge.net : <ol>
+<li><pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink login</pre></li>
+<li>Appuyez sur la touche retour chariot (pas de mot de passe, anonyme par défaut)</li>
+<li>Faites un check out du module xml : 
+<pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co xml</pre></li>
+</ol><b>Chefs d'équipe : </b>faites un check out en utilisant votre nom d'utilisateur :<ol>
+<li>Vous n'avez pas à vous connecter, exécutez directement :
+<pre>cvs -d:ext:votrenomutilisateur@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
+où <b>votrenomutilisateur</b> est, bien sûr, votre nom d'utilisateur sur SourceForge. Il se peut que vous ayez un message vous disant que la clé DSA du serveur est inconnue. Répondez "yes" à ce message. </li>
+<li>Dans ce cas, vous devez saisir votre phrase d'authentification SourceForge à l'invite.</li>
+</ol></li>
+</ol>
+
+<h3><a name="files.file-standards">2.4 Types de fichiers</a></h3>
+
+<p>En tant que traducteur, vous devrez distinguer deux types de fichiers :</p>
+<ol>
+<li><b>Fichiers statiques (fichiers PHP seuls)</b> <p>Ce sont des documents dont l'organisation (c'est-à-dire la numérotation des articles) a peu de chances de varier d'un jour sur l'autre. Dans ce cas, le document est représenté par un fichier PHP, que vous devez traduire.</p></li>
+<li><b>Fichiers dynamiques (fichiers XML générant des fichiers PHP et HTML)</b> <p>Ces documents (par exemple les QFP) sont mis à jour et restructurés plus souvent, il faut donc pouvoir les réorganiser dynamiquement. Ils ont pour base un fichier XML à partir duquel sont créés des fichiers PHP et HTML au moyen d'un script. En tant que traducteur, vous devez traduire le fichier XML.</p></li>
+</ol>
+<p>De plus, vous devrez traduire ou modifier d'autres fichiers, tels les Makefile, les fichiers de type nac.xx.inc et constants.xx.inc. En leur absence, soit les pages n'apparaîtront sur le site web, soit elles n'apparaîtront pas correctement.</p>
+<p>Tous les fichiers sont <b>encodés en utf-8</b>. Il en résulte que vous ne devez pas changer l'encodage à moins qu'il ne soit incorrect. De même vous ne devez utiliser aucune entité html autre que celles existant déjà dans les fichiers anglais.</p>
+
+<h3><a name="files.updating">2.5 Récupération de la révision la plus récente</a></h3>
+
+<p>Comme d'autres traducteurs vont changer certains fichiers (ne paniquez pas, CVS gère très bien les changements),  il vous est conseillé de mettre à jour fréquemment votre copie de travail après le premier check out. Pour mettre à jour, suivez les étapes suivantes :</p>
+<ol>
+ <li>Déplacez-vous dans le répertoire qui contient les fichiers récupérés, par exemple :
+<pre>cd ~/Documents/Fink-i18n/xml</pre></li>
+<li>Mettez-les à jour :
+<pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink update -dP</pre>
+pour les membres d'équipe sans accès commit, ou :
+<pre>cvs update -dP</pre>
+pour les chefs d'équipe.</li>
+</ol>
+<p>Vous verrez peut-être une lettre devant un ou plusieurs noms de fichiers lors de la mise à jour.  Consultez l'<a href="#appendix">Annexe</a> pour de plus amples informations, ainsi que la man page cvs.</p>
+
+<h3><a name="files.initial-translation">2.6 Traduction initiale</a></h3>
+
+<p>Voici les fichiers à traduire, classés par ordre de priorité :</p>
+<p>Noms (des fichiers de la version anglaise)</p>
+<ol>
+<li>Fichiers de constantes ( par exemple <tt style="white-space: nowrap;">xml/web/constants.*.inc</tt>) (voir ci-dessous)</li>
+ <li>Fichiers statiques PHP ( par exemple <tt style="white-space: nowrap;">xml/web/*.en.php</tt>)</li>
+ <li>Fichiers de navigation dans la documentation (par exemple <tt style="white-space: nowrap;">xml/web/doc/nav.*.inc</tt>) (même traitement que constants.*.inc)</li>
+ <li>Index de la documentation (<tt style="white-space: nowrap;">xml/doc/doc.en.xml</tt>)</li>
+ <li>Guide utilisateur (<tt style="white-space: nowrap;">xml/users-guide/uguide.en.xml</tt>)</li>
+ <li>Notions complexes (<tt style="white-space: nowrap;">xml/advanced/advanced.en.xml</tt>)</li>
+ <li>Guide utilisateur (<tt style="white-space: nowrap;">xml/users-guide/uguide.en.xml</tt>)</li>
+ <li>Utilisation de X11 (<tt style="white-space: nowrap;">xml/x11/x11.en.xml</tt>)</li>
+ <li>Accès CVS (<tt style="white-space: nowrap;">xml/cvsaccess/cvs.en.xml</tt>)</li>
+ <li>ReadMe (<tt style="white-space: nowrap;">xml/fink-readme/readme.en.xml</tt>)</li>
+<li>Internationalisation (<tt style="white-space: nowrap;">xml/multilingual/multilingual.en.xml</tt>)</li>
+ <li>Étiquette net (<tt style="white-space: nowrap;">xml/netiquette/netiquette.en.xml</tt>)</li>
+ <li>Sécurité (<tt style="white-space: nowrap;">xml/security/security.en.xml</tt>)</li>
+ <li>Tutoriel d'empaquetage (<tt style="white-space: nowrap;">xml/quick-start-pkg/quick-start-pkg.en.xml</tt>)</li>
+ <li>Construction de paquets (<tt style="white-space: nowrap;">xml/packaging/packaging.en.xml</tt>)</li>
+ <li>Portage (<tt style="white-space: nowrap;">xml/porting/porting.en.xml</tt>)</li>
+ <li>Dernières nouvelles (<tt style="white-space: nowrap;">xml/news/news.xml</tt>)</li>
+</ol>
+<p>Vérifiez qu'il n'y a pas d'autres fichiers php, constantes ou navigation à traduire dans les sous-répertoires du répertoire <tt style="white-space: nowrap;">xml/web</tt></p>
+<p>Ne traduisez et ne modifiez aucun fichier php situé dans le répertoire <tt style="white-space: nowrap;">xml/web</tt> ou ses sous-répertoires, s'il existe au début de ce fichier une ligne contenant "Generated from". Vous trouverez le fichier xml correspondant à traduire ou à modifier dans l'arborescence <tt style="white-space: nowrap;">xml</tt>.</p>
+<p>Les fichiers <tt style="white-space: nowrap;">constants.*.inc</tt> servent à traduire des mots inclus tels quels dans les fichiers PHP. La plupart correspondent à des articles de menu, situés en haut et à gauche des pages. Il vous faut les isoler des scripts  et créer un fichier constants.xx.inc pour votre langue. Pour ce faire, exécutez la commande suivante dans une fenêtre de terminal :</p>
+<pre>cp constants.fr.inc constants.xx.inc</pre>
+<p>où xx est votre code langue (par exemple de pour l'allemand).
+Ensuite, il vous faudra traduire la partie située entre guillemets simples de chaque ligne commençant par define. Si vous ne comprenez pas l'allemand, voici la traduction en anglais :</p>
+<p>N'oubliez pas de changer la locale, c'est-à-dire de changer en_US en de_DE pour l'allemand.</p>
+<pre>
 /* The Sections.  Used in Menu Navigation Bar */
 define (FINK_LC_ALL, 'en_US');
 
@@ -178,17 +180,17 @@ define (FINK_SECTION_HELP, 'Help');
 define (FINK_SECTION_FAQ, 'F.A.Q.'); 
 define (FINK_SECTION_DOCUMENTATION, 'Documentation'); 
 define (FINK_SECTION_MAILING_LISTS, 'Mailing Lists'); 
-      
+
 /* The Home Subsections. Used in Menu Navigation Bar */ 
 define (FINK_SECTION_HOME_INDEX, 'Index'); 
 define (FINK_SECTION_HOME_NEWS, 'News'); 
 define (FINK_SECTION_HOME_ABOUT, 'About'); 
 define (FINK_SECTION_HOME_CONTRIBUTORS, 'Contributors'); 
 define (FINK_SECTION_HOME_LINKS, 'Links'); 
-      
+
 /* The word 'Sections'. Used in Menu Navigation Bar */ 
 define (FINK_SECTIONS, 'Sections'); 
-      
+
 /* Used in FAQ/Documentation Sections: */
 /* Contents as Table of contents, Next as next page */ 
 /* Q as question, A as anwer */
@@ -203,11 +205,11 @@ define (FINK_PRINT_VERSION, 'Print Version');
 
 /* Footer */
 define (META_KEYWORDS, 'Mac OS X, Fink, Debian, Macintosh, Apple, UNIX, Open Source,
-             download, free software, port, development, package management');
+ download, free software, port, development, package management');
 define (META_DESCRIPTION, 'The Fink project wants to bring the full world of Unix Open
-             Source software to Darwin and Mac OS X. We modify Unix software so that it 
-             compiles and runs on Mac OS X and make it available for download as a coherent
-             distribution.');
+ Source software to Darwin and Mac OS X. We modify Unix software so that it 
+ compiles and runs on Mac OS X and make it available for download as a coherent
+ distribution.');
 define (HEADER_HOSTED_BY, 'Hosted by {img}');
 define (FOOTER_AVAILABLE_LANGUAGES, 'Available Languages');
 define (FOOTER_GENERATED_DYNAMICALLY, 'Generated dynamically from');
@@ -215,120 +217,120 @@ define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated on %a, %d %B %Y,  %R %Z');
 define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %B %Y,  %R %Z');
 </pre>
 <p><b>Note :</b> les premières lignes de la section Footer ont été coupées pour des raisons d'affichage. Ne les coupez pas dans le fichier.</p>
-      <p>Quand vous traduisez, vous devez suivre les étapes suivantes (disons que vous traduisez en français le document Running X11) :</p>
-      <ol>
-        <li>Copiez le fichier xml
-        <pre>cp x11.en.xml x11.fr.xml</pre></li>
-        <li>Modifiez les premières lignes pour indiquer que le texte du fichier est écrit en français et que l'encodage est UTF-8 :
-        <pre>&lt;?xml version='1.0' encoding='utf-8' ?&gt; ...
+<p>Quand vous traduisez, vous devez suivre les étapes suivantes (disons que vous traduisez en français le document Running X11) :</p>
+<ol>
+<li>Copiez le fichier xml
+<pre>cp x11.en.xml x11.fr.xml</pre></li>
+<li>Modifiez les premières lignes pour indiquer que le texte du fichier est écrit en français et que l'encodage est UTF-8 :
+<pre>&lt;?xml version='1.0' encoding='utf-8' ?&gt; ...
 &lt;document filename="index" lang="fr" &gt; ...</pre></li>
 <li><b>Note très importante</b> : Vérifiez que la ligne cvsid en début de fichier n'est pas coupée en deux.</li>
-        <li>Sauvegardez le fichier avec encodage UTF-8. Assurez-vous que l'encodage du texte est bien utf-8 et  ne modifiez que la partie texte dans le fichier.</li>
-        <li>Quand vous aurez fini la traduction, ou quand vous voulez la tester, modifiez le fichier 
-        <tt style="white-space: nowrap;">Makefile</tt> pour ajouter votre langue :
-        <pre>LANGUAGES = en ja fr include $(basedir)/Makefile.i18n.common</pre> 
+<li>Sauvegardez le fichier avec encodage UTF-8. Assurez-vous que l'encodage du texte est bien utf-8 et  ne modifiez que la partie texte dans le fichier.</li>
+<li>Quand vous aurez fini la traduction, ou quand vous voulez la tester, modifiez le fichier 
+<tt style="white-space: nowrap;">Makefile</tt> pour ajouter votre langue :
+<pre>LANGUAGES = en ja fr include $(basedir)/Makefile.i18n.common</pre> 
 <p>Puis exécutez <tt style="white-space: nowrap;">make</tt> dans le répertoire. Cela créera les fichiers PHP (et éventuellement d'autres fichiers), ainsi que tous les fichiers correspondant aux langues présentes dans le Makefile.</p></li>
-      </ol>
-      <p>Note : si vous constatez des fautes d'orthographe ou des erreurs dans le fichier anglais, ne le modifiez pas de vous-même, mais signalez-les à la <a href="http://fink.sourceforge.net/lists/fink-i18n.php">liste de diffusion fink-i18n
-      list</a>, de telle sorte que le fichier anglais - fichier maître - soit modifié.</p>
-    
-    <h3><a name="files.check-work">2.7 Vérification du travail</a></h3>
-      
-      <p>Avant de télécharger votre travail sur le site web de Fink, vous devez vérifier que vos documents s'affichent correctement. Il existe deux façons de le faire :</p>
-      <ul>
-        <li><b>La plus simple : </b>ouvrez les fichiers HTML et PHP dans votre navigateur web. Les fichiers PHP ne s'afficheront toutefois pas exactement comme vous les verrez sur le site web de Fink.</li>
-        <li><b>La meilleure : </b>Vous pouvez utiliser le serveur web inclus dans le système opératoire pour afficher vos documents de la même façon que sur le site web de Fink. En supposant que vous utilisez le serveur inclus :<ol>
-            <li>Modifiez le fichier <tt style="white-space: nowrap;">/etc/httpd/httpd.conf</tt>, par exemple avec :<pre>sudo pico /etc/httpd/httpd.conf</pre></li>
-            <li>Cherchez la ligne :
+</ol>
+<p>Note : si vous constatez des fautes d'orthographe ou des erreurs dans le fichier anglais, ne le modifiez pas de vous-même, mais signalez-les à la <a href="http://fink.sourceforge.net/lists/fink-i18n.php">liste de diffusion fink-i18n
+list</a>, de telle sorte que le fichier anglais - fichier maître - soit modifié.</p>
+
+<h3><a name="files.check-work">2.7 Vérification du travail</a></h3>
+
+<p>Avant de télécharger votre travail sur le site web de Fink, vous devez vérifier que vos documents s'affichent correctement. Il existe deux façons de le faire :</p>
+<ul>
+<li><b>La plus simple : </b>ouvrez les fichiers HTML et PHP dans votre navigateur web. Les fichiers PHP ne s'afficheront toutefois pas exactement comme vous les verrez sur le site web de Fink.</li>
+<li><b>La meilleure : </b>Vous pouvez utiliser le serveur web inclus dans le système opératoire pour afficher vos documents de la même façon que sur le site web de Fink. En supposant que vous utilisez le serveur inclus :<ol>
+<li>Modifiez le fichier <tt style="white-space: nowrap;">/etc/httpd/httpd.conf</tt>, par exemple avec :<pre>sudo pico /etc/httpd/httpd.conf</pre></li>
+<li>Cherchez la ligne :
 <pre>#LoadModule php4_module libexec/httpd/libphp4.so</pre>
 et supprimez le signe # au début de cette ligne.</li>
-            <li>Cherchez la ligne 
+<li>Cherchez la ligne 
 <pre>#AddModule mod_php4.c</pre>
 et supprimez le signe # au début de cette ligne.</li>
-            <li>Si vous utilisez une version d'Apache antérieure à celle incluse dans Panther, vous devez aussi rechercher la ligne :
+<li>Si vous utilisez une version d'Apache antérieure à celle incluse dans Panther, vous devez aussi rechercher la ligne :
 <pre>AddType application/x-httpd-php   .php</pre>
 et insérez un signe # au début de cette ligne.</li>
-            <li>Sauvegardez le fichier et fermez l'éditeur.</li>
-            <li>Démarrez le partage web personnel dans les préférences système. S'il est déjà activé, désactivez-le, puis réactivez-le.</li>
-            <li>Le moyen le plus simple de tout voir est de déplacer votre copie locale de la branche <tt style="white-space: nowrap;">xml </tt> dans le sous-répertoire 
-            <tt style="white-space: nowrap;">Sites </tt> de votre répertoire utilisateur. Vous pourrez alors ouvrir la page d'accueil dans votre navigateur à l'URL suivante :
-            <pre>http://127.0.0.1/~<b>NOMUTILISATEUR</b>/xml/web/index.php</pre>
-            où <tt style="white-space: nowrap;">NOMUTILISATEUR</tt> doit être remplacé par votre nom d'utilisateur.</li>
-          </ol></li>
-      </ul>
-    
-    <h3><a name="files.change-checkout">2.8 Après obtention de l'accès au commit (chefs d'équipe)</a></h3>
-      
-      <p>Lorsque que vous aurez obtenu l'accès au commit, vous devrez :</p>
-      <ul>
-        <li>Créer une paire de clés SSH pour votre compte SourceForge.<ol>
-            <li>Créez-la sur votre machine en suivant les <a href="http://sourceforge.net/docman/display_doc.php?docid=761&amp;group_id=1#keygenopenssh">instructions</a>
-            données sur SourceForge.</li>
-            <li>Exécutez dans une fenêtre de terminal la commande suivante : 
-            <pre>cat ~/.ssh/id_dsa.pub | pbcopy</pre>
-            Cette commande copie directement le contenu du fichier dans le presse-papiers, de façon à éviter de générer des caractères de fin de ligne intempestifs. Ne copiez surtout rien d'autre dans le presse-papiers avant d'avoir terminé la procédure.</li>
-            <li>Connectez-vous à votre compte sur SourceForge.</li>
-            <li>Cliquez sur "Account Options"</li>
-            <li>Allez dans la zone "Host Access Information" et cliquez sur  "Edit
-            SSH Keys for Shell/CVS"</li>
-            <li>Cliquez dans le formulaire et exécutez Cmd-A, Cmd-V</li>
-            <li>Cliquez sur OK.</li>
-          </ol></li>
-        <li>Faire un check out de l'arborescence <tt style="white-space: nowrap;">xml</tt> en utilisant votre nom d'utilisateur.<ol>
-            <li>Si vous avez déjà fait un check out de l'arborescence <tt style="white-space: nowrap;">xml</tt> au départ, vous devez renommer votre copie locale. Vous pouvez utiliser le Finder pour ce faire.</li>
-            <li>Exécutez la commande suivante dans une fenêtre de terminal de façon à vous déplacer dans le répertoire où réside votre arbre : 
-            <pre>cd ~/Documents/Fink-i18n</pre></li>
-            <li>Faites un check out de l'arbre xml :
-            <pre>cvs -d:ext:votrenomutilisateur@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
-            où <b>votrenomutilisateur</b> est, bien entendu, votre nom d'utilisateur sur SourceForge. Saisissez la phrase d'authentification à l'invite.</li>
-            <li>Copiez dans la nouvelle arborescence les fichiers sur lesquels vous aviez travaillé antérieurement, et qui résident dans la copie que vous venez de faire. Vous pouvez utiliser le Finder pour cela, faites cependant très attention de copier les fichiers exactement là où ils se trouvaient dans l'ancienne arborescence.</li>
-          </ol></li>
-      </ul>
-    
-    <h3><a name="files.committing">2.9 Commit des modifications (chefs d'équipe)</a></h3>
-      
-      <p>Maintenant, vous devez envoyer les modifications au serveur principal. Tout d'abord, vous devez vous assurer que vous avez effectivement accès au commit. Vous devez aussi vérifier que vous utilisez toujours la dernière version de XSLT dans l'arborescence instable de Fink, qui est, à l'heure où ce document est écrit, <tt style="white-space: nowrap;">libxslt-1.1.2-2</tt>.</p>
-      <p>La procédure de commit est différente selon la nature - statique ou dynamique - des documents :</p>
-      <ul>
-        <li><b>Fichiers statiques : </b>(fichiers PHP seulement). Pour faire un commit de ces documents, exécutez les étapes suivantes :<ol>
-            <li>Ouvrez une fenêtre de terminal.</li>
-            <li>Déplacez-vous dans le répertoire qui contient le fichier sur lequel vous voulez faire un check in, par exemple :
-            <pre>cd ~/Documents/Fink-i18n/xml/web</pre>
-            <p>si vous avez créé votre arborescence <tt style="white-space: nowrap;">xml</tt> dans le sous-répertoire 
-            <tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> de votre répertoire utilisateur et que vous voulez faire un commit d'un fichier PHP résidant dans le répertoire xml/web.</p></li>
-            <li>Si le fichier est un fichier que vous venez de créer, vous devez l'ajouter à la liste des fichiers, par exemple :
-            <pre>cvs add download.ru.php</pre>
-            Saisissez votre phrase d'authentification à l'invite.<p>Si le fichier existe déjà, sautez cette étape.</p></li>
-            <li>Faites un commit du fichier, par exemple :
-            <pre>cvs ci -m "message" download.ru.php</pre>
-            où 
-            <b>message</b> indique ce que vous avez fait. Saisissez votre phrase d'authentification à l'invite.
-            <p>Note : vous pouvez faire un commit de plusieurs fichiers à la fois.</p></li>
-            </ol></li>
-        <li><b>Fichiers dynamiques : </b>(XML et PHP). Après avoir modifié le fichier XML, effectuez les opérations suivantes : <ol>
-            <li>Ouvrez une fenêtre de terminal</li>
-            <li>Déplacez-vous dans le répertoire qui contient le fichier que vous avez créé ou modifié, par exemple :
-            <pre>cd ~/Documents/Fink-i18n/xml/faq</pre>
-            si vous avez travaillé sur les QFP.</li>
-            <li>Lancez :
-            <pre>make check</pre>
-            pour vérifier que le fichier est valide.</li>
-            <li>Si le fichier XML est un fichier que vous venez de créer, vous devez l'ajouter à la liste des fichiers, par exemple :
-            <pre>cvs add faq.ru.xml</pre>
-            Saisissez votre phrase d'authentification SourceForge à l'invite.<p>Si le fichier existe déjà, sautez cette étape.</p></li>
-            <li>Faites un commit du fichier, par exemple :
-            <pre>cvs ci -m "message" faq.ru.xml</pre>
-            <p>où <b>message</b> décrit ce que vous avez fait. Saisissez votre phrase d'authentification SourceForge à l'invite. 
-            N'oubliez pas de faire aussi un commit du Makefile si vous l'avez modifié (c'est-à-dire si vous avez ajouté votre langue dans le fichier).</p></li>
-            <li>Ensuite, lancez :
-            <pre>make &amp;&amp; make install</pre></li>
-            <li>Si vous obtenez un messsage d'erreur vous indiquant qu'un répertoire <tt style="white-space: nowrap;">foo</tt> n'existe pas dans l'arborescence <tt style="white-space: nowrap;">xml/scripts/installer/dmg</tt>, déplacez-vous y avec la commande suivante : <pre>cd ../scripts/installer/dmg</pre> et créez le répertoire manquant avec : <pre>mkdir -p foo</pre> Puis retournez dans le précédent répertoire et réexécutez : <pre>make &amp;&amp; make install</pre></li>
-            <li>Déplacez-vous à la racine de l'arborescence xml de Fink, par exemple :  
-            <pre>cd ~/Documents/Fink-i18n/xml</pre>
-            <p>si vous avez créé votre arborescence 
-            <tt style="white-space: nowrap;">xml</tt> dans le sous-répertoire 
-            <tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> de votre répertoire utilisateur.</p></li>
-            <li>Si le fichier XML est un fichier que vous venez de créer, il vous faut ajouter d'autres fichiers à la liste des fichiers gérés par CVS. Par exemple, si vous avez travaillé sur les QFP, vous devez exécuter :
+<li>Sauvegardez le fichier et fermez l'éditeur.</li>
+<li>Démarrez le partage web personnel dans les préférences système. S'il est déjà activé, désactivez-le, puis réactivez-le.</li>
+<li>Le moyen le plus simple de tout voir est de déplacer votre copie locale de la branche <tt style="white-space: nowrap;">xml </tt> dans le sous-répertoire 
+<tt style="white-space: nowrap;">Sites </tt> de votre répertoire utilisateur. Vous pourrez alors ouvrir la page d'accueil dans votre navigateur à l'URL suivante :
+<pre>http://127.0.0.1/~<b>NOMUTILISATEUR</b>/xml/web/index.php</pre>
+où <tt style="white-space: nowrap;">NOMUTILISATEUR</tt> doit être remplacé par votre nom d'utilisateur.</li>
+</ol></li>
+</ul>
+
+<h3><a name="files.change-checkout">2.8 Après obtention de l'accès au commit (chefs d'équipe)</a></h3>
+
+<p>Lorsque que vous aurez obtenu l'accès au commit, vous devrez :</p>
+<ul>
+<li>Créer une paire de clés SSH pour votre compte SourceForge.<ol>
+<li>Créez-la sur votre machine en suivant les <a href="http://sourceforge.net/docman/display_doc.php?docid=761&amp;group_id=1#keygenopenssh">instructions</a>
+données sur SourceForge.</li>
+<li>Exécutez dans une fenêtre de terminal la commande suivante : 
+<pre>cat ~/.ssh/id_dsa.pub | pbcopy</pre>
+Cette commande copie directement le contenu du fichier dans le presse-papiers, de façon à éviter de générer des caractères de fin de ligne intempestifs. Ne copiez surtout rien d'autre dans le presse-papiers avant d'avoir terminé la procédure.</li>
+<li>Connectez-vous à votre compte sur SourceForge.</li>
+<li>Cliquez sur "Account Options"</li>
+<li>Allez dans la zone "Host Access Information" et cliquez sur  "Edit
+SSH Keys for Shell/CVS"</li>
+<li>Cliquez dans le formulaire et exécutez Cmd-A, Cmd-V</li>
+<li>Cliquez sur OK.</li>
+</ol></li>
+<li>Faire un check out de l'arborescence <tt style="white-space: nowrap;">xml</tt> en utilisant votre nom d'utilisateur.<ol>
+<li>Si vous avez déjà fait un check out de l'arborescence <tt style="white-space: nowrap;">xml</tt> au départ, vous devez renommer votre copie locale. Vous pouvez utiliser le Finder pour ce faire.</li>
+<li>Exécutez la commande suivante dans une fenêtre de terminal de façon à vous déplacer dans le répertoire où réside votre arbre : 
+<pre>cd ~/Documents/Fink-i18n</pre></li>
+<li>Faites un check out de l'arbre xml :
+<pre>cvs -d:ext:votrenomutilisateur@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
+où <b>votrenomutilisateur</b> est, bien entendu, votre nom d'utilisateur sur SourceForge. Saisissez la phrase d'authentification à l'invite.</li>
+<li>Copiez dans la nouvelle arborescence les fichiers sur lesquels vous aviez travaillé antérieurement, et qui résident dans la copie que vous venez de faire. Vous pouvez utiliser le Finder pour cela, faites cependant très attention de copier les fichiers exactement là où ils se trouvaient dans l'ancienne arborescence.</li>
+</ol></li>
+</ul>
+
+<h3><a name="files.committing">2.9 Commit des modifications (chefs d'équipe)</a></h3>
+
+<p>Maintenant, vous devez envoyer les modifications au serveur principal. Tout d'abord, vous devez vous assurer que vous avez effectivement accès au commit. Vous devez aussi vérifier que vous utilisez toujours la dernière version de XSLT dans l'arborescence instable de Fink, qui est, à l'heure où ce document est écrit, <tt style="white-space: nowrap;">libxslt-1.1.2-2</tt>.</p>
+<p>La procédure de commit est différente selon la nature - statique ou dynamique - des documents :</p>
+<ul>
+<li><b>Fichiers statiques : </b>(fichiers PHP seulement). Pour faire un commit de ces documents, exécutez les étapes suivantes :<ol>
+<li>Ouvrez une fenêtre de terminal.</li>
+<li>Déplacez-vous dans le répertoire qui contient le fichier sur lequel vous voulez faire un check in, par exemple :
+<pre>cd ~/Documents/Fink-i18n/xml/web</pre>
+<p>si vous avez créé votre arborescence <tt style="white-space: nowrap;">xml</tt> dans le sous-répertoire 
+<tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> de votre répertoire utilisateur et que vous voulez faire un commit d'un fichier PHP résidant dans le répertoire xml/web.</p></li>
+<li>Si le fichier est un fichier que vous venez de créer, vous devez l'ajouter à la liste des fichiers, par exemple :
+<pre>cvs add download.ru.php</pre>
+Saisissez votre phrase d'authentification à l'invite.<p>Si le fichier existe déjà, sautez cette étape.</p></li>
+<li>Faites un commit du fichier, par exemple :
+<pre>cvs ci -m "message" download.ru.php</pre>
+où 
+<b>message</b> indique ce que vous avez fait. Saisissez votre phrase d'authentification à l'invite.
+<p>Note : vous pouvez faire un commit de plusieurs fichiers à la fois.</p></li>
+</ol></li>
+<li><b>Fichiers dynamiques : </b>(XML et PHP). Après avoir modifié le fichier XML, effectuez les opérations suivantes : <ol>
+<li>Ouvrez une fenêtre de terminal</li>
+<li>Déplacez-vous dans le répertoire qui contient le fichier que vous avez créé ou modifié, par exemple :
+<pre>cd ~/Documents/Fink-i18n/xml/faq</pre>
+si vous avez travaillé sur les QFP.</li>
+<li>Lancez :
+<pre>make check</pre>
+pour vérifier que le fichier est valide.</li>
+<li>Si le fichier XML est un fichier que vous venez de créer, vous devez l'ajouter à la liste des fichiers, par exemple :
+<pre>cvs add faq.ru.xml</pre>
+Saisissez votre phrase d'authentification SourceForge à l'invite.<p>Si le fichier existe déjà, sautez cette étape.</p></li>
+<li>Faites un commit du fichier, par exemple :
+<pre>cvs ci -m "message" faq.ru.xml</pre>
+<p>où <b>message</b> décrit ce que vous avez fait. Saisissez votre phrase d'authentification SourceForge à l'invite. 
+N'oubliez pas de faire aussi un commit du Makefile si vous l'avez modifié (c'est-à-dire si vous avez ajouté votre langue dans le fichier).</p></li>
+<li>Ensuite, lancez :
+<pre>make &amp;&amp; make install</pre></li>
+<li>Si vous obtenez un messsage d'erreur vous indiquant qu'un répertoire <tt style="white-space: nowrap;">foo</tt> n'existe pas dans l'arborescence <tt style="white-space: nowrap;">xml/scripts/installer/dmg</tt>, déplacez-vous y avec la commande suivante : <pre>cd ../scripts/installer/dmg</pre> et créez le répertoire manquant avec : <pre>mkdir -p foo</pre> Puis retournez dans le précédent répertoire et réexécutez : <pre>make &amp;&amp; make install</pre></li>
+<li>Déplacez-vous à la racine de l'arborescence xml de Fink, par exemple :  
+<pre>cd ~/Documents/Fink-i18n/xml</pre>
+<p>si vous avez créé votre arborescence 
+<tt style="white-space: nowrap;">xml</tt> dans le sous-répertoire 
+<tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> de votre répertoire utilisateur.</p></li>
+<li>Si le fichier XML est un fichier que vous venez de créer, il vous faut ajouter d'autres fichiers à la liste des fichiers gérés par CVS. Par exemple, si vous avez travaillé sur les QFP, vous devez exécuter :
 <pre>cvs add web/faq/index.en.php web/faq/general.ru.php \ 
 web/faq/relations.ru.php web/faq/usage-fink.ru.php \ 
 web/comp-general.ru.php web/faq/comp-packages.ru.php \ 
@@ -337,146 +339,147 @@ web/faq/upgrade-fink.ru.php web/faq/mirrors.ru.php \
 web/faq/faq.ru.html web/faq/header.ru.inc \ 
 scripts/installer/dmg/faq.ru.html</pre>
 Pour les autres documents, les fichiers à ajouter ne sont, bien entendu, pas les mêmes - utilisez les noms des fichiers créés lorsque vous avez exécuté <tt style="white-space: nowrap;">make
-            install</tt>.</li>
-         <li>N'oubliez pas d'ajouter et de faire un commit de tout fichier que vous avez créé (que ce soit constants.xx.inc, header.xx.inc, nav.xx.inc, etc...)
-          <p>Si le fichier existe déjà, sautez cette étape.</p></li>
-            <li>Faites un commit de l'ensemble de l'arborescence :
-            <pre>cvs ci -m "message"</pre>
-            <p>où <b>message</b> est une description que ce que vous avez fait (vous pouvez utiliser le même que celui que vous avez utilisé pour faire un commit du fichier XML). Saisissez votre phrase d'authentification à l'invite.</p><p>La raison pour laquelle vous devez exécuter deux commits dans ce cas, est que c'est la seule façon de faire pour que la date de création et le nom de la personne qui a modifié les fichiers en dernier ressort soient corrects.</p></li>
-          </ol></li>
-      </ul>
-    
-    <h3><a name="files.website">2.10 Mise à jour de notre site web</a></h3>
-      
-      <p>Si vous avez envie de voir tout de suite le fruit de votre travail, exécutez les étape suivantes :</p>
-      <ol>
-        <li>Ouvrez une fenêtre de terminal</li>
-        <li>Connectez-vous au serveur web via ssh : 
-        <pre>ssh nomutilisateur@shell.sourceforge.net</pre>
-        Saisissez votre phrase d'authentification SourceForge.</li>
-        <li>Déplacez-vous dans le répertoire qui contient nos pages web :
-        <pre>cd /home/groups/f/fi/fink/htdocs</pre></li>
-        <li>Mettez à jour le site web à partir de CVS :
-        <pre>./update.sh</pre></li>
-        <li>Déconnectez-vous du serveur web : 
-        <pre>exit</pre></li>
-        <li>Admirez votre travail : 
-        <pre>open http://fink.sourceforge.net/</pre></li>
-      </ol>
-    
-  <h2><a name="procedure">3 Procédure de mise à jour des documents</a></h2>
-    
-    
-    
+install</tt>.</li>
+ <li>N'oubliez pas d'ajouter et de faire un commit de tout fichier que vous avez créé (que ce soit constants.xx.inc, header.xx.inc, nav.xx.inc, etc...)
+<p>Si le fichier existe déjà, sautez cette étape.</p></li>
+<li>Faites un commit de l'ensemble de l'arborescence :
+<pre>cvs ci -m "message"</pre>
+<p>où <b>message</b> est une description que ce que vous avez fait (vous pouvez utiliser le même que celui que vous avez utilisé pour faire un commit du fichier XML). Saisissez votre phrase d'authentification à l'invite.</p><p>La raison pour laquelle vous devez exécuter deux commits dans ce cas, est que c'est la seule façon de faire pour que la date de création et le nom de la personne qui a modifié les fichiers en dernier ressort soient corrects.</p></li>
+</ol></li>
+</ul>
+
+<h3><a name="files.website">2.10 Mise à jour de notre site web</a></h3>
+
+<p>Si vous avez envie de voir tout de suite le fruit de votre travail, exécutez les étape suivantes :</p>
+<ol>
+<li>Ouvrez une fenêtre de terminal</li>
+<li>Connectez-vous au serveur web via ssh : 
+<pre>ssh nomutilisateur@shell.sourceforge.net</pre>
+Saisissez votre phrase d'authentification SourceForge.</li>
+<li>Déplacez-vous dans le répertoire qui contient nos pages web :
+<pre>cd /home/groups/f/fi/fink/htdocs</pre></li>
+<li>Mettez à jour le site web à partir de CVS :
+<pre>./update.sh</pre></li>
+<li>Déconnectez-vous du serveur web : 
+<pre>exit</pre></li>
+<li>Admirez votre travail : 
+<pre>open http://fink.sourceforge.net/</pre></li>
+</ol>
+
+<h2><a name="procedure">3 Procédure de mise à jour des documents</a></h2>
+
+
+
  <p>Comme la documentation anglaise est la documentation maître, elle doit être mise à jour en premier. Une telle mise à jour peut être effectuée par un membre de l'équipe i18n (par exemple par les rédacteurs anglais) ou directement par les développeurs.</p>
-      <p>Pour que tout se passe bien, vous devez suivre les procédures suivantes.</p>
-    
-    <h3><a name="procedure.call-to-translate">3.1 Demande de traduction</a></h3>
-      
-      <p>Quand un nouveau document est mis en ligne ou que des changements ont lieu dans la documentation anglaise, les traducteurs sont prévenus par un message envoyé sur la liste de diffusion fink-18n. Le message doit contenir les informations suivantes :</p>
-      <ul>
-        <li>Une note dans l'objet du message indiquant qu'il s'agit d'une demande de traduction, par exemple : "[translation]", ou "[translation-delayed]" pour les documents anglais qui ne sont pas mis en ligne immédiatement.</li>
-        <li>De plus, le nom du fichier concerné doit être inclus dans le corps du message.</li>
-        <li>Un diff doit être inclus pour indiquer les modifications faites, par exemple :
-        <pre>diff -Nru3 -r<b>last_revision</b> r<b>head</b> </pre>
+<p>Pour que tout se passe bien, vous devez suivre les procédures suivantes.</p>
+
+<h3><a name="procedure.call-to-translate">3.1 Demande de traduction</a></h3>
+
+<p>Quand un nouveau document est mis en ligne ou que des changements ont lieu dans la documentation anglaise, les traducteurs sont prévenus par un message envoyé sur la liste de diffusion fink-18n. Le message doit contenir les informations suivantes :</p>
+<ul>
+<li>Une note dans l'objet du message indiquant qu'il s'agit d'une demande de traduction, par exemple : "[translation]", ou "[translation-delayed]" pour les documents anglais qui ne sont pas mis en ligne immédiatement.</li>
+<li>De plus, le nom du fichier concerné doit être inclus dans le corps du message.</li>
+<li>Un diff doit être inclus pour indiquer les modifications faites, par exemple :
+<pre>diff -Nru3 -r<b>last_revision</b> r<b>head</b> </pre>
 </li>
-      </ul>
-      <p>Note : comme la simple exécution du commit d'un fichier XML génère un message sur la liste de diffusion fink-commits qui remplit tous les critères mentionnés ci-dessus, le plus simple est de faire suivre le message en changeant son objet. Néanmoins, cela ne fonctionne pas bien, si le nombre de changements est important.</p>
-    
-   <h3><a name="procedure.doc-updates">3.2 Nouveau document</a></h3>
-       
-      <p>On fait un <a href="#files.committing">commit</a> sur la version anglaise du document et on l'<a href="#files.website">active</a>, il est ensuite <a href="#procedure.new-translations">traduit</a> comme expliqué ci-dessous.</p>
-    
-  <h3><a name="procedure.new-translation">3.3 Nouvelles traductions</a></h3>
-      
-      <p>Le chef d'équipe de la langue concernée (ou une autre personne ayant un accès CVS) fait un <a href="#files.committing">commit</a> et <a href="#files.website">active</a> les documents dès qu'ils sont prêts.</p>
-      <p>On entend par nouvelle traduction :</p>
-      <ul>
-        <li>la première traduction d'un document existant,</li>
-        <li>toute traduction partielle d'un document existant,</li>
-        <li>la traduction d'un nouveau document anglais.</li>
-      </ul>
-    
-    <h3><a name="procedure.prompt-update">3.4 Mise à jour rapide de la documentation existante</a></h3>
-      
-      <p>On fait un <a href="#files.committing">commit</a> et l'on <a href="#files.website">active</a> immédiatement la documentation maître anglaise, - quelque soit la personne qui change le fichier XML, elle doit aussi faire le commit des fichiers PHP et HTML et activer les changements. Ensuite les équipes de traduction mettent à jour leurs versions, font un <a href="#files.committing">commit</a> de <b>tous</b> les fichiers (XML et PHP), puis <a href="#files.activate">activent</a> les changements.</p>
-      <p><b>Ne</b> changez <b>jamais</b> un fichier php généré dynamiquement ; changez le fichier xml correspondant.</p>
-      <p><b>Vérifiez</b> que la ligne cvsid en début de fichier n'est pas coupée en deux.</p>
-      <p><b>Notes :</b></p>
-      <ol>
-        <li>Les modifications du guide d'internationalisation (ce document) sont <b>toujours</b> faites suivant ce schéma, car les changements affectent l'ensemble des équipes de traduction.</li>
-        <li>Les modifications des documents statiques (fichiers PHP non générés via XML) sont <b>toujours</b> faites suivant ce schéma, car il est difficile de <a href="#procedure.delayed-update">retarder</a> leur activation.</li>
-      </ol>
-    
-    <h3><a name="procedure.delayed-update">3.5 Mise à jour retardée de la documentation existante (fichiers générés via XML uniquement)</a></h3>
-      
-      <p>Dans ce case, on fait le <a href="#files.committing">commit</a> de la version anglaise du fichier XML, mais <b>pas</b> des fichiers PHP et HTML, c'est-à-dire que l'on s'arrête à l'étape 5 de la section Fichiers dynamiques en <a href="#files.committing">2.9</a>. Tous les traducteurs traduisent dans leurs langues respectives et font le <a href="#files.committing">commit</a> du <b>seul</b> fichier XML (c'est-à-dire le même fichier que pour l'anglais) dans un laps de temps prévu d'avance. La génération, le commit et <a href="#files.website">l'activation</a> de tous les fichiers PHP et HTML sont faits en même temps par un des chefs du projet i18n quand le délai est écoulé.</p>
-    
-        <h3><a name="procedure.summary">3.6 Pour les développeurs et les documentalistes anglais</a></h3>
-      
-      <p>La règle actuelle est que tous les documents doivent être mis à jour suivant le schéma <a href="#procedure.prompt-update">mise à jour rapide</a>, sauf si vous avez une bonne raison de faire autrement.</p>
-    
+</ul>
+<p>Note : comme la simple exécution du commit d'un fichier XML génère un message sur la liste de diffusion fink-commits qui remplit tous les critères mentionnés ci-dessus, le plus simple est de faire suivre le message en changeant son objet. Néanmoins, cela ne fonctionne pas bien, si le nombre de changements est important.</p>
+
+ <h3><a name="procedure.doc-updates">3.2 Nouveau document</a></h3>
+ 
+<p>On fait un <a href="#files.committing">commit</a> sur la version anglaise du document et on l'<a href="#files.website">active</a>, il est ensuite <a href="#procedure.new-translations">traduit</a> comme expliqué ci-dessous.</p>
+<p><b>Note</b> : si le nouveau document est inclus dans un nouveau répertoire, n'oubliez pas d'ajouter ce nouveau répertoire au Makefile situé dans le répertoire <tt style="white-space: nowrap;">xml</tt>. Faute de le faire, le processus de compilation ne s'effectuera pas correctement.</p>
+
+<h3><a name="procedure.new-translation">3.3 Nouvelles traductions</a></h3>
+
+<p>Le chef d'équipe de la langue concernée (ou une autre personne ayant un accès CVS) fait un <a href="#files.committing">commit</a> et <a href="#files.website">active</a> les documents dès qu'ils sont prêts.</p>
+<p>On entend par nouvelle traduction :</p>
+<ul>
+<li>la première traduction d'un document existant,</li>
+<li>toute traduction partielle d'un document existant,</li>
+<li>la traduction d'un nouveau document anglais.</li>
+</ul>
+
+<h3><a name="procedure.prompt-update">3.4 Mise à jour rapide de la documentation existante</a></h3>
+
+<p>On fait un <a href="#files.committing">commit</a> et l'on <a href="#files.website">active</a> immédiatement la documentation maître anglaise, - quelque soit la personne qui change le fichier XML, elle doit aussi faire le commit des fichiers PHP et HTML et activer les changements. Ensuite les équipes de traduction mettent à jour leurs versions, font un <a href="#files.committing">commit</a> de <b>tous</b> les fichiers (XML et PHP), puis <a href="#files.activate">activent</a> les changements.</p>
+<p><b>Ne</b> changez <b>jamais</b> un fichier php généré dynamiquement ; changez le fichier xml correspondant.</p>
+<p><b>Vérifiez</b> que la ligne cvsid en début de fichier n'est pas coupée en deux.</p>
+<p><b>Notes :</b></p>
+<ol>
+<li>Les modifications du guide d'internationalisation (ce document) sont <b>toujours</b> faites suivant ce schéma, car les changements affectent l'ensemble des équipes de traduction.</li>
+<li>Les modifications des documents statiques (fichiers PHP non générés via XML) sont <b>toujours</b> faites suivant ce schéma, car il est difficile de <a href="#procedure.delayed-update">retarder</a> leur activation.</li>
+</ol>
+
+<h3><a name="procedure.delayed-update">3.5 Mise à jour retardée de la documentation existante (fichiers générés via XML uniquement)</a></h3>
+
+<p>Dans ce case, on fait le <a href="#files.committing">commit</a> de la version anglaise du fichier XML, mais <b>pas</b> des fichiers PHP et HTML, c'est-à-dire que l'on s'arrête à l'étape 5 de la section Fichiers dynamiques en <a href="#files.committing">2.9</a>. Tous les traducteurs traduisent dans leurs langues respectives et font le <a href="#files.committing">commit</a> du <b>seul</b> fichier XML (c'est-à-dire le même fichier que pour l'anglais) dans un laps de temps prévu d'avance. La génération, le commit et <a href="#files.website">l'activation</a> de tous les fichiers PHP et HTML sont faits en même temps par un des chefs du projet i18n quand le délai est écoulé.</p>
+
+<h3><a name="procedure.summary">3.6 Pour les développeurs et les documentalistes anglais</a></h3>
+
+<p>La règle actuelle est que tous les documents doivent être mis à jour suivant le schéma <a href="#procedure.prompt-update">mise à jour rapide</a>, sauf si vous avez une bonne raison de faire autrement.</p>
+
  <h2><a name="resources">4 Autres ressources</a></h2>
-    
-    
-    <h3><a name="resources.resources">4.1 Liens importants</a></h3>
-      
-      <p>L'internationalisation n'est pas une chose simple à mettre en place. Les ressources indiquées ci-dessous peuvent servir de base à une source auxiliaire d'information. Nous vous conseillons de les lire soigneusement si vous voulez en connaître plus sur le sujet.</p>
-      <ol>
-        <li><a href="http://www.w3.org/TR/unicode-xml/">Unicode in XML and
-        other Markup Languages</a></li>
-        <li><a href="http://www.w3.org/International/tutorials/tutorial-char-enc.html">Tutorial:
-        Character sets &amp; encodings</a></li>
-        <li><a href="http://www.w3.org/International/">W3C
-        Internationalization Activity</a></li>
-        <li><a href="http://www.cl.cam.ac.uk/~mgk25/unicode.html">UTF-8 and
-        Unicode FAQ for Unix/Linux</a></li>
-      </ol>
-    
-    <h3><a name="resources.editors">4.2 Éditeurs de textes</a></h3>
-      
-      <p>Il existe un certain d'éditeurs de texte que vous pouvez utiliser pour modifier les fichiers. Voici une liste de ceux que nous vous recommandons. Certains éditeurs de texte sont difficiles à utiliser ou sont des outils en ligne de commande, et ne conviennent donc pas à tout un chacun. Nous avons essayé de donner une liste d'éditeurs de texte pouvant convenir à tout le monde.</p>
-      <ul>
-        <li><a href="http://www.codingmonkeys.de/subethaedit/">SubEthaEdit</a> - éditeur de texte graphique pour Mac OS X utilisant la technologie Rendezvous.</li>
-        <li><a href="http://www.barebones.com/products/bbedit/index.shtml">BBEdit</a>
-        - éditeur de texte très complet et bien connu, quoique non gratuit.</li>
-        <li><a href="http://www.morphon.com/xmleditor/index.shtml">Morphon
-        XML-Editor</a> - éditeur de texte XML gratuit, très bien adapté pour la modification des fichiers XML.</li>
-        <li><a href="http://free.abracode.com/cyclone/">Cyclone</a> - interface gratuite pour le convertisseur d'encodage de texte d'Apple.</li>
-        <li><a href="http://www.macalester.edu/~jaas/linebreak.html">LineBreak</a>
-        - utilitaire pour Mac OS X qui convertit les fins de ligne dans les fichiers texte.</li>
-      </ul>
-    
-    <h3><a name="resources.moretools">4.3 Outils utiles</a></h3>
-      
-      <p>L'interface en ligne de commande ne convient pas à tout le monde. Les outils suivants sont généralement des interfaces graphiques d'outils en ligne de commande. Vous pouvez vous en servir si vous le désirez.</p>
-      <ul>
-        <li><a href="http://www.wincvs.org/download.html">MacCvsX 3.3</a>
-        - interface graphique pour CVS (recommandée uniquement aux chefs d'équipe)</li>
-      </ul>
-    
-  <h2><a name="appendix">5 Annexe</a></h2>
-    
-    
-    <h3><a name="appendix.cvs-codes">5.1 Codes CVS</a></h3>
-      
-      <p>Quand vous mettrez à jour votre copie locale par CVS, vous verrez parfois des lettres devant les noms de fichiers. Voici ce qu'elles signifient :</p>
-      <ul>
-        <li><b>P :</b> il existe une nouvelle version du fichier créée par une rustine.</li>
-        <li><b>U :</b> il existe une nouvelle version du fichier créée par téléchargement.</li>
-        <li><b>M :</b> la version dans votre copie locale a été modifiée.</li>
-        <li><b>C :</b> Votre version est en conflit avec celle du serveur. Vous devez résoudre le conflit en éditant le fichier et en intégrant vos modifications. <p>Pour ce faire, vous pouvez utiliser :</p>
-        <pre>rm fichier; cvs update fichier</pre>
-        <p>où <tt style="white-space: nowrap;">fichier</tt> représente le fichier concerné, puis appliquez les modifications à partir de la copie de sauvegarde de votre fichier que CVS a créée sous le nom de <tt style="white-space: nowrap;">.#fichier-version</tt></p> où <b>version</b> est le numéro de révision avant la mise à jour.</li>
-        <li><b>? :</b> le fichier n'est ni sur le serveur, ni dans la liste des fichiers à ignorer.</li>
-        <li><b>A :</b> le fichier a été ajouté, mais le commit n'a pas encore eu lieu.</li>
-        <li><b>R :</b> le fichier a été supprimé, mais le commit n'a pas encore eu lieu.</li>
-      </ul>
-    
-  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+
+
+<h3><a name="resources.resources">4.1 Liens importants</a></h3>
+
+<p>L'internationalisation n'est pas une chose simple à mettre en place. Les ressources indiquées ci-dessous peuvent servir de base à une source auxiliaire d'information. Nous vous conseillons de les lire soigneusement si vous voulez en connaître plus sur le sujet.</p>
+<ol>
+<li><a href="http://www.w3.org/TR/unicode-xml/">Unicode in XML and
+other Markup Languages</a></li>
+<li><a href="http://www.w3.org/International/tutorials/tutorial-char-enc.html">Tutorial:
+Character sets &amp; encodings</a></li>
+<li><a href="http://www.w3.org/International/">W3C
+Internationalization Activity</a></li>
+<li><a href="http://www.cl.cam.ac.uk/~mgk25/unicode.html">UTF-8 and
+Unicode FAQ for Unix/Linux</a></li>
+</ol>
+
+<h3><a name="resources.editors">4.2 Éditeurs de textes</a></h3>
+
+<p>Il existe un certain d'éditeurs de texte que vous pouvez utiliser pour modifier les fichiers. Voici une liste de ceux que nous vous recommandons. Certains éditeurs de texte sont difficiles à utiliser ou sont des outils en ligne de commande, et ne conviennent donc pas à tout un chacun. Nous avons essayé de donner une liste d'éditeurs de texte pouvant convenir à tout le monde.</p>
+<ul>
+<li><a href="http://www.codingmonkeys.de/subethaedit/">SubEthaEdit</a> - éditeur de texte graphique pour Mac OS X utilisant la technologie Rendezvous.</li>
+<li><a href="http://www.barebones.com/products/bbedit/index.shtml">BBEdit</a>
+- éditeur de texte très complet et bien connu, quoique non gratuit.</li>
+<li><a href="http://www.morphon.com/xmleditor/index.shtml">Morphon
+XML-Editor</a> - éditeur de texte XML gratuit, très bien adapté pour la modification des fichiers XML.</li>
+<li><a href="http://free.abracode.com/cyclone/">Cyclone</a> - interface gratuite pour le convertisseur d'encodage de texte d'Apple.</li>
+<li><a href="http://www.macalester.edu/~jaas/linebreak.html">LineBreak</a>
+- utilitaire pour Mac OS X qui convertit les fins de ligne dans les fichiers texte.</li>
+</ul>
+
+<h3><a name="resources.moretools">4.3 Outils utiles</a></h3>
+
+<p>L'interface en ligne de commande ne convient pas à tout le monde. Les outils suivants sont généralement des interfaces graphiques d'outils en ligne de commande. Vous pouvez vous en servir si vous le désirez.</p>
+<ul>
+<li><a href="http://www.wincvs.org/download.html">MacCvsX 3.3</a>
+- interface graphique pour CVS (recommandée uniquement aux chefs d'équipe)</li>
+</ul>
+
+<h2><a name="appendix">5 Annexe</a></h2>
+
+
+<h3><a name="appendix.cvs-codes">5.1 Codes CVS</a></h3>
+
+<p>Quand vous mettrez à jour votre copie locale par CVS, vous verrez parfois des lettres devant les noms de fichiers. Voici ce qu'elles signifient :</p>
+<ul>
+<li><b>P :</b> il existe une nouvelle version du fichier créée par une rustine.</li>
+<li><b>U :</b> il existe une nouvelle version du fichier créée par téléchargement.</li>
+<li><b>M :</b> la version dans votre copie locale a été modifiée.</li>
+<li><b>C :</b> Votre version est en conflit avec celle du serveur. Vous devez résoudre le conflit en éditant le fichier et en intégrant vos modifications. <p>Pour ce faire, vous pouvez utiliser :</p>
+<pre>rm fichier; cvs update fichier</pre>
+<p>où <tt style="white-space: nowrap;">fichier</tt> représente le fichier concerné, puis appliquez les modifications à partir de la copie de sauvegarde de votre fichier que CVS a créée sous le nom de <tt style="white-space: nowrap;">.#fichier-version</tt></p> où <b>version</b> est le numéro de révision avant la mise à jour.</li>
+<li><b>? :</b> le fichier n'est ni sur le serveur, ni dans la liste des fichiers à ignorer.</li>
+<li><b>A :</b> le fichier a été ajouté, mais le commit n'a pas encore eu lieu.</li>
+<li><b>R :</b> le fichier a été supprimé, mais le commit n'a pas encore eu lieu.</li>
+</ul>
+
+<hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: multilingual.fr.xml,v 1.13 2004/09/28 08:38:20 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: multilingual.fr.xml,v 1.14 2005/03/02 07:10:19 michga Exp $</i></p></body></html>
