@@ -294,6 +294,16 @@ SplitOff: &lt;&lt;
 							(0.19.2 CVS 版以降の Fink で利用可能)
 							%n や %N を使った際の混乱を避けるためには %{ni} や %{Ni} を使うこと．
 						</p>
+					</td></tr><tr valign="top"><td>%{default_script}</td><td>
+						<p>
+							<tt style="white-space: nowrap;">*Script</tt> フィールドでのみ有効．
+							<tt style="white-space: nowrap;">*Script</tt> フィールドでのデフォルトフィールド．
+							値は <tt style="white-space: nowrap;">Type</tt> に依存するが，常に存在する（または空欄）．
+							<tt style="white-space: nowrap;">SplitOff: InstallScript</tt> で使われる場合，
+							<tt style="white-space: nowrap;">SplitOff</tt> パッケージの <tt style="white-space: nowrap;">InstallScript</tt> デフォルトが空欄であっても，
+							この展開は<b>親</b>のデフォルトになります．
+							
+						</p>
 					</td></tr></table>
 		
 	<h2><a name="policy">3 パッケージ化ポリシー</a></h2>
@@ -1442,7 +1452,7 @@ Primary: ftp://ftp.barbarorg/pub/
 						</p>
 					</td></tr><tr valign="top"><td>SourceRename</td><td>
 						<p>
-							このフィールドを使うと，ビルド時にソースの tar ボールをリネームできる．
+							このフィールドを使うと，ビルド時にソースの tarball をリネームできる．
 							これが便利なのは，例えば，ソースのバージョンがサーバのディレクトリ名には示されているが，
 							tar ボールそのものはどのバージョンでも同じ名前のときだ．
 							(例えば <tt style="white-space: nowrap;">http://www.foobar.org/coolapp/1.2.3/source.tar.gz</tt> というとき)
@@ -2135,4 +2145,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.ja.xml,v 1.17 2004/07/21 18:45:14 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.ja.xml,v 1.18 2004/07/24 14:12:16 babayoshihiko Exp $</i></p></body></html>
