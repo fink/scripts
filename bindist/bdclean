@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+
+$| = 1;
+use v5.6.0;  # perl 5.6.0 or newer required
+use strict;
+
+use File::Find;
+
+###
+
+my $cleandir = shift;
+my $keepdir = shift or die "need two parameters: cleandir and keepdir\n";
+
+my %keep = ();
+$keep{"index.php"} = 1;
+$keep{"Packages.gz"} = 1;
+$keep{"Release"} = 1;
+
+find(sub {
+       if (-l) {
+	 my $fn = readlink($_);
+	 if ($fn =~ /\/([^\/]+)$/) {
+	   $fn = $1;
+	 }
+	 $keep{$fn} = 1;
+       }
+       if ($_ eq "finkinfo") {
+	 $File::Find::prune = 1;
+       }
+     }, $keepdir);
+
+find(sub {
+       if (not -l and -f) {
+	 if (not exists $keep{$_}) {
+	   print $File::Find::name."\n";
+	 }
+       }
+       if ($_ eq "finkinfo") {
+	 $File::Find::prune = 1;
+       }
+     }, $cleandir);
+
+exit 0;
