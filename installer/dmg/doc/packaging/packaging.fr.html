@@ -184,7 +184,7 @@ nom complet du paquet, c'est-à-dire : %n-%v-%r
 </td></tr><tr valign="top"><td>%d</td><td>
 <p>
 répertoire <b>d</b>ans lequel le paquet est construit, par exemple : 
-<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>. Ce répertoire temporaire sert de racine d'arborescence lors de la phase d'installation de la compilation d'un paquet. Vous ne devez pas partir du principe que <tt style="white-space: nowrap;">root-%f</tt> est dans <tt style="white-space: nowrap;">%p/src</tt>, car l'utilisateur peut changer ce répoertoire en utilisant le champ <tt style="white-space: nowrap;">Buildpath</tt> de <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
+<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>. Ce répertoire temporaire sert de racine d'arborescence lors de la phase d'installation de la compilation d'un paquet. Vous ne devez pas partir du principe que <tt style="white-space: nowrap;">root-%f</tt> est dans <tt style="white-space: nowrap;">%p/src</tt>, car l'utilisateur peut changer ce répertoire en utilisant le champ <tt style="white-space: nowrap;">Buildpath</tt> de <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
 </p>
 </td></tr><tr valign="top"><td>%D</td><td>
 <p>
@@ -205,7 +205,8 @@ chemin des rustines
 </p>
 </td></tr><tr valign="top"><td>%b</td><td>
 <p>
-répertoire de compilation, exemple : <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.Vous ne devez pas partir du principe que <tt style="white-space: nowrap;">%f</tt> est dans <tt style="white-space: nowrap;">%p/src</tt>, car l'utilisateur peut changer ce répoertoire en utilisant le champ <tt style="white-space: nowrap;">Buildpath</tt> de <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
+répertoire de compilation, exemple : <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.Vous ne devez pas partir du principe que <tt style="white-space: nowrap;">%f</tt> est dans <tt style="white-space: nowrap;">%p/src</tt>, car l'utilisateur peut changer ce répertoire en utilisant le champ <tt style="white-space: nowrap;">Buildpath</tt> de <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>.
+Le dernier sous-répertoire tire son nom du champ <tt style="white-space: nowrap;">Source</tt>, ou du champ <tt style="white-space: nowrap;">SourceDirectory</tt> (si ce champ existe), ou bien n'existe pas si le champ <tt style="white-space: nowrap;">NoSourceDirectory</tt> a pour valeur <tt style="white-space: nowrap;">true</tt> (vrai).
 </p>
 <p>
 Note: ne l'utilisez que s'il n'y a pas d'autres possibilités. Le répertoire de compilation est
@@ -1245,4 +1246,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.13 2004/04/16 01:06:34 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.14 2004/04/17 06:45:22 michga Exp $</i></p></body></html>
