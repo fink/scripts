@@ -1,0 +1,32 @@
+Starting from the 0.5.2 release, we have an automatic build system for
+creating the binary distribution.  It is based on some of the scripts
+in this directory (buildall, buildcheck, buildone, licensecheck,
+makeexcludes, purge-nonbase.sh).  Before beginning, the environment
+variable LOGDIR must be set to a directory to record activity logs.  At the
+moment, these scripts must be launched from the directory which contains
+them.  (This should be fixed in the future.)
+
+The "makeexcludes" script analyzes the licenses of all of the packages, and
+records the ones which should not be in the bindist in the file
+"excludes".  It also writes a file "excludes.log" which keeps track of why
+the package is being excluded.  It's a good idea to run this script first,
+analyze the output, and possibly modify some packages until all of the
+licensing is as expected.
+
+The "buildall" script builds all of the packages.  (Consult the other HOWTO
+file in this directory for instructions about what to do once they are
+built.)  The "buildall" script runs many iterates of the "buildone"
+script.  Each invocation of "buildone" clears out all non-essential
+packages from the Fink installation, and then builds the requested
+package.  All of the default responses are given, so its important not to
+have system-xfree86 or system-tetex in the Fink installation (except at the
+very last step); otherwise, the dependencies will choose those packages but
+they won't be able to be installed.  A transcript of the build session for
+package foo is recorded in the file $LOGDIR/foo.log, and if the build
+fails, the name of the package is recorded in $LOGDIR/NotBuilt.
+
+The suggested method is to remove the "system" packages, and set the Trees
+line to include only stable/main.  Run "buildall" (until all are
+successful). Then reset the Trees line to include both stable/main and
+stable/cryto, and run "buildall" again.  Finally, restore the "system"
+packages and build the corresponding binaries.
