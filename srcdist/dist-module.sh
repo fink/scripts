@@ -98,15 +98,19 @@ ls -l *.tar.gz
 
 ### create package description file
 
-echo "Creating package description file $fullname.info:"
+echo " "
+echo "Creating package description file $module.info:"
 
 md5=`/sbin/md5 -q $fullname.tar.gz`
-/usr/bin/sed -e 's/\@VERSION\@/'$version'/' -e 's/\@REVISION\@/1/' -e 's/\@MD5\@/'$md5'/' -e 's,%n-%v.tar,mirror:custom:fink/%n-%v.tar.gz,' -e 's/NoSourceDirectory: true//' <$fullname/$module.info.in >$fullname-1.info
+/usr/bin/sed -e 's/\@VERSION\@/'$version'/' -e 's/\@REVISION\@/1/' -e 's/\@MD5\@/'$md5'/' -e 's,%n-%v.tar,mirror:custom:fink/%n-%v.tar.gz,' -e 's/NoSourceDirectory: true//' <$fullname/$module.info.in >$module.info
 
-echo "CustomMirror: <<"  >> $fullname-1.info
-echo " Primary: http://west.dl.sourceforge.net/sourceforge/" >> $fullname-1.info
-echo " nam-US: http://us.dl.sourceforge.net/sourceforge/" >> $fullname-1.info
-echo " eur: http://eu.dl.sourceforge.net/sourceforge/" >> $fullname-1.info
-echo "<<" >> $fullname-1.info
+echo "CustomMirror: <<"  >> $module.info
+echo " Primary: http://west.dl.sourceforge.net/sourceforge/" >> $module.info
+echo " nam-US: http://us.dl.sourceforge.net/sourceforge/" >> $module.info
+echo " eur: http://eu.dl.sourceforge.net/sourceforge/" >> $module.info
+echo "<<" >> $module.info
+
+echo "Done:"
+ls -l *.info
 
 exit 0
