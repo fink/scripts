@@ -42,7 +42,7 @@ XMMS</a></li><li><a href="#usage-packages.nedit-window-locks">8.2 If I am editin
 XDarwin, it immediately quits!</a></li><li><a href="#usage-packages.no-server">8.4 When I try to start XDarwin I get the message "xinit:  No such file or directory (errno 2):  no server "/usr/X11R6/bin/X" in PATH".</a></li><li><a href="#usage-packages.xfree-keymapping">8.5 I just upgraded to Mac
 OS X 10.1 and now XFree86 always quits immediately. In the messages it
 says "assert failed on line 454 of darwinKeyboard.c!". What's
-wrong?</a></li><li><a href="#usage-packages.xterm-error">8.6 xterm fails with "dyld: xterm Undefined symbols:  xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib".</a></li><li><a href="#usage-packages.libXmuu">8.7 When I try to start XFree86 I get one of the following errors:  "dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib" or "dyld: xinit can't open library:  /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">8.8 I had Fink's XFree86 installed, and I've replaced it with Apple's X11, and now everything's crashing!</a></li><li><a href="#usage-packages.apple-x-delete">8.9 I want the delete key in Apple's X11.app to behave like that in XDarwin.</a></li><li><a href="#usage-packages.gnome-two">8.10 I upgraded from GNOME 1.x to GNOME 2.x and now <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">8.11 I upgraded to Apple's X11 in Panther and now my window title bars are missing.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
+wrong?</a></li><li><a href="#usage-packages.xterm-error">8.6 xterm fails with "dyld: xterm Undefined symbols:  xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib".</a></li><li><a href="#usage-packages.libXmuu">8.7 When I try to start XFree86 I get one of the following errors:  "dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib" or "dyld: xinit can't open library:  /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">8.8 I had Fink's XFree86 installed, and I've replaced it with Apple's X11, and now everything's crashing!</a></li><li><a href="#usage-packages.apple-x-delete">8.9 I want the delete key in Apple's X11.app to behave like that in XDarwin.</a></li><li><a href="#usage-packages.gnome-two">8.10 I upgraded from GNOME 1.x to GNOME 2.x and now <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">8.11 I upgraded to Apple's X11 in Panther and now my window title bars are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">8.12 I installed Apple's X11 in Panther but fink keeps asking to install xfree86.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
 
 
 <a name="general.what">
@@ -971,9 +971,13 @@ exec gnome-session</pre></div>
 	<div class="question"><p><b>Q8.11: I upgraded to Apple's X11 in Panther and now my window title bars are missing.</b></p></div>
 	<div class="answer"><p><b>A:</b> You didn't upgrade X11 to version "X11 1.0 - XFree86 4.3.0" included with Panther. You can install X11 from X11.pkg on Disk 3.</p></div>
 </a>
+<a name="usage-packages.apple-x11-wants-xfree86">
+	<div class="question"><p><b>Q8.12: I installed Apple's X11 in Panther but fink keeps asking to install xfree86.</b></p></div>
+	<div class="answer"><p><b>A:</b> You need to install the X11 SDK, which is on the Xcode CD, and is <b>not</b> installed by default.</p></div>
+</a>
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.133 2003/10/25 01:08:06 htodd Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.134 2003/10/25 22:29:39 htodd Exp $</i></p></body></html>
