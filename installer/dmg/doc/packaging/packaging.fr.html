@@ -22,7 +22,7 @@ Les informations contenues dans ce document correspondent à la description du f
 Si vous créez des paquets pour Fink, vous avez tout intérêt à vous abonner à la liste de diffusion <a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a>.
 Si vous cherchez un moyen d'aider Fink et que vous avez des compétences dans ce domaine, vous pouvez aussi adopter un <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">paquet sans mainteneur</a>.
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Modules Perl</a></li><li><a href="#policy.emacs">3.5 Règles Emacs</a></li></ul></li><li><a href="#fslayout"><b>4 Organisation des fichiers</b></a><ul><li><a href="#fslayout.fhs">4.1 Hiérarchie standard des fichiers</a></li><li><a href="#fslayout.dirs">4.2 Répertoires</a></li><li><a href="#fslayout.avoid">4.3 À éviter</a></li></ul></li><li><a href="#reference"><b>5 Référence</b></a><ul><li><a href="#reference.build">5.1 Construction d'un paquet</a></li><li><a href="#reference.fields">5.2 Champs</a></li><li><a href="#reference.splitoffs">5.3 SplitOffs</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Patches</a></li><li><a href="#reference.profile.d">5.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 Qu'est-ce qu'un paquet ?</a></li><li><a href="#intro.ident">1.2 Identification d'un paquet</a></li></ul></li><li><a href="#format"><b>2 Descriptions de paquets</b></a><ul><li><a href="#format.trees">2.1 Arborescence</a></li><li><a href="#format.format">2.2 Format de fichier</a></li><li><a href="#format.percent">2.3 Raccourcis %</a></li></ul></li><li><a href="#policy"><b>3 Règles de distribution des paquets</b></a><ul><li><a href="#policy.licenses">3.1 Licences de paquets</a></li><li><a href="#policy.prefix">3.2 Interférence avec le système de base</a></li><li><a href="#policy.sharedlibs">3.3 Librairies partagées</a></li><li><a href="#policy.perlmods">3.4 Modules Perl</a></li><li><a href="#policy.emacs">3.5 Règles Emacs</a></li></ul></li><li><a href="#fslayout"><b>4 Organisation des fichiers</b></a><ul><li><a href="#fslayout.fhs">4.1 Hiérarchie standard des fichiers</a></li><li><a href="#fslayout.dirs">4.2 Répertoires</a></li><li><a href="#fslayout.avoid">4.3 À éviter</a></li></ul></li><li><a href="#reference"><b>5 Référence</b></a><ul><li><a href="#reference.build">5.1 Construction d'un paquet</a></li><li><a href="#reference.fields">5.2 Champs</a></li><li><a href="#reference.splitoffs">5.3 Paquets multiples</a></li><li><a href="#reference.scripts">5.4 Scripts</a></li><li><a href="#reference.patches">5.5 Rustines</a></li><li><a href="#reference.profile.d">5.6 Scripts profile.d</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
 
 
 
@@ -544,14 +544,11 @@ La directive <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> utilise auto
 (Cette directive est disponible à partir de la version 0.13.0 de fink.)
 </p><p>
 Sous la réglementation de mai 2003, il était permis de créer un paquet <tt style="white-space: nowrap;">-pm</tt>, qui est essentiellement un paquet "lot", qui charge la variante <tt style="white-space: nowrap;">-pm560</tt> ou une autre variante existante.
-Cette stratégie est déconseillée sous la réglementation d'avril 2004, et sera complètement interdite après une période de transition. (La seule exception sera la paquet <tt style="white-space: nowrap;">storable-pm</tt> qui doit se présenter sous cette forme pour le bootstrap).
+Cette stratégie est déconseillée sous la réglementation d'avril 2004, et sera complètement interdite après une période de transition. (La seule exception sera le paquet <tt style="white-space: nowrap;">storable-pm</tt> qui doit se présenter sous cette forme pour le bootstrap).
 </p>
-<p>À partir de la version 0.20.1 de fink, le paquet virtuel system-perl "fournit" automatiquement certains modules perl quand la version de Peerl présente sur le système est supérieure ou égale à 5.8.0. Dans le cas de system-perl-5.8.1-1, ces modules sont les suivants : 
-<b>attribute-handlers-pm, cgi-pm, digest-md5-pm581, file-spec-pm, 
-file-temp-pm, filter-simple-pm581, filter-util-pm581, getopt-long-pm, 
-i18n-langtags-pm, libnet-pm, locale-maketext-pm, memoize-pm, 
-mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm, test-simple-pm, 
-time-hires-pm581.</b>
+<p>À partir de la version 0.20.2 de fink, le paquet virtuel system-perl "fournit" automatiquement certains modules perl quand la version de Peerl présente sur le système est supérieure ou égale à 5.8.0. Dans le cas de system-perl-5.8.1-1, ces modules sont les suivants : 
+<b>attribute-handlers-pm581, cgi-pm581, digest-md5-pm581, file-spec-pm581, file-temp-pm581, filter-simple-pm581, filter-util-pm581, getopt-long-pm581, i18n-langtags-pm581, libnet-pm581, locale-maketext-pm581, memoize-pm581, mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm581, test-simple-pm581, time-hires-pm581.</b>
+(Cette liste était légèrement différente dans la version 0.20.1 de fink ; les mainteneurs de paquet sont invités à vérifier que c'est bien sur la nouvelle liste qu'ils se basent). 
 </p>
 <p>
 Effective à partir de la version 0.13.0 de fink, la commande <tt style="white-space: nowrap;">fink validate</tt>, quand elle est appliquée à un fichier <tt style="white-space: nowrap;">.deb</tt>, teste si le paquet fink est un module XS qui a été installé dans un répertoire dont le nom ne comporte pas le numéro de version, et, génère, dans ce cas, une alerte.
@@ -984,7 +981,7 @@ Liste de commandes à exécuter durant la phase de compilation. Voir plus bas la
 <pre>./configure %c
 make</pre>
 <p>
-Elles conviennent pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut sont les suivantes :
+Elles conviennent pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut (à partir de la version 0.13.4 de fink) sont les suivantes :
 </p>
 <pre>perl Makefile.PL PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5 \
@@ -992,21 +989,32 @@ Elles conviennent pour les paquets utilisant GNU autoconf. Pour ceux de type per
  INSTALLSITELIB=%p/lib/perl5 \
  INSTALLSITEARCH=%p/lib/perl5/darwin \
  INSTALLMAN1DIR=%p/share/man/man1 \
- INSTALLMAN3DIR=%p/share/man/man3
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
-<p>Si le type est du style <tt style="white-space: nowrap;">perl $version</tt> (où $version est, par exemple,  5.6.0), les commandes par défaut sont les suivantes :
+<p>Si le type est du style <tt style="white-space: nowrap;">perl $version</tt> (où <tt style="white-space: nowrap;">$version</tt> est, par exemple,  5.6.0), les commandes par défaut sont les suivantes :
 </p>
 <pre>perl$version Makefile.PL \
  PERL=perl$version PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5/$version \
- INSTALLARCHLIB=%p/lib/perl5/$version/darwin \
+ INSTALLARCHLIB=%p/lib/perl5/$version/$perlarchdir \
  INSTALLSITELIB=%p/lib/perl5/$version \
- INSTALLSITEARCH=%p/lib/perl5/$version/darwin \
+ INSTALLSITEARCH=%p/lib/perl5/$version/$perlarchdir \
  INSTALLMAN1DIR=%p/share/man/man1 \
- INSTALLMAN3DIR=%p/share/man/man3
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
+<p>où <tt style="white-space: nowrap;">$perlarchdir</tt> est "darwin" pour les versions antérieures ou égales à 5.8.0, "darwin-thread-multi-2level" pour les versions postérieures ou égales à 5.8.1.</p>
 <p>
 L'interprétation des raccourcis (voir la section précédente) a lieu avant que les commandes soient exécutées.
 </p>
@@ -1028,22 +1036,33 @@ Liste de commandes à exécuter durant la phase d'installation. Voir plus bas la
 </p>
 <pre>make install prefix=%i</pre>
 <p>
-Ceci convient pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut sont les suivantes :
+Ceci convient pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut (à partir de la version 0.13.4 de fink) sont les suivantes :
 </p>
 <pre>make install INSTALLPRIVLIB=%i/lib/perl5 \
  INSTALLARCHLIB=%i/lib/perl5/darwin \
  INSTALLSITELIB=%i/lib/perl5 \
  INSTALLSITEARCH=%i/lib/perl5/darwin \
  INSTALLMAN1DIR=%i/share/man/man1 \
- INSTALLMAN3DIR=%i/share/man/man3</pre>
-<p>Si le type est du style <tt style="white-space: nowrap;">perl $version</tt> (où $version est, par exemple,  5.6.0), les commandes par défaut sont les suivantes :
+ INSTALLMAN3DIR=%i/share/man/man3 \
+ INSTALLSITEMAN1DIR=%i/share/man/man1 \
+ INSTALLSITEMAN3DIR=%i/share/man/man3 \
+ INSTALLBIN=%i/bin \
+ INSTALLSITEBIN=%i/bin \
+ INSTALLSCRIPT=%i/bin</pre>
+<p>Si le type est du style <tt style="white-space: nowrap;">perl $version</tt> (où <tt style="white-space: nowrap;">$version</tt> est, par exemple,  5.6.0), les commandes par défaut sont les suivantes :
 </p>
 <pre>make install INSTALLPRIVLIB=%i/lib/perl5/$version \
- INSTALLARCHLIB=%i/lib/perl5/$version/darwin \
+ INSTALLARCHLIB=%i/lib/perl5/$version/$perlarchdir \
  INSTALLSITELIB=%i/lib/perl5/$version \
- INSTALLSITEARCH=%i/lib/perl5/$version/darwin \
+ INSTALLSITEARCH=%i/lib/perl5/$version/$perlarchdir \
  INSTALLMAN1DIR=%i/share/man/man1 \
- INSTALLMAN3DIR=%i/share/man/man3</pre>
+ INSTALLMAN3DIR=%i/share/man/man3 \
+ INSTALLSITEMAN1DIR=%i/share/man/man1 \
+ INSTALLSITEMAN3DIR=%i/share/man/man3 \
+ INSTALLBIN=%i/bin \
+ INSTALLSITEBIN=%i/bin \
+ INSTALLSCRIPT=%i/bin</pre>
+<p>où <tt style="white-space: nowrap;">$perlarchdir</tt> est "darwin" pour les versions antérieures ou égales à 5.8.0, et "darwin-thread-multi-2level" pour les versions postérieures ou égales à 5.8.1.</p>
 <p>
 Si le paquet l'admet, il est préférable d'utiliser <tt style="white-space: nowrap;">make install DESTDIR=%d</tt>. L'interprétation des raccourcis (voir section précédente) a lieu avant que les commandes ne soient exécutées .
 </p>
@@ -1162,90 +1181,90 @@ Notes spécifiques au portage du paquet sur Darwin. Les éléments du type : "co
 </td></tr></table>
 
 
-<h3><a name="reference.splitoffs">5.3 SplitOffs</a></h3>
+<h3><a name="reference.splitoffs">5.3 Paquets multiples</a></h3>
 <p>
-Beginning with fink 0.9.9, a single .info file can be used to build multiple packages.   The install phase begins as usual, with the execution of the  <tt style="white-space: nowrap;">InstallScript</tt> and <tt style="white-space: nowrap;">DocFiles</tt> commands. A <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field, if present, then triggers the creation of an additional install directory.  Within the  <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field, the new install directory is referred to as %i, while the original install directory of the parent  package is referred to as %I.
+À partir de la version 0.9.9 de fink, on peut utiliser un seul fichier .info pour construire plusieurs paquets. La phase d'installation commence, comme pour tout autre type de paquet, par l'exécution des scripts <tt style="white-space: nowrap;">InstallScript</tt> et <tt style="white-space: nowrap;">DocFiles</tt>. Si un champ <tt style="white-space: nowrap;">SplitOff</tt> ou <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> est présent, il y a création d'un répertoire d'installation supplémentaire. À l'intérieur des champs <tt style="white-space: nowrap;">SplitOff</tt> et <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>, le nouveau répertoire d'installation est désigné par %i, tandis que le répertoire d'installation du paquet parent est désigné par %I.
 </p>
 <p>
-Each <tt style="white-space: nowrap;">SplitOff</tt> and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> field must contain a number of fields of its own.  In fact, it resembles a complete package description, but with certain fields missing.  Here is what belongs in the sub-description (by category):
+Chaque champ <tt style="white-space: nowrap;">SplitOff</tt> ou <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> doit contenir un certain nombre de champs qui lui sont propres. En fait, cela ressemble à une description de paquet ordinaire, mais certains champs sont omis. Voici les champs qui peuvent y figurer (classés par catégorie) :
 </p>
 <ul>
-<li>Initial Data: Only the <tt style="white-space: nowrap;">Package</tt> needs to be specified, everything else is inherited from the parent package.  You may modify <tt style="white-space: nowrap;">Type</tt> and <tt style="white-space: nowrap;">License</tt> by declaring the field within the <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>.  Percent expansion can be used, and it is often convenient to refer to the name %N of the parent package.</li>
-<li>Dependencies: All of these are allowed.</li>
-<li>Unpack Phase, Patch Phase, Compile Phase: These fields are irrelevant and will be ignored.</li>
-<li>Install Phase, Build Phase: Any of these fields are allowed (except that SplitOffs cannot themselves contain additional SplitOffs).</li>
-<li>Additional Data: These are inherited from the parent package but may be modified by declaring the field within the <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>.</li>
+<li>Données initiales : seul le champ <tt style="white-space: nowrap;">Package</tt> doit être spécifié, tout le reste est hérité du paquet parent. Vous pouvez modifier les champs <tt style="white-space: nowrap;">Type</tt> et <tt style="white-space: nowrap;">License</tt> en déclarant ces champs dans les champs <tt style="white-space: nowrap;">SplitOff</tt> et <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>. On peut utiliser les raccourcis ; il est préférable de mentionner le nom du paquet parent sous la forme %N.</li>
+<li>Dépendances : tous les champs sont autorisés.</li>
+<li>Phases de décompression, d'application des rustines, de compilation : ces champs n'ont pas de signification dans ce contexte et seront ignorés s'ils sont présents.</li>
+<li>Phases d'installation et de construction : tous les champs sont autorisés à l'exception des champs SplitOff (un champ SplitOff ne peut contenir lui-même un autre champ SplitOff).</li>
+<li>Données supplémentaires : elles sont héritées du paquet parent, mais peuvent être modifiées en déclarant le champ dans les champs <tt style="white-space: nowrap;">SplitOff</tt> ou <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>.</li>
 </ul>
 <p>
-During the install phase, the <tt style="white-space: nowrap;">InstallScript</tt> and <tt style="white-space: nowrap;">DocFiles</tt> of the parent package are executed first. Next comes processing of the <tt style="white-space: nowrap;">SplitOff</tt> and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> fields. For each such field in turn, the <tt style="white-space: nowrap;">Files</tt> command causes the listed files and directories to be moved from the parent's installation directory %I to the current installation directory %i.  Then the <tt style="white-space: nowrap;">InstallScript</tt> and <tt style="white-space: nowrap;">DocFiles</tt> of the given <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> package are executed.  
+Lors de la phase d'installation, les champs <tt style="white-space: nowrap;">InstallScript</tt> et <tt style="white-space: nowrap;">DocFiles</tt> du paquet parent sont exécutés en premier. Puis vient l'exécution des champs <tt style="white-space: nowrap;">SplitOff</tt> et <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>. Pour chacun de ces champs à tour de rôle, la commande <tt style="white-space: nowrap;">Files</tt> déplace les fichiers et répertoires spécifiés, du répertoire d'installation %I du paquet parent dans le répertoire de l'installation en cours %i. Puis les scripts <tt style="white-space: nowrap;">InstallScript</tt> et <tt style="white-space: nowrap;">DocFiles</tt> des paquets <tt style="white-space: nowrap;">SplitOff</tt> et <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> sont exécutés.
 </p>
 <p>
-At this time, the <tt style="white-space: nowrap;">SplitOff</tt> is processed first (if present), followed by each <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> in numerical order by N. However, this may change in the future, so, for example, instead of:
+À l'heure actuelle, le champ <tt style="white-space: nowrap;">SplitOff</tt>, s'il existe, est exécuté en premier, suivi des champs <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> par ordre numérique. Néanmoins, cela pourrait changer dans le futur. Il est donc conseillé de ne pas utiliser :
 </p>
 <pre>
 SplitOff: &lt;&lt;
-  Description: Some header files
+  Description: certains headers
   Files: include/foo.h include/bar.h
 &lt;&lt;
 SplitOff2: &lt;&lt;
-  Description: All other header files
+  Description: tous les autres headers
   Files: include/*
 &lt;&lt;
 </pre>
 <p>
-which only works correctly if <tt style="white-space: nowrap;">SplitOff</tt> is processed before <tt style="white-space: nowrap;">SplitOff2</tt> it's safer to list explicitly the files for each (or use more specific filename globs).
+qui ne fonctionne correctement que si <tt style="white-space: nowrap;">SplitOff</tt> est exécuté avant <tt style="white-space: nowrap;">SplitOff2</tt>. Il vaut mieux donner la liste explicite des fichiers pour chaque champ (ou utiliser des noms de fichier plus explicites).
 </p>
 <p>
-During the build phase, the pre/post install/remove scripts for each of the packages is constructed by using the build phase commands which were specified for that package.
+Lors de la phase de construction du paquet, les scripts pre/post install/remove de chacun des paquets sont construits à partir des commandes spécifiques de la phase de construction desdits paquets.
 </p>
 <p>
-Each package being built is required to document the licensing arrangement in %i/share/doc/%n (and of course %n takes a different value for each package).  Note that <tt style="white-space: nowrap;">DocFiles</tt> copies files rather than moving them, so it is possible to install identical copies of the documentation into each  of the packages by using <tt style="white-space: nowrap;">DocFiles</tt> several times.
+Chaque paquet à construire doit placer les fichiers de licence dans %i/share/doc/%n (avec %n ayant une valeur différente pour chaque paquet). Notez que <tt style="white-space: nowrap;">DocFiles</tt> copie les fichiers au lieu de les déplacer ; il est donc possible d'installer une même copie de la documentation dans chacun des paquets en utilisant <tt style="white-space: nowrap;">DocFiles</tt> plusieurs fois.
 </p>
 
 
 <h3><a name="reference.scripts">5.4 Scripts</a></h3>
 
 <p>
-The PatchScript, CompileScript and InstallScript fields allow you to specify shell commands to be executed. The build directory (<tt style="white-space: nowrap;">%b</tt>) is the current directory when scripts are executed. You should always use relative pathnames or percent-expansions for files and directories in the fink hierarchy, not complete absolute pathnames. Two forms are supported.
+Les champs PatchScript, CompileScript et InstallScript vous permettent d'indiquer des commandes shell à exécuter. Le répertoire de construction (<tt style="white-space: nowrap;">%b</tt>) est le répertoire en cours lors de l'exécution des scripts. Vous devez toujours utiliser des chemins relatifs ou des raccourcis pour les fichiers et répertoires de l'arborescence fink, et jamais des chemins absolus. Deux formats différents sont possibles pour ces champs.
 </p>
 <p>
-This field can be a simple list of commands. This is sort of like a shell script. However, the commands are executed via system(), one line at a time, so setting variables or changing the directory only affects commands on that same line. Starting in a CVS version of fink after 0.18.2, you can wrap long lines similar to normal shell scripts: a backslash (<tt style="white-space: nowrap;">\</tt>) at the end of a line indicates that the next line is a continuation.
+Le champ peut être constitué d'une simple liste de commandes, un peu comme un script shell. Néanmoins, les commandes sont exécutées ligne après ligne via system(). Il en résulte que l'assignation de variables ou les changements de répertoire n'ont d'effet que pour les commandes résidant sur une même ligne. À partir d'une version CVS de fink postérieure à 0.18.2, vous pouvez ajuster la longueur des lignes de la même manière que dans les scripts shell : une barre oblique inversée (<tt style="white-space: nowrap;">\</tt>) à la fin de la ligne indique que la ligne suivante est la suite de la ligne précédente.
 </p>
 <p>
-Alternately, you can embed a complete script here, using the interpreter of your choice. As with any Unix script, the first line must begin with <tt style="white-space: nowrap;">#!</tt> followed by the full pathname of to the interpreter and any needed flags (e.g., <tt style="white-space: nowrap;">#!/bin/csh</tt>, <tt style="white-space: nowrap;">#!/bin/bash -ev</tt>, etc.). In this situation, the whole *Script field is dumped into a temporary file that is then executed.
+Vous pouvez aussi insérer un script complet, en utilisant l'interpréteur que vous voulez. Comme avec tout autre script Unix, la première ligne doit commencer par <tt style="white-space: nowrap;">#!</tt> suivi du chemin complet de l'interpréteur et des options désirées (exemple : <tt style="white-space: nowrap;">#!/bin/csh</tt>, <tt style="white-space: nowrap;">#!/bin/bash -ev</tt>, etc...). Dans ce cas, la totalité du champ *Script est déversé dans un fichier temporaire, qui est alors exécuté.
 </p>
 
 
-<h3><a name="reference.patches">5.5 Patches</a></h3>
+<h3><a name="reference.patches">5.5 Rustines</a></h3>
 
 <p>
-If your package needs a patch to compile on Darwin (or to work with fink), name the patch with the same name as the package description, using the extension ".patch" instead of ".info" and put it in the same directory as the .info file. If you use the full package in the filename specify either one of these (they are equivalent):
+Si votre paquet nécessite une rustine pour compiler sous Darwin (ou pour fonctionner avec fink), donnez à la rustine le même nom que celui indiqué dans la description du paquet, en utilisant l'extension ".patch" au lieu de ".info", et placez-la dans le même répertoire que le fichier .info. Si vous utilisez le nom complet du paquet dans le nom du fichier, indiquez-le dans le champ d'une des façons suivantes (elles sont équivalentes) :
 </p>
 <pre>Patch: %f.patch</pre>
 <pre>PatchScript: patch -p1 &lt;%a/%f.patch</pre>
 <p>
-If you use the newer simple package filename convention, use %n insead of %f. These two fields are not mutually-exclusive - you can use both, and they will both be executed. In that case the PatchScript is executed last.
+Si vous utilisez les nouvelles conventions de nommage d'un paquet unique, utilisez %n au lieu de %f. Ces deux champs ne sont pas exclusifs l'un de l'autre ; vous pouvez utiliser les deux et ils seront tous deux exécutés. Dans ce cas,  le script PatchScript sera exécuté en dernier.
 </p>
 <p>
-Because you may need to have the users chosen prefix in the patch file it is recommended that you have a variable such as <tt style="white-space: nowrap;">@PREFIX@</tt>  instead of <tt style="white-space: nowrap;">/sw</tt> in the patch and then use:
+Comme il se peut que vous ayez besoin du préfixe choisi par l'utilisateur dans le fichier rustine, il est conseillé d'utiliser une variable telle <tt style="white-space: nowrap;">@PREFIX@</tt> au lieu de <tt style="white-space: nowrap;">/sw</tt> dans la rustine et d'utiliser ensuite :
 </p>
 <pre>PatchScript: sed 's|@PREFIX@|%p|g' &lt;%a/%f.patch | patch -p1</pre>
-<p>Patches should be in unidiff format and are normally generated by using:</p>
-<pre>diff -urN &lt;originalsourcedir&gt; &lt;patchedsourcedir&gt;</pre>
+<p>Les rustines doivent être en format unidiff et sont, en général, créées en utilisant :</p>
+<pre>diff -urN &lt;répertoiredusourceoriginel&gt; &lt;répertoiredusourcemodifié&gt;</pre>
 <p>
-If you have used emacs to edit files, you can add <tt style="white-space: nowrap;">-x'*~'</tt> to the diff command above in order to exclude automatically-generated backup files.</p>
+Si vous utilisez emacs pour modifier les fichiers, vous devez ajouter <tt style="white-space: nowrap;">-x'*~'</tt> à la commande diff ci-dessus, pour exclure les fichiers de sauvegarde générés automatiquement.</p>
 <p>
-It must also be noted that extremely large patches should not be put in cvs. They should be put on a web/ftp server and specified using the <tt style="white-space: nowrap;">SourceN:</tt> field. If you don't have a website, fink project admins can make the file available from fink's own website. If your patch is larger than about 30Kb, you should consider making it a separate download.
+Il faut aussi noter que les très grosses rustines ne doivent pas être mises dans cvs. Elles doivent être placées sur un serveur web/ftp et référencées en utilisant le champ <tt style="white-space: nowrap;">SourceN:</tt>. Si vous n'avez pas de site web, les administrateurs du projet fink peuvent mettre le fichier à disposition à partir du site web de fink. Si votre rustine fait plus de 30Kb, vous devez la traiter comme un téléchargement distinct.
 </p>
 
 
-<h3><a name="reference.profile.d">5.6 Profile.d scripts</a></h3>
+<h3><a name="reference.profile.d">5.6 Scripts profile.d</a></h3>
 
 <p>
-If your package needs some run-time initialization  (e.g. to setup environment variables), you can use profile.d scripts. These script fragments are sourced by the <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt> scripts. Normally, all fink users will load these scripts in their shell startup files (<tt style="white-space: nowrap;">.cshrc</tt> and comparable files). Your package must provide each script in two variants: one for sh compatible shells (sh, zsh, bash, ksh, ...) and one for csh compatible shells (csh, tcsh). They have to be installed as <tt style="white-space: nowrap;">/sw/etc/profile.d/%n.[c]sh</tt> (where %n as usual stands for the package name). Also, their executable and read bits have to be set (i.e. install them with -m 755), otherwise they will not be loaded correctly.
+Si votre paquet nécessite une initialisation à l'exécution (par exemple, pour définir des variables d'environnement), vous pouvez utiliser des scripts profile.d. Ces scripts sont sourcés par les scripts <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt>. Normalement, tout utilisateur de fink charge ces scripts dans ses fichiers de démarrage de shell (<tt style="white-space: nowrap;">.cshrc</tt> et équivalents). Votre paquet doit fournir deux variantes de scripts : l'une pour les shells compatibles avec sh (sh, zsh, bash, ksh, ...), l'autre pour les shells compatibles avec csh (csh, tcsh). Elles doivent être installées sous la forme <tt style="white-space: nowrap;">/sw/etc/profile.d/%n.[c]sh</tt> (où %n représente le nom du paquet). Il faut aussi positionner leurs bits de lecture et d'exécution (c'est-à-dire les installer avec -m 755), autrement elles ne seront pas chargées correctement.
 </p>
 <p>
-If you just need to set some environment variables (for example, QTDIR to '/sw'), you can use the RuntimeVars field which is provided as a convenient way to achieve exactly this.
+Si vous n'avez besoin que d'initialiser certaines variables d'environnement (par exemple, définir QTDIR comme '/sw'), vous pouvez utiliser le champ RuntimeVars, qui a été conçu exactement pour ce faire.
 </p>
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
