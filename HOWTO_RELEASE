@@ -20,11 +20,11 @@ dir on the webserver.
 7) Now _copy_ the finkinfo directories to /bindist. Verify
 no .info/.patch files are missing.
 
-8) Temporararily add unstable to fink.conf. Execute
+8) Temporarily add unstable to fink.conf. Execute
   fink scanpackages
 then undo your changes to fink.conf again
 
-9) Copy /sw to /fink-image/sw (or any other empty directoy). Remove
+9) Copy /sw to /fink-image/sw (or any other empty directory). Remove
 everything from the src dir, and all .debs.
 
 10) Create an Installer-Package using the data from the old
@@ -36,15 +36,12 @@ detailed instructions, or even a build script)
 12) If all worked fine, you can now create a disk image with the installer,
 Welcome.rtf, ReadMe.rtf, and License.rtf.
 
-13) Unless SourceForge finally added the proper file type for .dmgs,
-compress the diskimage with gzip.
+13) Release package tarball, fink-full tarball and binary installer via the FRS.
 
-14) Release package tarball, fink-full tarball and binary installer via the FRS.
+14) Update the package database
 
-15) Update the package database
-
-16) Send out announcement:
- * webpage
+15) Send out announcement:
+ * web page
  * email to fink-announce
  * notify FRS watchers
  * SF news item
