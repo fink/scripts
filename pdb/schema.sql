@@ -4,6 +4,12 @@ create table release (
  primary key (name)
 );
 
+create table sections (
+ name varchar(32) not null,
+ description text,
+ primary key (name)
+);
+
 create table package (
  release varchar(20) not null,
  fullname varchar(128) not null,
@@ -18,5 +24,7 @@ create table package (
  latest tinyint not null default '0',
  needtest tinyint not null default '0',
  primary key (release,name),
- index flag (flag)
+ index (section),
+ index (latest),
+ index (needtest)
 );
