@@ -1,0 +1,11 @@
+#!/bin/sh
+cd $BDDATA
+
+grep "^$1\\b" fit && echo "$1 already fit" && exit 0
+
+echo "$@" >fit.tmp
+cat fit fit.tmp | sort >fit.tmp2
+mv fit.tmp2 fit
+rm -f fit.tmp*
+
+exit 0
