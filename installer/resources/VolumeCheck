@@ -1,117 +1,22 @@
 #!/usr/bin/perl
+use File::Find;
 
-my $result = 0;
+my $result = 0, $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 my $TARGET_VOLUME = $ARGV[0];
 
 DO_CHECKS:
 {
-	if (-e "/sw")
+	# The "18" specifies the index of the localized error string in
+	# {English,Spanish,etc}.lproj/VolumeCheck.strings
+	if (-e "${TARGET_VOLUME}/$basedir")
 	{
-		print "Fink Installer: /sw exists! Bailing out..\n";
-		# The "18" specifies the index of the localized error string in
-		# {English,Spanish,etc}.lproj/VolumeCheck.strings
-   		$result = ((1 << 5) | 18);
-		last;
-	}
-
-	if (!-e "${TARGET_VOLUME}/System/Library/CoreServices/SystemVersion.plist")
-	{
-	print "Fink Installer: Fink must be installed on the System volume! Bailing out..\n";
-       	$result = ((1 << 5) | 19);
-	last;
-	}
-
-	$TargetSystemBuild = GetPathEntry("${TARGET_VOLUME}/System/Library/CoreServices/SystemVersion.plist", "ProductBuildVersion");
-#6C35
-	if ($TargetSystemBuild lt "6C115") 
-	{
-	print "Fink Installer: Fink requires Mac OS X 10.2 (Jaguar) or later! Bailing out..\n";
-       	$result = ((1 << 5) | 20);
-        last;
+	  print "Fink Installer: ${TARGET_VOLUME}/sw exists!\n";
+	  $result = ((1 << 5) | 18);
+  	  last;
 	}
 }
 
 exit $result;
-
-
-
-##################
-sub InfoPlistCheck
-{
-    my $path		= $_[0];
-    my $entry		= $_[1];
-    my $version		= $_[2];
-    my $operator	= $_[3];
-
-    if (!$operator)
-    {
-        $operator = "==";
-    }
-
-    @cfBundleVersionArray = split(/\./, GetPathEntry($path,$entry));
-    for ($i = 0; $i < 3; $i++) {
-        if(!$cfBundleVersionArray[$i]) {
-            $cfBundleVersionArray[$i] = '0';
-        }
-    }
-
-    @versionArray = split(/\./, $version);
-    
-    my $actualVersion;
-
-    for ($i = 0; $i < 3; $i++) {
-        if (($cfBundleVersionArray[$i] != $versionArray[$i]) or ($i == 2)) {
-
-            $actualVersion = $cfBundleVersionArray[$i];
-            $version = $versionArray[$i];
-
-            last;
-        }
-    }
-
-    my $expression = '$actualVersion ' . $operator . ' $version';
-
-    if( eval ($expression) )
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-
-}
-
-##################
-sub GetPathEntry
-{
-    my $path		= $_[0];
-    my $entry		= $_[1];
-
-    my $oldSeperator = $/;
-    $/ = \0;
-
-    open( PLIST, "$path") || do {
-        return 0;
-    };
-
-    $plistData = <PLIST>;
-    $plistData =~ /<dict>(.*?)<\/dict>/gis;
-
-    @items = split(/<key>/, $plistData);
-
-    shift @items;
-    foreach $item (@items) {
-        $item =~ /(.*?)<\/key>.*?<string>(.*?)<\/string>/gis;
-        $versiondata{ $1 } = $2;
-    }
-
-    close(PLIST);
-
-    $/ = $oldSeperator;
-
-    return $versiondata{$entry};
- }
 
 

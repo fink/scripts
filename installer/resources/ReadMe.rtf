@@ -12,7 +12,7 @@
 \f0\b0\fs28 \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 \cf0 \
-This is the installer package for Fink 0.5.0a. Fink is a distribution of Open Source Unix software ported to Mac OS X. Open Source software is developed by volunteers from all over the world, available for free and with complete source code.\
+This is the installer package for Fink IN_VERSION. Fink is a distribution of Open Source Unix software ported to Mac OS X. Open Source software is developed by volunteers from all over the world, available for free and with complete source code.\
 \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 
@@ -24,6 +24,7 @@ This is the installer package for Fink 0.5.0a. Fink is a distribution of Open So
 \'a5	Do not use this installer if you have MacGIMP or OpenOSX.com\'d5s GIMP package installed.\
 \'a5	This version of fink requires Mac OS X 10.2. For earlier versions of Mac OS X, see the Fink web site.  \
 \'a5	Don\'d5t trust the \'d2disk space required\'d3 figures.\
+\'a5	For installation on a separate volume, see below.\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 \cf0 \
 Apart from that, the installer is pretty safe to use. It will not touch your system files or in fact anything outside the /sw directory.\
@@ -73,6 +74,13 @@ This installer serves only as a starting point. The Fink distribution uses its o
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 \cf0 \
 These tools require administrative privileges, like this installer. On the command line, prefix the command with \'d4sudo\'d5. When asked, enter the password for your normal user account. The fink command is set up to use sudo automatically when needed.\
+\
+\pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
+
+\f1\b \cf0 Installation on an Alternate Volume\
+\pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
+
+\f0\b0 \cf0 You can install fink on a separate volume. Fink will create a symlink /sw that points to the /sw directory on the volume you choose. You may copy the fink tree somewhere else, but make sure /sw always points to the fink root. If you wish to install fink with a non-/sw prefix, do not use this installer. You need to use the separate tar.gz installer from the web site. (and binary packages will not be available)\
 \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 

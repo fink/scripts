@@ -46,29 +46,24 @@ Step 7:
  finished).
 
 Step 8.
- Run "./in_setup.sh" to create fink-IN_VERSION.pmsp
+ Use TextEdit to examine the files in the resources and dmg
+ subdirs of this directory, editing if necessary. You will need to edit the list of   
+ installed packages which appears at the end of resources/ReadMe.rtf.   
+ Additionally you may need to update the VolumeCheck file and localized error .strings   
+ files to contain the minimum supported system version. (eg, 6C115 for 10.2.0)
+ Leave IN_VERSION variables as-is, these will be replaced by script.
 
 Step 9.
- Use TextEdit to examine the files in the resources and dmg subdirectories
- of this directory, editing if necessary.  You will need to change version
- numbers, and you will need to edit the list of installed packages which
- appears at the end of resources/ReadMe.rtf. Additionally you may need to update 
- the VolumeCheck file and localized error .strings files to contain the 
- minimum supported system version. (eg, 6C115 for 10.2.0)
+ Run ./buildpkg.sh. This should copy the resources and dmg directories, subsituting versions in the various read me files. It will then create the pkg file in the dmgIN_VERSION directory.
 
 Step 10.
- "open fink-IN_VERSION.pmsp" should launch PackageMaker, and you can make
- the .pkg file, whose name should be "Fink IN_VERSION Installer.pkg".
- Put it in the dmg subdirectory.
-
-Step 11.
  Use DiskCopy to create an empty .dmg, 40 MB in size.  The Volume name should
  be "Fink IN_VERSION Installer" and the file name doesn't matter.  When
  the volume has been created, open it in the Finder, copy the contents of 
  the dmg subdirectory to it (except for the CVS directory of course), and 
  then drag it to the Trash.
 
-Step 12.
+Step 11.
  Launch DiskCopy again, and select "Convert Image".  You want to convert
  the .dmg you just created to "read/only", and give it the new name
  fink-IN_VERSION-installer.dmg.
