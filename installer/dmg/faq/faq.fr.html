@@ -17,9 +17,9 @@ Fran&ccedil;ais |
 <p>Ces QFP comprennent plusieurs pages, une par chapitre. Le sommaire ci-dessous donne la liste de toutes les questions ainsi qu'un lien pour chacune d'elles.</p>
 <h2>Contents</h2><ul><li><a href="#general"><b>1 Questions générales</b></a><ul><li><a href="#general.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#general.naming">1.2 Que signifie Fink ?</a></li><li><a href="#general.bsd-ports">1.3 En quoi Fink se différencie-t-il du mécanisme de portage BSD (qui comprend OpenPackages et GNU-Darwin) ?</a></li><li><a href="#general.usr-local">1.4 Pourquoi Fink n'installe rien dans /usr/local ?</a></li><li><a href="#general.why-sw">1.5 Pourquoi avoir choisi /sw ?</a></li></ul></li><li><a href="#relations"><b>2 Relations avec d'autres projets</b></a><ul><li><a href="#relations.upstream">2.1 Envoyez-vous aux mainteneurs situés en amont de vous les rustines que vous faites ?</a></li><li><a href="#relations.debian">2.2 Quelles sont vos relations avec le projet Debian ? Portez-vous Debian Linux sur Mac OS X ?</a></li><li><a href="#relations.apple">2.3 Quelles sont vos relations avec Apple ?</a></li><li><a href="#relations.openosx">2.4 Quelles sont vos relations avec OpenOSX.com ?</a></li><li><a href="#relations.forked">2.5 Quelles sont vos relations avec macosx.forked.net ?</a></li><li><a href="#relations.darwinports">2.6 Quelles sont vos relations avec Darwinports ?</a></li></ul></li><li><a href="#mirrors"><b>3 Miroirs de Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Qu'est-ce qu'un miroir Fink ?</a></li><li><a href="#mirrors.why">3.2 Pourquoi utiliser des miroirs rsync ?</a></li><li><a href="#mirrors.where">3.3 Où trouver de plus amples informations sur les miroirs Fink ?</a></li><li><a href="#mirrors.when-not">3.4 Impossible de se connecter au serveur rsync. Que faire ?</a></li><li><a href="#mirrors.otherinfogone">3.5 Après passage à la méthode rsync, tous les fichiers info des arborescences inutilisées ont disparu.</a></li><li><a href="#mirrors.howswitch">3.6 Comment passer d'une méthode à une autre à volonté ?</a></li><li><a href="#mirrors.status">3.7 Comment connaître l'état actuel des miroirs rsync ?</a></li><li><a href="#mirrors.Master">3.8 Qu'est-ce qu'un miroir Distfiles ?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Mise à jour de Fink (Résolution de problèmes spécifiques à une version donnée)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 Après passage à la version 0.16.0, fink considère la version du compilateur gcc 3.3 installée sur le système comme obsolète. Que faire ?</a></li></ul></li><li><a href="#usage-fink"><b>5 Installer, Utiliser et Entretenir Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Comment savoir quels sont les paquets gérés par Fink ?</a></li><li><a href="#usage-fink.proxy">5.2 Comment configurer fink pour utiliser un proxy HTTP quand on est derrière un mur pare-feu ?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 Comment mettre à jour les paquets disponibles sur CVS lorsqu'on utilise un firewall ?</a></li><li><a href="#usage-fink.moving">5.4 Est-il possible de déplacer Fink vers un autre dossier après
 	l'installation ?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Est-ce que Fink fonctionnera correctement si on le déplace après installation et que l'on crée un lien symbolique vers l'ancien emplacement ?</a></li><li><a href="#usage-fink.removing">5.6 Comment désinstaller la totalité de Fink ?</a></li><li><a href="#usage-fink.bindist">5.7 La base de données des paquets sur le site web mentionne le paquet xxx, mais apt-get ou dselect eux ne le mentionnent pas. Qui a raison ?</a></li><li><a href="#usage-fink.unstable">5.8 Comment installer un paquet instable quand la commande fink ne le trouve pas ('no package found') ?</a></li><li><a href="#usage-fink.sudo">5.9 Comment ne plus avoir à saisir mon mot de passe après la
-	commande sudo ?</a></li><li><a href="#usage-fink.exec-init-csh">5.10 À l'exécution de init.csh ou init.sh, un message d'erreur "Permission denied" apparaît. Que se passe-t-il ?</a></li><li><a href="#usage-fink.dselect-access">5.11 Pourquoi est-il impossible de télécharger des paquets après avoir utilisé le menu "[A]ccess" dans dselect ?</a></li><li><a href="#usage-fink.cvs-busy">5.12 When I try to run <q>fink selfupdate</q> or "fink
-        selfupdate-cvs", I get the error "<tt style="white-space: nowrap;">Updating using CVS failed.
-        Check the error messages above.</tt>"</a></li><li><a href="#usage-fink.kernel-panics">5.13 When I use Fink, my whole machine freezes up/kernel panics/dies.
+	commande sudo ?</a></li><li><a href="#usage-fink.exec-init-csh">5.10 À l'exécution de init.csh ou init.sh, un message d'erreur "Permission denied" apparaît. Que se passe-t-il ?</a></li><li><a href="#usage-fink.dselect-access">5.11 Pourquoi est-il impossible de télécharger des paquets après avoir utilisé le menu "[A]ccess" dans dselect ?</a></li><li><a href="#usage-fink.cvs-busy">5.12 Lors de l'exécution de <q>fink selfupdate</q> ou "fink
+        selfupdate-cvs", le message "<tt style="white-space: nowrap;">Updating using CVS failed.
+        Check the error messages above.</tt>" apparaît.</a></li><li><a href="#usage-fink.kernel-panics">5.13 When I use Fink, my whole machine freezes up/kernel panics/dies.
         Help!</a></li><li><a href="#usage-fink.not-found">5.14 I'm trying to install a package, but Fink can't download it. The
         download site shows a later version number of the package than what
         Fink has. What do I do?</a></li><li><a href="#usage-fink.fink-not-found">5.15 I get "command not found" errors when I run Fink or anything that I
@@ -295,41 +295,40 @@ deb http://us.dl.sourceforge.net/fink/direct_download current main crypto</pre><
 	développement dans CVS.</p></div>
     </a>
     <a name="usage-fink.cvs-busy">
-      <div class="question"><p><b>Q5.12: When I try to run <q>fink selfupdate</q> or "fink
-        selfupdate-cvs", I get the error "<tt style="white-space: nowrap;">Updating using CVS failed.
-        Check the error messages above.</tt>"</b></p></div>
-      <div class="answer"><p><b>A:</b> If the message is</p><pre>Can't exec "cvs": No such file or directory at 
+      <div class="question"><p><b>Q5.12: Lors de l'exécution de <q>fink selfupdate</q> ou "fink
+        selfupdate-cvs", le message "<tt style="white-space: nowrap;">Updating using CVS failed.
+        Check the error messages above.</tt>" apparaît.</b></p></div>
+      <div class="answer"><p><b>A:</b> Si le message est le suivant :</p><pre>Can't exec "cvs": No such file or directory at 
 /sw/lib/perl5/Fink/Services.pm line 216, &lt;STDIN&gt; line 3.
-### execution of cvs failed, exit code -1</pre><p>then you need to install the Developer Tools.</p><p>If, on the other hand, the last line is</p><pre>### execution of su failed, exit code 1</pre><p>you'll need to look further back in the output to see the error. If
-        you see a message that your connection was refused:</p><pre>(Logging in to anonymous@cvs.sourceforge.net)
+### execution of cvs failed, exit code -1</pre><p>alors vous devez installer les Developer Tools.</p><p>Si, par contre, la dernière ligne est la suivante :</p><pre>### execution of su failed, exit code 1</pre><p>vous devrez regarder plus haut pour voir l'erreur. Si vous voyez un
+	message précisant que votre connection à été refusée :</p><pre>(Logging in to anonymous@cvs.sourceforge.net)
 CVS password:
 cvs [login aborted]: connect to cvs.sourceforge.net:2401 failed: 
 Connection refused
 ### execution of su failed, exit code 1
-Failed: Logging into the CVS server for anonymous read-only access failed.</pre><p>or a message like the following:</p><pre>cvs [update aborted]: recv() from server cvs.sourceforge.net: 
+Failed: Logging into the CVS server for anonymous read-only access failed.</pre><p>ou bien un message comme le suivant :</p><pre>cvs [update aborted]: recv() from server cvs.sourceforge.net: 
 Connection reset by peer 
 ### execution of su failed, exit code 1 
-Failed: Updating using CVS failed. Check the error messages above.</pre><p>or</p><pre>cvs [update aborted]: End of file received from server</pre><p>or</p><pre>cvs [update aborted]: received broken pipe signal</pre><p>then it's likely that the cvs servers are overloaded and you have
-        to try the update later.</p><p>Another possibility is that you have some bad permissions in your
-        CVS directories, in which case you get "Permission denied"
-        messages:</p><pre>cvs update: in directory 10.2/stable/main: 
+Failed: Updating using CVS failed. Check the error messages above.</pre><p>ou :</p><pre>cvs [update aborted]: End of file received from server</pre><p>ou encore :</p><pre>cvs [update aborted]: received broken pipe signal</pre><p>alors il est possible que le serveur CVS soit surchargé. Il vous
+	faudra réessayer plus tard.</p><p>Il se peut que les permissions soient mal définies dans
+	votre dossier CVS et que vous n'y ayez pas accès, ce qui génère des
+	messages "Permission denied" :</p><pre>cvs update: in directory 10.2/stable/main: 
 cvs update: cannot open CVS/Entries for reading: No such file or directory
 cvs server: Updating 10.2/stable/main 
 cvs update: cannot write 10.2/stable/main/.cvsignore: Permission denied
 cvs [update aborted]: cannot make directory 10.2/stable/main/finkinfo: 
 No such file or directory 
 ### execution of su failed, exit code 1 Failed: 
-Updating using CVS failed. Check the error messages above.</pre><p>In this case you need to reset your cvs directories. Use the
-        command:</p><pre>sudo find /sw/fink -type d -name 'CVS' -exec rm -rf {}\
-; fink selfupdate-cvs</pre><p>If, you don't see either of the above messages, then this almost
-        always means you've modified a file in your /sw/fink/dists tree and
-        now the maintainer has changed it. Look further back in the
-        selfupdate-cvs output for lines that start with "C", like so:</p><pre>C 10.2/unstable/main/finkinfo/libs/db31-3.1.17-6.info 
+Updating using CVS failed. Check the error messages above.</pre><p>Dans ce cas-là, vous devez remettre à zéro votre répertoire CVS.
+	Utilisez la commande:</p><pre>sudo find /sw/fink -type d -name 'CVS' -exec rm -rf {}\
+; fink selfupdate-cvs</pre><p>Si vous ne voyez aucun des messages ci-dessus, il est très probable
+	que vous ayez modifié un fichier dans l'arborescence /sw/fink/dists et
+	que le mainteneur ait modifié ce fichier. Regardez de nouveau dans le message
+	apparu après selfupdate-cvs les lignes commençant par "C", comme :</p><pre>C 10.2/unstable/main/finkinfo/libs/db31-3.1.17-6.info 
 ... (other info and patch files) ... 
 ### execution of su failed, exit code 1 
-Failed: Updating using CVS failed. Check the error messages above.</pre><p>The "C" means CVS had a conflict in trying to update the latest
-        version.  The fix is to delete any files that show up as starting with "C" in
-        the output of selfupdate-cvs, and try again:</p><pre>sudo rm /sw/fink/10.2/unstable/main/finkinfo/libs/db31-3.1.17-6.info
+Failed: Updating using CVS failed. Check the error messages above.</pre><p>La lettre "C" signifie que CVS a rencontré un problème en essayant de
+	mettre à jour la dernière version. La solution consiste à retirer toutes les lignes commençant par "C" dans le message de sortie de selfupdate-cvs, et à essayer de nouveau.</p><pre>sudo rm /sw/fink/10.2/unstable/main/finkinfo/libs/db31-3.1.17-6.info
 fink selfupdate-cvs</pre></div>
     </a>
     <a name="usage-fink.kernel-panics">
@@ -1240,4 +1239,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.12 2004/03/27 09:39:14 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.13 2004/03/31 02:13:19 michga Exp $</i></p></body></html>
