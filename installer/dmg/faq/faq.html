@@ -721,7 +721,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs
 Your XFree86 installation is missing or incomplete. Please make sure you have
 an XFree86 release installed and retry the installation of the system-xfree86
 package.
-</pre><p>then you need to install the SDK package as well as the User package. The SDK is available from <a href="http://www.apple.com/macosx/x11/download/">the Apple X11 downoad page</a> (the link is in a box at the lower right corner labeled <b>X11 for Mac OS X Public Beta SDK</b>).</p><p>If, on the other hand, you get the following message:</p><pre>An error occurred trying to find your XFree86 installation's
+</pre><p>then you need to install the SDK package as well as the User package. If you are running Panther, the SDK is on the Xcode disk and is <b>NOT</b> automatically installed. The SDK as well as X11 beta for Jaguar is no longer available, and you'll either have to upgrade to Panther or use fink's xfree86.</p><p>If, on the other hand, you get the following message:</p><pre>An error occurred trying to find your XFree86 installation's
 version.  This really shouldn't happen, so I'm bailing.  :(</pre><p>then you need to update your package descriptions and install a newer version of system-xfree86.  If you are installing Apple X11 Beta 3, then you will need <tt style="white-space: nowrap;">system-xfree86-4.2-11</tt> or later.</p></div>
 </a>
 <a name="comp-packages.cctools">
