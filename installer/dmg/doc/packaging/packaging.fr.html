@@ -152,7 +152,7 @@ Certains champs prennent une valeur booléenne ; sont traitées comme vraies, le
 Pour vous rendre la vie plus facile, Fink gère un jeu de raccourcis sur certains champs.
 Pour lever toute ambiguïté, vous pouvez utiliser des accolades autour des caractères qui doivent être considérés comme des raccourcis. Par exemple, <tt style="white-space: nowrap;">%{n}</tt> a la même signification que <tt style="white-space: nowrap;">%n</tt>.
 Les raccourcis disponibles sont les suivants :</p>
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left"></th><th align="left"></th></tr><tr valign="top"><td>%n</td><td>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Raccourcis</th><th align="left">Signification</th></tr><tr valign="top"><td>%n</td><td>
 <p>
 le <b>n</b>om du paquet actif
 </p>
@@ -577,7 +577,7 @@ Fink suit l'esprit de <a href="http://www.pathname.com/fhs/">Filesystem Hierarch
 Les fichiers doivent être placés dans les sous-répertoires suivant de l'arborescence :
 </p>
 
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/bin</tt></td><td>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Répertoire</th><th align="left">Utilisation</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/bin</tt></td><td>
 <p>
 Ce répertoire est dédié aux exécutables généraux. Il n'existe pas de sous-répertoire.</p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/sbin</tt></td><td>
@@ -655,7 +655,7 @@ Aucun autre répertoire que ceux mentionnés ci-dessus ne doit être créé dans
 
 <p>Nous avons classé les champs en plusieurs catégories. Cette liste n'est pas forcément exhaustive. <tt style="white-space: nowrap;">:-)</tt></p>
 <p><b>Données initiales :</b></p>
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Package</td><td>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>Package</td><td>
 <p>
 Nom du paquet. Peut contenir des minuscules, des nombres ou les caractères spéciaux suivants : '.', '+' et '-'. Pas de trait de soulignement ('_'), ni de majuscules. Champ obligatoire.
 </p>
@@ -738,7 +738,7 @@ CompileScript:  &lt;&lt;
 <p>
 Ce champ indique la nature de la licence sous laquelle le paquet est distribué. Sa valeur doit être l'une de celles décrites plus haut dans la section <a href="#policy.licenses">Licences de paquet</a>. De plus, ce champ ne doit être renseigné que si le paquet respecte effectivement les règles de construction des paquets, c'est-à-dire installe une copie de la licence dans le répertoire doc.
 </p>
-</td></tr><tr valign="top"><td>Mainteneur</td><td>
+</td></tr><tr valign="top"><td>Maintainer</td><td>
 <p>
 Nom et adresse e-mail de la personne responsable du paquet. Ce champ est obligatoire et ne doit mentionner qu'un nom et qu'une adresse e-mail sous le format suivant :
 </p>
@@ -748,65 +748,65 @@ Nom et adresse e-mail de la personne responsable du paquet. Ce champ est obligat
 Ce champ permet à fink d'implémenter des changements de syntaxe incompatibles avec les versions précédentes dans les fichiers de description de paquet. Une version donnée de fink est configurée avec un nombre entier maximum "N", qu'il sait gérer. Tout paquet dont le champ InfoN est supérieur à ce nombre sera ignoré. Il ne faut donc utiliser ce mécanisme que dans les cas d'absolue nécessité, faute de quoi on priverait de ces paquets les personnes utilisant des versions plus anciennes de fink.  Quand un autre champ doit utiliser un numéro InfoN spécifique, mention en est faite dans la description du champ. Pour utiliser ce mécanisme, il faut insérer l'ensemble de la description du paquet dans le champ InfoN. Voir plus haut la section "Format de fichier" pour une description de la syntaxe des champs constitués de plusieurs lignes.
 </p>
 </td></tr></table>
-<p><b>Dependencies:</b></p>
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Depends</td><td>
+<p><b>Dépendances :</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>Depends</td><td>
 <p>
-A list of packages which must be installed before this package can be built. Percent expansion is performed on this field (as well as the other package list fields in this section: BuildDepends, Provides, Conflicts, Replaces, Recommends, Suggests, and Enhances. Usually, this is just a comma-separated list for plain package names, but Fink now supports alternatives and version clauses with the same syntax as dpkg. A fully featured example:
+Liste de paquets à installer pour que le paquet puisse compiler. L'interprétation des raccourcis a lieu dans ce champ (tout comme dans les autres champs de cette catégorie : BuildDepends, Provides, Conflicts, Replaces, Recommends, Suggests et Enhances). C'est, en général, une liste de noms de paquets séparés par des virgules, mais Fink gère maintenant les clauses de choix et de version avec la même syntaxe que dpkg. En voici un exemple :
 </p>
 <pre>Depends: daemonic (&gt;= 20010902-1), emacs | xemacs</pre>
 <p>
-Note that there is no way to express real optional dependencies. If a package works both with and without another package, you must either make sure that the other package is not used even when it is present or add it to the Depends field. If you want to offer the user both options, make two separate packages, e.g. wget and wget-ssl.
+Notez qu'on ne peut indiquer de réelles options de dépendances. Si un paquet fonctionne avec ou sans un autre paquet, vous devez soit vous assurer que l'autre paquet n'est pas utilisé, même s'il est présent, soit l'ajouter à la liste des dépendances. Si vous voulez donner à l'utilisateur le choix entre les deux options, faîtes deux paquets distincts, par exemple : wget et wget-ssl.
 </p>
 <p>
-Starting with a post-0.18.2 CVS version of fink, you can have conditional dependencies. These are specified by placing <tt style="white-space: nowrap;">(string1 op string2)</tt> before a package name. Percent expansion is performed as usual and then the two strings are compared according to the <tt style="white-space: nowrap;">op</tt> operator: &lt;&lt;, &lt;=, =, !=, &gt;&gt;, &gt;=. The immediately-following package is only considered as a dependency if the comparison is true.
+À partir d'une version CVS postérieure à la version 0.18.2 de fink, on peut utiliser des dépendances conditionnelles. Celles-ci sont indiquées en plaçant <tt style="white-space: nowrap;">(chaîne1 opérateur chaîne2)</tt> avant le nom du paquet. L'interprétation des raccourcis se fait normalement, puis les deux chaînes sont comparées en fonction de l'<tt style="white-space: nowrap;">opérateur</tt> utilisé, qui peut être : &lt;&lt;, &lt;=, =, !=, &gt;&gt;, &gt;=. Le paquet qui suit n'est considéré comme une dépendance que si la comparaison est vraie.
 </p>
 <p>
-You can use this format to simplify maintaining several similar packages. For example, both elinks and elinks-ssl could list:
+Vous pouvez utiliser ce format pour simplifier la maintenance de paquets similaires. Par exemple, elinks et elinks-ssl peuvent avoir :
 </p>
 <pre>Depends: (%n = elinks-ssl) openssl097-shlibs, expat-shlibs</pre>
-<p>would have the same effect as having elinks list:</p>
+<p>Ce qui a le même effet que si elinks avait :</p>
 <pre>Depends: expat-shlibs</pre>
-<p>and elinks-ssl list:</p>
+<p>et elinks-ssl avait :</p>
 <pre>Depends: openssl097-shlibs, expat-shlibs</pre>
 </td></tr><tr valign="top"><td>BuildDepends</td><td>
 <p>
-<b>Introduced in fink 0.9.0.</b> A list of dependencies that is applied at build time only.
-This can be used to list tools (e.g. flex) that must be present to build the packages, but which are not used at run time. Supports the same syntax as Depends.
+<b>Introduit dans fink 0.9.0.</b> Liste de dépendances utilisées uniquement lors de la compilation.
+Il sert à spécifier des outils (par exemple flex) qui doivent être présents pour compiler les paquets, mais qui ne sont pas nécessaires à l'exécution. Utilise la même syntaxe que Depends.
 </p>
 </td></tr><tr valign="top"><td>Provides</td><td>
 <p>
-A comma-separated list of package names that this package is considered to "provide". If a package named "pine" specifies <tt style="white-space: nowrap;">Provides: mailer</tt>, then any dependency on "mailer" is considered satisfied when "pine" is installed. You'll usually also want to name these packages in the "Conflicts" and the "Replaces" field.
+Liste de noms de paquets séparés par des virgules que ce paquet est censé "fournir". Si un paquet nommé "pine" indique <tt style="white-space: nowrap;">Provides: mailer</tt>, alors toute dépendance à "mailer" est considérée comme satisfaite si "pine" est installé. En général, on énumère aussi ces paquets dans les champs "Conflicts" et "Replaces".
 </p>
 </td></tr><tr valign="top"><td>Conflicts</td><td>
 <p>
-A comma-separated list of package names that must not be installed at the same time as this package. For virtual packages it is allowed to list the names of the provided packages here; they will be handled appropriately. This fields also supports versioned dependencies like the Depends field, but not alternatives (wouldn't make sense). If a package is listed in its own Conflicts, it will be (silently) removed from that list. (Introduced in a post-0.18.2 CVS version of fink.)
+Liste de noms de paquets séparés par des virgules qui ne doivent pas être installés en même temps que le paquet. Pour les paquets virtuels, on peut énumérer dans ce champ les noms des paquets fournis ; ils seront gérés correctement. Ce champ gère aussi les clauses de versions tout comme le champ Depends, mais pas les clauses de choix (cela n'aurait aucun sens). Si un paquet est nommé dans son propre champ Conflicts, il sera supprimé de cette liste (sans avertissement). (Introduit dans une version CVS de fink postérieure à la version 0.18.2).
 </p>
 <p>
-<b>Note:</b> Fink itself currently ignores this field. However, it is passed on to dpkg and will be handled accordingly. In summary, it only effects run-time, not build-time.
+<b>Note :</b> Fink lui-même ignore ce champ à l'heure actuelle. Néanmoins, il est passé à dpkg et est géré en conséquence. Bref, il n'a d'effet qu'à l'exécution, pas à la compilation.
 </p>
 </td></tr><tr valign="top"><td>Replaces</td><td>
 <p>
-This is used together with "Conflicts", when this package not only takes over the function of the conflicting package, but also has some common files. Without this field, dpkg may generate errors when installing the package because files are still owned by the other package. It is also a hint that the two packages involved are genuine alternatives and one can be removed in favor of the other. If a package is listed in its own Replaces, it will be (silently) removed from that list. (Introduced in a post-0.18.2 CVS version of fink.)
+Utilisé en général avec "Conflicts", quand le paquet non seulement remplace les fonctions du paquet en conflit, mais a aussi des fichiers en commun. Sans ce champ, dpkg pourrait générer des erreurs lors de la phase d'installation du paquet, car certains fichiers appartiendraient toujours à un autre paquet. C'est aussi l'indication que les deux paquets en cause sont équivalents l'un l'autre, et que l'un peut être remplacé par l'autre. Si un paquet est nommé dans son propre champ Replaces, il sera supprimé (sans avertissement) de cette liste. (Introduit dans une version CVS de fink postérieure à la version 0.18.2).
 </p>
 <p>
-<b>Note:</b> Fink itself currently ignores this field. However, it is passed on to dpkg and will be handled accordingly. In summary, it only effects run-time, not build-time.
+<b>Note :</b> Fink lui-même ignore ce champ à l'heure actuelle. Néanmoins, il est passé à dpkg et est géré en conséquence. Bref, il n'a d'effet qu'à l'exécution, pas à la compilation.
 </p>
 </td></tr><tr valign="top"><td>Recommends, Suggests, Enhances</td><td>
 <p>
-These fields specify additional package relations in the same style as the other dependency fields. These three relations don't affect actual installation via <tt style="white-space: nowrap;">dpkg</tt> or <tt style="white-space: nowrap;">apt-get</tt>. However, they are used by <tt style="white-space: nowrap;">dselect</tt> and other frontends to help the user make sensible choices.
+Ces champs indiquent des relations supplémentaires spécifiques dans le même style que les autres champs de dépendances. Ces trois champs n'ont aucun effet sur l'installation via <tt style="white-space: nowrap;">dpkg</tt> ou <tt style="white-space: nowrap;">apt-get</tt>. Néanmoins, ils sont utilisés par <tt style="white-space: nowrap;">dselect</tt> et d'autres interfaces pour aider l'utilisateur à faire des choix.
 </p>
 </td></tr><tr valign="top"><td>Pre-Depends</td><td>
 <p>
-A special variation of the Depends field with more strict semantics. This field must only be used after the case has been discussed on the developer mailing list and a consensus has been reached that it is necessary.
+Une variante spéciale du champ Depends avec une sémantique plus stricte. Ce champ ne doit être utilisé qu'après en avoir discuté sur la liste de développeurs et qu'il soit apparu évident que cela était nécessaire.
 </p>
 </td></tr><tr valign="top"><td>Essential</td><td>
 <p>
-A boolean value that denotes essential packages. Essential packages are installed as part of the bootstrap process. All non-essential packages implicitly depend on the essential ones. dpkg will refuse to remove essential packages from the system unless special flags are used to override this.
+Valeur booléenne qui signale les paquets essentiels. Ceux-ci sont installés lors du processus de bootstrap. Tous les paquets non essentiels dépendent implicitement des paquets essentiels. dpkg refusera de supprimer les paquets essentiels du système, à moins d'utiliser des options spéciales, qui permettent de lever cette interdiction.
 </p>
 </td></tr><tr valign="top"><td>BuildDependsOnly</td><td>
 <p>
-<b>Introduced in fink 0.9.9.</b>
-A boolean value which indicates that no other packages should Depend on this one, they should only BuildDepend.
+<b>Introduit dans fink 0.9.9.</b>
+Valeur booléenne qui indique qu'aucun autre paquet ne doit avoir un champ Depend le mentionnant, seul le champ BuildDepend est autorisé.
 </p>
 </td></tr></table>
 <p><b>Unpack Phase:</b></p>
