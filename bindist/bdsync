@@ -5,10 +5,10 @@ if [ -z "$BDBASE" ]; then
   echo "BDBASE not set"
   exit 1
 fi
-cd $BDBASE
+cd "$BDBASE"
 
 # locations
-source=$BDBASE
+source="$BDBASE"
 destination='fingolfin@shell.sourceforge.net:/home/groups/f/fi/fink/htdocs/bindist'
 
 # rsync options
@@ -17,7 +17,7 @@ options="-e ssh -av --partial --progress"
 #       already gzip-compressed
 
 # make sure every directory has a index.php
-$BDDATA/bdindex
+"$BDDATA"/bdindex
 
 # upload
 echo rsync "$@" $options $source $destination

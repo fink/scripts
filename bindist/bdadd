@@ -55,16 +55,17 @@ foreach $pkgspec (@ARGV) {
     &execute("mkdir -p $todir");
   }
 # HACK - we want to keep existing .debs for now
-  if (not -e $tofn) {
-    &execute("cp $fn $tofn");
-  }
-#   if (-e $tofn) {
-#     &execute("rm -f $tofn");
-#   }
-#   &execute("cp $fn $tofn");
+#  if (not -e $tofn) {
+#    &execute("cp $fn $tofn");
+#  }
+   if (-e $tofn) {
+     &execute("rm -f $tofn");
+   }
+   &execute("cp $fn $tofn");
 
   for ($i = 1; $i < 10; $i++) {
     $fn = $po->get_tarball($i);
+    last if not defined($fn);
     last if $fn eq "-";
 
     if (not -f "source/$fn") {
