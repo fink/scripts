@@ -1,0 +1,25 @@
+1) Build tarballs of base-files, packages and fink, as appropriate
+(see the srcdist HOWTO)
+
+2) Release them via the SourceForge FR system. Do *not* send out
+the notice emails
+
+3) Create/update the .info files for the above mentioned tar balls
+and add them to CVS
+
+4) Clean system:
+  rm -rf /sw /usr/X11R6 /etc/X11 /Application/XDarwin.app)
+and perform a fink bootstrap using the tarballs you created in 1)
+
+5) Prepare a binary installer
+(TODO - write instructions/scripts for this)
+
+6) Update the package database
+
+7) Announce it:
+ * webpage
+ * email to fink-announce
+ * notify FRS watchers
+ * SF news item
+ * Versiontracker
+ 
