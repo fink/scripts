@@ -1260,16 +1260,25 @@ present or add it to the Depends field.
 If you want to offer the user both options, make two separate
 packages, e.g. wget and wget-ssl.
 </p><p>
+Order of operations: logical "OR" (list of alternatives) has
+a higher precedence (binds more tightly) than the logical
+"AND" between each package (or set of alternatives) in the
+comma-separated list. Unlike the use of parentheses in arithmetic,
+there is no way to specify alternative groups of packages or otherwise
+change the order of operations in <tt style="white-space: nowrap;">Depends</tt> and related
+fields.
+</p><p>
 Starting with a post-0.18.2 CVS version of fink, you can have
 conditional dependencies. These are specified by placing
 <tt style="white-space: nowrap;">(string1 op string2)</tt> before a package name. Percent
-expansion is performed as usual and then the two strings are compared
+expansion is performed as usual and then the two strings
+(neither of which can be null) are compared
 according to the <tt style="white-space: nowrap;">op</tt> operator: &lt;&lt;, &lt;=, =, !=,
 &gt;&gt;, &gt;=. The immediately-following package is only considered
 as a dependency if the comparison is true.
 </p><p>
 You can use this format to simplify maintaining several similar
-packages. For example, both elinks and elinks-ssl could list:
+packages. For example, the packages elinks and elinks-ssl could both list:
 </p>
 <pre>Depends: (%n = elinks-ssl) openssl097-shlibs, expat-shlibs</pre>
 <p>
@@ -1280,6 +1289,19 @@ would have the same effect as having elinks list:
 and elinks-ssl list:
 </p>
 <pre>Depends: openssl097-shlibs, expat-shlibs</pre>
+<p>
+As an alternative syntax, you can also specify <tt style="white-space: nowrap;">(string)</tt>,
+which is "true" if <tt style="white-space: nowrap;">string</tt> is non-null. For example:
+</p>
+<pre>
+Package: nethack%type_pkg[-x11]
+Type: -x11 (boolean)
+Depends: (%type_pkg[-x11]) x11
+</pre>
+<p>
+would set the package x11 as a dependency for the nethack-x11 variant
+but not for the nethack variant.
+</p>
 </td></tr><tr valign="top"><td>BuildDepends</td><td>
 <p>
 <b>Introduced in fink 0.9.0.</b>
@@ -2137,4 +2159,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.25 2004/04/19 21:34:28 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.27 2004/04/30 08:23:47 dmacks Exp $</i></p></body></html>
