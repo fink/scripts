@@ -514,7 +514,11 @@ xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
   </p>
 </li>
 </ol>
- 
+<p>If, on the other hand, you have an X11 version that was not installed via Fink, you'll need to remove it via the command line:</p>
+<pre>sudo rm -rf /usr/X11R6 /etc/X11</pre> 
+<p>The above holds true for removing any flavor of X11 that you didn't install through Fink.  You will also need to remove <tt style="white-space: nowrap;">XDarwin.app</tt> | 
+<tt style="white-space: nowrap;">X11.app</tt>, depending on what you had installed.  Make sure to check your <tt style="white-space: nowrap;">.xinitrc</tt> if you are removing Apple's X11 to 
+make sure that you aren't trying to run <tt style="white-space: nowrap;">quartz-wm</tt>.  You can now install whatever new X11 variety you want, manually or via Fink.</p>  
 
 <h3><a name="inst-xfree86.fink-summary">3.8 Fink package summary</a></h3>
 
@@ -536,9 +540,6 @@ should install:
 </td></tr><tr valign="top"><td>4.x built from source, or from the latest CVS source</td><td>
 <p>
 <tt style="white-space: nowrap;">system-xfree86</tt> only (+splitoffs)</p>
-</td></tr><tr valign="top"><td>4.2.x base system built via Fink + binary rootless server</td><td>
-<p>
-<tt style="white-space: nowrap;">xfree86-base</tt> only</p>
 </td></tr><tr valign="top"><td>4.2.x from Apple</td><td>
 <p>
 <tt style="white-space: nowrap;">system-xfree86</tt> only (+splitoffs)
@@ -1214,4 +1215,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.40 2003/11/28 12:53:51 fingolfin Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.41 2003/12/02 02:38:25 alexkhansen Exp $</i></p></body></html>
