@@ -1037,11 +1037,6 @@ Primary: ftp://ftp.barbarorg/pub/
 </p>
 <pre>TarFilesRename: foo bar.* qux:quux
 Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
-<p>
-<b>注意：</b>这个字段的程序实现利用了 BSD tar 程序的特别特性。GNU tar 不支持这个特性。默认时，Fink 使用 GNU tar
-(因为有些压缩档只能用 GNU tar 解开)，但当一个软件包使用了 TarFilesRename 字段，Fink 会通过直接调用
-<tt style="white-space: nowrap;">/usr/bin/tar</tt> 的方法来使用 BSD tar。
-</p>
 </td></tr><tr valign="top"><td>Tar<b>N</b>FilesRename</td><td>
 <p>
 <b>从 fink 0.10.0 开始。</b>
@@ -1510,4 +1505,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.13 2004/07/21 06:30:43 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.14 2004/07/21 18:45:15 dmacks Exp $</i></p></body></html>
