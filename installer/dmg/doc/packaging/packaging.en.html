@@ -319,7 +319,8 @@ CVS version of fink)
 <p>
 the package <b>n</b>ame <b>i</b>nvariant portion. These are like
 %n and %N, except all %type_pkg[] and %type_raw[] are blanked out.
-(Introduced in a post-0.19.2 CVS version of fink)
+(Introduced in a post-0.19.2 CVS version of fink) You should use %{ni}
+and %{Ni} to avoid confusion with the %n and %N expansions.
 </p>
 </td></tr></table>
 
@@ -480,7 +481,7 @@ For some packages, everything can be accomplished with a main package and a
 -shlibs package; in other cases you also need a third package.  The new
 <tt style="white-space: nowrap;">SplitOff</tt> field actually makes this quite easy.
 </p><p>
-When three packages are needed, there are two different ways they could be named, depending on whether the libraries (option1) or the binaries (option 2) are the most important feature of the package.  For option 1, 
+When three packages are needed, there are two different ways they could be named, depending on whether the libraries (option 1) or the binaries (option 2) are the most important feature of the package.  For option 1, 
 use the layout:
 </p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Package</th><th align="left">Contents</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-shlibs</tt></td><td><p>Shared libraries</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo</tt></td><td><p>Headers</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-bin</tt></td><td><p>Binaries, etc.</p></td></tr></table>
@@ -1365,7 +1366,9 @@ the actual URL. The known <b>mirror-name</b>s are listed in
 package. Alternatively, using <tt style="white-space: nowrap;">custom</tt> as the
 <b>mirror-name</b> will cause Fink to use the <tt style="white-space: nowrap;">CustomMirror</tt>
 field.
-Before the URL is used, percent expansion takes place.
+Before the URL is used, percent expansion takes place. Remember that
+%n includes all %type_ variant data, so you may want to use %ni here
+(perhaps with some specific %type_ expansions).
 </p>
 <p>
 Since fink 0.18.0, <tt style="white-space: nowrap;">Source: none</tt> has the special meaning
@@ -1574,6 +1577,13 @@ appropriate path will be prepended automatically. Percent expansion is
 performed on this field, so a typical value is simply
 <tt style="white-space: nowrap;">%f.patch</tt> or <tt style="white-space: nowrap;">%n.patch</tt>. The patch is applied
 before the PatchScript is run (if any).
+</p>
+<p>
+Remember that %n includes all %type_ variant data, so you may want to
+use %ni here (perhaps with some specific %type_ expansions). It's
+easier to maintain a single patchfile and then make variant-specific
+changes in <tt style="white-space: nowrap;">PatchScript</tt> than to have a separate patchfile
+for each variant.
 </p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
 <p>
@@ -2087,4 +2097,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.13 2004/03/27 12:31:08 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.15 2004/03/28 23:59:44 dmacks Exp $</i></p></body></html>
