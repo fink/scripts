@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Fink メーリングリスト投稿時の注意</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="netiquette.en.html">English</a> | 
+<a href="netiquette.fr.html">Fran&ccedil;ais</a> | 
+&#26085;&#26412;&#35486; (Nihongo) | 
+<a href="netiquette.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">Fink メーリングリスト投稿時の注意</h1>
+    <p><b>この文書は書きかけです．</b></p>
+    <p>この文書は，Fink メーリングリストへ初めて投稿する方を対象としたガイドラインです．
+	問題解決に効果的な投稿の仕方が書かれています．</p>
+    <p>このページを読むようにいわれても冷静に．
+	たいていの場合，問題を特定するために必要な情報が不足しているためで，どのような情報が必要かはここに書かれているからです．
+	</p>
+  <h2>Contents</h2><ul><li><a href="#before-post"><b>1 投稿の前に</b></a><ul><li><a href="#before-post.research">1.1 自分の問題を調査します．</a></li></ul></li><li><a href="#first-post"><b>2 最初の投稿</b></a><ul><li><a href="#first-post.system">2.1 何がインストールされているか?</a></li><li><a href="#first-post.problem-description">2.2 何がおかしいのか?</a></li><li><a href="#first-post.remedies">2.3 何を試したか?</a></li><li><a href="#first-post.future-plans">2.4 次に何をするか?</a></li></ul></li><li><a href="#reply"><b>3 投稿への返信</b></a><ul><li><a href="#reply.reply-to-list">3.1 リストに返信すること</a></li></ul></li><li><a href="#unsubscribe"><b>4 定期購読の解除</b></a><ul><li><a href="#unsubscribe.unsubscribing">4.1 定期購読の解除はどうしたらいいですか?</a></li></ul></li></ul><h2><a name="before-post">1 投稿の前に</a></h2>
+    
+    
+    <h3><a name="before-post.research">1.1 自分の問題を調査します．</a></h3>
+      
+      <p>すでにあなたの問題がどこかで解答されている場合もあります．
+	  以下の場所は目を通しましょう:</p>
+      <ul>
+        <li>オンラインドキュメント</li>
+        <li>メーリングリストアーカイブ</li>
+        <li>Google</li>
+      </ul>
+    
+  <h2><a name="first-post">2 最初の投稿</a></h2>
+    
+    
+    <h3><a name="first-post.system">2.1 何がインストールされているか?</a></h3>
+      
+      <p>パッケージのインストールに問題がある場合，システムの以下の情報は提供しましょう:</p>
+      <ul>
+        <li>OS バージョン．</li>
+        <li>使用している Fink のバージョン．
+		ターミナルウィンドウで
+		<pre>fink --version</pre>
+		として，出力を投稿すると良いでしょう．</li>
+        <li>バイナリからのインストール (<tt style="white-space: nowrap;">apt-get</tt>) か，ソースからのインストールか (<tt style="white-space: nowrap;">fink install</tt>) 明記します．
+		<p>後者であれば， Developer Tools バージョンも必要です．.</p>
+		</li>
+        <li><p>X11 を必要とするパッケージであれば， Apple X11 か XFree86 のどちらかを明記します．
+		後者はバージョンも明記します．
+		</p><p>不明の場合はそう書きます．</p></li>
+      </ul>
+    
+    <h3><a name="first-post.problem-description">2.2 何がおかしいのか?</a></h3>
+      
+      <ul>
+        <li><b>問題のあるパッケージの名称とバージョンを明記する．</b>  
+		<p>これは，投稿の Subject 行に書く．</p>
+		<p>例えば，<tt style="white-space: nowrap;">foo-3.141-6</tt> に問題があるとき， <tt style="white-space: nowrap;">foo</tt> と略さない．</p>
+		<p>特に，あるパッケージ (例 <tt style="white-space: nowrap;">baz-2.18-1</tt>) が他のパッケージ
+		(<tt style="white-space: nowrap;">foo-3.141-6</tt>, <tt style="white-space: nowrap;">bar-16.0-9</tt>, ...) に依存していて，
+		問題の発生源が <tt style="white-space: nowrap;">foo</tt> である場合，
+		<tt style="white-space: nowrap;">foo-3.141-6</tt> として報告を行い， <tt style="white-space: nowrap;">baz-2.18-1</tt> としない．</p>
+		</li>
+        <li><b>問題を記述する．</b>  <p>
+		すなわち，エラーメッセージを記述する．</p>
+		<ol>
+            <li>バイナリインストール時の問題は，問題のあるパッケージを開き始めた時点から:<pre>...
+Selecting previously deselected package foo
+error unpacking foo
+...</pre>最後までを抜き出します．<p></p></li>
+            <li>ソースからの場合，いくつかの注意点があります:<ol>
+                <li>最初の configure 時に失敗している場合，通常すぐにわかります．
+				最後のエラーメッセージの直前数行を投稿してください:<pre>....
+Checking for bar-config...no
+Error:  bar-config not found
+....</pre>
+					<p>configure ログファイルに関連情報があると思った場合，
+					<tt style="white-space: nowrap;">/sw/src/foo-3.141-6/foo-3.141/config.log</tt> の該当部分も投稿します．
+					<b>ファイルは，サイズが巨大になるときがあるので送らないでください．</b>
+					</p></li>
+                <li>パッケージのビルドを開始した直後にエラーが発生する場合，
+				コンパイラが実行しようとした最後の行を投稿してください:<pre>...
+gcc &lt;flags, files etc.&gt;
+&lt;error messages&gt;
+...</pre></li>
+                <li><tt style="white-space: nowrap;">execution of mv failed</tt> が頻繁に発生する場合，
+				このエラーが発生しだす前のビルド出力を探すようにいわれるでしょう．
+				よって，投稿する前に各自で探す努力をしてください．
+				</li>
+              </ol></li>
+          </ol>    </li>
+      </ul>
+    
+    <h3><a name="first-post.remedies">2.3 何を試したか?</a></h3>
+      
+      <p>何を試したかを記述すると良いでしょう．例えば，</p>
+      <ul>
+        <li>FAQ や他の文書に記されている手順</li>
+        <li>問題発生源とおもわれるパッケージの削除</li>
+        <li>再ビルド/再インストール</li>
+        <li>パッケージ記述の再更新</li>
+        <li>その他</li>
+      </ul>
+      <p>これにより，既に試したことを提案されることがなくなります．</p>
+    
+    <h3><a name="first-post.future-plans">2.4 次に何をするか?</a></h3>
+      
+      <p>何点かポイントがあります:</p>
+      <ul>
+        <li>反応がなかった場合に何をするかを書く</li>
+        <li>行動が妥当かどうかを問う</li>
+      </ul>
+    
+  <h2><a name="reply">3 投稿への返信</a></h2>
+    
+    
+    
+      <p>本章は，投稿へ返信する際の注意点をあげます．</p>
+    
+    <h3><a name="reply.reply-to-list">3.1 リストに返信すること</a></h3>
+      
+      <p>他のメーリングリストと異なり， Fink リストの設定では，返信時には投稿者に返信し，リストには返信<b>しません</b>．
+	  以下の理由により，リストに返信するように留意してください:
+	  </p>
+      <ul>
+        <li>より多くの人があなたの問題を目に触れることができます</li>
+        <li>他人の時間を占有しない．
+		リスト上の人はみなボランティアです．</li>
+        <li>他の人にも利益があります．
+		メールを公の場で交換すると，メーリングリストアーカイブに残り，また文書化されるかもしれません
+		</li>
+      </ul>
+      <p><q>Reply to All</q> する人も多いです:</p>
+      <ul>
+        <li>"Reply" を押すのと変わらない</li>
+        <li>リストと前のメッセージの送信者に返信することになるが，これは望ましい．
+		リストメールはウィルス駆除などで遅れることもあり，直接送る方が早く到着する．</li>
+      </ul>
+      <p>しかし，この場合は他の総新作 (クロスポストやスレッド中で返信した他の人など) は取り除く必要があるかもしれません．</p>
+    
+  <h2><a name="unsubscribe">4 定期購読の解除</a></h2>
+    
+    
+    <h3><a name="unsubscribe.unsubscribing">4.1 定期購読の解除はどうしたらいいですか?</a></h3>
+      
+      <p>購読解除のメールはリストに送ら<b>ない</b>でください．</p>
+      <ol>
+        <li><a href="http://fink.sourceforge.net/lists/index.php">メーリングリスト</a> ページに行く．
+		<p>注記: MacOSX 版の Internet Explorer は使わないでください．</p></li>
+        <li>購読解除したいリストのリンクを辿る．</li>
+        <li>ページ下部の:  
+		<q>To change your subscription (set options like digest and delivery modes, 
+		get a reminder of your password, or unsubscribe), enter your subscription email 
+		address:</q>
+		に従い，購読解除したいメールアドレスを入力し， <q>Edit Options</q> ボタンを押す．</li>
+        <li>次のページの左上に購読解除がある．</li>
+      </ol>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: netiquette.ja.xml,v 1.1 2004/05/30 14:27:03 babayoshihiko Exp $</i></p></body></html>
