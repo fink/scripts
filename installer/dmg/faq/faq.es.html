@@ -467,8 +467,20 @@ fink selfupdate-cvs</pre></div>
     </a>
     <a name="usage-fink.cant-upgrade">
       <div class="question"><p><b>Q5.22: No puedo actualizar la versión Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> There are <a href="http://fink.sourceforge.net/download/fix-upgrade.php">special
-        instructions</a> to follow under these circumstances.</p></div>
+      <div class="answer"><p><b>A:</b> Si ni ejecutar <tt style="white-space: nowrap;">fink selfupdate</tt> ni <tt style="white-space: nowrap;">sudo apt-get update ; sudo apt-get dist-upgrade</tt> 
+        te actualiza a una versión más nueva de Fink, entonces puedes descargar manualmente una versión más nueva del
+        paquete <tt style="white-space: nowrap;">fink</tt>.  Los comandos a usar son:</p><ul>
+          <li><b>10.3.x:</b> (Distribución 0.7.1)
+		<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.7.1-updates/main/binary-darwin-powerpc/base/fink_0.22.4-1_darwin-powerpc.deb
+sudo dpkg -i fink_0.22.4-1_darwin-powerpc.deb
+rm fink_0.22.4-1_darwin-powerpc.deb
+fink selfupdate</pre></li>
+          <li><b>10.2.x:</b> (Distribución 0.6.3)
+		<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.6.3/release/main/binary-darwin-powerpc/base/fink_0.18.3-1_darwin-powerpc.deb
+sudo dpkg -i fink_0.18.3-1_darwin-powerpc.deb
+rm fink_0.18.3-1_darwin-powerpc.deb
+fink selfupdate</pre></li>
+        </ul></div>
     </a>
     <a name="usage-fink.spaces-in-directory">
       <div class="question"><p><b>Q5.23: ¿Puedo colocar a Fink en un volumen o directorio con un espacio en su nombre?</b></p></div>
@@ -1285,4 +1297,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.es.xml,v 1.4 2004/07/15 18:35:34 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.es.xml,v 1.5 2004/11/30 17:27:06 zifra Exp $</i></p></body></html>
