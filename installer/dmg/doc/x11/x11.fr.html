@@ -16,7 +16,7 @@ Fran&ccedil;ais |
 Ce document traite de l'utilisation de X11 / XFree86 / Xtools sur les systèmes Mac OS X et Darwin d'Apple.
 Il commence par une introduction et l'historique du développement, puis décrit la situation actuelle et les nombreuses options d'utilisation de X11 avec ou sans Fink.
 </p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 Qu'est-ce que X11 ?</a></li><li><a href="#intro.def-macosx">1.2 Qu'est-ce que Mac OS X ?</a></li><li><a href="#intro.def-darwin">1.3 Qu'est-ce que Darwin ?</a></li><li><a href="#intro.def-xfree86">1.4 Qu'est-ce que XFree86 ?</a></li><li><a href="#intro.def-xtools">1.5 Qu'est-ce que Xtools ?</a></li><li><a href="#intro.client-server">1.6 Client et Serveur</a></li><li><a href="#intro.rootless">1.7 Que signifie sans racine (rootless) ?</a></li><li><a href="#intro.wm">1.8 Qu'est-ce qu'un gestionnaire de fenêtres ?</a></li><li><a href="#intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></li></ul></li><li><a href="#history"><b>2 Historique</b></a><ul><li><a href="#history.early">2.1 Genèse</a></li><li><a href="#history.xonx-forms">2.2 Création de XonX</a></li><li><a href="#history.root-or-not">2.3 Être ou ne pas être racine</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Récupération et installation de XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installation via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Binaires d'Apple</a></li><li><a href="#inst-xfree86.official-binary">3.3 Binaires officiels</a></li><li><a href="#inst-xfree86.official-source">3.4 Source Officiel</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 Source le plus récent</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Remplacement de X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Résumé des paquets Fink disponibles</a></li></ul></li><li><a href="#run-xfree86"><b>4 Lancement de XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 Fichier .xinitrc</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installation de Xtools</a></li><li><a href="#xtools.run">5.2 Lancement de Xtools</a></li><li><a href="#xtools.opengl">5.3 Notes sur OpenGL</a></li></ul></li><li><a href="#other"><b>6 Autres possibilités pour X11</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Résolution de problèmes engendrés par XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 Après lancement, XDarwin se termine ou se plante quasi immédiatement</a></li><li><a href="#trouble.black">7.2 Icônes noires dans le panneau GNOME ou dans le menu d'une application GNOME</a></li><li><a href="#trouble.keyboard">7.3 Le clavier ne fonctionne pas sous XFree86</a></li><li><a href="#trouble.delete-key">7.4 La touche retour arrière ne fonctionne pas</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Conseils d'utilisation</b></a><ul><li><a href="#tips.terminal-app">8.1 Lancement d'applications X11 à partir de Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 Qu'est-ce que X11 ?</a></li><li><a href="#intro.def-macosx">1.2 Qu'est-ce que Mac OS X ?</a></li><li><a href="#intro.def-darwin">1.3 Qu'est-ce que Darwin ?</a></li><li><a href="#intro.def-xfree86">1.4 Qu'est-ce que XFree86 ?</a></li><li><a href="#intro.def-xtools">1.5 Qu'est-ce que Xtools ?</a></li><li><a href="#intro.client-server">1.6 Client et Serveur</a></li><li><a href="#intro.rootless">1.7 Que signifie sans racine (rootless) ?</a></li><li><a href="#intro.wm">1.8 Qu'est-ce qu'un gestionnaire de fenêtres ?</a></li><li><a href="#intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></li></ul></li><li><a href="#history"><b>2 Historique</b></a><ul><li><a href="#history.early">2.1 Genèse</a></li><li><a href="#history.xonx-forms">2.2 Création de XonX</a></li><li><a href="#history.root-or-not">2.3 Être ou ne pas être racine</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Récupération et installation de XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installation via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Binaires d'Apple</a></li><li><a href="#inst-xfree86.official-binary">3.3 Binaires officiels</a></li><li><a href="#inst-xfree86.official-source">3.4 Source Officiel</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 Source le plus récent</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Remplacement de X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Résumé des paquets Fink disponibles</a></li></ul></li><li><a href="#run-xfree86"><b>4 Lancement de XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 Fichier .xinitrc</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installation de Xtools</a></li><li><a href="#xtools.run">5.2 Lancement de Xtools</a></li><li><a href="#xtools.opengl">5.3 Notes sur OpenGL</a></li></ul></li><li><a href="#other"><b>6 Autres possibilités pour X11</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Résolution de problèmes engendrés par XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 Après lancement, XDarwin se termine ou se plante quasi immédiatement</a></li><li><a href="#trouble.black">7.2 Icônes noires dans le panneau GNOME ou dans le menu d'une application GNOME</a></li><li><a href="#trouble.keyboard">7.3 Le clavier ne fonctionne pas sous XFree86</a></li><li><a href="#trouble.delete-key">7.4 La touche retour arrière ne fonctionne pas</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Conseils d'utilisation</b></a><ul><li><a href="#tips.terminal-app">8.1 Lancement d'applications X11 à partir de Terminal.app</a></li><li><a href="#tips.open">8.2 Lancement d'applications Aqua à partir d'un xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copier-coller</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.def-x11">1.1 Qu'est-ce que X11 ?</a></h3>
@@ -762,85 +762,66 @@ Demander à Apple d'inclure une gestion correcte des locales dans une version ul
     <h3><a name="tips.terminal-app">8.1 Lancement d'applications X11 à partir de Terminal.app</a></h3>
       
       <p>
-Pour lancer des applications X11 à partir d'une fenêtre de Terminal.app, vous devez définir la variable d'environnement "DISPLAY". Cette variable indique aux applications l'emplacement du serveur de fenêtres X11. 
-In the default setup - XDarwin runs on the same machine, your shell is
-tcsh - you can set the variable as follows:
+Pour lancer des applications X11 à partir d'une fenêtre de Terminal.app, vous devez initialiser la variable d'environnement "DISPLAY". Cette variable indique aux applications l'emplacement du serveur de fenêtre X11. Quand XDarwin tourne sur la même machine que le serveur, vous pouvez initialiser cette variable de la façon suivante :
 </p>
+<ul>
+<li><p>Pour les utilisateurs de tcsh :</p>
       <pre>setenv DISPLAY :0.0</pre>
+</li>
+<li><p>Pour les utilisateur de bash :</p>
+<pre>export DISPLAY=":0.0"</pre>
+</li>
+</ul>
       <p>
-A nice setup is to have XDarwin.app started when you log in (settable
-in the Login panel of the System Preferences) and add the following to
-your .cshrc:
+Il est intéressant d'avoir une configuration qui lance XDarwin.app au démarrage (à indiquer dans les Préférences système, panneau Éléments d'ouverture sur Mac OS 10.2, panneau Comptes, Démarrage sur Mac OS 10.3):
 </p>
+<ul><li><p>Pour les utilisateurs de tcsh, ajoutez les ligne suivantes à votre fichier .cshrc :</p>
       <pre>if (! $?DISPLAY) then
   setenv DISPLAY :0.0
 endif</pre>
+</li>
+<li><p>Pour les utilisateurs de bash, ajoutez les lignes suivantes à votre fichier .zshrc :</p>
+<pre>[[ -z $DISPLAY ]] &amp;&amp; export DISPLAY=":0.0"</pre>
+</li></ul>
       <p>
-This sets DISPLAY automatically in every shell.
-It doesn't override the current value when DISPLAY is already set,
-though.
-This way you can still run X11 applications remotely or through ssh
-with X11 tunneling.
+Ces lignes initialisent automatiquement la variable DISPLAY dans tout shell ouvert, mais ne modifient pas sa valeur si elle est déjà initialisée. De cette manière, vous pouvez continuer à exécuter des applications X11 à distance ou via ssh par un tunnel X11.
 </p>
     
-    <h3><a name="tips.open">8.2 Launching Aqua apps from an xterm</a></h3>
+    <h3><a name="tips.open">8.2 Lancement d'applications Aqua à partir d'un xterm</a></h3>
       
       <p>
-One way to launch Aqua applications from an xterm (or any other shell,
-actually) is the <tt style="white-space: nowrap;">open</tt> command.
-Some examples:
+Pour lancer des applications Aqua à partir d'un xterm (ou de n'importe quel autre shell), vous pouvez utiliser la commande <tt style="white-space: nowrap;">open</tt>. Exemples :
 </p>
       <pre>open /Applications/TextEdit.app
 open SomeDocument.rtf
 open -a /Applications/TextEdit.app index.html</pre>
       <p>
-The second example opens the document in the application that is
-associated with it, the third example explicitly gives an application
-to use.
+Le second exemple ouvre le document dans l'application qui lui est associée, le troisième exemple indique explicitement l'application à utiliser.
 </p>
     
-    <h3><a name="tips.copy-n-paste">8.3 Copy and Paste</a></h3>
+    <h3><a name="tips.copy-n-paste">8.3 Copier-coller</a></h3>
       
       <p>
-Copy and Paste generally works between the Aqua and X11 environments.
-There are still some bugs.
-Emacs is reported to be picky about the current selection.
-Copy and paste from Classic to X11 doesn't work.
+Le copier-coller fonctionne, en général, entre les environnements Aqua et X11. Il reste quelques bogues. Emacs est particulièrement sensible à la sélection en cours. Le copier-coller entre Classic et X11 ne fonctionne pas.
 </p>
       <p>
-Anyway, the trick is to use the respective methods of the environment
-you're in.
-To transfer text from Aqua to X11, use Cmd-C in Aqua, then bring the
-destination window to the front and use the "middle mouse button", i.e. Option-click
-on a single-button mouse (this can be configured 
-under XDarwin's Preferences), to paste.
-To transfer text from X11 to Aqua, simply select the text with the
-mouse in X11, then use Cmd-V in Aqua to paste it.
+Ce qui est important est d'utiliser la bonne méthode selon l'environnement dans lequel vous êtes.
+Pour transférer du texte de Aqua vers X11, utilisez Cmd-C dans Aqua, faites venir la fenêtre de destination au premier-plan et utilisez le "bouton central de la souris", ou Alt-clic avec une souris à un bouton (vous pouvez configurer cette action dans les Préférences de XDarwin) pour coller.
+Pour transférer du texte de X11 vers Aqua, sélectionnez le texte avec la souris dans X11, puis utilisez Cmd-V dans Aqua pour le coller.
 </p>
       <p>
-The X11 system actually has several separate clipboards (called "cut
-buffers" in X11 speak), and some applications have weird views which
-one should be used.
-In particular, pasting into GNU Emacs or XEmacs sometimes doesn't work
-because of this.
-The program <tt style="white-space: nowrap;">autocutsel</tt> can help here; it automatically
-synchronizes the two main cut buffers.
-To run it, install the autocutsel Fink package and add the following
-line to your .xinitrc:
+En fait, le système X11 possède plusieurs presse-papiers distincts (appelés  "buffers de coupe" dans la terminologie X11) et certaines applications ont des idées bien arrêtées sur celui qu'elle doivent utiliser. C'est ainsi que le collage dans GNU Emacs ou XEmacs ne fonctionne pas toujours bien. Le programme <tt style="white-space: nowrap;">autocutsel</tt> permet d'améliorer les choses ; il synchronise automatiquement les deux buffers de coupe principaux. Pour l'exécuter, installez le paquet Fink autocutsel et ajoutez la ligne suivante à votre fichier .xinitrc :
 </p>
       <pre>autocutsel &amp;</pre>
       <p>
-(Make sure it's <b>before</b> the line that exec's the window
-manager and never returns! Don't just add it at the end, it won't
-be executed.)
+(Assurez-vous que cette ligne est placée <b>avant</b> la ligne d'exécution du gestionnaire de fenêtres et qu'elle tourne en arrière-plan. Ne l'ajoutez pas à la fin, elle ne serait jamais exécutée). Et rappelez-vous que ce paquet n'est plus nécessaire avec X11 d'Apple (voir <a href="#inst-xfree86.apple-binary">Notes au sujet de l'utilisation de X11 d'Apple</a>).
 </p>
-      <p>If you are using Apple's X11, then you can use Command-C or Edit-&gt;Copy, as 
-usual for Mac apps, to copy text to the clipboard.  However, pasting 
-from the clipboard to Apple X11 via Command-V doesn't work yet.</p>
+      <p>Si vous utilisez X11 d'Apple, vous pouvez utilisez Cmd-C ou Édition-&gt;Copier, comme pour les applications Mac, pour copier du texte dans le presse-papiers, et le bouton central de la souris ou Cmd-V pour coller le texte dans X11.</p>
+<p>Dans tous les cas de figure, si vous avez des difficultés à copier-coller du texte d'Aqua dans X11 ou vice-versa, vous pouvez tout d'abord réitérer l'action coller (il arrive qu'elle ne soit pas exécutée la première fois), ensuite vous pouvez utiliser des applications intermédiaires, par exemple TextEdit ou Terminal.app sous Aqua, nedit ou un xterm sous X11. Il y a toujours une solution à ce problème.</p>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.fr.xml,v 1.13 2004/05/13 01:48:06 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.fr.xml,v 1.14 2004/05/15 06:53:12 michga Exp $</i></p></body></html>
