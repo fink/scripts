@@ -11,8 +11,17 @@ chmod a+x $IN_BASEDIR/mkdmg.pl
 chmod a+x $IN_BASEDIR/resources/InstallationCheck
 chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
-cp -r $IN_BASEDIR/resources $RESDIR
-cp -r $IN_BASEDIR/dmg $DMGDIR
+cp -R $IN_BASEDIR/resources $RESDIR
+cp -R $IN_BASEDIR/dmg $DMGDIR
+rm -Rf $IN_BASEDIR/contents/CVS
+rm -Rf $IN_BASEDIR/.cvsignore
+rm -Rf $RESDIR/CVS
+rm -Rf $RESDIR/*/CVS
+rm -Rf $DMGDIR/CVS
+rm -f $DMGDIR/.cvsignore
+rm -Rf $DMGDIR/*/CVS
+rm -Rf $DMGDIR/*/*/CVS
+
 
 # Substitute the version for IN_VERSION where appropriate
 perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/English.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
@@ -31,5 +40,6 @@ perl -pi -e 's#</dict>#<key>IFPkgFlagAuthorizationAction</key>\n<string>RootAuth
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
 chmod -R a+rX $DMGDIR
-$IN_BASEDIR/mkdmg.pl -v "Fink $IN_VERSION Installer.dmg" $DMGDIR/*.*
+$IN_BASEDIR/mkdmg.pl -v "Fink $IN_VERSION Installer.dmg" $DMGDIR/*
 # "$DMGDIR/Fink $IN_VERSION Installer.pkg" "$DMGDIR/Fink ReadMe.rtf"  "$DMGDIR/Fink Web Site.url" "$DMGDIR/License.rtf" "$DMGDIR/users-guide.html"
+mv "Fink $IN_VERSION Installer.dmg" Fink-$IN_VERSION-Installer.dmg
