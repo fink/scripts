@@ -1,20 +1,25 @@
 #!/bin/sh
 RESDIR=$IN_BASEDIR/resources-$IN_VERSION;
 DMGDIR=$IN_BASEDIR/dmg-$IN_VERSION;
+CONDIR=$IN_BASEDIR/contents-$IN_VERSION;
 
 echo "basedir: $IN_BASEDIR version: $IN_VERSION";
 rm -rf $RESDIR
 rm -rf $DMGDIR
-chown -R root:admin $IN_BASEDIR/contents 
-chmod 1755 $IN_BASEDIR/contents
+rm -rf $CONDIR
+
 chmod a+x $IN_BASEDIR/mkdmg.pl 
 chmod a+x $IN_BASEDIR/resources/InstallationCheck
 chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
+
 cp -R $IN_BASEDIR/resources $RESDIR
 cp -R $IN_BASEDIR/dmg $DMGDIR
-rm -Rf $IN_BASEDIR/contents/CVS
-rm -f $IN_BASEDIR/contents/.cvsignore
+cp -R $IN_BASEDIR/contents $CONDIR
+chown -R root:admin $CONDIR
+chmod 1755 $CONDIR
+rm -Rf $CONDIR/CVS
+rm -f $CONDIR/.cvsignore
 rm -Rf $RESDIR/CVS
 rm -Rf $RESDIR/*/CVS
 rm -Rf $DMGDIR/CVS
@@ -38,7 +43,7 @@ for lang in Dutch French German Italian Japanese Spanish da fi ko no pt sv zh_CN
 done
 
 echo "running PackageMaker...";
-/Developer/Applications/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $IN_BASEDIR/contents -r $RESDIR -i $IN_BASEDIR/fink.info -d $RESDIR/English.lproj/Description.plist
+/Developer/Applications/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/fink.info -d $RESDIR/English.lproj/Description.plist
 perl -pi -e 's#</dict>#<key>IFPkgFlagAuthorizationAction</key>\n<string>RootAuthorization</string>\n</dict>#g' "$DMGDIR/Fink $IN_VERSION Installer.pkg/Contents/Info.plist"
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
