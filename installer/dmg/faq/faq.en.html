@@ -58,7 +58,7 @@ English |
         <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt>, because it conflicts
         with <tt style="white-space: nowrap;">system-xfree86</tt>.</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 How do I change from the non-threaded version of Fink's XFree86
         packages to the threaded version (or vice-versa)?</a></li><li><a href="#comp-packages.cctools">7.4 "When I try to install KDE, I get the following message: 'Can't
-        resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.xml-parser-pm">7.5 <tt style="white-space: nowrap;">intltool</tt> says that I need XML::Parser.  I have xml-parser-pm installed.</a></li><li><a href="#comp-packages.libiconv-gettext">7.6 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
+        resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
         library". Is that bad?</a></li><li><a href="#usage-general.passwd">8.2 There are suddenly a number of strange users on my system, with
         names like "mysql", "pgsql", and "games". Where did they come
         from?</a></li><li><a href="#usage-general.compile-myself">8.3 How do I compile something myself using Fink-installed
@@ -891,7 +891,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.xml-parser">
       <div class="question"><p><b>Q6.20: I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</b></p></div>
-      <div class="answer"><p><b>A:</b> You need to make sure that you have the right variant of the xml-parser-pm package to match the Perl version for your system.  For example, if you're on Panther you should have <tt style="white-space: nowrap;">xml-parser-pm581</tt> rather than <tt style="white-space: nowrap;">xml-parser-pm560</tt> (you may also have the <tt style="white-space: nowrap;">xml-parser-pm</tt> placeholder), since you have <tt style="white-space: nowrap;">Perl-5.8.1</tt> rather than <tt style="white-space: nowrap;">Perl-5.6.0</tt>.</p></div>
+      <div class="answer"><p><b>A:</b> You need to make sure that you have the right variant of the xml-parser-pm package to match the Perl version for your system.  For example, if you're on Panther you should have <tt style="white-space: nowrap;">xml-parser-pm581</tt> rather than <tt style="white-space: nowrap;">xml-parser-pm560</tt> (you may also have the <tt style="white-space: nowrap;">xml-parser-pm</tt> placeholder), since you have <tt style="white-space: nowrap;">Perl-5.8.1</tt> rather than <tt style="white-space: nowrap;">Perl-5.6.0</tt>.  If you're on Jaguar, and are using the default system Perl version, you'll have the <tt style="white-space: nowrap;">pm560</tt> variant, and if you've installed <tt style="white-space: nowrap;">Perl 5.8.0</tt> you may have the <tt style="white-space: nowrap;">pm580</tt> variant.</p></div>
     </a>
     <a name="comp-general.master-problems">
       <div class="question"><p><b>Q6.21: I'm trying to download a package, but Fink goes to some weird site with <q>distfiles</q> in its name, and the file isn't there.</b></p></div>
@@ -965,12 +965,8 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
         December 2002 Developer Tools.</p></div>
     </a>
     
-    <a name="comp-packages.xml-parser-pm">
-      <div class="question"><p><b>Q7.5: <tt style="white-space: nowrap;">intltool</tt> says that I need XML::Parser.  I have xml-parser-pm installed.</b></p></div>
-      <div class="answer"><p><b>A:</b> This most frequently happens on updates.  You need to make sure that you also have <tt style="white-space: nowrap;">xml-parser-pmXXX</tt> installed, where 'XXX" corresponds to the correct version of Perl for your system, e.g. 560 for Jaguar's built in Perl, and  581 for Panther's. </p></div>
-    </a>
     <a name="comp-packages.libiconv-gettext">
-      <div class="question"><p><b>Q7.6: I can't update <tt style="white-space: nowrap;">libiconv</tt>.</b></p></div>
+      <div class="question"><p><b>Q7.5: I can't update <tt style="white-space: nowrap;">libiconv</tt>.</b></p></div>
       <div class="answer"><p><b>A:</b> If you get errors of the form:</p><pre>libtool: link: cannot find the library `/sw/lib/libiconv.la'</pre><p>you can solve this problem by running</p><pre>fink remove gettext-dev
 fink install libiconv</pre></div>
     </a>
@@ -1377,4 +1373,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.27 2004/07/15 01:19:13 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.28 2004/07/15 14:16:04 alexkhansen Exp $</i></p></body></html>
