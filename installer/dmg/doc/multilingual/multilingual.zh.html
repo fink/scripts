@@ -15,7 +15,7 @@ Available Languages:  |
 
     <p>欢迎阅读 Fink 网站国际化指南。
     本文档的编写目录目的是给那些希望帮助 Fink 网站的国际工作的人提供一个工作指引。</p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.what">1.1 现在 Fink 网站的国际化工作进展如何？</a></li><li><a href="#intro.languages">1.2 语言</a></li><li><a href="#intro.organization">1.3 组织</a></li><li><a href="#intro.helping">1.4 提供帮助。</a></li></ul></li><li><a href="#files"><b>2 文档文件</b></a><ul><li><a href="#files.requirements">2.1 需求</a></li><li><a href="#files.setting-up">2.2 环境设置</a></li><li><a href="#files.acquiring">2.3 获取需要翻译的文件。</a></li><li><a href="#files.file-standards">2.4 文件格式</a></li><li><a href="#files.updating">2.5 更新到最新修订版</a></li><li><a href="#files.initial-translation">2.6 初始翻译</a></li><li><a href="#files.check-work">2.7 检查你的工作</a></li><li><a href="#files.change-checkout">2.8 当你获得提交修改的权限（团队领导）</a></li><li><a href="#files.committing">2.9 提交修改（团队领导）</a></li><li><a href="#files.website">2.10 更新我们的网站</a></li></ul></li><li><a href="#procedure"><b>3 更新文档的流程</b></a><ul><li><a href="#procedure.call-to-translate">3.1 通知进行翻译</a></li><li><a href="#procedure.new-translation">3.2 新翻译作品</a></li><li><a href="#procedure.doc-updates">3.3 新文档：</a></li><li><a href="#procedure.new-translation">3.4 新翻译作品：</a></li><li><a href="#procedure.prompt-update">3.5 提示更新一个已经翻译的文档：</a></li><li><a href="#procedure.delayed-update">3.6 延迟更新现有文档（仅限由 XML 产生的文档）：</a></li></ul></li><li><a href="#resources"><b>4 附加的资源</b></a><ul><li><a href="#resources.resources">4.1 重要链接</a></li><li><a href="#resources.editors">4.2 编辑器</a></li><li><a href="#resources.moretools">4.3 一些有用的工具</a></li></ul></li><li><a href="#appendix"><b>5 附录</b></a><ul><li><a href="#appendix.cvs-codes">5.1 CVS 代号。</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.what">1.1 现在 Fink 网站的国际化工作进展如何？</a></li><li><a href="#intro.languages">1.2 语言</a></li><li><a href="#intro.organization">1.3 组织</a></li><li><a href="#intro.helping">1.4 提供帮助。</a></li></ul></li><li><a href="#files"><b>2 文档文件</b></a><ul><li><a href="#files.requirements">2.1 需求</a></li><li><a href="#files.setting-up">2.2 环境设置</a></li><li><a href="#files.acquiring">2.3 获取需要翻译的文件。</a></li><li><a href="#files.file-standards">2.4 文件格式</a></li><li><a href="#files.updating">2.5 更新到最新修订版</a></li><li><a href="#files.initial-translation">2.6 初始翻译</a></li><li><a href="#files.check-work">2.7 检查你的工作</a></li><li><a href="#files.change-checkout">2.8 当你获得提交修改的权限（团队领导）</a></li><li><a href="#files.committing">2.9 提交修改（团队领导）</a></li><li><a href="#files.website">2.10 更新我们的网站</a></li></ul></li><li><a href="#procedure"><b>3 更新文档的流程</b></a><ul><li><a href="#procedure.call-to-translate">3.1 通知进行翻译</a></li><li><a href="#procedure.new-translation">3.2 新翻译作品</a></li><li><a href="#procedure.doc-updates">3.3 新文档：</a></li><li><a href="#procedure.new-translation">3.4 新翻译作品：</a></li><li><a href="#procedure.prompt-update">3.5 提示更新一个已经翻译的文档：</a></li><li><a href="#procedure.delayed-update">3.6 延迟更新现有文档（仅限由 XML 产生的文档）：</a></li><li><a href="#procedure.summary">3.7 对开发者和英语文档作者</a></li></ul></li><li><a href="#resources"><b>4 附加的资源</b></a><ul><li><a href="#resources.resources">4.1 重要链接</a></li><li><a href="#resources.editors">4.2 编辑器</a></li><li><a href="#resources.moretools">4.3 一些有用的工具</a></li></ul></li><li><a href="#appendix"><b>5 附录</b></a><ul><li><a href="#appendix.cvs-codes">5.1 CVS 代号。</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
     
 
     
@@ -273,7 +273,26 @@ define (FINK_SECTION_HOME_LINKS, 'Links');
 define (FINK_SECTIONS, 'Sections'); 
 
 /* Contents as Table of Contents. Used in FAQ/Documentation Sections */ 
-define (FINK_CONTENTS, 'Contents');</pre>
+define (FINK_CONTENTS, 'Contents');
+
+/* Printer */
+define (FINK_PRINTER, 'Printer');
+define (FINK_PRINT_VERSION, 'Print Version');
+
+/* Footer */
+define (META_KEYWORDS, 'Mac OS X, Fink, Debian, Macintosh, Apple, UNIX, Open Source,
+             download, free software, port, development, package management');
+define (META_DESCRIPTION, 'The Fink project wants to bring the full world of Unix Open
+             Source software to Darwin and Mac OS X. We modify Unix software so that it 
+             compiles and runs on Mac OS X and make it available for download as a coherent
+             distribution.');
+define (HEADER_HOSTED_BY, 'Hosted by {img}');
+define (FOOTER_AVAILABLE_LANGUAGES, 'Available Languages');
+define (FOOTER_GENERATED_DYNAMICALLY, 'Generated dynamically from');
+define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated: %x %X');
+define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %b %Y,  %R %Z');
+</pre>
+<p><b>注意：</b>Footer 部分的第一行由于显示的原因被分割成两行，在实际的文件不要这样分割。</p>
 
       <p>在你翻译的时候，你通常会按照下面的步骤（
       假设你正在翻译《运行 X11》这份文档到简体中文）：</p>
@@ -542,7 +561,7 @@ scripts/installer/dmg/faq.ru.html</pre>
     
     <h3><a name="procedure.prompt-update">3.5 提示更新一个已经翻译的文档：</a></h3>
       
-      <p>基准英文文档被<a href="#files.committing">提交</a>并立即<a href="#files.website">激活</a>。
+      <p>基准英文文档被<a href="#files.committing">提交</a>并立即<a href="#files.website">激活</a>-修改者应该提交相应的 PHP 和 HTML 文件，并负责激活更新。
       翻译团队需要更新它们的版本，<a href="#files.committing">提交</a><b>所有的</b>文件（XML 和 PHP），然后<a href="#files.activate">激活</a>更新。</p>
       <p><b>注意：</b></p>
       <ol>
@@ -554,7 +573,10 @@ scripts/installer/dmg/faq.ru.html</pre>
       
       <p>这种情况下，XML 文件的英文版本会被<a href="#files.committing">提交</a>，但<b>不会</b>提交相应的 PHP 和 HTML 文件，也就是说，在 <a href="#files.committing">2.9节</a>的关于动态文件部分的第 5 步完成后就结束。所有的翻译者在一个大家确定的时间段内进行翻译并<b>仅仅</b><a href="#files.committing">提交</a>相应的 XML 文件（也就是说，和英文版一样）。在这个时间段以后，由一个人，例如 i18n 核心团队的一员负责生成，提交和<a href="#files.website">激活</a>所有的 PHP 和 HTML 文件。</p>
     
-
+	<h3><a name="procedure.summary">3.7 对开发者和英语文档作者</a></h3>
+      
+      <p>当前的政策是所有文档应该按照 <a href="#procedure.prompt-update">提示更新</a> 流程进行更新，除非你有很特别的理由不这样做。</p>
+    
   <h2><a name="resources">4 附加的资源</a></h2>
     
 
