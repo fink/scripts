@@ -1210,10 +1210,11 @@ type <tt style="white-space: nowrap;">fink --help</tt> you get the list of optio
 -q, --quiet           - causes fink to be less verbose, opposite of --verbose
 -V, --version         - display version information
 -v, --verbose         - causes fink to be more verbose, opposite of --quiet
--y, --yes             - assume default answer for all interactive questio
+-y, --yes             - assume default answer for all interactive 
+                        questions.
 -b, --use-binary-dist - download pre-compiled packages from the binary 
                         distribution if available (e.g. to reduce compile
-		       time or disk usage).
+		        time or disk usage).
 		        Note that this mode instructs Fink to download the
                         version it wants if that version is available for
 		        download; it does not cause Fink to choose a version
@@ -1230,7 +1231,7 @@ type <tt style="white-space: nowrap;">fink --help</tt> you get the list of optio
                         patch, compile,and install phases. Note that packages
                         built with this option may be non-functional. You
                         should use this mode for package development
-                        and debugging only.ns</pre>
+                        and debugging only.</pre>
       <p>
 Most of these options are self-explanatory. They can also be set in the 
 <a href="#conf">Fink configuration file</a> (fink.conf) if you want 
@@ -1347,7 +1348,7 @@ fink list                 - list all packages
 fink list bash            - check if bash is available and what version.
 fink list --outdated      - list packages which are out of date
 fink list --section=kde   - list the packages in the kde section
-fink list "gnome*"         - list all packages that start with 'gnome'
+fink list "gnome*"        - list all packages that start with 'gnome'
 </pre>
       <p>
 The quotes in the last example are necessary to stop the shell from
@@ -1363,8 +1364,10 @@ the package descriptions to find packages. The second difference is that
 the search string must be supplied and is not optional.
 </p>
       <pre>
-fink apropos irc          - list all packages for which 'irc' occurs in the name or description
-fink apropos -s=kde irc   - the same as above, but restricted to packages from the kde section
+fink apropos irc          - list all packages for which 'irc' 
+			    occurs in the name or description.
+fink apropos -s=kde irc   - the same as above, but restricted to 
+			    packages from the kde section.
 </pre>
     
     <h3><a name="usage.describe">6.9 describe</a></h3>
@@ -1537,4 +1540,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.26 2005/03/09 03:08:57 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.27 2005/03/09 03:44:35 alexkhansen Exp $</i></p></body></html>
