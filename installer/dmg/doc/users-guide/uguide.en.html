@@ -1267,12 +1267,24 @@ others.
     <h3><a name="usage.dumpinfo">6.21 dumpinfo</a></h3>
       
       <p>
-	Shows how Fink parses parts of a package's .info file.
+	Shows how Fink parses parts of a package's .info file. Various
+	fields and percent expansions will be displayed according
+	to <b>options</b> as follows:
       </p>
+      <pre>
+-h, --help           - Show the options which are available.
+-a, --all            - Display all fields from the package description.
+                       This is the default mode when no --field or
+                       --percent flags are given.
+-f fieldname,        - Display the given fieldname(s),
+  --field=fieldname    in the order listed.
+-p key,              - Display the given percent expansion key(s),
+   --percent=key       in the order listed.
+      </pre>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.7 2004/04/12 02:54:09 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.8 2004/04/26 02:05:51 dmacks Exp $</i></p></body></html>
