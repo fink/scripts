@@ -12,7 +12,7 @@ Fran&ccedil;ais |
 </table>
 <h1 style="text-align: center;">Portage de logiciel sur Darwin et Mac OS X</h1>
 <p>Ce document contient des indications pour réaliser le portage d'applications Unix vers Darwin et Mac OS X. Ces informations s'appliquent à Mac OS X version 10.0.x et Darwin 1.3.x. Nous ferons référence aux deux systèmes sous le nom de Darwin, puisque Mac OS X est actuellement un sur-ensemble de Darwin.</p>
-<h2>Contents</h2><ul><li><a href="#basics"><b>1 Notions de base</b></a><ul><li><a href="#basics.heritage">1.1 D'où vient Darwin ?</a></li><li><a href="#basics.compiler">1.2 Le compilateur et les outils</a></li><li><a href="#basics.host-type">1.3 Le type de la machine hôte</a></li><li><a href="#basics.librairies">1.4 Librairies</a></li><li><a href="#basics.other-sources">1.5 Autres sources d'information</a></li></ul></li><li><a href="#shared"><b>2 Code partagé</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Librairies partagées ou modules chargeables</a></li><li><a href="#shared.version">2.2 Numérotation de version</a></li><li><a href="#shared.cflags">2.3 Options de compilation</a></li><li><a href="#shared.build-lib">2.4 Construction d'une librairie partagée</a></li><li><a href="#shared.build-mod">2.5 Construction d'un module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 État des lieux</a></li><li><a href="#libtool.patch-135">3.2 Rustine 1.3.5</a></li><li><a href="#libtool.fixing-14x">3.3 Adaptation de la version 1.4.x</a></li><li><a href="#libtool.notes">3.4 Notes supplémentaires</a></li></ul></li><li><a href="#preparing"><b>4 Préparation pour la version 10.2</b></a><ul><li><a href="#preparing.bash">4.1 Shell bash</a></li><li><a href="#preparing.gcc3">4.2 Compilateur gcc3</a></li></ul></li></ul><h2><a name="basics">1 Notions de base</a></h2>
+<h2>Contents</h2><ul><li><a href="#basics"><b>1 Notions de base</b></a><ul><li><a href="#basics.heritage">1.1 D'où vient Darwin ?</a></li><li><a href="#basics.compiler">1.2 Le compilateur et les outils</a></li><li><a href="#basics.host-type">1.3 Le type de la machine hôte</a></li><li><a href="#basics.librairies">1.4 Librairies</a></li><li><a href="#basics.other-sources">1.5 Autres sources d'information</a></li></ul></li><li><a href="#shared"><b>2 Code partagé</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Librairies partagées ou modules chargeables</a></li><li><a href="#shared.version">2.2 Numérotation de version</a></li><li><a href="#shared.cflags">2.3 Options de compilation</a></li><li><a href="#shared.build-lib">2.4 Construction d'une librairie partagée</a></li><li><a href="#shared.build-mod">2.5 Construction d'un module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 État des lieux</a></li><li><a href="#libtool.patch-135">3.2 Rustine 1.3.5</a></li><li><a href="#libtool.fixing-14x">3.3 Adaptation de la version 1.4.x</a></li><li><a href="#libtool.notes">3.4 Notes supplémentaires</a></li></ul></li><li><a href="#preparing-10.2"><b>4 Préparation pour la version 10.2</b></a><ul><li><a href="#preparing-10.2.bash">4.1 Shell bash</a></li><li><a href="#preparing-10.2.gcc3">4.2 Compilateur gcc3</a></li></ul></li><li><a href="#preparing-10.3"><b>5 Préparation pour la version 10.3</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li></ul></li></ul><h2><a name="basics">1 Notions de base</a></h2>
 
 
 <h3><a name="basics.heritage">1.1 D'où vient Darwin ?</a></h3>
@@ -184,10 +184,10 @@ for cmd in $cmds; do
 <p>Note subsidiaire : les Developer Tools d'Apple contiennent un programme appelé, lui aussi, libtool, qui est utilisé par le compilateur pour construire des librairies partagées.
 Cependant, cet outil n'a rien à voir avec GNU libtool. L'outil GNU libtool qu'Apple fournit est installé sous le nom de <tt style="white-space: nowrap;">glibtool</tt>. Ceci peut être réalisé en configurant GNU libtool avec <tt style="white-space: nowrap;">--program-transform-name=s/libtool/glibtool/</tt>.</p>
 
-<h2><a name="preparing">4 Préparation pour la version 10.2</a></h2>
+<h2><a name="preparing-10.2">4 Préparation pour la version 10.2</a></h2>
 
 
-<h3><a name="preparing.bash">4.1 Shell bash</a></h3>
+<h3><a name="preparing-10.2.bash">4.1 Shell bash</a></h3>
 <p>Fink a fait la transition de OS X 10.0 à OS X 10.1 facilement, et cela, en partie, grâce à la planification des changements à faire. Nous essayerons de faire de même pour la prochaine transition, mais peu de détails nous sont connus pour l'instant.</p>
 <p> Nous savons que OS X 10.2 utilisera bash au lieu de zsh dans le but de fournir la fonctionnalité <tt style="white-space: nowrap;">/bin/sh</tt>. Ceci a au moins trois conséquences pour Fink.</p>
 <ul><li>Dans le passé, certains paquets de Fink créaient un CompileScript (ou un PatchScript, ou un InstallScript) qui ne faisait rien, simplement en mettant un point virgule dans le script. Ceci ne fonctionne pas avec bash et doit être remplacé par :
@@ -246,11 +246,16 @@ IFS="${IFS=     }"; save_ifs="$IFS"; IFS='~'
 </li>
 </ul>
 
-<h3><a name="preparing.gcc3">4.2 Compilateur gcc3</a></h3>
+<h3><a name="preparing-10.2.gcc3">4.2 Compilateur gcc3</a></h3>
 <p>Mac OS X 10.2 utilise le compilateur gcc3.</p>
 <p>Certains paquets qui ont des modules chargeables et qui utilisent libtool échouent avec une erreur install_name, car libtool passe le drapeau -install_name même avec le drapeau -bundle (alors que cela n'est pas strictement nécessaire). Ce comportement était accepté par le compilateur gcc2 mais n'est plus accepté maintenant par le compilateur gcc3. Vous trouverez la rustine <a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg02025.html">ici</a>. Notez que vous n'avez pas besoin de cette rustine si votre paquet utilise libtool-1.3.5 (par exemple, si vous utilisez <tt style="white-space: nowrap;">UpdateLibtool: True</tt>) puisque elle a déjà été insérée dans une version révisée du fichier ltconfig 
 (accessible dans des préversions de fink).</p>
 <p>Un autre problème avec le compilateur gcc3 est l'incompatibilité pour les ABI C++ entre gcc2 et gcc3. En pratique, ceci signifie que les programmes C++ compilés avec gcc3 ne peuvent être liés à des librairies compilées avec gcc2.</p>
+
+<h2><a name="preparing-10.3">5 Préparation pour la version 10.3</a></h2>
+
+
+<h3><a name="preparing-10.3.perl">5.1 Perl</a></h3>
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
@@ -258,4 +263,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: porting.fr.xml,v 1.6 2005/03/11 04:52:46 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: porting.fr.xml,v 1.7 2005/03/16 18:01:44 dmacks Exp $</i></p></body></html>

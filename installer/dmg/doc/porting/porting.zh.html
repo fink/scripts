@@ -14,7 +14,7 @@ Available Languages:  |
 		<p>本文档包含如何移植 Unix 软件到 Darwin 和 Mac OS X 平台上的提示。
 		这里的信息适用于 Mac OS X 10.0.x 和 Darwin 1.3.x。
 		这两种操作系统我们都用 Darwin 来指代，因为 Mac OS X 实际上只是 Darwin 的一个超集。</p>
-	<h2>Contents</h2><ul><li><a href="#basics"><b>1 基本知识</b></a><ul><li><a href="#basics.heritage">1.1 Darwin 的来历</a></li><li><a href="#basics.compiler">1.2 编译器和工具</a></li><li><a href="#basics.host-type">1.3 主机类型</a></li><li><a href="#basics.libraries">1.4 函数库</a></li><li><a href="#basics.other-sources">1.5 其它信息来源</a></li></ul></li><li><a href="#shared"><b>2 共享代码</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共享库和可加载模块对比</a></li><li><a href="#shared.version">2.2 版本编号</a></li><li><a href="#shared.cflags">2.3 编译器标志</a></li><li><a href="#shared.build-lib">2.4 构建一个共享库</a></li><li><a href="#shared.build-mod">2.5 构建一个模块</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 有关情况</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 补丁</a></li><li><a href="#libtool.fixing-14x">3.3 修正 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 修正 libtool 产生的 dylib 的版本字符串</a></li><li><a href="#libtool.notes">3.5 更多注解</a></li></ul></li><li><a href="#preparing"><b>4 为 10.2 做准备</b></a><ul><li><a href="#preparing.bash">4.1 bash shell</a></li><li><a href="#preparing.gcc3">4.2 gcc3 编译器</a></li></ul></li></ul><h2><a name="basics">1 基本知识</a></h2>
+	<h2>Contents</h2><ul><li><a href="#basics"><b>1 基本知识</b></a><ul><li><a href="#basics.heritage">1.1 Darwin 的来历</a></li><li><a href="#basics.compiler">1.2 编译器和工具</a></li><li><a href="#basics.host-type">1.3 主机类型</a></li><li><a href="#basics.libraries">1.4 函数库</a></li><li><a href="#basics.other-sources">1.5 其它信息来源</a></li></ul></li><li><a href="#shared"><b>2 共享代码</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共享库和可加载模块对比</a></li><li><a href="#shared.version">2.2 版本编号</a></li><li><a href="#shared.cflags">2.3 编译器标志</a></li><li><a href="#shared.build-lib">2.4 构建一个共享库</a></li><li><a href="#shared.build-mod">2.5 构建一个模块</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 有关情况</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 补丁</a></li><li><a href="#libtool.fixing-14x">3.3 修正 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 修正 libtool 产生的 dylib 的版本字符串</a></li><li><a href="#libtool.notes">3.5 更多注解</a></li></ul></li><li><a href="#preparing-10.2"><b>4 为 10.2 做准备</b></a><ul><li><a href="#preparing-10.2.bash">4.1 bash shell</a></li><li><a href="#preparing-10.2.gcc3">4.2 gcc3 编译器</a></li></ul></li><li><a href="#preparing-10.3"><b>5 为 10.3 做准备</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li></ul></li></ul><h2><a name="basics">1 基本知识</a></h2>
 		
 		
 
@@ -463,12 +463,12 @@ libtool 库版本由三个整数来描述：
 </p>
 
 
-<h2><a name="preparing">4 为 10.2 做准备</a></h2>
+<h2><a name="preparing-10.2">4 为 10.2 做准备</a></h2>
 
 
 
 
-<h3><a name="preparing.bash">4.1 bash shell</a></h3>
+<h3><a name="preparing-10.2.bash">4.1 bash shell</a></h3>
 <p>
 Fink 使得从 OS X 10.0 到 OS X 10.1 的转换很容易， 这得益于在转换到来之前就已经做好了计划。
 我们计划在下一次转换到来之前也做好准备，但现在还不是太多的细节。
@@ -542,7 +542,7 @@ diff -Naur gdk-pixbuf-0.16.0/ltmain.sh gp-new/ltmain.sh
 </li>
 </ul>
 
-<h3><a name="preparing.gcc3">4.2 gcc3 编译器</a></h3>
+<h3><a name="preparing-10.2.gcc3">4.2 gcc3 编译器</a></h3>
 
 	<p>Mac OS X 10.2 使用 gcc3 编译器。</p>
 	
@@ -559,10 +559,15 @@ diff -Naur gdk-pixbuf-0.16.0/ltmain.sh gp-new/ltmain.sh
 
 
 
+<h2><a name="preparing-10.3">5 为 10.3 做准备</a></h2>
+
+
+<h3><a name="preparing-10.3.perl">5.1 Perl</a></h3>
+
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: porting.zh.xml,v 1.2 2004/03/12 15:06:20 jeff_yecn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: porting.zh.xml,v 1.3 2005/03/16 18:01:45 dmacks Exp $</i></p></body></html>
