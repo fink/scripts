@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - 移植 Unix 软件到 Darwin 和 Mac OS X 上</title></head><body><h1 style="text-align: center;">移植 Unix 软件到 Darwin 和 Mac OS X 上</h1>
+		<p>本文档包含如何移植 Unix 软件到 Darwin 和 Mac OS X 平台上的提示。
+		这里的信息适用于 Mac OS X 10.0.x 和 Darwin 1.3.x。
+		这两种操作系统我们都用 Darwin 来指代，因为 Mac OS X 实际上只是 Darwin 的一个超集。</p>
+	<h2>Contents</h2><ul><li><a href="#basics"><b>1 基本知识</b></a><ul><li><a href="#basics.heritage">1.1 Darwin 的来历</a></li><li><a href="#basics.compiler">1.2 编译器和工具</a></li><li><a href="#basics.host-type">1.3 主机类型</a></li><li><a href="#basics.libraries">1.4 函数库</a></li><li><a href="#basics.other-sources">1.5 其它信息来源</a></li></ul></li><li><a href="#shared"><b>2 共享代码</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共享库和可加载模块对比</a></li><li><a href="#shared.version">2.2 版本编号</a></li><li><a href="#shared.cflags">2.3 编译器标志</a></li><li><a href="#shared.build-lib">2.4 构建一个共享库</a></li><li><a href="#shared.build-mod">2.5 构建一个模块</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 有关情况</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 补丁</a></li><li><a href="#libtool.fixing-14x">3.3 修正 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 修正 libtool 产生的 dylib 的版本字符串</a></li><li><a href="#libtool.notes">3.5 更多注解</a></li></ul></li><li><a href="#preparing"><b>4 为 10.2 做准备</b></a><ul><li><a href="#preparing.bash">4.1 bash shell</a></li><li><a href="#preparing.gcc3">4.2 gcc3 编译器</a></li></ul></li></ul><h2><a name="basics">1 基本知识</a></h2>
+		
+		
+
+		<h3><a name="basics.heritage">1.1 Darwin 的来历</a></h3>
+
+			<p>Darwin 是从 NeXTStep / OpenStep 演化而来的类 Unix 操作系统。
+			据资料上它最初从 4.4BSD Lite 分支出来。
+			BSD 的继承关系在它上面仍然表现出来，事实上，最近 Darwin 仍然使用 FreeBSD 和 NetBSD 的代码来进行改进。</p>
+
+			<p>Darwin 的核心基于 Mach 3.0，BSD 和专利的面向对象驱动层 IOKit 的结合。虽然 Mach 最初是一个微内核的设计，但在它之上的 BSD 核心则是全功能形式的，由于现在两者如此紧密地缠绕在一起，所以应该把它们看成一个整体单一的全功能内核。</p>
+
+			<p>随 Darwin 提供的用户级工具主要是 BSD 家族的，而不是 Linux 所提供的 GNU 家族。
+			不过苹果在这方面并不象其它 BSD 版本那么严格，而只是以一种折衷的态度来对待。
+			例如，苹果同时提供 BSD make 和 GNU make，默认安装的是 GNU make。</p>
+		
+		
+
+		<h3><a name="basics.compiler">1.2 编译器和工具</a></h3>
+			
+			
+			<p>简单地说：使用的编译器是从 gcc 衍生物，但安装为 <tt style="white-space: nowrap;">cc</tt>；你可能需要修改 Makefiles。
+			多数软件包都不能构建共享库。
+			如果你获得有关宏的编译错误，使用 <tt style="white-space: nowrap;">-no-cpp-precomp</tt> 选项。</p>
+
+			<p>详细地说：Mac OS X 开发工具里面的编译器工具组合是一个怪兽。
+			编译器是基于 gcc 2.95.2 套件的，但做了些修改以支持 Objective C 语言和一些 Darwin 特殊东西。
+			预编译器 (<tt style="white-space: nowrap;">cpp</tt>) 有两个版本。
+			一个是从 gcc 2.95.2 来的标准的预编译器，另外一个是苹果编写的专门的预编译器，它支持对头文件的预编译。
+			后者是默认使用的版本，因为它比较快一些。
+			不过，一些代码不能用苹果的预编译器编译，所以你需要使用 <tt style="white-space: nowrap;">-no-cpp-precomp</tt> 选项来转用标准的预编译器。
+			(注意：我以前推荐 <tt style="white-space: nowrap;">-traditional-cpp</tt> 选项。
+			不过，在 GCC 3 中，它的含义发生了一些轻微的改变，使得对多数使用它的软件包都不可用了。
+			<tt style="white-space: nowrap;">-no-cpp-precomp</tt> 则对于当前的开发工具和将来基于 GCC 3 的编译器都会有相同的我们希望的效果。)</p>
+
+			<p>汇编器是基于 gas 1.38 的。连接器不是基于 GNU 工具的。
+			这在构建共享库的时候会有问题，因为 GNU libtool 和它产生的 configure 脚本不知道如何处理苹果的连接器。</p>
+		
+		
+
+		<h3><a name="basics.host-type">1.3 主机类型</a></h3>
+			
+			
+			<p>简单地说：如果配置过程出现 "Can't determine host type" 错误，从 /usr/share/libtool (在 10.2 之前的版本是 /usr/libexec) 拷贝 config.guess 和 config.sub 文件到当前目录。</p>
+
+			<p>详细地说：GNU 世界使用一个规范的格式来描述系统类型。
+			它由三部分组成：cpu 类型，制造商和操作系统。
+			有些时候会加上第四部分-这时第三部分表示内核，而第四部分表示操作系统。
+			所有部分都使用小写字母，并以破折号连接。
+			例如：<tt style="white-space: nowrap;">i586-pc-linux-gnu</tt>，<tt style="white-space: nowrap;">hppa1.1-hp-hpux10.20</tt>，<tt style="white-space: nowrap;">sparc-sun-solaris2.6</tt>。
+			对应于 Mac OS X 10.0 的主机类型是 <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt>。</p>
+
+			<p>许多使用 autoconf 的软件包需要知道它们所编译于的系统平台。(附注：为了支持交叉编译和移植，实际上会有三种类型-主机类型，构建类型，目标类型。通常来说，它们是相同的)。
+			你可以把主机类型作为参数传递给 configure 脚本，或让它自己猜测。</p>
+
+			<p>配置脚本使用两个配套的脚本来检测主机类型。<tt style="white-space: nowrap;">config.guess</tt> 尝试猜测主机类型，<tt style="white-space: nowrap;">config.sub</tt> 用于验证和规范主机类型。
+			这些脚本是作为独立的实体进行维护的，但它们会被包括在每个使用它们的软件包中。
+			直到最近，这些脚本才能够认识 Darwin 或 Mac OS X。
+			如果你有一个不认识 Darwin 的软件包，你需要替换包括在软件包里面的 config.guess 和 config.sub 脚本。
+			幸运的是，苹果放了一个可用的版本在 /usr/share/libtool (对 10.2 之前的版本是 /usr/libexec) 中，所以你只需要从那里拷贝就可以了。</p>
+
+		
+
+		<h3><a name="basics.libraries">1.4 函数库</a></h3>
+			
+
+			<p>简单地说：你可以从 Makefile 中删除 <tt style="white-space: nowrap;">-lm</tt>，这不会造成问题，但你不需要这样做。</p>
+
+			<p>详细地说：Mac OS X 没有单独的 libc，libm，libcurses，libpthread 等函数库。
+			它们都是系统函数库 libSystem 的一部分(在更早的版本中，它们实际上是系统框架(framework))。
+			不过，苹果在 /usr/lib 中放置了合适的符号连接，所以连接到 <tt style="white-space: nowrap;">-lm</tt> 也是可以的。
+			唯一的例外是 <tt style="white-space: nowrap;">-lutil</tt>。在其它系统中，libutil 包含与伪终端和登录记帐有关的函数。
+			这些函数在 libSystem 中，但没有提供 libutil.dylib 的符号连接。</p>
+
+		
+
+		<h3><a name="basics.other-sources">1.5 其它信息来源</a></h3>
+			
+
+			<p>关于移植的另外一个信息来源是一个在<a href="http://www.metapkg.org/wiki">MetaPkg Wiki</a> 的 Wiki 站点。</p>
+
+			<p>你可以阅读苹果的技术文摘 <a href="http://developer.apple.com/technotes/tn2002/tn2071.html">TN2071</a>：《移植 Unix 命令行工具到 Mac OS X》。</p>
+
+		
+
+	<h2><a name="shared">2 共享代码</a></h2>
+		
+		
+
+		<h3><a name="shared.lib-and-mod">2.1 共享库和可加载模块对比</a></h3>
+			
+			
+
+			<p>Mach-O 的一个令人吃惊的特性是对共享函数库和可加载模块的严格区分。
+			在 ELF 系统上，两者是相同的；任何的共享代码都可以作为函数库或作为动态加载模块。</p>
+
+			<p>Mach-O 共享函数库具有 MH_DYLIB 文件类型，扩展名为 <tt style="white-space: nowrap;">.dylib</tt>。
+			它们可以通过常用的静态连接标志进行连接，，比如 <tt style="white-space: nowrap;">-lfoo</tt> 会连接 libfoo.dylib。
+			不过，它们不能以模块形式加载。
+			(附注：共享库可以通过一个 API 动态装载。
+			不过，那个 API 和一般用于束的 API 并不相同；语法上的差别也使它不能作为 dlopen() 的模拟。
+			最值得注意的是，共享库不能被卸载。)</p>
+
+			<p>按 Mach-O 的术语，可加载模块称为束("bundles")。
+			它们的文件类型为 MH_BUNDLE。
+			由于没有其它的组件会使用它，它们可以有任意的扩展名。
+			苹果推荐使用 <tt style="white-space: nowrap;">.bundle</tt> 扩展名，但多数移植的软件会因为兼容性的原因而使用 <tt style="white-space: nowrap;">.so</tt> 的扩展名。
+			束可以通过 dyld API 动态加载和卸载，在这些 API 之上有一个封装来模拟 <tt style="white-space: nowrap;">dlopen()</tt>。
+			没有办法把束当作共享库来进行连接。
+			不过，可以把一个束连接到一个真正的共享库这样在束加载的时候，共享库也会被自动加载。</p>
+
+		
+
+		<h3><a name="shared.version">2.2 版本编号</a></h3>
+			
+
+			<p>在 ELF 系统中，版本号通常会添加到共享库的文件名后面，例如：<tt style="white-space: nowrap;">libqt.so.2.3.0</tt>。
+			在 Darwin 中，版本号被放在函数库名和扩展名之间，例如：<tt style="white-space: nowrap;">libqt.2.3.0.dylib</tt>。
+			注意，这样使得你可以在连接的时候指定所要连接的版本，比方说对上面的例子，可以使用：<tt style="white-space: nowrap;">-lqt.2.3.0</tt>。</p>
+
+			<p>当创建一个共享库时，你可以指定一个在运行时搜索函数库所用的名字。
+			通常都会这样去做，而使得可以同时安装一个函数库的不同主版本。
+			在 ELF 系统上，这称为 <tt style="white-space: nowrap;">soname</tt>。
+			区别是在 Darwin 上你可以(而且是必须)指定包括文件名的完整路径。
+			这消除了 "rpath" 选项以及 ldconfig/ld.so.cache 系统的需要。
+			要使用一个还没有安装的函数库，你可以设置 DYLD_LIBRARY_PATH 环境变量；查阅 dyld 的手册页获取更多细节。</p>
+
+			<p>Mach-O 的格式还提供了真正的次要版本号的检查，在 ELF 系统上这点不是很清楚。
+			每个 Mach-O 函数库有两个版本号："当前" 版本号和 "兼容" 版本号。
+			这两个版本号都有三组以句点分隔的数字组成，例如：1.4.2。
+			第一个数字必需为非零值。
+			第二和第三个数字可以不提供，这时缺省为零值。
+			没有指定版本号的时候，默认为 0.0.0，这是一种通配值。</p>
+
+			<p>"current"版本号主要是用于信息的用途。
+			"compatibility" 版本号用于后面的版本检查。
+			当一个可执行程序要连接的时候，库的版本信息被拷贝到可执行程序中。
+			当可执行程序运行的时候，这个版本信息会用来和要使用的库的版本进行进行核对。
+			除非使用的版本号等于或高于连接时候的库的版本号，否则 dyld 会产生一个运行时错误并终止程序的执行。</p>
+
+		
+
+		<h3><a name="shared.cflags">2.3 编译器标志</a></h3>
+			
+
+			<p>在 Darwin 上默认会生成"位置无关代码"(PIC)。
+			事实上，PowerPC 的代码在设计上就是位置无关的，所以这不会产生性能的损失。
+			因此，在编译共享库或模块的时候，你不需要指定 PIC 选项。
+			不过，连接器不允许在共享库中使用 "common" 标志，所以你需要使用 <tt style="white-space: nowrap;">-fno-common</tt> 编译器选项。</p>
+
+		
+
+		<h3><a name="shared.build-lib">2.4 构建一个共享库</a></h3>
+			
+
+			<p>要构建一个共享库，你要使用 <tt style="white-space: nowrap;">-dynamiclib</tt> 选项调用编译器。
+			这可以通过一个完整的例子来演示。
+			我们要编译一个名为 libfoo 的库，它由 source.c 和 code.c 两个源程序文件组成。
+			版本号是 2.4.5，2 是主版本号(发生了不兼容的 API 改变)，4 是次要版本号(后向兼容的 API 改变)，5 是修正错误的修订版计数(有些人把这称为 "teeny" 修订版，它包含完全兼容的改变)。
+			函数库不依赖于其它共享库，会被安装在 /usr/local/lib。</p>
+
+<pre>cc -fno-common -c source.c
+cc -fno-common -c code.c
+cc -dynamiclib -install_name /usr/local/lib/libfoo.2.dylib \
+ -compatibility_version 2.4 -current_version 2.4.5 \
+ -o libfoo.2.4.5.dylib source.o code.o
+rm -f libfoo.2.dylib libfoo.dylib
+ln -s libfoo.2.4.5.dylib libfoo.2.dylib
+ln -s libfoo.2.4.5.dylib libfoo.dylib</pre>
+<p>
+注意版本号的各个部分所使用的地方。
+同时也注意静态连接器会使用 libfoo.dylib 符号连接，
+而动态连接器会使用 libfoo.2.dylib 符号连接。
+也可以把这些符号连接指到函数库的不同次要修订版上。
+</p>
+
+
+
+<h3><a name="shared.build-mod">2.5 构建一个模块</a></h3>
+<p>
+要构建一个可加载模块，你用 <tt style="white-space: nowrap;">-bundle</tt> 参数调用编译器。
+如果模块会使用主程序中的标识符，你需要指定 <tt style="white-space: nowrap;">-undefined suppress</tt> 来允许未定义标识符，
+同时也配合使用 <tt style="white-space: nowrap;">-flat_namespace</tt> 来满足 Mac OS X 10.1 中的新连接器。
+一个详细的例子是：
+</p>
+<pre>cc -fno-common -c source.c
+cc -fno-common -c code.c
+cc -bundle -flat_namespace -undefined suppress \
+ -o mymodule.so source.o code.o</pre>
+<p>
+注意这里没有使用版本号码。
+理论上来说，可以使用版本号码，但从实用的角度来说，这样做是没有意义的。
+另外注意的是，对束没有命名限制。
+一些软件包喜欢使用 "lib"，因为在其它系统会有这个要求。这样做不会有问题。
+</p>
+
+
+
+<h2><a name="libtool">3 GNU libtool</a></h2>
+
+
+
+
+<p>
+要构建共享库的 GNU 软件包使用 GNU libtool 来在构建和安装过程中隐藏那些平台相关的过程。
+</p>
+
+
+<h3><a name="libtool.situation">3.1 有关情况</a></h3>
+<p>
+宏观地说，可以找到 libtool 的四个分支：
+</p>
+<ul>
+
+<li><p>
+<b>libtool 1.3</b>：
+最常见的分支。
+这个分支的最新版本是 1.3.5。
+它不认识 Darwin 并且只构建静态库。
+可以通过源代码树中 <tt style="white-space: nowrap;">ltconfig</tt> 和 <tt style="white-space: nowrap;">ltmain.sh</tt> 两个文件的存在来识别它。
+</p></li>
+
+<li><p>
+<b>libtool 1.4</b>：
+经过很长的时间的改进，最被作为新的稳定版本发布，这个分支具有更好的 autoconf 集成。
+不幸的是，那使得从 1.3 移植软件包变得不那么容易。
+它本身就支持 Darwin 1.3 / Mac OS X 10.0，并需要一点小修补来使得它能在 Mac OS X 10.1 下工作。
+它可以通过 <tt style="white-space: nowrap;">ltconfig</tt> 文件的不存在来识别。
+那些版本号为 1.3b 或 1.3d 的实际上是 1.4 的开发过程中的版本，必需小心对待。
+</p></li>
+
+<li><p>
+<b>多语言分支版本(multi-language-branch)</b>：
+也称为 MLB，这个版本是一个并行开发的版本，以添加对 C++ 和 Java (通过 gcj) 的支持。
+它已经被合并回主开发线中。
+最近的版本本身支持 Darwin 1.3 和 Mac OS X 10.0。
+MLB 可以通过 <tt style="white-space: nowrap;">ltcf-c.sh</tt>，<tt style="white-space: nowrap;">ltcf-cxx.sh</tt> 和 <tt style="white-space: nowrap;">ltcf-gcj.sh</tt> 文件识别。
+</p></li>
+
+<li><p>
+<b>当前开发分支</b>：
+这个开发中的版本将来会以 libtool 1.5 发布。
+它是 1.4 和 MLB 合并的结果。
+它支持 C，C++ 和 Java (通过 gcj)。
+不幸的是，它不太容易和 1.4 区分开，你需要查找 <tt style="white-space: nowrap;">ltmain.sh</tt> 里面的版本号信息。
+</p></li>
+
+</ul>
+<p>
+作为结论，libtool 1.3.x 以及使用它的软件包(它们是使用 libtool 的软件包的主流)需要进行补丁后在可以在 Darwin 上构建共享库。
+Apple 在 Mac OS X 中包括了一个修正的版本，但在多数情况下不能正常工作。Christoph Pfisterer 通过把正确的路径和完整的版本编号固定编程的方法改进了那个补丁。
+从 1.4 开始，这个修改被加进了上游的 libtool 发型版中。
+Fink 团队的成员仍然不对 libtool 进行改进，并把他们的结果反馈会 libtool 的维护者。
+版本编号方案对于所有 libtool 版本都是兼容的。
+</p>
+<p>
+附注：
+所有 libtool 版本所包括的 libltdl 库只有在安装了 dlcompat 的 Darwin 才可以使用。
+</p>
+
+
+
+<h3><a name="libtool.patch-135">3.2 1.3.5 补丁</a></h3>
+<p>
+如果你自己构建 libtool 1.3.5，你需要应用<a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">这个补丁</a> <b>[updated 2002-06-09]</b> 到 libtool 1.3.5 的源程序，然后删除 ltconfig 和 ltmain.sh 两个文件(它们会在你运行 configure 和 make 的时候从合适的 .in 文件中重建)。
+在 Fink 的 libtool 1.3.5 软件包中，这个过程是自动的。</p><p>
+但那仅是全部工作的一半 ─ 每个软件包是通过它自己附带的 ltconfig 和 ltmain.sh 来使用 libtool。
+所以如果你需要构建共享库的时候，你要把每个软件包里面的这两个文件替换掉。
+注意，你要在运行配置脚本之前做这个事情。
+方便起见，你可以在这里获取这两个文件：
+<a href="http://fink.sourceforge.net/files/ltconfig">ltconfig</a> (98K) 和
+<a href="http://fink.sourceforge.net/files/ltmain.sh">ltmain.sh</a> (110K)
+<b>[both updated 2002-06-09]</b>。</p>
+
+
+<h3><a name="libtool.fixing-14x">3.3 修正 1.4.x</a></h3>
+<p>
+现在广泛使用的 libtool 1.4.x 至少有三个不同版本(1.4.1，1.4.2，和更新的开发版本)，它们在 Darwin 上都有一些问题。不过在它们上面如何修正的方法却是不同的。Fink 所提供的 libtool14 软件包已经包括了所有需要的修正。
+不过，你仍然需要手工修正受影响的文件包的 ltmain.hs/configure 文件来使它可以正常工作。
+</p>
+
+<ol>
+<li>
+<b>flat_namespace 问题</b>：
+这个问题只发生在 Mac OS X10.1 和更新的版本上使用 libtool 的时候。
+原因是 libtool 尝试使用 <tt style="white-space: nowrap;">-undefined suppress</tt> 来允许未定义的标识符，但没有同时使用 <tt style="white-space: nowrap;">-flat_namespace</tt> 选项。
+从 10.1 开始，这不再可以工作了。典型的补丁是这样的：
+<pre>
+diff -Naur gdk-pixbuf-0.16.0.old/configure gdk-pixbuf-0.16.0.new/configure
+--- gdk-pixbuf-0.16.0.old/configure	Wed Jan 23 10:11:48 2002
++++ gdk-pixbuf-0.16.0.new/configure	Thu Jan 31 03:19:54 2002
+@@ -3334,7 +3334,7 @@
+     ;;
+ 
+   darwin* | rhapsody*)
+-    allow_undefined_flag='-undefined suppress'
++    allow_undefined_flag='-flat_namespace -undefined suppress'
+     # FIXME: Relying on posixy $() will cause problems for
+     #        cross-compilation, but unfortunately the echo tests do not
+     #        yet detect zsh echo's removal of \ escapes.
+</pre>
+</li>
+<li>
+<b>可加载模块问题</b>：
+这个问题是由于 zsh (在 10.0 和 10.1 上是默认的 shell；从 10.2 开始，它被替换为 bash) 的非标准行为引起的。
+Zsh 的非标准引号处理方式使得可加载模块不能正确地构建，最后它们被构建程共享库(不象 Linux，在 Darwin 上这是完全不同的东西)。一个典型的修正办法是(你不能完全不经修改地照搬)：
+<pre>
+diff -Naur gnome-core-1.4.0.6.old/configure gnome-core-1.4.0.6.new/configure
+--- gnome-core-1.4.0.6.old/configure	Sun Jan 27 08:19:48 2002
++++ gnome-core-1.4.0.6.new/configure	Fri Feb  8 01:10:21 2002
+@@ -4020,7 +4020,7 @@
+     # FIXME: Relying on posixy $() will cause problems for
+     #        cross-compilation, but unfortunately the echo tests do not
+     #        yet detect zsh echo's removal of \ escapes.
+-    archive_cmds='$nonopt $(test "x$module" = xyes &amp;&amp; echo -bundle || echo -dynamiclib) ...'
++    archive_cmds='$nonopt $(test x$module = xyes &amp;&amp; echo -bundle || echo -dynamiclib) ...'
+     # We need to add '_' to the symbols in $export_symbols first
+     #archive_expsym_cmds="$archive_cmds"' &amp;&amp; strip -s $export_symbols'
+     hardcode_direct=yes
+</pre>
+<p>
+这个问题在 1.4.2 后的某个 libtool 版本修正了。
+</p>
+</li>
+<li>
+<b>简易库问题</b>:
+在一些情况下，libtool 不能连接简易库，而给出 "multiple definitions" 错误。
+这是有 libtool 里面的一些更根本的问题导致的。
+有一个治标不治本，不过在实践中很有效的办法来解决(感谢 Dave Vasilevsky)：
+<pre>
+--- ltmain.sh.old       2002-04-27 00:01:23.000000000 -0400
++++ ltmain.sh   2002-04-27 00:01:45.000000000 -0400
+@@ -2894,7 +2894,18 @@
+        if test -n "$export_symbols" &amp;&amp; test -n "$archive_expsym_cmds"; then
+          eval cmds=\"$archive_expsym_cmds\"
+        else
++         save_deplibs="$deplibs"
++         for conv in $convenience; do
++       tmp_deplibs=
++       for test_deplib in $deplibs; do
++         if test "$test_deplib" != "$conv"; then
++           tmp_deplibs="$tmp_deplibs $test_deplib"
++         fi
++       done
++       deplibs="$tmp_deplibs"
++         done
+          eval cmds=\"$archive_cmds\"
++         deplibs="$save_deplibs"
+        fi
+        save_ifs="$IFS"; IFS='~'
+        for cmd in $cmds; do
+</pre>
+</li>
+<li>
+<b>DESTDIR 问题</b>:
+有些设置了 DESTDIR 并使用 libtool 1.4.2 的软件包会在重新连接的时候有问题。
+这个问题在这些邮件消息里面被讨论：
+<p>
+<a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00019.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00019.html</a></p>
+<p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00021.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00021.html</a></p>
+<p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00025.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00025.html</a>,</p>
+<p>对这个问题的补丁在这里被讨论：</p>
+<p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00043.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00043.html</a>.</p>
+</li>
+</ol>
+
+
+<h3><a name="libtool.dylibversionfix">3.4 修正 libtool 产生的 dylib 的版本字符串</a></h3>
+
+<p>由 libtool 产生的库可能会有错误的版本号。
+这是由于软件包的 Makefile 文件的一个错误标识而导致的。
+当 libtool 在这样一个 Makefile 文件里面被调用的时候：
+<tt style="white-space: nowrap;">
+-release "version"
+</tt>
+在 make 命令运行以后产生的二进制文件是这样的：</p>
+<ol>
+<li> libname.dylib</li>
+<li> libname-"version".dylib</li>
+</ol>
+<p>
+你可以很容易分辨在你的 Makefile 里面是不是使用了 <tt style="white-space: nowrap;">-release</tt>。
+你也许还注意到在函数库名后面的 <b>-</b>。
+这表明 libtool 是以 <tt style="white-space: nowrap;">-release</tt> 参数被调用来产生二进制文件的。
+一些其它的情况下，产生的二进制文件是类似这样的：
+</p>
+
+<ol>
+<li>libname.dylib</li>
+<li>libname-"version".x.x.x.dylib</li>
+</ol>
+<p>
+表明两个的标志 <tt style="white-space: nowrap;">-release</tt> 和 <tt style="white-space: nowrap;">-version-info</tt> 都被使用了。</p>
+<p>
+设置正确的 <tt style="white-space: nowrap;">-version-info</tt> 可以是一项很复杂的工作。
+苹果在它的开发者工具文档里面提供了一些很有用的信息。 
+因为你在运行 Fink，所以你应该安装了某个版本的开发工具。
+对当前 Mac OS X 系统的 libtool 的精确解释可以在<a href="file://localhost/Developer/Documentation/DeveloperTools/libtool/libtool_6.html#SEC34">文档</a>中找到。
+为了使本文档完整化，我们引用了上面提到的文档的一个摘要。
+</p>
+<p>
+引自《开发者文档》：
+libtool 库版本由三个整数来描述：
+</p>
+
+<ul><li>
+<b>当前</b>
+<p>
+这个函数库实现的最近的调用界面版本。
+</p>
+</li>
+<li>
+<b>修订版</b>
+<p>
+当前调用界面的实现版本。
+</p>
+</li>
+<li>
+<b>年龄</b>
+<p>
+这个函数库实现的最近和最旧的调用界面的版本号差别。
+换句话说，这个函数库实现从当前版本往前年龄范围内的全部调用界面─到现在的年龄。如果两个函数库由相同的当前和年龄号，那么动态连接器选择比较大修订版号的一个进行连接。
+</p>
+
+</li>
+</ul>
+<p>
+使用 libtool 设置和更新函数库的版本的更多信息可以在上面链接的文档中找到。
+它完整地包括了如何使用 <tt style="white-space: nowrap;">-version-info</tt> 创建和更新一个函数库版本号。
+</p>
+
+
+
+
+
+<h3><a name="libtool.notes">3.5 更多注解</a></h3>
+<p>关于 libtool 本身以及它的进展的更多信息，查看<a href="http://www.gnu.org/software/libtool/libtool.html">libtool 首页</a>。</p>
+
+<p>
+附注：
+苹果的开发工具包中也包括一个叫做 libtool 的程序，用于编译器构建共享库。
+不过，这和 GNU libtool 一点关系也没有。
+苹果提供的 GNU libtool 则被安装为 <tt style="white-space: nowrap;">glibtool</tt>。
+这可以通过
+<tt style="white-space: nowrap;">--program-transform-name=s/libtool/glibtool/</tt>
+来配置 GNU libtool 来解决。
+</p>
+
+
+<h2><a name="preparing">4 为 10.2 做准备</a></h2>
+
+
+
+
+<h3><a name="preparing.bash">4.1 bash shell</a></h3>
+<p>
+Fink 使得从 OS X 10.0 到 OS X 10.1 的转换很容易， 这得益于在转换到来之前就已经做好了计划。
+我们计划在下一次转换到来之前也做好准备，但现在还不是太多的细节。
+</p>
+<p>我们直到 OS X 10.2 将使用 bash 而不是 zsh 来提供
+<tt style="white-space: nowrap;">/bin/sh</tt> 的功能。这至少对 fink 有三点联系。
+</p>
+<ul><li>
+过去，一些 fink 软件包会创建了一个 CompileScript (或 PatchScript 或
+InstallScript)，它并不实际做什么事情，而只是简单的在脚本里面放一个分号。
+这种做法在 bash 下面是不行的，而必需替换为
+<pre>
+  CompileScript: echo "nothing to do"
+</pre>
+</li>
+<li>
+过去，一些 fink 软件包使用 <tt style="white-space: nowrap;">lib(foo|bar).dylib</tt>
+结构来同时引用两个库；现在在 bash 底下不能这么使用 (bash 里面的替代语句 <tt style="white-space: nowrap;">lib{foo,bar}.dylib</tt> 在 zsh 下不能使用)。解决方案：完整地写出名字。
+</li>
+<li>
+在很多情况下，需要使用一个 libtool 补丁，来避免在 bash 下面构建没有版本的库。<b>注意：对于 libtool-1.3.5 你不需要这些补丁，比如，你使用 UpdateLibtool:
+ True。</b>
+现象：在 bash 下执行构建操作，
+你看到
+<pre>
+../libtool: test: too many arguments
+</pre>
+当发生这种情况时，<tt style="white-space: nowrap;">configure</tt> 会包含下面的内容：
+<pre>
+archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
+-dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
+-install_name $rpath/$soname $(test -n "$verstring" -a x$verstring != 
+x0.0 &amp;&amp; echo $verstring)'
+</pre>
+下面是一个补丁(但必需小心使用，因为有些时候同时会有其它的 libtool 问题，所以这个补丁必需手工应用)：
+<pre>
+diff -Naur gdk-pixbuf-0.16.0/configure gp-new/configure
+--- gdk-pixbuf-0.16.0/configure 2002-01-22 20:11:48.000000000 -0500
++++ gp-new/configure    2002-05-10 03:02:44.000000000 -0400
+@@ -3338,7 +3338,7 @@
+      # FIXME: Relying on posixy $() will cause problems for
+      #        cross-compilation, but unfortunately the echo tests do not
+      #        yet detect zsh echo's removal of \ escapes.
+-    archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
+-dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
+-install_name $rpath/$soname $(test -n "$verstring" -a x$verstring != 
+x0.0 &amp;&amp; echo $verstring)'
++    archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
+-dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
+-install_name $rpath/$soname $tmp_verstring'
+      # We need to add '_' to the symbols in $export_symbols first
+      #archive_expsym_cmds="$archive_cmds"' &amp;&amp; strip -s $export_symbols'
+      hardcode_direct=yes
+diff -Naur gdk-pixbuf-0.16.0/ltmain.sh gp-new/ltmain.sh
+--- gdk-pixbuf-0.16.0/ltmain.sh 2002-01-22 20:11:43.000000000 -0500
++++ gp-new/ltmain.sh    2002-05-10 03:04:49.000000000 -0400
+@@ -2862,6 +2862,11 @@
+        if test -n "$export_symbols" &amp;&amp; test -n "$archive_expsym_cmds";
+	then
+          eval cmds=\"$archive_expsym_cmds\"
+        else
++         if test "x$verstring" = "x0.0"; then
++           tmp_verstring=
++         else
++           tmp_verstring="$verstring"
++         fi
+          eval cmds=\"$archive_cmds\"
+        fi
+        IFS="${IFS=     }"; save_ifs="$IFS"; IFS='~'
+</pre>
+</li>
+</ul>
+
+<h3><a name="preparing.gcc3">4.2 gcc3 编译器</a></h3>
+
+	<p>Mac OS X 10.2 使用 gcc3 编译器。</p>
+	
+	<p>一些使用可加载模块及 libtool 的软件包会因为一个 install_name 错误而失败，因为 libtool 甚至会和 -bundle 标志一起传递 -install_name 标志(即使这不是严格必需的)。
+	这种情况在 gcc2 编译器下是可接受的，那对 gcc3 就不行了。修正方法可以在<a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg02025.html">这里</a>找到。
+注意，如果你的软件包使用 libtool-1.3.5
+(例如，如果你使用 <tt style="white-space: nowrap;">UpdateLibtool: True</tt>)，你不需要这个补丁。
+因为它已经被包括到 fink 的 ltconfig 文件的修订版本中了(在 fink 的预发布版本中提供)。
+</p>
+
+<p>另外一个关于 gcc3 编译器的问题是 gcc2 和 gcc3 之间对 C++ ABI 的不兼容性。
+在实践中，这意味着用 gcc3 编译的 C++ 程序不能链接到用 gcc2 编译的库。</p>
+
+
+
+
+<hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.zh.xml,v 1.1 2004/03/11 23:30:29 jeff_yecn Exp $</i></p></body></html>
