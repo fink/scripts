@@ -19,7 +19,7 @@ Package installation and maintenance is covered as well.
 </p>
   <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 What is Fink?</a></li><li><a href="#intro.req">1.2 Requirements</a></li><li><a href="#intro.supported-os">1.3 Supported Systems</a></li><li><a href="#intro.src-vs-bin">1.4 Source vs. Binary</a></li></ul></li><li><a href="#install"><b>2 First Time Installation</b></a><ul><li><a href="#install.bin">2.1 Installing the Binary Distribution</a></li><li><a href="#install.src">2.2 Installing the Source Distribution</a></li><li><a href="#install.setup">2.3 Setting Up Your Environment</a></li></ul></li><li><a href="#packages"><b>3 Installing Packages</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installing Binary Packages with
 dselect</a></li><li><a href="#packages.bin-apt">3.2 Installing Binary Packages with
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unvailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Packages from Source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloding">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Packages from Source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloding">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.what">1.1 What is Fink?</a></h3>
@@ -115,7 +115,7 @@ Before a computer can actually run a program, it must be transformed
 into low-level machine code instructions (unreadable by most humans).
 That process is called "compiling" and the resulting program is called
 "executable" or "binary".
-(The process is also refered to as "building", because it usually
+(The process is also referred to as "building", because it usually
 involves more steps than just compiling.)
 </p>
       <p>
@@ -506,7 +506,7 @@ Removing packages is just as easy:
       <p>
       </p>
     
-    <h3><a name="packages.bin-exceptions">3.3 Installing Dependent Packages that are Unvailable in the Binary Distribution</a></h3>
+    <h3><a name="packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></h3>
       
       <p>Sometimes, when doing a binary install, you may get messages that a dependency can't be installed. e.g.:</p>
       <pre>Sorry, but the following packages have unmet
@@ -568,7 +568,7 @@ If you run into errors during that process, please first check the
         </li>
         <li>
           <p>
-            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see ths version (or possibly even the package).</p>
+            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
           <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS | rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
 </p>
         </li>
@@ -576,7 +576,7 @@ If you run into errors during that process, please first check the
 </li> 
         <li>
           <p>
-            <b>10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstahle packages.</p>
+            <b>10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
           <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
 </p>
         </li>
@@ -714,7 +714,7 @@ Once you have updated your package descriptions (no matter which way),
 you should update all packages at once with the command <tt style="white-space: nowrap;">fink
 update-all</tt>.
 </p>
-<p>To update the source distribution using Fink Commander, select Source-&gt;Selfupdate to download new package information files, and then Source-&gt;Updata-all to update your outdated packages.</p>
+<p>To update the source distribution using Fink Commander, select Source-&gt;Selfupdate to download new package information files, and then Source-&gt;Update-all to update your outdated packages.</p>
     
     <h3><a name="upgrade.mix">4.3 Mixing Binaries and Source</a></h3>
       
@@ -841,7 +841,7 @@ alter this value.
           <p>
             <b>FetchAltDir:</b> path</p>
           <p>usually fink will store the sources it fetches in
-<tt style="white-space: nowrap;">/sw/src</tt>. You can specify an alernate directory to look for
+<tt style="white-space: nowrap;">/sw/src</tt>. You can specify an alternate directory to look for
 downloaded source code in using this option. For example:
 </p>
           <pre>FetchAltDir: /usr/src</pre>
@@ -866,9 +866,9 @@ The default value is 3.
         <li>
           <p>
             <b>NoAutoIndex:</b> boolean</p>
-          <p>Fink caches its package descripition files in /sw/var/db/fink.db to
+          <p>Fink caches its package description files in /sw/var/db/fink.db to
 save it having to read and parse them all every time it runs. Fink
-checks whether or not thepackage index needs to be updated unless this
+checks whether or not the package index needs to be updated unless this
 option is set to "True". It defaults to "False" and it is not
 recommended that you change it. If you do, you may need to manually run
 the <tt style="white-space: nowrap;">fink index</tt> command to update the index.</p>
@@ -921,7 +921,7 @@ example:</p>
 Internet - <b>wget</b>, <b>curl</b>, or <b>axel</b>. The value
 <b>axelautomirror</b> uses an experimental mode of the <b>axel</b>
 application which tries to determine the closest server that has a
-certain file. The use of <b>axelmirror</b> is not recommended at this
+certain file. The use of <b>axel</b> and <b>axelautomirror</b> are not recommended at this
 time. The default value is <b>curl</b>.
 <b>The application you chose as DownloadMethod MUST be installed!</b>
           </p>
@@ -951,7 +951,7 @@ would like to use.</p>
           <p>You should change this value using the <tt style="white-space: nowrap;">fink configure</tt>
 command. The three letter code is one found in
 <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>.
-For example, if you live in europe:</p>
+For example, if you live in Europe:</p>
           <pre>MirrorContinent: eur</pre>
         </li>
         <li>
@@ -1014,7 +1014,7 @@ fill your hard-disk quickly!</b>
     
     <h3><a name="usage.using">6.1 Using the fink tool</a></h3>
       
-      <p>The <tt style="white-space: nowrap;">fink</tt> tool uses several suffix comands to work on packages from the source distribution. 
+      <p>The <tt style="white-space: nowrap;">fink</tt> tool uses several suffix commands to work on packages from the source distribution. 
 Some of them need at
 least one package name, but can handle several package names at
 once. You can specify just the package name (e.g. gimp), or a fully
@@ -1043,7 +1043,7 @@ of these for historic reasons).</p>
       
       <p>The remove command removes packages from the system by calling '<tt style="white-space: nowrap;">dpkg --remove</tt>'. The current implementation has some flaws: It only works on
 packages the <tt style="white-space: nowrap;">fink</tt> tool knows about (i.e. where an .info file is present); and it
-doesn't check dependencies itself but rather completly leaves that to
+doesn't check dependencies itself but rather completely leaves that to
 the dpkg tool (usually this poses no problem, though).</p>
       <p>The remove command only removes the actual package files, but leaves
 the .deb compressed package file intact. This means that you can
@@ -1243,4 +1243,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.1 2004/02/29 22:31:41 fingolfin Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.2 2004/03/09 23:50:43 michga Exp $</i></p></body></html>
