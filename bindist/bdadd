@@ -33,7 +33,7 @@ Fink::Package->require_packages();
 
 ### loop over packages
 
-my ($pkgspec, $pkgname, $po, $fn, $todir, $tofn, $linkpath, $i, $section);
+my ($pkgspec, $pkgname, $po, $fn, $todir, $tofn, $linkpath, $i, $section, $suffix);
 
 foreach $pkgspec (@ARGV) {
   $po = Fink::PkgVersion->match_package($pkgspec);
@@ -67,16 +67,14 @@ foreach $pkgspec (@ARGV) {
    }
    &execute("cp $fn $tofn");
 
-  for ($i = 1; $i < 10; $i++) {
-    $fn = $po->get_tarball($i);
-    last if not defined($fn);
-    last if $fn eq "-";
+  foreach $suffix ($po->get_source_suffices) {
+    $fn = $po->get_tarball($suffix);
 
     if (not -f "source/$fn") {
       system('mkdir -p source');
-      $fn = $po->find_tarball($i);
+      $fn = $po->find_tarball($suffix);
       if (not defined($fn)) {
-	print "WARNING: can't find source package \"".$po->get_tarball($i)."\" for $pkgname\n";
+	print "WARNING: can't find source package \"".$po->get_tarball($suffix)."\" for $pkgname\n";
 	next;
       }
       $tofn = "source/".&filename($fn);
