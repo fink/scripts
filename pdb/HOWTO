@@ -1,0 +1,65 @@
+Q: How do I update the package database?
+
+A: We can't run the full package DB update process on SourceForge's shell servers,
+since it requires some parts of fink to run, which in turn need perl 5.6.
+But SF only has an older perl version, and that won't change until debian
+incorporates perl 5.6 into their stable distro.
+
+First, some setup you have to perform exactly once.
+
+First you should ssh into shell.sourceforge.net. There you need to create two
+helper files (you only have to do that once):
+
+~/bin/finksql:
+#!/bin/sh
+exec mysql -h mysql.sourceforge.net -u fink --password=DBPASSWORD fink
+
+~/.finkdbi:
+DBI:mysql:database=fink;host=mysql.sourceforge.net|fink|DBPASSWORD
+
+You probably should chmod go-rw the two files, and also chmod u+x the finksql
+script. If you don't know the value for "DBPASSWORD", ask the project admin.
+
+Now, checkout the pdb  module from CVS into your home directory:
+  cvs -d :pserver:anonymous@cvs1:/cvsroot/fink co pdb
+
+Logout from SSH. You know have to edit the "upload" script by replacing
+"fingolfin" with your SourceForge login name. Finally edit fink.conf and make
+sure the Basepath in it points to some sensible place (in the directory you
+give there, a "fink" tree will be created via cvs checkout).
+
+That should be it for the one time setup. Now to the regular update procedure.
+I assume you are in the scripts/pdb 
+directory (the same this HOWTO is in).
+
+Simply run
+  ./refresh
+Verify that everything went smooth. In particula, current.sql should *not* be
+empty. If you are sufficiently sure all is fine, you can now run
+  ./upload
+  ssh MYSFUSERNAME@shell.sourceforge.net:/home/users/f/fi/fingolfin/bin/pdbupdate
+
+The last script will just cd into $HOME/pdb and run inject.pl from there. If you
+prefer, you can do this manually, too.
+
+That should be it!
+
+---------------------------------------------------------------------------------
+
+Q: How do I update the PDB for a full fink release?
+
+A: Assuming you just released fink 0.4.5, you'll want to adjust the package
+database accordingly. 
+
+Run this from your local pdb directory (replace 0.4.5 as appropriate):
+ ./dumprelease 0.4.5
+
+This will produce a file called 0.4.5-stable.sql. Upload this file to your
+SourceForge account. There, ...
+[TO BE CONTIUNED]
+
+
+---------------------------------------------------------------------------------
+
+This HOWTO was written by Max Horn, largely based on some instructions given
+by Christoph Pfisterer. Use at your own risk.
