@@ -362,7 +362,9 @@ initial &quot;<tt style="white-space: nowrap;">#!/bin/sh</tt>&quot;, but before 
 </li>
 <li>
 <p>If you are trying to build a package by hand against Apple's X11 and you see a failure like:</p>
-<pre>ld: err.o illegal reference to symbol: _XSetIOErrorHandler defined in indirectly referenced dynamic library /usr/X11R6/lib/libX11.6.dylib</pre>
+<pre>ld: err.o illegal reference to symbol: _XSetIOErrorHandler 
+defined in indirectly referenced dynamic library 
+/usr/X11R6/lib/libX11.6.dylib</pre>
 <p>then you'll need to make sure to that <tt style="white-space: nowrap;">-lX11</tt> is present during linking.  Check your package's configuration options to see how to feed it the extra argument.</p>
 </li>
 </ul>
@@ -519,7 +521,8 @@ There are two different ways to do this:
    To manually, remove them, you use the <tt style="white-space: nowrap;">dpkg</tt> with the --force-depends
    option, like so:
   </p>
-<pre>sudo dpkg -r --force-depends xfree86-rootless xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
+<pre>sudo dpkg -r --force-depends xfree86-rootless\ 
+xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
 <p>
    Note that if you have apps that require threaded XFree86, you may have trouble with your
    dpkg database if you force remove it and install a different XFree86 package or placeholder
@@ -1223,4 +1226,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.37 2003/07/25 01:06:55 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.xml,v 1.38 2003/08/30 20:26:12 alexkhansen Exp $</i></p></body></html>
