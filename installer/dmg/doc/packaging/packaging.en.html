@@ -5,9 +5,6 @@
 <td align="center">
 Available Languages:  | 
 English | 
-<a href="packaging.fr.html">Fran&ccedil;ais</a> | 
-<a href="packaging.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
-<a href="packaging.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
 </tr>
 </table>
@@ -1456,6 +1453,10 @@ special flags are used to override this.
 <b>Introduced in fink 0.9.9.</b>
 A boolean value which indicates that no other packages should Depend on
 this one, they should only BuildDepend.
+Unlike usual boolean fields, <tt style="white-space: nowrap;">BuildDependsOnly</tt> is
+tri-state: leaving it undefined (not specifying it at all) is
+different than defining it as logically false. See the <a href="#policy.sharedlibs">Shared Library Policy</a> for
+more information.
 </p>
 <p>As of fink 0.20.5, the presence or absence of this field, and its value
 if present, are recorded into the .deb
@@ -2259,4 +2260,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.46 2004/08/06 11:55:57 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.47 2004/09/07 09:57:30 dmacks Exp $</i></p></body></html>
