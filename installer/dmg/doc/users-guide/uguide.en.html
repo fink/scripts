@@ -1013,20 +1013,25 @@ packages. It is not recommended as your packages may be quite out of date.
           <p>
             <b>UseBinaryDist:</b> boolean</p>
           <p>
-Causes fink to try to download pre-compiled binary packages from the binary
+Causes <tt style="white-space: nowrap;">fink</tt> to try to download pre-compiled binary packages from the binary
 distribution if available and if the binary package is not already on the
 system. This can save a lot of installation time and it is therefore 
 recommended to set this option. Passing fink the 
-<a href="#usage">--use-binary-dist option</a> has the same effect, 
-but only operates on that single fink invocation.
+<a href="#usage">--use-binary-dist</a> option (or the <tt style="white-space: nowrap;">-b</tt> flag) has the same effect,  
+but only operates on that single fink invocation.  Passing <tt style="white-space: nowrap;">fink</tt> the
+           <tt style="white-space: nowrap;">--no-use-binary-dist</tt> flag overrides this, and compiles from source
+           for that single <tt style="white-space: nowrap;">fink</tt> invocation.
 <b>Only available as of  fink version 0.23.0</b>.
-          </p>
+          </p><p>Note that this mode instructs <tt style="white-space: nowrap;">fink</tt> to download the version it wants
+           if that version is available for download; it does not cause <tt style="white-space: nowrap;">fink</tt>
+           to choose a version based on its binary availability.
+</p>
         </li>
       </ul>
     
     <h3><a name="conf.mirrors">5.6 Mirror Settings</a></h3>
       
-      <p>Getting software from the Internet can be tedious thing and often
+      <p>Getting software from the Internet can be a tedious thing and often
 downloads are not as fast as we would like them to be. Mirror servers
 host copies of files available on other servers, but may have a faster
 connection to the Internet or be geographically closer to you, thus
@@ -1128,6 +1133,12 @@ while building Fink packages will be placed here. Defaults to <tt style="white-s
 <b>Only available in fink newer than version 0.21.0</b>.
           </p>
         </li>
+        <li><p><b>NotifyPlugin:</b> plugin</p><p>
+           Specify a notification plugin to tell you when packages have been
+           installed/uninstalled.  Defaults to Growl (requires <tt style="white-space: nowrap;">Mac::Growl</tt> to
+           operate).  Other plugins can be found in the
+           <tt style="white-space: nowrap;">/sw/lib/perl5/Fink/Notify</tt> directory.
+</p></li>
       </ul>
     
     <h3><a name="conf.sourceslist">5.9 Managing apt's sources.list file</a></h3>
@@ -1473,11 +1484,11 @@ Only available in <tt style="white-space: nowrap;">fink</tt> newer than version 
    --percent=key       in the order listed.
       </pre>
     
-
+    
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.24 2005/03/01 19:16:47 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.25 2005/03/07 01:11:54 alexkhansen Exp $</i></p></body></html>
