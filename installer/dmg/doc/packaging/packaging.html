@@ -1789,12 +1789,12 @@ certain fields missing.  Here is what belongs in the sub-description
 </p>
 <ul>
 <li>Initial Data: Only the <tt style="white-space: nowrap;">Package</tt> needs to be specified,
-everything else is inherited from the parent package (except for
-<tt style="white-space: nowrap;">Type</tt>, which is internally set to the value 
-<tt style="white-space: nowrap;">splitoff</tt>).  Percent expansion can be used, and it is often
-convenient to refer to the name %N of the parent package.</li>
-<li>Dependencies: All of these are allowed except <tt style="white-space: nowrap;">Essential</tt>,
-which cannot be used for a sub-package.</li>
+everything else is inherited from the parent package.  You may modify
+<tt style="white-space: nowrap;">Type</tt> and <tt style="white-space: nowrap;">License</tt> by declaring the field
+within the <tt style="white-space: nowrap;">SplitOff</tt>.  Percent expansion can be used, and
+it is often convenient to refer to the name %N of the parent
+package.</li>
+<li>Dependencies: All of these are allowed.</li>
 <li>Unpack Phase, Patch Phase, Compile Phase: These fields are irrelevant
 and will be ignored.</li>
 <li>Install Phase, Build Phase: Any of these fields are allowed (except
