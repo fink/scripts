@@ -22,6 +22,7 @@ This is the installer package for Fink IN_VERSION. Fink is a distribution of Ope
 \cf0 \'a5	Do not use this installer to update existing Fink installations. To update, see\
      \ul http://fink.sourceforge.net/download/upgrade.php\ulnone \
 \'a5	Do not use this installer if you have MacGIMP or OpenOSX.com\'d5s GIMP package installed.\
+\'a5	Do not use this installer if you have Virex 7.2 installed.  (As of this writing, MacAfee has not yet addressed the problem with Virex.  As a workaround for users of Virex 7.2, you can remove the /sw folder, install Fink, and then immediately install the Fink packages curl-shlibs, dlcompat-shlibs, and openssl-shlibs.)\
 \'a5	This version of fink requires Mac OS X 10.2. For earlier versions of Mac OS X, see the Fink web site.  \
 \'a5	Don\'d5t trust the \'d2disk space required\'d3 figures.\
 \'a5	For installation on a separate volume, see below.\
@@ -45,11 +46,11 @@ To actually use the programs installed by Fink, you must edit the configuration 
 
 \f0\b0\fs28 \cf0 Then, press Ctrl-O, press Return, press Ctrl-X. Quit Terminal.app and restart it. You're now ready to use Fink.\
 \
-More detailed instructions can be found on the Fink website:\
+More detailed instructions can be found in Documentation.html and FAQ.html provided on the Fink installation disk.  The same information (and more) can be found on the Fink website:\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
 \cf0 \ul http://fink.sourceforge.net/\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
-\cf0 \ulnone In particular, you\'d5ll be interested in the Fink User\'d5s Guide and the Running X11 document:\
+\cf0 \ulnone In particular, you\'d5ll be interested in the Fink User\'d5s Guide and the Running X11 document, available as links from Documentation.html on the Fink installation disk, or online at:\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
 \cf0 \ul http://fink.sourceforge.net/doc/users-guide/\ulnone \
 \ul http://fink.sourceforge.net/doc/x11/\ulnone \
@@ -64,8 +65,9 @@ This installer serves only as a starting point. The Fink distribution uses its o
 \pard\tx420\tx1440\tx2880\tx4320\tx5760\tx7200\li420\fi-280\ql\qnatural
 \cf0 \'a5	
 \f1\b FinkCommander
-\f0\b0  - a GUI for fink, available at \
-         \ul http://finkcommander.sourceforge.net/\ulnone \
+\f0\b0  - a GUI for fink, available in the FinkCommander folder of the Fink installation disk, or at \
+         \ul http://finkcommander.sourceforge.net/\
+\ulnone    To install FinkCommander, simply drag it to your hard disk. \
 \'a5	
 \f1\b apt-get
 \f0\b0  - a command line utility that is able to download binary packages from the Internet. (A ported Debian tool.)\
@@ -97,17 +99,17 @@ You can download the source code for the programs contained in this installer fr
 \cf0 \
 This installer contains the following packages: \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
-\cf0 apt-0.5.4-7\
-apt-shlibs-0.5.4-7\
+\cf0 apt-0.5.4-8\
+apt-shlibs-0.5.4-8\
 base-files-1.6-1\
 bzip2-1.0.2-1\
-debianutils-1.16-1\
-dpkg-1.9.20-4\
-fink-0.11.1-10\
+debianutils-1.23-1\
+dpkg-1.10.9-2\
+fink-0.12.1-1\
 gettext-0.10.40-3\
 gzip-1.2.4a-6\
 libiconv-1.7-5\
-ncurses-5.2-8\
+ncurses-5.3-1\
 storable-pm-1.0.14-1\
 tar-1.13.25-1\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
