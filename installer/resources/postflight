@@ -7,4 +7,5 @@ if(! -e "/sw")
 }
 system "/usr/bin/yes '' | /sw/lib/fink/postinstall.pl";
 system "/sw/bin/fink -y index";
-system "open /sw/bin/pathsetup.command"
+system "open /sw/bin/pathsetup.command";
+system "/sw/var/lib/fink/prebound/update-package-prebinding.pl -f";
