@@ -1,0 +1,55 @@
+#!/bin/sh
+set -e
+set -x
+
+if [ -z "$BDBASE" ]; then
+  echo "BDBASE not set"
+  exit 1
+fi
+cd $BDBASE
+
+release=$1
+if [ -z "$release" ]; then
+  echo "No new release given."
+  exit 1
+fi
+prevrel=$2
+if [ -z "$prevrel" ]; then
+  echo "No previous release given."
+  exit 1
+fi
+
+# create directories and Release files
+for dist in fink-$release fink-$release-updates ; do
+  mkdir -p dists/$dist
+  for tree in main crypto ; do
+    mkdir -p dists/$dist/$tree/finkinfo
+    mkdir -p dists/$dist/$tree/binary-darwin-powerpc
+    mkdir -p dists/$dist/$tree/source
+    ( echo "Archive: $dist"
+      echo "Component: $tree"
+      echo "Origin: Fink"
+      echo "Label: Fink"
+      echo "Architecture: darwin-powerpc"
+    ) | sed 's/fink-//' >dists/$dist/$tree/binary-darwin-powerpc/Release
+  done
+done
+
+# symlink old packages in the main tree (not updates, not crypto)
+from="fink-$prevrel/main"
+to="fink-$release/main"
+cd $BDBASE/dists/$from/binary-darwin-powerpc
+
+for file in * ; do
+  if [ -d $file ]; then
+    mkdir -p $BDBASE/dists/$to/binary-darwin-powerpc/$file
+  fi
+done
+for file in */*.deb ; do
+  ln -s ../../../../$from/binary-darwin-powerpc/$file ../../../$to/binary-darwin-powerpc/$file
+done
+
+# TODO: copy source symlinks
+# TODO: where do we get the content for finkinfo?
+
+exit 0
