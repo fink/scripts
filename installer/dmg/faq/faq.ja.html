@@ -339,7 +339,7 @@ unstable を使用する場合、何か上手くいったら（上手くいか�
 <a name="usage-fink.sudo">
 <div class="question"><p><b>Q5.9: sudo でパスワードを何度も何度も入力するのは疲れます。何か良い方法はありませんか?</b></p></div>
 <div class="answer"><p><b>A:</b> sudo がパスワードを聞いてこないように設定することができます。
-root 権限で <tt style="white-space: nowrap;">/etc/sudoers</tt> を開き、次の行を追加します:</p><pre>username ALL = NOPASSWD: ALL</pre><p>もちろん、 <tt style="white-space: nowrap;">username</tt> は実際のユーザー名に変えて下さい。</p></div>
+root 権限で <tt style="white-space: nowrap;">visudo</tt> を開き、次の行を追加します:</p><pre>username ALL = NOPASSWD: ALL</pre><p>もちろん、 <tt style="white-space: nowrap;">username</tt> は実際のユーザー名に変えて下さい。</p></div>
 </a>
 <a name="usage-fink.exec-init-csh">
 <div class="question"><p><b>Q5.10: init.csh or init.sh を実行しようとすると、 "Permission denied" エラーが出ます。
@@ -462,7 +462,9 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 <div class="answer"><p><b>A:</b> これは普通、 PATH の問題です。ターミナルで:</p><pre>printenv PATH</pre><p>と入力し、 <tt style="white-space: nowrap;">/sw/sbin</tt> が出てこないなら、環境変数を
 <a href="http://fink.sourceforge.net/doc/users-guide/install.php#setup">instructions</a>
 内の Users Guide を参照してください。
-<tt style="white-space: nowrap;">/sw/sbin</tt> があるが、他のディレクトリ (例えば /usr/local/bin) がそれより前にある場合、 PATH の順序を変えて先頭近くに移動するか、どうしても順序を変えられない理由があるならば、 Fink を使う時に Fink ではない方の <tt style="white-space: nowrap;">install-info</tt> のファイル名を一時的に変える必要があります。</p></div>
+<tt style="white-space: nowrap;">/sw/sbin</tt> があるが、他のディレクトリ (例えば /usr/local/bin) 
+がそれより前にある場合、 PATH の順序を変えて先頭近くに移動してください。
+どうしても順序を変えられない理由があるならば、 Fink を使う時に Fink ではない方の <tt style="white-space: nowrap;">install-info</tt> のディレクトリ名を一時的に変える必要があります。</p></div>
 </a>
 <a name="usage-fink.bad-list-file">
 <div class="question"><p><b>Q5.18: 何もインストールできないし、削除もできません。 "files list file" と出るだけです。</b></p></div>
@@ -1162,4 +1164,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.12 2004/03/27 00:34:25 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.13 2004/04/11 00:17:34 babayoshihiko Exp $</i></p></body></html>
