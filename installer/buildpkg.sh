@@ -28,8 +28,17 @@ rm -Rf $DMGDIR/*/CVS
 rm -Rf $DMGDIR/*/*/CVS
 
 # Create symlinks for documentation
-ln -s doc/doc.html $DMGDIR/Documentation.html
-ln -s faq/faq.html $DMGDIR/FAQ.html
+ln -s doc/doc.en.html $DMGDIR/Documentation.html
+ln -s faq/faq.en.html $DMGDIR/FAQ.html
+
+# Put the correct pathsetup script into pathsetup.app
+cp contents/sw/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
+chmod a+x $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
+
+# permissions for pathsetup.app
+chmod 555 $DMGDIR/pathsetup.app
+chmod 555 $DMGDIR/pathsetup.app/Contents/MacOS
+chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
 
 # Substitute the version for IN_VERSION where appropriate
 perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
@@ -43,7 +52,7 @@ for lang in Dutch French German Italian Japanese Spanish da fi ko no pt sv zh_CN
 done
 
 echo "running PackageMaker...";
-/Developer/Applications/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/fink.info -d $RESDIR/English.lproj/Description.plist
+/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/fink.info -d $RESDIR/English.lproj/Description.plist
 perl -pi -e 's#</dict>#<key>IFPkgFlagAuthorizationAction</key>\n<string>RootAuthorization</string>\n</dict>#g' "$DMGDIR/Fink $IN_VERSION Installer.pkg/Contents/Info.plist"
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
