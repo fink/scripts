@@ -9,468 +9,234 @@ Available Languages:  |
 <a href="uguide.es.html">Espa&ntilde;ol</a> | 
 Fran&ccedil;ais | 
 <a href="uguide.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
+<a href="uguide.ru.html">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russkiy)</a> | 
 <a href="uguide.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
 </tr>
 </table>
 <h1 style="text-align: center;">Guide de l'utilisateur Fink</h1>
-<p>
-Ce document donne un aperçu de toutes les fonctionnalités de fink. Les documents suivants, bien que plus anciens, sont plus complets :
-<a href="http://fink.sourceforge.net/doc/bundled/install.php">Installation</a>,
-<a href="http://fink.sourceforge.net/doc/bundled/usage.php">Utilisation</a>
-et le fichier ReadMe.rtf inclus dans l'image disque de la distribution binaire.
-Voir aussi la 
-<a href="http://fink.sourceforge.net/doc/">section documentation</a> du site web, qui contient d'autres documents utiles.
-</p>
-<p>
-Bienvenue dans le Guide de l'Utilisateur Fink. 
-Ce guide couvre les procédures de première installation et de mise à jour des distributions source et binaire, ainsi que l'installation de paquets et la maintenance.
-</p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#intro.req">1.2 Configuration requise</a></li><li><a href="#intro.supported-os">1.3 Systèmes supportés</a></li><li><a href="#intro.src-vs-bin">1.4 Source ou binaire</a></li></ul></li><li><a href="#install"><b>2 Première installation</b></a><ul><li><a href="#install.bin">2.1 Installation de la distribution binaire</a></li><li><a href="#install.src">2.2 Installation de la distribution source</a></li><li><a href="#install.setup">2.3 Définition de votre environnement</a></li></ul></li><li><a href="#packages"><b>3 Installation de paquets</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installation de paquets binaires avec dselect</a></li><li><a href="#packages.bin-apt">3.2 Installation de paquets binaires avec
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installation de paquets dépendants non disponibles dans la distribution binaire</a></li><li><a href="#packages.src">3.4 Installation de paquets binaires et de source avec fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Versions disponibles</a></li><li><a href="#packages.x11">3.7 Implémentation de X11</a></li></ul></li><li><a href="#upgrade"><b>4 Mise à niveau de Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Mise à niveau à partir de paquets binaires</a></li><li><a href="#upgrade.src">4.2 Mise à niveau de la distribution source</a></li><li><a href="#upgrade.mix">4.3 Mélange de binaires et de source</a></li></ul></li><li><a href="#conf"><b>5 Fichier de Configuration de Fink</b></a><ul><li><a href="#conf.about">5.1 À propos de fink.conf</a></li><li><a href="#conf.syntax">5.2 Syntaxe de fink.conf</a></li><li><a href="#conf.required">5.3 Éléments obligatoires</a></li><li><a href="#conf.optional">5.4 Options utilisateur</a></li><li><a href="#conf.downloading">5.5 Options de téléchargement</a></li><li><a href="#conf.mirrors">5.6 Configuration des miroirs</a></li><li><a href="#conf.developer">5.7 Configuration Développeur</a></li><li><a href="#conf.advanced">5.8 Variables pour les utilisateurs avertis</a></li><li><a href="#conf.sourceslist">5.9 Gestion du fichier sources.list d'apt</a></li></ul></li><li><a href="#usage"><b>6 Utilisation de l'outil fink en ligne de commande</b></a><ul><li><a href="#usage.using">6.1 Utilisation de l'outil fink</a></li><li><a href="#usage.options">6.2 Options globales</a></li><li><a href="#usage.install">6.3 install - installation</a></li><li><a href="#usage.remove">6.4 remove - suppression</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all - tout mettre à jour</a></li><li><a href="#usage.list">6.7 list - liste</a></li><li><a href="#usage.apropos">6.8 apropos - à propos</a></li><li><a href="#usage.describe">6.9 describe - description</a></li><li><a href="#usage.fetch">6.10 fetch - téléchargement</a></li><li><a href="#usage.fetch-all">6.11 fetch-all - tout télécharger</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing - télécharger paquets manquants</a></li><li><a href="#usage.build">6.13 build - compiler</a></li><li><a href="#usage.rebuild">6.14 rebuild - recompiler</a></li><li><a href="#usage.reinstall">6.15 reinstall - réinstaller</a></li><li><a href="#usage.configure">6.16 configure - configurer</a></li><li><a href="#usage.selfupdate">6.17 selfupdate - mise à jour automatique</a></li><li><a href="#usage.index">6.18 index - indexer</a></li><li><a href="#usage.validate">6.19 validate - valider</a></li><li><a href="#usage.scanpackages">6.20 scanpackages - création de fichiers Packages</a></li><li><a href="#usage.cleanup">6.21 cleanup - épuration</a></li><li><a href="#usage.dumpinfo">6.22 dumpinfo - analyse des fichiers info</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
-    
-    
-    <h3><a name="intro.what">1.1 Qu'est-ce que Fink ?</a></h3>
-      
-<p>
-Fink est une distribution de logiciels Unix Open Source pour Mac OS X et Darwin.
-Il apporte à votre Mac une large palette d'outils en ligne de commandes et de logiciels graphiques libres développés pour Linux ou pour d'autres systèmes opératoires similaires.
-</p>
-    
-    <h3><a name="intro.req">1.2 Configuration requise</a></h3>
-      
-<p>
-Vous devez disposer au moins :
-</p>
-      <ul>
-        <li>
-<p>
-D'un système Mac OS X installé, version 10.2 ou postérieure, ou des versions Darwin correspondantes.
-Il est <b>impossible</b> de faire fonctionner Fink sous des versions antérieures de l'un ou l'autre de ces systèmes.
-Voir ci-dessous pour de plus amples informations sur les systèmes supportés.
-</p>
-        </li>
-        <li>
-          <p>
-D'un accès Internet.
-Le code source et les paquets binaires sont récupérés à partir des sites Internet de téléchargement.
-</p>
-        </li>
-      </ul>
-      <p>
-Si vous comptez utiliser la distribution source (voir plus loin), vous devez aussi avoir :
-</p>
-      <ul>
-        <li>
-          <p>
-Les outils de développement.
-Sous Mac OS X, installez le paquet Developer.pkg à partir du CD DeveloperTools.
-Notez que la version des outils de développement doit correspondre à celle de Mac OS X.
-Sous Darwin, les outils de développement sont inclus dans l'installation par défaut.
-</p>
-          <p>
-Il est utile d'installer les Outils de Développement, même si vous ne comptez pas construire les paquets à partir du source.
-Certains des programmes installés par le paquet Developer.pkg sont en fait des outils de ligne de commande à portée générale.
-Le fonctionnement de certains paquets dépend de ces outils.
-</p>
-        </li>
-        <li>
-          <p>
-De la patience.
-Compiler plusieurs gros paquets prend du temps.
-Il peut s'agir de plusieurs heures, voire de plusieurs jours.
-</p>
-        </li>
-      </ul>
-    
-    <h3><a name="intro.supported-os">1.3 Systèmes supportés</a></h3>
-      
-      <p>
-        <b>Mac OS X 10.3</b> est le meilleur système opératoire pour faire tourner Fink.
-Tous les développeurs s'en servent et les paquets sont testés sur ce système.
-On considère qu'il est "complètement supporté et testé", bien qu'il puisse y avoir quelques problèmes de compilation résiduels pour certains paquets isolés.
-</p>
+<p>Ce document donne un aperçu de toutes les fonctionnalités de fink. Les documents suivants, bien que plus anciens, sont plus complets : <a href="http://fink.sourceforge.net/doc/bundled/install.php">Installation</a>, <a href="http://fink.sourceforge.net/doc/bundled/usage.php">Utilisation</a> et le fichier ReadMe.rtf inclus dans l'image disque de la distribution binaire. Voir aussi la <a href="http://fink.sourceforge.net/doc/">section documentation</a> du site web, qui contient d'autres documents utiles.</p>
+<p>Bienvenue dans le Guide de l'Utilisateur Fink. Ce guide couvre les procédures de première installation et de mise à jour des distributions source et binaire, ainsi que l'installation de paquets et la maintenance.</p>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#intro.req">1.2 Configuration requise</a></li><li><a href="#intro.supported-os">1.3 Systèmes supportés</a></li><li><a href="#intro.src-vs-bin">1.4 Source ou binaire</a></li></ul></li><li><a href="#install"><b>2 Première installation</b></a><ul><li><a href="#install.bin">2.1 Installation de la distribution binaire</a></li><li><a href="#install.src">2.2 Installation de la distribution source</a></li><li><a href="#install.setup">2.3 Définition de votre environnement</a></li></ul></li><li><a href="#packages"><b>3 Installation de paquets</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installation de paquets binaires avec dselect</a></li><li><a href="#packages.bin-apt">3.2 Installation de paquets binaires avec apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installation de paquets dépendants non disponibles dans la distribution binaire</a></li><li><a href="#packages.src">3.4 Installation de paquets binaires et de source avec fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Versions disponibles</a></li><li><a href="#packages.x11">3.7 Implémentation de X11</a></li></ul></li><li><a href="#upgrade"><b>4 Mise à niveau de Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Mise à niveau à partir de paquets binaires</a></li><li><a href="#upgrade.src">4.2 Mise à niveau de la distribution source</a></li><li><a href="#upgrade.mix">4.3 Mélange de binaires et de source</a></li></ul></li><li><a href="#conf"><b>5 Fichier de Configuration de Fink</b></a><ul><li><a href="#conf.about">5.1 À propos de fink.conf</a></li><li><a href="#conf.syntax">5.2 Syntaxe de fink.conf</a></li><li><a href="#conf.required">5.3 Éléments obligatoires</a></li><li><a href="#conf.optional">5.4 Options utilisateur</a></li><li><a href="#conf.downloading">5.5 Options de téléchargement</a></li><li><a href="#conf.mirrors">5.6 Configuration des miroirs</a></li><li><a href="#conf.developer">5.7 Configuration Développeur</a></li><li><a href="#conf.advanced">5.8 Variables pour les utilisateurs avertis</a></li><li><a href="#conf.sourceslist">5.9 Gestion du fichier sources.list d'apt</a></li></ul></li><li><a href="#usage"><b>6 Utilisation de l'outil fink en ligne de commande</b></a><ul><li><a href="#usage.using">6.1 Utilisation de l'outil fink</a></li><li><a href="#usage.options">6.2 Options globales</a></li><li><a href="#usage.install">6.3 install - installation</a></li><li><a href="#usage.remove">6.4 remove - suppression</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all - tout mettre à jour</a></li><li><a href="#usage.list">6.7 list - liste</a></li><li><a href="#usage.apropos">6.8 apropos - à propos</a></li><li><a href="#usage.describe">6.9 describe - description</a></li><li><a href="#usage.fetch">6.10 fetch - téléchargement</a></li><li><a href="#usage.fetch-all">6.11 fetch-all - tout télécharger</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing - télécharger paquets manquants</a></li><li><a href="#usage.build">6.13 build - compiler</a></li><li><a href="#usage.rebuild">6.14 rebuild - recompiler</a></li><li><a href="#usage.reinstall">6.15 reinstall - réinstaller</a></li><li><a href="#usage.configure">6.16 configure - configurer</a></li><li><a href="#usage.selfupdate">6.17 selfupdate - mise à jour automatique</a></li><li><a href="#usage.index">6.18 index - indexer</a></li><li><a href="#usage.validate">6.19 validate - valider</a></li><li><a href="#usage.scanpackages">6.20 scanpackages - création de fichiers Packages</a></li><li><a href="#usage.cleanup">6.21 cleanup - épuration</a></li><li><a href="#usage.dumpinfo">6.22 dumpinfo - analyse des fichiers info</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+
+
+<h3><a name="intro.what">1.1 Qu'est-ce que Fink ?</a></h3>
+
+<p>Fink est une distribution de logiciels Unix Open Source pour Mac OS X et Darwin. Il apporte à votre Mac une large palette d'outils en ligne de commandes et de logiciels graphiques libres développés pour Linux ou pour d'autres systèmes opératoires similaires.</p>
+
+<h3><a name="intro.req">1.2 Configuration requise</a></h3>
+
+<p>Vous devez disposer au moins :</p>
+<ul>
+<li>
+<p>D'un système Mac OS X installé, version 10.2 ou postérieure, ou des versions Darwin correspondantes. Il est <b>impossible</b> de faire fonctionner Fink sous des versions antérieures de l'un ou l'autre de ces systèmes. Voir ci-dessous pour de plus amples informations sur les systèmes supportés.</p>
+</li>
+<li>
+<p>D'un accès Internet. Le code source et les paquets binaires sont récupérés à partir des sites Internet de téléchargement.</p>
+</li>
+</ul>
+<p>Si vous comptez utiliser la distribution source (voir plus loin), vous devez aussi avoir :</p>
+<ul>
+<li>
+<p>Les outils de développement. Sous Mac OS X, installez le paquet Developer.pkg à partir du CD DeveloperTools. Notez que la version des outils de développement doit correspondre à celle de Mac OS X. Sous Darwin, les outils de développement sont inclus dans l'installation par défaut.</p>
+<p>Il est utile d'installer les Outils de Développement, même si vous ne comptez pas construire les paquets à partir du source. Certains des programmes installés par le paquet Developer.pkg sont en fait des outils de ligne de commande à portée générale. Le fonctionnement de certains paquets dépend de ces outils.</p>
+</li>
+<li>
+<p>De la patience. Compiler plusieurs gros paquets prend du temps. Il peut s'agir de plusieurs heures, voire de plusieurs jours.</p>
+</li>
+</ul>
+
+<h3><a name="intro.supported-os">1.3 Systèmes supportés</a></h3>
+
+<p><b>Mac OS X 10.3</b> est le meilleur système opératoire pour faire tourner Fink. Tous les développeurs s'en servent et les paquets sont testés sur ce système. On considère qu'il est "complètement supporté et testé", bien qu'il puisse y avoir quelques problèmes de compilation résiduels pour certains paquets isolés.</p>
 <p><b>Mac OS X 10.2</b> est toujours supporté, mais certains paquets récents peuvent ne pas avoir de versions 10.2 disponibles.</p>
-      <p>
-        <b>Mac OS X 10.1</b> est encore supporté dans une certaine mesure.
-Pour cette version, vous ne pouvez utiliser que Fink 0.4.1 et aucune autre version ultérieure.
-</p>
-      <p>
-Darwin 7.0.1 est la version Darwin correspondant à Mac OS X 10.3, et <b>Darwin 6.0.2</b> est celle correspondant à Mac OS X 10.2.
-Elles fonctionnent en général, mais ne sont pas aussi bien testées que les systèmes Mac OS X purs utilisés par la plupart des gens.
-Il se peut que vous ayez des problèmes avec des paquets qui utilisent des fonctionnalités spécifiques à Mac OS X - les paquets concernés comprennent XFree86 et probablement esound.
-</p>
-    
-    <h3><a name="intro.src-vs-bin">1.4 Source ou binaire</a></h3>
-      
-<p>
-Les logiciels sont écrits ("développés") avec des langages de programmation lisibles par des êtres humains ; sous cette forme, ils sont appelés "code source".
-Avant qu'un ordinateur puisse réellement faire tourner un programme, il doit être transformé en instructions machine de bas niveau (non lisibles par la plupart des gens).
-Ce processus s'appelle la "compilation" et le programme résultant est appelé 
-"exécutable" ou "binaire".
-(Le processus est aussi appelé "build", parce qu'il comporte d'autres étapes que la compilation.)
-</p>
-      <p>
-Quand vous achetez un logiciel commercial, vous n'avez pas accès au code source - les SSII le considère comme un secret de fabrication.
-Vous n'avez que l'exécutable prêt à fonctionner, vous n'avez donc aucun moyen de modifier le programme et de savoir ce qu'il fait réellement.
-</p>
-      <p>
-Il n'en va pas de même avec les logiciels <a href="http://www.opensource.org/">Open Source</a>.
-Comme son nom l'indique en anglais, le code source est ouvert à tous et peut donc être vu et modifié.
-En fait, la plupart des logiciels Open Source sont distribués sous forme de code source par leurs auteurs et vous devez les compiler sur votre ordinateur pour obtenir un exécutable.
-</p>
-      <p>
-Fink vous laisse le choix entre les deux formes source ou binaire.
-La distribution "source" récupère le source original, l'adapte à Mac OS X et aux règles de Fink et le compile sur votre ordinateur.
-Ce processus est complètement automatisé, mais dure un certain temps.
-À l'inverse, la distribution "binaire" récupère sur le site de Fink des paquets déjà compilés, ce qui fait gagner le temps de la compilation. 
-En fait, il est possible de marier les deux formes à volonté.
-Ce guide vous indique comment le faire.
-</p>
-    
-  <h2><a name="install">2 Première installation</a></h2>
-    
-    
-    
-      <p>
-Lors de la première installation, un système de base, comprenant les outils de gestion de paquets, est installé sur votre machine.
-Ensuite, vous devez définir votre environnement shell pour utiliser les logiciels installés par Fink.
-Cette procédure ne se fait qu'à la première installation ; à partir de la version 0.2.0, vous pouvez mettre à niveau Fink sans le réinstaller.
-La procédure de mise à niveau est expliquée au <a href="#upgrade">chapitre Mise à niveau</a>.
-</p>
-      <p>
-Après que les outils de gestion de paquets sont installés, vous pouvez les utiliser pour installer d'autres logiciels.
-La procédure est expliquée au <a href="#packages">chapitre Installation de Paquets</a>.
-</p>
-    
-    <h3><a name="install.bin">2.1 Installation de la distribution binaire</a></h3>
-      
-      <p>
-La distribution binaire se fait sous forme d'une image disque (.dmg) contenant un paquet d'installation Mac OS X (.pkg).
-Après téléchargement de l'image disque à partir de la 
+<p><b>Mac OS X 10.1</b> est encore supporté dans une certaine mesure. Pour cette version, vous ne pouvez utiliser que Fink 0.4.1 et aucune autre version ultérieure.</p>
+<p>Darwin 7.0.1 est la version Darwin correspondant à Mac OS X 10.3, et <b>Darwin 6.0.2</b> est celle correspondant à Mac OS X 10.2. Elles fonctionnent en général, mais ne sont pas aussi bien testées que les systèmes Mac OS X purs utilisés par la plupart des gens. Il se peut que vous ayez des problèmes avec des paquets qui utilisent des fonctionnalités spécifiques à Mac OS X - les paquets concernés comprennent XFree86 et probablement esound.</p>
+
+<h3><a name="intro.src-vs-bin">1.4 Source ou binaire</a></h3>
+
+<p>Les logiciels sont écrits ("développés") avec des langages de programmation lisibles par des êtres humains ; sous cette forme, ils sont appelés "code source". Avant qu'un ordinateur puisse réellement faire tourner un programme, il doit être transformé en instructions machine de bas niveau (non lisibles par la plupart des gens). Ce processus s'appelle la "compilation" et le programme résultant est appelé 
+"exécutable" ou "binaire". (Le processus est aussi appelé "build", parce qu'il comporte d'autres étapes que la compilation.)</p>
+<p>Quand vous achetez un logiciel commercial, vous n'avez pas accès au code source - les SSII le considère comme un secret de fabrication. Vous n'avez que l'exécutable prêt à fonctionner, vous n'avez donc aucun moyen de modifier le programme et de savoir ce qu'il fait réellement.</p>
+<p>Il n'en va pas de même avec les logiciels <a href="http://www.opensource.org/">Open Source</a>. Comme son nom l'indique en anglais, le code source est ouvert à tous et peut donc être vu et modifié. En fait, la plupart des logiciels Open Source sont distribués sous forme de code source par leurs auteurs et vous devez les compiler sur votre ordinateur pour obtenir un exécutable.</p>
+<p>Fink vous laisse le choix entre les deux formes source ou binaire. La distribution "source" récupère le source original, l'adapte à Mac OS X et aux règles de Fink et le compile sur votre ordinateur. Ce processus est complètement automatisé, mais dure un certain temps. À l'inverse, la distribution "binaire" récupère sur le site de Fink des paquets déjà compilés, ce qui fait gagner le temps de la compilation. 
+En fait, il est possible de marier les deux formes à volonté. Ce guide vous indique comment le faire.</p>
+
+<h2><a name="install">2 Première installation</a></h2>
+
+
+
+<p>Lors de la première installation, un système de base, comprenant les outils de gestion de paquets, est installé sur votre machine. Ensuite, vous devez définir votre environnement shell pour utiliser les logiciels installés par Fink. Cette procédure ne se fait qu'à la première installation ; à partir de la version 0.2.0, vous pouvez mettre à niveau Fink sans le réinstaller. La procédure de mise à niveau est expliquée au <a href="#upgrade">chapitre Mise à niveau</a>.</p>
+<p>Après que les outils de gestion de paquets sont installés, vous pouvez les utiliser pour installer d'autres logiciels. La procédure est expliquée au <a href="#packages">chapitre Installation de Paquets</a>.</p>
+
+<h3><a name="install.bin">2.1 Installation de la distribution binaire</a></h3>
+
+<p>La distribution binaire se fait sous forme d'une image disque (.dmg) contenant un paquet d'installation Mac OS X (.pkg). Après téléchargement de l'image disque à partir de la 
 <a href="http://fink.sourceforge.net/download/bindist.php">page de téléchargement</a>
 (vous devrez peut-être utiliser les fonctions "Téléchargez le fichier lié sous..." ou "Téléchargez sur le disque"), double-cliquez dessus pour la monter. 
-Ouvrez l'icône disque  "Fink 0.x.x Installer" qui apparaît sur votre bureau (ou dans le répertoire de téléchargement que vous avez choisi) après vérification du fichier par Utilitaire de disque (ou Images disques pour les versions antérieures à 10.3).
-Vous trouverez, à l'intérieur, des documents et un paquet d'installation.
-Double-cliquez sur le paquet d'installation et suivez les instructions qui apparaîtront à l'écran.
-</p>
-      <p>
-Un mot de passe administrateur vous sera demandé et un texte s'affichera.
-Lisez-le - il se peut qu'il soit plus récent que ce guide utilisateur.
-Quand l'installeur vous demandera de choisir un disque d'installation, assurez-vous que vous cliquez sur le volume système (celui sur lequel vous avez installé Mac OS X).
-Si vous choisissez un autre volume, l'installation s'effectuera, mais Fink ne fonctionnera pas.
-Quand le processus d'installation sera terminé, suivez les instructions de la section
-<a href="#install.setup">Définition de votre environnement</a>.
-</p>
-    
-    <h3><a name="install.src">2.2 Installation de la distribution source</a></h3>
-      
-      <p>
-La distribution source se fait sous forme d'une archive standard tar Unix (.tar.gz).
-Elle ne contient que le gestionnaire de paquets <tt style="white-space: nowrap;">fink</tt> et les descriptions de paquets. Les sources des paquets seront téléchargés à la demande.
-L'archive est disponible sur la 
-<a href="http://fink.sourceforge.net/download/srcdist.php">page de téléchargements</a>.
-N'utilisez surtout pas StuffIt Expander pour extraire l'archive tar.
-StuffIt ne gère toujours pas correctement les noms de fichiers longs.
-Si StuffIt Expander a déjà extrait les fichiers de l'archive, mettez à la poubelle le répertoire qu'il a créé.
-</p>
-      <p>
-La version source doit être installée à partir de la ligne de commande. Ouvrez donc Terminal.app et déplacez-vous dans le répertoire où se trouve l'archive fink-0.x.x-full.tar.gz.
-La commande suivante extrait l'archive :
-</p>
-      <pre>tar -xzf fink-0.x.x-full.tar.gz</pre>
-      <p>
-Elle crée un répertoire qui porte le même nom que l'archive.
-Ici, nous l'appellerons <tt style="white-space: nowrap;">fink-0.x.x-full</tt>.
-Déplacez-vous dans ce répertoire et lancez le script bootstrap :
-</p>
-      <pre>cd fink-0.x.x-full
+Ouvrez l'icône disque  "Fink 0.x.x Installer" qui apparaît sur votre bureau (ou dans le répertoire de téléchargement que vous avez choisi) après vérification du fichier par Utilitaire de disque (ou Images disques pour les versions antérieures à 10.3). Vous trouverez, à l'intérieur, des documents et un paquet d'installation. Double-cliquez sur le paquet d'installation et suivez les instructions qui apparaîtront à l'écran.</p>
+<p>Un mot de passe administrateur vous sera demandé et un texte s'affichera. Lisez-le - il se peut qu'il soit plus récent que ce guide utilisateur. Quand l'installeur vous demandera de choisir un disque d'installation, assurez-vous que vous cliquez sur le volume système (celui sur lequel vous avez installé Mac OS X). Si vous choisissez un autre volume, l'installation s'effectuera, mais Fink ne fonctionnera pas. Quand le processus d'installation sera terminé, suivez les instructions de la section
+<a href="#install.setup">Définition de votre environnement</a>.</p>
+
+<h3><a name="install.src">2.2 Installation de la distribution source</a></h3>
+
+<p>La distribution source se fait sous forme d'une archive standard tar Unix (.tar.gz). Elle ne contient que le gestionnaire de paquets <tt style="white-space: nowrap;">fink</tt> et les descriptions de paquets. Les sources des paquets seront téléchargés à la demande. L'archive est disponible sur la <a href="http://fink.sourceforge.net/download/srcdist.php">page de téléchargements</a>. N'utilisez surtout pas StuffIt Expander pour extraire l'archive tar. StuffIt ne gère toujours pas correctement les noms de fichiers longs. Si StuffIt Expander a déjà extrait les fichiers de l'archive, mettez à la poubelle le répertoire qu'il a créé.</p>
+<p>La version source doit être installée à partir de la ligne de commande. Ouvrez donc Terminal.app et déplacez-vous dans le répertoire où se trouve l'archive fink-0.x.x-full.tar.gz. La commande suivante extrait l'archive :</p>
+<pre>tar -xzf fink-0.x.x-full.tar.gz</pre>
+<p>Elle crée un répertoire qui porte le même nom que l'archive. Ici, nous l'appellerons <tt style="white-space: nowrap;">fink-0.x.x-full</tt>. Déplacez-vous dans ce répertoire et lancez le script bootstrap :</p>
+<pre>cd fink-0.x.x-full
 ./bootstrap.sh</pre>
-      <p>
-Le script effectue quelques vérifications sur votre système et utilise sudo pour acquérir les privilèges de super-utilisateur - pour ce faire, vous devrez fournir votre mot de passe.
-Ensuite, vous devrez indiquer le chemin d'installation.
-Vous devez utiliser le chemin par défaut -
-<tt style="white-space: nowrap;">/sw</tt>, sauf si vous avez de bonnes raisons de faire autrement.
-Seul le chemin par défaut vous permettra d'installer des paquets binaires ultérieurement.
-C'est pourquoi tous les exemples de ce guide utilise ce chemin ; modifiez le chemin en conséquence si vous utilisez un autre chemin.
+<p>Le script effectue quelques vérifications sur votre système et utilise sudo pour acquérir les privilèges de super-utilisateur - pour ce faire, vous devrez fournir votre mot de passe. Ensuite, vous devrez indiquer le chemin d'installation. Vous devez utiliser le chemin par défaut, <tt style="white-space: nowrap;">/sw</tt>, sauf si vous avez de bonnes raisons de faire autrement. Seul le chemin par défaut vous permettra d'installer des paquets binaires ultérieurement. C'est pourquoi tous les exemples de ce guide utilise ce chemin ; modifiez le chemin en conséquence si vous utilisez un autre chemin.</p>
+<p>Ensuite, vous devrez configurer Fink. Vous devrez répondre à des questions concernant votre proxy, les miroirs et la verbosité des messages. Si vous ne comprenez pas une question, appuyez sur la touche retour chariot pour accepter le choix par défaut. Vous pourrez ultérieurement changer la configuration en utilisant la commande <tt style="white-space: nowrap;">fink configure</tt>.</p>
+<p>Quand le script bootstrap aura toutes les informations nécessaires, il commencera à télécharger le code source du système de base et le compilera. Le processus continuera sans interaction de votre part. Ne vous inquiétez pas si vous voyez que certains paquets sont compilés deux fois. Ceci est nécessaire car, pour construire un paquet binaire du gestionnaire de paquets, il faut d'abord que le gestionnaire de paquets existe.</p>
+<p>À la fin du bootstrap, enchaînez sur la section <a href="#install.setup">Définition de votre environnement</a>.</p>
+
+<h3><a name="install.setup">2.3 Définition de votre environnement</a></h3>
+
+<p>Pour pouvoir utiliser les logiciels installés dans l'arborescence de répertoires de Fink, y compris les programmes de gestion de paquets, vous devez définir la variable d'environnement PATH
+(et quelques autres variables). Dans la plupart des cas, vous le ferez à l'aide de la commande :</p>
+<pre>open /sw/bin/pathsetup.command</pre>
+<p>ou pour <tt style="white-space: nowrap;">fink-0.18.3</tt> ou <tt style="white-space: nowrap;">fink-0.19.2</tt>, en lançant (exactement comme indiqué ci-dessous) :</p>
+<pre>/sw/bin/pathsetup.sh</pre>
+<p>Néanmoins, si cela ne fonctionne pas, vous pouvez configurer ces paramètres vous-même. La façon de le faire dépend du shell que vous utilisez. Vous déterminerez le shell utilisé en ouvrant un terminal et en utilisant la commande :</p>
+<pre>echo $SHELL</pre>
+<p> Si le résultat est "csh" ou "tcsh", c'est que vous utilisez le shell C. Si le résultat est bash, zsh, sh, ou quelque chose de similaire, vous utilisez vraisemblablement une variante du shell Bourne.</p>
+<ul>
+<li>
+<p>Shell Bourne (par défaut sur Mac OS X 10.3 et versions suivantes) </p>
+<p>Si vous utilisez un shell de type Bourne (sh, bash, zsh), ajoutez la ligne suivante au fichier <tt style="white-space: nowrap;">.profile</tt> de votre répertoire utilisateur (s'il existe déjà un fichier <tt style="white-space: nowrap;">.bash_profile</tt> dans ce répertoire, vous devez l'utilisez au lieu du fichier <tt style="white-space: nowrap;">.profile</tt>) :
 </p>
-      <p>
-Ensuite, vous devrez configurer Fink.
-Vous devrez répondre à des questions concernant votre proxy, les miroirs et la verbosité des messages.
-Si vous ne comprenez pas une question, appuyez sur la touche retour chariot pour accepter le choix par défaut.
-Vous pourrez ultérieurement changer la configuration en utilisant la commande <tt style="white-space: nowrap;">fink
-configure</tt>.
+<pre>. /sw/bin/init.sh</pre>
+<p>Si vous ne savez pas comment ajouter la ligne, utilisez ces commandes :
 </p>
-      <p>
-Quand le script bootstrap aura toutes les informations nécessaires, il commencera à télécharger le code source du système de base et le compilera.
-Le processus continuera sans interaction de votre part.
-Ne vous inquiétez pas si vous voyez que certains paquets sont compilés deux fois.
-Ceci est nécessaire car, pour construire un paquet binaire du gestionnaire de paquets, il faut d'abord que le gestionnaire de paquets existe.
-</p>
-      <p>
-À la fin du bootstrap, enchaînez sur la section 
-<a href="#install.setup">Définition de votre environnement</a>.
-</p>
-    
-    <h3><a name="install.setup">2.3 Définition de votre environnement</a></h3>
-      
-      <p>
-Pour pouvoir utiliser les logiciels installés dans l'arborescence de répertoires de Fink, y compris les programmes de gestion de paquets, vous devez définir la variable d'environnement PATH
-(et quelques autres variables).
-Dans la plupart des cas, vous le ferez à l'aide de la commande :
-</p>
-      <pre>open /sw/bin/pathsetup.command</pre>
-      <p>ou pour <tt style="white-space: nowrap;">fink-0.18.3</tt> ou <tt style="white-space: nowrap;">fink-0.19.2</tt>, en lançant (exactement comme indiqué ci-dessous) :
-</p>
-      <pre>/sw/bin/pathsetup.sh</pre>
-      <p>
-Néanmoins, si cela ne fonctionne pas, vous pouvez configurer ces paramètres vous-même. La façon de le faire dépend du shell que vous utilisez.
-Vous déterminerez le shell utilisé en ouvrant un terminal et en utilisant la commande :
-</p>
-      <pre>echo $SHELL</pre>
-      <p>
- Si le résultat est "csh" ou "tcsh", c'est que vous utilisez le shell C. Si le résultat est bash, zsh, sh, ou quelque chose de similaire, vous utilisez vraisemblablement une variante du shell Bourne.
-</p>
-      <ul>
-        <li>
-          <p>
-            Shell Bourne (par défaut sur Mac OS X 10.3 et versions suivantes) </p>
-          <p>
-   Si vous utilisez un shell de type Bourne (sh, bash, zsh), ajoutez la ligne suivante au fichier <tt style="white-space: nowrap;">.profile</tt> de votre répertoire utilisateur (s'il existe déjà un fichier <tt style="white-space: nowrap;">.bash_profile</tt> dans ce répertoire, vous devez l'utilisez au lieu du fichier <tt style="white-space: nowrap;">.profile</tt>) :
-  </p>
-          <pre>. /sw/bin/init.sh</pre>
-          <p>
-   Si vous ne savez pas comment ajouter la ligne, utilisez ces commandes :
-  </p>
-          <pre>cd
+<pre>cd
 pico .profile</pre>
-          <p>
-   Vous serez alors dans un éditeur de texte plein-écran (une fenêtre plein-écran de terminal), et il vous suffira de saisir la ligne <tt style="white-space: nowrap;">. /sw/bin/init.sh</tt>.  Ne vous inquiétez pas si vous voyez une note disant  "New file".  N'oubliez pas d'appuyer au moins une fois sur la touche retour chariot après la ligne saisie, puis appuyez successivement sur les touches Ctrl-O, Retour chariot et Ctrl-X pour sortir de l'éditeur.
-  </p>
-        </li>
-        <li>
-          <p>
-            Shell C (défaut sur Mac OS X 10.2 et versions antérieures) </p>
-          <p>
-   Si vous utilisez tcsh, ajoutez la ligne suivante au fichier <tt style="white-space: nowrap;">.cshrc</tt> de votre répertoire utilisateur :
-  </p>
-          <pre>source /sw/bin/init.csh</pre>
-          <p>
-   Si vous ne savez pas comment ajouter la ligne, utilisez les commandes suivantes :
-  </p>
-          <pre>cd
+<p>Vous serez alors dans un éditeur de texte plein-écran (une fenêtre plein-écran de terminal), et il vous suffira de saisir la ligne <tt style="white-space: nowrap;">. /sw/bin/init.sh</tt>.  Ne vous inquiétez pas si vous voyez une note disant  "New file".  N'oubliez pas d'appuyer au moins une fois sur la touche retour chariot après la ligne saisie, puis appuyez successivement sur les touches Ctrl-O, Retour chariot et Ctrl-X pour sortir de l'éditeur.</p>
+</li>
+<li>
+<p>Shell C (défaut sur Mac OS X 10.2 et versions antérieures) </p>
+<p>Si vous utilisez tcsh, ajoutez la ligne suivante au fichier <tt style="white-space: nowrap;">.cshrc</tt> de votre répertoire utilisateur :
+</p>
+<pre>source /sw/bin/init.csh</pre>
+<p>Si vous ne savez pas comment ajouter la ligne, utilisez les commandes suivantes :
+</p>
+<pre>cd
 pico .cshrc</pre>
-          <p>
-  Vous serez alors dans un éditeur de texte plein-écran (une fenêtre plein-écran de terminal), et il vous suffira de saisir la ligne <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt>.  Ne vous inquiétez pas si vous voyez une note disant  "New file".  N'oubliez pas d'appuyer au moins une fois sur la touche retour chariot après la ligne saisie, puis appuyez successivement sur les touches Ctrl-O, Retour chariot et Ctrl-X pour sortir de l'éditeur.
- </p>
-          <p>Vous devrez éditer d'autres fichiers dans les cas suivants :</p>
-          <ol>
-            <li>
-              <p>Vous avez un fichier <tt style="white-space: nowrap;">~/.tcshrc</tt>.</p>
-              <p>Un tel fichier est parfois créé par des applications de tierce partie, ou vous pouvez l'avoir créé vous-même.
-  Si tel est le cas, <tt style="white-space: nowrap;">~/.tcshrc</tt> est lu, mais
-  <tt style="white-space: nowrap;">~/.cshrc</tt> est ignoré.
-  Nous vous recommandons d'éditer le fichier <tt style="white-space: nowrap;">~/.tcshrc</tt>, comme expliqué ci-dessus pour le fichier 
-  <tt style="white-space: nowrap;">~/.cshrc</tt>, et d'ajouter la ligne suivante à la fin : </p>
-              <pre>source ~/.cshrc</pre>
-              <p>De cette façon, si jamais vous supprimez le fichier <tt style="white-space: nowrap;">~/.tcshrc</tt>, vous pourrez toujours faire tourner Fink.</p>
-            </li>
-            <li>
-              <p>Vous avez suivi les instructions figurant dans le fichier <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
-              <p>Vous avez donc créé deux fichiers <tt style="white-space: nowrap;">~/.tcshrc</tt> et <tt style="white-space: nowrap;"> ~/.login</tt> .  Dans ce cas,  <tt style="white-space: nowrap;">~/.login</tt>, qui est lu après <tt style="white-space: nowrap;">~/.tcshrc</tt>, source le fichier  <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  Ce dernier contient une ligne qui écrase la définition précédente de votre variable d'environnement PATH.  Vous devez alors créer un répertoire <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>:</p>
-              <pre>mkdir -p ~/Library/init/tcsh
+<p>Vous serez alors dans un éditeur de texte plein-écran (une fenêtre plein-écran de terminal), et il vous suffira de saisir la ligne <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt>.  Ne vous inquiétez pas si vous voyez une note disant  "New file".  N'oubliez pas d'appuyer au moins une fois sur la touche retour chariot après la ligne saisie, puis appuyez successivement sur les touches Ctrl-O, Retour chariot et Ctrl-X pour sortir de l'éditeur.</p>
+<p>Vous devrez éditer d'autres fichiers dans les cas suivants :</p>
+<ol>
+<li>
+<p>Vous avez un fichier <tt style="white-space: nowrap;">~/.tcshrc</tt>.</p>
+<p>Un tel fichier est parfois créé par des applications de tierce partie, ou vous pouvez l'avoir créé vous-même.   Si tel est le cas, <tt style="white-space: nowrap;">~/.tcshrc</tt> est lu, mais <tt style="white-space: nowrap;">~/.cshrc</tt> est ignoré. Nous vous recommandons d'éditer le fichier <tt style="white-space: nowrap;">~/.tcshrc</tt>, comme expliqué ci-dessus pour le fichier  <tt style="white-space: nowrap;">~/.cshrc</tt>, et d'ajouter la ligne suivante à la fin :</p>
+<pre>source ~/.cshrc</pre>
+<p>De cette façon, si jamais vous supprimez le fichier <tt style="white-space: nowrap;">~/.tcshrc</tt>, vous pourrez toujours faire tourner Fink.</p>
+</li>
+<li>
+<p>Vous avez suivi les instructions figurant dans le fichier <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
+<p>Vous avez donc créé deux fichiers <tt style="white-space: nowrap;">~/.tcshrc</tt> et <tt style="white-space: nowrap;"> ~/.login</tt> .  Dans ce cas,  <tt style="white-space: nowrap;">~/.login</tt>, qui est lu après <tt style="white-space: nowrap;">~/.tcshrc</tt>, source le fichier  <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  Ce dernier contient une ligne qui écrase la définition précédente de votre variable d'environnement PATH.  Vous devez alors créer un répertoire <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>:</p>
+<pre>mkdir -p ~/Library/init/tcsh
   pico ~/library/init/tcsh/path</pre>
-              <p>et y intégrez la ligne suivante :</p>
-              <pre>source ~/.cshrc</pre>
-              <p>Vous devrez aussi modifier le fichier .tcshrc, comme expliqué au-dessus, de façon à ce que votre PATH soit correctement défini dans les cas où le fichier <tt style="white-space: nowrap;">~/.login</tt> n'est pas lu.</p>
-            </li>
-          </ol>
-          <p>
-Les changements dans .cshrc (et dans les autres fichiers de démarrage) n'affectent que les nouveaux shells (les nouvelles fenêtres de Terminal). 
-Vous devez donc aussi exécuter cette commande dans toutes les fenêtres de Terminal que vous avez ouvertes avant d'éditer le fichier.
-Vous devez aussi exécuter la commande <tt style="white-space: nowrap;">rehash</tt>, car tcsh cache la liste des commandes disponibles.
-  </p>
-        </li>
-      </ul>
-      <p>
-Notez que les scripts ajoutent <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> et
-<tt style="white-space: nowrap;">/usr/X11R6/man</tt> à votre PATH pour que vous puissiez utilisez X11 lorsqu'il sera installé.
-Les paquets Fink peuvent définir eux-mêmes des variables, tel le paquet qt qui définit la variable d'environnement QTDIR.
-</p>
-      <p>
-Quand vous aurez fini de définir votre environnement, allez au chapitre 
-<a href="#packages">Installation de paquets</a> pour savoir comment installer des paquets réellement utiles avec les outils de gestion de paquets inclus dans Fink.
-</p>
-    
-  <h2><a name="packages">3 Installation de paquets</a></h2>
-    
-    
-    
-      <p>
-Maintenant que vous avez ce que l'on pourrait appeler une installation Fink, ce chapitre vous explique comment installer les paquets pour lesquels vous vous êtes donné tout ce mal.
-Avant de passer à l'explication proprement dite de l'installation des paquets à partir des distributions source ou binaire, il convient de noter certains points importants qui s'appliquent aux deux types d'installation.
-</p>
-    
-    <h3><a name="packages.bin-dselect">3.1 Installation de paquets binaires avec dselect</a></h3>
-      
-      <p>
-        <tt style="white-space: nowrap;">dselect</tt> est un programme qui vous permet de naviguer dans la liste des paquets disponibles et de choisir ceux que vous voulez installer.
-Il tourne sous Terminal.app, en mode plein écran, et utilise un système de navigation rudimentaire basé sur les touches du clavier.
-Comme tous les autres outils de gestion de paquets, <tt style="white-space: nowrap;">dselect</tt> nécessite les privilèges du super-utilisateur ; vous devez donc soit devenir super-utilisateur avant de l'utiliser, soit utiliser sudo :  
-</p>
-      <pre>sudo dselect</pre>
-      <p>
-        <b>Note :</b>
-        <tt style="white-space: nowrap;">dselect</tt> ne cohabite pas très bien avec l'application Terminal de Mac OS X. Vous devez exécuter les commandes suivantes avant de l'utiliser, ou les mettre dans le fichier de démarrage approprié  (<tt style="white-space: nowrap;">.cshrc</tt> ou <tt style="white-space: nowrap;">.profile</tt>) :</p>
-      <p>utilisateurs de tcsh :</p>
-      <pre>setenv TERM xterm-color</pre>
-      <p>utilisateurs de bash :</p>
-      <pre>export TERM=xterm-color</pre>
-      <p>
-Le menu principal vous laisse le choix entre plusieurs actions :
-</p>
-      <ul>
-        <li>
-          <p>
-            <b>[A]ccess - Accès</b> - permet de configurer la méthode d'accès au réseau.
-<b>Il n'est pas nécessaire d'exécuter cette commande</b>, car Fink effectue la configuration à votre place.
-En fait, vous devez éviter d'utiliser cette option, car vous risqueriez en le faisant de remplacer la configuration par défaut, qui fonctionne, par une configuration qui ne fonctionne pas.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>[U]pdate- Mise à jour</b> - permet de télécharger la liste des paquets disponibles sur le site de Fink.
-Cette commande n'installe et ne met à jour aucun paquet, elle ne fait que mettre à jour les listes utilisées par le navigateur de paquets. 
-Vous devez l'utiliser au moins une fois après avoir installé Fink.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>[S]elect - Sélection</b> - donne accès à la liste des paquets et permet de sélectionner / désélectionner les paquets que vous désirez.
-De plus amples détails seront donnés plus loin.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>[I]nstall - Installation</b> - c'est là que tout se passe.
-Les articles de menus ci-dessus n'affectent que les listes de paquets de dselect et le le statut de la base de données.
-Cette commande va télécharger et installer les paquets sélectionnés auparavant.
-Elle supprime aussi les paquets désélectionnés dans le navigateur.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>[C]onfig - Configuration</b> et <b>[R]emove - Suppression</b>.
-Ce sont d'anciennes commandes qui datent de la période antérieure à apt.
-Vous n'en avez pas besoin, mais elles ne sont pas dangereuses.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>[Q]uit - Quitter</b> - commande qui dit bien ce qu'elle veut dire.
-</p>
-        </li>
-      </ul>
-      <p>
-Vous passerez la plupart de votre temps dans le navigateur de paquets de dselect, que vous pouvez activer par le menu "[S]elect".
-Avant d'afficher la liste des paquets, dselect affiche un écran d'aide.
-Vous pouvez appuyer sur la touche 'k' pour avoir la liste complète des raccourcis clavier ou appuyez sur la barre d'espacement pour obtenir la liste des paquets.
-</p>
-      <p>
-Vous pouvez vous déplacer dans la liste en utilisant les flèches directionnelles haute et basse.
-La sélection se fait à l'aide des touches '+' et '-'.
-Quand vous sélectionnez un paquet qui dépend d'autres paquets, dselect affiche une liste des dépendances requises.
-Dans la plupart des cas, il vous suffit d'appuyer sur la touche retour chariot pour entériner les choix de dselect.
-Vous pouvez aussi modifier les choix de dselect dans la liste de dépendances (par exemple, choisir un autre paquet pour une dépendance virtuelle), ou appuyez sur 'Majuscules-R' pour retourner à l'état précédent.
-Vous quitterez la liste des dépendances et la liste principale des paquets en appuyant sur la touche retour chariot.
-Quand vous avez fini vos sélections, quittez la liste principale et utilisez le menu "[I]nstall" pour installer les paquets.
-</p>
-    
-    <h3><a name="packages.bin-apt">3.2 Installation de paquets binaires avec
-apt-get</a></h3>
-      
-      <p>
-        <tt style="white-space: nowrap;">dselect</tt> ne télécharge pas les paquets lui-même.
-        Il utilise apt pour ce faire.
-        Si vous préférez utiliser une interface en ligne de commande, vous pouvez accéder à apt directement avec la commande <tt style="white-space: nowrap;">apt-get</tt>.
-</p>
-      <p>
-Tout comme avec dselect, vous devez d'abord télécharger la liste des paquets disponibles avec cette commande :
-</p>
-      <pre>sudo apt-get update</pre>
-      <p>
-Comme le menu "[U]pdate - Mise à jour" dans dselect, cette commande ne fait que mettre à jour la liste des paquets disponibles, mais ne met pas à jour les paquets eux-mêmes sur votre ordinateur.
-Pour installer un paquet, il suffit de donner son nom à apt-get comme dans la commande suivante :
-</p>
-      <pre>sudo apt-get install lynx</pre>
-      <p>
-Si apt-get détecte que le paquet requiert certaines dépendances, il vous en affiche la liste et vous demande de confirmer.
-Puis il télécharge et installe les paquets choisis.
-La suppression de paquets est tout aussi simple :
-</p>
-      <pre>sudo apt-get remove lynx</pre>
-      <p>
-      </p>
-    
-    <h3><a name="packages.bin-exceptions">3.3 Installation de paquets dépendants non disponibles dans la distribution binaire</a></h3>
-      
-      <p>Parfois, lors de l'installation d'un paquet binaire, il arrive qu'un message s'affiche vous signalant qu'une dépendance ne peut être installée, par exemple :</p>
-      <pre>Sorry, but the following packages have unmet
+<p>et y intégrez la ligne suivante :</p>
+<pre>source ~/.cshrc</pre>
+<p>Vous devrez aussi modifier le fichier .tcshrc, comme expliqué au-dessus, de façon à ce que votre PATH soit correctement défini dans les cas où le fichier <tt style="white-space: nowrap;">~/.login</tt> n'est pas lu.</p>
+</li>
+</ol>
+<p>Les changements dans .cshrc (et dans les autres fichiers de démarrage) n'affectent que les nouveaux shells (les nouvelles fenêtres de Terminal). Vous devez donc aussi exécuter cette commande dans toutes les fenêtres de Terminal que vous avez ouvertes avant d'éditer le fichier. Vous devez aussi exécuter la commande <tt style="white-space: nowrap;">rehash</tt>, car tcsh cache la liste des commandes disponibles.</p>
+</li>
+</ul>
+<p>Notez que les scripts ajoutent <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> et <tt style="white-space: nowrap;">/usr/X11R6/man</tt> à votre PATH pour que vous puissiez utilisez X11 lorsqu'il sera installé. Les paquets Fink peuvent définir eux-mêmes des variables, tel le paquet qt qui définit la variable d'environnement QTDIR.</p>
+<p>Quand vous aurez fini de définir votre environnement, allez au chapitre <a href="#packages">Installation de paquets</a> pour savoir comment installer des paquets réellement utiles avec les outils de gestion de paquets inclus dans Fink.</p>
+
+<h2><a name="packages">3 Installation de paquets</a></h2>
+
+
+
+<p>Maintenant que vous avez ce que l'on pourrait appeler une installation Fink, ce chapitre vous explique comment installer les paquets pour lesquels vous vous êtes donné tout ce mal. Avant de passer à l'explication proprement dite de l'installation des paquets à partir des distributions source ou binaire, il convient de noter certains points importants qui s'appliquent aux deux types d'installation.</p>
+
+<h3><a name="packages.bin-dselect">3.1 Installation de paquets binaires avec dselect</a></h3>
+
+<p><tt style="white-space: nowrap;">dselect</tt> est un programme qui vous permet de naviguer dans la liste des paquets disponibles et de choisir ceux que vous voulez installer. Il tourne sous Terminal.app, en mode plein écran, et utilise un système de navigation rudimentaire basé sur les touches du clavier. Comme tous les autres outils de gestion de paquets, <tt style="white-space: nowrap;">dselect</tt> nécessite les privilèges du super-utilisateur ; vous devez donc soit devenir super-utilisateur avant de l'utiliser, soit utiliser sudo :  </p>
+<pre>sudo dselect</pre>
+<p><b>Note :</b> <tt style="white-space: nowrap;">dselect</tt> ne cohabite pas très bien avec l'application Terminal de Mac OS X. Vous devez exécuter les commandes suivantes avant de l'utiliser, ou les mettre dans le fichier de démarrage approprié  (<tt style="white-space: nowrap;">.cshrc</tt> ou <tt style="white-space: nowrap;">.profile</tt>) :</p>
+<p>utilisateurs de tcsh :</p>
+<pre>setenv TERM xterm-color</pre>
+<p>utilisateurs de bash :</p>
+<pre>export TERM=xterm-color</pre>
+<p>Le menu principal vous laisse le choix entre plusieurs actions :</p>
+<ul>
+<li>
+<p><b>[A]ccess - Accès</b> - permet de configurer la méthode d'accès au réseau. <b>Il n'est pas nécessaire d'exécuter cette commande</b>, car Fink effectue la configuration à votre place. En fait, vous devez éviter d'utiliser cette option, car vous risqueriez en le faisant de remplacer la configuration par défaut, qui fonctionne, par une configuration qui ne fonctionne pas.</p>
+</li>
+<li>
+<p><b>[U]pdate- Mise à jour</b> - permet de télécharger la liste des paquets disponibles sur le site de Fink. Cette commande n'installe et ne met à jour aucun paquet, elle ne fait que mettre à jour les listes utilisées par le navigateur de paquets. 
+Vous devez l'utiliser au moins une fois après avoir installé Fink.</p>
+</li>
+<li>
+<p><b>[S]elect - Sélection</b> - donne accès à la liste des paquets et permet de sélectionner / désélectionner les paquets que vous désirez. De plus amples détails seront donnés plus loin.</p>
+</li>
+<li>
+<p><b>[I]nstall - Installation</b> - c'est là que tout se passe. Les articles de menus ci-dessus n'affectent que les listes de paquets de dselect et le le statut de la base de données. Cette commande va télécharger et installer les paquets sélectionnés auparavant. Elle supprime aussi les paquets désélectionnés dans le navigateur.</p>
+</li>
+<li>
+<p><b>[C]onfig - Configuration</b> et <b>[R]emove - Suppression</b>. Ce sont d'anciennes commandes qui datent de la période antérieure à apt. Vous n'en avez pas besoin, mais elles ne sont pas dangereuses.</p>
+</li>
+<li>
+<p><b>[Q]uit - Quitter</b> - commande qui dit bien ce qu'elle veut dire.</p>
+</li>
+</ul>
+<p>Vous passerez la plupart de votre temps dans le navigateur de paquets de dselect, que vous pouvez activer par le menu "[S]elect". Avant d'afficher la liste des paquets, dselect affiche un écran d'aide. Vous pouvez appuyer sur la touche 'k' pour avoir la liste complète des raccourcis clavier ou appuyez sur la barre d'espacement pour obtenir la liste des paquets.</p>
+<p>Vous pouvez vous déplacer dans la liste en utilisant les flèches directionnelles haute et basse. La sélection se fait à l'aide des touches '+' et '-'. Quand vous sélectionnez un paquet qui dépend d'autres paquets, dselect affiche une liste des dépendances requises. Dans la plupart des cas, il vous suffit d'appuyer sur la touche retour chariot pour entériner les choix de dselect. Vous pouvez aussi modifier les choix de dselect dans la liste de dépendances (par exemple, choisir un autre paquet pour une dépendance virtuelle), ou appuyez sur 'Majuscules-R' pour retourner à l'état précédent. Vous quitterez la liste des dépendances et la liste principale des paquets en appuyant sur la touche retour chariot. Quand vous avez fini vos sélections, quittez la liste principale et utilisez le menu "[I]nstall" pour installer les paquets.</p>
+
+<h3><a name="packages.bin-apt">3.2 Installation de paquets binaires avec apt-get</a></h3>
+
+<p><tt style="white-space: nowrap;">dselect</tt> ne télécharge pas les paquets lui-même.   Il utilise apt pour ce faire.   Si vous préférez utiliser une interface en ligne de commande, vous pouvez accéder à apt directement avec la commande <tt style="white-space: nowrap;">apt-get</tt>.</p>
+<p>Tout comme avec dselect, vous devez d'abord télécharger la liste des paquets disponibles avec cette commande :</p>
+<pre>sudo apt-get update</pre>
+<p>Comme le menu "[U]pdate - Mise à jour" dans dselect, cette commande ne fait que mettre à jour la liste des paquets disponibles, mais ne met pas à jour les paquets eux-mêmes sur votre ordinateur. Pour installer un paquet, il suffit de donner son nom à apt-get comme dans la commande suivante :</p>
+<pre>sudo apt-get install lynx</pre>
+<p>Si apt-get détecte que le paquet requiert certaines dépendances, il vous en affiche la liste et vous demande de confirmer. Puis il télécharge et installe les paquets choisis. La suppression de paquets est tout aussi simple :</p>
+<pre>sudo apt-get remove lynx</pre>
+<p>      </p>
+
+<h3><a name="packages.bin-exceptions">3.3 Installation de paquets dépendants non disponibles dans la distribution binaire</a></h3>
+
+<p>Parfois, lors de l'installation d'un paquet binaire, il arrive qu'un message s'affiche vous signalant qu'une dépendance ne peut être installée, par exemple :</p>
+<pre>Sorry, but the following packages have unmet
 dependencies:
 foo: Depends: bar (&gt;= version) but it is
 not installable
 E: Sorry, broken packages</pre>
-      <p>Dans ce cas, cela veut dire que le paquet que vous tentez d'installer dépend d'un autre paquet qui ne peut être distribué sous forme binaire à cause d'une restriction de licence. Vous devez alors installer la dépendance sous sa forme source (voir la section suivante).</p>
-    
-    <h3><a name="packages.src">3.4 Installation de paquets binaires et de source avec fink</a></h3>
-      
-      <p>
-L'outil <tt style="white-space: nowrap;">fink</tt> vous permet d'installer des paquets non encore disponibles dans la <a href="#intro.src-vs-bin">distribution binaire</a>.
-      </p>
-      <p>Tout d'abord, vous devez installer une version adéquate des Developer Tools (outils de développement) sur votre système. Ceux-ci sont disponibles gratuitement après enregistrement sur <a href="http://connect.apple.com">http://connect.apple.com</a>.</p>
-      <p>
-Pour obtenir la liste des paquets disponibles à partir des sources, utilisez l'outil <tt style="white-space: nowrap;">fink</tt> :
-</p>
-      <pre>fink list</pre>
-      <p>
-La première colonne de la liste affiche le statut d'installation (vide si le paquet n'est pas installé, <tt style="white-space: nowrap;">i</tt> s'il est installé et <tt style="white-space: nowrap;">(i)</tt> s'il existe une version plus récente que la version installée. La seconde colonne donne le nom du paquet, la troisième sa version et la dernière une brève description.
-Vous pouvez obtenir une description plus détaillée d'un paquet particulier avec la commande 
-"describe" ( ou "info") :
-</p>
-      <pre>fink describe xmms</pre>
-      <p>
-Si vous voulez installer un paquet, utilisez la commande 
-"install" :
-</p>
-      <pre>fink install wget-ssl</pre>
-      <p>
-La commande <tt style="white-space: nowrap;">fink</tt> vérifie tout d'abord que toutes les "dépendances" requises sont présentes sur votre système. Si ce n'est pas le cas, elle vous demandera de confirmer l'installation de celles qui sont manquantes.
-Ensuite, elle télécharge le code source, le décompresse, lui applique des rustines, le compile et installe le paquet résultant sur votre système.
-Tout ceci peut prendre un certain temps.
-Si des erreurs se produisent durant le processus, consultez tout d'abord les 
-<a href="http://fink.sourceforge.net/faq/">QFP</a>.
-</p>
-      <p>
-À partir de la version 0.23.0 de <tt style="white-space: nowrap;">fink</tt>, vous pouvez télécharger des paquets binaires pré-compilés, s'ils sont disponibles, au lieu de les compiler vous-même. Il suffit pour cela d'utiliser l'<a href="#usage.options">option --use-binary-dist (ou -b)</a> de <tt style="white-space: nowrap;">fink</tt>. Cela vous permettra de gagner beaucoup de temps. Par exemple :
-      </p>
-      <pre>fink --use-binary-dist install wget-ssl</pre>
-      <p>or</p>
-      <pre>fink -b install wget-ssl</pre>
-      <p>
-charge d'abord toutes les dépendances de wget-ssl disponibles dans la distribution binaire et ne compile que celles qui ne le sont pas à partir du source. Vous pouvez activer de façon permanente cette option dans le <a href="#conf">fichier de configuration de Fink</a> (fink.conf) ou en exécutant la commande <tt style="white-space: nowrap;">fink configure</tt>.
-      </p>
-      <p>
-Vous trouverez de plus amples informations sur l'outil <tt style="white-space: nowrap;">fink</tt> dans le chapitre <a href="#usage">"Utilisation de l'outil fink en ligne de commande"</a>.
-      </p>
-   
-    <h3><a name="packages.fink-commander">3.5 Fink Commander</a></h3>
-      
-      <p>Fink Commander est une interface Aqua aux outils <tt style="white-space: nowrap;">apt-get</tt> et <tt style="white-space: nowrap;">fink</tt>.  Le menu Binary (binaire) vous permet d'effectuer des opérations sur la distribution binaire, et le menu Source vous offre les mêmes possibilités pour la distribution source.</p>
-      <p>Fink Commander est inclus dans l'installeur binaire de Fink. Pour le télécharger séparément (dans le cas où vous avez effectué un bootstrap de Fink à partir du source), ou pour de plus amples informations, allez sur le <a href="http://finkcommander.sourceforge.net">site web de Fink Commander</a>.</p>
-    
-    <h3><a name="packages.available-versions">3.6 Versions disponibles</a></h3>
-      
-      <p>Lorsque vous voulez installer un paquet, vous devez d'abord rechercher dans la <a href="http://fink.sourceforge.net/pdb/index.php">base de données des paquets</a> s'il est disponible via Fink. Les éventuelles versions disponibles apparaissent dans plusieurs lignes d'un tableau. Voici à quoi elles correspondent :</p>
+<p>Dans ce cas, cela veut dire que le paquet que vous tentez d'installer dépend d'un autre paquet qui ne peut être distribué sous forme binaire à cause d'une restriction de licence. Vous devez alors installer la dépendance sous sa forme source (voir la section suivante).</p>
+
+<h3><a name="packages.src">3.4 Installation de paquets binaires et de source avec fink</a></h3>
+
+<p>L'outil <tt style="white-space: nowrap;">fink</tt> vous permet d'installer des paquets non encore disponibles dans la <a href="#intro.src-vs-bin">distribution binaire</a>.</p>
+<p>Tout d'abord, vous devez installer une version adéquate des Developer Tools (outils de développement) sur votre système. Ceux-ci sont disponibles gratuitement après enregistrement sur <a href="http://connect.apple.com">http://connect.apple.com</a>.</p>
+<p>Pour obtenir la liste des paquets disponibles à partir des sources, utilisez l'outil <tt style="white-space: nowrap;">fink</tt> :</p>
+<pre>fink list</pre>
+<p>La première colonne de la liste affiche le statut d'installation (vide si le paquet n'est pas installé, <tt style="white-space: nowrap;">i</tt> s'il est installé et <tt style="white-space: nowrap;">(i)</tt> s'il existe une version plus récente que la version installée. La seconde colonne donne le nom du paquet, la troisième sa version et la dernière une brève description. Vous pouvez obtenir une description plus détaillée d'un paquet particulier avec la commande 
+"describe" ( ou "info") :</p>
+<pre>fink describe xmms</pre>
+<p>Si vous voulez installer un paquet, utilisez la commande 
+"install" :</p>
+<pre>fink install wget-ssl</pre>
+<p>La commande <tt style="white-space: nowrap;">fink</tt> vérifie tout d'abord que toutes les "dépendances" requises sont présentes sur votre système. Si ce n'est pas le cas, elle vous demandera de confirmer l'installation de celles qui sont manquantes. Ensuite, elle télécharge le code source, le décompresse, lui applique des rustines, le compile et installe le paquet résultant sur votre système. Tout ceci peut prendre un certain temps. Si des erreurs se produisent durant le processus, consultez tout d'abord les 
+<a href="http://fink.sourceforge.net/faq/">QFP</a>.</p>
+<p>À partir de la version 0.23.0 de <tt style="white-space: nowrap;">fink</tt>, vous pouvez télécharger des paquets binaires pré-compilés, s'ils sont disponibles, au lieu de les compiler vous-même. Il suffit pour cela d'utiliser l'<a href="#usage.options">option --use-binary-dist (ou -b)</a> de <tt style="white-space: nowrap;">fink</tt>. Cela vous permettra de gagner beaucoup de temps. Par exemple :</p>
+<pre>fink --use-binary-dist install wget-ssl</pre>
+<p>ou</p>
+<pre>fink -b install wget-ssl</pre>
+<p>charge d'abord toutes les dépendances de wget-ssl disponibles dans la distribution binaire et ne compile que celles qui ne le sont pas à partir du source. Vous pouvez activer de façon permanente cette option dans le <a href="#conf">fichier de configuration de Fink</a> (fink.conf) ou en exécutant la commande <tt style="white-space: nowrap;">fink configure</tt>.</p>
+<p>Vous trouverez de plus amples informations sur l'outil <tt style="white-space: nowrap;">fink</tt> dans le chapitre <a href="#usage">"Utilisation de l'outil fink en ligne de commande"</a>.</p>
+
+<h3><a name="packages.fink-commander">3.5 Fink Commander</a></h3>
+
+<p>Fink Commander est une interface Aqua aux outils <tt style="white-space: nowrap;">apt-get</tt> et <tt style="white-space: nowrap;">fink</tt>.  Le menu Binary (binaire) vous permet d'effectuer des opérations sur la distribution binaire, et le menu Source vous offre les mêmes possibilités pour la distribution source.</p>
+<p>Fink Commander est inclus dans l'installeur binaire de Fink. Pour le télécharger séparément (dans le cas où vous avez effectué un bootstrap de Fink à partir du source), ou pour de plus amples informations, allez sur le <a href="http://finkcommander.sourceforge.net">site web de Fink Commander</a>.</p>
+
+<h3><a name="packages.available-versions">3.6 Versions disponibles</a></h3>
+
+<p>Lorsque vous voulez installer un paquet, vous devez d'abord rechercher dans la <a href="http://fink.sourceforge.net/pdb/index.php">base de données des paquets</a> s'il est disponible via Fink. Les éventuelles versions disponibles apparaissent dans plusieurs lignes d'un tableau. Voici à quoi elles correspondent :</p>
 <ul>
 <li>
 <p><b>0.4.1 :</b>  C'est la version qui peut être installée à partir des binaires pour OS 10.1.</p>
@@ -481,197 +247,114 @@ Vous trouverez de plus amples informations sur l'outil <tt style="white-space: n
 </li>
 <li>
 <p><b>current-10.2-gcc3.3 stable :</b>  C'est la version stable la plus récente qui puisse être installée à partir du source pour OS 10.2 avec la mise à jour de <tt style="white-space: nowrap;">gcc 3.3</tt> contenue dans les Developer Tools. Pour installer cette version, il vous faut activer (si ce n'est déjà fait) l'accès par <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> ou rsync. Si vous n'avez pas mis à jour <tt style="white-space: nowrap;">gcc 3.3</tt>, il se peut que cette version (ou peut-être même le paquet) n'apparaisse pas dans la liste.</p>
-<p>Note : au contraire d'autres projets, Fink distribue les versions les plus récentes des paquets via CVS, tout comme les versions qui requièrent encore certains tests (voir la section instable plus loin). L'activation de CVS ou de rsync vous donne accès aux nouvelles versions binaires des paquets avant que la distribution binaire ne soit mise à jour.
-</p>
+<p>Note : au contraire d'autres projets, Fink distribue les versions les plus récentes des paquets via CVS, tout comme les versions qui requièrent encore certains tests (voir la section instable plus loin). L'activation de CVS ou de rsync vous donne accès aux nouvelles versions binaires des paquets avant que la distribution binaire ne soit mise à jour.</p>
 </li>
 <li><p><b>current-10.3 stable :</b>  C'est la version la plus récente qui puisse être installée à partir du source sur OS 10.3.  Encore une fois, il vous faudra peut-être activer l'accès à CVS ou rsync pour y avoir accès.</p>
 </li> 
 <li>
 <p><b>current-10.2-gcc3.3 unstable :</b>  C'est la version instable la plus récente qui puisse être installée à partir du source sur OS 10.2 avec <tt style="white-space: nowrap;">gcc 3.3</tt>.  Pour installer cette version, suivez les <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> sur l'installation des paquets instables.</p>
-<p>Note :  instable ne veut pas nécessairement dire non utilisable, cependant sachez que vous installez ces paquets à vos risques et périls.
-</p>
+<p>Note :  instable ne veut pas nécessairement dire non utilisable, cependant sachez que vous installez ces paquets à vos risques et périls.</p>
 </li>
 <li><b>current-10.3 unstable :</b>  C'est la version instable la plus récente qui puisse être installée à partir du source sur OS 10.3.  Activez l'arborescence instable comme indiqué ci-dessus.</li>
 </ul>
-    
-    <h3><a name="packages.x11">3.7 Implémentation de X11</a></h3>
-      
-      <p>De nombreux paquets de Fink requièrent que X11 soit installé. C'est pourquoi, l'une des premières choses à faire est de choisir quelle implémentation vous désirez.</p>
-      <p>
-Comme il existe plusieurs implémentations possibles de X11 sur Mac OS X (XFree86, Tenon Xtools, eXodus) et plusieurs façons de les installer (manuellement ou via Fink), vous avez le choix entre plusieurs paquets - un par type d'implémentation/installation.
-Fink ne sait pas toujours très bien déterminer si X11 est installé sur votre système et sous quelle forme, il est donc très important de choisir le bon paquet et de l'installer avant de commencer à installer des applications X11.
-Voici la liste des paquets disponibles et des méthodes d'installation de X11 :
-</p>
-      <ul>
-        <li>
-          <p>
-            <b>xfree86-base :</b>
-(uniquement pour 10.1 ou 10.2) Ce paquet correspond à une installation réelle.
-Il installe le paquet Fink XFree86 4.2.1.1.
-Pour assurer un maximum de flexibilité, ce paquet ne contient pas le serveur XDarwin.
-Pour disposer du serveur, vous devez installer le paquet xfree86-rootless.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>xfree86 :</b>
-C'est un paquet complet (le serveur d'affichage est inclus) qui installe XFree86 4.3.0 (uniquement pour 10.2), ou 4.3.99 (uniquement pour 10.3).
-Cette version est plus performante que la version 4.2.1.1, mais n'a pas été testée autant.
-</p>
-        </li>
-        <li>
-          <p>
-system-xfree86 :
-Ce paquet est généré automatiquement (avec Fink 0.6.2 ou une version ultérieure) quand vous installez manuellement XFree86, soit à partir du source, soit à partir de la distribution officielle (ou non officielle) binaire ; ou quand vous installez X11 d'Apple.
-Il tient lieu alors de  paquet fantôme pour les dépendances.
-</p>
-        </li>
-        <li>
-          <p>
-system-xtools :
-InstaIlez ce paquet si vous avez installé le progiciel Xtools de Tenon.
-Tout comme system-xfree86, ce paquet ne fait que vérifier si l'installation est correcte et ne modifie pas les fichiers.
-</p>
-        </li>
-      </ul>
-      <p>
-Pour de plus amples informations sur l'installation et l'utilisation de X11, voir le document 
-<a href="http://fink.sourceforge.net/doc/x11/">X11 sur Darwin et Mac OS X</a>.
-</p>
-    
-  <h2><a name="upgrade">4 Mise à niveau de Fink</a></h2>
-    
-    
-    
-      <p>
-Ce chapitre explique les procédures utilisées pour mettre à niveau votre installation de Fink à la toute dernière version.
-</p>
-    
-    <h3><a name="upgrade.bin">4.1 Mise à niveau à partir de paquets binaires</a></h3>
-      
-      <p>
-Si vous utilisez exclusivement la distribution binaire, vous n'avez pas à suivre une procédure de mise à niveau particulière.
-Il vous suffit d'utiliser l'outil que vous préférez pour récupérer la liste des paquets les plus récents et lui laisser mettre à jour tous les paquets.
-</p>
-      <p>
-Avec dselect, il suffit d'appuyer sur la touche "[U] - Mise à jour", puis sur  "[I] - Installation".
-Vous pouvez, bien sûr, utiliser "[S] - Sélectionner" entre les deux commandes pour vérifier les choix faits et rechercher de nouveaux paquets.
-</p>
-      <p>
-Avec apt, lancez <tt style="white-space: nowrap;">apt-get update</tt> pour récupérer la liste des paquets les plus récents, puis <tt style="white-space: nowrap;">apt-get upgrade</tt> pour mettre à jour tous les paquets qui peuvent l'être.
-</p>
+
+<h3><a name="packages.x11">3.7 Implémentation de X11</a></h3>
+
+<p>De nombreux paquets de Fink requièrent que X11 soit installé. C'est pourquoi, l'une des premières choses à faire est de choisir quelle implémentation vous désirez.</p>
+<p>Comme il existe plusieurs implémentations possibles de X11 sur Mac OS X (XFree86, Tenon Xtools, eXodus) et plusieurs façons de les installer (manuellement ou via Fink), vous avez le choix entre plusieurs paquets - un par type d'implémentation/installation. Fink ne sait pas toujours très bien déterminer si X11 est installé sur votre système et sous quelle forme, il est donc très important de choisir le bon paquet et de l'installer avant de commencer à installer des applications X11. Voici la liste des paquets disponibles et des méthodes d'installation de X11 :</p>
+<ul>
+<li>
+<p><b>xfree86-base :</b> (uniquement pour 10.1 ou 10.2). Ce paquet correspond à une installation réelle. Il installe le paquet Fink XFree86 4.2.1.1. Pour assurer un maximum de flexibilité, ce paquet ne contient pas le serveur XDarwin. Pour disposer du serveur, vous devez installer le paquet xfree86-rootless.</p>
+</li>
+<li>
+<p><b>xfree86 :</b> c'est un paquet complet (le serveur d'affichage est inclus) qui installe XFree86 4.3.0 (uniquement pour 10.2), ou 4.3.99 (uniquement pour 10.3). Cette version est plus performante que la version 4.2.1.1, mais n'a pas été testée autant.</p>
+</li>
+<li>
+<p><b>system-xfree86 :</b> ce paquet est généré automatiquement (avec Fink 0.6.2 ou une version ultérieure) quand vous installez manuellement XFree86, soit à partir du source, soit à partir de la distribution officielle (ou non officielle) binaire ; ou quand vous installez X11 d'Apple. Il tient lieu alors de  paquet fantôme pour les dépendances.</p>
+</li>
+<li>
+<p><b>system-xtools :</b> instaIlez ce paquet si vous avez installé le progiciel Xtools de Tenon. Tout comme system-xfree86, ce paquet ne fait que vérifier si l'installation est correcte et ne modifie pas les fichiers.</p>
+</li>
+</ul>
+<p>Pour de plus amples informations sur l'installation et l'utilisation de X11, voir le document <a href="http://fink.sourceforge.net/doc/x11/">X11 sur Darwin et Mac OS X</a>.</p>
+
+<h2><a name="upgrade">4 Mise à niveau de Fink</a></h2>
+
+
+
+<p>Ce chapitre explique les procédures utilisées pour mettre à niveau votre installation de Fink à la toute dernière version.</p>
+
+<h3><a name="upgrade.bin">4.1 Mise à niveau à partir de paquets binaires</a></h3>
+
+<p>Si vous utilisez exclusivement la distribution binaire, vous n'avez pas à suivre une procédure de mise à niveau particulière. Il vous suffit d'utiliser l'outil que vous préférez pour récupérer la liste des paquets les plus récents et lui laisser mettre à jour tous les paquets.</p>
+<p>Avec dselect, il suffit d'appuyer sur la touche "[U] - Mise à jour", puis sur  "[I] - Installation". Vous pouvez, bien sûr, utiliser "[S] - Sélectionner" entre les deux commandes pour vérifier les choix faits et rechercher de nouveaux paquets.</p>
+<p>Avec apt, lancez <tt style="white-space: nowrap;">apt-get update</tt> pour récupérer la liste des paquets les plus récents, puis <tt style="white-space: nowrap;">apt-get upgrade</tt> pour mettre à jour tous les paquets qui peuvent l'être.</p>
 <p>Avec Fink Commander, sélectionnez Binary-&gt;Update descriptions pour mettre à jour la liste des paquets, puis  Binary-&gt;Dist-Upgrade packages pour mettre à jour les paquets eux-mêmes.</p>
-      <p>
-Pour de plus amples informations, en particulier sur la mise à niveau des versions de Fink antérieure à la version 0.3.0, voir la 
-<a href="http://fink.sourceforge.net/download/upgrade.php">Matrice de mise à niveau</a>.
-</p>
-    
-    <h3><a name="upgrade.src">4.2 Mise à niveau de la distribution source</a></h3>
-      
-      <p>
-La procédure de mise à niveau se déroule en deux temps si vous utilisez la distribution source.
-Dans un premier temps, vous téléchargez les descriptions de paquets sur votre ordinateur.
-Dans un deuxième temps, ces descriptions de paquets sont utilisées pour recompiler les paquets ; le code source est téléchargé, si besoin est.
-</p>
-      <p>
-Si vous avez Fink 0.2.5 ou une version ultérieure, vous pouvez réaliser la première partie de la procédure en lançant <tt style="white-space: nowrap;">fink selfupdate</tt>.
-Cette commande vérifie sur le site web de Fink s'il existe une nouvelle version, la télécharge automatiquement et installe les descriptions de paquets.
-Avec les versions récentes de la commande <tt style="white-space: nowrap;">fink</tt>, vous pouvez récupérer les descriptions de paquets via CVS ou rsync.
-CVS est un serveur de contrôle de version sur lequel sont stockées et gérées les descriptions de paquets.
-L'utilisation de CVS présente l'avantage qu'il est continuellement mis à jour, mais il faut savoir qu'il n'existe qu'un seul serveur CVS et qu'il peut devenir non fiable lorsqu'il subit un trafic intense. C'est pourquoi nous recommandons à l'utilisateur moyen de se servir de rsync. Il existe différents miroirs pour rsync et le seul désavantage de cette méthode est qu'il faut compter environ une heure pour que les descriptions de paquets parviennent sur les miroirs rsync après leur mise à jour sur CVS.  
-</p>
-      <p>(si vous avez des problèmes lors d'une mise à niveau à partir d'une installation source, consultez 
-<a href="http://fink.sourceforge.net/download/fix-upgrade.php">ces instructions spéciales</a>.)</p>
-      <p>
-Si vous avez une version de Fink antérieure à 0.2.5, vous devez télécharger les descriptions de paquets vous-même.
-Allez dans la <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">zone de téléchargement</a> et cherchez l'archive tar la plus récente nommée packages-0.x.x.tar.gz dans le module "distribution".
-Téléchargez-la et installez-la comme suit :
-</p>
-      <pre>tar -xzf packages-0.x.x.tar.gz
+<p>Pour de plus amples informations, en particulier sur la mise à niveau des versions de Fink antérieure à la version 0.3.0, voir la 
+<a href="http://fink.sourceforge.net/download/upgrade.php">Matrice de mise à niveau</a>.</p>
+
+<h3><a name="upgrade.src">4.2 Mise à niveau de la distribution source</a></h3>
+
+<p>La procédure de mise à niveau se déroule en deux temps si vous utilisez la distribution source. Dans un premier temps, vous téléchargez les descriptions de paquets sur votre ordinateur. Dans un deuxième temps, ces descriptions de paquets sont utilisées pour recompiler les paquets ; le code source est téléchargé, si besoin est.</p>
+<p>Si vous avez Fink 0.2.5 ou une version ultérieure, vous pouvez réaliser la première partie de la procédure en lançant <tt style="white-space: nowrap;">fink selfupdate</tt>. Cette commande vérifie sur le site web de Fink s'il existe une nouvelle version, la télécharge automatiquement et installe les descriptions de paquets. Avec les versions récentes de la commande <tt style="white-space: nowrap;">fink</tt>, vous pouvez récupérer les descriptions de paquets via CVS ou rsync. CVS est un serveur de contrôle de version sur lequel sont stockées et gérées les descriptions de paquets. L'utilisation de CVS présente l'avantage qu'il est continuellement mis à jour, mais il faut savoir qu'il n'existe qu'un seul serveur CVS et qu'il peut devenir non fiable lorsqu'il subit un trafic intense. C'est pourquoi nous recommandons à l'utilisateur moyen de se servir de rsync. Il existe différents miroirs pour rsync et le seul désavantage de cette méthode est qu'il faut compter environ une heure pour que les descriptions de paquets parviennent sur les miroirs rsync après leur mise à jour sur CVS.  </p>
+<p>(si vous avez des problèmes lors d'une mise à niveau à partir d'une installation source, consultez <a href="http://fink.sourceforge.net/download/fix-upgrade.php">ces instructions spéciales</a>.)</p>
+<p>Si vous avez une version de Fink antérieure à 0.2.5, vous devez télécharger les descriptions de paquets vous-même. Allez dans la <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">zone de téléchargement</a> et cherchez l'archive tar la plus récente nommée packages-0.x.x.tar.gz dans le module "distribution". Téléchargez-la et installez-la comme suit :</p>
+<pre>tar -xzf packages-0.x.x.tar.gz
 cd packages-0.x.x
 ./inject.pl</pre>
-      <p>
-Après la mise à jour des descriptions de paquets (quelle que soit la méthode employée), vous devrez mettre à jour tous les paquets à l'aide de la commande <tt style="white-space: nowrap;">fink
-update-all</tt>.
-</p>
+<p>Après la mise à jour des descriptions de paquets (quelle que soit la méthode employée), vous devrez mettre à jour tous les paquets à l'aide de la commande <tt style="white-space: nowrap;">fink update-all</tt>.</p>
 <p>Pour mettre à jour la distribution source avec Fink Commander, sélectionnez Source-&gt;Selfupdate pour télécharger les nouvelles descriptions de paquets, puis Source-&gt;Update-all pour mettre à jour les paquets obsolètes.</p>
-    
-    <h3><a name="upgrade.mix">4.3 Mélange de binaires et de source</a></h3>
-      
-      <p>
-Si vous utilisez des paquets binaires précompilés pour certains logiciels et que vous en construisez d'autres à partir du source, vous devrez exécuter les séquences d'instructions des deux méthodes pour mettre à jour votre installation Fink.
-Tout d'abord, utilisez <tt style="white-space: nowrap;">dselect</tt> ou <tt style="white-space: nowrap;">apt-get</tt> pour récupérer les versions binaires les plus récentes des paquets, puis utilisez <tt style="white-space: nowrap;">fink selfupdate</tt> et <tt style="white-space: nowrap;">fink update-all</tt>
-pour récupérer les descriptions de paquets et mettre à jour les autres paquets.
-</p>
-      <p>
-À partir de la version 0.23.0 de fink, le fait d'utiliser l'option UseBinaryDist (configurable soit avec l'<a href="#usage.options">option --use-binary-dist (ou -b)</a> ou bien dans le <a href="#conf">fichier de configuration de Fink</a>) met à jour automatiquement les descriptions source et binaires lors de l'exécution de la commande <tt style="white-space: nowrap;">fink selfupdate</tt>. Dans ce cas, il n'est pas nécessaire d'exécuter la commande <tt style="white-space: nowrap;">apt-get</tt>.
-     </p>
-      <p>
-Si vous utilisez Fink Commander, sélectionnez Binary-&gt;Update descriptions (Binaire-&gt;Mise à jour des descriptions) pour mettre à jour la liste des paquets, puis Binary-&gt;Dist-Upgrade packages (Binaire-&gt;Mise à jour des paquets de la distribution) pour obtenir les nouvelles versions. Exécutez ensuite Source-&gt;Selfupdate (Source-&gt;Mise à jour automatique) pour télécharger les nouveaux fichiers info des paquets, puis Source-&gt;Update-all (Source-&gt;Tout mettre à jour). Voir les sections précédentes pour de plus amples informations.
-      </p>
-    
-  <h2><a name="conf">5 Fichier de Configuration de Fink</a></h2>
-    
-    
-    
-      <p>
-Ce chapitre vous décrit les différents éléments du fichier de configuration de Fink (fink.conf) et leur influence sur le comportement de Fink, en particulier sur celui de l'outil en ligne de commande <tt style="white-space: nowrap;">fink</tt> (celui qui fonctionne avec la distribution source).
-</p>
-    
-    <h3><a name="conf.about">5.1 À propos de fink.conf</a></h3>
-      
-      <p>
-Lors de la première installation de Fink, vous devez répondre à un certain nombre de questions. Vos réponses servent à personnaliser le fichier de configuration, par exemple les <a href="#conf.mirrors">miroirs</a> que vous désirez utiliser pour le téléchargement des fichiers ou la façon d'acquérir les droits de super-utilisateur. Vous pouvez, à tout moment, réexécuter ce processus en lançant la commande <tt style="white-space: nowrap;">fink configure</tt>. Certaines options ne peuvent être changées que manuellement en éditant le fichier <b>fink.conf</b>. En général, ces options sont réservés aux utilisateurs chevronnés.
-</p>
-      <p>
-Le fichier <b>fink.conf</b> est situé dans le répertoire <tt style="white-space: nowrap;">/sw/etc/</tt> et peut être édité avec votre éditeur de texte préféré. Vous devez avoir les droits de super-utilisateur pour le modifier.
-</p>
-    
-    <h3><a name="conf.syntax">5.2 Syntaxe de fink.conf</a></h3>
-      
-      <p>
-Le fichier <b>fink.conf</b> est constitué de plusieurs lignes ayant le même format :</p>
-      <pre>NomOption: Valeur</pre>
-      <p>Il y a une option par ligne et le nom de l'option est séparée de la valeur par des double-points et une espace. Le contenu de la valeur dépend de l'option ; c'est généralement une valeur booléenne  ("True" - vrai - ou "False" - faux), une chaîne de caractères ou une liste de chaînes de caractères séparées entre elles par une espace.
-      Par exemple :
-</p>
-      <pre>
+
+<h3><a name="upgrade.mix">4.3 Mélange de binaires et de source</a></h3>
+
+<p>Si vous utilisez des paquets binaires précompilés pour certains logiciels et que vous en construisez d'autres à partir du source, vous devrez exécuter les séquences d'instructions des deux méthodes pour mettre à jour votre installation Fink. Tout d'abord, utilisez <tt style="white-space: nowrap;">dselect</tt> ou <tt style="white-space: nowrap;">apt-get</tt> pour récupérer les versions binaires les plus récentes des paquets, puis utilisez <tt style="white-space: nowrap;">fink selfupdate</tt> et <tt style="white-space: nowrap;">fink update-all</tt> pour récupérer les descriptions de paquets et mettre à jour les autres paquets.</p>
+<p>À partir de la version 0.23.0 de fink, le fait d'utiliser l'option UseBinaryDist (configurable soit avec l'<a href="#usage.options">option --use-binary-dist (ou -b)</a> ou bien dans le <a href="#conf">fichier de configuration de Fink</a>) met à jour automatiquement les descriptions source et binaires lors de l'exécution de la commande <tt style="white-space: nowrap;">fink selfupdate</tt>. Dans ce cas, il n'est pas nécessaire d'exécuter la commande <tt style="white-space: nowrap;">apt-get</tt>.</p>
+<p>Si vous utilisez Fink Commander, sélectionnez Binary-&gt;Update descriptions (Binaire-&gt;Mise à jour des descriptions) pour mettre à jour la liste des paquets, puis Binary-&gt;Dist-Upgrade packages (Binaire-&gt;Mise à jour des paquets de la distribution) pour obtenir les nouvelles versions. Exécutez ensuite Source-&gt;Selfupdate (Source-&gt;Mise à jour automatique) pour télécharger les nouveaux fichiers info des paquets, puis Source-&gt;Update-all (Source-&gt;Tout mettre à jour). Voir les sections précédentes pour de plus amples informations.</p>
+
+<h2><a name="conf">5 Fichier de Configuration de Fink</a></h2>
+
+
+
+<p>Ce chapitre vous décrit les différents éléments du fichier de configuration de Fink (fink.conf) et leur influence sur le comportement de Fink, en particulier sur celui de l'outil en ligne de commande <tt style="white-space: nowrap;">fink</tt> (celui qui fonctionne avec la distribution source).</p>
+
+<h3><a name="conf.about">5.1 À propos de fink.conf</a></h3>
+
+<p>Lors de la première installation de Fink, vous devez répondre à un certain nombre de questions. Vos réponses servent à personnaliser le fichier de configuration, par exemple les <a href="#conf.mirrors">miroirs</a> que vous désirez utiliser pour le téléchargement des fichiers ou la façon d'acquérir les droits de super-utilisateur. Vous pouvez, à tout moment, réexécuter ce processus en lançant la commande <tt style="white-space: nowrap;">fink configure</tt>. Certaines options ne peuvent être changées que manuellement en éditant le fichier <b>fink.conf</b>. En général, ces options sont réservés aux utilisateurs chevronnés.</p>
+<p>Le fichier <b>fink.conf</b> est situé dans le répertoire <tt style="white-space: nowrap;">/sw/etc/</tt> et peut être édité avec votre éditeur de texte préféré. Vous devez avoir les droits de super-utilisateur pour le modifier.</p>
+
+<h3><a name="conf.syntax">5.2 Syntaxe de fink.conf</a></h3>
+
+<p>Le fichier <b>fink.conf</b> est constitué de plusieurs lignes ayant le même format :</p>
+<pre>NomOption: Valeur</pre>
+<p>Il y a une option par ligne et le nom de l'option est séparée de la valeur par des double-points et une espace. Le contenu de la valeur dépend de l'option ; c'est généralement une valeur booléenne  ("True" - vrai - ou "False" - faux), une chaîne de caractères ou une liste de chaînes de caractères séparées entre elles par une espace. Par exemple :</p>
+<pre>
 OptionBooléenne: True
 OptionChaîne: QuelqueChose
 OptionListe: Option1 Option2 Option3
 </pre>
-    
-    <h3><a name="conf.required">5.3 Éléments obligatoires</a></h3>
-      
-      <p>
-Certains éléments doivent obligatoirement figuré dans le fichier <b>fink.conf</b>. Sans eux, Fink ne peut pas fonctionner correctement. Voici les éléments qui appartiennent à cette catégorie.
-</p>
-      <ul>
-        <li>
-          <p>
-            <b>Basepath:</b> chemin</p>
-          <p>
-Indique à Fink où il est installé. Le chemin d'installation par défaut est <b>/sw</b>, mais vous pouvez l'avoir changé lors de la première installation de Fink. Vous <b>ne devez pas</b> changer cette valeur après installation, Fink ne s'y retrouverait plus.
-</p>
-        </li>
-      </ul>
-    
-    <h3><a name="conf.optional">5.4 Options utilisateur</a></h3>
-      
-      <p>
-D'autres éléments sont optionnels et permettent aux utilisateurs de changer le comportement de Fink.</p>
-      <ul>
-        <li>
-          <p>
-            <b>RootMethod:</b> su ou sudo ou none</p>
-          <p>Pour effectuer certaines opérations, Fink doit acquérir les droits de super-utilisateur. Les valeurs reconnues pour cette option sont <b>sudo</b> ou <b>su</b>. Si vous attribuez à cette option la valeur 
-<b>none</b> (aucune), vous devrez d'abord acquérir les droits de super-utilisateur avant d'exécuter Fink. La valeur par défaut est <b>sudo</b> et ne doit pas être changée, sauf rares exceptions.</p>
-        </li>
-        <li>
-          <p>
-            <b>Trees:</b> liste d'arborescences</p>
-          <p>La liste des arborescences disponibles est la suivante :</p>
-          <pre>
+
+<h3><a name="conf.required">5.3 Éléments obligatoires</a></h3>
+
+<p>Certains éléments doivent obligatoirement figuré dans le fichier <b>fink.conf</b>. Sans eux, Fink ne peut pas fonctionner correctement. Voici les éléments qui appartiennent à cette catégorie.</p>
+<ul>
+<li>
+<p><b>Basepath:</b> chemin</p>
+<p>Indique à Fink où il est installé. Le chemin d'installation par défaut est <b>/sw</b>, mais vous pouvez l'avoir changé lors de la première installation de Fink. Vous <b>ne devez pas</b> changer cette valeur après installation, Fink ne s'y retrouverait plus.</p>
+</li>
+</ul>
+
+<h3><a name="conf.optional">5.4 Options utilisateur</a></h3>
+
+<p>D'autres éléments sont optionnels et permettent aux utilisateurs de changer le comportement de Fink.</p>
+<ul>
+<li>
+<p><b>RootMethod:</b> su ou sudo ou none</p>
+<p>Pour effectuer certaines opérations, Fink doit acquérir les droits de super-utilisateur. Les valeurs reconnues pour cette option sont <b>sudo</b> ou <b>su</b>. Si vous attribuez à cette option la valeur <b>none</b> (aucune), vous devrez d'abord acquérir les droits de super-utilisateur avant d'exécuter Fink. La valeur par défaut est <b>sudo</b> et ne doit pas être changée, sauf rares exceptions.</p>
+</li>
+<li>
+<p><b>Trees:</b> liste d'arborescences</p>
+<p>La liste des arborescences disponibles est la suivante :</p>
+<pre>
 local/main      - tout paquet local que vous désirez installer
 local/bootstrap - paquets utilisés pendant l'installation de Fink
 stable/crypto   - paquets cryptographiques stables
@@ -679,188 +362,136 @@ stable/main     - autres paquets stables
 unstable/crypto - paquets cryptographiques instables
 unstable/main   - autres paquets cryptographiques
 </pre>
-          <p>
-Vous pouvez aussi ajouter vos propres arborescences dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists</tt> pour faire ce que vous voulez, mais ce n'est pas nécessaire dans la plupart des cas. Les arborescences par défaut sont "local/main local/bootstrap
+<p>Vous pouvez aussi ajouter vos propres arborescences dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists</tt> pour faire ce que vous voulez, mais ce n'est pas nécessaire dans la plupart des cas. Les arborescences par défaut sont "local/main local/bootstrap
 stable/main". Cette liste doit toujours être identique à celle figurant dans le fichier 
-<tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>. À partir de la version 0.21.0, fink le fait automatiquement pour vous.
+<tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>. À partir de la version 0.21.0, fink le fait automatiquement pour vous.</p>
+</li>
+<li>
+<p><b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, ou 10.3</p>
+<p>Fink doit savoir quelle version de Mac OS X est installée sur votre système. Mac OS X 10.0 et les versions antérieures ne sont pas gérées, et Mac OS X 10.1 n'est plus maintenue dans cette version de fink. Mac OS X10.2 n'est gérée que si la mise à jour d'août 2003 des Developer Tools a été installée. Ce champ est configuré par l'exécution du script <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>. Il est peu probable que vous ayez à changer cette valeur.</p>
+</li>
+<li>
+<p><b>FetchAltDir:</b> chemin</p>
+<p>En général, fink sauvegarde les sources qu'il télécharge dans le répertoire 
+<tt style="white-space: nowrap;">/sw/src</tt>. Avec cette option, vous pouvez indiquer un autre répertoire pour le code source téléchargé. Par exemple:</p>
+<pre>FetchAltDir: /usr/src</pre>
+</li>
+<li>
+<p><b>Verbose:</b> un nombre entre 0 et 3</p>
+<p>Cette option permet de faire varier la quantité d'information que Fink donne sur ce qu'il est en train de faire. Les valeurs sont : <b>0</b> Silencieux (aucune indication sur les statistiques de téléchargement) <b>1</b> Faible (aucune indication pendant la décompression des archives tar)
+<b>2</b> Moyen (affiche presque tout) <b>3</b> Fort (affiche tout)
+La valeur par défaut est 1.</p>
+</li>
+<li>
+<p><b>NoAutoIndex:</b> booléen</p>
+<p>Fink cache les fichiers de description de paquets dans /sw/var/db/fink.db pour éviter d'avoir à les lire et les analyser à chaque fois qu'il est invoqué. Il vérifie si l'index des paquets doit être ou non mis à jour, sauf si la valeur de cette option est  "True". Sa valeur par défaut est "False" et il n'est pas recommandé de la changer. Si vous le faites, vous devrez mettre à jour l'index manuellement en lançant la commande <tt style="white-space: nowrap;">fink index</tt>.</p>
+</li>
+<li>
+<p><b>SelfUpdateNoCVS:</b> booléen</p>
+<p>La commande <tt style="white-space: nowrap;">fink selfupdate</tt> met à jour le gestionnaire de paquets Fink. Cette option assure que CVS n'est pas utilisé pour ce faire quand elle a pour valeur True. La valeur de l'option est définie automatiquement par la commande <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>, vous n'avez donc pas besoin de la modifier manuellement.</p>
+</li>
+<li>
+<p><b>Buildpath:</b> chemin</p>
+<p>Fink doit créer plusieurs répertoires temporaires pour les paquets compilés à partir du source. Par défaut, ces répertoires sont placés dans <tt style="white-space: nowrap;">/sw/src</tt>, mais si vous voulez qu'ils soient créés ailleurs, indiquez ici le chemin. Voir les définitions des champs <tt style="white-space: nowrap;">KeepRootDir</tt> et <tt style="white-space: nowrap;">KeepBuildDir</tt> ci-dessous pour de plus amples informations sur ces répertoires temporaires.</p>
+</li>
+</ul>
+
+<h3><a name="conf.downloading">5.5 Options de téléchargement</a></h3>
+
+<p>Il existe plusieurs options dont la valeur influence la façon dont Fink télécharge les paquets.</p>
+<ul>
+<li>
+<p><b>ProxyPassiveFTP:</b> booléen</p>
+<p>Cette option indique à Fink s'il doit ou non utiliser le mode "passif" pour les téléchargements FTP. Pour certains serveurs FTP et certaines configurations de réseau, il faut donner à cette option la valeur True. Nous vous recommandons de lui laisser cette valeur, car le mode FTP actif est obsolète.</p>
+</li>
+<li>
+<p><b>ProxyFTP:</b> url</p>
+<p>Si vous utilisez un proxy FTP, vous devez saisir son adresse ici, par exemple :</p>
+<pre>ProxyFTP: ftp://votrehôte.com:2121/</pre>
+<p>Laissez la valeur vide si vous n'utilisez pas de proxy FTP.</p>
+</li>
+<li>
+<p><b>ProxyHTTP:</b> url</p>
+<p>Si vous utilisez un proxy HTTP, vous devez saisir son adresse ici, par exemple :</p>
+<pre>ProxyHTTP: http://votrehôte.com:3128/</pre>
+<p>Laissez la valeur vide si vous n'utilisez pas de proxy HTTP.</p>
+</li>
+<li>
+<p><b>DownloadMethod:</b> wget, curl, axel ou axelautomirror</p>
+<p>Fink peut utiliser diverses applications pour télécharger les fichiers à partir d'Internet - <b>wget</b>, <b>curl</b> ou <b>axel</b>. La valeur <b>axelautomirror</b> utilise un mode expérimental de l'application <b>axel</b> pour déterminer le serveur le plus proche ayant le fichier demandé. L'utilisation des deux méthodes <b>axel</b> et <b>axelautomirror</b> n'est pas recommandé actuellement. La valeur par défaut est <b>curl</b>. <b>L'application que vous choisissez comme méthode de téléchargement DOIT être installée !</b>
 </p>
-        </li>
-        <li>
-          <p>
-            <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, ou 10.3</p>
-          <p>Fink doit savoir quelle version de Mac OS X est installée sur votre système. Mac OS X 10.0 et les versions antérieures ne sont pas gérées, et Mac OS X 10.1 n'est plus maintenue dans cette version de fink. Mac OS X10.2 n'est gérée que si la mise à jour d'août 2003 des Developer Tools a été installée. Ce champ est configuré par l'exécution du script <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>. Il est peu probable que vous ayez à changer cette valeur.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>FetchAltDir:</b> chemin</p>
-          <p>En général, fink sauvegarde les sources qu'il télécharge dans le répertoire 
-<tt style="white-space: nowrap;">/sw/src</tt>. Avec cette option, vous pouvez indiquer un autre répertoire pour le code source téléchargé. Par exemple:
-</p>
-          <pre>FetchAltDir: /usr/src</pre>
-        </li>
-        <li>
-          <p>
-            <b>Verbose:</b> un nombre entre 0 et 3</p>
-          <p>
-Cette option permet de faire varier la quantité d'information que Fink donne sur ce qu'il est en train de faire. Les valeurs sont :
-<b>0</b>
-            Silencieux (aucune indication sur les statistiques de téléchargement)
-<b>1</b>
-            Faible (aucune indication pendant la décompression des archives tar)
-<b>2</b>
-            Moyen (affiche presque tout)
-<b>3</b>
-            Fort (affiche tout)
-La valeur par défaut est 1.
-</p>
-        </li>
-        <li>
-          <p>
-            <b>NoAutoIndex:</b> booléen</p>
-          <p>Fink cache les fichiers de description de paquets dans /sw/var/db/fink.db pour éviter d'avoir à les lire et les analyser à chaque fois qu'il est invoqué. Il vérifie si l'index des paquets doit être ou non mis à jour, sauf si la valeur de cette option est  "True". Sa valeur par défaut est "False" et il n'est pas recommandé de la changer. Si vous le faites, vous devrez mettre à jour l'index manuellement en lançant la commande <tt style="white-space: nowrap;">fink index</tt>.</p>
-        </li>
-        <li>
-          <p>
-            <b>SelfUpdateNoCVS:</b> booléen</p>
-          <p>La commande <tt style="white-space: nowrap;">fink selfupdate</tt> met à jour le gestionnaire de paquets Fink. Cette option assure que CVS n'est pas utilisé pour ce faire quand elle a pour valeur True. La valeur de l'option est définie automatiquement par la commande <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>, vous n'avez donc pas besoin de la modifier manuellement.</p>
-        </li>
-        	<li>
-	  <p>
-	    <b>Buildpath:</b> chemin</p>
-	  <p>Fink doit créer plusieurs répertoires temporaires pour les paquets compilés à partir du source. Par défaut, ces répertoires sont placés dans <tt style="white-space: nowrap;">/sw/src</tt>, mais si vous voulez qu'ils soient créés ailleurs, indiquez ici le chemin. Voir les définitions des champs <tt style="white-space: nowrap;">KeepRootDir</tt> et <tt style="white-space: nowrap;">KeepBuildDir</tt> ci-dessous pour de plus amples informations sur ces répertoires temporaires.
-	    </p>
-	</li>
-      </ul>
-    
-    <h3><a name="conf.downloading">5.5 Options de téléchargement</a></h3>
-      
-      <p>Il existe plusieurs options dont la valeur influence la façon dont Fink télécharge les paquets.</p>
-      <ul>
-        <li>
-          <p>
-            <b>ProxyPassiveFTP:</b> booléen</p>
-          <p>Cette option indique à Fink s'il doit ou non utiliser le mode "passif" pour les téléchargements FTP. Pour certains serveurs FTP et certaines configurations de réseau, il faut donner à cette option la valeur True. Nous vous recommandons de lui laisser cette valeur, car le mode FTP actif est obsolète.</p>
-        </li>
-        <li>
-          <p>
-            <b>ProxyFTP:</b> url</p>
-          <p>Si vous utilisez un proxy FTP, vous devez saisir son adresse ici, par exemple :</p>
-          <pre>ProxyFTP: ftp://votrehôte.com:2121/</pre>
-          <p>Laissez la valeur vide si vous n'utilisez pas de proxy FTP.</p>
-        </li>
-        <li>
-          <p>
-            <b>ProxyHTTP:</b> url</p>
-          <p>Si vous utilisez un proxy HTTP, vous devez saisir son adresse ici, par exemple :</p>
-          <pre>ProxyHTTP: http://votrehôte.com:3128/</pre>
-          <p>Laissez la valeur vide si vous n'utilisez pas de proxy HTTP.</p>
-        </li>
-        <li>
-          <p>
-            <b>DownloadMethod:</b> wget, curl, axel ou axelautomirror</p>
-          <p>Fink peut utiliser diverses applications pour télécharger les fichiers à partir d'Internet - <b>wget</b>, <b>curl</b> ou <b>axel</b>. La valeur <b>axelautomirror</b> utilise un mode expérimental de l'application <b>axel</b> pour déterminer le serveur le plus proche ayant le fichier demandé. L'utilisation des deux méthodes <b>axel</b> et <b>axelautomirror</b> n'est pas recommandé actuellement. La valeur par défaut est <b>curl</b>.
-<b>L'application que vous choisissez comme méthode de téléchargement DOIT être installée !</b>
-          </p>
-        </li>
-        <li>
-          <p>
-            <b>SelfUpdateMethod:</b> point, rsync ou cvs</p>
-          <p>
-Fink peut utiliser différentes méthodes pour mettre à jour les fichiers info des paquets. <b>rsync</b> est la méthode recommandée. Cette méthode utilise rsync pour télécharger les fichiers qui ont été modifiés dans les arborescences activées. Notez qui si vous modifiez ou ajoutez des fichiers aux arborescences stable ou instable, le fait d'utiliser rsync les supprimera. Faites d'abord une sauvegarde. <b>cvs</b> effectue le téléchargement à partir d'un accès anonyme ou d'un accès :ext: au serveur cvs de fink. Ceci présente l'inconvénient que cvs ne sait pas changer de miroirs, aussi, si le serveur n'est pas disponible, vous ne pouvez pas mettre à jour. <b>point</b> ne télécharge que la dernière version officielle des paquets. Cette méthode n'est pas recommandée car vos paquets risquent, alors, d'être obsolètes.
-          </p>
-        </li>
-        <li>
-          <p>
-            <b>UseBinaryDist:</b> booléen</p>
-          <p>
-Force fink à télécharger les paquets binaires pré-compilés à partir de la distribution binaire, s'ils sont disponibles et si les-dits paquets ne sont pas déjà installés sur votre système. Ceci permet de gagner beaucoup de temps à l'installation. Nous vous recommandons donc d'utiliser cette option. Le fait d'utiliser l'<a href="#usage">option --use-binary-dist</a> avec fink a le même effet, mais est restreint à cette invocation de fink.
-<b>Disponible à partir de la versin 0.23.0 de fink</b>.
-          </p>
-        </li>
-      </ul>
-    
-    <h3><a name="conf.mirrors">5.6 Configuration des miroirs</a></h3>
-      
-      <p>Il peut être pénible de télécharger des logiciels à partir d'Internet et les vitesses de téléchargement ne sont pas toujours ce qu'elles devraient être. Les serveurs miroirs hébergent des copies des fichiers disponibles sur d'autres serveurs ; ils ont parfois une connexion plus rapide à Internet que le serveur maître ou peuvent être plus proche géographiquement de votre lieu de téléchargement que le serveur principal ne l'est, ce qui vous donne la possibilité de télécharger les fichiers plus rapidement. Ils permettent également de réduire la charge des serveurs primaires, par exemple <b>ftp.gnu.org</b>, et ils assurent un accès aux fichiers lorsqu'un serveur n'est pas disponible.</p>
-      <p>Pour que Fink choisisse le serveur le plus adapté à votre cas, vous devez lui indiquer le continent et le pays dans lequel vous résidez. Si les téléchargements à partir d'un serveur échouent, il vous demandera si vous voulez réessayer à partir du même miroir, à partir d'un miroir différent dans le même pays ou sur le même continent, ou d'un autre miroir n'importe où dans le monde.</p>
-      <p>Le fichier <b>fink.conf</b> contient la liste des miroirs que vous désirez utiliser.</p>
-      <ul>
-        <li>
-          <p>
-            <b>MirrorContinent:</b> un code de trois lettres</p>
-          <p>Vous devez changer cette valeur à l'aide de la commande <tt style="white-space: nowrap;">fink configure</tt>. Le code de trois lettres est l'un de ceux qui sont dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>.
-Par exemple, si vous vivez en Europe :</p>
-          <pre>MirrorContinent: eur</pre>
-        </li>
-        <li>
-          <p>
-            <b>MirrorCountry:</b> un code de six lettres</p>
-          <p>Vous devez changer cette valeur à l'aide de la commande <tt style="white-space: nowrap;">fink configure</tt>. Le code de six lettres est composé du code de trois lettres du continent (voir ci-dessus), suivi d'un tiret, puis du code de deux lettres du pays. Vous le trouverez dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>.
-Par exemple, si vous vivez en Autriche :</p>
-          <pre>MirrorCountry: eur-AT</pre>
-        </li>
-        <li>
-          <p>
-            <b>MirrorOrder:</b> MasterFirst, MasterLast, MasterNever ou ClosestFirst</p>
-          <p>
-Fink gère des miroirs 'Maîtres', serveurs miroirs des archives tar du code source de tous les paquets Fink. L'utilisation d'un miroir maître a pour avantage que les URL de téléchargement du source ne sont jamais obsolètes. Les utilisateurs peuvent choisir d'utiliser ces miroirs maintenus par l'équipe Fink, ou de n'utiliser que les URL initiales du source et des miroirs externes tels les miroirs gnome, KDE ou debian. De plus, on peut combiner les deux jeux de miroirs ; la recherche aura lieu alors par ordre de proximité de la zone de téléchargement, comme cela a été expliqué ci-dessus. Avec les options MasterFirst et MasterLast, l'utilisateur va directement au jeu de miroirs maîtres (ou au jeu de miroirs non maîtres) si un téléchargement échoue. Les options sont les  suivantes :
-</p>
-          <pre>
-MasterFirst - Cherche d'abord dans les miroirs "Maîtres".
-MasterLast - Cherche dans les miroirs "Maîtres" à la fin.
-MasterNever - N'utilise jamais les miroirs "Maîtres".
-ClosestFirst - Cherche d'abord dans les miroirs les plus proches 
-           (combine tous les miroirs en un seul jeu de miroirs).
-</pre>
-        </li>
-      </ul>
-    
-    <h3><a name="conf.developer">5.7 Configuration Développeur</a></h3>
-      
-      <p>Certaines options du fichier <b>fink.conf</b> sont réservées aux développeurs. Nous déconseillons à l'utilisateur moyen de Fink de les modifier. Ce sont les options suivantes qui appartiennent à cette catégorie.</p>
-      <ul>
-        <li>
-          <p>
-            <b>KeepRootDir:</b> booléen</p>
-          <p>Empêche Fink de supprimer le répertoire /sw/src/root-[nom]-[version]-[révision] après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
-La commande <b>fink -K</b> a le même effet, restreint à  cette invocation de <b>fink</b>.
-         </p>
-        </li>
-        <li>
-          <p>
-            <b>KeepBuildDir:</b> booléen</p>
-          <p>Empêche Fink de supprimer le répertoire /sw/src/[nom]-[version]-[révision] après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
-La commande <b>fink -k</b> a le même effet, restreint à  cette invocation de <b>fink</b>.
-          </p>
-        </li>
-      </ul>
-    
-    <h3><a name="conf.advanced">5.8 Variables pour les utilisateurs avertis</a></h3>
-      
-      <p>Il existe quelques autres options qui peuvent se révéler utiles, mais exigent un certain doigté à l'usage.</p>
-      <ul>
-        <li>
-          <p>
-            <b>MatchPackageRegEx:</b> </p>
-          <p>Empêche fink de demander quel paquet installer s'il existe une correspondance unique à l'un des choix résultant de l'expression régulière Perl fournie. Exemple :</p>
-          <pre>MatchPackageRegEx: (.*-ssl$|^xfree86$|^xfree86-shlibs$)</pre>
-          <p>correspond aux paquets dont le nom commencent par xfree86 ou xfree86-shlibs ou se terminent par '-ssl' ;  il n'existe qu'une seule possibilité, fink installera xfree86 et xfree86-shlibs.</p>
-        </li>
-        <li>
-          <p>
-            <b>CCacheDir:</b> path</p>
-          <p>Si le paquet ccache-default est installé, les fichiers cache qu'il génère lorsque des paquets Fink sont installés sont placés dans le répertoire indiqué en tant que valeur du champ. La valeur par défaut est <tt style="white-space: nowrap;">/sw/var/ccache</tt>. Quand la valeur du champ est <tt style="white-space: nowrap;">none</tt>, fink ne définit pas la variable d'environnement CCACHE_DIR et ccache utilise <tt style="white-space: nowrap;">$HOME/.ccache</tt>, ce qui peut le conduire à placer des fichiers dont le possesseur est le super-utilisateur dans votre répertoire  utilisateur. <b>Introduit dans une version de fink postérieure à la version 0.21.0</b>. 
-          </p>
-        </li>
-      </ul>
-    
-     <h3><a name="conf.sourceslist">5.9 Gestion du fichier sources.list d'apt</a></h3>
-      
-      <p>À partir de la version 0.21.0, fink gère activement le fichier <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>, qui est utilisé par apt pour trouver l'emplacement des fichiers binaires à installer. Le fichier sources.list par "défaut" possède un contenu similaire à celui indiqué ci-dessous. Son contenu prend en compte la distribution et les branches dont vous vous servez. 
-</p>
-<pre># Local modifications should either go above this line, or at the end.
-#
+</li>
+<li>
+<p><b>SelfUpdateMethod:</b> point, rsync ou cvs</p>
+<p>Fink peut utiliser différentes méthodes pour mettre à jour les fichiers info des paquets. <b>rsync</b> est la méthode recommandée. Cette méthode utilise rsync pour télécharger les fichiers qui ont été modifiés dans les arborescences activées. Notez qui si vous modifiez ou ajoutez des fichiers aux arborescences stable ou instable, le fait d'utiliser rsync les supprimera. Faites d'abord une sauvegarde. <b>cvs</b> effectue le téléchargement à partir d'un accès anonyme ou d'un accès :ext: au serveur cvs de fink. Ceci présente l'inconvénient que cvs ne sait pas changer de miroirs, aussi, si le serveur n'est pas disponible, vous ne pouvez pas mettre à jour. <b>point</b> ne télécharge que la dernière version officielle des paquets. Cette méthode n'est pas recommandée car vos paquets risquent, alors, d'être obsolètes.</p>
+</li>
+<li>
+<p><b>UseBinaryDist:</b> booléen</p>
+<p>Force fink à télécharger les paquets binaires pré-compilés à partir de la distribution binaire, s'ils sont disponibles et si les-dits paquets ne sont pas déjà installés sur votre système. Ceci permet de gagner beaucoup de temps à l'installation. Nous vous recommandons donc d'utiliser cette option. Le fait d'utiliser l'<a href="#usage">option --use-binary-dist</a> avec fink a le même effet, mais est restreint à cette invocation de fink. <b>Disponible à partir de la versin 0.23.0 de fink</b>.</p>
+</li>
+</ul>
+
+<h3><a name="conf.mirrors">5.6 Configuration des miroirs</a></h3>
+
+<p>Il peut être pénible de télécharger des logiciels à partir d'Internet et les vitesses de téléchargement ne sont pas toujours ce qu'elles devraient être. Les serveurs miroirs hébergent des copies des fichiers disponibles sur d'autres serveurs ; ils ont parfois une connexion plus rapide à Internet que le serveur maître ou peuvent être plus proche géographiquement de votre lieu de téléchargement que le serveur principal ne l'est, ce qui vous donne la possibilité de télécharger les fichiers plus rapidement. Ils permettent également de réduire la charge des serveurs primaires, par exemple <b>ftp.gnu.org</b>, et ils assurent un accès aux fichiers lorsqu'un serveur n'est pas disponible.</p>
+<p>Pour que Fink choisisse le serveur le plus adapté à votre cas, vous devez lui indiquer le continent et le pays dans lequel vous résidez. Si les téléchargements à partir d'un serveur échouent, il vous demandera si vous voulez réessayer à partir du même miroir, à partir d'un miroir différent dans le même pays ou sur le même continent, ou d'un autre miroir n'importe où dans le monde.</p>
+<p>Le fichier <b>fink.conf</b> contient la liste des miroirs que vous désirez utiliser.</p>
+<ul>
+<li>
+<p><b>MirrorContinent:</b> un code de trois lettres</p>
+<p>Vous devez changer cette valeur à l'aide de la commande <tt style="white-space: nowrap;">fink configure</tt>. Le code de trois lettres est l'un de ceux qui sont dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>. Par exemple, si vous vivez en Europe :</p>
+<pre>MirrorContinent: eur</pre>
+</li>
+<li>
+<p><b>MirrorCountry:</b> un code de six lettres</p>
+<p>Vous devez changer cette valeur à l'aide de la commande <tt style="white-space: nowrap;">fink configure</tt>. Le code de six lettres est composé du code de trois lettres du continent (voir ci-dessus), suivi d'un tiret, puis du code de deux lettres du pays. Vous le trouverez dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>. Par exemple, si vous vivez en Autriche :</p>
+<pre>MirrorCountry: eur-AT</pre>
+</li>
+<li>
+<p><b>MirrorOrder:</b> MasterFirst, MasterLast, MasterNever ou ClosestFirst</p>
+<p>Fink gère des miroirs 'Maîtres', serveurs miroirs des archives tar du code source de tous les paquets Fink. L'utilisation d'un miroir maître a pour avantage que les URL de téléchargement du source ne sont jamais obsolètes. Les utilisateurs peuvent choisir d'utiliser ces miroirs maintenus par l'équipe Fink, ou de n'utiliser que les URL initiales du source et des miroirs externes tels les miroirs gnome, KDE ou debian. De plus, on peut combiner les deux jeux de miroirs ; la recherche aura lieu alors par ordre de proximité de la zone de téléchargement, comme cela a été expliqué ci-dessus. Avec les options MasterFirst et MasterLast, l'utilisateur va directement au jeu de miroirs maîtres (ou au jeu de miroirs non maîtres) si un téléchargement échoue. Les options sont les  suivantes :</p>
+<pre>
+MasterFirst - Cherche d'abord dans les miroirs "Maîtres". MasterLast - Cherche dans les miroirs "Maîtres" à la fin. MasterNever - N'utilise jamais les miroirs "Maîtres". ClosestFirst - Cherche d'abord dans les miroirs les plus proches 
+  (combine tous les miroirs en un seul jeu de miroirs). </pre>
+</li>
+</ul>
+
+<h3><a name="conf.developer">5.7 Configuration Développeur</a></h3>
+
+<p>Certaines options du fichier <b>fink.conf</b> sont réservées aux développeurs. Nous déconseillons à l'utilisateur moyen de Fink de les modifier. Ce sont les options suivantes qui appartiennent à cette catégorie.</p>
+<ul>
+<li>
+<p><b>KeepRootDir:</b> booléen</p>
+<p>Empêche Fink de supprimer le répertoire /sw/src/root-[nom]-[version]-[révision] après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
+La commande <b>fink -K</b> a le même effet, restreint à  cette invocation de <b>fink</b>.</p>
+</li>
+<li>
+<p><b>KeepBuildDir:</b> booléen</p>
+<p>Empêche Fink de supprimer le répertoire /sw/src/[nom]-[version]-[révision] après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
+La commande <b>fink -k</b> a le même effet, restreint à  cette invocation de <b>fink</b>.</p>
+</li>
+</ul>
+
+<h3><a name="conf.advanced">5.8 Variables pour les utilisateurs avertis</a></h3>
+
+<p>Il existe quelques autres options qui peuvent se révéler utiles, mais exigent un certain doigté à l'usage.</p>
+<ul>
+<li>
+<p><b>MatchPackageRegEx:</b> </p>
+<p>Empêche fink de demander quel paquet installer s'il existe une correspondance unique à l'un des choix résultant de l'expression régulière Perl fournie. Exemple :</p>
+<pre>MatchPackageRegEx: (.*-ssl$|^xfree86$|^xfree86-shlibs$)</pre>
+<p>correspond aux paquets dont le nom commencent par xfree86 ou xfree86-shlibs ou se terminent par '-ssl' ;  il n'existe qu'une seule possibilité, fink installera xfree86 et xfree86-shlibs.</p>
+</li>
+<li>
+<p><b>CCacheDir:</b> path</p>
+<p>Si le paquet ccache-default est installé, les fichiers cache qu'il génère lorsque des paquets Fink sont installés sont placés dans le répertoire indiqué en tant que valeur du champ. La valeur par défaut est <tt style="white-space: nowrap;">/sw/var/ccache</tt>. Quand la valeur du champ est <tt style="white-space: nowrap;">none</tt>, fink ne définit pas la variable d'environnement CCACHE_DIR et ccache utilise <tt style="white-space: nowrap;">$HOME/.ccache</tt>, ce qui peut le conduire à placer des fichiers dont le possesseur est le super-utilisateur dans votre répertoire  utilisateur. <b>Introduit dans une version de fink postérieure à la version 0.21.0</b>. </p>
+</li>
+</ul>
+
+<h3><a name="conf.sourceslist">5.9 Gestion du fichier sources.list d'apt</a></h3>
+
+<p>À partir de la version 0.21.0, fink gère activement le fichier <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>, qui est utilisé par apt pour trouver l'emplacement des fichiers binaires à installer. Le fichier sources.list par "défaut" possède un contenu similaire à celui indiqué ci-dessous. Son contenu prend en compte la distribution et les branches dont vous vous servez.</p>
+<pre># Local modifications should either go above this line, or at the end. #
 # Default APT sources configuration for Fink, written by the fink program
 
 # Local package trees - packages built from source locally
@@ -878,13 +509,11 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/release main crypto
 # packages built between releases
 deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 
-# Put local modifications to this file below this line, or at the top.
-</pre>
+# Put local modifications to this file below this line, or at the top. </pre>
 <p>Pour la bonne compréhension de fonctionnement de ce fichier, voici la traduction en français</p>
 <pre>
 # Les modifications locales doivent se faire soit au-dessus de cette ligne,
-# soit tout-à-fait à la fin du fichier.
-#
+# soit tout-à-fait à la fin du fichier. #
 # Configuration par défaut des sources APT pour Fink, générée par le programme fink 
 
 # Arborescence locale des paquets - paquets construits localement à partir des sources
@@ -902,253 +531,178 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/release main crypto
 # mis à jour entre deux versions
 deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 
-# Faites vos modifications en-dessous de cette ligne ou tout-à-fait au début du fichier.
-</pre>
+# Faites vos modifications en-dessous de cette ligne ou tout-à-fait au début du fichier. </pre>
 <p>Avec ce fichier par défaut, apt-get cherche d'abord dans votre installation locale les binaires déjà compilés, puis recherche les autres dans la distribution binaire officielle. Vous pouvez modifier l'ordre de recherche en ajoutant des lignes en début de fichier (ce seront elles qui seront les plus prioritaires) ou à la fin du fichier (elles seront les moins prioritaires).</p>
-<p>Si vous changez la ligne Trees ou la distribution que vous utilisez, fink modifie automatiquement la partie "par défaut" (similaire à celle ci-dessus) du fichier pour qu'elle corresponde aux nouvelles valeurs. Néanmoins Fink préserve toutes les modifications locales apportées au fichier, à condition que les changements soient situés au début (au-dessus de la première ligne par "défaut" ou à la fin du fichier (en dessous de la dernière ligne par défaut). </p>
-<p>Note : si vous avez modifié <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> avant de passer à la version 0.21.0 de fink, votre ancien fichier sources.list sera sauvegardé sous <tt style="white-space: nowrap;">/sw/etc/apt/sources.list.finkbak</tt> .
-</p>
-    
-  <h2><a name="usage">6 Utilisation de l'outil fink en ligne de commande</a></h2>
-    
-    
-    <h3><a name="usage.using">6.1 Utilisation de l'outil fink</a></h3>
-      
-      <p>L'outil <tt style="white-space: nowrap;">fink</tt> possède lui-même plusieurs commandes qui lui permettent de travailler sur les paquets de la distribution source.
-      Certaines nécessitent au moins un nom de paquet, mais peuvent gérer plusieurs noms à la fois. Vous pouvez n'indiquer que le nom du paquet (par exemple gimp), le nom et la version (par exemple gimp-1.2.1), ou le nom, la version et la révision (par exemple gimp-1.2.1-3). Fink choisira automatiquement la version et la révision la plus récente si elles ne sont pas spécifiées.  D'autres commandes possèdent des options.</p>
-      <p>Voici la liste des commandes de l'outil <tt style="white-space: nowrap;">fink</tt> :</p>
-    
-    <h3><a name="usage.options">6.2 Options globales</a></h3>
-      
-      <p>
-Ce sont des options qui s'appliquent à toutes les commandes fink. Pour obtenir la liste des options, exécutez <tt style="white-space: nowrap;">fink --help</tt> :
-      </p>
-      <pre>
+<p>Si vous changez la ligne Trees ou la distribution que vous utilisez, fink modifie automatiquement la partie "par défaut" (similaire à celle ci-dessus) du fichier pour qu'elle corresponde aux nouvelles valeurs. Néanmoins Fink préserve toutes les modifications locales apportées au fichier, à condition que les changements soient situés au début (au-dessus de la première ligne par "défaut" ou à la fin du fichier (en dessous de la dernière ligne par défaut).</p>
+<p>Note : si vous avez modifié <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> avant de passer à la version 0.21.0 de fink, votre ancien fichier sources.list sera sauvegardé sous <tt style="white-space: nowrap;">/sw/etc/apt/sources.list.finkbak</tt> .</p>
+
+<h2><a name="usage">6 Utilisation de l'outil fink en ligne de commande</a></h2>
+
+
+<h3><a name="usage.using">6.1 Utilisation de l'outil fink</a></h3>
+
+<p>L'outil <tt style="white-space: nowrap;">fink</tt> possède lui-même plusieurs commandes qui lui permettent de travailler sur les paquets de la distribution source. Certaines nécessitent au moins un nom de paquet, mais peuvent gérer plusieurs noms à la fois. Vous pouvez n'indiquer que le nom du paquet (par exemple gimp), le nom et la version (par exemple gimp-1.2.1), ou le nom, la version et la révision (par exemple gimp-1.2.1-3). Fink choisira automatiquement la version et la révision la plus récente si elles ne sont pas spécifiées.  D'autres commandes possèdent des options.</p>
+<p>Voici la liste des commandes de l'outil <tt style="white-space: nowrap;">fink</tt> :</p>
+
+<h3><a name="usage.options">6.2 Options globales</a></h3>
+
+<p>Ce sont des options qui s'appliquent à toutes les commandes fink. Pour obtenir la liste des options, exécutez <tt style="white-space: nowrap;">fink --help</tt> :</p>
+<pre>
 -h, --help            - affiche ce message d'aide
 -q, --quiet           - diminue le niveau de verbosité de fink, effet contraire à celui de --verbose
 -V, --version         - affiche les informations de version
 -v, --verbose         - augmente le niveau de verbosité de fink, effet contraire à celui de --quiet
 -y, --yes             - applique la réponse par défaut à toutes les questions interactives
 -b, --use-binary-dist - télécharge les paquets pré-compilés de la distribution binaire s'ils sont disponibles
-      </pre>
-      <p>
-La plupart de ces options ne nécessite pas d'explication supplémentaire. Elles peuvent être configurées dans le <a href="#conf">fichier de configuration de Fink</a> (fink.conf) si vous souhaitez les rendre permanentes et non pas restreindre leur effet à une seule invocation de <tt style="white-space: nowrap;">fink</tt>.
-      </p>
-      <p>
-L'option <tt style="white-space: nowrap;">--use-binary-dist</tt> force <tt style="white-space: nowrap;">fink</tt> à télécharger les paquets binaires à partir de la distribution binaire, s'ils sont disponibles et qu'ils ne sont pas déjà sur votre système. Disponible à partir de la version 0.23.0 de <tt style="white-space: nowrap;">fink</tt>.
-      </p>
-    
-    <h3><a name="usage.install">6.3 install - installation</a></h3>
-      
-      <p>La commande install est utilisée pour installer des paquets. Elle télécharge, configure, compile et installe les paquets désirés. Elle installe aussi automatiquement les dépendances requises, mais vous demande confirmation avant de le faire. Exemple :</p>
-      <pre>fink install nedit
+</pre>
+<p>La plupart de ces options ne nécessite pas d'explication supplémentaire. Elles peuvent être configurées dans le <a href="#conf">fichier de configuration de Fink</a> (fink.conf) si vous souhaitez les rendre permanentes et non pas restreindre leur effet à une seule invocation de <tt style="white-space: nowrap;">fink</tt>.</p>
+<p>L'option <tt style="white-space: nowrap;">--use-binary-dist</tt> force <tt style="white-space: nowrap;">fink</tt> à télécharger les paquets binaires à partir de la distribution binaire, s'ils sont disponibles et qu'ils ne sont pas déjà sur votre système. Disponible à partir de la version 0.23.0 de <tt style="white-space: nowrap;">fink</tt>.</p>
 
-Reading package info...
-Information about 131 packages read.
-The following additional package will be installed:
+<h3><a name="usage.install">6.3 install - installation</a></h3>
+
+<p>La commande install est utilisée pour installer des paquets. Elle télécharge, configure, compile et installe les paquets désirés. Elle installe aussi automatiquement les dépendances requises, mais vous demande confirmation avant de le faire. Exemple :</p>
+<pre>fink install nedit
+
+Reading package info... Information about 131 packages read. The following additional package will be installed:
  lesstif
 Do you want to continue? [Y/n]</pre>
 <p>Ici fink lit les fichiers d'information des paquets, donne le nombre de fichiers lus, signale que le paquet lesstif sera téléchargé si vous donnez votre accord.</p>      
-      <p>
-Si vous ajoutez l'<a href="#usage.options">option --use-binary-dist</a>, <tt style="white-space: nowrap;">fink</tt> télécharge les paquets binaires, s'ils sont disponibles, au lieu de les compiler. Cela permet de gagner du temps.
-      </p>
+<p>Si vous ajoutez l'<a href="#usage.options">option --use-binary-dist</a>, <tt style="white-space: nowrap;">fink</tt> télécharge les paquets binaires, s'ils sont disponibles, au lieu de les compiler. Cela permet de gagner du temps.</p>
 <p>Les alias de la commande install sont : update, enable, activate, use (la plupart du temps pour des raisons historiques).</p>
-    
-    <h3><a name="usage.remove">6.4 remove - suppression</a></h3>
-      
+
+<h3><a name="usage.remove">6.4 remove - suppression</a></h3>
+
 <p>La commande remove supprime les paquets du système en appelant la commande  '<tt style="white-space: nowrap;">dpkg --remove</tt>'. L'implantation actuelle de cette commande a un défaut : elle ne vérifie pas les dépendances elle-même, mais délègue ce travail à l'outil dpkg (en général, cela ne pose pas de problèmes).</p>
-      <p>La commande remove ne supprime que le paquet lui-même (à l'exclusion des fichiers de configuration). Le paquet compressé .deb reste sur le système. Ceci signifie que vous pouvez réinstaller le paquet plus tard, sans avoir à le recompiler. Si vous avez besoin de libérer de l'espace disque, vous pouvez supprimer les fichiers .deb de l'arborescence <tt style="white-space: nowrap;">/sw/fink/dists</tt>.</p>
-      <p>Alias : disable, deactivate, unuse, delete.</p>
-    
-    <h3><a name="usage.purge">6.5 purge</a></h3>
-      
+<p>La commande remove ne supprime que le paquet lui-même (à l'exclusion des fichiers de configuration). Le paquet compressé .deb reste sur le système. Ceci signifie que vous pouvez réinstaller le paquet plus tard, sans avoir à le recompiler. Si vous avez besoin de libérer de l'espace disque, vous pouvez supprimer les fichiers .deb de l'arborescence <tt style="white-space: nowrap;">/sw/fink/dists</tt>.</p>
+<p>Alias : disable, deactivate, unuse, delete.</p>
+
+<h3><a name="usage.purge">6.5 purge</a></h3>
+
 <p>La commande purge supprime les paquets du système. Elle agit de la même façon que la commande remove, mais elle supprime en plus les fichiers de configuration.</p>
-    
-    <h3><a name="usage.update-all">6.6 update-all - tout mettre à jour</a></h3>
-      
-      <p>Cette commande met à jour tous les paquets installés. Elle n'utilise pas de liste de paquets, il suffit de lancer :</p>
-      <pre>fink update-all</pre>
-      <p>
-L'<a href="#usage.options">option --use-binary-dist</a> peut être utilisée ici.
-      </p>
-    
-    <h3><a name="usage.list">6.7 list - liste</a></h3>
-      
-      <p>
-Cette commande donne la liste des paquets disponibles, leur statut d'installation, la dernière version disponible et une courte description.
-Appelée sans paramètres, elle affiche tous les paquets disponibles.
-Vous pouvez aussi l'utiliser avec un nom ou une expression régulière acceptée par le shell, Fink donnera alors la liste de tous les paquets correspondants.
-</p>
-      <p>
-La première colonne affiche le statut d'installation qui s'interprète de la façon suivante :
-</p>
-      <pre>
-     non installé
+
+<h3><a name="usage.update-all">6.6 update-all - tout mettre à jour</a></h3>
+
+<p>Cette commande met à jour tous les paquets installés. Elle n'utilise pas de liste de paquets, il suffit de lancer :</p>
+<pre>fink update-all</pre>
+<p>L'<a href="#usage.options">option --use-binary-dist</a> peut être utilisée ici.</p>
+
+<h3><a name="usage.list">6.7 list - liste</a></h3>
+
+<p>Cette commande donne la liste des paquets disponibles, leur statut d'installation, la dernière version disponible et une courte description. Appelée sans paramètres, elle affiche tous les paquets disponibles. Vous pouvez aussi l'utiliser avec un nom ou une expression régulière acceptée par le shell, Fink donnera alors la liste de tous les paquets correspondants.</p>
+<p>La première colonne affiche le statut d'installation qui s'interprète de la façon suivante :</p>
+<pre>
+  non installé
  i   dernière version installée
 (i)  installé, mais une version plus récente est disponible
 </pre>
-      <p>
-Voici quelques-unes des options de la commande <tt style="white-space: nowrap;">fink list</tt> :
-</p>
-      <pre>
+<p>Voici quelques-unes des options de la commande <tt style="white-space: nowrap;">fink list</tt> :</p>
+<pre>
 -h,--help
-	  Affiche les options disponibles.
--t,--tab
-	  Affiche la liste en séparant les divers éléments d'une ligne par une tabulation,
-	  utile en cas d'utilisation à l'intérieur d'un script.
--i,--installed
-	  N'affiche que les paquets installés.
--o,--outdated
-	  N'affiche que les paquets obsolètes.
--u,--uptodate
-	  N'affiche que les paquets à jour.
--n,--notinstalled
-	  Affiche les paquets qui ne sont pas installés.
--s=expr,--section=expr
-	  Affiche les paquets dans les sections correspondant à l'expression régulière
-	  fournie.
--w=xyz,--width=xyz
-	  Fixe la largeur de l'affichage. xyz est soit une valeur numérique, soit auto. 
-	  auto correspond à la largeur du terminal. 
-	  La valeur par défaut est auto.
-</pre>
-      <p>
-Quelques exemples d'utilisation :
-</p>
-      <pre>
+  Affiche les options disponibles. -t,--tab
+  Affiche la liste en séparant les divers éléments d'une ligne par une tabulation,
+  utile en cas d'utilisation à l'intérieur d'un script. -i,--installed
+  N'affiche que les paquets installés. -o,--outdated
+  N'affiche que les paquets obsolètes. -u,--uptodate
+  N'affiche que les paquets à jour. -n,--notinstalled
+  Affiche les paquets qui ne sont pas installés. -s=expr,--section=expr
+  Affiche les paquets dans les sections correspondant à l'expression régulière
+  fournie. -w=xyz,--width=xyz
+  Fixe la largeur de l'affichage. xyz est soit une valeur numérique, soit auto. 
+  auto correspond à la largeur du terminal. 
+  La valeur par défaut est auto. </pre>
+<p>Quelques exemples d'utilisation :</p>
+<pre>
 fink list                 - affiche tous les paquets
 fink list bash            - vérifie si bash est installé et affiche la version installée
 fink list --outdated      - affiche les paquets obsolètes
 fink list --section=kde   - affiche les paquets de la section kde
 fink list "gnome*"         - affiche tous les paquets dont le nom commence par 'gnome'
 </pre>
-      <p>
-Dans le dernier exemple, les guillemets sont nécessaires pour empêcher le shell d'interpréter le modèle lui-même.
-</p>
-    
-    <h3><a name="usage.apropos">6.8 apropos - à propos</a></h3>
-      
-      <p>
-Cette commande est presque identique à la commande <tt style="white-space: nowrap;">fink list</tt>. La différence la plus notable est que <tt style="white-space: nowrap;">fink apropos</tt> recherche aussi dans les fichiers de descriptions de paquets pour trouver les paquets. La seconde différence est que la chaîne de recherche n'est pas optionnelle, elle doit être fournie.
-</p>
-      <pre>
-fink apropos irc          - affiche tous les paquets où 'irc' apparaît soit dans le nom, 
-                            soit dans la description
-fink apropos -s=kde irc   - identique au précèdent, mais restreint aux paquets de la 
-                            section kde
-</pre>
-    
-    <h3><a name="usage.describe">6.9 describe - description</a></h3>
-      
-      <p>
-Cette commande affiche la description du paquet nommé sur la ligne de commande.
-Notez, qu'à l'heure actuelle, seule une faible part des paquets ont une description.
-</p>
-      <p>
-Alias : desc, description, info
-</p>
-    
-    <h3><a name="usage.fetch">6.10 fetch - téléchargement</a></h3>
-      
-      <p>Télécharge les paquets nommés, mais ne les installe pas. Cette commande télécharge les archives tar, même si elles ont déjà été téléchargées.</p>
-    
-    <h3><a name="usage.fetch-all">6.11 fetch-all - tout télécharger</a></h3>
-      
-      <p>Télécharge <b>tous</b> les paquets sous forme source. Comme fetch, cette commande télécharge les archives tar, même si elle ont déjà été téléchargées.</p>
-    
-    <h3><a name="usage.fetch-missing">6.12 fetch-missing - télécharger paquets manquants</a></h3>
-      
-      <p>Télécharge <b>tous</b> les paquets manquants sous forme source. Cette commande ne télécharge que les paquets qui ne sont pas présents sur le système.</p>
-    
-    <h3><a name="usage.build">6.13 build - compiler</a></h3>
-      
-      <p>Construit un paquet, mais ne l'installe pas. Les archives tar source sont téléchargées si elles ne sont pas présentes sur le système. La commande construit un paquet .deb que vous pourrez installer ultérieurement avec la commande install. Cette commande n'a aucun effet si le fichier .deb existe déjà. Notez que, contrairement au paquet, les dépendances sont, elles,  <b>installées</b>.</p>
-      <p>
-L'<a href="#usage.options">option --use-binary-dist</a> peut être utilisée ici.
-      </p>
-    
-    <h3><a name="usage.rebuild">6.14 rebuild - recompiler</a></h3>
-      
-      <p>Construit un paquet (tout comme la commande build), mais ignore et écrase le fichier .deb existant. Si le paquet est installé, le nouveau fichier .deb sera lui aussi installé dans le système via <tt style="white-space: nowrap;">dpkg</tt>. Très utile pendant la phase de développement du paquet.</p>
-      <p>
-L'<a href="#usage.options">option --use-binary-dist</a> peut être utilisée ici.
-      </p>
-    
-    <h3><a name="usage.reinstall">6.15 reinstall - réinstaller</a></h3>
-      
-      <p>Identique à install, mais installe le paquet via <tt style="white-space: nowrap;">dpkg</tt>, même s'il est déjà installé. Vous pouvez utiliser cette commande si vous supprimez involontairement des paquets, ou bien si vous changez les fichiers de configuration et que vous voulez retrouver la configuration par défaut.</p>
-    
-    <h3><a name="usage.configure">6.16 configure - configurer</a></h3>
-      
-      <p>
-Réexécute le processus de configuration de Fink.
-Cela vous permet de changer les sites miroirs et les configurations proxy, entre autres.
-</p>
-    
-    <h3><a name="usage.selfupdate">6.17 selfupdate - mise à jour automatique</a></h3>
-      
-<p>
-	Cette commande automatise le processus de mise à jour de Fink. Elle vérifie si une nouvelle version existe sur le site web de Fink, télécharge ensuite les descriptions de paquets et met à jour les paquets fondamentaux, y compris <tt style="white-space: nowrap;">fink</tt>. Cette commande met à jour les versions standards, mais peut aussi configurer votre arborescence <tt style="white-space: nowrap;">/sw/fink/dists</tt> de telle sorte qu'elle soit mise à jour directement via CVS. Vous avez alors accès aux toutes dernières versions des paquets.
-</p>
-      <p>
-Si l'<a href="#usage.options">option --use-binary-dist option</a> est activée, la liste des paquets disponibles dans la distribution binaire est, elle aussi, mise à jour.
-      </p>
-    
-    <h3><a name="usage.index">6.18 index - indexer</a></h3>
-      
-      <p>
-   Reconstruit le cache des paquets. Normalement, vous n'avez pas besoin d'exécuter cette commande manuellement, car <tt style="white-space: nowrap;">fink</tt> est censé détecter automatiquement s'il est besoin de reconstruire le cache.
-</p>
-    
-    <h3><a name="usage.validate">6.19 validate - valider</a></h3>
-      
-      <p>
-   Cette commande exécute différents contrôles sur les fichiers .info et .deb. Les mainteneurs de paquets doivent l'exécuter sur leurs descriptions de paquets et sur les paquets construits avant de les soumettre.
-</p>
-      <p>
-   Alias : check
-</p>
-    
-    <h3><a name="usage.scanpackages">6.20 scanpackages - création de fichiers Packages</a></h3>
-      
-      <p>
-   Lance dpkg-scanpackages(8) avec les arborescences spécifiées.
-</p>
-    
-    <h3><a name="usage.cleanup">6.21 cleanup - épuration</a></h3>
-      
-      <p>
-   Supprime les fichiers correspondants aux paquets obsolètes (.info, .patch, .deb) quand des versions plus récentes sont disponibles.
-   Cela peut libérer une grande portion d'espace disque.
-</p>
-       <p>
-Si l'<a href="#usage.options">option --use-binary-dist</a> est activée, les paquets binaires téléchargés obsolètes sont supprimés.
-      </p>
-   
-        <h3><a name="usage.dumpinfo">6.22 dumpinfo - analyse des fichiers info</a></h3>
-      
-     <p>
-	Note : disponible dans une version de fink postérieure à la version 0.21.0.
-      </p>
-      <p>
-	Affiche l'analyse syntaxique des différentes parties d'un fichier .info d'un paquet. Les <b>options</b> suivantes permettent de moduler l'affichage des champs et l'interprétation des raccourcis :
-      </p>
-      <pre>
--h, --help           - Affiche les options disponibles.
--a, --all            - Affiche tous les champs de description du paquet.
-                       C'est le mode par défaut quand aucune option 
-                       --field ou --percent n'est utilisée.
--f nomchamp,         - Affiche le contenu des champs indiqués
-  --field=nomchamp     dans leur ordre d'apparition après l'option -f.
--p clé,              - Affiche l'interprétation des clés fournies
-   --percent=clé       dans leur ordre d'apparition après l'option -p.
-     </pre>
-    
+<p>Dans le dernier exemple, les guillemets sont nécessaires pour empêcher le shell d'interpréter le modèle lui-même.</p>
 
-  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+<h3><a name="usage.apropos">6.8 apropos - à propos</a></h3>
+
+<p>Cette commande est presque identique à la commande <tt style="white-space: nowrap;">fink list</tt>. La différence la plus notable est que <tt style="white-space: nowrap;">fink apropos</tt> recherche aussi dans les fichiers de descriptions de paquets pour trouver les paquets. La seconde différence est que la chaîne de recherche n'est pas optionnelle, elle doit être fournie.</p>
+<pre>
+fink apropos irc          - affiche tous les paquets où 'irc' apparaît soit dans le nom, 
+ soit dans la description
+fink apropos -s=kde irc   - identique au précèdent, mais restreint aux paquets de la 
+ section kde
+</pre>
+
+<h3><a name="usage.describe">6.9 describe - description</a></h3>
+
+<p>Cette commande affiche la description du paquet nommé sur la ligne de commande. Notez, qu'à l'heure actuelle, seule une faible part des paquets ont une description.</p>
+<p>Alias : desc, description, info</p>
+
+<h3><a name="usage.fetch">6.10 fetch - téléchargement</a></h3>
+
+<p>Télécharge les paquets nommés, mais ne les installe pas. Cette commande télécharge les archives tar, même si elles ont déjà été téléchargées.</p>
+
+<h3><a name="usage.fetch-all">6.11 fetch-all - tout télécharger</a></h3>
+
+<p>Télécharge <b>tous</b> les paquets sous forme source. Comme fetch, cette commande télécharge les archives tar, même si elle ont déjà été téléchargées.</p>
+
+<h3><a name="usage.fetch-missing">6.12 fetch-missing - télécharger paquets manquants</a></h3>
+
+<p>Télécharge <b>tous</b> les paquets manquants sous forme source. Cette commande ne télécharge que les paquets qui ne sont pas présents sur le système.</p>
+
+<h3><a name="usage.build">6.13 build - compiler</a></h3>
+
+<p>Construit un paquet, mais ne l'installe pas. Les archives tar source sont téléchargées si elles ne sont pas présentes sur le système. La commande construit un paquet .deb que vous pourrez installer ultérieurement avec la commande install. Cette commande n'a aucun effet si le fichier .deb existe déjà. Notez que, contrairement au paquet, les dépendances sont, elles, <b>installées</b>.</p>
+<p>L'<a href="#usage.options">option --use-binary-dist</a> peut être utilisée ici.</p>
+
+<h3><a name="usage.rebuild">6.14 rebuild - recompiler</a></h3>
+
+<p>Construit un paquet (tout comme la commande build), mais ignore et écrase le fichier .deb existant. Si le paquet est installé, le nouveau fichier .deb sera lui aussi installé dans le système via <tt style="white-space: nowrap;">dpkg</tt>. Très utile pendant la phase de développement du paquet.</p>
+<p>L'<a href="#usage.options">option --use-binary-dist</a> peut être utilisée ici.</p>
+
+<h3><a name="usage.reinstall">6.15 reinstall - réinstaller</a></h3>
+
+<p>Identique à install, mais installe le paquet via <tt style="white-space: nowrap;">dpkg</tt>, même s'il est déjà installé. Vous pouvez utiliser cette commande si vous supprimez involontairement des paquets, ou bien si vous changez les fichiers de configuration et que vous voulez retrouver la configuration par défaut.</p>
+
+<h3><a name="usage.configure">6.16 configure - configurer</a></h3>
+
+<p>Réexécute le processus de configuration de Fink. Cela vous permet de changer les sites miroirs et les configurations proxy, entre autres.</p>
+
+<h3><a name="usage.selfupdate">6.17 selfupdate - mise à jour automatique</a></h3>
+
+<p>Cette commande automatise le processus de mise à jour de Fink. Elle vérifie si une nouvelle version existe sur le site web de Fink, télécharge ensuite les descriptions de paquets et met à jour les paquets fondamentaux, y compris <tt style="white-space: nowrap;">fink</tt>. Cette commande met à jour les versions standards, mais peut aussi configurer votre arborescence <tt style="white-space: nowrap;">/sw/fink/dists</tt> de telle sorte qu'elle soit mise à jour directement via CVS. Vous avez alors accès aux toutes dernières versions des paquets.</p>
+<p>Si l'<a href="#usage.options">option --use-binary-dist option</a> est activée, la liste des paquets disponibles dans la distribution binaire est, elle aussi, mise à jour.</p>
+
+<h3><a name="usage.index">6.18 index - indexer</a></h3>
+
+<p>Reconstruit le cache des paquets. Normalement, vous n'avez pas besoin d'exécuter cette commande manuellement, car <tt style="white-space: nowrap;">fink</tt> est censé détecter automatiquement s'il est besoin de reconstruire le cache.</p>
+
+<h3><a name="usage.validate">6.19 validate - valider</a></h3>
+
+<p>Cette commande exécute différents contrôles sur les fichiers .info et .deb. Les mainteneurs de paquets doivent l'exécuter sur leurs descriptions de paquets et sur les paquets construits avant de les soumettre.</p>
+<p>Alias : check</p>
+
+<h3><a name="usage.scanpackages">6.20 scanpackages - création de fichiers Packages</a></h3>
+
+<p>Lance dpkg-scanpackages(8) avec les arborescences spécifiées.</p>
+
+<h3><a name="usage.cleanup">6.21 cleanup - épuration</a></h3>
+
+<p>Supprime les fichiers correspondants aux paquets obsolètes (.info, .patch, .deb) quand des versions plus récentes sont disponibles. Cela peut libérer une grande portion d'espace disque.</p>
+<p>Si l'<a href="#usage.options">option --use-binary-dist</a> est activée, les paquets binaires téléchargés obsolètes sont supprimés.</p>
+
+<h3><a name="usage.dumpinfo">6.22 dumpinfo - analyse des fichiers info</a></h3>
+
+<p>Note : disponible dans une version de fink postérieure à la version 0.21.0.</p>
+<p>Affiche l'analyse syntaxique des différentes parties d'un fichier .info d'un paquet. Les <b>options</b> suivantes permettent de moduler l'affichage des champs et l'interprétation des raccourcis :</p>
+<pre>
+-h, --help           - Affiche les options disponibles. -a, --all            - Affiche tous les champs de description du paquet.   C'est le mode par défaut quand aucune option 
+  --field ou --percent n'est utilisée. -f nomchamp,         - Affiche le contenu des champs indiqués
+  --field=nomchamp     dans leur ordre d'apparition après l'option -f. -p clé,              - Affiche l'interprétation des clés fournies
+--percent=clé       dans leur ordre d'apparition après l'option -p. </pre>
+
+
+<hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.fr.xml,v 1.19 2004/12/09 18:17:04 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.fr.xml,v 1.20 2005/02/01 08:33:58 michga Exp $</i></p></body></html>
