@@ -826,12 +826,13 @@ stable/main". This list should be kept in sync with the
         </li>
         <li>
           <p>
-            <b>Distribution:</b> 10.1 or 10.2</p>
-          <p>Fink needs to know which version of Mac OS X you are running. The
-10.1 distribution is meant for users of Mac OS X 10.1, while 10.2 will
-only work for those who run Mac OS X 10.2 "Jaguar" on their systems.
-Mac OS X 10.0 and earlier are not supported. You should not need to
-alter this value.
+            <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, or 10.3</p>
+          <p>Fink needs to know which version of Mac OS X you are
+running. Mac OS X 10.0 and earlier are not supported, and 10.1 is no
+longer supported by this version of fink. Mac OS X 10.2 is only still
+supported if the August 2003 Developer Tools update is installed. This
+field is set by running the <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>
+script. You should not need to alter this value manually.
 </p>
         </li>
         <li>
@@ -880,6 +881,18 @@ True. It is set automatically by the <tt style="white-space: nowrap;">fink
 selfupdate-cvs</tt> command, so you should not need to change it
 manually.</p>
         </li>
+	<li>
+	  <p>
+	    <b>Buildpath:</b> path</p>
+	  <p>Fink needs to create several temporary directories for
+each package it compiles from source. By default, they are placed
+in <tt style="white-space: nowrap;">/sw/src</tt> but if you want them to be somewhere
+else, specify the path here. See the descriptions of
+the <tt style="white-space: nowrap;">KeepRootDir</tt> and <tt style="white-space: nowrap;">KeepBuildDir</tt> fields
+later in this document for more information about these temporary
+directories.
+	    </p>
+	</li>
       </ul>
     
     <h3><a name="conf.downloading">5.5 Download Settings</a></h3>
@@ -1239,4 +1252,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.3 2004/03/10 11:34:52 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.4 2004/03/18 10:06:26 dmacks Exp $</i></p></body></html>
