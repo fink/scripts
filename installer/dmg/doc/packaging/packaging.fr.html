@@ -1101,63 +1101,63 @@ Similaire au champ <tt style="white-space: nowrap;">SplitOff</tt>, utilisé pour
 Utilisé <b>uniquement</b> avec un champ <tt style="white-space: nowrap;">SplitOff</tt> ou <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>, ce champ indique quels fichiers et répertoires doivent être déplacés du répertoire d'installation %I du paquet parent vers le répertoire d'installation en cours %i. Notez que le déplacement a lieu après l'exécution des scripts InstallScript et DocFiles du paquet parent, mais avant l'exécution des mêmes scripts du paquet en cours d'installation.
 </p>
 </td></tr></table>
-<p><b>Build Phase:</b></p>
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>PreInstScript, PostInstScript, PreRmScript, PostRmScript</td><td>
+<p><b>Phase de construction :</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>PreInstScript, PostInstScript, PreRmScript, PostRmScript</td><td>
 <p>
-These fields specify pieces of shell scripts that will be called when the package is installed, upgraded or removed. Fink automatically adds the shell script header <tt style="white-space: nowrap;">#!/bin/sh</tt>, and calls <tt style="white-space: nowrap;">set -e</tt> so any command that fails will result in instant termination of the script. Fink also adds an <tt style="white-space: nowrap;">exit 0</tt> at the end. To indicate an error, exit from the script with a non-zero exit code. The first parameter (<tt style="white-space: nowrap;">$1</tt>) is set to a value indicating what action is being performed. Some possible values are <tt style="white-space: nowrap;">install</tt>, <tt style="white-space: nowrap;">upgrade</tt>, <tt style="white-space: nowrap;">remove</tt> and <tt style="white-space: nowrap;">purge</tt>. Note that there are more values, used during error rollback or when removing a package in favor of another one.
+Ces champs correspondent à des scripts shell qui seront appelés lors de l'installation, la mise à jour ou la suppression du paquet. Fink ajoute automatiquement l'en-tête du script shell <tt style="white-space: nowrap;">#!/bin/sh</tt> et appelle  <tt style="white-space: nowrap;">set -e</tt>, de façon à ce que tout échec d'une commande entraîne 'arrêt immédiat du script. Fink ajoute aussi  <tt style="white-space: nowrap;">exit 0</tt> à la fin du script. Pour signaler une erreur, utilisez exit avec un code non nul. Le premier paramètre (<tt style="white-space: nowrap;">$1</tt>) contient une valeur indiquant l'action à faire. Exemples de valeurs possibles : <tt style="white-space: nowrap;">install</tt>, <tt style="white-space: nowrap;">upgrade</tt>, <tt style="white-space: nowrap;">remove</tt> et <tt style="white-space: nowrap;">purge</tt>. Notez qu'il existe d'autres valeurs, utilisées lors des reprises sur erreur et du remplacement d'un paquet par un autre.
 </p>
 <p>
-The scripts are called at the following times:
+Ces différents scripts sont appelés lors des évènements suivants :
 </p>
 <ul>
-<li>PreInstScript: When the package is installed for the first time and before upgrading the package to this version.</li>
-<li>PostInstScript: After unpacking and setting up the package.</li>
-<li>PreRmScript: Before the package is removed or upgraded to a later version.</li>
-<li>PostRmScript: After the package was removed or upgraded to a later version.</li>
+<li>PreInstScript : lors de la première installation d'un paquet et avant la mise à jour d'un paquet à la même version.</li>
+<li>PostInstScript : après le dépaquetage et la définition des variables spécifiques au paquet.</li>
+<li>PreRmScript : avant la suppression et la mise à jour d'un paquet à une version ultérieure.</li>
+<li>PostRmScript : après la suppression et la mise à jour du paquet à une version ultérieure.</li>
 </ul>
 <p>
-To make it more clear, an upgrade invokes both the ...Inst scripts of the new version and the ...Rm scripts of the old version. Details can be found in the Debian Policy Manual, <a href="http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html">Chapter 6</a>.
+Soyons plus clair. Une mise à jour invoque à la fois les scripts ...Inst de la nouvelle version et les scripts ...Rm de l'ancienne version. Vous trouverez de plus amples informations à ce sujet dans le <a href="http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html">Chapitre 6</a> du Manuel des normes Debian.
 </p>
 <p>
-Percent expansion is performed on the scripts. Commands can generally be called without giving a full path.
+L'interprétation des raccourcis a lieu dans ces scripts. Les commandes peuvent, en général, être lancées sans donner leur chemin complet.
 </p>
 </td></tr><tr valign="top"><td>ConfFiles</td><td>
 <p>
-A space-separated list of files that are user-modifiable configuration files. The files must be specified with an absolute path, e.g. <tt style="white-space: nowrap;">%p/etc/foo.conf</tt>. The named files will receive special treatment by dpkg. When a package is upgraded and the file has changed both on disk and in the package, the user is asked which version to use and backups of the file will be made. When a package is "remove"d, the configuration files will remain on disk. Only a "purge" also removes the configuration files.
+Liste de fichiers séparés par des espaces. Ces fichiers sont des fichiers de configuration modifiables par l'utilisateur. Le chemin complet des fichiers doit être indiqué, comme dans <tt style="white-space: nowrap;">%p/etc/foo.conf</tt>. Ces fichiers sont traités de façon spéciale par dpkg. Quand un paquet est mis à jour et que le fichier de configuration a changé à la fois sur le disque et dans le paquet, dpkg demande à l'utilisateur quelle version il veut utiliser et sauvegarde l'ancien fichier. Quand un paquet est supprimé avec "remove", les fichiers de configuration ne sont pas supprimés. Pour les supprimer, il faut utiliser "purge".
 </p>
 </td></tr><tr valign="top"><td>InfoDocs</td><td>
 <p>
-Lists the names of Info documents that the package installs in %p/share/info. This will add appropriate code to the postinst and prerm scripts to maintain the Info directory file, <tt style="white-space: nowrap;">dir</tt>. This feature is still in flux, more fields for finer control may be added in the future.
+Liste des documents Info que le paquet installe dans %p/share/info. Des commandes appropriées sont ajoutées aux scripts postinst et prerm pour mettre à jour le fichier de la hiérarchie Info <tt style="white-space: nowrap;">dir</tt>. Cette fonctionnalité est en cours de développement, d'autres champs pourront être ajoutés à l'avenir pour une gestion plus précise.
 </p>
 </td></tr><tr valign="top"><td>DaemonicFile</td><td>
 <p>
-Gives a service description for <tt style="white-space: nowrap;">daemonic</tt>. <tt style="white-space: nowrap;">daemonic</tt> is used by Fink to create and remove StartupItems for daemon processes (e.g. web servers). The description will added to the package as a file named <tt style="white-space: nowrap;">%p/etc/daemons/<b>name</b>.xml</tt>, where <b>name</b> is specified by the DaemonicName field and defaults to the package name. Percent expansion is performed on the contents of this field. Note that you must add <tt style="white-space: nowrap;">daemonic</tt> to the dependency list if your package uses it.
+Décrit un service pour <tt style="white-space: nowrap;">daemonic</tt>. <tt style="white-space: nowrap;">daemonic</tt> est utilisé par Fink pour créer et supprimer des éléments à lancer au démarrage pour les processus démon (par exemple les serveurs web). La description est ajoutée au paquet sous la forme d'un fichier nommé <tt style="white-space: nowrap;">%p/etc/daemons/<b>nom</b>.xml</tt>, où <b>nom</b> est indiqué par le champ DaemonicName et est réduit, par défaut,  au nom du paquet. L'interprétation des raccourcis a lieu sur le contenu de ce champ. Notez que vous devez ajouter <tt style="white-space: nowrap;">daemonic</tt> à la liste des dépendances, si votre paquet utilise ce champ.
 </p>
 </td></tr><tr valign="top"><td>DaemonicName</td><td>
 <p>
-A name for the <tt style="white-space: nowrap;">daemonic</tt> service description file. See the description of DaemonicFile for details.
+Nom du fichier de description d'un service <tt style="white-space: nowrap;">daemonic</tt>. Voir la description de DaemonicFile pour de plus amples informations.
 </p>
 </td></tr></table>
-<p><b>Additional Data:</b></p>
-<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Homepage</td><td>
+<p><b>Autres informations :</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>Homepage</td><td>
 <p>
-The URL of the upstream home page of the package.
+URL de la page d'accueil du paquet en amont.
 </p>
 </td></tr><tr valign="top"><td>DescDetail</td><td>
 <p>
-A more detailed description than the one in the <tt style="white-space: nowrap;">Description</tt> field (what is it, what can I use it for?). Multiple lines allowed. Because this field will be displayed without the benefit of word-wrap, you should manually insert line breaks in order to keep lines less than 79 chars (if possible).
+Description plus détaillée que celle figurant dans le champ <tt style="white-space: nowrap;">Description</tt> (répond aux questions : qu'est-ce que c'est ?, comment l'utiliser?). Les lignes multiples sont autorisées. Comme ce champ sera affiché sans que la longueur des lignes soit adaptée à la largeur de la fenêtre d'affichage, vous devez insérer des sauts de ligne, de façon à ce que les lignes ne dépassent pas 78 caractères (si possible).
 </p>
 </td></tr><tr valign="top"><td>DescUsage</td><td>
 <p>
-This is for information that is needed to use the package (how do I use it?). As in "run wmaker.inst once before using WindowMaker". Multiple lines allowed. Because this field will be displayed without the benefit of word-wrap, you should manually insert line breaks in order to keep lines less than 79 chars (if possible).
+Information nécessaire à l'utilisation du paquet (répond à la question : comment l'utiliser ?). Exemple : "run wmaker.inst once before using WindowMaker". Lignes multiples autorisées. Comme ce champ sera affiché sans que la longueur des lignes soit adaptée à la largeur de la fenêtre d'affichage, vous devez insérer des sauts de ligne, de façon à ce que les lignes ne dépassent pas 78 caractères (si possible).
 </p>
 </td></tr><tr valign="top"><td>DescPackaging</td><td>
 <p>
-Notes about the packaging. Stuff like "patches the Makefile to put everything in place" goes here. Multiple lines allowed.
+Notes sur la construction du paquet. Les éléments du type : "patches the Makefile to put everything in place" sont placés dans ce champ. Lignes multiples autorisées.
 </p>
 </td></tr><tr valign="top"><td>DescPort</td><td>
 <p>
-Notes that are specific to porting the package to Darwin. Stuff like "config.guess and libtool scripts are updated, -no-cpp-precomp is necessary" goes here. Multiple lines allowed.
+Notes spécifiques au portage du paquet sur Darwin. Les éléments du type : "config.guess and libtool scripts are updated, -no-cpp-precomp is necessary" sont placés dans ce champ. Lignes multiples autorisées.
 </p>
 </td></tr></table>
 
@@ -1253,4 +1253,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.26 2004/05/13 09:11:05 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.27 2004/05/16 09:37:18 michga Exp $</i></p></body></html>
