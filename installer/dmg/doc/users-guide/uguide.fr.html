@@ -26,7 +26,7 @@ Bienvenue dans le Guide de l'Utilisateur Fink.
 Ce guide couvre les procédures de première installation et de mise à jour des distributions source et binaire, ainsi que l'installation de paquets et la maintenance.
 </p>
   <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#intro.req">1.2 Configuration requise</a></li><li><a href="#intro.supported-os">1.3 Systèmes supportés</a></li><li><a href="#intro.src-vs-bin">1.4 Source ou binaire</a></li></ul></li><li><a href="#install"><b>2 Première installation</b></a><ul><li><a href="#install.bin">2.1 Installation de la distribution binaire</a></li><li><a href="#install.src">2.2 Installation de la distribution source</a></li><li><a href="#install.setup">2.3 Définition de votre environnement</a></li></ul></li><li><a href="#packages"><b>3 Installation de paquets</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installation de paquets binaires avec dselect</a></li><li><a href="#packages.bin-apt">3.2 Installation de paquets binaires avec
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installation de paquets dépendants non disponibles dans la distribution binaire</a></li><li><a href="#packages.src">3.4 Installation de paquets à partir du source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Versions disponibles</a></li><li><a href="#packages.x11">3.7 Implémentation de X11</a></li></ul></li><li><a href="#upgrade"><b>4 Mise à niveau de Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Mise à niveau à partir de paquets binaires</a></li><li><a href="#upgrade.src">4.2 Mise à niveau de la distribution source</a></li><li><a href="#upgrade.mix">4.3 Mélange de binaires et de source</a></li></ul></li><li><a href="#conf"><b>5 Fichier de Configuration de Fink</b></a><ul><li><a href="#conf.about">5.1 À propos de fink.conf</a></li><li><a href="#conf.syntax">5.2 Syntaxe de fink.conf</a></li><li><a href="#conf.required">5.3 Éléments obligatoires</a></li><li><a href="#conf.optional">5.4 Options utilisateur</a></li><li><a href="#conf.downloading">5.5 Options de téléchargement</a></li><li><a href="#conf.mirrors">5.6 Configuration des miroirs</a></li><li><a href="#conf.developer">5.7 Configuration Développeur</a></li></ul></li><li><a href="#usage"><b>6 Utilisation de l'outil fink en ligne de commande</b></a><ul><li><a href="#usage.using">6.1 Utilisation de l'outil fink</a></li><li><a href="#usage.install">6.2 install - installation</a></li><li><a href="#usage.remove">6.3 remove - suppression</a></li><li><a href="#usage.update-all">6.4 update-all - tout mettre à jour</a></li><li><a href="#usage.list">6.5 list - liste</a></li><li><a href="#usage.apropos">6.6 apropos - à propos</a></li><li><a href="#usage.describe">6.7 describe - description</a></li><li><a href="#usage.fetch">6.8 fetch - téléchargement</a></li><li><a href="#usage.fetch-all">6.9 fetch-all - tout télécharger</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing - télécharger paquets manquants</a></li><li><a href="#usage.build">6.11 build - compiler</a></li><li><a href="#usage.rebuild">6.12 rebuild - recompiler</a></li><li><a href="#usage.reinstall">6.13 reinstall - réinstaller</a></li><li><a href="#usage.configure">6.14 configure - configurer</a></li><li><a href="#usage.selfupdate">6.15 selfupdate - mise à jour automatique</a></li><li><a href="#usage.index">6.16 index - indexer</a></li><li><a href="#usage.validate">6.17 validate - valider</a></li><li><a href="#usage.scanpackages">6.18 scanpackages - création de fichiers Packages</a></li><li><a href="#usage.checksums">6.19 checksums - sommes de contrôle</a></li><li><a href="#usage.cleanup">6.20 cleanup - épuration</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installation de paquets dépendants non disponibles dans la distribution binaire</a></li><li><a href="#packages.src">3.4 Installation de paquets à partir du source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Versions disponibles</a></li><li><a href="#packages.x11">3.7 Implémentation de X11</a></li></ul></li><li><a href="#upgrade"><b>4 Mise à niveau de Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Mise à niveau à partir de paquets binaires</a></li><li><a href="#upgrade.src">4.2 Mise à niveau de la distribution source</a></li><li><a href="#upgrade.mix">4.3 Mélange de binaires et de source</a></li></ul></li><li><a href="#conf"><b>5 Fichier de Configuration de Fink</b></a><ul><li><a href="#conf.about">5.1 À propos de fink.conf</a></li><li><a href="#conf.syntax">5.2 Syntaxe de fink.conf</a></li><li><a href="#conf.required">5.3 Éléments obligatoires</a></li><li><a href="#conf.optional">5.4 Options utilisateur</a></li><li><a href="#conf.downloading">5.5 Options de téléchargement</a></li><li><a href="#conf.mirrors">5.6 Configuration des miroirs</a></li><li><a href="#conf.developer">5.7 Configuration Développeur</a></li></ul></li><li><a href="#usage"><b>6 Utilisation de l'outil fink en ligne de commande</b></a><ul><li><a href="#usage.using">6.1 Utilisation de l'outil fink</a></li><li><a href="#usage.install">6.2 install - installation</a></li><li><a href="#usage.remove">6.3 remove - suppression</a></li><li><a href="#usage.update-all">6.4 update-all - tout mettre à jour</a></li><li><a href="#usage.list">6.5 list - liste</a></li><li><a href="#usage.apropos">6.6 apropos - à propos</a></li><li><a href="#usage.describe">6.7 describe - description</a></li><li><a href="#usage.fetch">6.8 fetch - téléchargement</a></li><li><a href="#usage.fetch-all">6.9 fetch-all - tout télécharger</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing - télécharger paquets manquants</a></li><li><a href="#usage.build">6.11 build - compiler</a></li><li><a href="#usage.rebuild">6.12 rebuild - recompiler</a></li><li><a href="#usage.reinstall">6.13 reinstall - réinstaller</a></li><li><a href="#usage.configure">6.14 configure - configurer</a></li><li><a href="#usage.selfupdate">6.15 selfupdate - mise à jour automatique</a></li><li><a href="#usage.index">6.16 index - indexer</a></li><li><a href="#usage.validate">6.17 validate - valider</a></li><li><a href="#usage.scanpackages">6.18 scanpackages - création de fichiers Packages</a></li><li><a href="#usage.checksums">6.19 checksums - sommes de contrôle</a></li><li><a href="#usage.cleanup">6.20 cleanup - épuration</a></li><li><a href="#usage.dumpinfo">6.21 dumpinfo - analyse des fichiers info</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.what">1.1 Qu'est-ce que Fink ?</a></h3>
@@ -792,12 +792,15 @@ ClosestFirst - Cherche d'abord dans les miroirs les plus proches
           <p>
             <b>KeepRootDir:</b> booléen</p>
           <p>Empêche Fink de supprimer le répertoire /sw/src/root-[nom]-[version]-[révision] après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
+La commande <b>fink -K</b> a le même effet, restreint à  cette invocation de <b>fink</b>.
+
           </p>
         </li>
         <li>
           <p>
             <b>KeepBuildDir:</b> booléen</p>
           <p>Empêche Fink de supprimer le répertoire /sw/src/[nom]-[version]-[révision] après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
+La commande <b>fink -k</b> a le même effet, restreint à  cette invocation de <b>fink</b>.
           </p>
         </li>
       </ul>
@@ -857,7 +860,8 @@ Voici quelques-unes des options de la commande <tt style="white-space: nowrap;">
 -h,--help
 	  Affiche les options disponibles.
 -t,--tab
-	  Affiche la liste en séparant les divers éléments d'une ligne par une tabulation, utile en cas d'utilisation à l'intérieur d'un script.
+	  Affiche la liste en séparant les divers éléments d'une ligne par une tabulation,
+	  utile en cas d'utilisation à l'intérieur d'un script.
 -i,--installed
 	  N'affiche que les paquets installés.
 -o,--outdated
@@ -867,9 +871,11 @@ Voici quelques-unes des options de la commande <tt style="white-space: nowrap;">
 -n,--notinstalled
 	  Affiche les paquets qui ne sont pas installés.
 -s=expr,--section=expr
-	  Affiche les paquets dans les sections correspondant à l'expression régulière fournie.
+	  Affiche les paquets dans les sections correspondant à l'expression régulière
+	  fournie.
 -w=xyz,--width=xyz
-	  Fixe la largeur de l'affichage. xyz est soit une valeur numérique, soit auto. auto correspond à la largeur du terminal. 
+	  Fixe la largeur de l'affichage. xyz est soit une valeur numérique, soit auto. 
+	  auto correspond à la largeur du terminal. 
 	  La valeur par défaut est auto.
 </pre>
       <p>
@@ -892,8 +898,10 @@ Dans le dernier exemple, les guillemets sont nécessaires pour empêcher le shel
 Cette commande est presque identique à la commande <tt style="white-space: nowrap;">fink list</tt>. La différence la plus notable est que <tt style="white-space: nowrap;">fink apropos</tt> recherche aussi dans les fichiers de descriptions de paquets pour trouver les paquets. La seconde différence est que la chaîne de recherche n'est pas optionnelle, elle doit être fournie.
 </p>
       <pre>
-fink apropos irc          - affiche tous les paquets où 'irc' apparaît soit dans le nom, soit dans la description
-fink apropos -s=kde irc   - identique au précèdent, mais restreint aux paquets de la section kde
+fink apropos irc          - affiche tous les paquets où 'irc' apparaît soit dans le nom, 
+                            soit dans la description
+fink apropos -s=kde irc   - identique au précèdent, mais restreint aux paquets de la 
+                            section kde
 </pre>
     
     <h3><a name="usage.describe">6.7 describe - description</a></h3>
@@ -977,9 +985,16 @@ Cela vous permet de changer les sites miroirs et les configurations proxy, entre
    Cela peut libérer une grande portion d'espace disque.
 </p>
     
+        <h3><a name="usage.dumpinfo">6.21 dumpinfo - analyse des fichiers info</a></h3>
+      
+      <p>
+	Affiche l'analyse syntaxique des différentes parties d'un fichier .info d'un paquet.
+      </p>
+    
+
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.fr.xml,v 1.6 2004/04/12 02:48:49 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.fr.xml,v 1.7 2004/04/14 02:31:00 michga Exp $</i></p></body></html>
