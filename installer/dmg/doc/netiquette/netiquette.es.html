@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Como mandar mensajes a las Listas de Correo de Fink</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="netiquette.en.html">English</a> | 
+Espa&ntilde;ol | 
+<a href="netiquette.fr.html">Fran&ccedil;ais</a> | 
+<a href="netiquette.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
+<a href="netiquette.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">Como mandar mensajes a las Listas de Correo de Fink</h1>
+    <p><b>Este es un documento en construcción.</b></p>
+    <p>Este documento pretende ser una guía para los nuevos miembros de las Listas de 
+    Correo de Fink. La idea principal es indicar a los usuarios como mandar mensajes efectivamente, con el fin de solucionar efectivamente cualquier problema. </p>
+    <p>Usted puede haber sido mandado a esta página en respuesta a algún mensaje. Por favor, no se ofenda. Lo más posible es que es necesario que provee más información con el objeto de aclarar la causa de su problema, y que dicha información se encuentre listada aquí.</p>
+  <h2>Contents</h2><ul><li><a href="#before-post"><b>1 ¿Qué hacer antes de "postear"?</b></a><ul><li><a href="#before-post.research">1.1 Investige su pregunta. </a></li></ul></li><li><a href="#first-post"><b>2 Primer "Post"</b></a><ul><li><a href="#first-post.system">2.1 ¿Qué has instalado?</a></li><li><a href="#first-post.problem-description">2.2 ¿Qué es lo que esta mal?</a></li><li><a href="#first-post.remedies">2.3 ¿Qué has intentado?</a></li><li><a href="#first-post.future-plans">2.4 ¿Qué intentarás ahora?</a></li></ul></li><li><a href="#reply"><b>3 Respondiendo a los "posts"</b></a><ul><li><a href="#reply.reply-to-list">3.1 Asegurate de responder a la Lista.</a></li></ul></li><li><a href="#unsubscribe"><b>4 ¿Cómo desuscribirse de las Listas?</b></a><ul><li><a href="#unsubscribe.unsubscribing">4.1 ¿Cómo me desuscribo?</a></li></ul></li></ul><h2><a name="before-post">1 ¿Qué hacer antes de "postear"?</a></h2>
+    
+    
+    <h3><a name="before-post.research">1.1 Investige su pregunta. </a></h3>
+      
+      <p>Siempre es importante hacer algo de investigación antes de postear, dado que es posible que ya se haya dado una respuesta a su pregunta. Algunos ejemplos de los lugares donde buscar son:</p>
+      <ul>
+        <li>la documentación en línea</li>
+        <li>los archivos de la lista de correo</li>
+        <li>Google</li>
+      </ul>
+    
+  <h2><a name="first-post">2 Primer "Post"</a></h2>
+    
+    
+    <h3><a name="first-post.system">2.1 ¿Qué has instalado?</a></h3>
+      
+      <p>Si has estado teniendo problemas con un paquete instalado, deberás proveer la siguiente información acerca de tu sistema:</p>
+      <ul>
+        <li>Tu versión de OS.</li>
+        <li>La versión de Fink que estás usando.  Un tip útil es ejecutar el comando <pre>fink --version</pre>en una ventana de terminal y adicionar el resultado a tu información en el "post".</li>
+        <li>También deberás especificar si estas instalando a partir de binarios, e.g. usando <tt style="white-space: nowrap;">apt-get</tt>, o de la fuenta, e.g. usando <tt style="white-space: nowrap;">fink install</tt>.<p>En el segundo caso, favor de indicar la versión de las Developer Tools que estas usando.</p></li>
+        <li><p>Si estas instalando un paquete que requiere de X11, deberás indicar si estas usando:  Apple's X11 o XFree86.  En el segundo caso, especifica la versión.   </p><p>Si tienes dudas, provee toda la informacion arriba mencionada.</p></li>
+      </ul>
+    
+    <h3><a name="first-post.problem-description">2.2 ¿Qué es lo que esta mal?</a></h3>
+      
+      <ul>
+        <li><b>Especifica el nombre y la vbersión del paquete que esta causando 
+        problemas.</b>  <p>Este dato debera estar en la línes del tema de tu mensaje.
+        </p><p>Esto significa que si estas teniendo problemas con <tt style="white-space: nowrap;">foo-3.141-6
+        </tt>, no solo reportes un problema con <tt style="white-space: nowrap;">foo</tt>.</p><p>En particular,
+        si estás instalando un paquete (e.g. <tt style="white-space: nowrap;">baz-2.18-1</tt>) que depende de 
+        otros paquetes, (<tt style="white-space: nowrap;">foo-3.141-6</tt>, <tt style="white-space: nowrap;">bar-16.0-9</tt>, ...) , y 
+        estás teniendo problemas con <tt style="white-space: nowrap;">foo</tt>, deberás reportar un problema con 
+        <tt style="white-space: nowrap;">foo-3.141-6</tt>, no con <tt style="white-space: nowrap;">baz-2.18-1</tt>.</p></li>
+        <li><b>Describe el problema.</b>  
+        <p>Esto significa que deberás "postear" una muestra del mensaje de error que 
+        estes recibiendo.</p><ol>
+            <li>En el caso de problemas con la instalación de binarios, comienza
+            donde esta siendo desempaquetado en paquete problematico:
+            <pre>...
+Selecting previously deselected package foo
+error unpacking foo
+...</pre>y continua hasta el final.<p></p></li>
+            <li>Hay pocas posibilidades de problemas con la instalacion desde la fuente:
+            <ol>
+                <li>Si el error es durante la configuración inicial, el error ocurrirá 
+                desde el principio. "Postea" desde el último grupo de pruebas que se 
+                ejecutaron justo antes del mensaje de error hasta después de dicho 
+                mensaje:<pre>....
+Checking for bar-config...no
+Error:  bar-config not found
+....</pre><p>Si crees que el dato puede ayudar, entonces puedes "postear" la sección relevante del log del archivo de configuración, e.g. <tt style="white-space: nowrap;">/sw/src/foo-3.141-6/foo-3.141/config.log</tt>.  <b>Por favor, no pongas TODO el archivo, podría se bastante grande.</b></p></li>
+                <li>O, el error puede aparecer hasta que se inicía la construcción del
+                paquete. En este caso, "postea" la última línea que el compilador trato 
+                de ejecutar hasta el mensaje de error:<pre>...
+gcc &lt;flags, files etc.&gt;
+&lt;error messages&gt;
+...</pre></li>
+                <li>Sí lo que obtienes es el temido error de <tt style="white-space: nowrap;">execution of mv failed</tt> lo que habrás de hacer es buscar en el output del build un error previó,
+                 así que mejor buscaló antes de hacer tu "post".</li>
+              </ol></li>
+          </ol>    </li>
+      </ul>
+    
+    <h3><a name="first-post.remedies">2.3 ¿Qué has intentado?</a></h3>
+      
+      <p>Es una buena idea mencionar que cosas has intentado para corregir la 
+      situación, e.g.</p>
+      <ul>
+        <li>Instructiones en el FAQ u otra documentación</li>
+        <li>La remoción de los paquetes que parecen causar conflicto</li>
+        <li>Reconstrucciones/reinstalaciones</li>
+        <li>La actualización de las descripciones de los paquetes</li>
+        <li>etc.</li>
+      </ul>
+      <p>De esta manera, nadie empezará a sugerir cosas que ya intentaste.</p>
+    
+    <h3><a name="first-post.future-plans">2.4 ¿Qué intentarás ahora?</a></h3>
+      
+      <p>Algunas cosas caen en esta categoría:</p>
+      <ul>
+        <li>"Postea" lo que planeas hacer en caso de no obtener respuesta inmediata.</li>
+        <li>Preguntar acerca de lo apropiado del curso de acción elegido.</li>
+      </ul>
+    
+  <h2><a name="reply">3 Respondiendo a los "posts"</a></h2>
+    
+    
+    
+      <p>Este capítulo cubre como responder a los "posts".</p>
+    
+    <h3><a name="reply.reply-to-list">3.1 Asegurate de responder a la Lista.</a></h3>
+      
+      <p>A diferencia de otras listas a las que estes suscrito, las Listas del Fink
+      están ajustadas para que si respondes a un mensaje, la respuesta llega a quien puso el mensaje, pero <b>no</b> a la lista.  Por favor, asegurate de responder a la lista, así:  </p>
+      <ul>
+        <li>Más gente verá tu problema.</li>
+        <li>No monopolizaras el tiempo de nadie. Recuerda que la gente que responde a las listas son voluntarios.</li>
+        <li>Otras pueden beneficiarse. El tener un set completo de intercambio de correo a la vista del público significa que este set irá al archivo de la lista de correo y finalmente a la documentación.</li>
+      </ul>
+      <p>Frecuentemente se usa el comando <q>Reply to All</q> para lograr ésto:</p>
+      <ul>
+        <li>Es igual de facil que ejecutar "Reply".</li>
+        <li>Aunque esto manda el mensaje tanto a lista como al autor de mensaje previo, esta opción es preferida dado que en ocasiones la lista se retrasa, e.g. al filtrar correos durante las epidemias, pero el mensaje le llegará al destinatario pronto.</li>
+      </ul>
+      <p>Claro que si haces esto, tal vez quieras eliminar algunos destinatarios extra 
+      (por ejemplo, de post cruzados, u otras personas que ya hayan respondido).</p>
+    
+  <h2><a name="unsubscribe">4 ¿Cómo desuscribirse de las Listas?</a></h2>
+    
+    
+    <h3><a name="unsubscribe.unsubscribing">4.1 ¿Cómo me desuscribo?</a></h3>
+      
+      <p>Para desuscribirse, <b>no</b> mande un mensaje a la lista.</p>
+      <ol>
+        <li>Vaya a la página de las<a href="http://fink.sourceforge.net/lists/index.php">Listas de Correo</a>.  <p>Nota:  no use el Internet Explorer del MacOS X.</p></li>
+        <li>Seleccione el vínculo de la lista de la que desea desuscribirse.</li>
+        <li>Vaya al pie de la página donde dice::  <q>Para cambiar su suscripción (ajustar opciones como resumen y modos de entrega, obtener un recordatorio de tu password o desuscribirse), ingrese su dirección de correo suscrito:</q>, e ingrese la dirección de correo electrónico donde esta recibiendo el correo de Fink, entonces dele click al botón de <q>Edit Options</q> .   </li>
+        <li>En la página que se abre a continuación, hay un campo en la parte superior 
+        izquierda donde se puede desuscribir.</li>
+      </ol>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: netiquette.es.xml,v 1.1 2004/09/22 22:36:21 michga Exp $</i></p></body></html>
