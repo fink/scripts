@@ -230,7 +230,7 @@ signe pourcentage (%) (ce signe n'est pas interprété en fonction de ce qui le 
 fonction de pseudo-hachage retournant le sous-type du <b>type</b> donné. Voir la documentation sur le champ <tt style="white-space: nowrap;">Type</tt> plus bas.
 La forme _raw correspond à la chaîne précise du sous-type, tandis que la forme _pkg correspond à la même chaîne dont tous les points auraient été enlevés (suivant les conventions de nommage des paquets - language-version - de Fink et pour d'autres usages réservés aux experts). (Introduit dans une version CVS de Fink ultérieure à la version 0.19.2).
 </p>
-</td></tr><tr valign="top"><td>%ni, %Ni</td><td>
+</td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>
 la partie <b>i</b>nvariante du <b>n</b>om  du paquet. Identiques à %n et %N, à l'exception près que tous les %type_pkg[] et %type_raw[] sont occultés.
 (Introduit dans une version CVS de Fink ultérieure à la version 0.19.2). Vous devez utiliser %{ni} et %{Ni} pour éviter de possibles confusions avec les raccourcis %n et %N.
@@ -692,7 +692,7 @@ Aucun autre répertoire que ceux mentionnés ci-dessus ne doit être créé dans
 <p>
 Nom du paquet. Peut contenir des minuscules, des nombres ou les caractères spéciaux suivants : '.', '+' et '-'. Pas de trait de soulignement ('_'), ni de majuscules. Champ obligatoire.
 </p>
-<p>Seuls les raccourcis %N, %Ni, %type_raw[] et %type_pkg[] sont applicables à ce champ.</p>
+<p>Seuls les raccourcis %N, %{Ni}, %type_raw[] et %type_pkg[] sont applicables à ce champ.</p>
 <p>
 Selon les règles de Fink, un paquet donné doit toujours être compilé avec les mêmes options activées. Si un paquet peut avoir plusieurs variantes (voir la documentation sur le champ <tt style="white-space: nowrap;">Type</tt>), vous devez encoder les informations concernant la variante dans le champ <tt style="white-space: nowrap;">Package</tt> (voir la documentation sur le raccourci  %type_pkg[]). De cette façon, chaque variante possédera un nom unique. Le nom du paquet indique quelles variantes sont incluses. Notez que l'usage des raccourcis %type_pkg[] et %type_raw[] dans le nom du paquet est récent et grandement incompatible avec les anciennes versions de fink ; les descriptions de ces paquets doivent être insérés dans un champ <tt style="white-space: nowrap;">InfoN</tt> avec N&gt;=2.
 </p>
@@ -861,7 +861,7 @@ Primary: ftp://ftp.barbarorg/pub/
 &lt;&lt;</pre>
 </td></tr><tr valign="top"><td>Source</td><td>
 <p>
-URL de l'archive tar du source. Ce doit être une URL HTTP ou FTP, mais Fink ne fait pas de vérification  - il se contente de passer l'URL à wget. Ce champ gère un type spécial d'URL pour les miroirs : <tt style="white-space: nowrap;">miroir:&lt;nom-miroir&gt;:&lt;chemin-relatif&gt;</tt>. Ainsi, la définition du miroir <b>nom-miroir</b> est récupérée dans le fichier de configuration de Fink, la partie <b>chemin-relatif</b> y est ajoutée, et  c'est l'ensemble qui est utilisé comme réelle URL. Chaque <b>nom-miroir</b> reconnu est stocké dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt>, qui fait partie du paquet fink ou du packet fink-mirrors. Par ailleurs, l'utilisation de  <tt style="white-space: nowrap;">custom</tt> comme <b>nom-miroir</b> oblige Fink à utiliser le champ <tt style="white-space: nowrap;">CustomMirror</tt>. L'interprétation des raccourcis a lieu avant utilisation de l'URL. N'oubliez pas que %n correspond à toutes les variantes du champ  %type_, il est donc conseillé d'utiliser ici %ni (avec, éventuellement, des spécifications de %type_).
+URL de l'archive tar du source. Ce doit être une URL HTTP ou FTP, mais Fink ne fait pas de vérification  - il se contente de passer l'URL à wget. Ce champ gère un type spécial d'URL pour les miroirs : <tt style="white-space: nowrap;">miroir:&lt;nom-miroir&gt;:&lt;chemin-relatif&gt;</tt>. Ainsi, la définition du miroir <b>nom-miroir</b> est récupérée dans le fichier de configuration de Fink, la partie <b>chemin-relatif</b> y est ajoutée, et  c'est l'ensemble qui est utilisé comme réelle URL. Chaque <b>nom-miroir</b> reconnu est stocké dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt>, qui fait partie du paquet fink ou du packet fink-mirrors. Par ailleurs, l'utilisation de  <tt style="white-space: nowrap;">custom</tt> comme <b>nom-miroir</b> oblige Fink à utiliser le champ <tt style="white-space: nowrap;">CustomMirror</tt>. L'interprétation des raccourcis a lieu avant utilisation de l'URL. N'oubliez pas que %n correspond à toutes les variantes du champ  %type_, il est donc conseillé d'utiliser ici %{ni} (avec, éventuellement, des spécifications de %type_).
 </p>
 <p>
 À partir de fink 0.18.0, <tt style="white-space: nowrap;">Source: none</tt> indique qu'il n'y a pas de source à récupérer. Voir la description du champ <tt style="white-space: nowrap;">Type</tt> pour de plus amples informations. La valeur <tt style="white-space: nowrap;">gnu</tt> est un raccourci pour <tt style="white-space: nowrap;">mirror:gnu:%n/%n-%v.tar.gz</tt> ; de même, <tt style="white-space: nowrap;">gnome</tt> est un raccourci pour <tt style="white-space: nowrap;">mirror:gnome:stable/sources/%n/%n-%v.tar.gz</tt>. La valeur par défaut est <tt style="white-space: nowrap;">%n-%v.tar.gz</tt> (correspond à un téléchargement ordinaire).
@@ -971,7 +971,7 @@ La version modifiée prend en compte DESTDIR et garantit que les catalogues de m
 Le nom d'une rustine à appliquer avec <tt style="white-space: nowrap;">patch -p1 &lt;<b>nom-rustine</b></tt>. Ne donnez que le nom du fichier ; le chemin est ajouté automatiquement devant le nom du fichier. L'interprétation des raccourcis y est effectuée, si bien qu'on trouve, en général : <tt style="white-space: nowrap;">%f.patch</tt> ou <tt style="white-space: nowrap;">%n.patch</tt>. La rustine est appliquée avant que le script PatchScript soit exécuté (s'il existe).
 </p>
 <p>
-N'oubliez pas que %n inclut implicitement toutes les variantes %type_. Le cas échéant, utilisez %ni (éventuellement avec des variantes spécifiques %type_). Il est plus facile de gérer une seule rustine et de faire des changements spécifiques à certaines variantes dans le script <tt style="white-space: nowrap;">PatchScript</tt> que de gérer une rustine par variante.
+N'oubliez pas que %n inclut implicitement toutes les variantes %type_. Le cas échéant, utilisez %{ni} (éventuellement avec des variantes spécifiques %type_). Il est plus facile de gérer une seule rustine et de faire des changements spécifiques à certaines variantes dans le script <tt style="white-space: nowrap;">PatchScript</tt> que de gérer une rustine par variante.
 </p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
 <p>
@@ -1302,4 +1302,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.32 2004/06/19 15:03:58 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.fr.xml,v 1.34 2004/07/02 19:15:40 michga Exp $</i></p></body></html>

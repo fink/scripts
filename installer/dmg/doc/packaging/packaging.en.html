@@ -320,7 +320,7 @@ period characters removed (as per Fink's language-version package naming
 convention and for other clever uses). (Introduced in a post-0.19.2
 CVS version of fink)
 </p>
-</td></tr><tr valign="top"><td>%ni, %Ni</td><td>
+</td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>
 the package <b>n</b>ame <b>i</b>nvariant portion. These are like
 %n and %N, except all %type_pkg[] and %type_raw[] are blanked out.
@@ -1116,7 +1116,7 @@ May contain lowercase letters, numbers and the special characters '.',
 No underscores ('_'), no capital letters.
 Required field.
 </p>
-<p>Percent expansion is applied to this field for %N, %Ni, %type_raw[],
+<p>Percent expansion is applied to this field for %N, %{Ni}, %type_raw[],
 and %type_pkg[] only.</p>
 <p>
 As per Fink packaging policy, a given package must always
@@ -1466,7 +1466,7 @@ package. Alternatively, using <tt style="white-space: nowrap;">custom</tt> as th
 <b>mirror-name</b> will cause Fink to use the <tt style="white-space: nowrap;">CustomMirror</tt>
 field.
 Before the URL is used, percent expansion takes place. Remember that
-%n includes all %type_ variant data, so you may want to use %ni here
+%n includes all %type_ variant data, so you may want to use %{ni} here
 (perhaps with some specific %type_ expansions).
 </p>
 <p>
@@ -1679,7 +1679,7 @@ before the PatchScript is run (if any).
 </p>
 <p>
 Remember that %n includes all %type_ variant data, so you may want to
-use %ni here (perhaps with some specific %type_ expansions). It's
+use %{ni{ here (perhaps with some specific %type_ expansions). It's
 easier to maintain a single patchfile and then make variant-specific
 changes in <tt style="white-space: nowrap;">PatchScript</tt> than to have a separate patchfile
 for each variant.
@@ -2237,4 +2237,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.33 2004/06/23 22:22:52 dmrrsn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.34 2004/07/02 19:13:11 michga Exp $</i></p></body></html>
