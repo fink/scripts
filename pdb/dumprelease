@@ -6,7 +6,7 @@ tag=release_`echo $release | sed 's/\./_/g'`
 
 echo "Updating from CVS..."
 if [ ! -d fink ]; then
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink packages
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists/10.2
 fi
 cd fink
 cvs -z3 -q update -r $tag
