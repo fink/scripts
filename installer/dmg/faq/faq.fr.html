@@ -343,7 +343,18 @@ fink selfupdate-cvs</pre></div>
     </a>
     <a name="usage-fink.cant-upgrade">
       <div class="question"><p><b>Q5.22: Impossible de mettre à jour Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> Suivez les <a href="http://fink.sourceforge.net/download/fix-upgrade.php">instructions spéciales</a> dans ce cas.</p></div>
+      <div class="answer"><p><b>A:</b> Suivez les <a href="http://fink.sourceforge.net/download/fix-upgrade.php">instructions spéciales</a> dans ce cas.</p><p>Quand ni l'exécution de la commande <tt style="white-space: nowrap;">fink selfupdate</tt>, ni celle des commandes <tt style="white-space: nowrap;">sudo apt-get update ; sudo apt-get dist-upgrade</tt> n'aboutissent à la mise à jour effective de Fink, vous devez télécharger une nouvelle version du paquet <tt style="white-space: nowrap;">fink</tt> de la manière suivante :</p><ul>
+          <li><b>10.3.x:</b> (distribution 0.7.1)
+		<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.7.1-updates/main/binary-darwin-powerpc/base/fink_0.22.4-1_darwin-powerpc.deb
+sudo dpkg -i fink_0.22.4-1_darwin-powerpc.deb
+rm fink_0.22.4-1_darwin-powerpc.deb
+fink selfupdate</pre></li>
+          <li><b>10.2.x:</b> (distribution 0.6.3)
+		<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.6.3/release/main/binary-darwin-powerpc/base/fink_0.18.3-1_darwin-powerpc.deb
+sudo dpkg -i fink_0.18.3-1_darwin-powerpc.deb
+rm fink_0.18.3-1_darwin-powerpc.deb
+fink selfupdate</pre></li>
+        </ul></div>
     </a>
     <a name="usage-fink.spaces-in-directory">
       <div class="question"><p><b>Q5.23: Est-il possible d'installer Fink sur un volume ou dans un répertoire contenant un espace dans le nom?</b></p></div>
@@ -833,4 +844,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.38 2004/10/17 19:47:54 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.39 2004/11/29 06:15:21 michga Exp $</i></p></body></html>
