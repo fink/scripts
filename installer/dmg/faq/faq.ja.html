@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - The Fink F.A.Q.</title></head><body><h1 style="text-align: center;">The Fink F.A.Q.</h1>
 <p>このページは Fink の FAQ です。
-他の FAQ と同様に、質問は実際に発生したものと予想して作られたものがあります。
-質疑応答の形をとった仮ドキュメントといえるでしょう。</p>
+質問は、他の FAQ と同様に実際に質問されたものと、あらかじめ予想して作られたものがあります。
+質問と回答の形をとった仮のドキュメントとなっています。</p>
 <p>FAQは節毎にページがわかれています。
 下記の目次にすべての質問があります。
 それぞれリンクされていますので、辿っていってください。</p>
@@ -440,7 +440,8 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 これは直すことができます。
 エラーメッセージ中のパッケージの .deb ファイルがシステム上にあれば、その状態を確認します:
 </p><pre>dpkg --contents <b>full-path-to-debfile</b>
-</pre><p>例えば</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>ディレクトリやファイルの一覧が表示されたら、 .deb ファイルは大丈夫です。
+</pre><p>例えば</p><pre>dpkg --contents
+        /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>ディレクトリやファイルの一覧が表示されたら、 .deb ファイルは大丈夫です。
 もし出力されたのがファイルやディレクトリ以外であるか、 .deb ファイルがなくても、このエラーはビルドに影響しないので、次に進んでください。
 </p><p>バイナリインストールを試みている場合、あるいはインストールしたバージョンと現在のバイナリバージョンが一致する場合
 (例えば、 <a href="http://fink.sourceforge.net/pdb/index.php">パッケージデータベース</a> で調べたなら)、
@@ -454,10 +455,12 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 </p><pre>dpkg -c <b>full-path-to-debfile</b>
   | awk '{if ($6 == "./"){ print "/."; } else if (substr($6, length($6), 1) == "/")
     {print substr($6, 2, length($6) - 2); } else { print substr($6, 2, length($6) - 1);}}'
-  &gt; /sw/var/lib/dpkg/info/<b>packagename</b>.list</pre><p>例えば、</p><pre>dpkg -c /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb
-  | awk '{if ($6 == "./") { print "/."; } else if (substr($6, length($6), 1) == "/")
-   {print substr($6, 2, length($6) - 2); } else { print substr($6, 2, length($6) - 1);}}'
-  &gt; /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p>このコマンドは、 .deb ファイルの中身を解凍して、ファイル名以外を除いて .list ファイルに書き込んでいます。</p></div>
+  &gt; /sw/var/lib/dpkg/info/<b>packagename</b>.list</pre><p>例えば、</p><pre>dpkg -c
+        /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb | awk '{if
+        ($6 == "./") { print "/."; } else if (substr($6, length($6), 1) ==
+        "/") {print substr($6, 2, length($6) - 2); } else { print substr($6,
+        2, length($6) - 1);}}' &gt;
+        /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p>このコマンドは、 .deb ファイルの中身を解凍して、ファイル名以外を除いて .list ファイルに書き込んでいます。</p></div>
 </a>
 <a name="usage-fink.error-nineteen">
 <div class="question"><p><b>Q5.19: Fink バイナリインストーラを使うと、ウィンドウ中に大きく "19" と出て、何もインストールできません。</b></p></div>
@@ -477,14 +480,9 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 </a>
 <a name="usage-fink.perl-undefined-symbol">
 <div class="question"><p><b>Q5.21: なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</b></p></div>
-<div class="answer"><p><b>A:</b> このようなエラー:</p><pre>dyld: perl Undefined symbols:
-_Perl_safefree
-_Perl_safemalloc
-_Perl_saferealloc
-_Perl_sv_2pv
-_perl_call_sv
-_perl_eval_sv
-_perl_get_sv</pre><p>がでる場合、 Perl を アップデートしていて、 <tt style="white-space: nowrap;">storable-pm</tt> をアップグレードする必要があります。
+<div class="answer"><p><b>A:</b> このようなエラー:</p><pre>dyld: perl Undefined symbols: _Perl_safefree
+        _Perl_safemalloc _Perl_saferealloc _Perl_sv_2pv _perl_call_sv
+        _perl_eval_sv _perl_get_sv</pre><p>がでる場合、 Perl を アップデートしていて、 <tt style="white-space: nowrap;">storable-pm</tt> をアップグレードする必要があります。
 Fink をアップグレードしてください。
 インストール時に、 <tt style="white-space: nowrap;">perl-core</tt> と <tt style="white-space: nowrap;">system-perl</tt> のどちらをインストールするか聞かれるので、後者を選択してください。
 さらに、 <tt style="white-space: nowrap;">storable-pm</tt> もアップデートしてください。</p><p>OS 10.1.x では、次のコマンドを実行します (Developer Tools が必要です):</p><pre>sudo mv /sw/lib/perl5/darwin/Storable.pm /tmp
@@ -1006,27 +1004,75 @@ Disk 3 の X11.pkg から X11 をインストールできます。</p></div>
 </a>
 <a name="usage-packages.apple-x11-wants-xfree86">
 <div class="question"><p><b>Q9.11: Panther で Apple X11 をインストールしたけれども、 Fink が xfree86 をインストールしろといい続けます。</b></p></div>
-<div class="answer"><p><b>A:</b> X11SDK を(再)インストールする必要があります。
-これはXcode CD に入っていて、デフォルトではインストール<b>されません</b>。</p><p>Xcode をインストールしたとしても、 X11SDK はデフォルトではインストールされません。
-Xcode のカスタムインストールをするか、 <tt style="white-space: nowrap;">Packages</tt> フォルダ内の <tt style="white-space: nowrap;">X11SDK</tt> pkg をダブルクリックします。</p><p>インストールは、 <tt style="white-space: nowrap;">fink-virtual-pkgs</tt> を実行することで確認できます。
-<tt style="white-space: nowrap;">Package: system-xfree86</tt> というセクションがあり、 <tt style="white-space: nowrap;">provides:</tt> の行に <tt style="white-space: nowrap;">x11</tt> がああることを確認できれば大丈夫です。</p><p>もしインストールが適切ではないようでしたら、最も安全な方法は、古い xfree86 や system-xfree86 を削除し、 Apple X11 と X11SDK を再インストールします。
-この時出る最初の行のエラーメッセージは無視できます:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
-xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg \
-/Library/Receipts/X11User.pkg; fink selfupdate; fink index</pre><p>この後、 Panther の3枚目から X11 を、Xcode CD から X11SDK を再インストールします。</p><p>注記:  <tt style="white-space: nowrap;">fink-0.17.0</tt> およびそれ以降では 、<tt style="white-space: nowrap;">system-xfree86</tt> のバイナリインストールにX11SDK を必要としなくなりました。</p></div>
+<div class="answer"><p><b>A:</b> 二つの可能性があります。</p><ul>
+		<li><b>バイナリからのインストール:</b> 
+		お使いの <tt style="white-space: nowrap;">fink</tt> パッケージのバージョンが 0.17.0 より前のものであれば
+		(Fink-0.6.2 インストーラに含まれていたものも)
+		fink を更新することで直ります。
+		即ち <pre>sudo apt-get update
+sudo apt-get install fink</pre></li>
+		<li><b>ソースからのインストール: </b>
+		まず <tt style="white-space: nowrap;">fink</tt> を更新します。
+		<pre>fink selfupdate</pre>
+		次に、 X11SDK を (再) インストールします。
+		これは、 Xcode CD に入っていますが、デフォルトではインストール<b>されません</b>。
+		Xcode をインストールしても、 X11SDK はデフォルトではインストール<b>されません</b>。
+		Xcode のインストール時にカスタムを選択するか、<tt style="white-space: nowrap;">Packages</tt> フォルダ内の
+		<tt style="white-space: nowrap;">X11SDK</tt> pkg をダブルクリックします。</li>
+		</ul><p>どちらの場合でも、現在のインストールを確認するには、</p><pre>fink-virtual-pkgs</pre><p>とし、以下の行を探します。
+		<tt style="white-space: nowrap;">Package: system-xfree86 </tt>と <tt style="white-space: nowrap;">Package: system-xfree86-shlibs</tt> 
+		(さらに、 SDK をインストールした場合は <tt style="white-space: nowrap;">Package: system-xfree86-dev</tt>) 
+		次に、 <tt style="white-space: nowrap;">Provides:</tt> 行に
+		<tt style="white-space: nowrap;">x11 </tt>と <tt style="white-space: nowrap;">x11-shlibs</tt> (および
+		<tt style="white-space: nowrap;">x11-dev</tt>) がそれぞれ存在することを確認します。</p><p>もし存在しないものがある場合、安全な直し方は、一旦全ての xfree86 と system-xfree86
+		を削除して、 Apple の X11 (と、ソースからの場合 X11SDK) を再インストールすることです。
+		この際、一行目に警告が出ることがありますが、無視して下さい:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 
+\ xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg 
+\ /Library/Receipts/X11User.pkg; fink selfupdate; fink index</pre><p>次に、 Panther CD から X11 (と Xcode CD から X11SDK)
+		を再インストールします。</p><p>注記: <tt style="white-space: nowrap;">system-xfree86</tt> は、 <tt style="white-space: nowrap;">fink-0.17.0</tt> 以降では
+		バイナリインストールに X11SDK を必要としなくなりました。</p><p>もし問題が解決されず、バージョンが
+		<tt style="white-space: nowrap;">fink-0.19.0</tt> 以降であれば、以下を実行します</p><pre>fink-virtual-pkgs --debug</pre><p>これにより何か足りないものが判明します。</p><p>これより古いバージョンの  <tt style="white-space: nowrap;">fink</tt> を使っている場合、
+		Perl スクリプト (Martin Costabel 提供) をダウンロードして実行することで同じ情報が得られます。</p><ul>
+		<li>入手先: <a href="http://perso.wanadoo.fr/costabel/fink-x11-debug">http://perso.wanadoo.fr/costabel/fink-x11-debug</a></li>
+		<li>好きな場所に保存</li>
+		<li>実行: <pre>perl fink-x11-debug</pre></li>
+		</ul></div>
 </a>
 <a name="usage-packages.apple-x11-beta-wants-xfree86">
 <div class="question"><p><b>Q9.12: Apple の X11 と 10.2-gcc3.3 バージョンの Fink をインストールしたけれども、 Fink が xfree86 をインストールしろといい続けます。</b></p></div>
-<div class="answer"><p><b>A:</b> X11SDK を(再)インストールする必要があります。
-これは、 Apple X11 のベータ版をダウンロードした時に一緒にダウンロードしたはずです。
-</p><p>インストールは、 <tt style="white-space: nowrap;">fink-virtual-pkgs</tt> を実行することで確認できます。
-<tt style="white-space: nowrap;">Package: system-xfree86</tt> というセクションがあり、 <tt style="white-space: nowrap;">provides:</tt> の行に <tt style="white-space: nowrap;">x11</tt> がああることを確認できれば大丈夫です。</p><p>もしインストールが適切ではないようでしたら、最も安全な方法は、古い xfree86 や system-xfree86 を削除し、 Apple X11 と X11SDK を再インストールします。
-この時出る最初の行のエラーメッセージは無視できます:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
-xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg \
-/Library/Receipts/X11User.pkg; fink selfupdate; fink index</pre><p>この後、 X11 と X11SDK を再インストールします。</p><p>注記:  <tt style="white-space: nowrap;">system-xfree86</tt> のバイナリインストールは <tt style="white-space: nowrap;">fink-0.17.0</tt> およびそれ以降では X11SDK を必要としません。</p></div>
+<div class="answer"><p><b>A:</b> 二つの可能性があります。</p><ul>
+		<li><b>バイナリからのインストール:</b> 
+		お使いの <tt style="white-space: nowrap;">fink</tt> パッケージのバージョンが 0.17.0 より前のものであれば
+		(Fink-0.6.2 インストーラに含まれていたものも)
+		fink を更新することで直ります。
+		即ち <pre>sudo apt-get update
+sudo apt-get install fink</pre></li>
+		<li><b>ソースからのインストール: </b>
+		まず <tt style="white-space: nowrap;">fink</tt> を更新します。
+		<pre>fink selfupdate</pre>
+		次に、 X11SDK を (再) インストールします。
+		これは、ベータ版の Apple X11 をダウンロードした際に一緒にダウンロードしたものです。</li>
+		</ul><p>どちらの場合でも、現在のインストールを確認するには、</p><pre>fink-virtual-pkgs</pre><p>とし、以下の行を探します。
+		<tt style="white-space: nowrap;">Package: system-xfree86 </tt>と <tt style="white-space: nowrap;">Package: system-xfree86-shlibs</tt> 
+		(さらに、 SDK をインストールした場合は <tt style="white-space: nowrap;">Package: system-xfree86-dev</tt>) 
+		次に、 <tt style="white-space: nowrap;">Provides:</tt> 行に
+		<tt style="white-space: nowrap;">x11 </tt>と <tt style="white-space: nowrap;">x11-shlibs</tt> (および
+		<tt style="white-space: nowrap;">x11-dev</tt>) がそれぞれ存在することを確認します。</p><p>もし存在しないものがある場合、安全な直し方は、一旦全ての xfree86 と system-xfree86
+		を削除して、 Apple の X11 (と、ソースからの場合 X11SDK) を再インストールすることです。
+		この際、一行目に警告が出ることがありますが、無視して下さい:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 
+\ xfree86-base xfree86-base-shlibs; rm -rf /Library/Receipts/X11SDK.pkg 
+\ /Library/Receipts/X11User.pkg; fink selfupdate; fink index</pre><p>次に、 X11 (必要があれば X11SDK も) を再インストールします。</p><p>注記: <tt style="white-space: nowrap;">system-xfree86</tt> は、 <tt style="white-space: nowrap;">fink-0.17.0</tt> 以降では
+		バイナリインストールに X11SDK を必要としなくなりました。</p><p>もし問題が解決されず、バージョンが
+		<tt style="white-space: nowrap;">fink-0.19.0</tt> 以降であれば、以下を実行します</p><pre>fink-virtual-pkgs --debug</pre><p>これにより何か足りないものが判明します。</p><p>これより古いバージョンの  <tt style="white-space: nowrap;">fink</tt> を使っている場合、
+		Perl スクリプト (Martin Costabel 提供) をダウンロードして実行することで同じ情報が得られます。</p><ul>
+		<li>入手先: <a href="http://perso.wanadoo.fr/costabel/fink-x11-debug">http://perso.wanadoo.fr/costabel/fink-x11-debug</a></li>
+		<li>好きな場所に保存</li>
+		<li>実行: <pre>perl fink-x11-debug</pre></li>
+		</ul></div>
 </a>
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.9 2004/03/12 13:44:49 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.10 2004/03/15 23:58:46 babayoshihiko Exp $</i></p></body></html>

@@ -4,8 +4,7 @@
 <p>Voici la liste des questions fréquemment posées sur Fink. Comme la plupart des QFP, une partie correspond à des questions réelles, d'autres ont été élaborées spécialement pour ces QFP. Il s'agit en fait d'un document écrit dans le style question-réponse.</p>
 <p>Ces QFP comprennent plusieurs pages, une par chapitre. Le sommaire ci-dessous donne la liste de toutes les questions ainsi qu'un lien pour chacune d'elles.</p>
 <h2>Contents</h2><ul><li><a href="#general"><b>1 Questions générales</b></a><ul><li><a href="#general.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#general.naming">1.2 Que signifie Fink ?</a></li><li><a href="#general.bsd-ports">1.3 En quoi Fink se différencie-t-il du mécanisme de portage BSD (qui comprend OpenPackages et GNU-Darwin) ?</a></li><li><a href="#general.usr-local">1.4 Pourquoi Fink n'installe rien dans /usr/local?</a></li><li><a href="#general.why-sw">1.5 Pourquoi avoir choisi 
-/sw?</a></li></ul></li><li><a href="#relations"><b>2 Relations avec d'autres projets</b></a><ul><li><a href="#relations.upstream">2.1 Envoyez-vous aux mainteneurs situés en amont de vous les rustines que vous faites ?</a></li><li><a href="#relations.debian">2.2 Quelles sont vos relations avec le projet Debian ? Portez-vous Debian Linux sur Mac OS X ?</a></li><li><a href="#relations.apple">2.3 Quelles sont vos relations avec Apple</a></li><li><a href="#relations.openosx">2.4 Quelles sont vos relations avec OpenOSX.com ?</a></li><li><a href="#relations.forked">2.5 Quelles sont vos relations avec macosx.forked.net ?</a></li><li><a href="#relations.darwinports">2.6 Quelles sont vos relations avec Darwinports ?</a></li></ul></li><li><a href="#mirrors"><b>3 Miroirs de Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Qu'est-ce qu'un miroir Fink ?</a></li><li><a href="#mirrors.why">3.2 Pourquoi utiliser des miroirs rsync ?</a></li><li><a href="#mirrors.where">3.3 Où trouver de plus amples informations sur les miroirs Fink ?</a></li><li><a href="#mirrors.when-not">3.4 Impossible de se connecter au serveur rsync. Que faire ?</a></li><li><a href="#mirrors.otherinfogone">3.5 Après passage à la méthode rsync, tous les fichiers info des arborescences inutilisées ont disparu.</a></li><li><a href="#mirrors.howswitch">3.6 Comment passer d'une méthode à une autre à volonté ?</a></li><li><a href="#mirrors.status">3.7 Comment connaître l'état actuel des miroirs rsync ?</a></li><li><a href="#mirrors.Master">3.8 Qu'est-ce qu'un miroir Distfiles ?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Upgrading Fink (version-specific troubleshooting)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 I just upgraded to 0.16.0 and it tells me "Your version of the
-gcc 3.3 compiler is out of date." What do I do?</a></li></ul></li><li><a href="#usage-fink"><b>5 Installing, Using and Maintaining Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 How can I find out what packages
+/sw?</a></li></ul></li><li><a href="#relations"><b>2 Relations avec d'autres projets</b></a><ul><li><a href="#relations.upstream">2.1 Envoyez-vous aux mainteneurs situés en amont de vous les rustines que vous faites ?</a></li><li><a href="#relations.debian">2.2 Quelles sont vos relations avec le projet Debian ? Portez-vous Debian Linux sur Mac OS X ?</a></li><li><a href="#relations.apple">2.3 Quelles sont vos relations avec Apple</a></li><li><a href="#relations.openosx">2.4 Quelles sont vos relations avec OpenOSX.com ?</a></li><li><a href="#relations.forked">2.5 Quelles sont vos relations avec macosx.forked.net ?</a></li><li><a href="#relations.darwinports">2.6 Quelles sont vos relations avec Darwinports ?</a></li></ul></li><li><a href="#mirrors"><b>3 Miroirs de Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Qu'est-ce qu'un miroir Fink ?</a></li><li><a href="#mirrors.why">3.2 Pourquoi utiliser des miroirs rsync ?</a></li><li><a href="#mirrors.where">3.3 Où trouver de plus amples informations sur les miroirs Fink ?</a></li><li><a href="#mirrors.when-not">3.4 Impossible de se connecter au serveur rsync. Que faire ?</a></li><li><a href="#mirrors.otherinfogone">3.5 Après passage à la méthode rsync, tous les fichiers info des arborescences inutilisées ont disparu.</a></li><li><a href="#mirrors.howswitch">3.6 Comment passer d'une méthode à une autre à volonté ?</a></li><li><a href="#mirrors.status">3.7 Comment connaître l'état actuel des miroirs rsync ?</a></li><li><a href="#mirrors.Master">3.8 Qu'est-ce qu'un miroir Distfiles ?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Mise à jour de Fink (Résolution de problèmes spécifiques à une version donnée)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 Je viens de passer à la version 0.16.0 et fink me dit que ma version du compilateur gcc 3.3 est obsolète. Que faire ?</a></li></ul></li><li><a href="#usage-fink"><b>5 Installing, Using and Maintaining Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 How can I find out what packages
 Fink supports?</a></li><li><a href="#usage-fink.proxy">5.2 I'm behind a firewall. How do I
 configure Fink to use an HTTP proxy?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 How do I update available packages from CVS when I am behind a firewall?</a></li><li><a href="#usage-fink.moving">5.4 Can I move Fink to another
 location after installation?</a></li><li><a href="#usage-fink.moving-symlink">5.5 If I move Fink after
@@ -171,26 +170,15 @@ Lire le <a href="http://fink.sourceforge.net/pr/forked.php">communiqué officiel
     <div class="answer"><p><b>A:</b> Il est parfois difficile de trouver une version précise d'un source sur Internet. Les miroirs Distfiles stockent les paquets source nécessaires à fink pour construire ses paquets source. Ils font aussi office de miroir.</p></div>
 </a>
 
-<h2><a name="upgrade-fink">4 Upgrading Fink (version-specific troubleshooting)</a></h2>
-
-
-<a name="upgrade-fink.gcc-0.16.0">
-<div class="question"><p><b>Q4.1: I just upgraded to 0.16.0 and it tells me "Your version of the
-gcc 3.3 compiler is out of date." What do I do?</b></p></div>
-<div class="answer"><p><b>A:</b> As of the release of Panther, Fink has been updated to understand
-the newer gcc 3.3 compiler. In order to be able to support users
-on both 10.2 (Jaguar) and 10.3 (Panther), we are requiring all users
-to install the latest gcc 3.3 update (August 2003 Updater, and the
-Panther XCode tools, respectively). You will get this warning if
-you installed the earlier XCode beta updater for Mac OS X 10.2's
-December 2002 developer tools. If you're on 10.2, the command:
-</p><pre>gcc --version</pre><p>...should tell you what version you have. As of October 24th,
-2003, we require build 1493 or higher.</p><p>10.2 users can download the August 2003 Updater from <a href="http://developer.apple.com/">Apple Developer Connection</a>
-(free registration required).</p><p>10.3 users should upgrade to a Panther-compatible developer tools
-release (i.e. XCode). A CD with XCode should have been provided
-with your Panther media.</p></div>
-</a>
-<h2><a name="usage-fink">5 Installing, Using and Maintaining Fink</a></h2>
+<h2><a name="upgrade-fink">4 Mise à jour de Fink (Résolution de problèmes spécifiques à une version donnée)</a></h2>
+    
+    
+    <a name="upgrade-fink.gcc-0.16.0">
+      <div class="question"><p><b>Q4.1: Je viens de passer à la version 0.16.0 et fink me dit que ma version du compilateur gcc 3.3 est obsolète. Que faire ?</b></p></div>
+      <div class="answer"><p><b>A:</b> À partir de Panther, Fink a été mis à jour pour fonctionner avec le nouveau compilateur gcc 3.3. Pour pouvoir gérer à la fois 10.2 (Jaguar) et 10.3 (Panther), il faut que tous les utilisateurs installent la dernière mise à jour de gcc 3.3 (mise à jour d'août 2003 pour les utilisateurs de Jaguar, outils XCode de Panther pour les utilisateurs de Panther). Ce message d'alerte apparaîtra si vous avez installé la béta précédente de XCode correspondant aux Developer Tools de décembre 2002 pour Max OS X 10.2. Si vous utilisez 10.2, la commande :</p><pre>gcc --version</pre><p>vous dira quelle version est installée sur votre système. À partir du 24 octobre 2003, il faut avoir le build 1493 ou supérieur.</p><p>Les utilisateurs de 10.2 peuvent télécharger la mise à jour d'août 2003 sur <a href="http://developer.apple.com/">Apple Developer Connection</a>
+(enregistrement gratuit obligatoire).</p><p>Les utilisateurs de 10.3 doivent installer les outils de développement compatibles avec Panther (c'est-à-dire XCode). Vous devez trouver un CD contenant XCode parmi ceux reçus avec Panther.</p></div>
+    </a>
+  <h2><a name="usage-fink">5 Installing, Using and Maintaining Fink</a></h2>
 
 
 <a name="usage-fink.what-packages">
@@ -983,4 +971,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.1 2004/03/14 16:43:06 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.4 2004/03/17 00:35:31 michga Exp $</i></p></body></html>
