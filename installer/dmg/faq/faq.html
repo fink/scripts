@@ -759,7 +759,7 @@ unix_dl.c:466: error: for each function it appears in.)
 unix_dl.c:466: error: parse error before "info"
 unix_dl.c:467: error: `info' undeclared (first use in this function)
 make[1]: *** [unix_dl.lo] Error 1</pre><p>then most likely you have a header file, <tt style="white-space: nowrap;">/usr/local/include/dlfcn.h</tt>, that is incompatible with Panther.  Move it out of the way.</p><p>This usually is installed by Open Office, and you should replace this header file, as well as the library <tt style="white-space: nowrap;">/usr/local/lib/libdl.dylib</tt>, with symbolic links to Panther's builtin files</p><pre>sudo ln -s /usr/include/dlfcn.h /usr/local/include/dlfcn.h
-sudo ln -s /usr/lib/dlfcn.h /usr/local/lib/libdl.dylib</pre></div>
+sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
 </a>
 <h2><a name="comp-packages">6 Compile Problems - Specific Packages</a></h2>
 
@@ -1024,4 +1024,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.164 2004/01/28 14:12:29 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.165 2004/01/29 14:24:16 alexkhansen Exp $</i></p></body></html>
