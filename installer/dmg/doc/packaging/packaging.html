@@ -1848,11 +1848,23 @@ of the packages by using <tt style="white-space: nowrap;">DocFiles</tt> several 
 <h3><a name="reference.scripts">5.4 Scripts</a></h3>
 
 <p>The PatchScript, CompileScript and InstallScript fields allow you
-to specify shell commands to be executed. This is sort of like a shell
-script. However, the commands are executed via system(), one by one,
-so you can't use constructs that span multiple lines. It also means
-the <tt style="white-space: nowrap;">cd</tt> commands only affect commands that are on the same
-line. This may be fixed one day in the future.</p>
+to specify shell commands to be executed. Two forms are supported.
+</p><p>
+This field can be a simple list of commands. This is sort of like a
+shell script. However, the commands are executed via system(), one
+line at a time, so setting variables or changing the directory only
+affects commands on that same line. Starting in a CVS version of fink
+after 0.18.2, you can wrap long lines similar to normal shell scripts:
+a backslash (<tt style="white-space: nowrap;">\</tt>) at the end of a line indicates that the
+next line is a continuation.
+</p><p>
+Alternately, you can embed a complete script here, using the
+interpreter of your choice. As with any Unix script, the first line
+must begin with <tt style="white-space: nowrap;">#!</tt> followed by the full pathname of to
+the interpreter and any needed flags (e.g., <tt style="white-space: nowrap;">#!/bin/csh</tt>,
+<tt style="white-space: nowrap;">#!/bin/bash -ev</tt>, etc.). In this situation, the whole
+*Script field is dumped into a temporary file that is then executed.
+</p>
 
 
 <h3><a name="reference.patches">5.5 Patches</a></h3>
@@ -1903,4 +1915,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.66 2004/02/16 02:33:50 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.67 2004/02/16 09:09:51 dmacks Exp $</i></p></body></html>
