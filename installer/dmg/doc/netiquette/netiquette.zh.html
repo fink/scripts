@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - 如何在 Fink 邮件列表上张贴</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="netiquette.en.html">English</a> | 
+<a href="netiquette.fr.html">Fran&ccedil;ais</a> | 
+&#20013;&#25991; (&#31616;) (Simplified Chinese) | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">如何在 Fink 邮件列表上张贴</h1>
+    <p><b>本文档正在编写当中。</b></p>
+    <p>本文档是作为 Fink 邮件列表的新张贴者的一个使用规则。
+    目的是使得该列表的用户了解如何有效地进行发表，介绍问题的有效解决方法。</p>
+    <p>在本列表中某个信息的回应中，可以要你参考某个网页。
+    不要着急！
+    这很可能只是说明你需要提供更多的信息你澄清你问题的原因，你所需要提供的信息被列在这里。</p>
+  <h2>Contents</h2><ul><li><a href="#before-post"><b>1 在张贴前需要做些什么</b></a><ul><li><a href="#before-post.research">1.1 研究你的问题。</a></li></ul></li><li><a href="#first-post"><b>2 初始张贴</b></a><ul><li><a href="#first-post.system">2.1 你已经安装了什么？</a></li><li><a href="#first-post.problem-description">2.2 发生了什么问题？</a></li><li><a href="#first-post.remedies">2.3 你尝试过什么？</a></li><li><a href="#first-post.future-plans">2.4 下面你打算尝试什么？</a></li></ul></li><li><a href="#reply"><b>3 回应一个帖子</b></a><ul><li><a href="#reply.reply-to-list">3.1 确定是回应到邮件列表</a></li></ul></li><li><a href="#unsubscribe"><b>4 如何取消订阅？</b></a><ul><li><a href="#unsubscribe.unsubscribing">4.1 我怎么取消订阅？</a></li></ul></li></ul><h2><a name="before-post">1 在张贴前需要做些什么</a></h2>
+    
+    
+    <h3><a name="before-post.research">1.1 研究你的问题。</a></h3>
+      
+      <p>你应该在张贴之前先自己做些研究，也许你的问题已经被回答过了。
+      可以查找的地方举例如下：</p>
+      <ul>
+        <li>在线文档</li>
+        <li>邮件列表归档</li>
+        <li>Google</li>
+      </ul>
+    
+  <h2><a name="first-post">2 初始张贴</a></h2>
+    
+    
+    <h3><a name="first-post.system">2.1 你已经安装了什么？</a></h3>
+      
+      <p>如果你有关于安装软件包的问题，你应该提供关于你的系统下列信息：</p>
+      <ul>
+        <li>你的操作系统版本。</li>
+        <li>你运行的 Fink 版本。一个有用的方法是张贴你的命令行窗口运行 <pre>fink --version</pre> 命令的输出。</li>
+        <li>你应该指明你时候从二进制版本进行安装，例如，使用 <tt style="white-space: nowrap;">apt-get</tt>；或是从源代码进行安装，例如，使用 <tt style="white-space: nowrap;">fink install</tt>。<p>如果是后者，你应该指明你使用的开发工具的版本。</p></li>
+        <li><p>如果你正在安装一个需要 X11 的软件包，你应该指明你使用的软件包：苹果的 X11 还是 XFree86。
+        如果是后者，指明它的版本号。</p>
+        <p>如果存在怀疑的话，请尽管提供这个信息。</p></li>
+      </ul>
+    
+    <h3><a name="first-post.problem-description">2.2 发生了什么问题？</a></h3>
+      
+      <ul>
+        <li><b>指明出现问题的软件包的名字和版本号。</b>  
+        <p>这应该出现你的信息的主题行中。</p>
+        <p>意思是如果你的问题是关于 <tt style="white-space: nowrap;">foo-3.141-6</tt>，不要只是说是一个关于 <tt style="white-space: nowrap;">foo</tt> 的问题。</p>
+        <p>尤其是，如果你在安装一个依赖于其它软件包(<tt style="white-space: nowrap;">foo-3.141-6</tt>, <tt style="white-space: nowrap;">bar-16.0-9</tt>, ...)的软件包(例如：<tt style="white-space: nowrap;">baz-2.18-1</tt>)的时候，你在 <tt style="white-space: nowrap;">foo</tt> 安装时出现问题，你应该报告一个关于 <tt style="white-space: nowrap;">foo-3.141-6</tt> 的问题，而不是 <tt style="white-space: nowrap;">baz-2.18-1</tt>。</p></li>
+        <li><b>描述问题。</b>
+        <p>意思是你应该张贴一个错误信息的样本。</p>
+        <ol>
+            <li><p>对于二进制版本的安装问题，从发生问题的软件包开始解包的位置开始摘录：</p>
+            <pre>...
+Selecting previously deselected package foo
+error unpacking foo
+...</pre>
+<p>然后一直到结束。</p></li>
+            <li><p>对于从源代码安装有几种可能需要考虑的情况：</p>
+            <ol>
+                <li><p>如果在初始配置的时候失败，这通常是立即发生的。
+                从错误信息之前的几项测试开始一直摘录到最后：</p>
+                <pre>....
+Checking for bar-config...no
+Error:  bar-config not found
+....</pre>
+						<p>如果你认为可能有帮助的话，你可以张贴配置日志文件的相应部分，例如： <tt style="white-space: nowrap;">/sw/src/foo-3.141-6/foo-3.141/config.log</tt>。<b>请不要张贴整个文件，因为它会非常巨大。</b></p>
+						</li>
+                <li><p>或者，错误在你实际开始构建软件包时立即发生。
+                这种情况下，可以张贴从编译尝试运行到结束的几行：</p>
+                <pre>...
+gcc &lt;编译标志，文件，等等&gt;
+&lt;错误信息&gt;
+...</pre>
+						</li>
+                <li><p>如果你遇到的是看起来很可怕的 <tt style="white-space: nowrap;">execution of mv failed</tt> 错误，你应该在你的编译输出中寻找一个更早发生的错误，所以在张贴之前你需要把它找出来。</p></li>
+              </ol>
+              </li>
+          </ol>
+          </li>
+      </ul>
+    
+    <h3><a name="first-post.remedies">2.3 你尝试过什么？</a></h3>
+      
+      <p>提及你尝试过什么解决办法是个好主意，例如：</p>
+      <ul>
+        <li>FAQ 的指南或其它文档</li>
+        <li>删除似乎是引起问题的软件包</li>
+        <li>重新构建/重新安装</li>
+        <li>再次升级软件包描述</li>
+        <li>等等。</li>
+      </ul>
+      <p>这样，其它人不会再向你建议你已经做过的事情。</p>
+    
+    <h3><a name="first-post.future-plans">2.4 下面你打算尝试什么？</a></h3>
+      
+      <p>这个类别下包括一些项目：</p>
+      <ul>
+        <li>如果你没有获得立即的回应，张贴你下一步计划做的事情。</li>
+        <li>询问一系列操作是否合适。</li>
+      </ul>
+    
+  <h2><a name="reply">3 回应一个帖子</a></h2>
+    
+    
+    
+      <p>本章涉及如何回应一个帖子。</p>
+    
+    <h3><a name="reply.reply-to-list">3.1 确定是回应到邮件列表</a></h3>
+      
+      <p>和一些其它的你订阅的邮件列表不同，Fink 邮件列表的设计是如果你简单地回复一个消息，你会直接回复到张贴人，而<b>不是</b>回复到邮件列表。请确定你是回复到邮件列表：</p>
+      <ul>
+        <li>这样你可以让更多的人看到你的问题。</li>
+        <li>你不应该总是占用某个人的时间。记住：在邮件列表中回复的人是志愿者。</li>
+        <li>其它人也可以受益。
+        让全部的邮件发布在可公开阅览的区域意味着它会被收集到邮件列表归档中，并可能最终形成文档。</li>
+      </ul>
+      <p>通常人们使用<q>回复全部</q>来实现：</p>
+      <ul>
+        <li>它和按“回复”按钮一样的容易。</li>
+        <li>虽然这会同时向邮件列表和原来消息的作者发送邮件，这是可以接受的，因为有些时候邮件列表会有延迟，例如：病毒暴发的时候的过滤。通常直接发送给原来消息作者的邮件会到达得快些。</li>
+      </ul>
+      <p>不过，如果你这样做，你应该删除其它额外的收件人(比如说由于同时发布到多个列表，或者其它已经回复这个主题的其它人)。</p>
+    
+  <h2><a name="unsubscribe">4 如何取消订阅？</a></h2>
+    
+    
+    <h3><a name="unsubscribe.unsubscribing">4.1 我怎么取消订阅？</a></h3>
+      
+      <p>要取消订阅，<b>不要</b>向列表发送邮件。</p>
+      <ol>
+        <li>应该访问<a href="http://fink.sourceforge.net/lists/index.php">邮件列表</a>页面。
+        <p>注意：不要使用 Mac OS X 版本的 Internet Explorer。</p></li>
+        <li>选择你要取消订阅的邮件列表的链接。</li>
+        <li>找到页面底部写着：
+        <q>To change your subscription (set options like digest and delivery modes, get a reminder of your password, or unsubscribe), enter your subscription email address:</q>的部分，输入你接受 Fink 邮件的电子邮件地址，然后按 <q>Edit Options</q> 按钮。</li>
+        <li>在随后打开的页面中的左上角，有一个让你选择取消订阅的字段。</li>
+      </ol>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: netiquette.zh.xml,v 1.1 2004/04/18 13:29:06 jeff_yecn Exp $</i></p></body></html>
