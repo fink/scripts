@@ -55,6 +55,7 @@ open(STDOUT, ">&OLDOUT");
 ### drop the previous data
 
 print "# delete old rows\n";
+print "BEGIN;\n";
 print "DELETE FROM package WHERE release='$release';\n";
 print "DELETE FROM splitoffs WHERE parentkey REGEXP '^$release';\n";
 
@@ -135,6 +136,7 @@ foreach $package (Fink::Package->list_packages()) {
   }
 }
 
+print "COMMIT;\n";
 
 ### make timestamp
 
