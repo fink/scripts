@@ -380,10 +380,9 @@ Packages in there usually have not been tested at all, many have
 problems or just won't compile.
 That is why Fink doesn't search the unstable tree by default.
 </p><p>
-If you only want one or two specific packages, it is safer to copy
-those .info files (and their associated .patch files, if there are
+If you only want one or two specific packages, and nothing else from unstable, then you need to switch over to CVS updating, because rsync only updates the trees that are active in your <tt style="white-space: nowrap;">fink.conf</tt>.  Then you'll need to run <tt style="white-space: nowrap;">fink selfupdate</tt> to download the package description files.  Now copy the relevant <tt style="white-space: nowrap;">.info</tt> files (and their associated <tt style="white-space: nowrap;">.patch</tt> files, if there are
 any) from <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo</tt>
-to <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo</tt>.  However, note that your package may depend on other packages (or particular versions) which are also only in unstable.  You will have to move their .info and .patch files as well.</p><p>If you want Fink to use all of unstable, edit
+to <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo</tt>.  However, note that your package may depend on other packages (or particular versions) which are also only in unstable.  You will have to move their .info and .patch files as well.  After you move all of the files, make sure to run <tt style="white-space: nowrap;">fink index</tt>, so that Fink's record of available packages is updated.</p><p>If you want Fink to use all of unstable, edit
 <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, add
 <tt style="white-space: nowrap;">unstable/main</tt> and <tt style="white-space: nowrap;">unstable/crypto</tt> 
 to the beginning of the <tt style="white-space: nowrap;">Trees:</tt>
@@ -994,4 +993,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.147 2003/11/14 18:06:49 htodd Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.148 2003/11/16 18:56:20 alexkhansen Exp $</i></p></body></html>
