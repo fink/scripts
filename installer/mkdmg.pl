@@ -63,7 +63,8 @@ my @unmountImageOptions = qw{-quiet};
 
 # Converting disk images
 my @convertImage = qw{hdiutil convert};
-my @convertImageOptions = qw{-format UDRO -quiet -o};
+my @convertImageOptions = qw{-format UDZO -quiet -o -imagekey zlib-level=9};
+#my @convertImageOptions = qw{-format UDRO -quiet -o};
 
 # Compressing disk images
 my %compressCommands = (
