@@ -1,8 +1,15 @@
 #!/bin/sh
+set -e
 
-source='/Users/chrisp/fink/web/bindist'
+if [ -z "$BDBASE" ]; then
+  echo "BDBASE not set"
+  exit 1
+fi
+cd $BDBASE
+
+# locations
+source=$BDBASE
 destination='shell1:/home/groups/f/fi/fink/htdocs'
-
 if [ "$1" = "pippin" ]; then
   destination='pippin:/home/chrisp/fink/web'
 fi
@@ -13,6 +20,10 @@ options="$options --delete"
 # NOTE: data isn't compressed on the fly as practically all data is
 #       already gzip-compressed
 
+# make sure every directory has a index.php
+$BDDATA/bdindex
+
+# upload
 rsync $options $source $destination
 
 exit 0
