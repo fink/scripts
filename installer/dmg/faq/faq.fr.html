@@ -8,6 +8,7 @@ Available Languages:  |
 <a href="faq.es.html">Espa&ntilde;ol</a> | 
 Fran&ccedil;ais | 
 <a href="faq.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
+<a href="faq.ru.html">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russkiy)</a> | 
 <a href="faq.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
 </tr>
@@ -795,7 +796,7 @@ exec metacity &amp; exec gnome-session</pre><p>Note : ceci n'est plus vrai pour 
       <div class="answer"><p><b>A:</b> Il faut envisager deux hypothèses :</p><ul>
           <li>
             <b>Vous faites une installation à partir des binaires :</b>
-<p>Si vous utilisez une version récente de <tt style="white-space: nowrap;">fink</tt> (c'est-à-dire &gt;= 0.18.3-1), la solution consiste, en général, à réinstaller le paquet X11User, car l'installeur omet parfois d'installer certains fichiers. Vous devrez peut-être effectuer la réinstallation plusieurs fois. L'exécution de :</p>
+<p>Si vous utilisez une version récente de <tt style="white-space: nowrap;">fink</tt> (c'est-à-dire &gt;= 0.18.3-1), la solution consiste, en général, à réinstaller le paquet X11User, car l'installeur omet parfois d'installer certains fichiers. Vous devrez peut-être effectuer la réinstallation plusieurs fois. L'exécution de:</p>
 <pre>fink list -i system-xfree86</pre>
 <p>doit faire apparaître l'installation effective des paquets <tt style="white-space: nowrap;">system-xfree86</tt> et <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>.</p>
 <p>Si la réinstallation du paquet X11User ne suffit pas à résoudre le problème, consultez les instructions <a href="#usage-packages.special-x11-debug">débogage spécial</a> ci-dessous.</p>
@@ -804,7 +805,7 @@ exec metacity &amp; exec gnome-session</pre><p>Note : ceci n'est plus vrai pour 
 sudo apt-get install fink</pre>
 </li>
           <li>
-            <b>Vous faites une installation à partir du source :</b>
+            <b>Vous faites une installation à partir du source:</b>
 <p>Si vous utilisez une version récente de <tt style="white-space: nowrap;">fink</tt>, cette erreur signifie, en général, que vous devez installer ou réinstaller le paquet X11SDK, qui est <b>obligatoire</b> pour compiler les paquets à partir des sources. Vous le trouverez sur le CD XCode. Il n'est pas installé par défaut. Il doit être soit installé en personnalisant l'installation de XCode, soit en double-cliquant sur X11SDK.pkg, fichier situé dans le répertoire <tt style="white-space: nowrap;">Packages</tt> du CD XCode.</p>
 <p>Si le problème persiste, exécutez :</p>
 <pre>fink list -i system-xfree86  </pre>
@@ -844,4 +845,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.40 2004/12/03 00:38:50 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.41 2005/01/24 03:17:59 dmacks Exp $</i></p></body></html>

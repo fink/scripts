@@ -8,6 +8,7 @@ English |
 <a href="faq.es.html">Espa&ntilde;ol</a> | 
 <a href="faq.fr.html">Fran&ccedil;ais</a> | 
 <a href="faq.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
+<a href="faq.ru.html">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russkiy)</a> | 
 <a href="faq.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
 </tr>
@@ -893,7 +894,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
       <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> and <tt style="white-space: nowrap;">gcc3.1</tt> are  virtual packages to
         indicate the presence of gcc-2.95 and gcc-3.1, respectively, on your system. Install the gcc2.95 and/or the gcc3.1
         package from the XCode Tools (earlier OS versions have gcc-2.95 and gcc-3.1 as
-        part of their main Developer Tools installation).</p></div>
+        part of their main Developer Tools installation).</p><p><b>Note:  </b>Installing gcc2.95 and/or gcc3.1 will not interfere with your gcc3.3 compiler--they can all coexist.  </p></div>
     </a>
     <a name="comp-general.system-java">
       <div class="question"><p><b>Q6.18: Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</b></p></div>
@@ -1352,17 +1353,17 @@ exec metacity &amp; exec gnome-session</pre><p>Note:  this is no longer true for
       <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
           <li>
             <b>You are installing from binaries:</b>
-            <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt> (&gt;=0.18.3-1), typically what you need to do is reinstall the X11User package, since the installer application occasionally misses installing a file.  You may need to do this multiple times.</p>Running
-<pre>fink list -i system-xfree86</pre>should show that the <tt style="white-space: nowrap;">system-xfree86</tt> and <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> packages are installed.<p>If reinstalling the X11User package doesn't work, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p>
-            <p>If you are running an earlier version of the <tt style="white-space: nowrap;">fink</tt> package, then
-          updating <tt style="white-space: nowrap;">fink</tt> may solve your problem immediately, e.g.
-          via</p>
+            <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt> (&gt;=0.18.3-1), typically what you need to do is reinstall the X11User package, since the installer application occasionally misses installing a file.  You may need to do this multiple times. Running</p>
+	    <pre>fink list -i system-xfree86</pre>
+	    <p>should show that the <tt style="white-space: nowrap;">system-xfree86</tt> and <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> packages are installed. If reinstalling the X11User package doesn't work, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p>
+            <p>If you are running an earlier version of the <tt style="white-space: nowrap;">fink</tt> package, then updating <tt style="white-space: nowrap;">fink</tt> may solve your problem immediately, e.g. via</p>
             <pre>sudo apt-get update
 sudo apt-get install fink</pre>
           </li>
           <li>
-            <b>You are installing from source: </b>If you have a current version of <tt style="white-space: nowrap;">fink</tt>, then typically this error means that you need to (re)install the X11SDK, which is <b>mandatory</b> if you want to build packages from source. It is on the Xcode CD, and is <b>not</b> installed by default. Even if you install XCode, the X11SDK is <b>not</b> installed by default. It has to be installed either with a custom Xcode install, or by clicking on the X11SDK pkg in the <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.
-<p>If you are still having problems, run </p>
+            <b>You are installing from source:</b>
+	    <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt>, then typically this error means that you need to (re)install the X11SDK, which is <b>mandatory</b> if you want to build packages from source. It is on the Xcode CD, and is <b>not</b> installed by default. Even if you install XCode, the X11SDK is <b>not</b> installed by default. It has to be installed either with a custom Xcode install, or by clicking on the X11SDK pkg in the <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.</p>
+	    <p>If you are still having problems, run </p>
             <pre>fink list -i system-xfree86  </pre>
             <p>It should show the <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt> packages as installed.  If the <tt style="white-space: nowrap;">-dev</tt> package is missing, reinstall the X11SDK, since sometimes the Apple Installer misses a file.  You may need to keep doing this.  If either of the other two are missing, then reinstall the X11User package (same reason).</p>
             <p>
@@ -1404,4 +1405,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.40 2004/12/02 16:41:59 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.42 2005/01/24 20:57:39 alexkhansen Exp $</i></p></body></html>
