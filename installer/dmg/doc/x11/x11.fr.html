@@ -16,8 +16,7 @@ Fran&ccedil;ais |
 Ce document traite de l'utilisation de X11 / XFree86 / Xtools sur les systèmes Mac OS X et Darwin d'Apple.
 Il commence par une introduction et l'historique du développement, puis décrit la situation actuelle et les nombreuses options d'utilisation de X11 avec ou sans Fink.
 </p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 Qu'est-ce que X11 ?</a></li><li><a href="#intro.def-macosx">1.2 Qu'est-ce que Mac OS X ?</a></li><li><a href="#intro.def-darwin">1.3 Qu'est-ce que Darwin ?</a></li><li><a href="#intro.def-xfree86">1.4 Qu'est-ce que XFree86 ?</a></li><li><a href="#intro.def-xtools">1.5 Qu'est-ce que Xtools ?</a></li><li><a href="#intro.client-server">1.6 Client et Serveur</a></li><li><a href="#intro.rootless">1.7 Que signifie sans racine (rootless) ?</a></li><li><a href="#intro.wm">1.8 Qu'est-ce qu'un gestionnaire de fenêtres ?</a></li><li><a href="#intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></li></ul></li><li><a href="#history"><b>2 Historique</b></a><ul><li><a href="#history.early">2.1 Genèse</a></li><li><a href="#history.xonx-forms">2.2 Création de XonX</a></li><li><a href="#history.root-or-not">2.3 Être ou ne pas être racine</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Récupération et installation de XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installation via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Binaires d'Apple</a></li><li><a href="#inst-xfree86.official-binary">3.3 Binaires officiels</a></li><li><a href="#inst-xfree86.official-source">3.4 Source Officiel</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 Source le plus récent</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Remplacement de X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Résumé des paquets Fink disponibles</a></li></ul></li><li><a href="#run-xfree86"><b>4 Lancement de XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 Fichier .xinitrc</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installation de Xtools</a></li><li><a href="#xtools.run">5.2 Lancement de Xtools</a></li><li><a href="#xtools.opengl">5.3 Notes sur OpenGL</a></li></ul></li><li><a href="#other"><b>6 Other X11 Possibilities</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Troubleshooting XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 When I launch XDarwin, it quits
-or crashes almost immediately</a></li><li><a href="#trouble.black">7.2 Black icons in the GNOME panel or in the
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 Qu'est-ce que X11 ?</a></li><li><a href="#intro.def-macosx">1.2 Qu'est-ce que Mac OS X ?</a></li><li><a href="#intro.def-darwin">1.3 Qu'est-ce que Darwin ?</a></li><li><a href="#intro.def-xfree86">1.4 Qu'est-ce que XFree86 ?</a></li><li><a href="#intro.def-xtools">1.5 Qu'est-ce que Xtools ?</a></li><li><a href="#intro.client-server">1.6 Client et Serveur</a></li><li><a href="#intro.rootless">1.7 Que signifie sans racine (rootless) ?</a></li><li><a href="#intro.wm">1.8 Qu'est-ce qu'un gestionnaire de fenêtres ?</a></li><li><a href="#intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></li></ul></li><li><a href="#history"><b>2 Historique</b></a><ul><li><a href="#history.early">2.1 Genèse</a></li><li><a href="#history.xonx-forms">2.2 Création de XonX</a></li><li><a href="#history.root-or-not">2.3 Être ou ne pas être racine</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Récupération et installation de XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installation via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Binaires d'Apple</a></li><li><a href="#inst-xfree86.official-binary">3.3 Binaires officiels</a></li><li><a href="#inst-xfree86.official-source">3.4 Source Officiel</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 Source le plus récent</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 Remplacement de X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Résumé des paquets Fink disponibles</a></li></ul></li><li><a href="#run-xfree86"><b>4 Lancement de XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 Fichier .xinitrc</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installation de Xtools</a></li><li><a href="#xtools.run">5.2 Lancement de Xtools</a></li><li><a href="#xtools.opengl">5.3 Notes sur OpenGL</a></li></ul></li><li><a href="#other"><b>6 Autres possibilités pour X11</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Résolution de problèmes engendrés par XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 Après lancement, XDarwin se termine ou se plante quasi immédiatement</a></li><li><a href="#trouble.black">7.2 Black icons in the GNOME panel or in the
 menu of a GNOME application</a></li><li><a href="#trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></li><li><a href="#trouble.delete-key">7.4 The Backspace key doesn't work</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Usage Tips</b></a><ul><li><a href="#tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
@@ -555,183 +554,99 @@ Pour lancer Xtools, double-cliquez sur Xtools.app dans le répertoire Applicatio
 Xtools utilise l'accelération matériel OpenGL en mode sans racine et fournit les librairies pour gérer cette fonctionnalité. La librairie principale libGL est parfaite, mais les librairies libGLU et libglut n'existent que sous forme statique, ce qui n'est pas suffisant pour assurer une compatibilité binaire complète avec XFree86. Quelques headers manquent. Fink ne propose pas de solution à ce problème pour le moment. Nous espérons que le problème sera résolu dans Xtools 1.1.
 </p>
     
-  <h2><a name="other">6 Other X11 Possibilities</a></h2>
+  <h2><a name="other">6 Autres possibilités pour X11</a></h2>
     
     
     <h3><a name="other.vnc">6.1 VNC</a></h3>
       
       <p>
-VNC is a network-capable graphics display system similar in design to
-X11.
-However, it works at a lower level, making implementation easier.
-With the Xvnc server and a Mac OS X display client, it is possible to
-run X11 applications with Mac OS X.
-Jeff Whitaker's <a href="http://www.cdc.noaa.gov/~jsw/macosx_xvnc/">Xvnc page</a> has
-more information on that.
+VNC est un système d'affichage graphique en réseau d'architecture semblable à celle de X11. Néanmoins, il fonctionne à un niveau plus bas, rendant son implémentation plus facile. Avec le serveur Xvnc et un client d'affichage Mac OS X, on peut exécuter des applications X11 sous Mac OS X. La <a href="http://www.cdc.noaa.gov/~jsw/macosx_xvnc/">page Xvnc</a> de Jeff Whitaker vous fournira de plus amples informations à ce sujet.
 </p>
     
     <h3><a name="other.wiredx">6.2 WiredX</a></h3>
       
       <p>
-        <a href="http://www.jcraft.com/wiredx/">WiredX</a> is an X11
-server written in Java.
-It also supports rootless mode.
-An Installer.app package is available at the web site.
+        <a href="http://www.jcraft.com/wiredx/">WiredX</a> est un serveur X11 écrit en Java. Il gère aussi le mode sans racine. Un paquet d'installation Installer.app est disponible sur son site web.
 </p>
     
     <h3><a name="other.exodus">6.3 eXodus</a></h3>
       
       <p>
-According to the website, <a href="http://www.powerlan-usa.com/exodus/">eXodus 8</a> by Powerlan
-USA runs natively on Mac OS X.
-It is unknown what codebase it uses and whether/how it supports local
-clients.
-Because of this, there is no special support for eXodus in Fink.
-If you have more info, please throw it our way.
+D'après son site web, <a href="http://www.powerlan-usa.com/exodus/">eXodus 8</a> de Powerlan USA fonctionne en natif sur Mac OS X. On ne sait pas sur quel code il se base, ni s'il gère les clients locaux, ni comment il les gère. En conséquence, Fink ne peut fournir un support adapté à eXodus. Si vous avez de plus amples informations à ce sujet, n'hésitez pas à nous le faire savoir.
 </p>
     
-  <h2><a name="trouble">7 Troubleshooting XFree86</a></h2>
+  <h2><a name="trouble">7 Résolution de problèmes engendrés par XFree86</a></h2>
     
     
-    <h3><a name="trouble.immedate-quit">7.1 When I launch XDarwin, it quits
-or crashes almost immediately</a></h3>
+    <h3><a name="trouble.immedate-quit">7.1 Après lancement, XDarwin se termine ou se plante quasi immédiatement</a></h3>
       
       <p>
-First of all: Don't Panic!
-There are lots of things than can go wrong with XFree86, and a good
-number of them can cause startup failures.
-Further, it is not unusual that XDarwin crashes when it experiences
-startup problems.
-This section tries to provide a comprehensive list of problems you may
-come across.
-But first, you need to gather two important pieces of information:
+Tout d'abord : pas de panique ! Il existe un grand nombre de choses qui peuvent ne pas fonctionner correctement avec XFree86 ; et un bon nombre d'entre elles peuvent causer des problèmes de démarrage. De plus, quand XDarwin rencontre des problèmes au démarrage, il est fréquent qu'il se plante. Cette section tente de fournir une liste exhaustive des problèmes que vous pouvez rencontrer. Mais, tout d'abord, vous devez collecter deux informations importantes.
 </p>
       <p>
-        <b>XDarwin version.</b>
-You can find the XDarwin version in the Finder by clicking
-<b>once</b> on the XDarwin icon and then selecting "Show Info"
-from the menu.
-The version is only incremented when a new binary test release is made
-by the XonX project, so "1.0a1" may actually be any version between
-1.0a1 and 1.0a2.
+        <b>Version de X.</b>
+Vous obtiendrez la version de XDarwin en cliquant <b>une seule fois</b> sur l'icône de XDarwin dans le Finder, puis en choisissant "Lire les informations" à partir du menu (raccourci Cmd-I). Le numéro de version n'est incrémenté que lorsqu'une nouvelle version de test binaire est produite par le projet XonX ; autrement dit, "1.0a1" correspond à n'importe quelle version entre 1.0a1 et 1.0a2.
 </p>
       <p>
-        <b>Error messages.</b>
-These are essential in pinpointing the particular problem you
-experience.
-How you get the error messages depends on how you started XDarwin.
-If you ran <tt style="white-space: nowrap;">startx</tt> from a Terminal window, you'll have the
-messages right there in that window.
-Remember that you can scroll up.
-If you started XDarwin by double-clicking the icon, the messages end
-up in the system log, which you can access through the Console
-application in the Utilities folder.
-Be sure to pick the right set of messages, i.e. the last one.
+        <b>Messages d'erreur.</b>
+Ils sont essentiels à la compréhension du problème auquel vous êtes confronté. Leur emplacement dépend de la façon dont vous avez lancé XDarwin. Si vous avez lancé <tt style="white-space: nowrap;">startx</tt> dans une fenêtre de Terminal, les messages apparaissent directement dans cette fenêtre. Vous pouvez utiliser les barres de défilement. Si vous avez lancé XDarwin en double-cliquant sur son icône, les messages apparaissent dans les logs système, auxquels vous avez accès via l'application Console, située dans le répertoire Utilities (situé dans le répertoire Applications). Assurez-vous que vous récupérez les bons messages, c'est-à-dire les derniers.
 </p>
       <p>
-We'll start with a list of the messages you may see:
+Commençons par une liste des messages possibles :
 </p>
       <pre>_XSERVTransmkdir: Owner of /tmp/.X11-unix should be set to root</pre>
       <pre>_IceTransmkdir: Owner of /tmp/.ICE-unix should be set to root</pre>
       <p>
-Class: Harmless.
-X11 creates hidden directories in /tmp to store the socket "files" for
-local connections.
-For security reasons, X11 prefers if these directories are owned by
-root, but since they are world-writable anyway it will still run
-without any problems.
-(Note: It's quite hard to have these dirs owned by root, as Mac OS X
-wipes out /tmp on reboots and XDarwin doesn't run with root privileges
-and doesn't need to.)
+Sévérité : inoffensif.
+X11 crée des répertoires cachés dans /tmp pour stocker les "fichiers"  socket utilisés pour les connexions locales. Pour des raisons de sécurité, X11 s'attend à ce que le possesseur de ces répertoires soit le super-utilisateur ; mais, comme ils sont accessibles en écriture par tout utilisateur, X11 fonctionne sans problèmes. (Note : il est très difficile de définir le super-utilisateur comme possesseur de ces répertoires, car Mac OS X vide /tmp lors du redémarrage et XDarwin ne fonctionne pas, en temps normal, - et n'a pas besoin de fonctionner - avec les privilèges de super-utilisateur.)
 </p>
       <pre>QuartzAudioInit: AddIOProc returned 1852797029</pre>
       <pre>-[NSCFArray objectAtIndex:]: index (2) beyond bounds (2)</pre>
       <pre>kCGErrorIllegalArgument : CGSGetDisplayBounds (display 35434400)</pre>
       <pre>No core keyboard</pre>
       <p>
-Class: Bogus.
-These are follow-up errors that result when the server tries to reset
-itself after a previous error.
-During that, another copy of the startup banner is printed, followed
-by one or more of the above messages because resetting the server
-doesn't really work in the affected versions of XDarwin.
-So when you see messages like these, scroll up in the Terminal
-resp. Console window and look for another set of banner and messages.
-This affects all versions up to and including XDarwin 1.0a3; it was
-fixed after 1.0a3 was released.
+Sévérité : bogue.
+Ce sont des erreurs qui apparaissent quand le serveur tente de se rétablir après une erreur précédente. Durant ce processus, une nouvelle copie de la bannière de démarrage est imprimée, suivie d'un ou plusieurs messages semblables à ceux indiqués ci-dessus, car la procédure de rétablissement du serveur ne fonctionne pas correctement dans certaines versions de XDarwin. Quand vous voyez apparaître ce type de messages, utilisez les barres de défilement dans la fenêtre de Terminal ou dans la fenêtre de Console pour rechercher plus haut une autre bannière de démarrage suivie d'autres messages. Ce bogue affecte toutes les versions de XDarwin jusqu'à la version 1.0a3 ; il a été résolu après la publication de la version 1.0a3.
 </p>
       <pre>cat: /Users/chrisp/.Xauthority: No such file or directory</pre>
       <p>
-Class: Mostly harmless.
-It is unknown where these messages come from and they seem to have no
-impact on operations.
-You can get rid of them by running <tt style="white-space: nowrap;">touch .Xauthority</tt> in
-your home directory.
+Sévérité : quasi inoffensif.
+On ne sait pas d'où viennent ces messages et ils semblent n'avoir aucune incidence sur le déroulement des opérations. Vous pouvez les éliminer en exécutant <tt style="white-space: nowrap;">touch .Xauthority</tt> dans votre répertoire utilisateur.
 </p>
       <pre>Gdk-WARNING **: locale not supported by C library</pre>
       <p>
-Class: Harmless.
-This just means what it says and won't keep the application from
-working.
-For more information, <a href="#trouble.locale">see below</a>.
+Sévérité : inoffensif.
+Cela signifie que la librairie C ne gère pas votre locale, mais cela n'empêche pas l'application de fonctionner. Pour de plus amples informations, <a href="#trouble.locale">voir ci-dessous</a>.
 </p>
       <pre>Gdk-WARNING **: locale not supported by Xlib, locale set to C
 Gdk-WARNING **: can not set locale modifiers</pre>
       <p>
-Class: Bad, but not fatal.
-These messages may appear in addition to the one above.
-This indicates that XFree86's locale data files are not present.
-It appears that this happens unreproducibly when building Free86 from
-source.
-Most applications will still work, GNU Emacs is a notable exception.
+Sévérité : pas bon, mais non fatal.
+Ces messages peuvent apparaître à la suite du précédent. Ceci signifie que les fichiers de données locale de XFree86 n'existent pas sur votre système. Il semble que le message apparaisse de façon erratique quand on compile XFree86 à partir du source. La plupart des applications fonctionnent, mais GNU Emacs fait partie des exceptions.
 </p>
       <pre>Unable to open keymapping file USA.keymapping.
 Reverting to kernel keymapping.</pre>
       <p>
-Class: Often fatal.
-This can happen with XDarwin 1.0a1, with the "Load from file"
-keymapping option enabled.
-That version needs a full path when the file to load is set via the
-Preferences dialog, but searches automatically when it is passed on
-the command line.
-The message will usually be followed by the "assert" message shown
-below.
-To fix this, follow the directions below.
+Sévérité : souvent fatal.
+Ceci peut se produire avec XDarwin 1.0a1, quand l'option "Load from file" est activée. Cette version requiert un chemin complet quand le fichier de mappage clavier est chargé via le dialogue de Préférences, mais exécute une recherche automatique quand l'option "-keymap" est utilisée en ligne de commande. Ce message est généralement suivi du message "assert" suivant. Pour résoudre le problème, suivez les instructions ci-dessous.
 </p>
       <pre>Fatal server error:
 assert failed on line 454 of darwinKeyboard.c!</pre>
       <pre>Fatal server error:
 Could not get kernel keymapping! Load keymapping from file instead.</pre>
       <p>
-Class: Fatal.
-Changes Apple made in Mac OS X 10.1 broke the code in XFree86 that
-reads the keyboard layout from the operating system kernel;
-the message above is the result of that.
-You must use the "Load from file" keymapping option on Mac OS X 10.1.
-The setting is in the XDarwin Preferences dialog.
-Be sure that a file is selected (i.e. use the "Pick file" button) -
-simply activating the check box may not be sufficient with some
-versions of XDarwin.
-If you can't get to the Preferences dialog because XDarwin closes
-before you get a chance, run it from Terminal with the command
-<tt style="white-space: nowrap;">startx -- -quartz -keymap USA.keymapping</tt>.
-This usually allows XDarwin to start up, and you can then make the
-permanent choice in the Preferences dialog.
+Sévérité : fatal.
+Les modifications qu'Apple a fait dans Mac OS X 10.1 ont entraîné des répercutions sur le fonctionnement de XFree86. En effet, celui-ci lit normalement les symboles clavier à partir du noyau du système opératoire. Le message ci-dessus en est la conséquence. Vous devez utiliser l'option de mappage de clavier "Load from file" sur Mac OS X 10.1. Cette option est accessible à partir du dialogue de Préférences de XDarwin. N'oubliez pas de choisir un fichier (c'est-à-dire utilisez le bouton "Pick file"). Cocher la case peut s'avérer insuffisant avec certaines versions de XDarwin. Si vous ne pouvez pas accéder au dialogue de Préférences, parce que XDarwin quitte avant que vous puissiez y accéder, exécutez 
+<tt style="white-space: nowrap;">startx -- -quartz -keymap USA.keymapping</tt> dans une fenêtre de Terminal. Ceci permet, en général, de lancer XDarwin ; il vous suffit ensuite d'aller dans le dialogue de Préférences et d'y activer le mappage du clavier pour que ce choix devienne permanent.
 </p>
       <pre>Fatal server error:
 Could not find keymapping file .</pre>
-      <p>Class: Fatal (as it says).  This error is due to the absence of the keymapping files under Panther.  You need to install <tt style="white-space: nowrap;">xfree86-4.3.99-16</tt> or later, since these versions don't need the keymapping files.</p>
+      <p>Sévérité : fatal (comme indiqué). Cette erreur est due à l'absence de fichiers de mappage clavier sous Panther. Vous devez installer <tt style="white-space: nowrap;">xfree86-4.3.99-16</tt> ou une version postérieure, car ces versions ne nécessitent pas de fichiers de mappage clavier.</p>
       <pre>Warning: no access to tty (Inappropriate ioctl for device).
 Thus no job control in this shell.</pre>
       <p>
-Class: Mostly harmless.
-XDarwin 1.0a2 and later launch an interactive shell behind the scenes
-to run your client startup file (.xinitrc).
-This was done so that you don't have to add statements to set up PATH
-in that file.
-Some shells complain that they're not connected to a real terminal,
-but that can be ignored since that shell instance is not used for
-anything that requires job control or the like.
+Sévérité : quasi inoffensif.
+XDarwin 1.0a2 et les versions suivantes lancent un shell interactif en arrière-plan pour exécuter le fichier de démarrage client (.xinitrc). Ceci afin que vous n'ayez pas besoin d'ajouter des commandes de définition de votre PATH dans ce fichier. Certains shells signalent qu'ils ne sont pas connectés à un vrai terminal ; ce message peut être ignoré, car cette instance de shell n'est pas utilisée pour exécuter quoi que ce soit qui requière un contrôle de tâches ou quelque chose de similaire.
 </p>
       <pre>Fatal server error:
 failed to connect as window server!</pre>
@@ -1031,4 +946,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.fr.xml,v 1.11 2004/05/08 22:05:21 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.fr.xml,v 1.12 2004/05/09 11:05:39 michga Exp $</i></p></body></html>
