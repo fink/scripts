@@ -208,7 +208,7 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 <div class="answer"><p><b>A:</b> Panther のリリースにともない、 Fink は新しい gcc 3.3 コンパイラに対応するようアップデートされました。
 10.2 (Jaguar) と 10.3 (Panther) の両方をサポートするため、すべてのユーザーは最新の gcc 3.3 update (August 2003 Updater または
 Panther XCode tools) をインストールする必要があります。
-Mac OS X 10.2 の December 2002 developer tools 用 XCode ベータ・アップデータをインストールした場合、この警告が出ます。もし 10.2 であれば、コマンド:</p><pre>gcc --version</pre><p>...で現在のバージョンがわかります。
+Mac OS X 10.2 の December 2002 developer tools 用 XCode ベータ・アップデータをインストールした場合、この警告が出ます。もし 10.2 であれば、コマンド:</p><pre>gcc --version</pre><p>で現在のバージョンがわかります。
 2003年10月24日時点で build 1493 かそれ以上が必要です。</p><p>10.2 ユーザーは、 August 2003 Updater を <a href="http://developer.apple.com/">Apple Developer Connection</a> からダウンロードできます (無料登録が必要)。</p><p>10.3 ユーザーは、 Panther 互換のディベロッパーツール (Xcode など) にアップグレードする必要があります。
 XCode の入った CD が Panther に同梱されているはずです。</p></div>
 </a>
@@ -322,7 +322,7 @@ root 権限で <tt style="white-space: nowrap;">/etc/sudoers</tt> を開き、�
 何がおかしいのですか?</b></p></div>
 <div class="answer"><p><b>A:</b> init.csh と init.sh は通常のコマンドのように実行するものではありません。
 これらのファイルは環境変数の PATH や MANPATH を設定するものです。
-これをシェルがずっと保持するには、 <tt style="white-space: nowrap;">source</tt> コマンドを使い:</p><p> csh/tcsh の場合:</p><pre>source /sw/bin/init.csh</pre><p> bash の場合:</p><pre>source /sw/bin/init.sh</pre><p>と入力します。</p></div>
+これをシェルに保持させるには、csh/tcsh では <tt style="white-space: nowrap;">source</tt> コマンド、bash/zsh では <tt style="white-space: nowrap;">.</tt> コマンドを使い:</p><p> csh/tcsh の場合:</p><pre>source /sw/bin/init.csh</pre><p> bash の場合:</p><pre>. /sw/bin/init.sh</pre><p>と入力します。</p></div>
 </a>
 <a name="usage-fink.dselect-access">
 <div class="question"><p><b>Q5.11: うぎゃ! dselect で "[A]ccess" メニューを使ったら、パッケージをダウンロードできなくなった!</b></p></div>
@@ -1029,4 +1029,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.8 2004/02/28 17:05:56 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.9 2004/03/12 13:44:49 babayoshihiko Exp $</i></p></body></html>
