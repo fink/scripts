@@ -10,6 +10,7 @@ chdir $base or die "bindist base \"$base\" is bogus, set env var BDBASE\n";
 my ($currel, $dest);
 chomp($currel = `cat $ENV{BDDATA}/current`);
 my $dest = "dists/fink-$currel/main";
+my $dest_crytpo = "dists/fink-$currel/crytpo";
 
 ### now load the useful modules
 
@@ -28,7 +29,7 @@ Fink::Package->require_packages();
 
 ### loop over packages
 
-my ($pkgspec, $pkgname, $po, $fn, $todir, $tofn, $i);
+my ($pkgspec, $pkgname, $po, $fn, $todir, $tofn, $i, $section);
 
 foreach $pkgspec (@ARGV) {
   $po = Fink::PkgVersion->match_package($pkgspec);
@@ -43,15 +44,24 @@ foreach $pkgspec (@ARGV) {
     print "ERROR: no binary package for $pkgname\n";
     next;
   }
-  $todir = $dest."/binary-darwin-powerpc/".$po->get_section();
+  $section = $po->get_section();
+  if ($section eq "crypto") {
+    $todir = $dest_crytpo."/binary-darwin-powerpc";
+  } else {
+    $todir = $dest."/binary-darwin-powerpc/".$section;
+  }
   $tofn = $todir."/".&filename($fn);
   if (not -d $todir) {
     &execute("mkdir -p $todir");
   }
-  if (-e $tofn) {
-    &execute("rm -f $tofn");
+# HACK - we want to keep existing .debs for now
+  if (not -e $tofn) {
+    &execute("cp $fn $tofn");
   }
-  &execute("cp $fn $tofn");
+#   if (-e $tofn) {
+#     &execute("rm -f $tofn");
+#   }
+#   &execute("cp $fn $tofn");
 
   for ($i = 1; $i < 10; $i++) {
     $fn = $po->get_tarball($i);
@@ -67,7 +77,11 @@ foreach $pkgspec (@ARGV) {
       &execute("cp $fn $tofn");
     }
 
-    $todir = $dest."/source/".$po->get_section();
+    if ($section eq "crypto") {
+      $todir = $dest_crytpo."/source";
+    } else {
+      $todir = $dest."/source/".$section;
+    }
     $tofn = $todir."/".&filename($fn);
     if (not -f $tofn) {
       if (not -d $todir) {
