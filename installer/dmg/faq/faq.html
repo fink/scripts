@@ -540,7 +540,9 @@ _Perl_saferealloc
 _Perl_sv_2pv
 _perl_call_sv
 _perl_eval_sv
-_perl_get_sv</pre><p>then what has probably happened is that you updated Perl to a new version and now <tt style="white-space: nowrap;">storable-pm</tt> needs to be rebuilt.  You will have to have the Developer Tools for this.  Perform the following commands:</p><pre>sudo mv /sw/lib/perl5/darwin/Storable.pm /tmp
+_perl_get_sv</pre><p>then what has probably happened is that you updated Perl to a new version and now <tt style="white-space: nowrap;">storable-pm</tt> needs to be updated.  
+You should update Fink.  During the process you will be prompted to install either <tt style="white-space: nowrap;">perl-core</tt> or <tt style="white-space: nowrap;">system-perl</tt>; choose the latter. 
+In addition, <tt style="white-space: nowrap;">storable-pm</tt> should also get updated.</p><p>For OS 10.1.x, perform the following commands (you'll need the Developer Tools):</p><pre>sudo mv /sw/lib/perl5/darwin/Storable.pm /tmp
 sudo mv /sw/lib/perl5/darwin/auto/Storable /tmp
 fink rebuild storable-pm
 fink selfupdate-cvs</pre></div>
@@ -920,4 +922,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.120 2003/07/25 12:07:58 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.121 2003/07/26 02:42:12 alexkhansen Exp $</i></p></body></html>
