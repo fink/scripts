@@ -54,11 +54,11 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 というメッセージが出て、何もインストールできません!</a></li><li><a href="#comp-general.freetype-problems">6.15 freetype に関係したエラーが出ます。</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 `Dl_info' のエラーが出ます。</a></li><li><a href="#comp-general.gcc2">6.17 Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</a></li><li><a href="#comp-general.system-java">6.18 Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
 と言っていますが、そのようなパッケージはありません。
 </a></li><li><a href="#comp-general.dpkg-split">6.19 
-    何をインストールしようとしても、
-     <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
-     というエラーが出ます。
-     どうしたらいいですか?
-    </a></li><li><a href="#comp-general.xml-parser">6.20 
+何をインストールしようとしても、
+<q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
+というエラーが出ます。
+どうしたらいいですか?
+</a></li><li><a href="#comp-general.xml-parser">6.20 
 	次のメッセージが出ます:<q>configure: error: XML::Parser perl module is required for intltool</q>。
 	どうしたら良いでしょうか?
 	</a></li><li><a href="#comp-general.master-problems">6.21 
@@ -83,8 +83,8 @@ XDarwin を起動してもすぐ終了しちゃう!</a></li><li><a href="#usage-
 </a></li><li><a href="#usage-packages.xterm-error">9.5 xterm が "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib" といって終了します。</a></li><li><a href="#usage-packages.libXmuu">9.6 XFree86 を起動しようとすると、下記のエラーのひとつがでます。
 "dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib"
 または "dyld: xinit can't open library: /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">9.7 Fink の XFree86 を Apple X11 に置き換えたのですが、なんでもかんでもクラッシュするようになりました!</a></li><li><a href="#usage-packages.apple-x-delete">9.8 Apple X11 の delete キーを、 XDarwin のように使いたいのです。</a></li><li><a href="#usage-packages.gnome-two">9.9 GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 Apple X11 をインストールしたけれども、 Fink が XFree86 か X.org をインストールしろといい続けます。</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 
-    10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
-    </a></li><li><a href="#usage-packages.special-x11-debug">9.13 まだ X11 と Fink の問題が解決されません。</a></li></ul></li></ul><h2><a name="general">1 一般的な質問</a></h2>
+10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
+</a></li><li><a href="#usage-packages.special-x11-debug">9.13 まだ X11 と Fink の問題が解決されません。</a></li></ul></li></ul><h2><a name="general">1 一般的な質問</a></h2>
 
 
 <a name="general.what">
@@ -466,22 +466,17 @@ Fink が自動的にここを探しにいきます。
 <a name="usage-fink.fink-not-found">
 <div class="question"><p><b>Q5.15: Fink や Fink でインストールしたものを実行しようとすると
 "command not found" エラーが出ます。</b></p></div>
-<div class="answer"><p><b>A:</b> 常にこのエラーが出るようでしたら、誤ってスタートアップスクリプトを書き換えてしまったと思われます。
-<tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt> スクリプトを実行
-(ファインダからダブルクリックするか、ターミナルから実行)
-すると、初期の設定を検出しようとします。
-この後、新規ターミナルを開いて環境変数が読み込まれているか確認して下さい。
-<b>注記:</b>
-<tt style="white-space: nowrap;">fink-0.18.3</tt> と <tt style="white-space: nowrap;">fink-0.19.2</tt> では、スクリプトは
-<tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt>
-になりました。
-必ずターミナル上で実行して下さい。
+<div class="answer"><p><b>A:</b> 常にこのエラーが出るようでしたら、誤ってスタートアップスクリプトを書き換えてしまった(か、書き換えに失敗した)と思われます。
+<tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt> スクリプトを実行してください。
+このプログラムは、デフォルトシェルを判定し、シェルの設定に Fink のシェル初期化スクリプトを読み込むコマンドを追加します。
+<b>注記:</b> 古いバージョンの fink では、スクリプト名が <tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt> ではなく <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt> となっていることがあります。
+あるいは、 Fink バイナリディストリビューションのディスクイメージ内にある <tt style="white-space: nowrap;">pathsetup.app</tt> を実行する方法もあります。
 </p><p>このエラーが Apple X11 ターミナルでのみ出る場合，
 <a href="http://fink.sourceforge.net/doc/x11/run-xfree86.php#xinitrc%20">.xinitrc</a> 
 というファイルを作成し、</p><pre>. /sw/bin/init.sh</pre><p>の一行を最初の方
 (他のプログラムが実行される前)
 に追加します。
-X11 が立ち上がっている場合、リスタートします。</p><pre>source ~/.cshrc</pre></div>
+X11 が立ち上がっている場合、 X11 を再起動します。</p><pre>source ~/.cshrc</pre></div>
 </a>
 <a name="usage-fink.invisible-sw">
 <div class="question"><p><b>Q5.16: Finder で /sw を隠して、ユーザーが Fink の構成を壊すのを防ぎたい。</b></p></div>
@@ -507,7 +502,7 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 エラーメッセージ中のパッケージの .deb ファイルがシステム上にあれば、その状態を確認します:
 </p><pre>dpkg --contents <b>full-path-to-debfile</b>
 </pre><p>例えば</p><pre>dpkg --contents
-        /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>ディレクトリやファイルの一覧が表示されたら、 .deb ファイルは大丈夫です。
+/sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>ディレクトリやファイルの一覧が表示されたら、 .deb ファイルは大丈夫です。
 もし出力されたのがファイルやディレクトリ以外であるか、 .deb ファイルがなくても、このエラーはビルドに影響しないので、次に進んでください。
 </p><p>バイナリインストールを試みている場合、あるいはインストールしたバージョンと現在のバイナリバージョンが一致する場合
 (例えば、 <a href="http://fink.sourceforge.net/pdb/index.php">パッケージデータベース</a> で調べたなら)、
@@ -631,7 +626,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 <div class="answer"><p><b>A:</b> 
 これは、何らかの理由で OSX ターミナルがログインする度に
 <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt>
- を実行するように設定されているからです。
+を実行するように設定されているからです。
 修正するには、 初期設定ファイル <tt style="white-space: nowrap;">~/Library/Preferences/com.apple.Terminal.plist</tt> を削除します。</p><p>他の設定を失いたくない場合、削除する代わりにテキストエディタでこのファイルを開き、
 <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt>
 と書かれている部分を削除します。</p></div> 
@@ -742,9 +737,9 @@ Fink を使うには、オリジナルの方の <tt style="white-space: nowrap;"
 エラーは発生したもののビルドは続行したものです。
 問題のあったファイルを追跡するには、ビルドの出力中の存在しないファイルを探します。
 例えば:</p><pre>mv /sw/src/root-foo-0.1.2-3/sw/lib/libbar*.dylib \
- /sw/src/root-foo-shlibs-0.1.2-3/sw/lib/
- mv: cannot stat `/sw/src/root-foo-0.1.2-3/sw/lib/libbar*.dylib':
- No such file or directory
+/sw/src/root-foo-shlibs-0.1.2-3/sw/lib/
+mv: cannot stat `/sw/src/root-foo-0.1.2-3/sw/lib/libbar*.dylib':
+No such file or directory
 ### execution of mv failed, exit code 1
 Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-space: nowrap;">libbar</tt> ファイルをビルド出力の前の方で探します。</p></div>
 </a>
@@ -885,15 +880,15 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 </a>
 <a name="comp-general.dpkg-split">
 <div class="question"><p><b>Q6.19: 
-    何をインストールしようとしても、
-     <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
-     というエラーが出ます。
-     どうしたらいいですか?
-    </b></p></div>
+何をインストールしようとしても、
+<q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
+というエラーが出ます。
+どうしたらいいですか?
+</b></p></div>
 <div class="answer"><p><b>A:</b> 
-    通常、環境変数を正しく設定することで直ります。
-    参照: <a href="#usage-fink.fink-not-found">この FAQ 項目</a>
-    </p></div>
+通常、環境変数を正しく設定することで直ります。
+参照: <a href="#usage-fink.fink-not-found">この FAQ 項目</a>
+</p></div>
 </a>
 <a name="comp-general.xml-parser">
 <div class="question"><p><b>Q6.20: 
@@ -940,7 +935,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 <div class="answer"><p><b>A:</b> これはログインスクリプト (例 <tt style="white-space: nowrap;">~/.cshrc</tt>) が "<tt style="white-space: nowrap;">echo Hello</tt>" であるとか <tt style="white-space: nowrap;">xttitle</tt> といったことをターミナルに書くと発生します。
 いちばん簡単な解決方法は、問題の行をコメントアウトすることです。
 </p><p>もし echo を残しておきたいなら、次のようにすることもできます:</p><pre>if ( $?prompt) then
-       echo Hello
+echo Hello
 endif</pre></div>
 </a>
 <a name="comp-packages.cant-install-xfree">
@@ -1010,10 +1005,10 @@ Unix システムでは、ファイルやプロセスの "所有者" を使っ�
 Apache や MySQL のようなプログラムは、"所有者" が必要で、これらの daemon に root を割り当てると安全ではなくなります。
 (Apache に、システム上の全てのファイルへいきなり書き込み権限が与えられたと思ってみてください)
 このため、 passwd パッケージはユーザーを必要とするパッケージにユーザーを追加するのです。</p><p>急にユーザーが "システム環境設定: ユーザー" ペイン (10.2.x) あるいは
- "システム環境設定: アカウント" ペイン (10.3.x) 
+"システム環境設定: アカウント" ペイン (10.3.x) 
 に現れるのは不安ですが、削除したい気持ちを押えてください。</p><ul>
 <li>第一に、あなたはユーザーを利用するパッケージをインストールする選択をしたのです。
- ユーザーを削除したら意味がありませんよね?</li>
+ユーザーを削除したら意味がありませんよね?</li>
 <li>実際、 Mac OS X には既にユーザーが追加されていますが、気づいていないのです。
 www, daemon, nobody などがそうです。
 これらのユーザーは、ある種のサービスを行なう Unix 流のやり方なのです。
@@ -1023,13 +1018,13 @@ Apple がインストールしたユーザーは、 NetInfo マネージャ.app 
 </li>
 <li>このユーザーを削除することにした場合、十分気をつけてください。
 "システム環境設定: ユーザー" ペイン (10.2.x) あるいは
- "システム環境設定: アカウント" ペイン (10.3.x) 
+"システム環境設定: アカウント" ペイン (10.3.x) 
 から追加したユーザーのファイルには、適当な管理者権限が割り振られます。
 管理者アカウントのパーミッションが混乱するという報告があります。
 これはシステム環境設定のバグで、 Apple には報告されています。
 安全にユーザーを削除するには、 NetInfo マネージャ.app を使うか、ターミナルから <tt style="white-space: nowrap;">niutil</tt> コマンドを入力します。
 NetInfo の詳細については、 <tt style="white-space: nowrap;">niutil</tt> の man ページを読んでください。
- </li>
+</li>
 </ul><p>passwd パッケージのインストール中に、Fink がユーザーを追加するか<b>尋ねます</b>ので、実際はいきなりではないはずです。</p></div>
 </a>
 <a name="usage-general.compile-myself">
@@ -1369,26 +1364,26 @@ sudo apt-get install fink</pre>
 </a>
 <a name="usage-packages.wants-xfree86-on-upgrade">
 <div class="question"><p><b>Q9.12: 
-    10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
-    </b></p></div>
+10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
+</b></p></div>
 <div class="answer"><p><b>A:</b> 
-    以下の古い代替パッケージのうちいずれかを削除する必要があります:
-    <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt>, 
-    <tt style="white-space: nowrap;">system-xfree86-43</tt> 。
-    自分でインストールした X11 の設定を Fink が行ない、バーチャルパッケージを作成します。
-    他のパッケージが <tt style="white-space: nowrap;">system-xfree86</tt> に依存しているため、以下のコマンドを使い
-    </p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>
-    古いバージョンを削除します。
-    インストールの確認は、
-    </p><pre>fink list -i system-xfree86</pre><p>
-    とし、 <tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>
-    があるか確認します。
-    X11SDK もインストールされている場合、 <tt style="white-space: nowrap;">system-xfree86-dev</tt> も確認します。
-    </p><p>
-    これでも問題が解決されない場合、上の
-    <a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86 or X.org</a>
-    を参照してください。
-    </p></div>
+以下の古い代替パッケージのうちいずれかを削除する必要があります:
+<tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt>, 
+<tt style="white-space: nowrap;">system-xfree86-43</tt> 。
+自分でインストールした X11 の設定を Fink が行ない、バーチャルパッケージを作成します。
+他のパッケージが <tt style="white-space: nowrap;">system-xfree86</tt> に依存しているため、以下のコマンドを使い
+</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>
+古いバージョンを削除します。
+インストールの確認は、
+</p><pre>fink list -i system-xfree86</pre><p>
+とし、 <tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>
+があるか確認します。
+X11SDK もインストールされている場合、 <tt style="white-space: nowrap;">system-xfree86-dev</tt> も確認します。
+</p><p>
+これでも問題が解決されない場合、上の
+<a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86 or X.org</a>
+を参照してください。
+</p></div>
 </a>
 <a name="usage-packages.special-x11-debug">
 <div class="question"><p><b>Q9.13: まだ X11 と Fink の問題が解決されません。</b></p></div>
@@ -1413,12 +1408,12 @@ fink selfupdate; fink index</pre><p>
 		古いバージョンの  <tt style="white-space: nowrap;">fink</tt> を使っている場合、Perl スクリプト
 		(Martin Costabel 作成)　で同様の情報が得られます。
 		</p><ul>
-          <li>入手先: <a href="http://perso.wanadoo.fr/costabel/fink-x11-debug">http://perso.wanadoo.fr/costabel/fink-x11-debug</a>
-          </li>
-          <li>好きな場所に保存</li>
-          <li>ターミナルウィンドウから実行: <pre>perl fink-x11-debug</pre>
-          </li>
-        </ul></div>
+<li>入手先: <a href="http://perso.wanadoo.fr/costabel/fink-x11-debug">http://perso.wanadoo.fr/costabel/fink-x11-debug</a>
+</li>
+<li>好きな場所に保存</li>
+<li>ターミナルウィンドウから実行: <pre>perl fink-x11-debug</pre>
+</li>
+</ul></div>
 </a>
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
