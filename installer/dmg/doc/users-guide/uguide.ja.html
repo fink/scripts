@@ -14,7 +14,7 @@ Fink ユーザーズガイドへようこそ。
 このガイドでは、ソースからとバイナリからの両方について、初めてのインストールとアップグレードの仕方について書かれています。
 パッケージインストールとメンテナンスのことも書かれています。
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloding">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
 
 
 <h3><a name="intro.what">1.1 Fink とは何ですか?</a></h3>
@@ -222,34 +222,38 @@ bash, zsh, sh または似たようなものであれば、 bourne シェルの�
   <p>
    Bourne シェル系 (sh, bash, zsh など) を使っている場合、以下の行をホームディレクトリ内の <tt style="white-space: nowrap;">.profile</tt> ファイルに追加して下さい (あるいは、 <tt style="white-space: nowrap;">.bash_profile</tt> がある場合、こちらを使って下さい):
   </p>
-  <pre>source /sw/bin/init.sh</pre>
+  <pre>. /sw/bin/init.sh</pre>
   <p>
    行追加の方法を知らない場合、以下のコマンドを実行して下さい:
   </p>
   <pre>cd pico .profile</pre>
-  <p>
-   フルスクリーン (フル・ターミナルウィンドウ) テキストエディタになり、 <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt> 行をタイプできるようになります。
-   "New file" という文字が出ていても大丈夫です。
-   行を追加したら、最低一回はリターンキーを押して下さい。
-   その後、 Control-O, Return, Control-X と押して、エディタから抜けて下さい。
-  </p>
+<p>
+フルスクリーン (フル・ターミナルウィンドウ) テキストエディタになり、 
+<tt style="white-space: nowrap;">. /sw/bin/init.sh</tt> 行をタイプできるようになります。
+"New file" という文字が出ていても大丈夫です。
+行を追加したら、最低一回はリターンキーを押して下さい。
+その後、 Control-O, Return, Control-X と押して、エディタから抜けて下さい。
+</p>
  </li>
  <li>
   <p>C シェル (Mac OS X 10.2 までのデフォルト) </p>
   <p>
-   tcsh を使っている場合、以下の行をホームディレクトリ内の <tt style="white-space: nowrap;">.cshrc</tt> ファイルに追加して下さい:
+   tcsh を使っている場合、以下の行をホームディレクトリ内の 
+   <tt style="white-space: nowrap;">.cshrc</tt> ファイルに追加して下さい:
   </p>
   <pre>source /sw/bin/init.csh</pre>
   <p>
    行追加の方法を知らない場合、以下のコマンドを実行して下さい:
   </p>
-  <pre>cd pico .cshrc</pre>
-  <p>
-   フルスクリーン (フル・ターミナルウィンドウ) テキストエディタになり、 <tt style="white-space: nowrap;">source /sw/bin/init.csh</tt> 行をタイプできるようになります。
-   "New file" という文字が出ていても大丈夫です。
-   行を追加したら、最低一回はリターンキーを押して下さい。
-   その後、 Control-O, Return, Control-X と押して、エディタから抜けて下さい。
-  </p>
+<pre>cd
+pico .profile</pre>
+<p>
+フルスクリーン (フル・ターミナルウィンドウ) テキストエディタになり、 
+<tt style="white-space: nowrap;">source /sw/bin/init.csh</tt> 行をタイプできるようになります。
+"New file" という文字が出ていても大丈夫です。
+行を追加したら、最低一回はリターンキーを押して下さい。
+その後、 Control-O, Return, Control-X と押して、エディタから抜けて下さい。
+</p>
   <p>状況によっては、さらに数行編集する必要がある場合もあります:</p>
   <ol>
   <li>
@@ -268,8 +272,7 @@ bash, zsh, sh または似たようなものであれば、 bourne シェルの�
   ここで問題は、 <tt style="white-space: nowrap;">~/.login</tt> が <tt style="white-space: nowrap;">~/.tcshrc</tt> の後で実行され、 <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt> を source することです。
   後者は、あなたの設定した PATH を上書きする行を含んでいます。
   <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt> を作成するのがよいでしょう:</p>
-  <pre>mkdir ~/Library/init
-mkdir ~/Library/init/tcsh
+<pre>mkdir -p ~/Library/init/tcsh
 pico ~/library/init/tcsh/path</pre>
   <p>としてから:</p>
   <pre>source ~/.cshrc</pre>
@@ -311,13 +314,13 @@ Fink のパッケージはそれぞれ設定を追加することができます
 <p>
 <tt style="white-space: nowrap;">dselect</tt> は、入手可能なパッケージの一覧を表示し、インストールするものを選択できるプログラムです。
 これはターミナル.app 内で動作しますが、 "スクリーン" 全体を簡単なキーボードナビゲーションで使います。
-他のパッケージ管理ツールと同様、 <tt style="white-space: nowrap;">dselect</tt> はルート権限を必要とするので、あらかじめ root になるか、 sudo を使い:
+他のパッケージ管理ツールと同様、 <tt style="white-space: nowrap;">dselect</tt> はルート権限を必要とするので、sudo を使い:
 </p>
 <pre>sudo dselect</pre>
 <p>
 とします。
 <b>注記：</b>
-<tt style="white-space: nowrap;">dselect</tt> は OSX ターミナル上では問題があります。
+<tt style="white-space: nowrap;">dselect</tt> は Mac OS X ターミナル上では問題があります。
 これを避けるには以下のコマンドを先に実行するか、起動ファイル (例 <tt style="white-space: nowrap;">.cshrc</tt> | <tt style="white-space: nowrap;">.profile</tt>) に書いておく必要があります。
 </p>
 <p>tcsh の場合:</p>
@@ -769,7 +772,7 @@ High (全て報告する)
 </li>
 </ul>
 
-<h3><a name="conf.downloding">5.5 ダウンロード設定</a></h3>
+<h3><a name="conf.downloading">5.5 ダウンロード設定</a></h3>
 
 <p>Fink がダウンロードする手段を変える設定はいくつかあります。</p>
 <ul>
@@ -1025,7 +1028,7 @@ fetch と同様、以前ダウンロードしたかどうかに関わらず tarb
 <h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
 
 <p>
-<b>全ての</b>パッケージソースファイルをダウンロードします。
+ローカルに存在しない<b>全ての</b>パッケージソースファイルをダウンロードします。
 このコマンドは、システム上に無いパッケージのみダウンロードします。</p>
 
 <h3><a name="usage.build">6.11 build</a></h3>
@@ -1109,4 +1112,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.ja.xml,v 1.3 2004/02/24 03:03:42 babayoshihiko Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.ja.xml,v 1.4 2004/03/11 23:56:35 babayoshihiko Exp $</i></p></body></html>
