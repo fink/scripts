@@ -38,10 +38,10 @@ use Getopt::Std;
 
 # Program that performs copies. You may prefer CpMac.
 # If you want to use UFS, you need to run "cp" as root (I suggest using sudo)
-#my @copy = qw{cp};
-#my @copyOptions = qw{-R};
-my @copy = qw{/Developer/Tools/CpMac};
-my @copyOptions = qw{-r};
+my @copy = qw{cp};
+my @copyOptions = qw{-R};
+#my @copy = qw{/Developer/Tools/CpMac};
+#my @copyOptions = qw{-r};
 
 # Command to use to expand shell metacharacters: A string because we WANT to use the shell
 my $expand = "/bin/ls -d";
