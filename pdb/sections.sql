@@ -9,6 +9,7 @@ insert into sections values ('gnome', 'The GNOME desktop environment (version 1.
 insert into sections values ('graphics', 'Graphics applications and libraries');
 insert into sections values ('languages', 'Programming languages (compilers, interpreters)');
 insert into sections values ('libs', 'General purpose libraries');
+insert into sections values ('libs/perlmods', 'Perl libraries');
 insert into sections values ('net', 'Network-related applications and libraries');
 insert into sections values ('sci', 'Scientific applications');
 insert into sections values ('shells', 'Shells a.k.a. command line interpreters');
