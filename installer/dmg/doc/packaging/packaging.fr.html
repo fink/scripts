@@ -896,6 +896,8 @@ asi-JP: ftp://ftp.qiixbar.jp/pub/mirror/bar
 eur-DE: ftp://ftp.barfoo.de/bar
 Primary: ftp://ftp.barbarorg/pub/
 &lt;&lt;</pre>
+<p>
+Les codes des continents et des pays se trouvent dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>, qui est partie intégrante des paquets fink et fink-mirrors.</p>
 </td></tr><tr valign="top"><td>Source</td><td>
 <p>
 URL de l'archive tar du source. Ce doit être une URL HTTP ou FTP, mais Fink ne fait pas de vérification  - il se contente de passer l'URL à wget. Ce champ gère un type spécial d'URL pour les miroirs : <tt style="white-space: nowrap;">miroir:&lt;nom-miroir&gt;:&lt;chemin-relatif&gt;</tt>. Ainsi, la définition du miroir <b>nom-miroir</b> est récupérée dans le fichier de configuration de Fink, la partie <b>chemin-relatif</b> y est ajoutée, et  c'est l'ensemble qui est utilisé comme réelle URL. Chaque <b>nom-miroir</b> reconnu est stocké dans le fichier <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt>, qui fait partie du paquet fink ou du packet fink-mirrors. Par ailleurs, l'utilisation de  <tt style="white-space: nowrap;">custom</tt> comme <b>nom-miroir</b> oblige Fink à utiliser le champ <tt style="white-space: nowrap;">CustomMirror</tt>. L'interprétation des raccourcis a lieu avant utilisation de l'URL. N'oubliez pas que %n correspond à toutes les variantes du champ  %type_, il est donc conseillé d'utiliser ici %{ni} (avec, éventuellement, des spécifications de %type_).
@@ -1350,4 +1352,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.49 2004/11/02 02:38:51 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.50 2004/11/05 01:15:31 michga Exp $</i></p></body></html>
