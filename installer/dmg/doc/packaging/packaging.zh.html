@@ -168,6 +168,9 @@ SplitOff: &lt;&lt;
 <p>
 父软件包的名字（<b>N</b>ame），除非在 <tt style="white-space: nowrap;">SplitOff</tt> 中，否则应该和 %n 相同
 </p>
+<p>
+注意：如果父 <tt style="white-space: nowrap;">Package</tt> 字段包含 %type_*[]，那些百分号扩展的值<b>将</b>被包括在 <tt style="white-space: nowrap;">SplitOff</tt> 块的 %N 中(因为它们被包括在父字段的 %n 中)。
+</p>
 </td></tr><tr valign="top"><td>%e</td><td>
 <p>
 软件包的额外版本标识（<b>e</b>poch）。它主要用于强行替代版本号的顺序，比方说你现在已经有一个 2.0Beta1 版，然后现在 2.0 版出来了，显然 2.0 版应该是一个更新的版本。但是 字符串比较的结果却是 2.0Beta1 &lt; 2.0。所以，要么你只能把 2.0 命名为 2.0Final，要么你使用 epoch 来强行制定版本的先后顺序。比方说：epcho 1, version 1.0 是一个比 epcho 0, version 2.0 更新的版本。
@@ -192,6 +195,7 @@ SplitOff: &lt;&lt;
 <p>
 要打包的全套文件将被构建于的目标（<b>d</b>estination）目录，例如：
 <tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>。
+这个临时目录在编译过程的安装阶段将作为根目录位置。
 你不应该假设 <tt style="white-space: nowrap;">root-%f</tt> 会在 <tt style="white-space: nowrap;">%p/src</tt> 中，因为用户可以通过 <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> 文件中的 <tt style="white-space: nowrap;">Buildpath</tt> 字段来改变它的位置。
 </p>
 </td></tr><tr valign="top"><td>%D</td><td>
@@ -213,7 +217,9 @@ SplitOff: &lt;&lt;
 </td></tr><tr valign="top"><td>%b</td><td>
 <p>
 构建（<b>b</b>uild）过程所在的目录，例如：<tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>。
-你不应该假设 <tt style="white-space: nowrap;">%f</tt> 一定在 <tt style="white-space: nowrap;">%p/src</tt> 中，因为用户可以通过 <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> 文件中的 <tt style="white-space: nowrap;">Buildpath</tt> 字段来改变它。</p>
+你不应该假设 <tt style="white-space: nowrap;">%f</tt> 一定在 <tt style="white-space: nowrap;">%p/src</tt> 中，因为用户可以通过 <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> 文件中的 <tt style="white-space: nowrap;">Buildpath</tt> 字段来改变它。
+最内部的目录根据 <tt style="white-space: nowrap;">Source</tt> 文件名来命名，或是 <tt style="white-space: nowrap;">SourceDirectory</tt> 字段(如果存在的话)的值，或在 <tt style="white-space: nowrap;">NoSourceDirectory</tt> 为 <tt style="white-space: nowrap;">true</tt> 的时候不使用它。
+</p>
 <p>
 注意：仅在没有其它选择的情况下才使用它。构建目录是脚本运行的当前目录；在命令中你应该使用相对路径。
 </p>
@@ -229,6 +235,20 @@ SplitOff: &lt;&lt;
 </td></tr><tr valign="top"><td>%%</td><td>
 <p>
 百分号字符（它部分展开后面跟着它的东西）。展开严格按照从左到右的顺序进行，所以 %%n 和软件包名没有关系，而只是字符串 %n。（从 fink-0.18.0 开始引入）
+</p>
+</td></tr><tr valign="top"><td>%type_raw[<b>类型</b>], %type_pkg[<b>类型</b>]</td><td>
+<p>
+对给定<b>类型</b>返回的代表子类型的伪哈希值。
+查阅本文档后面关于 <tt style="white-space: nowrap;">Type</tt> 字段的内容。
+_raw 形式表明使用子类型字符串的精确形式，
+_pkg 形式表明使用去除句点之后的形式(就好象 Fink 的语言版本软件包的命名约定一样)。(在 fink 的 CVS 0.19.2 后版本中引入)。
+</p>
+</td></tr><tr valign="top"><td>%ni, %Ni</td><td>
+<p>
+软件包的固定名称(<b>n</b>ame <b>i</b>nvariant)部分。
+它们和 %n 和 %N 类似，除了所有 %type_pkg[] 和 %type_raw[] 被去掉。
+(在 fink 的 CVS 0.19.2 后版本中引入)。
+你应该使用 %{ni} 和 %{Ni} 以避免与 %n 和 %N 扩展相混淆。
 </p>
 </td></tr></table>
 
@@ -327,7 +347,7 @@ Fink 对于共享库有了新的规则，它从 2002 年 2 月开始生效。
 对于一些软件，可以通过一个主软件包和一个 -shlibs 软件包来组成；另外的一些情况下，你还需要第三个软件包。新的
 <tt style="white-space: nowrap;">SplitOff</tt> 字段正是为了简化这种情况。
 </p><p>
-当需要第三个软件包的时候，有两种不同的命名办法，取决于共享库是软件包的主要功能，还是可执行程序是主要功能。对于第一种情况，使用下面的命名模式：
+当需要第三个软件包的时候，有两种不同的命名办法，取决于共享库是软件包的主要功能(情况一)，还是可执行程序是主要功能(情况二)。对于第一种情况，使用下面的命名模式：
 </p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Package</th><th align="left">Contents</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-shlibs</tt></td><td><p>共享库</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo</tt></td><td><p>头文件</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-bin</tt></td><td><p>二进制执行文件，等等</p></td></tr></table>
 
@@ -706,7 +726,13 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 不可以使用下划线("_"),不可以使用大写字母。
 这是一个必需字段。
 </p>
-<p>从 fink 0.9.9 开始，这个字段以及 Depends，BuildDepends，Provides，Conflicts，Replaces，Recommends，Suggests 和 Enhances 字段可以使用百分号展开。</p>
+<p>对这个字段，只可应用 %N、%Ni、%type_raw[] 和 %type_pkg[] 这几种百分号扩展。</p>
+<p>
+作为 Fink 的打包规则，给定的软件包应该总是使用相同的选项进行编译。
+如果对一个软件包由多个变种(查阅关于 <tt style="white-space: nowrap;">Type</tt> 字段的文档)，你必须在 <tt style="white-space: nowrap;">Package</tt> 字段中加入特定变种的信息(查阅关于 %type_pkg[] 百分号展开的文档)。
+这样每个变种会由一个唯一的名称，软件包名字会指明包含了哪些变种的选项。
+注意在 <tt style="white-space: nowrap;">Package</tt> 字段使用 %type_pkg[] 和 %type_raw[] 百分号展开是新的功能，并与旧的 fink 版本严重不兼容，所以这些软件包的描述应该嵌入在 <tt style="white-space: nowrap;">InfoN</tt> (N&gt;=2)字段中。
+</p>
 </td></tr><tr valign="top"><td>Version</td><td>
 <p>
 上游版本号。与 Package 字段具有同样的限制。
@@ -744,11 +770,63 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 从 fink 0.18.0 开始，你可以通过设置 <tt style="white-space: nowrap;">Source: none</tt> 来获得同样的效果。这样你可以把 "Type" 字段用于其它目的(比如：<tt style="white-space: nowrap;">Type: perl</tt>，等等)。
 </p>
 <p>
-最后，从 fink 0.9.5 开始，开始有 <tt style="white-space: nowrap;">perl</tt> 类型，它会对编译和安装脚本使用另外一套默认值。
+从 fink 0.9.5 开始，开始有 <tt style="white-space: nowrap;">perl</tt> 类型，它会对编译和安装脚本使用另外一套默认值。
 从 fink 0.13.0 开始，有个这种类型的变种，
 <tt style="white-space: nowrap;">perl $version</tt>，其中 $version 是 perl 的一个版本号，它由句点分开的三个数字组成，例如： 
 <tt style="white-space: nowrap;">perl 5.6.0</tt>。
 </p>
+<p>
+在 fink-0.19.2 后的一个 CVS 版本开始，language/language-version use 被通用化，以允许使用任意维护者定义的类型以及相应的子类型，并对一个给定的软件包可以使用多于一种类型。
+类型和子类型均为不包含空白字符的任意字符串(但不应该使括号、逗号和百分号)；不会进行百分号展开。
+多种类型值(每个类型可以有一个用空白字符分开的可选的子类型)可以用逗号分隔的列表指定。
+</p>
+<p>
+另外，存在“变种”的概念，即一个 .info 文件描述一族相关的使用不同编译选项的软件包。
+这个过程的关键是使用一系列子类型。
+我们不使用单个字符串，而是使用括号中的一列用空格分开的字符串。
+Fink 会对每种子类型克隆软件包描述文件，并在其中使用其中一个子类型。
+例如：
+</p>
+<pre>Type: perl (5.6.0 5.8.1)</pre>
+<p>
+提供两个软件包描述，其中一个作为 <tt style="white-space: nowrap;">Type: perl 5.6.0</tt>，另外一个作为 <tt style="white-space: nowrap;">Type: perl 5.8.1</tt>。
+特殊的子类型清单 "(boolean)" 代表一个包含它自己和一个句点的清单，因此下面的两种形式是相同的：
+</p>
+<pre>
+Type: -x11 (boolean)
+Type: -x11 (-x11 .)
+</pre>
+<p>
+子类型清单展开/软件包克隆是递归的；如果在子类型清单中有多个类型，你会活得所有可能的组合：
+</p>
+<pre>Type: -ssl (boolean), perl (5.6.0 5.8.1)</pre>
+<p>
+可以使用 %type_raw[] 和 %type_pkg[] 伪哈希值来在其它字段中访问特定的变种子类型。
+这里是两个示范的 .info 片段：
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: foo-pm%type_pkg[perl]
+Type: perl (5.6.0 5.8.1)
+Depends: perl-core%type_pkg[perl]
+ &lt;&lt;
+</pre>
+<pre>
+Info2: &lt;&lt;
+Package: bar%type_pkg[-x11]
+Type: -x11 (boolean)
+Depends: (%type_raw[-x11] = -x11) x11
+CompileScript:  &lt;&lt;
+  #!/bin/bash -ev
+  if [ "%type_raw[-x11]" == "-x11" ]; then
+    ./configure %c --with-x11
+  else
+    ./configure %c --without-x11
+  fi
+  make
+&lt;&lt;
+&lt;&lt;
+</pre>
 </td></tr><tr valign="top"><td>License</td><td>
 <p>
 本字段给出软件包发布所依据的授权协议的性质。它必须是本文档前面<a href="#policy.licenses">软件包授权协议</a>中所描述的值之一。 另外，只有软件包确实满足打包规则在这方面的要求时，比如已经在软件包的 doc 目录安装了一份授权协议，才能够设置这个字段。
@@ -773,6 +851,7 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Depends</td><td>
 <p>
 在本软件包构建前必需安装的软件包的列表。
+在这个字段中会进行百分号展开(也包括这部分中的其它软件包列表字段：BuildDepends、Provides、Conflicts、Replaces、Recommends、Suggests 和 Enhances)。
 通常，它只是以逗号分割软件包名清单，但 Fink 现在也和 dpkg 一样支持替代软件包和版本子句。
 一个体现全部特性的例子是：
 </p>
@@ -865,6 +944,7 @@ Primary: ftp://ftp.barbarorg/pub/
 这会在 Fink 的配置中寻找 <b>mirror-name</b> 镜像的设置，然后添加  <b>relative-path</b> 部分，并把结果作为实际的 URL。已知的 <b>mirror-name</b> 被列在 <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt> 中。它是 fink 或 fink-mirror 软件包的一部分。另一方面，使用 <tt style="white-space: nowrap;">custom</tt> 作为 <b>mirror-name</b> 会使 Fink 使用 <tt style="white-space: nowrap;">CustomMirror</tt>
 字段。
 在 URL 使用前，会进行百分号展开。
+记住 %n 包括所有 %type_ 变种数据，所以你可能会希望在这里使用 %ni(也许还包括一些特定的 %type_ 展开)。
 </p>
 <p>
 从 0.18.0 开始，<tt style="white-space: nowrap;">Source: none</tt> 具有特别的含义。它标识不需要下载源文件。参考
@@ -875,7 +955,7 @@ Primary: ftp://ftp.barbarorg/pub/
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b></td><td>
 <p>
-如果一个软件包包含几个压缩档，在这些额外的字段中说明它们呢，从 N = 2 开始。所以，第一个压缩档(它应该是所谓的"主"压缩档)会被放在 <tt style="white-space: nowrap;">Source</tt>，第二个压缩档则作为 <tt style="white-space: nowrap;">Source2</tt>，依此类推。这里的规则和 Source 是一样的，区别只是 "gnu" 和 "gnome" 捷径不会被展开-那样做并没有意义。从 fink 的 0.19.1 后的一个 CVS 版本开始，你不在需要对 N 使用一个连续的值。不过，你仍然要保证它们是不重复的。
+如果一个软件包包含几个压缩档，在这些额外的字段中说明它们呢，从 N = 2 开始。所以，第一个压缩档(它应该是所谓的"主"压缩档)会被放在 <tt style="white-space: nowrap;">Source</tt>，第二个压缩档则作为 <tt style="white-space: nowrap;">Source2</tt>，依此类推。这里的规则和 Source 是一样的，区别只是 "gnu" 和 "gnome" 捷径不会被展开-那样做并没有意义。从 fink 的 0.19.2 后的一个 CVS 版本开始，你可以使用任意(不需要连续)的 N &gt;= 2 的整数值。不过，你仍然要保证它们是不重复的。
 </p>
 </td></tr><tr valign="top"><td>SourceDirectory</td><td>
 <p>
@@ -905,7 +985,7 @@ Primary: ftp://ftp.barbarorg/pub/
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b>Rename</td><td>
 <p>
-这和 <tt style="white-space: nowrap;">SourceRename</tt> 字段是一模一样的，除了它是用来重命名 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段指定的第 N 个压缩档外。参考其它有关的部分来了解使用的例子。
+这和 <tt style="white-space: nowrap;">SourceRename</tt> 字段是一模一样的，除了它是用来重命名与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的压缩档外。参考其它有关的部分来了解使用的例子。
 </p>
 </td></tr><tr valign="top"><td>Source-MD5</td><td>
 <p>
@@ -930,7 +1010,7 @@ Primary: ftp://ftp.barbarorg/pub/
 </td></tr><tr valign="top"><td>Source<b>N</b>-MD5</td><td>
 <p>
 <b>从 fink 0.10.0 开始。</b>
-这个字段和 <tt style="white-space: nowrap;">Source-MD5</tt> 字段完全一样，除了它是指定与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的第 N 个压缩档的 MD5 校验值。
+这个字段和 <tt style="white-space: nowrap;">Source-MD5</tt> 字段完全一样，除了它是指定与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的压缩档的 MD5 校验值。
 </p>
 </td></tr><tr valign="top"><td>TarFilesRename</td><td>
 <p>
@@ -956,7 +1036,7 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 </td></tr><tr valign="top"><td>Tar<b>N</b>FilesRename</td><td>
 <p>
 <b>从 fink 0.10.0 开始。</b>
-这和 <tt style="white-space: nowrap;">TarFilesRename</tt> 字段一致，除了它作用于与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的第 N 个压缩档以外。
+这和 <tt style="white-space: nowrap;">TarFilesRename</tt> 字段一致，除了它作用于与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的压缩档以外。
 </p>
 </td></tr></table>
 
@@ -1012,6 +1092,10 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 应用于 <tt style="white-space: nowrap;">patch -p1
 &lt;<b>patch-file</b></tt> 命令的补丁文件的名字。这应该只是一个文件名；正确的路径会被自动添加。在本字段中会应用百分号展开。所以典型的设置值只是
 <tt style="white-space: nowrap;">%f.patch</tt> 或 <tt style="white-space: nowrap;">%n.patch</tt>。补丁会在 PatchScript 脚本运行之前应用(如果有的话)。
+</p>
+<p>
+记住 %n 包括所有 %type_ 变种数据，所以你可能需要在这里使用 %ni (也许需要包括一些特定的 %type_ 展开)。
+维护一个单独的补丁文件，然后在 <tt style="white-space: nowrap;">PatchScript</tt> 字段中列出与变种有关的修改会比对每个变种使用单独的补丁文件容易些。
 </p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
 <p>
@@ -1208,7 +1292,7 @@ Shlibs 声明表明维护者承诺这个名字和至少
 <p>
 <b>Introduced in fink 0.9.9.</b>
 这和 <tt style="white-space: nowrap;">SplitOff</tt> 一样，用于从同一个编译/安装过程产生第三、第四个等等软件包。
-从 fink 0.19.1 后的一个 CVS 版本开始，你不再需要使用连续编号的 N。不过，你仍然要保证它们是互不重复的。
+从 fink 0.19.2 后的一个 CVS 版本开始，你可以使用 N &gt;=2 的任意整数值。不过，你仍然要保证它们是互不重复的。
 </p>
 </td></tr><tr valign="top"><td>Files</td><td>
 <p>
@@ -1310,32 +1394,46 @@ StartupItems (例如 web 服务器)。
 <p>从 fink 0.9.9 开始，可以用一个单独的 .info 文件来构建多个软件包。
 安装阶段和正常的类似，执行
 <tt style="white-space: nowrap;">InstallScript</tt> 和 <tt style="white-space: nowrap;">DocFiles</tt> 命令。
-如果存在 <tt style="white-space: nowrap;">SplitOff</tt> 字段，会触发第二个安装目录的创建。
-在 <tt style="white-space: nowrap;">SplitOff</tt> 字段里面，新的安装目录以 %i 代表，
+如果存在 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 字段，会触发额外一个安装目录的创建。
+在 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 字段里面，新的安装目录以 %i 代表，
 而父文件包的原始安装目录则用 %I 代表。
 </p>
 <p>
-<tt style="white-space: nowrap;">SplitOff</tt> 字段必须包含它自己的一系列字段。
+每个 <tt style="white-space: nowrap;">SplitOff</tt> 和 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 字段必须包含它自己的一系列字段。
 事实上，它由一个备有包含字段的一个完整的软件包描述组成。下面是在子描述里面可以包含的内容(分类说明)：
 </p>
 <ul>
-<li>初始化数据：只需要指明 <tt style="white-space: nowrap;">Package</tt> 字段，其它的内容都可以从父软件包进行继承。你可能需要通过声明 <tt style="white-space: nowrap;">SplitOff</tt> 内的字段修改 <tt style="white-space: nowrap;">Type</tt> 和 <tt style="white-space: nowrap;">License</tt> 字段。可以使用百分号扩展，而且通常使用 %N 来引用父软件包的名字会很方便。</li>
+<li>初始化数据：只需要指明 <tt style="white-space: nowrap;">Package</tt> 字段，其它的内容都可以从父软件包进行继承。你可能需要通过声明 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 内的字段修改 <tt style="white-space: nowrap;">Type</tt> 和 <tt style="white-space: nowrap;">License</tt> 字段。可以使用百分号扩展，而且通常使用 %N 来引用父软件包的名字会很方便。</li>
 <li>依赖关系：所有的依赖关系有关的字段都可以使用。</li>
 <li>解压阶段，补丁阶段，编译阶段：这些字段是无关的，会被忽略。</li>
-<li>安装阶段，构建阶段：全部的字段都可以使用(除了 <tt style="white-space: nowrap;">SplitOff</tt> 字段不能在 <tt style="white-space: nowrap;">SplitOff</tt>
-字段里面使用以外)。</li>
-<li>额外数据：这会从父软件包继承，但可以通过在 <tt style="white-space: nowrap;">SplitOff</tt> 中声明这些字段而进行修改。</li>
+<li>安装阶段，构建阶段：全部的字段都可以使用(除了 SplitOff 不能包括新的 SplitOff 以外)。</li>
+<li>额外数据：这会从父软件包继承，但可以通过在 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 中声明这些字段而进行修改。</li>
 </ul>
 <p>
 在安装阶段，父文件包的 <tt style="white-space: nowrap;">InstallScript</tt> 和 
 <tt style="white-space: nowrap;">DocFiles</tt> 会被首先执行。
-然后是 <tt style="white-space: nowrap;">SplitOff</tt> 字段里面的 <tt style="white-space: nowrap;">Files</tt> 命令，它会导致命令中所列的文件和目录会从父文件包的安装目录 %I 移到当前的安装目录 %i。然后<tt style="white-space: nowrap;">SplitOff</tt> 软件包的 <tt style="white-space: nowrap;">InstallScript</tt>
+然后处理 <tt style="white-space: nowrap;">SplitOff</tt> 和 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 字段。对每个这种字段，<tt style="white-space: nowrap;">Files</tt> 命令会导致命令中所列的文件和目录会从父文件包的安装目录 %I 移到当前的安装目录 %i。然后给定 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 软件包的 <tt style="white-space: nowrap;">InstallScript</tt>
 和 <tt style="white-space: nowrap;">DocFiles</tt> 会被执行。
-</p><p>
-如果还有通过 <tt style="white-space: nowrap;">SplitOff2</tt>，<tt style="white-space: nowrap;">SplitOff3</tt>等等指明的更多子软件包，命令
-(<tt style="white-space: nowrap;">Files</tt>，<tt style="white-space: nowrap;">InstallScript</tt>，<tt style="white-space: nowrap;">DocFiles</tt>)
-会以同样的顺序依此对它们进行执行。
-</p><p>
+</p>
+<p>
+目前，<tt style="white-space: nowrap;">SplitOff</tt> 会被首先执行(如果存在的话)，然后是按照 N 的顺序执行每个 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>。
+不过，在将来这可能会被改变。因此，例如：
+</p>
+<pre>
+SplitOff: &lt;&lt;
+  Description: Some header files
+  Files: include/foo.h include/bar.h
+&lt;&lt;
+SplitOff2: &lt;&lt;
+  Description: All other header files
+  Files: include/*
+&lt;&lt;
+</pre>
+<p>
+只有 <tt style="white-space: nowrap;">SplitOff</tt> 在 <tt style="white-space: nowrap;">SplitOff2</tt> 之前处理才是正确的。
+比较安全的作法是在每个块中都显式列出每个文件(或使用更明确的文件名描述)。
+</p>
+<p>
 在构建阶段，每个软件包的安装/删除的前/后脚本会通过相应软件包构建阶段的命令来生成。
 </p><p>
 每个被构建的软件包都要求把授权协议文件存放到 %i/share/doc/%n (当然对于每个软件包 %n 有不同的取值)目录中。
@@ -1403,4 +1501,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.8 2004/04/16 01:06:34 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.9 2004/04/17 16:46:56 jeff_yecn Exp $</i></p></body></html>
