@@ -641,10 +641,8 @@ unstable/main   - 其它未稳定软件包
         </li>
         <li>
           <p>
-            <b>Distribution:</b> 10.1 或 10.2</p>
-          <p>Fink 需要知道你使用的 Mac OS X 版本是什么。
-10.1 指用户使用 Mac OS X 10.1，而 10.2 则只对那些使用 Mac OS X 10.2 "Jaguar" 的用户有效。
-Mac OS X 10.0 及更早的版本并不被支持。你不应该改变这个设置值。
+            <b>Distribution:</b> 10.1、10.2、10.2-gcc3.3 或 10.3</p>
+          <p>Fink 需要知道你使用的 Mac OS X 版本是什么。10.0 或更早的版本不能够被支持，从这个版本的 Fink 开始，10.1 也不被支持。对 10.2，只有安装了 2003 年八月开发工具升级的才可以被支持。这个字段是通过运行 <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt> 来设置的。你不应该手工改变这个设置值。
 </p>
         </li>
         <li>
@@ -680,6 +678,10 @@ Mac OS X 10.0 及更早的版本并不被支持。你不应该改变这个设置
           <p>
             <b>SelfUpdateNoCVS:</b> 布尔值</p>
           <p><tt style="white-space: nowrap;">fink selfupdate</tt>　命令会更新 Fink软件管理器到最新的版本。当这个选项设为 True 的时候，将保证不会使用协作式版本管理系统（CVS）来更新软件包。它由 <tt style="white-space: nowrap;">fink　selfupdate-cvs</tt> 命令自动设置，所以你不需要手工改变它。</p>
+        </li>
+        <li>
+        		<p><b>Buildpath:</b> 路径</p>
+        		<p>Fink 在从源代码编译的时候，需要创建几个临时的目录。默认情况下，它们被放置在 <tt style="white-space: nowrap;">/sw/src</tt> 下，不过，如果你想把它们放在其它地方的话，可以在这里指明路径。查阅本文档后面关于 <tt style="white-space: nowrap;">KeepRootDir</tt> 和 <tt style="white-space: nowrap;">KeepBuildDir</tt> 字段的描述获取关于这个临时目录的更多信息。</p>
         </li>
       </ul>
     
@@ -950,4 +952,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.zh.xml,v 1.3 2004/03/10 22:55:12 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.zh.xml,v 1.4 2004/03/19 20:59:04 jeff_yecn Exp $</i></p></body></html>
