@@ -227,12 +227,12 @@ the <b>f</b>ull package name, i.e. %n-%v-%r
 </p>
 </td></tr><tr valign="top"><td>%p, %P</td><td>
 <p>
-the <b>p</b>refix where Fink is installed, e.g. /sw
+the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;">/sw</tt>
 </p>
 </td></tr><tr valign="top"><td>%d</td><td>
 <p>
 the <b>d</b>estination directory where the tree to be packaged is built, e.g.
-/sw/src/root-gimp-1.2.1-1
+<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>
 </p>
 </td></tr><tr valign="top"><td>%D</td><td>
 <p>
@@ -254,7 +254,7 @@ the path where the p<b>a</b>tches can be found
 </p>
 </td></tr><tr valign="top"><td>%b</td><td>
 <p>
-the <b>b</b>uild directory, e.g. /sw/src/gimp-1.2.1-1/gimp-1.2.1 
+the <b>b</b>uild directory, e.g. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>
 </p>
 <p>
 Note: Use this only when there is no other way. The build directory is the
@@ -753,8 +753,8 @@ which depend on <tt style="white-space: nowrap;">foo</tt>.
 </p><p>
 Traditionally, the Fink packages for perl modules have the suffix 
 <tt style="white-space: nowrap;">-pm</tt>, and have been build using the <tt style="white-space: nowrap;">Type: perl</tt> 
-directive, which stores the perl module's files in /sw/lib/perl5 and/or
-/sw/lib/perl5/darwin.  Under the new policy, this storage location is only 
+directive, which stores the perl module's files in <tt style="white-space: nowrap;">/sw/lib/perl5</tt> and/or
+<tt style="white-space: nowrap;">/sw/lib/perl5/darwin</tt>.  Under the new policy, this storage location is only 
 permitted for perl modules which are independent of the version of perl 
 being used to compile them.
 </p><p>
@@ -766,7 +766,7 @@ of a file with a suffix <tt style="white-space: nowrap;">.bundle</tt>.
 A version-dependent perl module must be built using a versioned binary
 of perl, such as <tt style="white-space: nowrap;">perl5.6.0</tt>, and must store its files in
 versioned subdirectories of the standard perl directories, such as
-/sw/lib/perl5/5.6.0 and /sw/lib/perl5/5.6.0/darwin.  A new convention
+<tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> and <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt>.  A new convention
 is being introducted of using the suffix <tt style="white-space: nowrap;">-pm560</tt> for
 a perl module of version 5.6.0.  Similar storage and naming conventions
 are in force for other versions of perl, which will soon include 
@@ -948,12 +948,12 @@ In particular, the following should not be used:
 <p>To understand some of the fields, you need some knowledge of the
 build process Fink uses. It consists of five phases: unpack, patch,
 compile, install and build. The example paths below are for an
-installation in /sw and the package gimp-1.2.1-1.</p>
-<p>In the <b>unpack phase</b> the directory /sw/src/gimp-1.2.1-1 is created
+installation in <tt style="white-space: nowrap;">/sw</tt> and the package gimp-1.2.1-1.</p>
+<p>In the <b>unpack phase</b> the directory <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1</tt> is created
 and the source tarball(s) are unpacked there. In most cases, this will
 create a directory gimp-1.2.1 with the source in it; all following
 steps will be executed in that directory
-(i.e. /sw/src/gimp-1.2.1-1/gimp-1.2.1). Details can be controlled with
+(i.e. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>). Details can be controlled with
 the SourceDirectory, NoSourceDirectory and Source<b>N</b>ExtractDir
 fields.</p>
 <p>In the <b>patch phase</b> the source is patched so that it will
@@ -965,9 +965,9 @@ compiled. Usually this means calling the <tt style="white-space: nowrap;">config
 with some parameters and then issuing a <tt style="white-space: nowrap;">make</tt> command. See the
 CompileScript field description for details.</p>
 <p>In the <b>install phase</b> the package is installed to a temporary
-directory, /sw/src/root-gimp-1.2.1-1 (= %d). (Note the "root-" part.)
-All files that would normally be installed to /sw are installed in
-/sw/src/root-gimp-1.2.1-1/sw (= %i = %d%p) instead. See the
+directory, <tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt> (= %d). (Note the "root-" part.)
+All files that would normally be installed to <tt style="white-space: nowrap;">/sw</tt> are installed in
+<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1/sw</tt> (= %i = %d%p) instead. See the
 InstallScript field description for details.</p>
 <p>(<b>Introduced in fink 0.9.9.</b> It is possible to generate several
 packages from a single package description using the <tt style="white-space: nowrap;">SplitOff</tt>
@@ -1116,6 +1116,9 @@ For virtual packages it is allowed to list the names of the provided
 packages here; they will be handled appropriately.
 This fields also supports versioned dependencies like the Depends
 field, but not alternatives (wouldn't make sense).
+If a package is listed in its own Conflicts, it will be (silently)
+removed from that list. (Introduced in a post-0.18.2 CVS version of
+fink.)
 </p>
 <p>
 <b>Note:</b> Fink itself currently ignores this field.
@@ -1131,6 +1134,9 @@ Without this field, dpkg may generate errors when installing the
 package because files are still owned by the other package.
 It is also a hint that the two packages involved are genuine
 alternatives and one can be removed in favor of the other.
+If a package is listed in its own Replaces, it will be (silently)
+removed from that list. (Introduced in a post-0.18.2 CVS version of
+fink.)
 </p>
 <p>
 <b>Note:</b> Fink itself currently ignores this field.
@@ -1192,15 +1198,17 @@ supports a special URL scheme for mirrors:
 <tt style="white-space: nowrap;">mirror:&lt;mirror-name&gt;:&lt;relative-path&gt;</tt>. This will
 look up the mirror setting for <b>mirror-name</b> in Fink's
 configuration, append the <b>relative-path</b> part and use that as
-the actual URL. Alternatively, using <tt style="white-space: nowrap;">custom</tt> as the
+the actual URL. The known <b>mirror-name</b>s are listed in
+<tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt>, which is part of the fink or fink-mirrors
+package. Alternatively, using <tt style="white-space: nowrap;">custom</tt> as the
 <b>mirror-name</b> will cause Fink to use the <tt style="white-space: nowrap;">CustomMirror</tt>
 field.
+Before the URL is used, percent expansion takes place.
+</p>
+<p>
 Since fink 0.18.0, <tt style="white-space: nowrap;">Source: none</tt> has the special meaning
 that there is no source to fetch. See the description of the
 <tt style="white-space: nowrap;">Type</tt> field for more information.
-</p>
-<p>
-Before the URL is used, percent expansion takes place.
 The value <tt style="white-space: nowrap;">gnu</tt> is a shorthand for
 <tt style="white-space: nowrap;">mirror:gnu:%n/%n-%v.tar.gz</tt>; <tt style="white-space: nowrap;">gnome</tt> is a shorthand for
 <tt style="white-space: nowrap;">mirror:gnome:stable/sources/%n/%n-%v.tar.gz</tt>. The
@@ -1252,7 +1260,7 @@ caused by this, you would then use something like
 <pre>SourceRename: %n-%v.tar.gz</pre>
 <p>
 In the above example this would result in the tarball being stored under
-/sw/src/coolapp-1.2.3.tar.gz as one would expect.
+<tt style="white-space: nowrap;">/sw/src/coolapp-1.2.3.tar.gz</tt> as one would expect.
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b>Rename</td><td>
 <p>
@@ -1871,7 +1879,7 @@ Your package must provide each script in two variants: one for sh compatible she
 Also, their executable and read bits have to be set (i.e. install them with -m 755), otherwise they will not be loaded correctly.
 </p>
 <p>
-If you just need to set some environment variables (for example, QTDIR to /sw), you can use the RuntimeVars field which is provided as a convenient way to achieve exactly this.
+If you just need to set some environment variables (for example, QTDIR to '/sw'), you can use the RuntimeVars field which is provided as a convenient way to achieve exactly this.
 </p>
 
 
@@ -1881,4 +1889,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.60 2004/02/13 07:17:59 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.63 2004/02/13 07:44:11 dmacks Exp $</i></p></body></html>
