@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>Fink Documentation - Fink User's Guide</title></head><body><h1 style="text-align: center;">Fink User's Guide</h1>
 <p>
 <b>This document is a work in progress.</b>
@@ -264,62 +264,94 @@ In most cases, you can do this via the command
 </p>
 <pre>open /sw/bin/pathsetup.command</pre>
 <p>
-However, if that doesn't work for some reason, try the following.
-If you use tcsh (the default on Mac OS X), add the following line to
-the file <tt style="white-space: nowrap;">.cshrc</tt> in your home directory:
+However, if that doesn't work for some reason, you can configure it
+manually.  This will depend on the shell you are using, however.
+You can determine the shell you are using by opening a terminal and
+running the command:
 </p>
-<pre>source /sw/bin/init.csh</pre>
+<pre>echo $0</pre>
 <p>
-If you don't know how to add the line, run these commands:
+ If it says "csh" or "tcsh" in it, you are using the C shell.  If it is
+ bash, zsh, sh, or something similar, you are likely running a variant
+ of the bourne shell.
 </p>
-<pre>cd
+<ul>
+ <li>
+  <p>Bourne Shell (default on Mac OS X 10.3 and later) </p>
+  <p>
+   If you use a Bourne style shell (e.g. sh, bash, zsh), add the following
+   lines to the file <tt style="white-space: nowrap;">.profile</tt> in your home directory (or, if
+   you have an existing <tt style="white-space: nowrap;">.bash_profile</tt> file, you should use that
+   instead):
+  </p>
+  <pre>source /sw/bin/init.sh</pre>
+  <p>
+   If you don't know how to add the line, run these commands:
+  </p>
+  <pre>cd
+pico .profile</pre>
+  <p>
+   You are now in a full-screen (well, full terminal window) text editor and
+   can simply start typing the <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt> line.  It's
+   okay if there is a note that says "New file".  Be sure that you pressed
+   Return at least once after the line, then press Control-O, Return,
+   Control-X to get out of the editor.
+  </p>
+ </li>
+ <li>
+  <p>C Shell (default on Mac OS X 10.2 and earlier) </p>
+  <p>
+   If you use tcsh (the default on Mac OS X), add the following line to
+   the file <tt style="white-space: nowrap;">.cshrc</tt> in your home directory:
+  </p>
+  <pre>source /sw/bin/init.csh</pre>
+  <p>
+   If you don't know how to add the line, run these commands:
+  </p>
+  <pre>cd
 pico .cshrc</pre>
-<p>
-You are now in a full-screen (well, full terminal window) text editor
-and can simply start typing the <tt style="white-space: nowrap;">source /sw/bin/init.csh</tt>
-line.
-It's okay if there is a note that says "New file".
-Be sure that you pressed Return at least once after the line, then
-press Control-O, Return, Control-X to get out of the editor.
-</p>
-<p>There are a couple of common situations where you may need to edit additional files:</p>
-<ol>
-<li>
-<p>You have a <tt style="white-space: nowrap;">~/.tcshrc</tt>.</p>
-<p>Such a file occasionally gets created by third-party applications, or 
-you may have done it yourself.
-In any case what will happen is that <tt style="white-space: nowrap;">~/.tcshrc</tt> gets read and 
-<tt style="white-space: nowrap;">~/.cshrc</tt> is ignored.
-The recommended procedure is to edit <tt style="white-space: nowrap;">~/.tcshrc</tt> in a similar 
-manner to how you edited
-<tt style="white-space: nowrap;">~/.cshrc</tt> above, and add the following line at the end:</p>
-<pre>source ~/.cshrc</pre>
-<p>That way, if you ever need to remove <tt style="white-space: nowrap;">~/.tcshrc</tt>, you will be able to run Fink.</p>
-</li>
-<li>
-<p>You followed the instructions under <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
-<p>These instructions tell you to create a <tt style="white-space: nowrap;">~/.tcshrc</tt> and a<tt style="white-space: nowrap;"> ~/.login</tt> .  The problem in this case is with <tt style="white-space: nowrap;">~/.login</tt>, which gets run after <tt style="white-space: nowrap;">~/.tcshrc</tt>, and sources <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  The latter contains a line that overwrites your previous PATH setup.  What you should do in this case is create <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>:</p>
-<pre>mkdir ~/Library/init
-mkdir ~/Library/init/tcsh
-pico ~/library/init/tcsh/path</pre>
-<p>and put:</p>
-<pre>source ~/.cshrc</pre>
-<p>in it.  You should also modify your .tcshrc as in item 1 above, to make sure that your PATH is set correctly for situations where <tt style="white-space: nowrap;">~/.login</tt> doesn't get read.</p>
-</li>
-</ol>
-<p>
-Editing .cshrc (and other startup files) will only affect new shells (i.e. newly opened Terminal
-windows), so you should also run this command in all Terminal windows
-that you opened before you edited the file.
-You'll also need to run <tt style="white-space: nowrap;">rehash</tt> because tcsh caches the
-list of available commands internally.
-</p>
-<p>
-If you use a Bourne style shell (e.g. sh, bash, zsh), use
-<tt style="white-space: nowrap;">/sw/bin/init.sh</tt> instead.
-The file to edit varies with the shell, although <tt style="white-space: nowrap;">.profile</tt>
-should work for all Bourne style shells.
-</p>
+  <p>
+   You are now in a full-screen (well, full terminal window) text editor
+   and can simply start typing the <tt style="white-space: nowrap;">source /sw/bin/init.csh</tt>
+   line.
+   It's okay if there is a note that says "New file".
+   Be sure that you pressed Return at least once after the line, then
+   press Control-O, Return, Control-X to get out of the editor.
+  </p>
+  <p>There are a couple of common situations where you may need to edit additional files:</p>
+  <ol>
+  <li>
+  <p>You have a <tt style="white-space: nowrap;">~/.tcshrc</tt>.</p>
+  <p>Such a file occasionally gets created by third-party applications, or 
+  you may have done it yourself.
+  In any case what will happen is that <tt style="white-space: nowrap;">~/.tcshrc</tt> gets read and 
+  <tt style="white-space: nowrap;">~/.cshrc</tt> is ignored.
+  The recommended procedure is to edit <tt style="white-space: nowrap;">~/.tcshrc</tt> in a similar 
+  manner to how you edited
+  <tt style="white-space: nowrap;">~/.cshrc</tt> above, and add the following line at the end:</p>
+  <pre>source ~/.cshrc</pre>
+  <p>That way, if you ever need to remove <tt style="white-space: nowrap;">~/.tcshrc</tt>, you will be able to run Fink.</p>
+  </li>
+  <li>
+  <p>You followed the instructions under <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
+  <p>These instructions tell you to create a <tt style="white-space: nowrap;">~/.tcshrc</tt> and a<tt style="white-space: nowrap;"> ~/.login</tt> .  The problem in this case is with <tt style="white-space: nowrap;">~/.login</tt>, which gets run after <tt style="white-space: nowrap;">~/.tcshrc</tt>, and sources <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  The latter contains a line that overwrites your previous PATH setup.  What you should do in this case is create <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>:</p>
+  <pre>mkdir ~/Library/init
+  mkdir ~/Library/init/tcsh
+  pico ~/library/init/tcsh/path</pre>
+  <p>and put:</p>
+  <pre>source ~/.cshrc</pre>
+  <p>in it.  You should also modify your .tcshrc as in item 1 above, to make sure that your PATH is set correctly for situations where <tt style="white-space: nowrap;">~/.login</tt> doesn't get read.</p>
+  </li>
+  </ol>
+  <p>
+  Editing .cshrc (and other startup files) will only affect new shells (i.e. newly opened Terminal
+  windows), so you should also run this command in all Terminal windows
+  that you opened before you edited the file.
+  You'll also need to run <tt style="white-space: nowrap;">rehash</tt> because tcsh caches the
+  list of available commands internally.
+  </p>
+ </li>
+</ul>
 <p>
 Note that the scripts also add <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> and
 <tt style="white-space: nowrap;">/usr/X11R6/man</tt> to your path so you can use X11 when
