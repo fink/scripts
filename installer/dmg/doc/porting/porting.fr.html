@@ -12,7 +12,7 @@ Fran&ccedil;ais |
 </table>
 <h1 style="text-align: center;">Portage de logiciel sur Darwin et Mac OS X</h1>
 		<p>Ce document contient des indications pour réaliser le portage d'applications Unix vers Darwin et Mac OS X. Ces informations s'appliquent à Mac OS X version 10.0.x et Darwin 1.3.x. Nous ferons référence aux deux systèmes sous le nom de Darwin, puisque Mac OS X est actuellement un sur-ensemble de Darwin.</p>
-	<h2>Contents</h2><ul><li><a href="#basics"><b>1 Notions de base</b></a><ul><li><a href="#basics.heritage">1.1 D'où vient Darwin ?</a></li><li><a href="#basics.compiler">1.2 Le compilateur et les outils</a></li><li><a href="#basics.host-type">1.3 Le type de la machine hôte</a></li><li><a href="#basics.librairies">1.4 Librairies</a></li><li><a href="#basics.other-sources">1.5 Autres sources d'information</a></li></ul></li><li><a href="#shared"><b>2 Code partagé</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Librairies partagées ou modules chargeables</a></li><li><a href="#shared.version">2.2 Numérotation de version</a></li><li><a href="#shared.cflags">2.3 Options de compilation</a></li><li><a href="#shared.build-lib">2.4 Construction d'une librairie partagée</a></li><li><a href="#shared.build-mod">2.5 Construction d'un module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 État des lieux</a></li><li><a href="#libtool.patch-135">3.2 Rustine 1.3.5</a></li><li><a href="#libtool.fixing-14x">3.3 Adaptation de la version 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 Correction de la numérotation des versions pour les dylibs générées par libtool</a></li><li><a href="#libtool.notes">3.5 Notes supplémentaires</a></li></ul></li><li><a href="#preparing"><b>4 Preparing for 10.2</b></a><ul><li><a href="#preparing.bash">4.1 The bash shell</a></li><li><a href="#preparing.gcc3">4.2 The gcc3 compiler</a></li></ul></li></ul><h2><a name="basics">1 Notions de base</a></h2>
+	<h2>Contents</h2><ul><li><a href="#basics"><b>1 Notions de base</b></a><ul><li><a href="#basics.heritage">1.1 D'où vient Darwin ?</a></li><li><a href="#basics.compiler">1.2 Le compilateur et les outils</a></li><li><a href="#basics.host-type">1.3 Le type de la machine hôte</a></li><li><a href="#basics.librairies">1.4 Librairies</a></li><li><a href="#basics.other-sources">1.5 Autres sources d'information</a></li></ul></li><li><a href="#shared"><b>2 Code partagé</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Librairies partagées ou modules chargeables</a></li><li><a href="#shared.version">2.2 Numérotation de version</a></li><li><a href="#shared.cflags">2.3 Options de compilation</a></li><li><a href="#shared.build-lib">2.4 Construction d'une librairie partagée</a></li><li><a href="#shared.build-mod">2.5 Construction d'un module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 État des lieux</a></li><li><a href="#libtool.patch-135">3.2 Rustine 1.3.5</a></li><li><a href="#libtool.fixing-14x">3.3 Adaptation de la version 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 Correction de la numérotation des versions pour les dylibs générées par libtool</a></li><li><a href="#libtool.notes">3.5 Notes supplémentaires</a></li></ul></li><li><a href="#preparing"><b>4 Préparation pour la version 10.2</b></a><ul><li><a href="#preparing.bash">4.1 Shell bash</a></li><li><a href="#preparing.gcc3">4.2 Compilateur gcc3</a></li></ul></li></ul><h2><a name="basics">1 Notions de base</a></h2>
 		
 		
 
@@ -395,56 +395,53 @@ Ceci peut être réalisé en configurant GNU libtool avec
 </p>
 
 
-<h2><a name="preparing">4 Preparing for 10.2</a></h2>
+<h2><a name="preparing">4 Préparation pour la version 10.2</a></h2>
 
 
 
 
-<h3><a name="preparing.bash">4.1 The bash shell</a></h3>
+<h3><a name="preparing.bash">4.1 Shell bash</a></h3>
 <p>
-Fink made the transition from OS X 10.0 to OS X 10.1 fairly easily, thanks
-in part to planning ahead for the changes that were coming.  We will try
-to do the same for the next transition, but not many details are known
-yet. </p>
-<p> We understand that OS X 10.2 will use bash rather than zsh to provide
-<tt style="white-space: nowrap;">/bin/sh</tt> functionality.  This has at least three implications
-for fink. 
+Fink a fait la transition de OS X 10.0 à OS X 10.1 facilement, et cela, en partie, grâce
+à la planification des changements à faire. Nous essayerons de faire de même
+pour la prochaine transition, mais peu de détails nous sont connus pour l'instant.
+</p>
+<p> Nous savons que OS X 10.2 utilisera bash au lieu de zsh dans le but de fournir la fonctionnalité
+<tt style="white-space: nowrap;">/bin/sh</tt>. Ceci a au moins trois conséquences pour Fink.
 </p>
 <ul><li>
-In the past, some fink packages created a CompileScript (or PatchScript or
-InstallScript) which does nothing
-by simply putting a semicolon in the script.  This does not work
-under bash, and must be replaced by something like
+Dans le passé, certains paquets de Fink créaient un CompileScript (ou un PatchScript, 
+ou un InstallScript) qui ne faisait rien, simplement en mettant un point virgule dans le script. 
+Ceci ne fonctionne pas avec bash et doit être remplacé par :
 <pre>
   CompileScript: echo "nothing to do"
 </pre>
 </li>
 <li>
-In the past, some fink packages used a the <tt style="white-space: nowrap;">lib(foo|bar).dylib</tt>
-construction to refer to two libraries at once; this doesn't work under
-bash (and the bash alternative <tt style="white-space: nowrap;">lib{foo,bar}.dylib</tt> doesn't work
-under zsh).  Solution: write out the names in full.
+Dans le passé, certains paquets de Fink utilisaient la construction <tt style="white-space: nowrap;">lib(foo|bar).dylib</tt>
+pour faire référence à deux librairies simultanément ; ceci ne fonctionne pas avec bash (et l'alternative
+<tt style="white-space: nowrap;">lib{foo,bar}.dylib</tt> ne fonctionne pas avec zsh). La solution : écrire les noms intégralement.
 </li>
 <li>
-A libtool patch is needed in many cases, to prevent libraries from being
-build unversioned under bash.  
-<b> Note: you do not need this patch with
- libtool-1.3.5, for example, if you are using UpdateLibtool:
- True. </b>
-The symptom: when building under bash,
-you see
+Avec bash, une rustine de libtool est nécessaire dans de nombreux cas, pour éviter 
+que les librairies ne soient construites sans numéro de version.  
+<b> Note : vous n'avez pas besoin de cette rustine avec libtool-1.3.5, par exemple,
+si vous utilisez
+UpdateLibtool: True. </b>
+Le symptome : quand vous construisez sous bash,
+vous voyez
 <pre>
 ../libtool: test: too many arguments
 </pre>
-When this happens, <tt style="white-space: nowrap;">configure</tt> contains the following:
+Quand cela arrive, <tt style="white-space: nowrap;">configure</tt> contient ce qui suit :
 <pre>
 archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
 -dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
 -install_name $rpath/$soname $(test -n "$verstring" -a x$verstring != 
 x0.0 &amp;&amp; echo $verstring)'
 </pre>
-Here is a patch (but it must be used with care, because sometimes there are
-other libtool problems as well so this patch must be applied by hand):
+Voici une rustine (mais elle doit être appliquée avec précaution, car quelquefois
+il y a aussi d'autres problêmes avec libtool, si bien que cette rustine doit être appliquée à la main):
 <pre>
 diff -Naur gdk-pixbuf-0.16.0/configure gp-new/configure
 --- gdk-pixbuf-0.16.0/configure 2002-01-22 20:11:48.000000000 -0500
@@ -483,24 +480,25 @@ diff -Naur gdk-pixbuf-0.16.0/ltmain.sh gp-new/ltmain.sh
 </li>
 </ul>
 
-<h3><a name="preparing.gcc3">4.2 The gcc3 compiler</a></h3>
+<h3><a name="preparing.gcc3">4.2 Compilateur gcc3</a></h3>
 
-	<p>Mac OS X 10.2 uses the gcc3 compiler.</p>
+	<p>Mac OS X 10.2 utilise le compilateur gcc3.</p>
 	
-	<p>Some packages which have loadable modules and use
-libtool fail with an install_name error, because libtool passes
-the -install_name flag even along with the -bundle flag (when it is not
-strictly needed).  This behavior was accepted by the gcc2 compiler but is
-not being accepted by the gcc3 compiler.  The fix can be found<a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg02025.html">here.</a>
-Note that you do not need the patch if your package uses libtool-1.3.5
-(for example, if you are using <tt style="white-space: nowrap;">UpdateLibtool: True</tt>)
-since it has already been incorporated into a revised version of fink's
-ltconfig file (available in pre-release versions of fink).
+	<p>Certains paquets qui ont des modules chargeables et qui 
+	utilisent libtool échouent avec une erreur install_name, car
+	libtool passe le drapeau -install_name même avec le drapeau -bundle
+	(alors que cela n'est pas strictement nécessaire). 
+	Ce comportement était accepté par le compilateur gcc2 mais n'est plus accepté maintenant
+	par le compilateur gcc3. Vous trouverez la rustine <a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg02025.html">ici</a>.
+	Notez que vous n'avez pas besoin de cette rustine si votre paquet utilise libtool-1.3.5
+	(par exemple, si vous utilisez <tt style="white-space: nowrap;">UpdateLibtool: True</tt>)
+	puisque elle a déjà été insérée dans une version révisée du fichier ltconfig  
+	(accessible dans des préversions de fink).
 </p>
 
-<p>Another issue with the gcc3 compiler is an incompatibility for C++ ABIs
-between gcc2 and gcc3.  In practice, this means that C++ programs compiled
-with gcc3 cannot link to libraries compiled with gcc2.</p>
+<p>Un autre problème avec le compilateur gcc3 est l'incompatibilité pour les ABI C++
+entre gcc2 et gcc3.  En pratique, ceci signifie que les programmes C++ compilés avec gcc3
+ne peuvent être liés à des librairies compilées avec gcc2.</p>
 
 
 
@@ -510,4 +508,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.fr.xml,v 1.3 2004/03/22 00:01:29 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: porting.fr.xml,v 1.4 2004/03/25 02:58:58 michga Exp $</i></p></body></html>
