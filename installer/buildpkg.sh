@@ -14,7 +14,7 @@ chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
 
 cp -R $IN_BASEDIR/resources $RESDIR
-cp -R $IN_BASEDIR/dmg $DMGDIR
+/Developer/Tools/CpMac -r $IN_BASEDIR/dmg $DMGDIR
 cp -R $IN_BASEDIR/contents $CONDIR
 chown -R root:admin $CONDIR
 chmod 1755 $CONDIR
