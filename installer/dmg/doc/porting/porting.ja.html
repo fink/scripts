@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Unix ソフトウェの Darwin と Mac OS X へのポーティング</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="porting.en.html">English</a> | 
+<a href="porting.fr.html">Fran&ccedil;ais</a> | 
+&#26085;&#26412;&#35486; (Nihongo) | 
+<a href="porting.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">Unix ソフトウェの Darwin と Mac OS X へのポーティング</h1>
+    <p>
+		この文書は Unix アプリケーションを Darwin や Mac OS X へ移植する際に有用な情報を集めています．
+		ここでの情報は， Mac OS X バージョン 10.0.0 と Darwin 1.3.x に適用されます．
+		どちらも Mac OS X は Darwin のスーパーセットなので，両者を Darwin という言葉で示します．
+		</p>
+  <h2>Contents</h2><ul><li><a href="#basics"><b>1 基本</b></a><ul><li><a href="#basics.heritage">1.1 Darwin はどこから来たのか</a></li><li><a href="#basics.compiler">1.2 コンパイラとツール</a></li><li><a href="#basics.host-type">1.3 ホスト種別</a></li><li><a href="#basics.libraries">1.4 ライブラリ</a></li><li><a href="#basics.other-sources">1.5 他の情報源</a></li></ul></li><li><a href="#shared"><b>2 共有コード</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共有ライブラリ vs ローダブル・モジュール</a></li><li><a href="#shared.version">2.2 バージョン番号</a></li><li><a href="#shared.cflags">2.3 コンパイラフラグ</a></li><li><a href="#shared.build-lib">2.4 共有ライブラリ をビルド</a></li><li><a href="#shared.build-mod">2.5 モジュールをビルド</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 状況</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 パッチ</a></li><li><a href="#libtool.fixing-14x">3.3 1.4.x を修正</a></li><li><a href="#libtool.dylibversionfix">3.4 libtool により生成された dylibs のバージョン番号を修正</a></li><li><a href="#libtool.notes">3.5 さらなる注記</a></li></ul></li><li><a href="#preparing"><b>4 10.2 に向けて</b></a><ul><li><a href="#preparing.bash">4.1 bash シェル</a></li><li><a href="#preparing.gcc3">4.2 gcc3 コンパイラ</a></li></ul></li></ul><h2><a name="basics">1 基本</a></h2>
+    
+    
+    <h3><a name="basics.heritage">1.1 Darwin はどこから来たのか</a></h3>
+      
+      <p>
+			Darwin は Unix ライクなオペレーティングシステムとして， NeXTStep / OpenStep から派生してきました．
+			これはまた， 4.4BSD Lite から分岐してきたとも言われています．
+			BSD の遺産もあり，実際 Darwin は近年 FreeBSD と NetBSD のコードによって近代化されてきました．
+			</p>
+      <p>
+			Darwin のカーネルは，Mach 3.0 ，BSD，オブジェクト指向ドライバレイヤ IOKit などの商用機能などの混合です．
+			Mac は元々マイクロカーネルとして設計されていましたが，この上にある BSD カーネルはモノリシックであり，両者は今では相互に依存し，一つのカーネルとして見ることができます．
+			</p>
+      <p>
+			Darwin にあるユーザー空間のツールやライブラリはほとんど BSD 由来のもので，Linux のような GNU ツールではありません．
+			Apple は他の BSD のように厳密ではなく，有益な妥協もしています．
+			たとえば， Apple は BSD make と GNU make の両方を付けて， GNU make をデフォルトとしています．
+			</p>
+    
+    <h3><a name="basics.compiler">1.2 コンパイラとツール</a></h3>
+      
+      <p>
+			短い説明: コンパイラは gcc の葉生物ですが， <tt style="white-space: nowrap;">cc</tt> としてインストールされます．
+			Makefile にパッチを当てる必要があるでしょう．
+			ほとんどのパッケージは 共有ライブラリ をビルドしません．
+			マクロに関係するエラーが出た時は，<tt style="white-space: nowrap;">-no-cpp-precomp</tt> オプションを使用してください．
+			</p>
+      <p>
+			長い説明: Mac OS X Developer Tools にあるコンパイラツールチェーンは不思議な生き物です．
+			コンパイラは gcc 2.95.2 スイートをもとに， Objective C 言語やいくつかの Darwin 特有なことをサポートする変更がなされています．
+			プリプロセサー  (<tt style="white-space: nowrap;">cpp</tt>) は二つのバージョンがあります．
+			ひとつは通常の(gcc 2.95.2 からの) プリコンパイラで，もう一つは Apple による，コンパイル済みヘッダをサポートする特別なプリコンパイラです．
+			こちらの方が高速で，デフォルトになっています．
+			しかし，コードによっては Apple のプリコンパイラではコンパイルできません．
+			この場合，<tt style="white-space: nowrap;">-no-cpp-precomp</tt> オプションを使い，通常のプリコンパイラでコンパイルします．
+			(注記: 以前は <tt style="white-space: nowrap;">-traditional-cpp</tt> オプションを勧めていました．
+			このオプションの意味が GCC 3 で少し変わったため，これを使うパッケージのほとんどを破壊してしまいました．
+			<tt style="white-space: nowrap;">-no-cpp-precomp</tt> は現在の Developer Tools と 将来の GCC 3 ベースのコンパイラの双方に要求通りのことをしてくれます．)
+			</p>
+      <p>
+			アッセンブラは gas 1.38 ベースだと言いますが，リンカは GNU ツールではありません．
+			これは 共有ライブラリ をビルドする際に問題となります．
+			GNU libtool とこれが生成する configure スクリプトは Apple のリンカの扱い方を知らないためです．
+			</p>
+    
+    <h3><a name="basics.host-type">1.3 ホスト種別</a></h3>
+      
+      <p>
+			短い説明: configure が 'Can't determine host type' と言って異常終了した場合，config.guess と config.sub を /usr/share/libtool (OS バージョン 10.2 以前では /usr/libexec) を現在のディレクトリにコピーしてください．
+			</p>
+      <p>長い説明: GNU の世界では，システムの種類を特定するために基準形式を採用しています．
+これには３つのパートがあります: CPU 種別，メーカー，オペレーティングシステム．
+４つ目のパートがつくこともあります．
+全て小文字で表記され，ダッシュでつながれます．
+例: <tt style="white-space: nowrap;">i586-pc-linux-gnu</tt>, <tt style="white-space: nowrap;">hppa1.1-hp-hpux10.20</tt>, <tt style="white-space: nowrap;">sparc-sun-solaris2.6</tt>．
+Mac OS X 10.0 のホスト種別は <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> です．
+</p>
+      <p>
+			autoconf を使うパッケージは多くの場合，コンパイル環境のシステム種別を知りたがります．
+			(注記: クロスコンパイルと移植のサポートのため，３つの種別 - ホスト種別，ビルド種別，ターゲット種別があります．
+			通常は全て同一です．)
+			ホスト種別は configure スクリプトに渡すことも，自動推測してもらうこともできます．
+			</p>
+      <p>
+			configure スクリプトは二つの付属スクリプトでホスト種別を決定します．
+			<tt style="white-space: nowrap;">config.guess</tt> がホスト種別の推測を試み，<tt style="white-space: nowrap;">config.sub</tt> で検証・正規化をします．
+			両スクリプトは別々にメンテナンスされていますが，全てのパッケージに含まれます．
+			最近までこのスクリプトは Darwin も Mac OS X も知りませんでした．
+			もし Darwin を認識しないパッケージがあった場合， configu.guess と config.sub を置き換える必要があります．
+			功にも， Apple が動作するバージョンのものを /usr/share/libtool (10.2 以前の OS では /usr/libexec) に置いていますので，そこからコピーしてください．
+			</p>
+    
+    <h3><a name="basics.libraries">1.4 ライブラリ</a></h3>
+      
+      <p>
+			短い説明: <tt style="white-space: nowrap;">-lm</tt> を削除しても問題ありませんが，する必要もありません．
+			</p>
+      <p>
+			長い説明: Mac OS X は libc, libm, libcurses, libpthread などのライブラリを分割して持っていません．
+			代わりに，これらは全てシステムライブラリ libSystem の一部となっています．
+			(以前のバージョンではこれは System のフレームワークでした．)
+			しかし， Apple は適切にシンボリックリンクを /usr/lib に置いていますので，<tt style="white-space: nowrap;">-lm</tt> でリンクすれば動作します．
+			唯一の例外は <tt style="white-space: nowrap;">-lutil</tt> です．
+			他のシステムでは，libutil は疑似ターミナルや，ログイン監査などの関数を含んでいます．
+			これらの関数は libSystem にはなく， libutil.dylib へのシンボリックリンクもありません．
+			</p>
+    
+    <h3><a name="basics.other-sources">1.5 他の情報源</a></h3>
+      
+      <p>ポーティングに関する他の情報源としては，<a href="http://www.metapkg.org/wiki">MetaPkg Wiki</a> があります．</p>
+      <p>Apple Technical Note <a href="http://developer.apple.com/technotes/tn2002/tn2071.html">TN2071</a>: "Porting Command Line Unix Tools to Mac OS X" も読むとよいでしょう．</p>
+    
+  <h2><a name="shared">2 共有コード</a></h2>
+    
+    
+    <h3><a name="shared.lib-and-mod">2.1 共有ライブラリ vs ローダブル・モジュール</a></h3>
+      
+      <p>
+			Mach-0 の仕様の一つであ，多くの人を驚かせるものとして， 共有ライブラリ と 動的ローダブル・モジュールを厳密に区別します．
+			ELF システムでは両者は同質で，共有コードのどの部分でも，ライブラリとしても動的ローディングにも使うことができます．
+			</p>
+      <p>
+			Mach-O 共有ライブラリ のファイルタイプは MH_DYLIB で，拡張子は <tt style="white-space: nowrap;">.dylib</tt> となります．
+			これは通常の静的リンカフラグ，例えば libfoo.dylib の場合は <tt style="white-space: nowrap;">-lfoo</tt> でリンクすることができます．
+			しかし，モジュールとしてロードすることはできません．
+			(注記: 共有ライブラリ は API を通して動的にロードすることができます．
+			しかし API はバンドルの場合と異なり，dlopen() エミュレーションの意味を無くします．
+			特筆すべきこととして， 共有ライブラリ はアンロードできません．)
+			</p>
+      <p>
+			ローダブル・モジュールは Mach-O の用語では"バンドル"と言われ，ファイルタイプは MH_BUNDLE です．
+			これを用いるコンポーネントは拡張子を気にしないので，拡張子は何でも構いません．
+			<tt style="white-space: nowrap;">.bundle</tt> という拡張子が Apple の推奨ですが，移植されたソフトウェアのほとんどは，互換性のため <tt style="white-space: nowrap;">.so</tt> を使っています．
+			バンドルは dyld API を用いて動的にロード／アンロードされることができますし，この API の上に <tt style="white-space: nowrap;">dlopen()</tt> をエミュレートするラッパもあります．
+			バンドルを 共有ライブラリ のようにリンクすることはできませんが，バンドルを 共有ライブラリ にリンクさせることは可能です．
+			この場合，バンドルがロードされた際に両者ともロードされます．
+			</p>
+    
+    <h3><a name="shared.version">2.2 バージョン番号</a></h3>
+      
+      <p>
+			ELF システムでは通常， <tt style="white-space: nowrap;">libqt.so.2.3.0</tt> のようにバージョン番号はファイル名に後置されます．
+			Darwin では，<tt style="white-space: nowrap;">libqt.2.3.0.dylib</tt> にようにバージョン番号はライブラリ名と拡張子の間に置かれます．
+			これにより， <tt style="white-space: nowrap;">-lqt.2.3.0</tt> のように，特定バージョンのライブラリをリンク時に指定することができます．
+			</p>
+      <p>
+			共有ライブラリを作成する場合，実行時に検索するライブラリの名前を指定することができます．
+			これはよく行われることで，これによって，ライブラリのいくつかのメジャーバージョンをインストールすることが可能になります．
+			ELF システムでは，これは <tt style="white-space: nowrap;">soname</tt> と言われています．
+			Darwin の場合，ファイル名の他にフルパスを指定することができ（またする必要があり）ます．
+			これにより，"rpath" オプションと ldconfig/ld.so.cache システムが不要になります．
+			まだインストールされていないライブラリを使うには， DYLD_LIBRARY_PATH 環境変数を設定することもできます．
+			詳細は dyld の man ページをご覧ください．
+			</p>
+      <p>
+			Mach-O 形式は，ELF システムの関知しないマイナーバージョンの確認を行います．
+			Mach-O ライブラリは二つのバージョン番号: "current" バージョンと "compatibility" バージョンがあります．
+			両方のバージョン番号は３つの番号を 1.4.2 のようにドットでつなげます．
+			最初の番号は 0 ではいけません．
+			２つ目と３つ目の番号は省略可能で，この場合 0 と扱われます．
+			バージョン番号を指定しなかった場合， 0.0.0 と扱われ，ある種のワイルドカード値となります．
+			</p>
+      <p>
+			"current" バージョンは情報提供のためのみ存在します．
+			"compatibility" バージョンは以下のように確認目的に使用されます．
+			実行可能ファイルをリンクする際，ライブラリからの情報がファイルにコピーされます．
+			ファイルが実行される際に使用するライブラリに対して情報を確認します．
+			使用するライブラリのバージョンが，リンク時のものと同一か新しいものでない限り，実行時エラーを生成してプログラムを終了させます．
+			</p>
+    
+    <h3><a name="shared.cflags">2.3 コンパイラフラグ</a></h3>
+      
+      <p>
+			位置独立コード (PIC: Position Independent Code) の生成は Darwin ではデフォルトです．
+			実際， PowerPC コードは設計上 position-independent となり，パフォーマンスや空間上の損失はありません．
+			このため，共有ライブラリやモジュールへコードをコンパイルする際も，PIC を指定する必要はありません．
+			しかし，リンカは"共通"のシンボルを共有ライブラリ内に持つことは認めないので， <tt style="white-space: nowrap;">-fno-common</tt> コンパイラオプションが必要になります．
+			</p>
+    
+    <h3><a name="shared.build-lib">2.4 共有ライブラリ をビルド</a></h3>
+      
+      <p>
+			共有ライブラリをビルドするには， <tt style="white-space: nowrap;">-dynamiclib</tt> 付きでコンパイラドライバを呼び出します．
+			以下の一連の例を見るとわかりやすいでしょう．
+			ここでは source.c と code.c というソースからなる libfoo というライブラリビルドするとします．
+			バージョン番号は 2.4.5 ，2 が主リビジョン (非互換の API 変更)， 4 が副リビジョン (後方互換な API の変更)，5 がバグ修正リビジョンかうんと (人によっては"teeny" リビジョンといい，完全に互換性のある変更です)です．
+			このライブラリは他の共有ライブラリには依存せず， /usr/local/lib にインストールされます．
+			</p>
+      <pre>cc -fno-common -c source.c
+cc -fno-common -c code.c
+cc -dynamiclib -install_name /usr/local/lib/libfoo.2.dylib \
+ -compatibility_version 2.4 -current_version 2.4.5 \
+ -o libfoo.2.4.5.dylib source.o code.o
+rm -f libfoo.2.dylib libfoo.dylib
+ln -s libfoo.2.4.5.dylib libfoo.2.dylib
+ln -s libfoo.2.4.5.dylib libfoo.dylib</pre>
+      <p>
+バージョンのどの部分がどこで使われたかわかりましたか．
+また，静的リンカが libfoo.dylib シンボリックリンクを使い，動的リンカは libfoo.2.dylib シンボリックリンクを使うことに注意してください．
+それぞれのシンボリックリンクをライブラリの異なるリビジョンへつなげることも可能です．
+
+</p>
+    
+    <h3><a name="shared.build-mod">2.5 モジュールをビルド</a></h3>
+      
+      <p>
+ローダブル・モジュールをビルドするためには，<tt style="white-space: nowrap;">-bundle</tt> オプション付きでコンパイラドライバを呼び出します．
+モジュールがホストプログラムのシンボルを使う場合， <tt style="white-space: nowrap;">-undefined suppress</tt> を指定して未定義のシンボルを使い， <tt style="white-space: nowrap;">-flat_namespace</tt> を指定して新しいリンカが Mac OS X 10.1 でも使えるようにします．
+一連の例:
+</p>
+      <pre>cc -fno-common -c source.c
+cc -fno-common -c code.c
+cc -bundle -flat_namespace -undefined suppress \
+ -o mymodule.so source.o code.o</pre>
+      <p>
+バージョン番号は使用していません．
+理論的には使うことも可能ですが，実際あまり意味がありません．
+また，バンドルには名称上の制限が無いことに注意してください．
+パッケージによっては，他のシステムが要求するため "lib" を前置しますが，これも無害です．
+</p>
+    
+  <h2><a name="libtool">3 GNU libtool</a></h2>
+    
+    
+    
+      <p>
+ライブラリをビルドする GNU パッケージは，ライブラリをビルド・インストールする際のプラットフォーム依存の手続きを隠すため GNU libtool を使います．
+</p>
+    
+    <h3><a name="libtool.situation">3.1 状況</a></h3>
+      
+      <p>
+粗く言って，４つの libtool の流派があります:
+</p>
+      <ul>
+        <li>
+          <p><b>libtool 1.3</b>:
+最も一般的な流派．
+この流派の最新のリリースは 1.3.5．
+Darwin には非対応で，静的ライブラリのみをビルドする．
+ソースツリーに<tt style="white-space: nowrap;">ltconfig</tt> と <tt style="white-space: nowrap;">ltmain.sh</tt> があることで判定できる．
+</p>
+        </li>
+        <li>
+          <p><b>libtool 1.4</b>:
+長らく開発途中で，最近新しい安定版がリリースされた．
+このブランチは改良された autoconf との統合がされている．
+残念ながら， 1.3 からのパッケージの統合を難しくしている．
+Darwin 1.3 / Mac OS X 10.0 に対応し，小さいパッチを当てることで Mac OS X 10.1 にも対応する．
+<tt style="white-space: nowrap;">ltconfig</tt> がないことで判定できる．
+1.3b や 1.3d などのバージョンがついたものも， 1.4 の開発スナップショットであり，扱いには注意が必要である．
+</p>
+        </li>
+        <li>
+          <p><b>多言語版</b>:
+MLB (multi-language-branch) ともいい，このバージョンは C++ や (gcj を通して) Java へのサポートを追加した平行開発ブランチである．
+現在は主開発ブランチに統合されている．
+最新版は Darwin 1.3 と Mac OS X 10.0 に対応している．
+MLB は <tt style="white-space: nowrap;">ltcf-c.sh</tt>, <tt style="white-space: nowrap;">ltcf-cxx.sh</tt>, <tt style="white-space: nowrap;">ltcf-gcj.sh</tt> などのファイルで判定できる．
+</p>
+        </li>
+        <li>
+          <p><b>現在の開発ブランチ</b>:
+いずれ libtool 1.5 としてリリースされる開発バージョン．
+1.4 と MLB を統合してできた．
+C, C++, (gcj を通して) Java に対応．
+残念ながら， 1.4 との違いは簡単にはわからない．
+<tt style="white-space: nowrap;">ltmain.sh</tt> の中のバージョン番号を確認する必要がある．
+</p>
+        </li>
+      </ul>
+      <p>
+結論として，libtool 1.3.x とこれを使うパッケージ (libtool を使うパッケージの主流) は， Darwin で共有ライブラリをビルドするにはパッチが必要になります．
+Apple は libtool 1.3.5 のパッチが当たったバージョンを Mac OS X に組み込んでいますが，ほとんどの場合うまく行きません．
+Christoph Pfisterer がこのパッチを改良し，正しいパスのハードコーディングと完全なバージョニングを行うようになりました．
+この変更は上流の libtool リリースと 1.4 で始まる開発バージョンに統合されました．
+Fink チームのメンバーはこれからも改良を続け， libtool メンテナに送っていきます．
+バージョン番号の貴族は全ての libtool バージョンで一致しています．
+</p>
+      <p>
+注記:
+全てのバージョンの libtool に関して，付属の libltdl ライブラリは dlcompat がインストールされている場合に限り Darwin 上で動作します．
+</p>
+    
+    <h3><a name="libtool.patch-135">3.2 1.3.5 パッチ</a></h3>
+      
+      <p>
+libtool 1.3.5 を自分でビルドする場合，
+<a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">このパッチ</a> <b>[updated 2002-06-09]</b> 
+をソースにあて，ltconfig と ltmain.sh というファイルを削除します．
+(これらのファイルは，configure と make をすることで .in ファイルにより再生成されます．)
+Fink パッケージの libtool 1.3.5 では自動的に行われます．
+</p>
+      <p>
+ここまででやっと半分です - libtool を使うパッケージはそれぞれ独自の ltconfig と ltmain.sh を持っています．
+共有ライブラリとしてビルドする全てのパッケージについて，これらのファイルを置き換える必要があります．
+これは configure スクリプトを実行する前に行う必要があります．
+両ファイルは以下から取得することができます:
+<a href="http://fink.sourceforge.net/files/ltconfig">ltconfig</a> (98K) と
+<a href="http://fink.sourceforge.net/files/ltmain.sh">ltmain.sh</a> (110K)
+<b>[both updated 2002-06-09]</b>.</p>
+    
+    <h3><a name="libtool.fixing-14x">3.3 1.4.x を修正</a></h3>
+      
+      <p>
+現在，よく使われている libtool 1.4.x には３つのバージョンがあります (1.4.1, 1.4.2, 最新開発スナップショット)．
+いずれも Darwin ではいくつかの問題があり，修正方法も異なります．
+Fink で提供している libtool14 は全てのパッチを含んでいます．
+しかし，これによって影響されるパッケージの ltmain.sh/configure ファイルを修正する必要があります．
+</p>
+      <ol>
+        <li><b>flat_namespace バグ</b>:
+この問題は， Mac OS X 10.1 上で libtool を使用する際に発生します．
+何が起こるかというと，libtool は未定義シンボルを許可するために <tt style="white-space: nowrap;">-undefined suppress</tt> を使おうとするが，これに伴う <tt style="white-space: nowrap;">-flat_namespace</tt> を指定しません．
+10.1 からは，これでは動作しません．
+パッチは以下のようになります:
+<pre>
+diff -Naur gdk-pixbuf-0.16.0.old/configure gdk-pixbuf-0.16.0.new/configure
+--- gdk-pixbuf-0.16.0.old/configure	Wed Jan 23 10:11:48 2002
++++ gdk-pixbuf-0.16.0.new/configure	Thu Jan 31 03:19:54 2002
+@@ -3334,7 +3334,7 @@
+     ;;
+ 
+   darwin* | rhapsody*)
+-    allow_undefined_flag='-undefined suppress'
++    allow_undefined_flag='-flat_namespace -undefined suppress'
+     # FIXME: Relying on posixy $() will cause problems for
+     #        cross-compilation, but unfortunately the echo tests do not
+     #        yet detect zsh echo's removal of \ escapes.
+</pre></li>
+        <li><b>ローダブル・モジュールのバグ</b>:
+このバグは，zsh (10.0 と 10.1 のデフォルトシェル; 10.2 では bash に変更される見込み) の非標準的な挙動によります．
+zsh の非標準的なクォートの挙動により，ローダブル・モジュールが正しくビルドされず，(Linux と異なり，Darwin では本質的に別ものな) 共有ライブラリになります．
+修正方法の例 (の一部なので，そのままでは使えません):
+<pre>
+diff -Naur gnome-core-1.4.0.6.old/configure gnome-core-1.4.0.6.new/configure
+--- gnome-core-1.4.0.6.old/configure	Sun Jan 27 08:19:48 2002
++++ gnome-core-1.4.0.6.new/configure	Fri Feb  8 01:10:21 2002
+@@ -4020,7 +4020,7 @@
+     # FIXME: Relying on posixy $() will cause problems for
+     #        cross-compilation, but unfortunately the echo tests do not
+     #        yet detect zsh echo's removal of \ escapes.
+-    archive_cmds='$nonopt $(test "x$module" = xyes &amp;&amp; echo -bundle || echo -dynamiclib) ...'
++    archive_cmds='$nonopt $(test x$module = xyes &amp;&amp; echo -bundle || echo -dynamiclib) ...'
+     # We need to add '_' to the symbols in $export_symbols first
+     #archive_expsym_cmds="$archive_cmds"' &amp;&amp; strip -s $export_symbols'
+     hardcode_direct=yes
+</pre><p>
+この問題は 1.4.2 以降のバージョンでは修正されました．
+</p></li>
+        <li><b>convenience ライブラリのバグ</b>:
+条件によっては，libtool は convinience ライブラリをリンクすることができず， "multiple definitions" エラーを出します．
+これは libtool の本質的な問題によるようです．
+現在のところ回避策として (原因ではなく症状を治すだけでですが，成功します)，この修正を行います (Dave Vasilevsky に感謝):
+<pre>
+--- ltmain.sh.old       2002-04-27 00:01:23.000000000 -0400
++++ ltmain.sh   2002-04-27 00:01:45.000000000 -0400
+@@ -2894,7 +2894,18 @@
+        if test -n "$export_symbols" &amp;&amp; test -n "$archive_expsym_cmds"; then
+          eval cmds=\"$archive_expsym_cmds\"
+        else
++         save_deplibs="$deplibs"
++         for conv in $convenience; do
++       tmp_deplibs=
++       for test_deplib in $deplibs; do
++         if test "$test_deplib" != "$conv"; then
++           tmp_deplibs="$tmp_deplibs $test_deplib"
++         fi
++       done
++       deplibs="$tmp_deplibs"
++         done
+          eval cmds=\"$archive_cmds\"
++         deplibs="$save_deplibs"
+        fi
+        save_ifs="$IFS"; IFS='~'
+        for cmd in $cmds; do
+</pre></li>
+        <li><b>DESTDIR バグ</b>:
+DESTDIR を設定し， libtool 1.4.2 を使用するパッケージのなかで，再リンクに問題がある場合があります．
+この問題は，以下のメールで議論されました:
+<p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00019.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00019.html</a></p><p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00021.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00021.html</a></p><p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00025.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00025.html</a>,</p><p>パッチに関する議論は:</p><p><a href="http://mail.gnu.org/archive/html/libtool/2002-04/msg00043.html">http://mail.gnu.org/archive/html/libtool/2002-04/msg00043.html</a>.</p></li>
+      </ol>
+    
+    <h3><a name="libtool.dylibversionfix">3.4 libtool により生成された dylibs のバージョン番号を修正</a></h3>
+      
+      <p>libtool により生成されたライブラリは，バージョン番号が間違っている場合があります．
+これは，パッケージの Makefile のフラグが間違っているためです．
+Makefile 中で libtool がこのように呼び出されている場合:
+<tt style="white-space: nowrap;">
+-release "version"
+</tt>
+make 後の結果のバイナリは:
+</p>
+      <ol>
+        <li> libname.dylib</li>
+        <li> libname-"version".dylib</li>
+      </ol>
+      <p>
+となります．
+<tt style="white-space: nowrap;">-release</tt> が Makefile で使用されているかどうかは直ぐにわかります．
+ライブラリ名の直後に <b>-</b> があることに気づくことがあります．
+これは， libtool が <tt style="white-space: nowrap;">-release</tt> 付きでバイナリ生成するために呼ばれたことを示します．
+また，ライブラリはこのようになる場合もあります:
+</p>
+      <ol>
+        <li>libname.dylib</li>
+        <li>libname-"version".x.x.x.dylib</li>
+      </ol>
+      <p>
+これは，<tt style="white-space: nowrap;">-release</tt> と <tt style="white-space: nowrap;">-version-info</tt> の両フラグを使用したことを示しています．
+</p>
+      <p><tt style="white-space: nowrap;">-version-info</tt> を正しく設定するのは複雑です．
+Apple の提供する Developer Tools の文書には素晴らしい情報があります．
+Fink を使用している以上，あなたも Developer Tools をインストールをしているでしょう．
+Mac OS X システムでの libtool のリンクに関する<a href="file://localhost/Developer/Documentation/DeveloperTools/libtool/libtool_6.html#SEC34">文書</a>はここです．
+この文書は完全版ですが，下記に簡略に記します．
+</p>
+      <p>
+developer 文書より引用（訳は Fink Support, Translation and Documentation Team チーム）:
+libtool ライブラリバージョンは ３つの整数値で記述されている:
+</p>
+      <ul>
+        <li>
+          <b>current</b>
+          <p>
+当該ライブラリが実現している最新のインターフェイス番号
+</p>
+        </li>
+        <li>
+          <b>revision</b>
+          <p>
+ 現在のインターフェイスの実現番号
+</p>
+        </li>
+        <li>
+          <b>age</b>
+          <p>
+当該ライブラリの実現した最も新しいインターフェイスと最も古いものの期間．
+あるいは，当該ライブラリが current - age から current までの期間のインターフェイス番号を実現していることを示す．
+二つのライブラリが，同一の current と age 番号を持つ場合，リンカは revision 番号が大きい方を選びます．
+</p>
+        </li>
+      </ul>
+      <p>
+libtool によるライブラリのバージョン番号の設定・更新の情報は，上記リンクに詳細があります．
+<tt style="white-space: nowrap;">-version-info</tt> を通して，新しい番号をつくったり，現在のバージョン番号を更新する方法は詳しく書かれています．
+</p>
+    
+    <h3><a name="libtool.notes">3.5 さらなる注記</a></h3>
+      
+      <p>libtool 自体と，libtool が何をするかについての詳細は <a href="http://www.gnu.org/software/libtool/libtool.html">libtool ホームページ</a>を参照．</p>
+      <p>
+注記:
+Apple の Developer Tools には libtool というプログラムがはいっていて，コンパイラドライバが共有ライブラリをビルドする際に使われます．
+しかし，これは GNU の libtool とは全く関係がありません．
+Apple の提供する GNU libtool は <tt style="white-space: nowrap;">glibtool</tt> としてインストールされています．
+これは， GNU libtool を<tt style="white-space: nowrap;">--program-transform-name=s/libtool/glibtool/</tt> と configure することで得られます．
+</p>
+    
+  <h2><a name="preparing">4 10.2 に向けて</a></h2>
+    
+    
+    <h3><a name="preparing.bash">4.1 bash シェル</a></h3>
+      
+      <p>
+OS X 10.2 は <tt style="white-space: nowrap;">/bin/sh</tt> 機能を提供するため zsh ではなく bash を使用すると理解しています．
+これにより fink にとっては３つのことが実現されます．
+</p>
+      <ul>
+        <li>
+過去において，セミコロンを追加するだけでは何もしない CompileScript (や PatchScript や
+InstallScript) を作成した fink パッケージがあります．
+これは bash では動作せず，以下のように置き換える必要があります
+<pre>
+  CompileScript: echo "nothing to do"
+</pre>
+</li>
+        <li>
+過去の fink パッケージでは二つのライブラリを参照するために  <tt style="white-space: nowrap;">lib(foo|bar).dylib</tt> という記述を用いたことがあります．
+これは bash では動作しません (bash の同様の <tt style="white-space: nowrap;">lib{foo,bar}.dylib</tt> は zsh で動作しない)．
+解決: 両方の名前をちゃんと記述し直す．
+</li>
+        <li>
+多くの場合，bash 下でバージョン無しでビルドされないように libtool パッチが必要です．
+<b>注記: UpdateLibtool: True を使用している場合， libtoool-1.3.5 にはこのパッチは必要ありません．
+ </b>
+症状: bash 下でビルド時に
+<pre>
+../libtool: test: too many arguments
+</pre>
+とあり， <tt style="white-space: nowrap;">configure</tt> 内に以下が含まれている場合:
+<pre>
+archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
+-dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
+-install_name $rpath/$soname $(test -n "$verstring" -a x$verstring != 
+x0.0 &amp;&amp; echo $verstring)'
+</pre>
+ここにパッチがあります (が，注意して使用してください．他の libtool 問題の可能性もあるので，その場合は自分でパッチを当ててください):
+<pre>
+diff -Naur gdk-pixbuf-0.16.0/configure gp-new/configure
+--- gdk-pixbuf-0.16.0/configure 2002-01-22 20:11:48.000000000 -0500
++++ gp-new/configure    2002-05-10 03:02:44.000000000 -0400
+@@ -3338,7 +3338,7 @@
+      # FIXME: Relying on posixy $() will cause problems for
+      #        cross-compilation, but unfortunately the echo tests do not
+      #        yet detect zsh echo's removal of \ escapes.
+-    archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
+-dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
+-install_name $rpath/$soname $(test -n "$verstring" -a x$verstring != 
+x0.0 &amp;&amp; echo $verstring)'
++    archive_cmds='$CC $(test .$module = .yes &amp;&amp; echo -bundle || echo 
+-dynamiclib) $allow_undefined_flag -o $lib $libobjs $deplibs$linkopts 
+-install_name $rpath/$soname $tmp_verstring'
+      # We need to add '_' to the symbols in $export_symbols first
+      #archive_expsym_cmds="$archive_cmds"' &amp;&amp; strip -s $export_symbols'
+      hardcode_direct=yes
+diff -Naur gdk-pixbuf-0.16.0/ltmain.sh gp-new/ltmain.sh
+--- gdk-pixbuf-0.16.0/ltmain.sh 2002-01-22 20:11:43.000000000 -0500
++++ gp-new/ltmain.sh    2002-05-10 03:04:49.000000000 -0400
+@@ -2862,6 +2862,11 @@
+        if test -n "$export_symbols" &amp;&amp; test -n "$archive_expsym_cmds";
+	then
+          eval cmds=\"$archive_expsym_cmds\"
+        else
++         if test "x$verstring" = "x0.0"; then
++           tmp_verstring=
++         else
++           tmp_verstring="$verstring"
++         fi
+          eval cmds=\"$archive_cmds\"
+        fi
+        IFS="${IFS=     }"; save_ifs="$IFS"; IFS='~'
+</pre>
+</li>
+      </ul>
+    
+    <h3><a name="preparing.gcc3">4.2 gcc3 コンパイラ</a></h3>
+      
+      <p>gcc3 コンパイラを使用する Mac OS X 10.2</p>
+      <p>ローダブル・モジュールを含み， libtool を使用するパッケージで， install_name エラーで失敗するものは， libtool が -install_name フラグと(特に必要なり) -bundle フラグを送るためです ．
+gcc2 コンパイラは受け付けていましたが， gcc3 コンパイラでは受け付けません．
+修正は<a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg02025.html">ここ</a>にあります．
+libtool-1.3.5 を使うパッケージ (<tt style="white-space: nowrap;">UpdateLibtool: True</tt> を使用している場合を含む) はこのパッチは必要ないことに注意してください．
+既に fink の ltconfig ファイル (fink のプレリリース版にある) に統合されているためです．
+</p>
+      <p>他の gcc3 コンパイラの問題は， gcc2 と gcc3 での C++ ABI の非互換性によります．
+gcc2 でコンパイルされたライブラリに gcc3 でコンパイルされた C++ プログラムからリンクできないことを意味します．
+</p>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2005 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr>
+<p>Generated from <i>$Fink: porting.en.xml,v 1.2 2004/03/12 15:06:20 jeff_yecn Exp $</i></p></body></html>
