@@ -7,7 +7,7 @@ if [ -d fink ]; then
   cvs -z3 -q update -A
   cd ..
 else
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink packages
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists/10.2
 fi
 
 echo "Dumping stable..."
