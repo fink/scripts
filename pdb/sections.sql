@@ -1,4 +1,4 @@
-scdelete from sections;
+delete from sections;
 insert into sections values ('base', 'Core packages');
 insert into sections values ('crypto', 'Cryptographic software (subject to national regulations)');
 insert into sections values ('database', 'SQL database software');
