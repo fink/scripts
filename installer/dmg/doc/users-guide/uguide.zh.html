@@ -1,0 +1,954 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Fink 用户指南</title></head><body><h1 style="text-align: center;">Fink 用户指南</h1>
+    <p>
+      <b>本文档尚在不断修改中。</b>
+下面的旧文档可以给你更详尽的概念：
+<a href="http://fink.sourceforge.net/doc/bundled/install.php">安装</a>,
+<a href="http://fink.sourceforge.net/doc/bundled/usage.php">使用</a>
+以及包括在发行安装版本的磁盘映象中的 ReadMe.rtf 文件。
+同时也可以查阅本网站的
+<a href="http://fink.sourceforge.net/doc/">文档部分</a> ，它包括一些其它的有用资讯。
+</p>
+    <p>
+欢迎查看 Fink 用户指南。
+本指南包括从源代码或安装包来初次安装或升级 Fink 的步骤。
+同时也会涉及软件包的安装和维护。
+</p>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.what">1.1 Fink 是什么？</a></li><li><a href="#intro.req">1.2 系统要求</a></li><li><a href="#intro.supported-os">1.3 支持的操作系统</a></li><li><a href="#intro.src-vs-bin">1.4 源代码与二进制安装包的对比</a></li></ul></li><li><a href="#install"><b>2 首次安装</b></a><ul><li><a href="#install.bin">2.1 安装二进制发行版</a></li><li><a href="#install.src">2.2 安装源代码发行版</a></li><li><a href="#install.setup">2.3 设置你的环境</a></li></ul></li><li><a href="#packages"><b>3 安装软件包</b></a><ul><li><a href="#packages.bin-dselect">3.1 用 dselect 安装二进制包</a></li><li><a href="#packages.bin-apt">3.2 用　apt-get　安装二进制包</a></li><li><a href="#packages.bin-exceptions">3.3 安装没有二进制版本的依赖软件包</a></li><li><a href="#packages.src">3.4 从源代码安装软件包</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 可用版本</a></li><li><a href="#packages.x11">3.7 找到 X11</a></li></ul></li><li><a href="#upgrade"><b>4 升级 Fink</b></a><ul><li><a href="#upgrade.bin">4.1 用二进制包进行升级</a></li><li><a href="#upgrade.src">4.2 升级从源码安装版本</a></li><li><a href="#upgrade.mix">4.3 混合使用二进制和源文件安装的情况</a></li></ul></li><li><a href="#conf"><b>5 Fink 配置文件</b></a><ul><li><a href="#conf.about">5.1 关于 fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf 文件的语法</a></li><li><a href="#conf.required">5.3 必需的设置</a></li><li><a href="#conf.optional">5.4 可选用户设置</a></li><li><a href="#conf.downloding">5.5 下载设置</a></li><li><a href="#conf.mirrors">5.6 镜像站点设置</a></li><li><a href="#conf.developer">5.7 开发人员设置</a></li></ul></li><li><a href="#usage"><b>6 在命令行使用 Fink 工具</b></a><ul><li><a href="#usage.using">6.1 使用 Fink 工具</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+    
+    
+    <h3><a name="intro.what">1.1 Fink 是什么？</a></h3>
+      
+      <p>
+Fink 是 OS X 和 Darwin 上的开放源代码的 Unix 软件。
+它给你的 Mac 带来种类众多的 Linux 和其他类似系统上开发的免费命令行及图形界面软件。
+</p>
+    
+    <h3><a name="intro.req">1.2 系统要求</a></h3>
+      
+      <p>
+任何情况下你都需要：
+</p>
+      <ul>
+        <li>
+          <p>
+安装了 Mac OS X 10.2 或以上的系统，或着相对应的 Darwin 版本。
+两者的更早版本<b>不能</b>使用。
+后面有关于支持系统的更多信息。
+</p>
+        </li>
+        <li>
+          <p>
+互联网访问。
+要安装的源代码或可执行安装包都需要从互联网下载站点进行下载。
+</p>
+        </li>
+      </ul>
+      <p>
+如果你需要使用源代码发布的版本（详见底下），你还需要：
+</p>
+      <ul>
+        <li>
+          <p>
+开发工具。
+对 OS X，安装 Developer　Tools CD　上的 Developer.pkg 软件包。
+请注意这些工具包必须与你的 Mac OS X 版本相对应。
+对 Darwin，这些工具应该已经包括在默认安装中。
+</p>
+          <p>
+即使你不打算从源代码编译安装软件，安装开发工具仍然是个很好的主意。
+开发工具包安装的一些程序实际上是一些通用的命令行工具。
+后面你要安装的一些软件包可能需要有他们才可以运行。
+</p>
+        </li>
+        <li>
+          <p>
+耐心。
+编译一些大的软件包需要花比较长时间。
+我这里指的是按小时或者甚至是按天计算的时间。
+</p>
+        </li>
+      </ul>
+    
+    <h3><a name="intro.supported-os">1.3 支持的操作系统</a></h3>
+      
+      <p>
+        <b>Mac OS X 10.3</b> 是运行 Fink 的首选操作系统。
+所有开发者都运行它，所有软件包都在这个系统上经过测试。
+它可以被认为是 "被全面支持和经过完全测试"的，虽然对于特定的软件包可能会有个别的问题。
+</p>
+<p><b>Mac OS X 10.2</b> 仍然被支持，但一些新的软件包可能没有适合 10.2 的版本。</p>
+      <p>
+        <b>Mac OS X 10.1</b> 在某种程度仍然被支持。
+你只能运行 Fink 0.4.1，在它上面没有更新的版本。
+</p>
+      <p>
+Darwin 7.0.1 是与 Mac OS X 10.3 对应的 Darwin 版本，而 <b>Darwin 6.0.2</b> 则是与 Mac OS X　10.2 相应的版本。
+总体来讲它们都可以使用，但没有经过非常详细的测试。因为多数人都只是在 Mac OS X 上运行。
+对于一些使用了 OS X 专有特性的软件你可能会碰到问题 —— 受影响的软件包包括 XFree86，可能也包括 esound。
+</p>
+    
+    <h3><a name="intro.src-vs-bin">1.4 源代码与二进制安装包的对比</a></h3>
+      
+      <p>
+软件是用人们可阅读的编程语言来编写（"开发"）而成的；这种形式称为 "源代码"。
+要使得计算机能够真正运行它，它必须转换为一种底层的机器指令代码（对多数人来说，这些代码是不可读的）。
+这个转换过程称为 "编译" 经过转换后的程序称为　"可执行" 或 "二进制"程序。
+（这个过程有时候也称为 "构建"，因为实际上它还包括除编译以外的其它步骤）。
+</p>
+      <p>
+当你购买商业软件的时候，你不会看到源代码。这些公司甚至把它当作商业机密。
+你只能获得一个已经可以运行的可执行程序，这意味着你没有办法修改程序，甚至没有办法知道它在运行过程究竟做了什么事情。
+</p>
+      <p>
+对于 <a href="http://www.opensource.org/">开放源码</a>
+软件（简称开源软件）则不是这样。
+顾名思义，它的源代码是公开给任何人查看和修改的。
+事实上，对多数的开源软件的作者只是以源代码方式发布他们的作品，你需要在你自己的计算机上进行编译以后才可以使用。</p>
+      <p>
+Fink 可以让你自己在两种方式中间选择。
+使用 "源代码" 发行版本的话，你将现在原始的源程序，并在上面应用 OS X 和 Fink 的编译规则，然后在你的机器上进行编译。
+整个过程是全自动的，但是会花较长的时间。
+使用 "二进制" 发行版本的话，你将下载从 Fink 站点下载已经编译好的软件包进行安装，这可以节省你自己编译的时间。
+事实上也可以按照你的需要混合这两种方式。
+本指南的其余部分将介绍如何做到这一点。
+</p>
+    
+  <h2><a name="install">2 首次安装</a></h2>
+    
+    
+    
+      <p>
+在第一次安装时，一套基本的软件包管理工具会被安装到你的计算机上。
+在这之后你需要设置好你的 shell 来使用 Fink 所安装的软件。
+你只需要做一次这件事情，以后你可以直接从任何 Fink 安装版本（高于 0.2.0 发布版）升级，而不需要重新安装。
+这会在<a href="#upgrade">如何升级</a>一章进行介绍。
+</p>
+      <p>
+在软件包管理工具安装好以后，你可以用它来安装更多的软件。
+这会在 <a href="#packages">安装软件包</a>一章进行介绍。
+</p>
+    
+    <h3><a name="install.bin">2.1 安装二进制发行版</a></h3>
+      
+      <p>
+二进制发行版以 Mac OS X 安装包 (.pkg) 的形式提供，它被打包在一个磁盘映象文件(.dmg)中。
+从<a href="http://fink.sourceforge.net/download/bindist.php">下载页面</a>下载了磁盘映象文件以后（你可能需要使用你的浏览器的 "保存目标为..." 或 "下载到磁盘" 功能），双击这个磁盘文件来装载上它。
+在 "磁盘工具" 程序（10.3以前是 "磁盘拷贝"）校验完你下载的文件后，在你的桌面上（或你下载到的文件夹里面）会出现一个 "Fink 0.x.x Installer" 的磁盘图标，打开它。
+在里面你会看到一些文档和一个安装包。
+双击安装包并按照屏幕上的说明完成剩下的安装。
+</p>
+      <p>
+你会被要求输入管理员密码，同时会显示一些文本。
+请阅读它们 —— 它会比这份用户指南的版本更新。
+当安装程序让你选择一个宗卷进行安装时，一定要选择系统宗卷（也就是你安装 OS X 的宗卷）。
+如果你选择了错误的宗卷，安装仍然可以进行，但是安装后的 Fink 不能正常工作。
+当安装程序运行完毕以后，继续
+<a href="#install.setup">设置你的环境</a>部分。
+</p>
+    
+    <h3><a name="install.src">2.2 安装源代码发行版</a></h3>
+      
+      <p>
+源代码发行版以标准的 Unix tarball (.tar.gz)　方式提供。
+它仅包含 <tt style="white-space: nowrap;">fink</tt> 软件包管理器以及它自己的软件包描述，整个软件包的其它部分会在安装的过程中才下载。
+你可以从这个
+<a href="http://fink.sourceforge.net/download/srcdist.php">下载页面</a>获得它。
+很重要的是，你不能用 StuffIt Expander 来解压缩下载后的 tar 压缩档。
+由于某些原因，StuffIt 仍然不能处理长文件名。
+如果 StuffIt Expander 已经自动解压了你下载的压缩档，把它解压产生的文件夹删除掉。
+</p>
+      <p>
+源代码发行版必须从命令行安装，因此请打开　Terminal.app 并进入到你保存所下载到的
+fink-0.x.x-full.tar.gz 压缩档的目录。
+以下的命令将解压压缩档：
+</p>
+      <pre>tar -xzf fink-0.x.x-full.tar.gz</pre>
+      <p>
+它会创建一个与压缩档同名的新目录。
+我们将继续使用 <tt style="white-space: nowrap;">fink-0.x.x-full</tt> 这个名称来代表它。
+现在，进入这个新目录，并运行 bootstrap 脚本：
+</p>
+      <pre>cd fink-0.x.x-full
+./bootstrap.sh</pre>
+      <p>
+这个脚本会对你的系统进行一些检查，然后使用 sudo 把你提升到 root 权限——这时会提示你输入你的密码。然后，脚本会询问你安装的路径，除非你有一个很好的理由，否则你应该使用默认的——
+<tt style="white-space: nowrap;">/sw</tt>。
+只有这样，以后你才可以顺利安装下载的二进制方式提供的安装包。另外，我们全部的例子都使用这个路径，所以如果你使用其它的安装路径，你要记住进行相应的替换。
+</p>
+      <p>
+下一步是 Fink 的配置。
+它会询问你一些象代理和镜象服务器设置以及是否需要详细信息输出等问题。
+如果你不是很明白有些问题，你可以按回车键接受默认的选择。
+以后你还可以通过 <tt style="white-space: nowrap;">fink　configure</tt> 这个命令重新这个配置过程。
+</p>
+      <p>
+当 bootstrap 收集到它所需要的所有信息以后，它会下载基本系统所需要的源代码并编译它。
+这以后不再需要用户的交互。
+如果你看到一些软件包被反复编译两次不需要担心。
+这是正常的现象，因为要构件一个软件包管理器的二进制安装包，你首先需要有一个软件包管理器。
+</p>
+      <p>
+当 bootstrap 脚本执行完毕，请继续
+<a href="#install.setup">设置你的环境</a>部分。
+</p>
+    
+    <h3><a name="install.setup">2.3 设置你的环境</a></h3>
+      
+      <p>
+要使用 Fink 目录下安装的软件，包括软件包管理器本身，你必须相应设置 PATH 环境变量。
+多数情况下，你可以在命令行这样做：
+</p>
+      <pre>open /sw/bin/pathsetup.command</pre>
+      <p>
+如果由于某种情况这种方法不奏效，你可以手工配置它。不过，这会随你使用的 Shell 程序不同而不同。
+你可以通过打开终端窗口并运行下面指令来查看你 shell 类型：
+</p>
+      <pre>echo $SHELL</pre>
+      <p>
+如果命令输出 "csh" 或 "tcsh" ，那么你使用的是 C shell。如果输出是　bash，zsh，sh　或其它类似的东西，你很可能是在使用 Bourne shell 的一个变种。
+</p>
+      <ul>
+        <li>
+          <p>
+            Bourne Shell（在 Mac OS X 10.3 后是默认的shell程序） </p>
+          <p>
+   如果你使用 Bourne 风格的 shell （比如 sh，bash，zsh），把下面的几行添加到你的主目录下的 <tt style="white-space: nowrap;">.profile</tt> 文件中（或者，如果你已经有一个 <tt style="white-space: nowrap;">.bash_profile</tt> 文件，你也可以添加到那里）：
+  </p>
+          <pre>source /sw/bin/init.sh</pre>
+          <p>
+   如果你不知道如何添加，运行下面的命令：
+  </p>
+          <pre>cd
+pico .profile</pre>
+          <p>
+   你现在进入到一个全屏幕（准确地说，全终端窗口）文本编辑器，应该很容易能够输入 <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt> 这一行。如果有个提示说 "New file"，这不是什么问题。确定在这行的末尾你至少输入了回车，然后按 Control-O，再回车，最后　Control-X 退出编辑器。
+  </p>
+        </li>
+        <li>
+          <p>
+            C Shell（在 Mac OS X 10.2 或更早的版本是默认 Shell) </p>
+          <p>
+   如果你使用 tcsh （Mac OS X　的默认），在文件<tt style="white-space: nowrap;">.cshrc</tt>中添加下面一行：
+  </p>
+          <pre>source /sw/bin/init.csh</pre>
+          <p>
+   如果你不懂怎么添加，运行下面的命令：
+  </p>
+          <pre>cd
+pico .cshrc</pre>
+          <p>
+   你现在进入到一个全屏幕（准确地说，全终端窗口）文本编辑器，应该很容易能够输入 <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt> 这一行。如果有个提示说 "New file"，这不是什么问题。确定在这行的末尾你至少输入了回车，然后按 Control-O，再回车，最后　Control-X 退出编辑器。
+  </p>
+          <p>有些情况下你需要编辑更多的文件：</p>
+          <ol>
+            <li>
+              <p>你已经有一个<tt style="white-space: nowrap;">~/.tcshrc</tt>文件。</p>
+              <p>有些第三方软件会创建这个文件，或者你自己这样做。
+  这时，<tt style="white-space: nowrap;">~/.tcshrc</tt> 将会被读取，而 
+  <tt style="white-space: nowrap;">~/.cshrc</tt> 则被忽略了。
+  推荐的步骤是用你上面编辑<tt style="white-space: nowrap;">~/.cshrc</tt>时类似的方法编辑 <tt style="white-space: nowrap;">~/.tcshrc</tt>，并在最后加入这样一行：</p>
+              <pre>source ~/.cshrc</pre>
+              <p>这样，如果你要删除 <tt style="white-space: nowrap;">~/.tcshrc</tt>，你还可以运行 Fink。</p>
+            </li>
+            <li>
+              <p>你曾经按照 <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>文档里面的要求进行操作。</p>
+              <p>这些指南告诉你创建一个 <tt style="white-space: nowrap;">~/.tcshrc</tt> 文件及一个 <tt style="white-space: nowrap;"> ~/.login</tt> 文件。这种情况下的问题是 <tt style="white-space: nowrap;">~/.login</tt> 文件在 <tt style="white-space: nowrap;">~/.tcshrc</tt> 文件之后运行，并用 source 语句引用 <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt> 文件的内容。后者包括一条语句重写了你前面设置的 PATH 环境变量。在这种情况下，你需要做的是创建 <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>文件：</p>
+              <pre>mkdir ~/Library/init
+  mkdir ~/Library/init/tcsh
+  pico ~/library/init/tcsh/path</pre>
+              <p>并加入：</p>
+              <pre>source ~/.cshrc</pre>
+              <p>到文件里面。你还需要按照第一点所说的那样修改你的 .tcshrc 文件，以确保在 <tt style="white-space: nowrap;">~/.login</tt> 文件没有被读取的时候 PATH 仍然被正确设置。</p>
+            </li>
+          </ol>
+          <p>
+  编辑 .cshrc （以及其它启动文件）只会影响新的 Shell（也就是说，新打开的终端窗口），所以你也需要在你编辑这个文件之前打开的所有终端窗口中运行这个命令。
+  你还需要运行 <tt style="white-space: nowrap;">rehash</tt> 命令，因为 tcsh 会在内部缓存所有可用的命令。
+  </p>
+        </li>
+      </ul>
+      <p>
+注意这个脚本还添加了 <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> 和
+<tt style="white-space: nowrap;">/usr/X11R6/man</tt> 到你的路径中，所以你可以在安装了 X11 以后使用它。
+Fink 软件包可以添加它们自己的设置，例如，qt 软件会设置 QTDIR 环境变量。
+</p>
+      <p>
+一旦你的环境设置好，继续
+<a href="#packages">安装软件包</a> 章节来了解如何用 Fink 所包括的软件包管理工具来安装一些实际的软件包。
+</p>
+    
+  <h2><a name="packages">3 安装软件包</a></h2>
+    
+    
+    
+      <p>
+现在你已经做完了一些可以称为 Fink 安装的事情。
+本章介绍怎么用 Fink 来安装一些实际的软件包，这也是你安装 Fink 的目的。
+在我们解释如何用源码或二进制包安装前，有一些重要的信息是对这两种方式都适用的。
+</p>
+    
+    <h3><a name="packages.bin-dselect">3.1 用 dselect 安装二进制包</a></h3>
+      
+      <p>
+        <tt style="white-space: nowrap;">dselect</tt> 是一个让你查看可用的软件包清单的程序，同时也可以选择你所需要安装的包。
+它在 Terminal.app 程序中运行，但会占用整个"屏幕" 并使用简单的键盘进行控制浏览。
+和其它软件包管理工具一样 <tt style="white-space: nowrap;">dselect</tt> 需要
+root 用户权限，所以你需要在使用它之前转换成 root 或使用 sudo：
+</p>
+      <pre>sudo dselect</pre>
+      <p>
+        <b>注意：</b>
+        <tt style="white-space: nowrap;">dselect</tt> 已知在 OS X 的终端程序中运行存在问题。你需要套在使用它前运行下面的命令，或把它们放到合适的启动文件中（例如 <tt style="white-space: nowrap;">.cshrc</tt> 或 <tt style="white-space: nowrap;">.profile</tt>）：</p>
+      <p>对 tcsh 用户：</p>
+      <pre>setenv TERM xterm-color</pre>
+      <p>对 bash 用户：</p>
+      <pre>export TERM=xterm-color</pre>
+      <p>
+在主菜单里面有几个选择：
+</p>
+      <ul>
+        <li>
+          <p>
+            <b>[A]ccess</b> - 这个选项配置所使用的网络访问方法。
+<b>你不需要运行这个</b>，因为 Fink 已经为你预先配置好一切东西了。
+事实上，你应该避免使用这个菜单，因为它可能会用一些不合适的选项来覆盖默认的配置。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>[U]pdate</b> - 这个选项从 Fink 站点中下载所有可用的软件包的清单。
+这个选项并不实际安装或更新任何软件包，它只是更新软件包浏览器中所使用的清单。
+在安装 Fink 以后你必须知道运行它一次。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>[S]elect</b> - 这个选项告诉你实际的软件包清单，在这里你可以按你的希望选择或反选你系统里面的软件包。在后面我们会详细介绍这一点。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>[I]nstall</b> - 这是开始实际操作的地方。
+以上的菜单项只是影响 dselect 的软件包列表和状态数据库。而这个菜单项则是实际开始下载和安装你要求的软件包。
+它也会删除你在浏览器中反选的软件包。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>[C]onfig</b> and <b>[R]emove</b> - 这是 apt 之前的留下来的遗迹。
+你不需要使用它们，虽然它们不会有什么害处。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>[Q]uit</b> - 这应该不需要更多解释。
+</p>
+        </li>
+      </ul>
+      <p>
+多数时间你会在软件包浏览器中使用 dselect，这可以通过 "[S]elect" 菜单项访问。
+在 dselect 显示软件包清单之前，它会显示一个介绍性的帮助屏幕。
+你可以按 'k' 按钮来获得一个键盘命令的详细清单，或按空格键进入软件包清单。
+</p>
+      <p>
+你可以使用上下方向键来在清单中进行浏览。
+你可以用 '+' and '-'　来进行选择。
+当你选择的软件包安装时需要其它的软件包时，dselect 会显示一个相关的子列表。
+多数情况下，你只需要按回车键来接受 dselect　的选择。
+你可以在子列表中进行调整（例如，选择另外一个可替代的软件包依赖关系），或者按 'R'
+（即是 Shift-R）来回到原来的状态。
+子列表和主软件包清单都是通过按回车键离开。
+当你对你的选择感到满意以后，离开主清单并使用 "[I]nstall" 菜单项来实际安装软件包。
+</p>
+    
+    <h3><a name="packages.bin-apt">3.2 用　apt-get　安装二进制包</a></h3>
+      
+      <p>
+        <tt style="white-space: nowrap;">dselect</tt> 本身并不实际安装软件包。
+相反，它会运行 apt 来做这些实际工作。
+如果你喜欢一个纯命令行界面，你可以用 <tt style="white-space: nowrap;">apt-get</tt> 命令直接使用 apt　的功能。
+</p>
+      <p>
+和 dselect　一样，你首先需要用这个命令下载可用的软件包清单：
+</p>
+      <pre>sudo apt-get update</pre>
+      <p>
+象 dselect 中的"[U]pdate" 菜单项一样，它并不会实际更新你计算机中的文件，而只是更新 apt 的可用软件包列表。要安装软件包，你需要给 apt-get 一个名字，象这样：
+</p>
+      <pre>sudo apt-get install lynx</pre>
+      <p>
+如果 apt-get 发现这个软件还需要其它软件包安装，它会告诉你一个清单，让你确认。
+然后它会下载和安装所要求的软件包。
+删除已安装的软件包也很容易：
+</p>
+      <pre>sudo apt-get remove lynx</pre>
+      <p>
+      </p>
+    
+    <h3><a name="packages.bin-exceptions">3.3 安装没有二进制版本的依赖软件包</a></h3>
+      
+      <p>有些时候，当我们执行一个二进制软件包安装的时候，你会或得一个依赖关系不能安装的错误信息。比如：</p>
+      <pre>Sorry, but the following packages have unmet
+dependencies:
+foo: Depends: bar (&gt;= version) but it is
+not installable
+E: Sorry, broken packages</pre>
+      <p>这种现象的原因时你要安装的软件包需要依赖于另外一个软件包，但是那个软件包由于版权许可问题不能以二进制包方式发布。你必须用源代码来安装这个依赖关系（见下一部分）。</p>
+    
+    <h3><a name="packages.src">3.4 从源代码安装软件包</a></h3>
+      
+      <p>首先，你需要在你的系统中安装合适版本的开发工具。在 <a href="http://connect.apple.com">http://connect.apple.com</a>中免费注册以后可以下载得到它。</p>
+      <p>
+要获得可以从源代码安装的软件包清单，可以用 <tt style="white-space: nowrap;">fink</tt> 工具查询：
+</p>
+      <pre>fink list</pre>
+      <p>
+第一列是安装状态（空白表示没有安装，<tt style="white-space: nowrap;">i</tt> 表示已安装，<tt style="white-space: nowrap;">(i)</tt> 表示已安装但是并不是最新的版本），后面是软件包的名字，最新版本，以及一个简要的描述。
+你可以用　"describe" 命令 （"info" 是它的一个别名）来获得某个软件包的更多信息：
+</p>
+      <pre>fink describe xmms</pre>
+      <p>
+当你找到一个你希望的软件包以后，可以使用
+"install" 命令：
+</p>
+      <pre>fink install wget-ssl</pre>
+      <p>
+<tt style="white-space: nowrap;">fink</tt> 命令首先会检查所有需要先安装的软件（"依赖关系"）是否已经存在，然后询问你时候可以安装那些现在还不存在的软件包。
+然后它会开始下载源代码，解包，给它打上必要的补丁，编译，然后把最终的结果安装到你的系统上。
+这可能会花费比较长的时间。
+如果你发现此过程中发生了错误，请首先查看
+<a href="http://fink.sourceforge.net/faq/">FAQ</a>。
+</p>
+    
+    <h3><a name="packages.fink-commander">3.5 Fink Commander</a></h3>
+      
+      <p>Fink Commander 是 <tt style="white-space: nowrap;">apt-get</tt> 和 <tt style="white-space: nowrap;">fink</tt> 工具的 Aqua 界面。二进制包菜单可以让你管理二进制安装包，源程序菜单则相应管理源程序安装包。</p>
+      <p>Fink Commander 被包括在 Fink 的二进制安装包中。如果你想要单独下载它（比方说，你是从源代码开始建立 Fink 的），或者需要额外的信息，可以访问 <a href="http://finkcommander.sourceforge.net">Fink Commander 网站</a>。</p>
+    
+    <h3><a name="packages.">3.6 可用版本</a></h3>
+      
+      <p>当你希望安装一个软件包，你应该首先查看 <a href="http://fink.sourceforge.net/pdb/index.php">软件包数据库</a> 来找找是不是可以通过 Fink 获得。软件包的各个可用版本会在一个表格的多个行中出现。就象这样：</p>
+      <ul>
+        <li>
+          <p>
+            <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p>
+        </li>
+        <li>
+          <p>
+<b>0.6.2:</b>  This is the base version that can be installed from binaries for OS 10.2 or OS 10.3, under the current Fink release.  If you <a href="#upgrade">upgrade</a> Fink, there may be an OS-specific newer version that isn't shown here.</p> 
+        </li>
+        <li>
+          <p>
+            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see ths version (or possibly even the package).</p>
+          <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS | rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
+</p>
+        </li>
+<li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS | rsync access may be needed to access this version.</p>
+</li> 
+        <li>
+          <p>
+            <b>10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstahle packages.</p>
+          <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
+</p>
+        </li>
+<li><b>10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
+      </ul>
+    
+    <h3><a name="packages.x11">3.7 找到 X11</a></h3>
+      
+      <p>许多 Fink 中的软件包都要求已经安装某种形式的 X11。因此，首先要做的第一件事情是选择一种 X11 实现。</p>
+      <p>
+由于在 Mac OS X 上有几种 X11 实现（XFree86, Tenon Xtools, eXodus），以及几种不同的方式去安装它们（手工或通过 Fink），所以存在有几种可选的软件包 - 每种设置方式一个。
+Fink 并不能猜测你需要什么，所以很重要的是在你开始安装 X11 应用程序之前先选择一种合适的安装好。
+这里是可用的软件包和　X11　安装方法：
+</p>
+      <ul>
+        <li>
+          <p>
+            <b>xfree86-base:</b>
+（仅限 10.1 或 10.2）这个软件包是一个真正的安装包。它把整个 XFree86 4.2.1.1 作为一个 Fink 包进行安装。为了获取最大的灵活性，这个软件包并不包含实际的 XDarwin 服务器。
+要安装它，你需要先安装 xfree86-rootless 软件包。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>xfree86:</b>
+这是一个单独的软件包（包括显示服务器），它会安装 XFree86 4.3.0 （仅限 10.2)，或 4.3.99 （仅限10.3 ）。
+这个版本比 4.2.1.1 要快，但没有经过非常多的测试。
+</p>
+        </li>
+        <li>
+          <p>
+system-xfree86:
+这个软件包是自动生成的（对于 Fink 0.6.2 或更新），如果你是手工安装 XFree86 的话。这包括从源码安装或从官方（或非官方）的二进制发行包，或者安装苹果的 X11。
+它会作为一个依赖关系的占位符。
+</p>
+        </li>
+        <li>
+          <p>
+system-xtools:
+如果你安装了 Tenon 的 Xtools 产品，你需要安装这个软件包。
+和 system-xfree86 一样，这只是执行一个可用性校验，并不修改实际的文件。
+</p>
+        </li>
+      </ul>
+      <p>
+关于安装和运行 X11 的更多信息，请参考
+<a href="http://fink.sourceforge.net/doc/x11/">Darwin
+及 Mac OS X 上 X11 的文档</a>.
+</p>
+    
+  <h2><a name="upgrade">4 升级 Fink</a></h2>
+    
+    
+    
+      <p>
+本章介绍如何升级你的 Fink 安装到最新和最好的版本。
+</p>
+    
+    <h3><a name="upgrade.bin">4.1 用二进制包进行升级</a></h3>
+      
+      <p>
+如果你只是使用二进制包进行安装，那么不需要什么特别的升级步骤。
+简单地选择你喜欢的工具从服务器上获取最新的软件包，并安装需要的所有软件包就可以了。
+</p>
+      <p>
+对于 dselect，只需要选择 "[U]pdate"，然后 "[I]nstall"　就足够了。
+当然，你也许会希望在两个步骤中间运行 "[S]elect" 来查看做了什么选择以及新软件包的有关信息。
+</p>
+      <p>
+对于 apt，运行 <tt style="white-space: nowrap;">apt-get update</tt> 来获取最新的软件包清单，然后运行 <tt style="white-space: nowrap;">apt-get upgrade</tt> 来更新全部有新版本的软件包。
+</p>
+<p>对于 Fink Commander，选择 Binary-&gt;Update descriptions 来更新软件包清单，然后选择 Binary-&gt;Dist-Upgrade packages 来升级到新的版本。</p>
+      <p>
+更多的信息，尤其是关于升级 Fink 0.3.0　之前版本，参见
+<a href="http://fink.sourceforge.net/download/upgrade.php">Upgrade Matrix</a>。
+</p>
+    
+    <h3><a name="upgrade.src">4.2 升级从源码安装版本</a></h3>
+      
+      <p>
+如果你使用的是源码安装，升级会稍微复杂一些。
+整个过程由两个步骤组成。
+第一步，下载最新的软件包描述到你的计算机。
+第二步，使用这些软件包描述来编译新的软件包，实际的源代码会根据需要下载。
+</p>
+      <p>
+如果你使用 Fink 0.2.5 或更新版本，第一步可以运行 <tt style="white-space: nowrap;">fink selfupdate</tt>。
+这个命令会检查 Fink 网站看是否有一个新的版本发布，如果有的话，会自动下载和安装软件包描述文件。
+在最新的 <tt style="white-space: nowrap;">fink</tt> 版本的命令中，你可以选择直接从 CVS 或通过 rsync 来直接获取软件包描述。
+CVS 是一个具有版本控制功能的储存库，它保存和管理软件包描述文件。
+使用 CVS 的优点是它是不断更新的，缺点是对 Fink 只有一个 CVS 服务器，如果访问量太大，它会变得不稳定。因此，对通常用户，我们推荐使用 rsync。对于 rsync，我们有多个镜像站点。唯一得缺点是新得版本在 CVS 发布以后会大约需要一个小时后才会更新到 rsync 镜像站点上。
+</p>
+      <p>（如果你在升级从源码安装得版本中碰到问题，请查阅　
+<a href="http://fink.sourceforge.net/download/fix-upgrade.php">一些特殊指引</a>。）</p>
+      <p>
+如果你的 Fink 是 0.2.5　之前得版本，你需要手工下载软件包描述文件。
+访问 <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">下载区</a>，在 "distribution"　模块中寻找最新的 packages-0.x.x.tar.gz 压缩档。
+下载它，然后按下面的办法安装：
+</p>
+      <pre>tar -xzf packages-0.x.x.tar.gz
+cd packages-0.x.x
+./inject.pl</pre>
+      <p>
+更新了软件包描述以后（无论你采用什么办法），
+你应该可以用　<tt style="white-space: nowrap;">fink　update-all</tt>　命令一次更新所有软件包。
+</p>
+<p>如果使用 Fink Commander 更新源代码发布版本，选择 Source-&gt;Selfupdate 下载最新的软件包信息文件，然后选择 Source-&gt;Updata-all 来更新所有不是最新的软件包。</p>
+    
+    <h3><a name="upgrade.mix">4.3 混合使用二进制和源文件安装的情况</a></h3>
+      
+      <p>
+如果你的某些软件包是使用预编译好的二进制安装包安装，而另外一些则使用源代码安装，你需要使用上面的两套步骤来更新你的 Fink 安装。
+也就是说，首先使用 <tt style="white-space: nowrap;">dselect</tt> 或 <tt style="white-space: nowrap;">apt-get</tt> 来获取可用的二进制安装版本，然后使用 <tt style="white-space: nowrap;">fink selfupdate</tt> 和 <tt style="white-space: nowrap;">fink update-all</tt>　来过去最新的软件包描述，并更新剩下的软件包。如果你使用 Fink commander，请按照 <a href="#upgrade.bin">二进制升级</a> 的指引，然后在按 <a href="#upgrade.src">源代码升级</a>完成剩下的步骤。
+</p>
+
+    
+  <h2><a name="conf">5 Fink 配置文件</a></h2>
+    
+    
+    
+      <p>
+本章会解释 Fink 配置文件（fink.conf）中的设置项，以及他们会对 Fink 的工作产生什么作用，尤其是 <tt style="white-space: nowrap;">fink</tt> 命令行工具（也就是说使用源代码发布版本）。
+</p>
+    
+    <h3><a name="conf.about">5.1 关于 fink.conf</a></h3>
+      
+      <p>
+在 Fink 安装的时候，它会询问你几个问题以建立起你的配置文件，就好像选择你希望使用来下载文件的 <a href="#conf.mirrors">镜像网站</a> 以及如何获得超级用户权限。你可以用<tt style="white-space: nowrap;">fink configure</tt> 命令来重新进行这个过程。而有一些选项，则需要直接编辑 <b>fink.conf</b> 文件。通常来说，这些选项对于熟练用户才会有用。
+</p>
+      <p>
+<b>fink.conf</b> 文件的位置在
+<tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>，它可以用你喜欢的纯文本编辑器来编辑它。要编辑它，你需要超级用户的权限。
+</p>
+    
+    <h3><a name="conf.syntax">5.2 fink.conf 文件的语法</a></h3>
+      
+      <p>
+你的 fink.conf 文件由多行组成，格式是：</p>
+      <pre>选项名: 选项值</pre>
+      <p>每行一个选项，选项名和选项值之间以一个冒号和一个空格分开。选项值的内容取决每个不同的选项，但通常会是一个布尔值（"True" 或 "False"），一个字符串，或用空格分开的多个字符串。 
+例如：
+</p>
+      <pre>
+BooleanOption: True
+StringOption: Something
+ListOption: Option1 Option2 Option3
+</pre>
+    
+    <h3><a name="conf.required">5.3 必需的设置</a></h3>
+      
+      <p>
+<b>fink.conf</b> 文件里面的一些设置是不可缺的。如果缺少它们，Fink 就无法正常工作。下面的设置就属于这一类。
+</p>
+      <ul>
+        <li>
+          <p>
+            <b>Basepath:</b> 路径</p>
+          <p>
+它告诉 Fink 它被安装在什么位置。默认的情况是 <b>/sw</b>，除非你在第一次安装的时候更改了它的位置。安装以后，你<b>决不能</b>再更改这个设置，否则会使 Fink 陷入混乱中。
+</p>
+        </li>
+      </ul>
+    
+    <h3><a name="conf.optional">5.4 可选用户设置</a></h3>
+      
+      <p>
+有很多设置用户可以进行调整，来对 Fink 进行优化。
+</p>
+      <ul>
+        <li>
+          <p>
+            <b>RootMethod:</b> su 或 sudo 或 none</p>
+          <p>对一些操作，Fink 需要有超级用户权限。可供选择的选项包括 <b>sudo</b> 或 <b>su</b>。你也可以把它设为
+<b>none</b>，这时，你需要自己转换到 root 权限后再运行 Fink。默认值是 <b>sudo</b>，多数情况下这不应该修改。</p>
+        </li>
+        <li>
+          <p>
+            <b>Trees:</b> 代码树列表</p>
+          <p>可供选择的代码树包括：</p>
+          <pre>
+local/main      - 所有你希望安装的本地软件包
+local/bootstrap - Fink　安装过程需要使用的软件包
+stable/crypto   - 稳定的可靠（经过数字签名）软件包
+stable/main     - 其它稳定软件包
+unstable/crypto - 未稳定的可靠（经过数字签名）软件包
+unstable/main   - 其它未稳定软件包
+</pre>
+          <p>
+你可以根据需要在　<tt style="white-space: nowrap;">/sw/fink/dists</tt>　目录中加入你自己的代码树，但通常来说不需要这样做。默认的代码树是 "local/main local/bootstrap　stable/main"。这个设置清单应该与 <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> 文件内容保持一致。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>Distribution:</b> 10.1 或 10.2</p>
+          <p>Fink 需要知道你使用的 Mac OS X 版本是什么。
+10.1 指用户使用 Mac OS X 10.1，而 10.2 则只对那些使用 Mac OS X 10.2 "Jaguar" 的用户有效。
+Mac OS X 10.0 及更早的版本并不被支持。你不应该改变这个设置值。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>FetchAltDir:</b> 路径</p>
+          <p>通常来说 Fink 会保存它下载的源代码到
+<tt style="white-space: nowrap;">/sw/src</tt>　目录中。你可以用这个选项来更换保存下载源程序的目录。例如：
+</p>
+          <pre>FetchAltDir: /usr/src</pre>
+        </li>
+        <li>
+          <p>
+            <b>Verbose:</b> 0 到 3　之间的数字</p>
+          <p>
+这个选项设置 Fink 应该在运行过程中告诉你详细到什么程度的信息。取值的含义是：
+<b>0</b>
+            安静模式 （不显示下载状态）
+<b>1</b>
+            低模式 （不显示正在展开的压缩档的信息）
+<b>2</b>
+            中模式 （几乎显示所有信息）
+<b>3</b>
+            高模式 （显示所有信息）
+默认值是 3。
+</p>
+        </li>
+        <li>
+          <p>
+            <b>NoAutoIndex:</b> 布尔值</p>
+          <p>Fink 会缓存它的软件包描述文件在 /sw/var/db/fink.db 中，这会减少每次运行时读取和解析这些文件的时间。除非这个值被设成 "True"，否则 Fink 会每次都检查软件包的索引时候需要更新。默认情况下它被设成 "False"。我们不推荐你更改它。如果你真的改动了它，你需要手工运行　<tt style="white-space: nowrap;">fink index</tt> 命令来更新索引。</p>
+        </li>
+        <li>
+          <p>
+            <b>SelfUpdateNoCVS:</b> 布尔值</p>
+          <p><tt style="white-space: nowrap;">fink selfupdate</tt>　命令会更新 Fink软件管理器到最新的版本。当这个选项设为 True 的时候，将保证不会使用协作式版本管理系统（CVS）来更新软件包。它由 <tt style="white-space: nowrap;">fink　selfupdate-cvs</tt> 命令自动设置，所以你不需要手工改变它。</p>
+        </li>
+      </ul>
+    
+    <h3><a name="conf.downloding">5.5 下载设置</a></h3>
+      
+      <p>有几个设置会影响 Fink 下载软件包数据的方式。</p>
+      <ul>
+        <li>
+          <p>
+            <b>ProxyPassiveFTP:</b> 布尔值</p>
+          <p>这个选项使得 Fink 使用 "被动" 模式来进行 FTP 下载。某些 FTP 服务器或网络配置会要求这个设置必须为 。建议永远保持这个选项为打开，因为主动模式的 FTP 已经过时了。</p>
+        </li>
+        <li>
+          <p>
+            <b>ProxyFTP:</b> url</p>
+          <p>如果你使用 FTP 代理，那么你应该这里输入它的地址，例如：</p>
+          <pre>ProxyFTP: ftp://yourhost.com:2121/</pre>
+          <p>留空这一项，如果你不需要使用 FTP 代理。</p>
+        </li>
+        <li>
+          <p>
+            <b>ProxyHTTP:</b> url</p>
+          <p>如果你使用 HTTP 代理，那么你应该在这里输入它的地址，例如：</p>
+          <pre>ProxyHTTP: http://yourhost.com:3128/</pre>
+          <p>留空这一项，如果你不需要使用 HTTP 代理。</p>
+        </li>
+        <li>
+          <p>
+            <b>DownloadMethod:</b> wget 或 curl 或 axel 或 axelautomirror</p>
+          <p>Fink 可以使用三种不同的程序来从网上下载程序 —— <b>wget</b>，<b>curl</b> 或 <b>axel</b>。而 <b>axelautomirror</b> 会使用 <b>axel</b> 的一种实验中的模式，这种模式会自动检测包含你要下载的文件的离你最近的服务器。目前不推荐使用 <b>axelmirror</b>。默认值是 <b>curl</b>。
+<b>你这里选择的程序必须已经安装在你的计算机上！</b>
+          </p>
+        </li>
+      </ul>
+    
+    <h3><a name="conf.mirrors">5.6 镜像站点设置</a></h3>
+      
+      <p>从网上获取软件可能会是一个冗长的过程。经常下载的速度不会象我们所希望的那样快。镜像服务器会从其它服务器中拷贝文件，但可能它会有一个更快的网络连接，或者它在地理上离你更近，这样从它上面下载会更快些。同时它们也可以分担主服务器的负担，其中一个例子是<b>ftp.gnu.org</b>，在一个访问不到的时候，它会提供另一个替代的服务器。</p>
+      <p>为了让 Fink 能够使用最合适你的镜像服务器，你要告诉它你居住在哪个洲和哪个国家。如果不能从某个服务器下载，它会提示你是：重试相同的镜像站点，连接与你在相同国家或洲的另一个镜像服务器，还是世界上任意一个镜像服务器。</p>
+      <p><b>fink.conf</b> 文件中保存着你希望使用哪些镜像服务器的信息。</p>
+      <ul>
+        <li>
+          <p>
+            <b>MirrorContinent:</b> 三个字母的代号</p>
+          <p>你应该使用 <tt style="white-space: nowrap;">fink configure</tt>
+命令来更改这些取值。三个字母的代号可以在 <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt> 文件中找到。
+例如，如果你住在亚洲：</p>
+          <pre>MirrorContinent: asi</pre>
+        </li>
+        <li>
+          <p>
+            <b>MirrorCountry:</b> 六个字母代号</p>
+          <p>你应该使用 <tt style="white-space: nowrap;">fink configure</tt>
+命令来更改这些取值。六个字母由三个字母的洲代号（见上面的描述），一个减号，以及两个字母的国家代号组成。你可以在 <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt> 文件中找到它们。
+例如，如果你住在中国：</p>
+          <pre>MirrorCountry: asi-CN</pre>
+        </li>
+        <li>
+          <p>
+            <b>MirrorOrder:</b> MasterFirst 或 MasterLast 或 MasterNever 或 ClosestFirst</p>
+          <p>
+Fink 支持 '主（master）镜像服务器'，它镜像保存了 Fink 中有的所有软件包的源程序压缩档。使用主镜像服务器的好处是下载源程序的链接不会失效。用户可以选择使用这些由 Fink 团队维护的镜像服务器，或使用那些原始的源程序站点和外部的镜像服务器：例如 gnome，KDE 和 　debian 的镜像网站。
+另外，用户还可以选择结合两种设置，并按上文所说的办法以邻近的次序来进行搜索。如果使用 MasterFirst 或 MasterLast 选项，当某个服务器失效时，用户可以“跳转到”到主服务器（或非主服务器）组。选项包括：
+</p>
+          <pre>
+MasterFirst - 优先搜索 "主" 镜像服务器。
+MasterLast - 最后搜索 "主" 镜像服务器。
+MasterNever - 不搜索 "主" 镜像服务器。
+ClosestFirst - 优先搜索最近的镜像服务器（把所有镜像服务器合在一组）。
+</pre>
+        </li>
+      </ul>
+    
+    <h3><a name="conf.developer">5.7 开发人员设置</a></h3>
+      
+      <p>在 <b>fink.conf</b> 中一些选项只是对开发人员有用。我们不推荐 Fink 用户修改它们。下面的一些选项属于这一类。</p>
+      <ul>
+        <li>
+          <p>
+            <b>KeepRootDir:</b> 布尔值</p>
+          <p>使得 Fink 不会在构建好一个软件包以后删除 /sw/src/root-name-version 目录。默认值是 False。<b>注意，使用这个选项可以很快塞满你的硬盘！</b>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>KeepBuildDir:</b> boolean</p>
+          <p>使得 Fink 不会在构建好一个软件包以后删除 /sw/src/name-version 目录。默认值是 False。<b>注意，使用这个选项可以很快塞满你的硬盘！</b>
+          </p>
+        </li>
+      </ul>
+    
+  <h2><a name="usage">6 在命令行使用 Fink 工具</a></h2>
+    
+    
+    <h3><a name="usage.using">6.1 使用 Fink 工具</a></h3>
+      
+      <p><tt style="white-space: nowrap;">fink</tt> 工具使用几个后缀命令来处理源程序发行包。其中的一些需要至少有一个软件包名称，但同时可以处理多个软件包。你可以简单地应用软件包的名称（例如，　gimp），或包括版本号的全名（例如 gimp-1.2.1 或 gimp-1.2.1-3）。在没有指明版本的情况下，Fink 会自动选择最新的版本。其它还具有不同的选项。</p>
+      <p>下面是 <tt style="white-space: nowrap;">fink</tt> 工具的命令清单：</p>
+    
+    <h3><a name="usage.install">6.2 install</a></h3>
+      
+      <p>install 命令用于安装软件包。它下载，配置，构建和安装你指名的软件包。它还会自动安装需要的依赖关系，但在此之前会要求你确认。例如：</p>
+      <pre>fink install nedit
+
+Reading package info...
+Information about 131 packages read.
+The following additional package will be installed:
+ lesstif
+Do you want to continue? [Y/n]</pre>
+      <p>install 命令的别名包括： update, enable, activate, use （这些别名多数是因为历史原因形成的）。</p>
+    
+    <h3><a name="usage.remove">6.3 remove</a></h3>
+      
+      <p>remove 命令会使用 '<tt style="white-space: nowrap;">dpkg --remove</tt>' 命令从系统中删除软件包。当前这个命令实现有一些缺陷：它只对 <tt style="white-space: nowrap;">fink</tt> 工具知道的软件包（也就是说，那些有 .info 文件的）有效；而且它自己并不检查依赖关系，而把这个工作完全交给 dpkg 工具（虽然通常情况下这不会有问题）。</p>
+      <p>remove 命令只会删除实际软件包包括的文件，而保留 .deb 压缩包文件。这意味着你可以在以后重新安装这个软件包，而不需要重新进行编译。如果你需要磁盘空间，你可以在<tt style="white-space: nowrap;">/sw/fink/dists</tt> 代码树中删除它们。</p>
+      <p>别名：disable，deactivate，unuse，delete。</p>
+    
+    <h3><a name="usage.update-all">6.4 update-all</a></h3>
+      
+      <p>这个命令会更新所有已经安装的软件包到最新的版本。它不需要输入要更新的软件包清单，你只需要输入：</p>
+      <pre>fink update-all</pre>
+    
+    <h3><a name="usage.list">6.5 list</a></h3>
+      
+      <p>
+这个命令产生一个可用的软件包，它的安装情况，最新版本和简单的描述。
+如果你不使用其它参数的话，它会列出所有可用软件包。
+你可以附上一个名称或 shell 模式，fink 会列出所有匹配的软件包。
+</p>
+      <p>
+第一列显示的安装状态的意义为：
+</p>
+      <pre>
+     未安装
+ i   已安装最新版本
+(i)  已安装，但不是最新版本
+</pre>
+      <p>
+<tt style="white-space: nowrap;">fink list</tt> 命令可以使用下面这些标志：
+</p>
+      <pre>
+-h,--help
+	  显示可用的选项。
+-t,--tab
+	  按制表位输出清单，这对需要在脚本中使用输出很有用。
+-i,--installed
+	  只显示已安装的软件包。
+-o,--outdated
+	  只显示已过期的软件包。
+-u,--uptodate
+	  只显示没有过期的软件包。
+-n,--notinstalled
+	  只显示没有安装的软件包。
+-s=expr,--section=expr
+	  只显示满足正则表达式的软件包。
+-w=xyz,--width=xyz
+	  设定你希望输出格式化为的宽度。xyz 可以为一个数字或者 auto。
+	  auto 会根据终端的宽度来设置输出宽度。
+	  默认值是 auto。
+</pre>
+      <p>
+一些有用的例子：
+</p>
+      <pre>
+fink list                 - 列出所有的软件包
+fink list bash            - 检查 bash 是否可用，以及它的版本
+fink list --outdated      - 列出过期的软件包
+fink list --section=kde   - 列出属于 kde 部分的软件包
+fink list "gnome*"        - 列出所有以 'gnome' 开头的软件包
+</pre>
+      <p>
+在最后一个例子中，引号是必须的。因为这样才可以避免 shell 自己来匹配这个模式。
+</p>
+    
+    <h3><a name="usage.apropos">6.6 apropos</a></h3>
+      
+      <p>
+这个命令的作用几乎和 <tt style="white-space: nowrap;">fink list</tt> 一样。最主要区别是 <tt style="white-space: nowrap;">fink apropos</tt> 还会搜索软件包描述来寻找软件包。第二个区别是必需提供一个搜索字符串，而不是可选的。
+</p>
+      <pre>
+fink apropos irc          - 寻找在名称或描述中包含 'irc' 的软件包
+fink apropos -s=kde irc   - 同上，但只在 kde 部分寻找
+</pre>
+    
+    <h3><a name="usage.describe">6.7 describe</a></h3>
+      
+      <p>
+你在这个命令中给出软件包的名称，命令会输出它的描述。
+注意，目前只有一小部分软件包有描述信息。
+</p>
+      <p>
+别名： desc, description, info
+</p>
+    
+    <h3><a name="usage.fetch">6.8 fetch</a></h3>
+      
+      <p>下载指定的软件包，但不安装它。这个命令下载压缩档，即使以前已经下载过。</p>
+    
+    <h3><a name="usage.fetch-all">6.9 fetch-all</a></h3>
+      
+      <p>下载 <b>所有</b> 软件包源程序文件。和 fetch　一样，它会下载即使已经下载过的压缩档。</p>
+    
+    <h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
+      
+      <p>下载 <b>所有</b> 软件包源程序文件。这个命令只下载系统中没有的文件。</p>
+    
+    <h3><a name="usage.build">6.11 build</a></h3>
+      
+      <p>构建一个软件包，并不安装它。通常，缺少的源压缩档会自动被下载。这个命令的结果是产生一个可用于安装的 .deb 软件包文件，以后你可以使用 install 命令迅速地安装它。如果 .deb 文件已经存在，这个命令会什么都不干。注意，依赖关系会被<b>安装</b>，而不仅仅是构建。</p>
+    
+    <h3><a name="usage.rebuild">6.12 rebuild</a></h3>
+      
+      <p>构建一个软件包（和 build 命令类似），但忽略和覆盖现存的 .deb 文件。如果这个软件包已经安装，新创建的 .deb 文件也会通过 <tt style="white-space: nowrap;">dpkg</tt> 安装到系统。对软件包开发过程很有用。</p>
+    
+    <h3><a name="usage.reinstall">6.13 reinstall</a></h3>
+      
+      <p>和 install 相同，但会使用 <tt style="white-space: nowrap;">dpkg</tt> 安装，即使它已经被安装。你可以用这个命令安装被意外删除的软件包文件或者改变了设置文件以后希望恢复回默认的设置。</p>
+    
+    <h3><a name="usage.configure">6.14 configure</a></h3>
+      
+      <p>
+重新运行 Fink 的配置过程。
+你可以改变镜像站点和代理服务器设置等。
+</p>
+    
+    <h3><a name="usage.selfupdate">6.15 selfupdate</a></h3>
+      
+      <p>
+	这个命令会自动更新到一个新的 Fink 版本。它检查 Fink 网站确定是否有新的版本。然后下载软件包描述并升级核心软件包，包括 <tt style="white-space: nowrap;">fink</tt> 本身。这个命令可以升级标准的发布版本，但也可以设置你的 <tt style="white-space: nowrap;">/sw/fink/dists</tt> 目录树来使用直接 CVS 进行升级。这意味着你可以访问所有软件包的最新修订版。
+</p>
+    
+    <h3><a name="usage.index">6.16 index</a></h3>
+      
+      <p>
+   重建软件包缓存。通常你不应该手工运行这个命令，因为 <tt style="white-space: nowrap;">fink</tt> 应该能够自动检测到什么时候需要更新。
+</p>
+    
+    <h3><a name="usage.validate">6.17 validate</a></h3>
+      
+      <p>
+   这个命令会对 .info 和 .deb 文件进行一些检查。软件包维护人员在提交他们负责的软件包之前，应该运行这个命令来对它的描述和相应的构建好的软件包进行检查。
+</p>
+      <p>
+   别名： check
+</p>
+    
+    <h3><a name="usage.scanpackages">6.18 scanpackages</a></h3>
+      
+      <p>
+   使用指定的代码树来调用 dpkg-scanpackages(8) 命令。
+</p>
+    
+    <h3><a name="usage.checksums">6.19 checksums</a></h3>
+      
+      <p>
+   验证 <tt style="white-space: nowrap;">/sw/src</tt>　目录中所有可以验证的压缩档的 MD5 摘要。
+</p>
+    
+    <h3><a name="usage.cleanup">6.20 cleanup</a></h3>
+      
+      <p>
+   删除所有已经有新版本的失效的软件包文件（.info, .patch, .deb）。
+   这会释放出大量的磁盘空间。
+</p>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.zh.xml,v 1.2 2004/03/07 01:55:45 jeff_yecn Exp $</i></p></body></html>

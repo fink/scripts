@@ -1,0 +1,921 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - 在 Darwin 和 Mac OS X 上运行 X11</title></head><body><h1 style="text-align: center;">在 Darwin 和 Mac OS X 上运行 X11</h1>
+    <p>
+本文档是关于如何在苹果的 Mac OS X 和 Darwin 系统上运行 X11 / XFree86 / Xtools。它包括一些介绍和开发历史，然后描述当前的状况，在通过或不通过 Fink 的情况下使用 X11 的许多选项。
+</p>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def-x11">1.1 什么是 X11？</a></li><li><a href="#intro.def-macosx">1.2 什么是 Mac OS X？</a></li><li><a href="#intro.def-darwin">1.3 什么是 Darwin？</a></li><li><a href="#intro.def-xfree86">1.4 什么是 XFree86？</a></li><li><a href="#intro.def-xtools">1.5 什么是 Xtools？</a></li><li><a href="#intro.client-server">1.6 客户和服务器</a></li><li><a href="#intro.rootless">1.7 “无根的”（rootless）是什么意思？</a></li><li><a href="#intro.wm">1.8 什么是窗口管理器？</a></li><li><a href="#intro.desktop">1.9 什么是 Quartz/Aqua，Gnome 和 KDE？</a></li></ul></li><li><a href="#history"><b>2 历史</b></a><ul><li><a href="#history.early">2.1 早期岁月</a></li><li><a href="#history.xonx-forms">2.2 XonX 出世</a></li><li><a href="#history.root-or-not">2.3 有根到无根</a></li></ul></li><li><a href="#inst-xfree86"><b>3 获取和安装 XFree86</b></a><ul><li><a href="#inst-xfree86.fink">3.1 通过 Fink 安装</a></li><li><a href="#inst-xfree86.apple-binary">3.2 苹果公司的二进制版本</a></li><li><a href="#inst-xfree86.official-binary">3.3 官方二进制版本</a></li><li><a href="#inst-xfree86.official-source">3.4 官方源代码版</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 最新的源代码</a></li><li><a href="#inst-xfree86.macgimp">3.6 MacGimp</a></li><li><a href="#inst-xfree86.switching-x11">3.7 替换 X11</a></li><li><a href="#inst-xfree86.fink-summary">3.8 Fink 软件包简介</a></li></ul></li><li><a href="#run-xfree86"><b>4 启动 XFree86</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.xinitrc">4.3 .xinitrc 文件</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 安装 Xtools</a></li><li><a href="#xtools.run">5.2 运行 Xtools</a></li><li><a href="#xtools.opengl">5.3 OpenGL 注意事项</a></li></ul></li><li><a href="#other"><b>6 其它 X11 可能</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 XFree86 故障排除</b></a><ul><li><a href="#trouble.immedate-quit">7.1 当我启动 XDarwin，它几乎立刻就退出或崩溃了</a></li><li><a href="#trouble.black">7.2 在 GNOME 面板或 GNOME 程序中出现黑图标</a></li><li><a href="#trouble.keyboard">7.3 在 XFree86 下键盘不能使用</a></li><li><a href="#trouble.delete-key">7.4 回退（Backspace）键不行</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 使用提示</b></a><ul><li><a href="#tips.terminal-app">8.1 在终端程序窗口启动 X11</a></li><li><a href="#tips.open">8.2 在 xterm 里面启动 Aqua 程序</a></li><li><a href="#tips.copy-n-paste">8.3 拷贝和粘贴</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+    
+    
+    <h3><a name="intro.def-x11">1.1 什么是 X11？</a></h3>
+      
+      <p>
+<a href="http://www.x.org/">X Window 系统</a>版本 11，简称 X11，是一个对网络透明的客户／服务器架构的图形显示系统。
+它支持应用程序在你的屏幕上绘制象素，线条，文字，图象等等。
+X11 还包括一些其它的辅助的函数库，使得它可以容易地绘制用户界面，例如：按钮，文本输入区等等。</p>
+      <p>
+X11 是 Unix 事实上的图形系统标准。
+Linux，各种 BSD 版本和多数的商用 Unix 都采用它。
+类似 CDE，KDE 和 GNOME 等桌面环境都运行在它之上。
+</p>
+    
+    <h3><a name="intro.def-macosx">1.2 什么是 Mac OS X？</a></h3>
+      
+      <p>
+        <a href="http://www.apple.com/macosx/">Mac OS X</a> 是<a href="http://www.apple.com/">苹果电脑</a>开发的一个操作系统。
+和它的祖先 NeXTStep 和 OpenStep 一样，它基于 BSD，因此属于 Unix 操作系统家族的一份子。
+不过，它包括一个专有的图形显示系统。
+这个图形引擎称为 Quartz（石英），而其外观风格则称为 Aqua（水）。很多时候这两个名字通常会相互代替使用。
+</p>
+    
+    <h3><a name="intro.def-darwin">1.3 什么是 Darwin？</a></h3>
+      
+      <p>
+        <a href="http://OpenDarwin.org/">Darwin</a> 基本上是 Mac OS X 的免费和公开源码的精简版本。
+它不包括 Quartz，Aqua，或其它相关技术。
+默认情况下，它只包括一个文字终端。
+</p>
+    
+    <h3><a name="intro.def-xfree86">1.4 什么是 XFree86？</a></h3>
+      
+      <p>
+        <a href="http://www.xfree86.org/">XFree86</a> 是对 X11 的一个开放源码的实现。最初它开发运行在 Intel x86 PC 上，因此得名。
+现在，它可以运行在主要的硬件架构和操作系统上，包括 OS/2，Darwin，Mac OS X 和 Windows。
+</p>
+    
+    <h3><a name="intro.def-xtools">1.5 什么是 Xtools？</a></h3>
+      
+      <p>
+Xtools 是 <a href="http://www.tenon.com/">Tenon
+Intersystems</a> 的一个产品。
+它有针对 Mac OS X 上基于 XFree86 的 X11 的产品。
+</p>
+    
+    <h3><a name="intro.client-server">1.6 客户和服务器</a></h3>
+      
+      <p>
+X11 使用客户／服务器体系架构。
+有一个中央的程序负责实际的绘图工作以及协调不同程序的访问要求，这个程序称为服务器。
+想要绘图的程序使用 X11 与服务器连接告诉它要画什么，
+这些程序在 X11 中称为客户（程序）。
+</p>
+      <p>
+X11 允许服务器和客户在不同的机器上，
+这种情况下很容易发生术语的混淆。
+在一个工作站和服务器的环境中，你在工作站计算机上运行 X11 显示服务器程序，在服务器计算机上运行应用程序（X 客户）。
+所以，我们这里谈到"服务器"时，我们指的是 X11 显示服务程序，而不是藏在你衣橱里面的计算机。
+</p>
+    
+    <h3><a name="intro.rootless">1.7 “无根的”（rootless）是什么意思？</a></h3>
+      
+      <p>
+一点背景：
+X11 把屏幕描绘成按层次关系嵌套在一起的许多窗口。
+在层次关系的顶端，有一个特殊的窗口，它的大小是整个屏幕，并包括全部其它窗口。
+这个窗口包含背景，并被称为"根（root）窗口"。
+</p>
+      <p>
+现在回到题目：
+和任何图形环境一样，X11 被设计成独立运行并完全控制整个屏幕。
+在 Mac OS X 中，Quartz 已经控制了屏幕，所以当这两个一起运行的时候，其中一个必须做出特殊的处理。
+</p>
+      <p>
+一种办法让两个程序轮流控制。
+每个环境都有完整的屏幕，但同一时间只有一个可见，用户可以在两种环境中间切换。
+这个模式称为全屏幕或有根模式。
+之所以称为有根模式是因为在 X11 屏幕上的确存在通常的根窗口，和其它系统一样。
+</p>
+      <p>
+另外一种版本是根据窗口来混合两种环境。
+这消除了切换两种模式屏幕的需要。
+它也消除了了 X11 的根窗口，因为 Quartz 已经管理了桌面背景。
+因为没有（可见的）根窗口，这种模式称为"无根"模式。这是在 Mac OS X 上使用 X11 最舒服的一种方式。
+</p>
+    
+    <h3><a name="intro.wm">1.8 什么是窗口管理器？</a></h3>
+      
+      <p>
+在多数图形环境中，窗口边框的外观（标题栏，关闭按钮，等）是由系统定义的。
+X11 则不是这样。
+在 X11 中，窗口的框架（也称为"装饰"）是由一个称为窗口管理器的单独程序提供的。
+一般认为，窗口管理器只是另外一个客户程序；它用通常的办法启动，并与 X 服务器按同样的方法通信。
+</p>
+      <p>
+由很多不同的窗口管理器供我们选择。
+<a href="http://www.xwinman.org/">xwinman.org</a>有一个详细的清单。
+多数常见的窗口管理器都允许用户定制称为<a href="http://www.themes.org/">主题</a>的窗口外观。
+许多窗口管理器还提供额外的功能，象在根窗口上的弹出菜单，docks，或程序启动按钮。
+</p>
+      <p>
+Fink 已经打包了很多窗口器，这里是一个
+<a href="http://fink.sourceforge.net/pdb/section.php/x11-wm/">当前的清单
+</a>。
+      </p>
+    
+    <h3><a name="intro.desktop">1.9 什么是 Quartz/Aqua，Gnome 和 KDE？</a></h3>
+      
+      <p>
+他们都是桌面环境，另外还有很多类似的环境。
+他们的用途是给应用程序提供额外框架，使得他们的外观，使用感觉和行为在视觉上保持一致。例如：
+</p>
+      <p> 图形引擎：X11
+</p>
+      <p> 窗口管理器：
+<a href="http://sawmill.sourceforge.net/">sawfish</a>
+      </p>
+      <p> 桌面：<a href="http://www.gnome.org/">Gnome</a>
+      </p>
+      <p>
+图形显示引擎，窗口管理器和桌面之间的界限是模糊的，因为有些类似或相同的功能，会被其中之一或多个所同时实现。这也是为什么某个特定的窗口管理器可能不可以被另外一个特定的桌面环境所使用的原因。
+
+</p>
+      <p>
+许多的程序会针对特定的桌面环境开发。
+多数程序可以在安装对应的桌面环境的函数库（以及相应的更底层的函数库）后，能够不减损或有限减损功能地运行。 
+其中的例子是越来越多的 
+<a href="http://fink.sourceforge.net/pdb/section.php/gnome">
+GNOME 程序精选
+</a>
+可以在不运行 GNOME 的情况下安装和运行。  
+不幸的是，对 <a href="http://www.kde.org/">KDE 应用程序</a>却
+<a href="http://fink.sourceforge.net/faq/usage-fink.php#kde">
+还没有取得类似的进展
+</a>。 
+      </p>
+    
+  <h2><a name="history">2 历史</a></h2>
+    
+    
+    
+      <p>［请原谅我使用史诗的风格，我没法抗拒…］</p>
+      <p>［也请原谅我没有能力完全表达英语原文的神韵－中文译者］</p>
+    
+    <h3><a name="history.early">2.1 早期岁月</a></h3>
+      
+      <p>
+创世之初，一切荒芜。
+Darwin 还是一个初生婴儿，Mac OS X 仍然在开发。它们上面都没有 X11 的实现。
+</p>
+      <p>
+John Carmack 到来了，他把 XFree86 带到了 Mac OS X 服务器版，当时 Darwin 家族唯一可用的操作系统。
+后来，Dave ZarzyckiLater 把移植代码升级到 XFree86 4.0，并运行在 Darwin 1.0 上。
+这些补丁最后飘落到 Darwin 项目的 CVS 库中，沉睡着，等待某一天的到来…
+</p>
+    
+    <h3><a name="history.xonx-forms">2.2 XonX 出世</a></h3>
+      
+      <p>
+某个美好的日子，Torrey T. Lyons 经过那里，Darwin 补丁终于等到了它们所一直等待的人。
+Torrey 把它们带到了新家：官方 XFree86 CVS 库。
+现在是 Mac OS X Public Beta 和 Darwin 1.2 的时代。
+XFree86 4.0.2 能在 Darwin 上运行得很好，但在 Mac OS X 上却需要退出 Aqua 界面回到控制台上去运行。
+因此，Torrey 把 <a href="http://mrcla.com/XonX/">XonX 团队</a>召集到他身边，开始了把 XFree86 带到 Mac OS X 上的征途。
+</p>
+      <p>
+在差不多相同的时候，Tenon 开始使用 XFree86 4.0 为基础建造 Xtools。
+</p>
+    
+    <h3><a name="history.root-or-not">2.3 有根到无根</a></h3>
+      
+      <p>
+很快，XonX 团队成功地使 XFree86 以全屏幕方式与 Quartz 同时运行。他们发布了测试版本给那些勇于尝试的用户。
+测试版本叫做 XFree86-Aqua，简称 XAqua。
+由于 Torrey 是团队的领导者，因此所做的修改直接加进了 XFree86 的 CVS 库，并一起向 4.1.0
+版本迈进。
+</p>
+      <p>
+早期，与 Quartz 的界面是通过一个叫 Xmaster.app （最初用 Carbon 编写，后来用 Cocoa 重写了）的小程序来完成的。
+后来这些代码被集成到 X server 中，导致了 XDarwin.app 的诞生。
+这个时候，共享库的支持也被加入了（Tenon 用它们来代替自己的补丁程序，很方便地实现了二进制兼容）。
+同时，在无根模式上也获得了重要的进展（使用 Carbon API），可惜，那时候要加进 XFree86 4.1.0 中已经太晚了。
+不过无根模式的补丁是免费软件，因此得以不断地在网上传播。
+在 XFree86 4.1.0 仅以全屏幕模式发布以后，无根模式的工作仍在进展，不过改为使用 Cocoa API 了。
+最终，一个试验性的无根模式被加进了 XFree86 的 CVS 库。
+</p>
+      <p>
+这时，苹果发布了 Mac OS X 10.0 和 Darwin 1.3，
+几个星期以后，Tenon 发布了 Xtools 1.0。
+</p>
+      <p>把无根模式集成进 XFree86 的开发工作一直在进行，到 2002 年一月 XFree86 4.2.0 发布的时候，Darwin/Mac OS X 的版本已经完全集成到 XFree86 的主发布版本中了。
+</p>
+    
+  <h2><a name="inst-xfree86">3 获取和安装 XFree86</a></h2>
+    
+    
+    <h3><a name="inst-xfree86.fink">3.1 通过 Fink 安装</a></h3>
+      
+      <p>
+Fink 可以让你以你喜欢的方式安装 X11，
+不过它也提供自己的 XFree86 软件包。如果你使用 <tt style="white-space: nowrap;">fink install ...</tt>，它会下载源代码，并在你的计算机上进行编译。如果你使用 <tt style="white-space: nowrap;">apt-get install ...</tt> 或 <tt style="white-space: nowrap;">dselect</tt> 前端工具，它会下载预编译的二进制包，类似官方的
+XFree86 发行版。
+</p>
+      <p>
+<tt style="white-space: nowrap;">xfree86-base</tt> 软件包包括除 XDarwin 服务器外的所有 XFree86 4.2.1.1 （对 10.1 用户是 4.2.0）程序。
+<tt style="white-space: nowrap;">xfree86-rootless</tt> 软件是来自标准稳定版的 XFree86 4.2.1.1 的服务器软件。它同时支持全屏幕和无根模式，也包括 OpenGL 支持。
+（早期，Fink 还有一个只提供全屏幕模式的 <tt style="white-space: nowrap;">xfree86-server</tt> 软件包，但现在已经不是一个有关联的选择了）。
+你可以选择象后面那样，自己安装服务器。这种情况下，你只应该安装 <tt style="white-space: nowrap;">xfree86-base</tt>，否则 Fink 可能会覆盖你自己安装的服务器。注意，当前<tt style="white-space: nowrap;"> xfree86-base</tt> (4.2.1.1-3) 的稳定版本在构建过程中还会产生 <tt style="white-space: nowrap;">xfree86-rootless</tt>，<tt style="white-space: nowrap;">xfree86-base-shlibs</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt>。你必须安装全部这四个软件包才能获得一个可用的 XFree86 环境。
+</p>
+      <p><tt style="white-space: nowrap;">xfree86-base-threaded</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> 本质上是相同的东西，但被修改以提供线程支持。对某些程序来说，例如<tt style="white-space: nowrap;">xine</tt>，这是必须的。</p>
+      <p>XFree86 4.2.11 （非线程版）被认为是在 10.2 下与 Fink 一起使用的稳定的基准版本。XFree86 4.3.0 也有提供，但更多地被认为是试验性的，而且在本文档写作的时候，仍出于未稳定代码树中。它内置了线程支持，并比 4.2.1.1 快。要安装这个版本，你应该安装 <tt style="white-space: nowrap;">xfree86</tt> 软件包。注意，对这个版本，再没有单独的 -base 和 -rootless 软件包，虽然函数库仍被划分到 <tt style="white-space: nowrap;">xfree86-shlibs</tt>中。如果你构建与 4.3 连接的二进制版本，他们不能在 4.2.1.1 或苹果的 X11 上运行，请小心行事。</p>
+      <p>
+        <b>10.3 用户：</b>你需要安装版本 4.3.99.16-2 或更新，它是 XFree86-4.4 升级版。如果你是使用二进制发布方式，确认已经升级了软件包描述（例如，运行 <tt style="white-space: nowrap;">sudo apt-get update</tt>）。</p>
+    
+    <h3><a name="inst-xfree86.apple-binary">3.2 苹果公司的二进制版本</a></h3>
+      
+      <p>
+2003 年 1 月 7 日，苹果发布了<a href="http://www.apple.com/macosx/x11/">一个基于 XFree86-4.2 的 X11 定制实现</a>，它包括 Quartz 渲染和加速的 OpenGL。2003 年 2 月 10 日发布了补充更多特性和修正缺陷的新版本。第三个版本（Beta 3）2003 年 3 月 17 日，它包括更多的特性和缺陷修正。这个版本可以运行在 Juguar 上。
+</p>
+      <p>2003 年 10 月 24 日，苹果发布了 Panther (10.3)，包括了它们 X11 的发布版本。这个版本基于 XFree86-4.3。</p>
+      <p>
+要使用苹果的二进制版本，你需要安装 <b>X11 User</b> 软件包，你还需要
+<a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php">更新</a> Fink。</p>
+      <p>在 <tt style="white-space: nowrap;">fink-0.16.2</tt>下，你需要安装 <b>X11 SDK</b> 软件包。这样以后，Fink 才可以创建 <tt style="white-space: nowrap;">system-xfree86</tt> 虚拟软件包。</p>
+      <p>在 <tt style="white-space: nowrap;">fink-0.17.0</tt> 或更新版本下，只有你需要从源程序编译软件包才必须安装 X11 SDK 。这种情况下，即使你没有安装 SDK，仍然会有 <tt style="white-space: nowrap;">system-xfree86</tt> 和 <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> 虚拟软件包，后者表示共享函数库。如果你安装了 SDK，那么还会有一个
+<tt style="white-space: nowrap;">system-xfree86-dev</tt> 软件包，代表头文件。
+</p>
+      <p>
+如果你已经安装了 XFree86，无论是否通过 Fink 安装，你都可以<a href="#inst-xfree86.switching-x11">用一个 X11 软件包来替换另一个</a>。确定你删除了现有的软件包，然后安装苹果的 X11（如果需要的话，还包括 X11 SDK）。
+</p>
+      <p>
+关于使用苹果 X11 的一些注意事项：
+</p>
+      <ul>
+        <li>
+          <p><tt style="white-space: nowrap;">autocutsel</tt> 软件包已经不在需要。如果正在使用启动这个功能的 X11，你应该关闭它。</p>
+        </li>
+        <li>
+          <p>苹果的 X11 使用你现有的 <tt style="white-space: nowrap;">~/.xinitrc</tt> 文件。如果你希望全功能的 Quartz 集成，你应该使用 <tt style="white-space: nowrap;">/usr/X11R6/bin/quartz-wm</tt>
+作为你的窗口管理器，或者删除 <tt style="white-space: nowrap;">~/.xinitrc</tt> 文件。</p>
+          <p>如果你只需要拷贝粘贴支持，但希望使用另外一个窗口管理器，你可以按照下面的例子做：</p>
+          <pre>/usr/X11R6/bin/quartz-wm --only-proxy &amp;
+exec /sw/bin/fvwm2</pre>
+          <p>当然，你也可以使用其它的窗口管理器，<tt style="white-space: nowrap;">startkde</tt>，等等。</p>
+        </li>
+        <li>
+          <p>
+            <tt style="white-space: nowrap;">quartz-wm</tt> 不完全支持 Gnome/KDE 窗口管理管器的一些提示参数，所以你可能会看到一些本不应该有边框的窗口会有边框。</p>
+        </li>
+        <li>
+          <p>默认情况下，苹果的 X11 不理会 Fink 的环境变量设置。为了启动你通过 fink 安装的程序（例如窗口管理器，gnome-session，其它在
+<tt style="white-space: nowrap;">/sw/bin</tt> 下的应用程序），把下面移行放在 <tt style="white-space: nowrap;">~/.xinitrc</tt> 文件比较靠前的地方（比如，在最初的 "<tt style="white-space: nowrap;">#!/bin/sh</tt>" 的这一行之后，但在运行其它程序以前）：</p>
+          <pre> . /sw/bin/init.sh
+</pre>
+          <p>这样 Fink 的环境就被初始化了。注意：我们使用 <tt style="white-space: nowrap;">init.sh</tt> 文件而不是 <tt style="white-space: nowrap;">init.csh</tt> 文件是因为<tt style="white-space: nowrap;">.xinitrc</tt> 是使用 <tt style="white-space: nowrap;">sh</tt> 来做解释器，而不是 <tt style="white-space: nowrap;">tcsh</tt>。</p>
+        </li>
+        <li>
+          <p>有些程序需要调用 Fink 目录下的其它程序，如果这些程序是通过应用程序菜单启动的话，还需要另外的专门处理。而不仅仅是使用全路径名这个简单。例如：</p>
+          <pre>/sw/bin/emacs</pre>
+          <p>如果你使用 bash 作为你的默认 shell 程序，你需要象下面这样设置：</p>
+          <pre>. /sw/bin/init.sh ; emacs</pre>
+          <p>如果你用 tcsh：</p>
+          <pre>source /sw/bin/init.csh ; emacs</pre>
+          <p>这个确保程序有一个正确的 PATH 环境。你可以对任何 Fink 安装的程序使用这个语法。</p>
+        </li>
+        <li>
+          <p>如果你尝试手工编译一个需要和苹果的 X11 连接的软件包，并且看到类似下面的错误：</p>
+          <pre>ld: err.o illegal reference to symbol: _XSetIOErrorHandler 
+defined in indirectly referenced dynamic library 
+/usr/X11R6/lib/libX11.6.dylib</pre>
+          <p>那么你需要在你的连接选项中使用 <tt style="white-space: nowrap;">-lX11</tt>。检查你的软件的配置选项，看如何给它添加额外的连接参数。</p>
+        </li>
+        <li>
+          <p>如果你原来使用 <tt style="white-space: nowrap;">xfree86</tt> 软件包，后来又转到苹果的 X11 （无论是 10.2.x 还是 10.3.x 上），任何连接到 <tt style="white-space: nowrap;">xfree86</tt> 的软件包都需要重新编译，因为他们并不二进制兼容。</p>
+        </li>
+      </ul>
+    
+    <h3><a name="inst-xfree86.official-binary">3.3 官方二进制版本</a></h3>
+      
+      <p>
+XFree86 项目又一个针对 XFree86 4.2.0 的官方二进制发行版，它还可以通过补丁升级到 4.2.1.1。
+你可以在你本地的 <a href="http://www.xfree86.org/MIRRORS.shtml">XFree86 镜像站点</a>中的<tt style="white-space: nowrap;">4.2.0/binaries/Darwin-ppc-5.x</tt> 目录中找到它。
+一定要同时下载 <tt style="white-space: nowrap;">Xprog.tgz</tt> 和 <tt style="white-space: nowrap;">Xquartz.tgz</tt>
+这两个压缩档，虽然它们被标为可选的。
+如果你不知道你需要些什么，那么可以下载整个目录。
+以 root 权限运行 <tt style="white-space: nowrap;">Xinstall.sh</tt> 脚本来进行安装。
+（在安装之前，你也许要阅读一下<a href="http://www.xfree86.org/4.2.0/Install.html">官方指南</a>）。如果你愿意的话，也可以使用 XonX 的<a href="http://prdownloads.sourceforge.net/xonx/XInstall_10.1.sit?download">二进制安装包</a>，它使用相同的源程序，但更容易使用。上面两种情况下，你都应该下载，解压，然后运行下面的更新：</p>
+      <ol>
+        <li>10.1 用户：<a href="http://prdownloads.sourceforge.net/xonx/XFree86_4.2.0.1-10.1.zip?download">4.2.0 -&gt; 4.2.0.1 升级</a>。10.2 用户：  <a href="http://prdownloads.sourceforge.net/xonx/XFree86_4.2.0.1-10.2.zip?download">4.2.0 -&gt; 4.2.0.1 升级</a>
+        </li>
+        <li>10.1 和 10.2 用户：<a href="http://prdownloads.sourceforge.net/xonx/XFree86_4.2.1.1.zip?download">4.2.0.1 -&gt; 4.2.1.1 升级</a>
+        </li>
+      </ol>
+      <p>同时，还有一个 XFree86 4.3.0 的官方二进制安装版，在 <a href="http://www.xfree86.org/MIRRORS.shtml">XFree86 镜像站点</a>的<tt style="white-space: nowrap;">4.3.0/binaries/Darwin-ppc-6.x</tt>目录里面。
+一定要下载 <tt style="white-space: nowrap;">Xprog.tgz</tt> 和 <tt style="white-space: nowrap;">Xquartz.tgz</tt>
+这两个压缩档，即使它们被标为可选的。
+如果你不确定你需要什么，可以下载整个目录。
+用 root 权限运行 <tt style="white-space: nowrap;">Xinstall.sh</tt> 脚本来进行安装。
+（你也许会希望在安装前先阅读一下<a href="http://www.xfree86.org/4.3.0/Install.html">官方指南</a>）。</p>
+      <p>无论你安装哪一个版本，你现在都拥有了一个 XFree86 软件包，其中包括一个可以在 OS X 下支持全屏幕或无根模式的服务器程序。
+</p>
+    
+    <h3><a name="inst-xfree86.official-source">3.4 官方源代码版</a></h3>
+      
+      <p>
+如果你有时间可花的话，你可以用源代码构建 XFree86 4.2.0。
+你可以在你本地的 <a href="http://www.xfree86.org/MIRRORS.shtml">XFree86 镜像站点</a>的<tt style="white-space: nowrap;">4.2.0/source</tt>目录中找到它们。
+获取一共三个的 <tt style="white-space: nowrap;">X420src-#.tgz</tt> 压缩档，并把它们解压到相同的一个目录里面。
+你可以把一些宏定义放到 XFree86 的源代码树的 <tt style="white-space: nowrap;">config/cf/host.def</tt> 文件里面，来自己定制构建方式。
+
+查看
+<tt style="white-space: nowrap;">config/cf/darwin.cf</tt> 文件来获得一些提示。
+（注意：只有那些被 #ifndef 包围的宏才可以被 host.def 文件所重定义。）
+</p>
+      <p>
+当你对你的配置满意以后，使用下面指令编译和安装 XFree86：
+</p>
+      <pre>make World
+sudo make install install.man</pre>
+      <p>要升级到 4.2.1.1，请按照<a href="#inst-xfree86.official-binary">官方二进制版</a>部分的指引。</p>
+      <p>要安装 4.3.0，按照上面的指引，把 "2" 替换成 "3"，但是不要做 4.2.1.1 的升级步骤。</p>
+      <p>
+和安装官方二进制版一样，你现在已经拥有了一个 XFree86 软件包，其中包括一个可以在 OS X 下支持全屏幕或无根模式的服务器程序。
+</p>
+    
+    <h3><a name="inst-xfree86.latest-cvs">3.5 最新的源代码</a></h3>
+      
+      <p>
+如果你不但有时间，还有坚强的神经的话，你可以从公开的 CVS 库里面获取最新的开发过程中的 XFree86 源代码。
+注意，代码是处于持续开发过程中的，因此，你今天下载的内容不一定和你昨天下载的相同。
+</p>
+      <p>
+要安装，按照 <a href="http://www.xfree86.org/cvs/">XFree86
+CVS</a> 中的办法下载 <tt style="white-space: nowrap;">xc</tt> 模块。然后，按照上面的从源代码构建的办法进行。
+</p>
+    
+    <h3><a name="inst-xfree86.macgimp">3.6 MacGimp</a></h3>
+      
+      <p>
+MacGimp 2001 年时提供的可下载的安装程序不包括 XFree86。
+（虽然它可能会覆盖一些 XFree86 配置文件）。
+</p>
+      <p>
+<a href="http://www.macgimp.com/">MacGimp, Inc.</a>销售的 CD 据称包括 XFree86。
+它的确切版本并不清楚，可能是 4.0.3，4.1.0 和一个开发版本的混合。
+服务器程序支持无根模式，使用 4.1.0 之前的一个补丁程序。
+</p>
+    
+    <h3><a name="inst-xfree86.switching-x11">3.7 替换 X11</a></h3>
+      
+      <p>
+如果你已经安装了一个 Fink X11 软件包，但由于某个原因你希望删除它，换成另外一个。操作过程很简单。首先你需要牵制删除旧的安装包，然后安装新的，保持你的 dpkg 数据库的一致性。
+</p>
+      <p>
+有两个办法这样做：
+</p>
+      <ol>
+        <li>
+          <p>使用 FinkCommander</p>
+          <p>
+   如果你使用<a href="http://finkcommander.sourceforge.net/">FinkCommander</a>，你可以从菜单里面进行强制删除。例如，如果你安装了 <tt style="white-space: nowrap;">xfree86-rootless</tt>，但希望改用线程化的版本，你可以选择 <tt style="white-space: nowrap;">xfree86-rootless</tt>，
+   <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt>，<tt style="white-space: nowrap;">xfree86-base</tt> 和
+   <tt style="white-space: nowrap;">xfree86-base-shlibs</tt> 软件包，然后选择菜单：
+  </p>
+          <pre>Source -&gt; Force Remove</pre>
+        </li>
+        <li>
+          <p>在命令行手工删除</p>
+          <p>
+   要手工删除，你可以使用带 --force-depends 参数的 <tt style="white-space: nowrap;">dpkg</tt> 命令，象这样：
+  </p>
+          <pre>sudo dpkg -r --force-depends xfree86-rootless\ 
+xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
+          <p>
+   如果你有需要使用线程化 XFree86 的程序，那么删除它并安装另外一个 XFree86 软件包会有问题。
+  </p>
+        </li>
+      </ol>
+      <p>如果，你有一个不是由 Fink 安装的 X11，你需要在命令行删除它：</p>
+      <pre>sudo rm -rf /usr/X11R6 /etc/X11</pre>
+      <p>上面办法应该对任何不是通过 Fink 安装的 X11 都有效。根据你安装的版本不同，你还需要删除 <tt style="white-space: nowrap;">XDarwin.app</tt> 或 
+<tt style="white-space: nowrap;">X11.app</tt>。如果你删除的是苹果的 X11，那么检查你的 <tt style="white-space: nowrap;">.xinitrc</tt> 文件，确定你运行的窗口管理器不是 <tt style="white-space: nowrap;">quartz-wm</tt>。你现在可以安装你喜欢的 X11 变种，手工或通过 Fink。</p>
+    
+    <h3><a name="inst-xfree86.fink-summary">3.8 Fink 软件包简介</a></h3>
+      
+      <p>
+一个关于安装选项和你应该安装的 Fink 软件包的归纳：
+</p>
+      <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Install Type</th><th align="left">Fink packages</th></tr><tr valign="top"><td>Fink 的 4.2.x 已编译版</td><td>
+            <p>
+              <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> （以及他们的 <tt style="white-space: nowrap;">-shlibs</tt>）</p>
+            <p>或 <tt style="white-space: nowrap;">xfree86-base-threaded</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> （以及 <tt style="white-space: nowrap;">-shlibs</tt>）</p>
+          </td></tr><tr valign="top"><td>Fink 的 4.3.x 已编译版</td><td>
+            <p>
+              <tt style="white-space: nowrap;">xfree86</tt> 和 <tt style="white-space: nowrap;">xfree86-shlibs</tt>
+            </p>
+          </td></tr><tr valign="top"><td>4.x 官方二进制版</td><td>
+            <p>
+              仅 <tt style="white-space: nowrap;">system-xfree86</tt> （以及一些 splitoff）</p>
+          </td></tr><tr valign="top"><td>4.x 已编译版，包括从源代码发布版或最新的 CVS 源代码编译的。</td><td>
+            <p>
+              仅 <tt style="white-space: nowrap;">system-xfree86</tt> （以及一些 splitoff）</p>
+          </td></tr><tr valign="top"><td>苹果的 4.2.x 版</td><td>
+            <p>
+              仅 <tt style="white-space: nowrap;">system-xfree86</tt> （以及一些 splitoff）
+</p>
+          </td></tr><tr valign="top"><td>苹果的 4.3.x 版</td><td>
+            <p>
+              仅 <tt style="white-space: nowrap;">system-xfree86</tt> （以及一些 splitoff）
+</p>
+          </td></tr></table>
+    
+  <h2><a name="run-xfree86">4 启动 XFree86</a></h2>
+    
+    
+    <h3><a name="run-xfree86.darwin">4.1 Darwin</a></h3>
+      
+      <p>
+在纯 Darwin 环境下，XFree86 和其它 Unix 环境的使用基本一样。
+通常的启动方式是在控制台运行 <tt style="white-space: nowrap;">startx</tt>； 
+这会启动服务器程序可一些最初的客户程序，例如窗口管理器和一个运行 shell 的终端模拟程序。
+在纯 Darwin 中，不需要指明任何参数，只需要输入：
+</p>
+      <pre>startx</pre>
+      <p>
+你可以通过你自己主目录中的几个文件来定制需要启动什么。
+<tt style="white-space: nowrap;">.xinitrc</tt> 控制什么客户程序会被启动。
+<tt style="white-space: nowrap;">.xserverrc</tt> 可以控制服务器程序的选项，甚至启动一个不同的服务器。
+如果你碰到麻烦（比如，只有一个空白的屏幕或退回了控制台），你可以通过把这些文件暂时移开来确定问题所在。
+当 <tt style="white-space: nowrap;">startx</tt> 找不到这些文件的时候，它会使用安全的默认设置，一般这时候应该能正常工作。
+</p>
+      <p>
+另外的办法是，你可以直接通过一个 XDMCP 选项直接启动服务器，象这样：
+</p>
+      <pre>X -query remotehost</pre>
+      <p>
+关于它的详细信息请查看 <tt style="white-space: nowrap;">Xserver</tt> 的手册页面。
+</p>
+      <p>
+最后，可以有些选项设置 <tt style="white-space: nowrap;">xdm</tt>；请阅读它的手册页面获取详细信息。
+</p>
+      <p>
+注意：如果你使用 Mac OS X，你可以在登录窗口输入 <tt style="white-space: nowrap;">&gt;console</tt>　来获得一个和纯 Darwin 环境等效的纯文本控制台。
+然后，你可以使用上面描述的启动方法，除了 <tt style="white-space: nowrap;">xdm</tt> 作为一个例外。
+</p>
+    
+    <h3><a name="run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></h3>
+      
+      <p>
+基本上，在 Mac OS X 下启动 XFree86 有两种办法。
+一种办法是在你应用程序中双击 XDarwin.app 程序图标。在启动过程中会有一个对话框让你选择是全屏幕模式还是无根模式。你可以在偏好设定对话框中设定总是使用你选择模式并禁用选择对话框。  
+</p>
+      <p>
+在 4.2.0 之前，它会自动启动全屏幕模式，没有办法通过双击程序来进入无根模式。
+</p>
+      <p>
+另外一种在 Mac OS X 中启动 XFree86 的办法是在终端程序中运行
+<tt style="white-space: nowrap;">startx</tt>。
+如果你用这种办法启动服务器程序，你必须告诉它应该与 Quartz 并行使用。
+这可以通过使用 <tt style="white-space: nowrap;">-fullscreen</tt> 参数，比如：
+</p>
+      <pre>startx -- -fullscreen</pre>
+      <p>
+这会以全屏幕模式启动服务器，以及你的 <tt style="white-space: nowrap;">.xinitrc</tt> 文件里面的客户程序。  
+</p>
+      <p>
+注意，在 4.2 之前，使用 <tt style="white-space: nowrap;">-quartz</tt> 参数来进入全屏幕模式。
+</p>
+      <p>
+如果你的服务器程序支持无根模式，你可以用 <tt style="white-space: nowrap;">-rootless</tt> 参数用无根模式启动：</p>
+      <pre>startx -- -rootless</pre>
+      <p>
+<tt style="white-space: nowrap;">-quartz</tt> 选项不再选择全屏幕模式，而是使用偏好设定里面的默认设置。
+</p>
+      <p>对于 4.3，如果不带参数地使用 <tt style="white-space: nowrap;">startx</tt>，会显示启动对话框。</p>
+    
+    <h3><a name="run-xfree86.xinitrc">4.3 .xinitrc 文件</a></h3>
+      
+      <p>
+如果在你的主目录中有一个 <tt style="white-space: nowrap;">.xinitrc</tt> 文件，它可以用于启动一些最初的 X 客户程序，比如，窗口管理器，或者一些 xterm 终端或象 GNOME 这样的桌面环境。<tt style="white-space: nowrap;">.xinitrc</tt> 文件实际上是包括一些命令 shell 脚本。
+<b>不</b> 需要把通常的 <tt style="white-space: nowrap;">#!/bin/sh</tt> 放在第一行和把这个文件设为可执行；xinit 知道怎么在 shell 里面运行它。
+</p>
+      <p>
+如果在你的主目录里面没有 <tt style="white-space: nowrap;">.xinitrc</tt> 文件，XFree86 会使用它的默认文件，
+<tt style="white-space: nowrap;">/private/etc/X11/xinit/xinitrc</tt>。
+你可以使用这个默认文件作为你自己的 .xinitrc 文件的一个起点：
+</p>
+      <pre>cp /private/etc/X11/xinit/xinitrc ~/.xinitrc</pre>
+      <p>
+如果你使用 Fink，你可以在文件的开头使用 source <tt style="white-space: nowrap;">init.sh</tt>
+来确保环境被正确设置。
+</p>
+      <p>
+虽然原则上你可以在 <tt style="white-space: nowrap;">.xinitrc</tt> 中使用任意命令，但是还是有些需要注意的地方。
+首先，解释这个文件的 shell 默认情况下会等待一个程序执行完毕才会执行下一个程序。
+因此，如果你希望同时运行多个程序，你需要告诉 shell 应该"在后台"运行他们。这可以通过在一行命令的末尾加一个 <tt style="white-space: nowrap;">&amp;</tt> 号来实现。
+</p>
+      <p>
+第二，<tt style="white-space: nowrap;">xinit</tt> 会等待 <tt style="white-space: nowrap;">.xinitrc</tt>
+脚本执行完，然后认为 "这个部分已经执行完毕，现在我应该关闭 X 服务器了"。
+这意味着你的 <tt style="white-space: nowrap;">.xinitrc</tt> 文件里面的最后一个命令一定不能是后台运行的，而且它应该是一个一直运行的程序。
+一般情况下，窗口管理器正好可以用于这个用途。
+事实上，多数窗口管理器会假设 <tt style="white-space: nowrap;">xinit</tt> 在等待它结束运行，并以此来作为它们菜单里面"注销"功能的工作原理。
+（注意：为了节省一些内存和 CPU 的消耗，你可以象下面的例子一样在最后一条命令前加上
+<tt style="white-space: nowrap;">exec</tt>。）
+</p>
+      <p>
+关于启动 GNOME 的一个简单例子：
+</p>
+      <pre>source /sw/bin/init.sh
+exec gnome-session</pre>
+      <p>
+一个稍微复杂一点的例子会关闭 X11 响铃，启动一些客户程序，最后运行 Enlightenment 窗口管理器：
+</p>
+      <pre>source /sw/bin/init.sh
+
+xset b off
+
+xclock -geometry -0+0 &amp;
+xterm &amp;
+xterm &amp;
+
+exec enlightenment</pre>
+    
+  <h2><a name="xtools">5 Xtools</a></h2>
+    
+    
+    <h3><a name="xtools.install">5.1 安装 Xtools</a></h3>
+      
+      <p>
+现在一切都很简单。获取一个安装程序，双击它，然后安装有关的屏幕指示进行。
+注意在提示选择安装宗卷的时候要选择启动宗卷。
+</p>
+      <p>
+如果你使用 Fink，你应该在安装 Xtools 以后，在 Fink 里面安装
+<tt style="white-space: nowrap;">system-xtools</tt> 软件包。
+这个软件包并不安装任何文件，它只是检查必须的库函数，然后做为 Fink 依赖关系系统的一个占位符存在。
+</p>
+    
+    <h3><a name="xtools.run">5.2 运行 Xtools</a></h3>
+      
+      <p>
+要运行 Xtools，在你的应用程序文件夹里面双击 Xtools.app 程序图标。
+象 XFree86 一样，Xtools 会运行你
+<tt style="white-space: nowrap;">.xinitrc</tt> 文件里面的客户程序。
+Xtools 还可以让你在菜单里面启动客户程序。
+</p>
+    
+    <h3><a name="xtools.opengl">5.3 OpenGL 注意事项</a></h3>
+      
+      <p>
+Xtools 可以在无根模式下使用硬件加速的 OpenGL，并包括有关的支持函数库。
+虽然主 libGL 函数库没有什么问题，但 libGLU 和 libglut 函数库只是静态连接库，这并不足以提供与 XFree86 的二进制兼容。
+另外，还缺乏一些头文件。
+Fink 暂时还没有解决的办法。
+希望这会在 Xtools 1.1 发布的时候修正。
+</p>
+    
+  <h2><a name="other">6 其它 X11 可能</a></h2>
+    
+    
+    <h3><a name="other.vnc">6.1 VNC</a></h3>
+      
+      <p>
+VNC 是一个在设计上和 X11 类似的网络图象显示系统。
+不过，它工作于更底层，而使得实现更为简单。
+使用 Xvnc 服务器和一个 Mac OS X 显示客户程序，有可能在 Mac OS X 上运行 X11 应用程序。
+Jeff Whitaker 的 <a href="http://www.cdc.noaa.gov/~jsw/macosx_xvnc/">Xvnc 页面</a>有关于它的更多信息。
+</p>
+    
+    <h3><a name="other.wiredx">6.2 WiredX</a></h3>
+      
+      <p>
+        <a href="http://www.jcraft.com/wiredx/">WiredX</a> 是一个由 Java 写成的 X11 服务器程序。
+它也支持无根模式。
+在它的网站上可以下载得到一个安装程序。
+</p>
+    
+    <h3><a name="other.exodus">6.3 eXodus</a></h3>
+      
+      <p>
+根据<a href="http://www.powerlan-usa.com/exodus/">eXodus 8</a>网站的资料，这个由 Powerlan USA 开发的程序可以在 Mac OS X 直接运行。
+现在还不知道它使用代码基础，以及它是否支持本地客户程序。
+因此，在 Fink 中对 eXodus 没有什么特别的支持。
+如果你有更多的信息，请告诉我们。
+</p>
+    
+  <h2><a name="trouble">7 XFree86 故障排除</a></h2>
+    
+    
+    <h3><a name="trouble.immedate-quit">7.1 当我启动 XDarwin，它几乎立刻就退出或崩溃了</a></h3>
+      
+      <p>
+首先：不要惊慌！
+在 XFree86 中可能发生问题的地方很多，中间有不少会引起启动失败。
+而且，当 XDarwin 碰到启动问题的时候崩溃并不是什么特别奇怪的事情。
+本部分提供你可能会碰到的问题的详细清单。
+但首先，你需要收集两部分的重要信息：
+</p>
+      <p>
+        <b>XDarwin 版本。</b>
+你可以用这个办法获知 XDarwin 的版本：在 Finder 中<b>单击</b> XDarwin 的图标，然后在菜单中选择"显示信息"。
+这个版本号只有在 XonX 项目发布一个新的二进制安装版的时候才会增加，所以 "1.0a1" 实际上可能是
+1.0a1 和 1.0a2 之间的任何版本。
+</p>
+      <p>
+        <b>出错信息。</b>
+这对说明你实际碰到的问题很重要。
+如何获取错误信息取决于你如何启动 XDarwin。
+如果你在终端窗口运行 <tt style="white-space: nowrap;">startx</tt>，你可以在那个窗口直接看到出错信息。
+记住，你可以向上翻卷。
+如果你通过双击启动 XDarwin，错误信息会保存到系统日志。你可以通过实用工具文件夹里面的控制台程序来察看。
+注意，要选择合适部分的信息，通常就是说，应该是最后的一部分信息。
+</p>
+      <p>
+下面是你可能会看到的信息：
+</p>
+      <pre>_XSERVTransmkdir: Owner of /tmp/.X11-unix should be set to root</pre>
+      <pre>_IceTransmkdir: Owner of /tmp/.ICE-unix should be set to root</pre>
+      <p>
+分类：无害。
+X11 会在 /tmp 下创建一些隐藏文件来保存用于本地连接的套接口"文件"。
+出于安全的原因，X11 希望这些目录由 root 用户拥有，不过由于它们是所有人可写的，所以它的运行不会有问题。
+（注意：要让这些目录由 root 拥有会很困难，因为 Mac OS X
+会在每次启动的时候清空 /tmp 目录，而 XDarwin 又不是以 root 权限运行，事实上它也不需要）。
+</p>
+      <pre>QuartzAudioInit: AddIOProc returned 1852797029</pre>
+      <pre>-[NSCFArray objectAtIndex:]: index (2) beyond bounds (2)</pre>
+      <pre>kCGErrorIllegalArgument : CGSGetDisplayBounds (display 35434400)</pre>
+      <pre>No core keyboard</pre>
+      <p>
+分类：虚假错误。
+这是由于服务器程序由于以前的错误后试图复位自己而产生的后续错误。
+在那期间，会打印新的启动标题，以及一个或更多的上述错误，因为对受此影响的 XDarwin 版本，复位功能实际并不能工作。
+当你看到上面的信息时，你应该向上翻卷终端程序输出或控制台窗口。并寻找另外一个启动标题和错误信息。受此影响的版本包括 XDarwin 1.0a3 及之前版本，在 1.0a3 发布以后，这个问题被修正了。
+</p>
+      <pre>cat: /Users/chrisp/.Xauthority: No such file or directory</pre>
+      <p>
+分类：多数情况下无害。
+暂时还不知道这些信息从哪里来的，但看起来它们没有对任何操作造成影响。
+你可以在你目录里面运行 <tt style="white-space: nowrap;">touch .Xauthority</tt> 命令来消除这个错误。
+</p>
+      <pre>Gdk-WARNING **: locale not supported by C library</pre>
+      <p>
+分类：无害。
+正如信息所说的意思，它并不会使程序不能工作。
+更多的信息，<a href="#trouble.locale">参考下面</a>。
+</p>
+      <pre>Gdk-WARNING **: locale not supported by Xlib, locale set to C
+Gdk-WARNING **: can not set locale modifiers</pre>
+      <p>
+分类：有些糟糕，但并非致命的。
+这些信息可能和前面的一个信息一起出现。
+这意味着 XFree86 的本地化数据文件找不到了。
+在从 XFree86 源程序编译安装的时候，可能会导致这个问题，但暂时这个问题没有办法固定地重现。
+多数程序仍然可以工作，不过 GNU Emacs 是一个重要的例外。
+</p>
+      <pre>Unable to open keymapping file USA.keymapping.
+Reverting to kernel keymapping.</pre>
+      <p>
+分类：通常是致命的。
+这通常发生于 XDarwin 1.0a1，同时启用 "Load from file"
+键盘映射选项的时候。
+那个版本在要装载的文件是通过偏好设定对话框设置的时候需要文件的全路径，但如果作为命令行参数传递的时候却自动搜索。
+这个信息后面通常会紧跟下面的 "assert" 消息。
+要修正这个错误，可以按照下面的办法。
+</p>
+      <pre>Fatal server error:
+assert failed on line 454 of darwinKeyboard.c!</pre>
+      <pre>Fatal server error:
+Could not get kernel keymapping! Load keymapping from file instead.</pre>
+      <p>
+分类：致命错误。
+苹果在 Mac OS X 10.1 所做的改变破坏了 XFree86 从系统核心读取眼键盘布局的代码，上面的信息就是因此而引起的。
+在 Mac OS X 10.1 中，你必须使用 "Load from file" 键盘映射选项。
+你可以在 XDarwin 的偏好设定对话框中进行设置。
+确定已经选择了文件（就是说，使用 "Pick file" 按钮）－对 XDarwin 的一些版本来说，简单的激活对话框并不足够。
+如果 XDarwin 在你能够选择偏好设置之前就关闭了，在终端里面运行命令：
+<tt style="white-space: nowrap;">startx -- -quartz -keymap USA.keymapping</tt>。
+这通常可以让 XDarwin 启动起来，然后你可以在偏好设定对话框中进行持久的选择。
+</p>
+      <pre>Fatal server error:
+Could not find keymapping file .</pre>
+      <p>分类：致命错误（它也是这么说的）。这个错误是因为在 Panther 下缺乏键盘映射文件。你需要安装 <tt style="white-space: nowrap;">xfree86-4.3.99-16</tt> 或更新版本，因为这些版本不需要键盘映射文件。</p>
+      <pre>Warning: no access to tty (Inappropriate ioctl for device).
+Thus no job control in this shell.</pre>
+      <p>
+分类：多数时候是无害的。
+XDarwin 1.0a2 或更早的版本会启动一个非交互的 shell 程序来执行你的客户启动文件（.xinitrc）。
+这么做使得你不需要在那个文件里面添加设置 PATH 的语句。
+有些 shells 程序会提示说他们呢没有连接到一个真正的终端，但这一般可以被忽略，因为这些 shell 实例并不需要进行作业控制或其它类似的事情。
+</p>
+      <pre>Fatal server error:
+failed to connect as window server!</pre>
+      <p>
+分类：致命错误。
+这意味着在你登录进 Aqua 时，控制台模式的服务器程序（对纯 Darwin）已经被启动。
+这通常发生在你安装了官方的 XFree86 二进制发行版，却遗漏了安装 Xquartz.tgz 压缩档。
+它也可能发生在 /usr/X11R6/bin 中的符号连接出现混乱的情况。也可能是因为你在终端窗口使用 <tt style="white-space: nowrap;">XDarwin</tt> 命令来启动服务器程序（你应该使用 startx 命令，参阅<a href="#run-xfree86">启动 XFree86</a>）。
+</p>
+      <p>
+上面的任意情况下，你可以运行 <tt style="white-space: nowrap;">ls -l /usr/X11R6/bin/X*</tt> 命令并观察输出。
+你应该可以看到四个相关的项目：
+<tt style="white-space: nowrap;">X</tt>，一个指向 <tt style="white-space: nowrap;">XDarwinStartup</tt> 的符号连接；
+<tt style="white-space: nowrap;">XDarwin</tt>，一个可执行文件（这是控制台模式服务器程序）；
+<tt style="white-space: nowrap;">XDarwinQuartz</tt>，一个指向
+<tt style="white-space: nowrap;">/Applications/XDarwin.app/Contents/MacOS/XDarwin</tt>的符号连接；
+以及 <tt style="white-space: nowrap;">XDarwinStartup</tt>，一个很小的可执行文件。
+如果任意的一个不存在或指向另外的文件，你需要修正它。
+应该如何做取决于你安装 XFree86 的方式。
+参考 <a href="#inst-xfree86.rootless">《无根模式服务器介绍》</a>部分获取更多的提示。
+</p>
+      <pre>The XKEYBOARD keymap compiler (xkbcomp) reports:
+&gt; Error:            Can't find file "unknown" for geometry include
+&gt;                   Exiting
+&gt;                   Abandoning geometry file "(null)"
+Errors from xkbcomp are not fatal to the X server</pre>
+      <p>
+分类：多数情况下无害。
+正如消息说的，它是非致命的。
+就我所知，XDarwin 根本不使用 XKB 扩展。
+也许有些客户程序尝试使用它…
+</p>
+      <pre>startx: Command not found.</pre>
+      <p>
+分类：致命错误。
+这在 XDarwin 1.0a2 和 1.0a3 下可能会发生，如果你的 shell 初始化文件没有把 /usr/X11R6/bin 加入到 PATH 变量中。
+如果你使用 Fink 而且没有改变你的默认 shell，把 <tt style="white-space: nowrap;">source /sw/bin/init.csh</tt> 这一行添加到你主目录下的 <tt style="white-space: nowrap;">.cshrc</tt>
+文件中（这也是 Fink 使用指南所推荐的）应该就足够了。
+</p>
+      <pre>_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed
+_XSERVTransMakeAllCOTSServerListeners: server already running</pre>
+      <pre>Fatal server error:
+Cannot establish any listening sockets - Make sure an X server isn't already
+running</pre>
+      <p>
+分类：致命错误。
+这个错误发生在你碰巧同时运行了多个 XDarwin 的实例，或者更多的情况是一次不完整的 XDarwin 关闭（比如，崩溃）之后。
+这也许还有可能是一个用于本地连接的套接口文件的权限错误。
+你可以尝试用命令 <tt style="white-space: nowrap;">rm -rf /tmp/.X11-unix</tt> 来清理它。
+多数情况下重新启动也会有帮助（因为 Mac OS X 在启动时会自动清空 /tmp 目录，同时也复位网络栈）。
+</p>
+      <pre>Xlib: connection to ":0.0" refused by server
+Xlib: Client is not authorized to connect to Server</pre>
+      <p>
+分类：致命。
+客户程序无法连接显示服务器（XDarwin），因为它们使用了错误的认证数据。
+这可能由于一些 VNC 安装，或者用 sudo 运行 XDarwin 引起，也有可能因为一些其它奇怪的意外。
+通常的处理办法时删除你主目录下的 .Xauthority 文件（它保存了身份验证数据），然后重新建立一个空文件：
+</p>
+      <pre>cd
+rm .Xauthority
+touch .Xauthority</pre>
+      <p>
+另外导致 XFree86 启动失败的原因是不正确的
+<tt style="white-space: nowrap;">.xinitrc</tt> 文件。
+发生的原因是 <tt style="white-space: nowrap;">.xinitrc</tt> 被执行，但又由于某种原因立刻终止。
+<tt style="white-space: nowrap;">xinit</tt> 把这个解析为 "用户执行过程已经结束"
+并关闭 XDarwin。
+查阅<a href="#run-xfree86.xinitrc">.xinitrc
+部分</a>获取更多细节。
+记得设置 PATH 变量并不要把最后一个持续运行的程序放到后台执行。
+通常添加一个 <tt style="white-space: nowrap;">exec xterm</tt> 作为你的窗口管理器或类似的东西不能运行的时候的替代是一个好主意。
+</p>
+    
+    <h3><a name="trouble.black">7.2 在 GNOME 面板或 GNOME 程序中出现黑图标</a></h3>
+      
+      <p>
+通常的问题现象是那些图标或图象显示为黑色的方块或边框。
+这是由于操作系统核心的限制引起的。
+问题已经报告给苹果，但到目前位置，他们似乎还不愿意修复它；查看<a href="http://www.opensource.apple.com/bugs/X/Kernel/2691632.html">Darwin
+缺陷报告</a>档案获取详细信息。
+</p>
+      <p>
+当前的情况是 MIT-SHM 对 X11
+协议的扩展实际上对 Darwin 和 Mac OS X 不可用。
+有两种办法把协议扩展关掉：服务器端或客户程序端。
+由 Fink 安装的 XFree86 服务器程序（指 xfree86-server 和
+xfree86-rootless 软件包）已经关闭了它。
+GIMP 和 GNOME 面板也经过这样的处理。
+如果你在其它程序中碰到同样的黑图标问题，用 <tt style="white-space: nowrap;">--no-xshm</tt> 命令行参数启动那个程序。
+</p>
+    
+    <h3><a name="trouble.keyboard">7.3 在 XFree86 下键盘不能使用</a></h3>
+      
+      <p>
+这是一个仅影响笔记本电脑（PowerBook，iBook）的已知问题。
+要暂时解决，使用 "Load from file" 键盘映射选项。
+现在这已经成为默认设置，因为传统的办法（从核心读取键盘映射）从 Mac OS X 10.1 开始已经失效。
+如果你还没有启用这个选项，你可以在 XDarwin 偏好设置对话框中进行设置。
+选中 "Load from file" 选项盒并选择要读取的键盘映射文件。
+重新启动 XDarwin 后，你的键盘应该基本能工作（看下面的内容）》
+</p>
+      <p>
+如果你从命令行启动 XFree86，你可以把键盘映射文件作为一个参数传递给程序，象这样：
+</p>
+      <pre>startx -- -quartz -keymap USA.keymapping</pre>
+    
+    <h3><a name="trouble.delete-key">7.4 回退（Backspace）键不行</a></h3>
+      
+      <p>
+这可能会发生在你使用上面描述的 "Load keymapping from file" 选项时。映射文件把回退键描述为 "Delete"，而不是
+"Backspace"。
+你可以在你的 .xinitrc 文件中加入一行：
+</p>
+      <pre>xmodmap -e "keycode 59 = BackSpace"</pre>
+      <p>
+如果我没有记错的话，XDarwin 1.0a2 及更新版本已经自动可以正确映射回退键。
+</p>
+    
+    <h3><a name="trouble.locale">7.5 "Warning: locale not supported by C library"</a></h3>
+      
+      <p>
+这个消息很常见，但无害。
+它只是表达它的意思－国际化不能通过标准的 C 函数库支持，程序会使用默认的英语消息，日期格式等等。
+有几种办法来处理它：
+</p>
+      <ul>
+        <li>
+          <p>
+简单地忽略这个信息。
+</p>
+        </li>
+        <li>
+          <p>
+通过取消定义环境变量 LANG 来消除这个消息。
+注意，这也会关闭那些支持国际化的程序（通过 gettext/libintl）的国际化功能。使用 .xinitrc 的例子：
+</p>
+          <pre>unset LANG</pre>
+          <p>
+使用 .cshrc 的例子：
+</p>
+          <pre>unsetenv LANG</pre>
+        </li>
+        <li>
+          <p>
+（仅对10.1）使用 <tt style="white-space: nowrap;">libxpg4</tt> Fink 软件包。
+它建立一个常用 locale 函数的库并在系统库之前装载（使用
+DYLD_INSERT_LIBRARIES 环境变量）。
+你需要把你的 LANG 环境变量设成完成的形式，比如：<tt style="white-space: nowrap;">de_DE.ISO_8859-1</tt> 而不是 <tt style="white-space: nowrap;">de</tt>
+或 <tt style="white-space: nowrap;">de_DE</tt>。
+</p>
+        </li>
+        <li>
+          <p>
+要求苹果在未来的 Mac OS X 版本中加入合适的本地化支持。
+</p>
+        </li>
+      </ul>
+    
+  <h2><a name="tips">8 使用提示</a></h2>
+    
+    
+    <h3><a name="tips.terminal-app">8.1 在终端程序窗口启动 X11</a></h3>
+      
+      <p>
+要从终端程序窗口启动 X11 程序，你需要设置 "DISPLAY" 环境变量。
+这个变量告诉程序在哪里找到 X11 窗口服务器。
+默认设置－XDarwin 运行在相同的机器上，你的 shell 是 tcsh－的情况下，你可以这样设置环境变量：
+</p>
+      <pre>setenv DISPLAY :0.0</pre>
+      <p>
+一个不错的设置办法是在你登录的时候让 XDarwin.app 程序自动启动（可以在系统设置的登录面板中设置），并在你的 .cshrc 中加进：
+</p>
+      <pre>if (! $?DISPLAY) then
+  setenv DISPLAY :0.0
+endif</pre>
+      <p>
+这会在每个 shell 中自动设置 DISPLAY 变量。但它不会覆盖已经设置的 DISPLAY 值。这样你仍然可以远程地运行 X11 程序或通过 ssh X11 隧道来使用它。
+</p>
+    
+    <h3><a name="tips.open">8.2 在 xterm 里面启动 Aqua 程序</a></h3>
+      
+      <p>
+在 xterm（或其它 shell）里面启动 Aqua 程序的办法是使用 <tt style="white-space: nowrap;">open</tt> 命令，一些例子：
+</p>
+      <pre>open /Applications/TextEdit.app
+open SomeDocument.rtf
+open -a /Applications/TextEdit.app index.html</pre>
+      <p>
+第二个例子用与那个文档关联的程序来打开那个文档，第三个例子则显式制定一个用来打开的程序。
+</p>
+    
+    <h3><a name="tips.copy-n-paste">8.3 拷贝和粘贴</a></h3>
+      
+      <p>
+拷贝和粘贴一般来说可以在 Aqua 和 X11 环境之间进行。
+但还有一些缺陷。
+据说 Emacs 目前的选择中最好的。
+不能 Classic 和 X11 之间拷贝和粘贴。
+</p>
+      <p>
+秘诀在于要使用相应环境的方法。
+要从 Aqua 拷贝文字到 X11，在 Aqua 里面使用 Cmd-C，然后把你要粘贴到的 X11 窗口选到最前面，然后使用"鼠标中键"，对于单键鼠标即 Option-鼠标键（这可以在 XDarwin 的偏好设定里面设置）去粘贴。
+要从 X11 拷贝文字到 Aqua，简单地用鼠标在 X11 中选中文字，然后在 Aqua 中用 Cmd-V 粘贴。
+</p>
+      <p>
+X11 系统实际上有几个单独的剪贴板（X11 中称为 "剪切缓冲区），有些程序会搞混应该使用哪一个。
+对于 GNU Emacs 或 XEmacs，粘贴有些时候不成功就是因为这个原因。
+<tt style="white-space: nowrap;">autocutsel</tt> 这个程序会有帮助，因为它自动同步两个主要剪切缓冲区。
+要运行它，安装 autocutsel Fink 软件包，并在你的 .xinitrc 中添加一行：
+</p>
+      <pre>autocutsel &amp;</pre>
+      <p>
+（要把它放在运行窗口管理器<b>之前</b>，否则它不会被运行！不要把它添加在末尾，那样它不会被运行）。
+</p>
+      <p>如果你使用苹果的 X11，你可以使用 Command-C 或 编辑-&gt;拷贝，就象一般的 mac 程序一样，来拷贝文本到剪贴板。不过，暂时你还不能用 Command-V 粘贴剪贴板里面的内容。</p>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.zh.xml,v 1.3 2004/03/07 01:55:46 jeff_yecn Exp $</i></p></body></html>
