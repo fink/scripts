@@ -167,7 +167,7 @@ Fink <b>不是</b> Debian GNU/Linux 发布版的一个移植。
       <div class="question"><p><b>Q4.1: 我升级到了 0.16.0，它告诉我说 "Your version of the
 gcc 3.3 compiler is out of date." 我应该怎么办？</b></p></div>
       <div class="answer"><p><b>A:</b> 在 Panther 发布后，Fink 也升级以认识新的 gcc 3.3 编译器。为了同时支持 10.2 (Jaguar) 和 10.3 (Panther) 的用户，我们要求所有用户都安装最新的 gcc 3.3 更新 （August 2003 更新，或者相应的 Panther XCode 工具）。如果你在 Mac OS X 10.2 的 December 2002 developer tools 上安装 XCode beta 更新你就会获得这个警告信息。如果你使用 10.2，命令：
-</p><pre>gcc --version</pre><p>...会告诉你正在使用的版本。对于 October 24th,2003，我们要求 build 1493 或更高。</p><p>10.2 用户可以从 <a href="http://developer.apple.com/">Apple Developer Connection</a> 下载（需要先免费注册） August 2003 升级。</p><p>10.3 用户应该升级到 Panther 兼容的开发工具（也就是说  XCode）。你应该能够在你的 Panther 软件包中找到 XCode 的 CD。</p></div>
+</p><pre>gcc --version</pre><p>会告诉你正在使用的版本。对于 October 24th,2003，我们要求 build 1493 或更高。</p><p>10.2 用户可以从 <a href="http://developer.apple.com/">Apple Developer Connection</a> 下载（需要先免费注册） August 2003 升级。</p><p>10.3 用户应该升级到 Panther 兼容的开发工具（也就是说  XCode）。你应该能够在你的 Panther 软件包中找到 XCode 的 CD。</p></div>
     </a>
   <h2><a name="usage-fink">5 安装，使用和维护 Fink</a></h2>
     
@@ -272,7 +272,7 @@ Fink 的所有文件几乎都安装在 /sw （或你选择安装的地方）。�
     </a>
     <a name="usage-fink.exec-init-csh">
       <div class="question"><p><b>Q5.10: 当我尝试运行 init.csh 或 init.sh 时，我碰到一个 "Permission denied" 错误。我做错了什么？</b></p></div>
-      <div class="answer"><p><b>A:</b> init.csh 和 init.sh 并不能象普通命令一样运行。这些文件会设置象 PATH 和 MANPATH 这样的环境变量到你的 shell 程序中。要对 shell 一直起作用，它需要由一个 <tt style="white-space: nowrap;">source</tt> 命令来运行，象这样：</p><p>对 csh/tcsh：</p><pre>source /sw/bin/init.csh</pre><p>或对 bash：</p><pre>source /sw/bin/init.sh</pre></div>
+      <div class="answer"><p><b>A:</b> init.csh 和 init.sh 并不能象普通命令一样运行。这些文件会设置象 PATH 和 MANPATH 这样的环境变量到你的 shell 程序中。要对 shell 一直起作用的话，对于 csh/tcsh，它需要由一个 <tt style="white-space: nowrap;">source</tt> 命令来运行；或对于 bash/zsh，使用"<tt style="white-space: nowrap;"> . </tt>"命令，象这样：</p><p>对 csh/tcsh：</p><pre>source /sw/bin/init.csh</pre><p>或对 bash/zsh：</p><pre>. /sw/bin/init.sh</pre></div>
     </a>
     <a name="usage-fink.dselect-access">
       <div class="question"><p><b>Q5.11: 救命！我选择了 dselect 的
@@ -824,4 +824,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.zh.xml,v 1.4 2004/03/07 23:28:43 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.zh.xml,v 1.5 2004/03/12 15:06:20 jeff_yecn Exp $</i></p></body></html>
