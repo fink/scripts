@@ -9,7 +9,11 @@ cd "$BDBASE"
 
 tree=$1
 if [ -z "$tree" ]; then
-  tree="fink-`cat $BDDATA/current`"
+  if [ -n "$CURREL" ]; then
+    tree="fink-$CURREL"
+  else
+    tree="fink-`cat $BDDATA/current`"
+  fi
   echo "Defaulting to tree $tree"
 fi
 
