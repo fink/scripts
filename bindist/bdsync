@@ -9,15 +9,10 @@ cd $BDBASE
 
 # locations
 source=$BDBASE
-destination='shell1:/home/groups/f/fi/fink/htdocs'
-if [ "$1" = "pippin" ]; then
-  shift
-  destination='pippin:/home/chrisp/fink/web'
-fi
+destination='fingolfin@shell.sourceforge.net:/home/groups/f/fi/fink/htdocs/bindist'
 
 # rsync options
 options="-e ssh -av --partial --progress"
-options="$options --delete"
 # NOTE: data isn't compressed on the fly as practically all data is
 #       already gzip-compressed
 
@@ -25,6 +20,7 @@ options="$options --delete"
 $BDDATA/bdindex
 
 # upload
+echo rsync "$@" $options $source $destination
 rsync "$@" $options $source $destination
 
 exit 0

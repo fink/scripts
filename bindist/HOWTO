@@ -1,0 +1,122 @@
+This is an attempt to explain how to use the binary distro related scripts in
+this directory. I had to discover this on my own, so it might not always be
+fully correct or complete, but it should at least help to start using them.
+
+Note that these tools can and should be improved, they are not set in stone.
+They are meant to ease controlling the binary distro, and that can't be made
+simple & fail-safe enough.
+
+
+---------------------------------------------------------------------------------
+
+Environment variables:
+
+BDBASE
+  Description:
+    Set to the location where you store the bindist tree on you local HD.
+    The online bindist will be synced using rsync against this tree.
+  Example:
+    /bindist
+
+BDDATA
+  Description:
+    The location in which these scripts and some auxillary files are stored.
+    I.e. it points to your checkout of the Fink scripts module, subdir "bindist"
+  Example:
+    /Users/maxhorn/Documents/fink-cvs/scripts/bindist
+
+---------------------------------------------------------------------------------
+
+bdadd
+  Adds a list of packages to the binary distro. These files are taken from
+  your active fink installation. You invoke it with a list of package specs,
+  similiar to the "fink install" command. An invocation could look like this:
+    ./bdadd xfree86-rootless automake debianutils-1.15-4
+  It copies the .deb files into your local bindist tree, so be prepared to
+  have a lot of disk space being taken.
+  
+  TODO: right now the path "/sw" is hard coded into the script. This is not
+  that bad since the bindist is always for /sw; but if somebody wants to make
+  a bindist for say /usr/local, it's bad. Shouldn't be hard to fix.
+
+bdclean
+  ???
+
+bdindex
+  Creates index.php files in the various directories of the local bindist.
+  They will be synced to the online version by the bdsync command, and 
+  then allow there to browse the bindist in any web browser. Usually it is
+  sufficient to run it once after bdnewrel.
+
+bdlist
+  Lists all .debs currently in the local bindist tree, for the current release.
+
+bdnewrel
+  Prepares a new Fink binary release, by creating the appropriate file
+  structure. You call it with two parameters: the name of the new release,
+  and the name of the previous release (this is used to shared old .debs
+  without the need to recreate them). A typical invocation would be:
+    ./bdnewrel 0.4.0 0.3.2a
+
+  After running this command, verify that all went right and that the tree
+  it generated looks OK. You may also run the "bdindex" command just after
+  this one.
+  
+  TODO: should be extended to automatically retrieve the .info files from CVS
+  based on the release tags in CVS.
+  TODO: should be enhanced to handle "crypto" tree correctly
+
+
+bdscan
+  Scans your local bindist tree using dpk-scanpackages, creating the Packages.gz
+  files required by apt-get/dselect.
+
+
+bdsync
+  Syncs your local bindist tree at $BDBASE against the online one (you will have
+  to edit it if your SF username is not "fingolfin").
+  This will not delete files missing in your local tree from the online tree.
+  If you have to remove things again from the online tree, you have to do
+  so manually (for security reasons, so you don't wipe out by accident the whole
+  online bindist)
+
+
+---------------------------------------------------------------------------------
+
+Q: How do I make a new binary release of the Fink distribution?
+
+A: Use the bdnewrel command, as described above.
+
+---------------------------------------------------------------------------------
+
+Q: How do I add a package to the bindist?
+
+A: Assuming your local bindist tree and the environment variables are setup,
+adding a new package FOO to the bindist works like this:
+
+
+# Copy over the .deb file(s)
+./bdadd FOO
+# Ensure all .deb's etc are uploaded
+./bdsync
+# Make sure the files are referenced
+./bdscan
+# Get the Package.gz files are online
+./bdsync
+
+You could do it with the last .bdsync call only, and that would be a bit faster;
+but by using two calls, we ensure the online Package.gz files never refer to
+files that are not yet online. Not really that important, but playing it safe
+won't hurt here.
+
+---------------------------------------------------------------------------------
+
+Q: Once the new bindist is online, how can I enable it so that people can
+use it via dselect?
+
+A: In the web CVS module, modify the "LATEST-FINK" file to contain the new
+version. Then, ssh into shell.sourceforge.net and run this script:
+  /home/groups/f/fi/fink/htdocs/update.sh
+
+---------------------------------------------------------------------------------
+

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 $| = 1;
-use v5.6.0;  # perl 5.6.0 or newer required
+require 5.006;  # perl 5.6.0 or newer required
 use strict;
 
 my $base = $ENV{BDBASE};
@@ -77,5 +77,5 @@ foreach $pkgspec (@ARGV) {
     }
   }
 }
-
+&execute("chmod -R g+w ".$dest);
 exit 0;

@@ -5,7 +5,7 @@ if [ -z "$BDBASE" ]; then
   echo "BDBASE not set"
   exit 1
 fi
-cd $BDBASE
+cd "$BDBASE"
 
 tree=$1
 if [ -z "$tree" ]; then
@@ -19,12 +19,12 @@ if [ ! -d "dists/$tree" ]; then
 fi
 
 for dir in main crypto ; do
-  basedir=dists/$tree/$dir/binary-darwin-powerpc
+  basedir="dists/$tree/$dir/binary-darwin-powerpc"
   if [ ! -d $basedir ]; then
     echo "ERROR: no binary directory for $tree/$dir"
   else
     echo "Scanning $basedir"
-    dpkg-scanpackages $basedir override | gzip >$basedir/Packages.gz
+    dpkg-scanpackages "$basedir" "$BDDATA/override" | gzip > "$basedir/Packages.gz"
   fi
 done
 
