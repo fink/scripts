@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>Fink Documentation - The Fink F.A.Q.</title></head><body><h1 style="text-align: center;">The Fink F.A.Q.</h1>
 <p>This is the list of frequently asked questions about Fink. Like
 in most FAQs, some questions are taken from real life and some are
@@ -37,7 +37,7 @@ from the head command. What's broken?</a></li><li><a href="#comp-general.also_in
 like "locale not supported by C library". Is that bad?</a></li><li><a href="#usage-general.passwd">7.2 There are suddenly a number of 
 strange users on my system, with names like "mysql", "pgsql", and "games".  
 Where did they come from?</a></li><li><a href="#usage-general.compile-myself">7.3 How do I compile something
-myself using fink-installed software?</a></li><li><a href="#usage-general.apple-x11-applications-menu">7.4 I can't run any of my fink-installed applications using the Applications menu in Apple X11.</a></li><li><a href="#usage-general.x-options">7.5 I'm bewildered by the Xwindows options:  Apple X11, XFree86, etc.  What should I install?</a></li><li><a href="#usage-general.no-display">7.6 When I try to run an application, I get a message that says "cannot open display:".  What do I need to do?</a></li></ul></li><li><a href="#usage-packages"><b>8 Package Usage Problems - Specific Packages</b></a><ul><li><a href="#usage-packages.xmms-quiet">8.1 I get no sound from
+myself using fink-installed software?</a></li><li><a href="#usage-general.apple-x11-applications-menu">7.4 I can't run any of my fink-installed applications using the Applications menu in Apple X11.</a></li><li><a href="#usage-general.x-options">7.5 I'm bewildered by the Xwindows options:  Apple X11, XFree86, etc.  What should I install?</a></li><li><a href="#usage-general.no-display">7.6 When I try to run an application, I get a message that says "cannot open display:".  What do I need to do?</a></li><li><a href="#usage-general.suggest-package">7.7 I don't see my favorite program in Fink.  How do I suggest a new package for inclusion in Fink?</a></li></ul></li><li><a href="#usage-packages"><b>8 Package Usage Problems - Specific Packages</b></a><ul><li><a href="#usage-packages.xmms-quiet">8.1 I get no sound from
 XMMS</a></li><li><a href="#usage-packages.nedit-window-locks">8.2 If I am editing a file in nedit, when I open another file its window pops up but is unresponsive.</a></li><li><a href="#usage-packages.xdarwin-start">8.3 Help! When I start
 XDarwin, it immediately quits!</a></li><li><a href="#usage-packages.no-server">8.4 When I try to start XDarwin I get the message "xinit:  No such file or directory (errno 2):  no server "/usr/X11R6/bin/X" in PATH".</a></li><li><a href="#usage-packages.xfree-keymapping">8.5 I just upgraded to Mac
 OS X 10.1 and now XFree86 always quits immediately. In the messages it
@@ -837,6 +837,10 @@ options.
 <div class="question"><p><b>Q7.6: When I try to run an application, I get a message that says "cannot open display:".  What do I need to do?</b></p></div>
 <div class="answer"><p><b>A:</b> This error means that the system isn't connecting with your Xwindows display.  Make sure you do the following:</p><p>1. Start Xwindows (Apple's X11, XFree86, ...).</p><p>2. Make sure your DISPLAY enviroment variable is set correctly.  If you are using the default setup for Xwindows, you can do this with</p><pre>setenv DISPLAY :0</pre><p>if you are running <tt style="white-space: nowrap;">tcsh</tt>, or</p><pre>export DISPLAY=:0</pre><p>if you're running <tt style="white-space: nowrap;">bash</tt>.</p></div>
 
+</a>
+<a name="usage-general.suggest-package">
+<div class="question"><p><b>Q7.7: I don't see my favorite program in Fink.  How do I suggest a new package for inclusion in Fink?</b></p></div>
+<div class="answer"><p><b>A:</b> Make the request on the <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Package Request Tracker</a> on the Fink project page.</p><p>Note that you must have a SourceForge id to do so.</p></div>
 </a>
 <h2><a name="usage-packages">8 Package Usage Problems - Specific Packages</a></h2>
 
