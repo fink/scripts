@@ -13,7 +13,7 @@
 如果你希望帮助 Fink 项目，而你在这方面又有专长，你可以考虑选择接受一个
 <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">尚未有维护人员的软件包。</a>
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.prefix">3.2 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.3 共享函数库</a></li><li><a href="#policy.perlmods">3.4 Perl 模块</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#reference"><b>5 操作手册</b></a><ul><li><a href="#reference.build">5.1 构建过程</a></li><li><a href="#reference.fields">5.2 字段</a></li><li><a href="#reference.splitoffs">5.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">5.4 脚本</a></li><li><a href="#reference.patches">5.5 补丁</a></li><li><a href="#reference.profile.d">5.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.prefix">3.2 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.3 共享函数库</a></li><li><a href="#policy.perlmods">3.4 Perl 模块</a></li><li><a href="#policy.emacs">3.5 Emacs 规则</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#reference"><b>5 操作手册</b></a><ul><li><a href="#reference.build">5.1 构建过程</a></li><li><a href="#reference.fields">5.2 字段</a></li><li><a href="#reference.splitoffs">5.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">5.4 脚本</a></li><li><a href="#reference.patches">5.5 补丁</a></li><li><a href="#reference.profile.d">5.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
 
 
 
@@ -524,6 +524,18 @@ perl 5.6.1 和 perl 5.8.0。
 
 
 
+<h3><a name="policy.emacs">3.5 Emacs 规则</a></h3>
+<p>Fink 项目选择遵循 Debian 项目针对 emacs 的规则，但稍微有些差别。
+（Debian 规则文档可以在
+<a href="http://www.debian.org/doc/packaging-manuals/debian-emacs-policy">
+http://www.debian.org/doc/packaging-manuals/debian-emacs-policy</a> 找到）。
+在 Fink 的规则中有两点区别。
+首先，在 fink 中这个规则目前仅应用于 emacs20 和 emacs21 软件包，而不应用于 xemacs。（这在将来可能会有改变）。
+第二，不象 Debian 的规则，Fink 软件包允许安装东西到 /sw/share/emacs/site-lisp 目录中。
+</p>
+
+
+
 <h2><a name="fslayout">4 文件系统布局</a></h2>
 
 
@@ -920,7 +932,7 @@ Primary: ftp://ftp.barbarorg/pub/
 例如：
 </p>
 <pre>TarFilesRename: foo bar.* qux:quux
-Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
+Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <p>
 <b>注意：</b>这个字段的程序实现利用了 BSD tar 程序的特别特性。GNU tar 不支持这个特性。默认时，Fink 使用 GNU tar
 (因为有些压缩档只能用 GNU tar 解开)，但当一个软件包使用了 TarFilesRename 字段，Fink 会通过直接调用
@@ -1372,4 +1384,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.4 2004/03/11 15:43:25 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.5 2004/03/14 00:06:18 jeff_yecn Exp $</i></p></body></html>
