@@ -7,6 +7,7 @@ rm -rf $RESDIR
 rm -rf $DMGDIR
 chown -R root:admin $IN_BASEDIR/contents 
 chmod 1755 $IN_BASEDIR/contents
+chmod a+x $IN_BASEDIR/mkdmg.pl 
 chmod a+x $IN_BASEDIR/resources/InstallationCheck
 chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
@@ -20,3 +21,5 @@ perl -pi -e 's#</dict>#<key>IFPkgFlagAuthorizationAction</key>\n<string>RootAuth
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
 chmod -R a+rX $DMGDIR
+$IN_BASEDIR/mkdmg.pl -v "Fink $IN_VERSION Installer.dmg" $DMGDIR/*.*
+# "$DMGDIR/Fink $IN_VERSION Installer.pkg" "$DMGDIR/Fink ReadMe.rtf"  "$DMGDIR/Fink Web Site.url" "$DMGDIR/License.rtf" "$DMGDIR/users-guide.html"
