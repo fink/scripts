@@ -206,14 +206,19 @@ English |
       <p>The files to translate, in order of priority, are:</p>
       <p>Title (English version file)</p>
       <ol>
-        <li>Constants file (<tt style="white-space: nowrap;">xml/web/constants.*.inc</tt>)(see
+        <li>Constants files: (e.g. <tt style="white-space: nowrap;">xml/web/constants.*.inc</tt>) (see
         below)</li>
-        <li>Static PHP files (e.g. <tt style="white-space: nowrap;">xml/web/*.en.php</tt>)</li>
-        <li>User's Guide (<tt style="white-space: nowrap;">xml/uguide.en.xml</tt>)</li>
-        <li>FAQ (<tt style="white-space: nowrap;">xml/faq.en.xml</tt>)</li>
+       <li>Static PHP files (e.g. <tt style="white-space: nowrap;">xml/web/*.en.php</tt>)</li>
+       <li>Documentation navigation files (i.e. <tt style="white-space: nowrap;">xml/web/doc/nav.*.inc</tt>) (same handling as constants.*.inc)</li>
+       <li>User's Guide (<tt style="white-space: nowrap;">xml/uguide.en.xml</tt>)</li>
+       <li>FAQ (<tt style="white-space: nowrap;">xml/faq.en.xml</tt>)</li>
         <li>Running X11 (<tt style="white-space: nowrap;">xml/x11/x11.en.xml</tt>)</li>
-        <li>Document Index (<tt style="white-space: nowrap;">xml/doc/doc.en.xml</tt></li>
-        <li>Packaging (<tt style="white-space: nowrap;">xml/packaging/packaging.en.xml</tt>)</li>
+        <li>Document Index (<tt style="white-space: nowrap;">xml/doc/doc.en.xml</tt>)</li>
+        <li>CVS Access (<tt style="white-space: nowrap;">xml/cvsaccess/cvs.en.xml</tt>)</li>
+        <li>ReadMe (<tt style="white-space: nowrap;">xml/fink-readme/readme.en.xml</tt>)</li>
+        <li>Net Etiquette (<tt style="white-space: nowrap;">xml/netiquette/netiquette.en.xml</tt>)</li>
+        <li>Security (<tt style="white-space: nowrap;">xml/security/security.en.xml</tt>)</li>
+       <li>Packaging (<tt style="white-space: nowrap;">xml/packaging/packaging.en.xml</tt>)</li>
         <li>Porting (<tt style="white-space: nowrap;">xml/porting/porting.en.xml</tt>)</li>
         <li>News (<tt style="white-space: nowrap;">xml/news/news.xml</tt>)</li>
       </ol>
@@ -248,8 +253,13 @@ define (FINK_SECTION_HOME_LINKS, 'Links');
 /* The word 'Sections'. Used in Menu Navigation Bar */ 
 define (FINK_SECTIONS, 'Sections'); 
       
-/* Contents as Table of Contents. Used in FAQ/Documentation Sections */ 
+/* Used in FAQ/Documentation Sections: */
+/* Contents as Table of contents, Next as next page */ 
+/* Q as question, A as anwer */
 define (FINK_CONTENTS, 'Contents');
+define (FINK_NEXT, 'Next');
+define (FINK_Q, 'Q');
+define (FINK_A, 'A');
 
 /* Printer */
 define (FINK_PRINTER, 'Printer');
@@ -265,8 +275,8 @@ define (META_DESCRIPTION, 'The Fink project wants to bring the full world of Uni
 define (HEADER_HOSTED_BY, 'Hosted by {img}');
 define (FOOTER_AVAILABLE_LANGUAGES, 'Available Languages');
 define (FOOTER_GENERATED_DYNAMICALLY, 'Generated dynamically from');
-define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated on %a, %d %b %Y,  %R %Z');
-define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %b %Y,  %R %Z');
+define (FOOTER_DATABASE_LAST_UPDATED, 'Last updated on %a, %d %B %Y,  %R %Z');
+define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %B %Y,  %R %Z');
 </pre>
 <p><b>Note:</b> the first lines of Footer section have been splitted for display purpose, do not split them in the file.</p>
       <p>When you translate, you normally follow the steps as below (suppose
@@ -415,10 +425,11 @@ define (FOOTER_LAST_CHANGED, 'Last changed by {author} on %a, %d %b %Y,  %R %Z')
             list of files, e,g.: <pre>cvs add faq.ru.xml Makefile</pre> You'll need to give your SourceForge
             passphrase.<p>If the file already exists, you can skip to the next
             step.</p></li>
-            <li>Commit the files, e.g.: <pre>cvs ci -m "message" faq.ru.xml Makefile</pre> <p> where <b>message</b> is a
+            <li>Commit the files, e.g.: <pre>cvs ci -m "message" faq.ru.xml Makefile</pre> where <b>message</b> is a
             descriptive message about what you've done. Enter your SourceForge
-            passphrase at the prompt.</p></li>
+            passphrase at the prompt.</li>
             <li>Now run <pre>make &amp;&amp; make install</pre></li>
+            <li>If you get an error message telling you that a directory <tt style="white-space: nowrap;">foo</tt> is missing under <tt style="white-space: nowrap;">xml/scripts/installer/dmg</tt>, then move to it with: <pre>cd ../scripts/installer/dmg</pre> and create the directory with: <pre>mkdir -p foo</pre> Then return to the previous directory and rerun <pre>make &amp;&amp; make install</pre></li>
             <li>Move into your copy of the Fink xml tree, e.g: <pre>cd ~/Documents/Fink-i18n/xml</pre> <p>if you created your
             <tt style="white-space: nowrap;">xml</tt> tree under
             <tt style="white-space: nowrap;">Documents/Fink-i18n/</tt> in your home
