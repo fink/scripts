@@ -11,7 +11,7 @@ English |
 </table>
 <h1 style="text-align: center;">Create a Fink Package - Tutorial</h1>
 <p>
-This document is for people who want to create a package for Fink. It
+This document is for people who want to create a package for <tt style="white-space: nowrap;">Fink</tt>. It
 complements the 
 <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>, 
 which is a more detailed and comprehensive document.
@@ -39,7 +39,7 @@ package for <a href="http://maxwell.sourceforge.net">maxwell</a>.
 finkdev% somecommand
 </pre>
 <p>
-it means that you have to type somecommand into Terminal.app or
+it means that you have to type <tt style="white-space: nowrap;">somecommand</tt> into Terminal.app or
 any other terminal on your Mac.
 </p>
 <p>
@@ -65,7 +65,7 @@ Read and try to understand the
 </li>
 <li>
 Look at other, similar packages in your 
-/sw/fink/dists/unstable/main/finkinfo/ directory or 
+<tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo/</tt> directory or 
 <a href="http://cvs.sourceforge.net/viewcvs.py/fink/dists/10.3/unstable/">
 in the online CVS repository</a> and take one (or several) info file(s) as 
 a starting point.
@@ -90,9 +90,9 @@ if you think you need more detailed information.
 <h3><a name="howtostart.Make">1.2 Make your Package</a></h3>
 <p>
 Save your new info file (and patch file - if needed) into your 
-/sw/fink/dists/local/main/finkinfo/ directory. The file should be named
-packagename.info (and packagename.patch) where 
-packagename is the name of your package. If this directory doesn't 
+<tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo/</tt> directory. The file should be named
+<tt style="white-space: nowrap;">packagename.info</tt> (and <tt style="white-space: nowrap;">packagename.patch</tt>) where 
+<tt style="white-space: nowrap;">packagename</tt> is the name of your package. If this directory doesn't 
 exist you need to create it manually.
 </p>
 
@@ -147,18 +147,18 @@ finkdev% fink build packagename
 <p>
 Watch the output of the build process carefully for errors or warnings.
 Especially make sure that everything is installed into the destination directory
-(which is located at /sw/src/root-packagename-%v-%r/sw) from where
+(which is located at <tt style="white-space: nowrap;">/sw/src/root-packagename-%v-%r/sw</tt>) from where
 fink builds the binary package. Nothing should be installed directly into
-/sw.
+<tt style="white-space: nowrap;">/sw</tt>.
 </p>
 <p>
-If you use the --keep-build-dir or -k option to fink, it will 
+If you use the <tt style="white-space: nowrap;">--keep-build-dir</tt> or <tt style="white-space: nowrap;">-k</tt> option to fink, it will 
 keep the build directory. This is where fink expands the downloaded source and 
 where the package gets built. This might help if you need to debug the build
-process. Type man fink for details.
+process. Type <tt style="white-space: nowrap;">man fink</tt> for details.
 </p>
 <p>
-You may also want to use the --keep-root-dir or -K option, it will keep the destination directory. This is where fink builds the installation tree for the package. Comparing build and destination directories may help you debugging the installation phase.
+You may also want to use the <tt style="white-space: nowrap;">--keep-root-dir</tt> or <tt style="white-space: nowrap;">-K</tt> option, it will keep the destination directory. This is where fink builds the installation tree for the package. Comparing build and destination directories may help you debugging the installation phase.
 </p>
 <p>
 If the build succeeds check the content of the binary package with:
@@ -169,7 +169,7 @@ finkdev% dpkg -c /sw/fink/dists/local/main/binary-darwin-powerpc/packagename.deb
 <p>
 Check if all files that you think should be in the package are actually
 in the .deb file. Again: make sure that nothing is installed directly into 
-/sw.
+<tt style="white-space: nowrap;">/sw</tt>.
 </p>
 <p>
 Now you can also validate the binary package by doing:
@@ -188,7 +188,7 @@ and test the functionality of your package.
 </p>
 <p>
 If any of the above steps fail try to correct the errors and restart at the 
-top with the fink validate step.
+top with the <tt style="white-space: nowrap;">fink validate</tt> step.
 </p>
 
 
@@ -214,19 +214,19 @@ If feasible add multiple items one at a time to the same tracker item
 (e.g. info and patch files).
 </li>
 <li>
-Add a note whether your package is intended for the 10.2-gcc3.3 tree, 
-10.3 tree, or both,
+Add a note whether your package is intended for the <tt style="white-space: nowrap;">10.2-gcc3.3</tt> tree, 
+<tt style="white-space: nowrap;">10.3</tt> tree, or both,
 </li>
 <li>
-which section (graphics, sci, etc.) you feel it belongs in, and
+which <tt style="white-space: nowrap;">section</tt> (graphics, sci, etc.) you feel it belongs in, and
 </li>
 <li>
-that you have run the command fink validate on your info and deb files.
+that you have run the command <tt style="white-space: nowrap;">fink validate</tt> on your info and deb files.
 </li>
 <li>
-Set the Group field of the tracker item to 
-Undergoing Validation when you create the new tracker. Also change it 
-back to Undergoing Validation whenever you fixed problems package 
+Set the <tt style="white-space: nowrap;">Group</tt> field of the tracker item to 
+<tt style="white-space: nowrap;">Undergoing Validation</tt> when you create the new tracker. Also change it 
+back to <tt style="white-space: nowrap;">Undergoing Validation</tt> whenever you fixed problems package 
 reviewers found in your submission.
 </li>
 </ul>
@@ -262,14 +262,14 @@ first time we have attempted to make a maxwell-0.5.1 package, it is revision 1.
 <p>
 The Source field is where fink will grab the source tarball from. Because 
 <a href="http://sourceforge.net">Sourceforge</a> has a system where
-packages are mirrored around the world, and since fink knows about it,
-we use mirror:sourceforge:. %n expands to the package name,
-maxwell, and %v expands to the package version, 0.5.1.
+packages are mirrored around the world, and since <tt style="white-space: nowrap;">fink</tt> knows about it,
+we use <tt style="white-space: nowrap;">mirror:sourceforge:</tt>. <tt style="white-space: nowrap;">%n</tt> expands to the package name,
+maxwell, and <tt style="white-space: nowrap;">%v</tt> expands to the package version, 0.5.1.
 </p>
 <p>
-Now we can save this as maxwell.info in 
-/sw/fink/dists/local/main/finkinfo/. That done, we can see how we
-are doing by using fink validate.
+Now we can save this as <tt style="white-space: nowrap;">maxwell.info</tt> in 
+<tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo/</tt>. That done, we can see how we
+are doing by using <tt style="white-space: nowrap;">fink validate</tt>.
 </p>
 <pre>
 finkdev% fink validate maxwell.info 
@@ -347,14 +347,14 @@ change to the next mirror set. More information about this problem is in the
 <a href="http://fink.sourceforge.net/faq/comp-general.php#master-problems">FAQ</a>.
 </p>
 <p>
-So we can now get the md5 by running md5 /sw/src/maxwell-0.5.1.tar.gz,
+So we can now get the md5 by running <tt style="white-space: nowrap;">md5 /sw/src/maxwell-0.5.1.tar.gz</tt>,
 and add it to the .info file:
 </p>
 <pre>
 Source-MD5: ce5c354b2fed4e237524ad0bc59997a3
 </pre>
 <p>
-And now we find that fink validate passes, yippee!
+And now we find that <tt style="white-space: nowrap;">fink validate</tt> passes, yippee!
 </p>
 
 
@@ -385,7 +385,7 @@ Can't exec "./configure": No such file or directory at \
 </pre>
 <p>
 Hmm, well that did not go all that well. Let's read the README 
-(which you can find at /sw/src/maxwell-0.5.1-1/maxwell-0.5.1/README)
+(which you can find at <tt style="white-space: nowrap;">/sw/src/maxwell-0.5.1-1/maxwell-0.5.1/README</tt>)
 and see what it says...
 </p>
 <pre>
@@ -406,18 +406,18 @@ make install prefix=%i
 &lt;&lt;
 </pre>
 <p>
-We need to use prefix=%i since fink builds the binary deb file
-from the files in %i. These files are later installed into 
-%p (which is /sw by default) when you use 
-fink install maxwell. For more details about %p and
-%i please consult the 
+We need to use <tt style="white-space: nowrap;">prefix=%i</tt> since fink builds the binary deb file
+from the files in <tt style="white-space: nowrap;">%i</tt>. These files are later installed into 
+<tt style="white-space: nowrap;">%p</tt> (which is <tt style="white-space: nowrap;">/sw</tt> by default) when you use 
+<tt style="white-space: nowrap;">fink install maxwell</tt>. For more details about <tt style="white-space: nowrap;">%p</tt> and
+<tt style="white-space: nowrap;">%i</tt> please consult the 
 <a href="http://fink.sourceforge.net/doc/packaging/format.php#percent">
 Packaging Manual</a>.
 </p>
 <p>
 Normally the lines in the Script fields are passed line by line to the shell.
-But the #! /bin/sh -ev line makes fink run it as a separate script.
-The parameter -e means "die on error" and -v means
+But the <tt style="white-space: nowrap;">#! /bin/sh -ev</tt> line makes fink run it as a separate script.
+The parameter <tt style="white-space: nowrap;">-e</tt> means "die on error" and <tt style="white-space: nowrap;">-v</tt> means
 "verbose".
 </p>
 <p>
@@ -472,12 +472,12 @@ dpkg-deb: building package `maxwell' in \
 </pre>
 <p>
 Fink seems to have installed everything into the correct place: 
-/sw/src/root-maxwell-0.5.1-1 from where the binary package 
-maxwell_0.5.1-1_darwin-powerpc.deb was built.
+<tt style="white-space: nowrap;">/sw/src/root-maxwell-0.5.1-1</tt> from where the binary package 
+<tt style="white-space: nowrap;">maxwell_0.5.1-1_darwin-powerpc.deb</tt> was built.
 </p>
 <p>
 Also note how fink automatically included some compiler flags to enable it to
-access other fink packages (e.g. -I/sw/include).
+access other fink packages (e.g. <tt style="white-space: nowrap;">-I/sw/include</tt>).
 </p>
 <p>
 Let's have a look at what is in the binary package:
@@ -530,9 +530,9 @@ Warning: File installed into deprecated directory /sw/man/
 <p>
 Oops... something is wrong. Let's consult the 
 <a href="http://fink.sourceforge.net/doc/packaging/fslayout.php#fhs">Packaging Manual</a>
-again. It tells us to install man pages into /sw/share/man and files such
-as README into /sw/share/doc/%n. If we look into the 
-Makefile of maxwell we see that the mandir and datadir can be set:
+again. It tells us to install man pages into <tt style="white-space: nowrap;">/sw/share/man</tt> and files such
+as <tt style="white-space: nowrap;">README</tt> into <tt style="white-space: nowrap;">/sw/share/doc/%n</tt>. If we look into the 
+<tt style="white-space: nowrap;">Makefile</tt> of maxwell we see that the mandir and datadir can be set:
 </p>
 <pre>
 prefix = /usr/local
@@ -554,13 +554,13 @@ and rebuild the package with
 finkdev% fink rebuild maxwell
 </pre>
 <p>
-(We used fink rebuild because fink build would not do 
+(We used <tt style="white-space: nowrap;">fink rebuild</tt> because <tt style="white-space: nowrap;">fink build</tt> would not do 
 anything since the package was already built successfully.)
 </p>
 <p>
-Review the contents of your deb file (with dpkg -c) to see where 
+Review the contents of your deb file (with <tt style="white-space: nowrap;">dpkg -c</tt>) to see where 
 the files got installed now. Then validate the deb file again with 
-fink validate. If all is well you can install the new package with:
+<tt style="white-space: nowrap;">fink validate</tt>. If all is well you can install the new package with:
 </p>
 <pre>
 finkdev% fink install maxwell
@@ -597,4 +597,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.3 2004/07/16 15:07:42 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.4 2004/07/17 22:36:19 michga Exp $</i></p></body></html>
