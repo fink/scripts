@@ -1,0 +1,38 @@
+#!/bin/sh
+set -e
+
+if [ -z "$BDBASE" ]; then
+  echo "BDBASE not set"
+  exit 1
+fi
+cd $BDBASE
+
+showall=0
+if [ "x$1" = "x-a" ]; then
+  showall=1
+  shift
+fi
+
+tree=$1
+if [ -z "$tree" ]; then
+  tree="fink-`cat $BDDATA/current`"
+  echo "Defaulting to tree $tree"
+fi
+
+if [ ! -d "dists/$tree" ]; then
+  echo "ERROR: invalid tree '$tree'"
+  exit 1
+fi
+
+basedir=dists/$tree/main/binary-darwin-powerpc
+if [ ! -d $basedir ]; then
+  echo "ERROR: no binary directory for $tree/main"
+elif [ $showall -eq 1 ]; then
+  find $basedir -name \*.deb -print | \
+    sed -e 's,.*/,,' -e 's,_darwin-powerpc.deb,,' | sort
+else
+  find $basedir -type f -and -name \*.deb -print | \
+    sed -e 's,.*/,,' -e 's,_darwin-powerpc.deb,,' | sort
+fi
+
+exit 0
