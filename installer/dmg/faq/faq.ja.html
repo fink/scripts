@@ -5,6 +5,7 @@
 <td align="center">
 Available Languages:  | 
 <a href="faq.en.html">English</a> | 
+<a href="faq.es.html">Espa&ntilde;ol</a> | 
 <a href="faq.fr.html">Fran&ccedil;ais</a> | 
 &#26085;&#26412;&#35486; (Nihongo) | 
 <a href="faq.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
@@ -31,7 +32,11 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 のエラーが出るだけです。</a></li><li><a href="#usage-fink.bad-list-file">5.18 何もインストールできないし、削除もできません。 "files list file" と出るだけです。</a></li><li><a href="#usage-fink.error-nineteen">5.19 Fink バイナリインストーラを使うと、ウィンドウ中に大きく "19" と出て、何もインストールできません。</a></li><li><a href="#usage-fink.dselect-garbage">5.20 <tt style="white-space: nowrap;">dselect</tt> でパッケージを選択すると、大量のゴミがでてきます。
 これはどうやったら使えますか?</a></li><li><a href="#usage-fink.perl-undefined-symbol">5.21 なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</a></li><li><a href="#usage-fink.cant-upgrade">5.22 Fink のバージョンをアップデートできないようです。</a></li><li><a href="#usage-fink.spaces-in-directory">5.23 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</a></li><li><a href="#usage-fink.packages-gz">5.24 バイナリアップデートをしようとすると、 "File not found" というメッセージが大量に出ます。</a></li><li><a href="#usage-fink.wrong-tree">5.25 OS | Developer Tools を変えたら、 Fink が認識してくれません。</a></li><li><a href="#usage-fink.seg-fault">5.26 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 ターミナルウィンドウを開くと、
 "Your environment seems to be correctly set up for Fink already."
-というメッセージが出てログアウトします。</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
+というメッセージが出てログアウトします。</a></li><li><a href="#usage-fink.ext-drive">5.28 
+	メインパーティション以外に Fink をインストールしていますが、
+	ソースからの更新ができません。
+	<q>chowname</q> を含んだエラーが出ます。
+	</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
 これは何ですか?</a></li><li><a href="#comp-general.cvs">6.2 "fink selfupdate-cvs" をしようとしたら、このメッセージが出てきました: "cvs: Command not found."
 </a></li><li><a href="#comp-general.missing-make">6.3 <tt style="white-space: nowrap;">make</tt> に関連したエラーがでました。</a></li><li><a href="#comp-general.head">6.4 head コマンドから変な使用方法メッセージが出ています。何がおかしいのですか?</a></li><li><a href="#comp-general.also_in">6.5 あるパッケージをインストールしようとすると、他のパッケージのファイルを上書きしようとしているというエラーメッセージが出ました。
 </a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: I get messages about "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local/lib にインストールされているライブラリが Fink のビルドの問題を起こすことがあると聞いたけど、本当ですか?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
@@ -608,6 +613,29 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt>
 と書かれている部分を削除します。</p></div> 
 </a>
+<a name="usage-fink.ext-drive">
+<div class="question"><p><b>Q5.28: 
+	メインパーティション以外に Fink をインストールしていますが、
+	ソースからの更新ができません。
+	<q>chowname</q> を含んだエラーが出ます。
+	</b></p></div>
+<div class="answer"><p><b>A:</b> このようなエラーであれば:</p><pre>This first test is designed to die, so please ignore the error
+ message on the next line.
+ # Looks like your test died before it could output anything.
+ ./00compile............................ok
+ ./Base/initialize......................ok
+ ./Base/param...........................ok
+ ./Base/param_boolean...................ok
+ ./Command/cat..........................ok
+ ./Command/chowname.....................#
+ Failed test (./Command/chowname.t at line 27)
+ #          got: 'root'
+ #     expected: 'nobody'</pre><p>
+、Fink がインストールされているドライブ/パーティションを
+「<b>情報を見る</b>」し、 "所有権を無視する" を外します。
+</p></div>
+</a>
+
 <h2><a name="comp-general">6 コンパイルの問題 - 一般</a></h2>
 
 
@@ -1263,4 +1291,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.15 2004/04/30 04:57:48 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.ja.xml,v 1.16 2004/05/18 15:49:15 babayoshihiko Exp $</i></p></body></html>
