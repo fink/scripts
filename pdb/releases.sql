@@ -10,3 +10,4 @@ insert into release values ('0.5.1-stable', 'Packages shipped with Fink 0.5.1 (F
 insert into release values ('0.5.2-stable', 'Packages shipped with Fink 0.5.2 (For Mac OS X 10.2)');
 insert into release values ('0.5.3-stable', 'Packages shipped with Fink 0.5.3 (For Mac OS X 10.2)');
 insert into release values ('0.6.1-stable', 'Packages shipped with Fink 0.6.1 (For Mac OS X 10.2/10.3)');
+insert into release values ('0.6.2-stable', 'Packages shipped with Fink 0.6.2 (For Mac OS X 10.2/10.3)');
