@@ -32,6 +32,7 @@ create table package (
  latest tinyint not null default '0',
  needtest tinyint not null default '0',
  primary key (release,name),
+ index (name),
  index (section),
  index (latest),
  index (needtest)
