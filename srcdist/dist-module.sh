@@ -4,6 +4,7 @@
 #
 # Fink - a package manager that downloads source and installs it
 # Copyright (c) 2001 Christoph Pfisterer
+# Copyright (c) 2001-2003 The Fink Package Manager Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -94,5 +95,12 @@ fi
 
 echo "Done:"
 ls -l *.tar.gz
+
+### create package description file
+
+echo "Creating package description file $fullname.info:"
+
+md5=`/sbin/md5 -q $fullname.tar.gz`
+/usr/bin/sed -e 's/\@VERSION\@/'$version'/' -e 's/\@REVISION\@/1/' -e 's/\@MD5\@/'$md5'/' -e 's,%n-%v.tar,mirror:sourceforge:fink/%n-%v.tar.gz,' -e 's/NoSourceDirectory: true//' <$fullname/$module.info.in >$fullname-1.info
 
 exit 0
