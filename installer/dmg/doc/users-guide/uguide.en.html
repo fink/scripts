@@ -32,7 +32,7 @@ Package installation and maintenance is covered as well.
 </p>
   <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 What is Fink?</a></li><li><a href="#intro.req">1.2 Requirements</a></li><li><a href="#intro.supported-os">1.3 Supported Systems</a></li><li><a href="#intro.src-vs-bin">1.4 Source vs. Binary</a></li></ul></li><li><a href="#install"><b>2 First Time Installation</b></a><ul><li><a href="#install.bin">2.1 Installing the Binary Distribution</a></li><li><a href="#install.src">2.2 Installing the Source Distribution</a></li><li><a href="#install.setup">2.3 Setting Up Your Environment</a></li></ul></li><li><a href="#packages"><b>3 Installing Packages</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installing Binary Packages with
 dselect</a></li><li><a href="#packages.bin-apt">3.2 Installing Binary Packages with
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Packages from Source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li><li><a href="#conf.advanced">5.8 Advanced Settings</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.cleanup">6.19 cleanup</a></li><li><a href="#usage.dumpinfo">6.20 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Packages from Source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li><li><a href="#conf.advanced">5.8 Advanced Settings</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.cleanup">6.19 cleanup</a></li><li><a href="#usage.dumpinfo">6.20 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.what">1.1 What is Fink?</a></h3>
@@ -566,7 +566,7 @@ If you run into errors during that process, please first check the
       <p>Fink Commander is an Aqua interface to both <tt style="white-space: nowrap;">apt-get</tt> and the <tt style="white-space: nowrap;">fink</tt> tool.  The Binary menu lets you do operations on the binary distribution, and the Source menu does the same thing for the source distribution.</p>
       <p>Fink Commander is included with the Fink binary installer.  To download it separately (e.g. if you've bootstrapped Fink from source), or for additional information, visit the <a href="http://finkcommander.sourceforge.net">Fink Commander website</a>.</p>
     
-    <h3><a name="packages.">3.6 Available versions</a></h3>
+    <h3><a name="packages.available-versions">3.6 Available versions</a></h3>
       
       <p>When you want to install a package, you should first check the <a href="http://fink.sourceforge.net/pdb/index.php">package database</a> and see if it is available at all through Fink.  The available version(s) of the package will be shown in several rows of a table.  These are:</p>
       <ul>
@@ -574,25 +574,26 @@ If you run into errors during that process, please first check the
           <p>
             <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p>
         </li>
+        <li><b>0.6.3:</b>  this is the version that can be installed from binaries for OS 10.2.</li>
         <li>
           <p>
-<b>0.7.0:</b>  This is the base version that can be installed from binaries for OS 10.2 or OS 10.3, under the current Fink release.  If you <a href="#upgrade">upgrade</a> Fink, there may be an OS-specific newer version that isn't shown here.</p> 
+<b>0.7.0:</b>  This is the base version that can be installed from binaries for OS 10.3, under the current Fink release.  If you <a href="#upgrade">upgrade</a> Fink, there may be an OS-specific newer version that isn't shown here.</p> 
         </li>
         <li>
           <p>
-            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
-          <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS | rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
+            <b>current-10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
+          <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS or rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
 </p>
         </li>
-        <li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS | rsync access may be needed to access this version.</p>
+        <li><p><b>current-10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS or rsync access may be needed to access this version.</p>
 </li>
         <li>
           <p>
-            <b>10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
+            <b>current-10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
           <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
 </p>
         </li>
-        <li><b>10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
+        <li><b>current-10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
       </ul>
     
     <h3><a name="packages.x11">3.7 Getting X11 Sorted Out</a></h3>
@@ -1065,7 +1066,7 @@ while building Fink packages will be placed here. Defaults to <tt style="white-s
 binary files for installation.  The default sources.list file looks 
 something like this, adjusted to match your Distribution and Trees:
 </p>
-<pre># Local modifications should either go above this line, or at the end.
+      <pre># Local modifications should either go above this line, or at the end.
 #
 # Default APT sources configuration for Fink, written by the fink program
 
@@ -1086,18 +1087,19 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 
 # Put local modifications to this file below this line, or at the top.
 </pre>
-<p>With this default file, apt-get first looks in your local installation
+      <p>With this default file, apt-get first looks in your local installation
 for already-compiled binaries, and then looks in the official binary
 distribution.  You can alter this by making entries at the beginning of
 the file (which will be searched first) or at the end of the file (which
 will be searched last).</p>
-<p>If you change your Trees line or the Distribution you are using,
+      <p>If you change your Trees line or the Distribution you are using,
 fink will automatically modify the "default" portion of the file to
 correspond to the new values.  Fink will, however, preserve any local
 modifications you have made to the file, provided that you confine your
 modifications to the top of the file (above the first default line) and
 the bottom of the file (below the last default line).
-</p><p>
+</p>
+      <p>
 Note: If you had modified <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> prior to upgrading
 to fink 0.21.0, you will find your former file stored at <tt style="white-space: nowrap;">/sw/etc/apt/sources.list.finkbak</tt> .
 </p>
@@ -1350,4 +1352,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.14 2004/08/12 15:01:32 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.15 2004/09/02 14:49:05 alexkhansen Exp $</i></p></body></html>
