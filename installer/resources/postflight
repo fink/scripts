@@ -7,5 +7,5 @@ if(! -e "/sw")
 }
 system "/usr/bin/yes '' | /sw/lib/fink/postinstall.pl";
 system "/sw/bin/fink -y index";
-system "open /sw/bin/pathsetup.command";
+exec "/sw/bin/pathsetup.sh; osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'" or die "Cannot execute pathsetup and osascript";
 system "/sw/var/lib/fink/prebound/update-package-prebinding.pl -f";
