@@ -608,7 +608,8 @@ installation or install libwww after you installed Fink.
 </a>
 <a name="comp-general.also_in">
 <div class="question"><p><b>Q4.5: When I try to install a package I get an error message about trying to overwrite a file that is in another package.</b></p></div>
-<div class="answer"><p><b>A:</b> This occasionally happens with splitoff packages (i.e. the ones with -dev, -shlibs, etc.) when a file gets moved from one part of the splitoff to another (e.g. from <tt style="white-space: nowrap;">foo</tt> to <tt style="white-space: nowrap;">foo-shlibs</tt>.  What you can do is overwrite the file with that from the package you are trying to install (since they are nominally the same):</p><pre>sudo dpkg -i --force-overwrite packagename</pre><p>where <b>packagename</b> is the package that you are trying to install.</p></div>
+<div class="answer"><p><b>A:</b> This occasionally happens with splitoff packages (i.e. the ones with -dev, -shlibs, etc.) when a file gets moved from one part of the splitoff to another (e.g. from <tt style="white-space: nowrap;">foo</tt> to <tt style="white-space: nowrap;">foo-shlibs</tt>.  What you can do is overwrite the file with that from the package you are trying to install (since they are nominally the same):</p><pre>sudo dpkg -i --force-overwrite <b>filename</b>
+</pre><p>where <b>filename</b> is the .deb file corresponding to the package that you are trying to install.</p></div>
 </a>
 <a name="comp-general.weak_lib">
 <div class="question"><p><b>Q4.6: After I installed the December 2002 Development Tools I get messages about &quot;weak libraries&quot;.</b></p></div>
@@ -952,4 +953,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.128 2003/09/06 21:04:23 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.xml,v 1.129 2003/09/06 21:20:22 alexkhansen Exp $</i></p></body></html>
