@@ -9,14 +9,40 @@ and add them to CVS
 
 4) Clean system:
   rm -rf /sw /usr/X11R6 /etc/X11 /Application/XDarwin.app)
-and perform a fink bootstrap using the tarballs you created in 1)
 
-5) Prepare a binary installer
-(TODO - write instructions/scripts for this)
+5) Perform a fink bootstrap using the tarballs you created in 1)
 
-6) Update the package database
+6) Create /bindist (you can use any other path if you prefer)
+and _move_ the .deb's from /sw/fink there. Note that you
+should retain the structure, compare with the bindist
+dir on the webserver.
 
-7) Announce it:
+7) Now _copy_ the finkinfo directories to /bindist. Verify
+no .info/.patch files are missing.
+
+8) Temporararily add unstable to fink.conf. Execute
+  fink scanpackages
+then undo your changes to fink.conf again
+
+9) Copy /sw to /fink-image/sw (or any other empty directoy)
+
+10) Create an Installer-Package using the data from the old
+binary installer (TODO: put these files into CVS, along with more
+detailed instructions, or even a build script)
+
+11) Now test the binary installer!
+
+12) If all worked fine, you can now create a disk image with the installer,
+Welcome.rtf, ReadMe.rtf, and License.rtf.
+
+13) Unless SourceForge finally added the proper file type for .dmgs,
+compress the diskimage with gzip.
+
+14) Release binary installer via the FRS.
+
+15) Update the package database
+
+16) Send out announcement:
  * webpage
  * email to fink-announce
  * notify FRS watchers
