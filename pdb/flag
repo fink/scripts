@@ -46,20 +46,20 @@ $q = "SELECT DISTINCT name FROM package";
 $sth = $dbh->prepare($q);
 $sth->execute();
 
-my ($pkgname, $release, $version, $chosen, %vlist);
+my ($pkgname, $release, $version, $revision, $chosen, %vlist);
 
 while (1) {
   ($pkgname) = $sth->fetchrow_array;
   last unless defined($pkgname);
 
   %vlist = ();
-  $q = "SELECT name,release,version FROM package WHERE name='$pkgname'";
+  $q = "SELECT name,release,version,revision FROM package WHERE name='$pkgname'";
   $sth2 = $dbh->prepare($q);
   $sth2->execute();
   while (1) {
-    (undef, $release, $version) = $sth2->fetchrow_array;
+    (undef, $release, $version, $revision) = $sth2->fetchrow_array;
     last unless defined($release);
-    $vlist{$release} = $version;
+    $vlist{$release} = $version."-".$revision;
   }
   $sth2->finish;
 
