@@ -68,6 +68,9 @@ foreach $package (Fink::Package->list_packages()) {
   next if $po->is_virtual();
   $version = &latest_version($po->list_versions());
   $vo = $po->get_version($version);
+  
+  # Skip splitoffs
+  next if $vo->{_type} eq "splitoff";
 
   # gather fields
   $maintainer = $vo->param_default("Maintainer", "(not set)");
