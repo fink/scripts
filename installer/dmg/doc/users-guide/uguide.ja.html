@@ -217,11 +217,14 @@ StuffIt Expander が解凍してしまっている場合、作成されたフォ
 
 <p>
 Fink ディレクトリ階層にインストールされたソフトウェア、パッケージ管理プログラムを含めて、を使用するには、 PATH 環境変数などをそれぞれ設定しなければなりません。
-これはコマンドを使って
+これはターミナル上で、
+</p>
+<pre>/sw/bin/pathsetup.sh</pre>
+<p>
+と入力します。
+古いバージョンの fink の場合、ファイル名が <tt style="white-space: nowrap;">pathsetup.command</tt> ですので、次のように入力します。
 </p>
 <pre>open /sw/bin/pathsetup.command</pre>
-<p><tt style="white-space: nowrap;">fink-0.18.3</tt> あるいは <tt style="white-space: nowrap;">fink-0.19.2</tt> の場合は (下記の通り正確に)</p>
-<pre>/sw/bin/pathsetup.sh</pre>
 <p>
 として下さい。
 これが効かない場合は手動で設定することができますが、シェルによってやり方が異なります。
