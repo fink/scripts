@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+echo "Updating from CVS..."
+if [ -d fink ]; then
+  cd fink
+  cvs -z3 -q update -A
+  cd ..
+else
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink packages
+fi
+
+echo "Dumping stable..."
+./dump stable >current.sql
+echo "Dumping unstable..."
+./dump unstable >>current.sql
+
+exit 0
