@@ -50,7 +50,7 @@ English |
         build a package?</a></li><li><a href="#comp-general.node-exists">6.8 I can't install a package | update because I get a message that a
         "node" already exists.</a></li><li><a href="#comp-general.usr-local-libs">6.9 I've heard that libraries and headers installed under /usr/local sometimes
         cause build problems for Fink. Is this true?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 When I try to build a package, I get a message that a "table of
-        contents" is out of date. What do I need to do?</a></li><li><a href="#comp-general.fc-atlas">6.11 Fink Commander hangs when I try to install atlas.</a></li><li><a href="#comp-general.basic-headers">6.12 I get messages saying that I'm missing stddef.h | whar.h | crt.o. Where do I find them?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 I can't update, because Fink is "unable to resolve version conflict
+        contents" is out of date. What do I need to do?</a></li><li><a href="#comp-general.fc-atlas">6.11 Fink Commander hangs when I try to install atlas.</a></li><li><a href="#comp-general.basic-headers">6.12 I get messages saying that I'm missing stddef.h | wchar.h | crt.o. Where do I find them?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 I can't update, because Fink is "unable to resolve version conflict
         on multiple dependencies".</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 I can't install anything because I get "dpkg: parse error, in file
         `/sw/var/lib/dpkg/status'"!</a></li><li><a href="#comp-general.freetype-problems">6.15 I get errors involving freetype.</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 I get build errors involving `Dl_info'.</a></li><li><a href="#comp-general.gcc2">6.17 Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> but I can't seem to
         install it.</a></li><li><a href="#comp-general.system-java">6.18 Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</a></li><li><a href="#comp-general.dpkg-split">6.19 When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</a></li><li><a href="#comp-general.xml-parser">6.20 I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</a></li></ul></li><li><a href="#comp-packages"><b>7 Compile Problems - Specific Packages</b></a><ul><li><a href="#comp-packages.libgtop">7.1 A package fails to build with errors involving
@@ -79,7 +79,7 @@ English |
         XDarwin.</a></li><li><a href="#usage-packages.gnome-two">9.9 I upgraded from GNOME 1.x to GNOME 2.x and now
         <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 I upgraded to Apple's X11 in Panther and now my window title bars
         are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 I installed Apple's X11 but Fink keeps asking to install
-        xfree86.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</a></li><li><a href="#usage-packages.special-x11-debug">9.13 I'm still having problems with X11 and Fink.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
+        XFree86.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86.</a></li><li><a href="#usage-packages.special-x11-debug">9.13 I'm still having problems with X11 and Fink.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
     
     
     <a name="general.what">
@@ -776,7 +776,7 @@ rerun ranlib(1) (can't load from it)</pre><p>What you need to do is run ranlib (
         instead.</p></div>
     </a>
     <a name="comp-general.basic-headers">
-      <div class="question"><p><b>Q6.12: I get messages saying that I'm missing stddef.h | whar.h | crt.o. Where do I find them?</b></p></div>
+      <div class="question"><p><b>Q6.12: I get messages saying that I'm missing stddef.h | wchar.h | crt.o. Where do I find them?</b></p></div>
       <div class="answer"><p><b>A:</b> These headers, and many others, are provided by the DevSDK package of
         the Developer Tools. Check whether
         <tt style="white-space: nowrap;">/Library/Receipts/DevSDK.pkg</tt> exists on your
@@ -879,7 +879,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
       <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> is a virtual package to
         indicate the presence of gcc-2.95 on your system. Install the gcc2.95
         package from the XCode Tools (earlier OS versions have gcc-2.95 as
-        part of their main Developer Tools installation.</p></div>
+        part of their main Developer Tools installation).</p></div>
     </a>
     <a name="comp-general.system-java">
       <div class="question"><p><b>Q6.18: Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>, but there's no such package.</b></p></div>
@@ -927,13 +927,7 @@ endif</pre></div>
         too.</p><p>3. To get XFree86-4.2.1, Install Fink's <tt style="white-space: nowrap;">xfree86-base</tt>
         and <tt style="white-space: nowrap;">xfree86-rootless</tt> packages by the usual means:
         "<tt style="white-space: nowrap;">fink install</tt>" for source users, "<tt style="white-space: nowrap;">apt-get
-        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>
--        package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004 isn't in the binary
--        distro yet, and is currently only in the unstable tree [see &lt;link url="http://fink.sourceforge.net/faq/usage-fink.php#unstable"&gt;how to install unstable package&lt;/link&gt;]
-
-3a. To get XFree86-4.3.x and above, install Fink's <tt style="white-space: nowrap;">xfree86</tt>
-        package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004) isn't in the binary
-        distro yet, and is currently only in the unstable tree [see <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable%5C">how to install unstable packages</a>].</p></div>
+        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x and above, install Fink's <tt style="white-space: nowrap;">xfree86</tt> package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004) isn't in the binary distro yet, and is currently only in the unstable tree [see <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable%5C">how to install unstable packages</a>].</p></div>
     </a>
     <a name="comp-packages.change-thread-nothread">
       <div class="question"><p><b>Q7.3: How do I change from the non-threaded version of Fink's XFree86
@@ -1061,8 +1055,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
         should I install?</b></p></div>
       <div class="answer"><p><b>A:</b> All are variants on XFree86 (they're all based on the XFree86
         code), but have some slight differences between them. There are
-  different options under Panther and under Jaguar.
-  Under Panther you have the choice between:</p><ul>
+  different options under Panther and under Jaguar.</p><p>Under Panther you have the choice between:</p><ul>
           <li><p>     Apple's X11 (on the third disk). Don't forget to install the
   X11 SDK
   (on the XCode disk) if you want to compile programs or if you plan to
@@ -1323,7 +1316,7 @@ exec metacity &amp; exec gnome-session</pre><p>Note:  this is no longer true for
     </a>
     <a name="usage-packages.apple-x11-wants-xfree86">
       <div class="question"><p><b>Q9.11: I installed Apple's X11 but Fink keeps asking to install
-        xfree86.</b></p></div>
+        XFree86.</b></p></div>
       <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
           <li>
             <b>You are installing from binaries:</b>   <p>If you are running a
@@ -1342,7 +1335,7 @@ sudo apt-get install fink</pre><p>If this fails, or if you have a later version 
           default. It has to be installed either with a custom Xcode install,
           or by clicking on the <tt style="white-space: nowrap;">X11SDK</tt> pkg in the
           <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.  
-<p><b>Note for Jaguar (X11 beta 3) users</b>:  As you aren't using XCode, you need to have already download a copy of the proper X11SDK package on your system.  Since X11 beta 3 is expired, its X11SDK package (as well as the X11User package) is no longer available for download.  You'll either have to restrict yourself to installing X11 applications via the binary distribution, install XFree86, or update to Panther.</p><p>If you're still having problems, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p></li>
+<p><b>Note for Jaguar (X11 beta 3) users</b>:  As you aren't using XCode, you need to have already downloaded a copy of the proper X11SDK package on your system.  Since X11 beta 3 is expired, its X11SDK package (as well as the X11User package) is no longer available for download.  You'll either have to restrict yourself to installing X11 applications via the binary distribution, install XFree86, or update to Panther.</p><p>If you're still having problems, then consult the <a href="#usage-packages.special-x11-debug">special debug</a> instructions, below.</p></li>
         </ul></div>
     </a>
     <a name="usage-packages.wants-xfree86-on-upgrade">
