@@ -12,3 +12,4 @@ perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf 
 echo "calling /Developer/Applications/PackageMaker.app/Contents/MacOS/PackageMaker -build -p \"$IN_BASEDIR/dmg/Fink $IN_VERSION Installer.pkg\" -f $IN_BASEDIR/contents -r $RESDIR -i $IN_BASEDIR/fink.info -d $RESDIR/English.lproj/Description.plist";
 
 /Developer/Applications/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $IN_BASEDIR/contents -r $RESDIR -i $IN_BASEDIR/fink.info -d $RESDIR/English.lproj/Description.plist
+`find $DMGDIR/Fink\ $IN_VERSION\ Installer.pkg -name 'CVS' -type d -exec rm -rf {} \;`
