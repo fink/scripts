@@ -14,7 +14,7 @@
 本指南包括从源代码或安装包来初次安装或升级 Fink 的步骤。
 同时也会涉及软件包的安装和维护。
 </p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.what">1.1 Fink 是什么？</a></li><li><a href="#intro.req">1.2 系统要求</a></li><li><a href="#intro.supported-os">1.3 支持的操作系统</a></li><li><a href="#intro.src-vs-bin">1.4 源代码与二进制安装包的对比</a></li></ul></li><li><a href="#install"><b>2 首次安装</b></a><ul><li><a href="#install.bin">2.1 安装二进制发行版</a></li><li><a href="#install.src">2.2 安装源代码发行版</a></li><li><a href="#install.setup">2.3 设置你的环境</a></li></ul></li><li><a href="#packages"><b>3 安装软件包</b></a><ul><li><a href="#packages.bin-dselect">3.1 用 dselect 安装二进制包</a></li><li><a href="#packages.bin-apt">3.2 用　apt-get　安装二进制包</a></li><li><a href="#packages.bin-exceptions">3.3 安装没有二进制版本的依赖软件包</a></li><li><a href="#packages.src">3.4 从源代码安装软件包</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 可用版本</a></li><li><a href="#packages.x11">3.7 找到 X11</a></li></ul></li><li><a href="#upgrade"><b>4 升级 Fink</b></a><ul><li><a href="#upgrade.bin">4.1 用二进制包进行升级</a></li><li><a href="#upgrade.src">4.2 升级从源码安装版本</a></li><li><a href="#upgrade.mix">4.3 混合使用二进制和源文件安装的情况</a></li></ul></li><li><a href="#conf"><b>5 Fink 配置文件</b></a><ul><li><a href="#conf.about">5.1 关于 fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf 文件的语法</a></li><li><a href="#conf.required">5.3 必需的设置</a></li><li><a href="#conf.optional">5.4 可选用户设置</a></li><li><a href="#conf.downloding">5.5 下载设置</a></li><li><a href="#conf.mirrors">5.6 镜像站点设置</a></li><li><a href="#conf.developer">5.7 开发人员设置</a></li></ul></li><li><a href="#usage"><b>6 在命令行使用 Fink 工具</b></a><ul><li><a href="#usage.using">6.1 使用 Fink 工具</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.what">1.1 Fink 是什么？</a></li><li><a href="#intro.req">1.2 系统要求</a></li><li><a href="#intro.supported-os">1.3 支持的操作系统</a></li><li><a href="#intro.src-vs-bin">1.4 源代码与二进制安装包的对比</a></li></ul></li><li><a href="#install"><b>2 首次安装</b></a><ul><li><a href="#install.bin">2.1 安装二进制发行版</a></li><li><a href="#install.src">2.2 安装源代码发行版</a></li><li><a href="#install.setup">2.3 设置你的环境</a></li></ul></li><li><a href="#packages"><b>3 安装软件包</b></a><ul><li><a href="#packages.bin-dselect">3.1 用 dselect 安装二进制包</a></li><li><a href="#packages.bin-apt">3.2 用　apt-get　安装二进制包</a></li><li><a href="#packages.bin-exceptions">3.3 安装没有二进制版本的依赖软件包</a></li><li><a href="#packages.src">3.4 从源代码安装软件包</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 可用版本</a></li><li><a href="#packages.x11">3.7 找到 X11</a></li></ul></li><li><a href="#upgrade"><b>4 升级 Fink</b></a><ul><li><a href="#upgrade.bin">4.1 用二进制包进行升级</a></li><li><a href="#upgrade.src">4.2 升级从源码安装版本</a></li><li><a href="#upgrade.mix">4.3 混合使用二进制和源文件安装的情况</a></li></ul></li><li><a href="#conf"><b>5 Fink 配置文件</b></a><ul><li><a href="#conf.about">5.1 关于 fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf 文件的语法</a></li><li><a href="#conf.required">5.3 必需的设置</a></li><li><a href="#conf.optional">5.4 可选用户设置</a></li><li><a href="#conf.downloading">5.5 下载设置</a></li><li><a href="#conf.mirrors">5.6 镜像站点设置</a></li><li><a href="#conf.developer">5.7 开发人员设置</a></li></ul></li><li><a href="#usage"><b>6 在命令行使用 Fink 工具</b></a><ul><li><a href="#usage.using">6.1 使用 Fink 工具</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
     
     
     <h3><a name="intro.what">1.1 Fink 是什么？</a></h3>
@@ -215,21 +215,21 @@ fink-0.x.x-full.tar.gz 压缩档的目录。
           <p>
    如果你使用 Bourne 风格的 shell （比如 sh，bash，zsh），把下面的几行添加到你的主目录下的 <tt style="white-space: nowrap;">.profile</tt> 文件中（或者，如果你已经有一个 <tt style="white-space: nowrap;">.bash_profile</tt> 文件，你也可以添加到那里）：
   </p>
-          <pre>source /sw/bin/init.sh</pre>
+          <pre>. /sw/bin/init.sh</pre>
           <p>
    如果你不知道如何添加，运行下面的命令：
   </p>
           <pre>cd
 pico .profile</pre>
           <p>
-   你现在进入到一个全屏幕（准确地说，全终端窗口）文本编辑器，应该很容易能够输入 <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt> 这一行。如果有个提示说 "New file"，这不是什么问题。确定在这行的末尾你至少输入了回车，然后按 Control-O，再回车，最后　Control-X 退出编辑器。
+   你现在进入到一个全屏幕（准确地说，全终端窗口）文本编辑器，应该很容易能够输入 <tt style="white-space: nowrap;">. /sw/bin/init.sh</tt> 这一行。如果有个提示说 "New file"，这不是什么问题。确定在这行的末尾你至少输入了回车，然后按 Control-O，再回车，最后　Control-X 退出编辑器。
   </p>
         </li>
         <li>
           <p>
             C Shell（在 Mac OS X 10.2 或更早的版本是默认 Shell) </p>
           <p>
-   如果你使用 tcsh （Mac OS X　的默认），在文件<tt style="white-space: nowrap;">.cshrc</tt>中添加下面一行：
+   如果你使用 tcsh，在你主目录下的<tt style="white-space: nowrap;">.cshrc</tt>文件中添加下面一行：
   </p>
           <pre>source /sw/bin/init.csh</pre>
           <p>
@@ -252,10 +252,9 @@ pico .cshrc</pre>
               <p>这样，如果你要删除 <tt style="white-space: nowrap;">~/.tcshrc</tt>，你还可以运行 Fink。</p>
             </li>
             <li>
-              <p>你曾经按照 <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>文档里面的要求进行操作。</p>
+              <p>你曾经按照 <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt> 文档里面的要求进行操作。</p>
               <p>这些指南告诉你创建一个 <tt style="white-space: nowrap;">~/.tcshrc</tt> 文件及一个 <tt style="white-space: nowrap;"> ~/.login</tt> 文件。这种情况下的问题是 <tt style="white-space: nowrap;">~/.login</tt> 文件在 <tt style="white-space: nowrap;">~/.tcshrc</tt> 文件之后运行，并用 source 语句引用 <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt> 文件的内容。后者包括一条语句重写了你前面设置的 PATH 环境变量。在这种情况下，你需要做的是创建 <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>文件：</p>
-              <pre>mkdir ~/Library/init
-  mkdir ~/Library/init/tcsh
+              <pre>mkdir -p ~/Library/init/tcsh
   pico ~/library/init/tcsh/path</pre>
               <p>并加入：</p>
               <pre>source ~/.cshrc</pre>
@@ -270,7 +269,7 @@ pico .cshrc</pre>
       </ul>
       <p>
 注意这个脚本还添加了 <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> 和
-<tt style="white-space: nowrap;">/usr/X11R6/man</tt> 到你的路径中，所以你可以在安装了 X11 以后使用它。
+<tt style="white-space: nowrap;">/usr/X11R6/man</tt> 到你 PATH 环境变量中，使得你可以在安装了 X11 以后使用它。
 Fink 软件包可以添加它们自己的设置，例如，qt 软件会设置 QTDIR 环境变量。
 </p>
       <p>
@@ -294,12 +293,12 @@ Fink 软件包可以添加它们自己的设置，例如，qt 软件会设置 QT
         <tt style="white-space: nowrap;">dselect</tt> 是一个让你查看可用的软件包清单的程序，同时也可以选择你所需要安装的包。
 它在 Terminal.app 程序中运行，但会占用整个"屏幕" 并使用简单的键盘进行控制浏览。
 和其它软件包管理工具一样 <tt style="white-space: nowrap;">dselect</tt> 需要
-root 用户权限，所以你需要在使用它之前转换成 root 或使用 sudo：
+root 用户权限，所以你需要(以具有管理员权限的帐号)使用 sudo：
 </p>
       <pre>sudo dselect</pre>
       <p>
         <b>注意：</b>
-        <tt style="white-space: nowrap;">dselect</tt> 已知在 OS X 的终端程序中运行存在问题。你需要套在使用它前运行下面的命令，或把它们放到合适的启动文件中（例如 <tt style="white-space: nowrap;">.cshrc</tt> 或 <tt style="white-space: nowrap;">.profile</tt>）：</p>
+        <tt style="white-space: nowrap;">dselect</tt> 已知在 Mac OS X 的终端程序中运行存在问题。你需要套在使用它前运行下面的命令，或把它们放到合适的启动文件中（例如 <tt style="white-space: nowrap;">.cshrc</tt> 或 <tt style="white-space: nowrap;">.profile</tt>）：</p>
       <p>对 tcsh 用户：</p>
       <pre>setenv TERM xterm-color</pre>
       <p>对 bash 用户：</p>
@@ -684,7 +683,7 @@ Mac OS X 10.0 及更早的版本并不被支持。你不应该改变这个设置
         </li>
       </ul>
     
-    <h3><a name="conf.downloding">5.5 下载设置</a></h3>
+    <h3><a name="conf.downloading">5.5 下载设置</a></h3>
       
       <p>有几个设置会影响 Fink 下载软件包数据的方式。</p>
       <ul>
@@ -777,7 +776,7 @@ ClosestFirst - 优先搜索最近的镜像服务器（把所有镜像服务器�
     
     <h3><a name="usage.using">6.1 使用 Fink 工具</a></h3>
       
-      <p><tt style="white-space: nowrap;">fink</tt> 工具使用几个后缀命令来处理源程序发行包。其中的一些需要至少有一个软件包名称，但同时可以处理多个软件包。你可以简单地应用软件包的名称（例如，　gimp），或包括版本号的全名（例如 gimp-1.2.1 或 gimp-1.2.1-3）。在没有指明版本的情况下，Fink 会自动选择最新的版本。其它还具有不同的选项。</p>
+      <p><tt style="white-space: nowrap;">fink</tt> 工具使用几个后缀命令来处理源程序发行包。其中的一些需要至少有一个软件包名称，但同时可以处理多个软件包。你可以简单地应用软件包的名称（例如，　gimp），或包括版本号的全名（例如 gimp-1.2.1) 或包含版本号和修订版号的名称 (例如 gimp-1.2.1-3）。在没有指明版本的情况下，Fink 会自动选择最新的版本。其它还具有不同的选项。</p>
       <p>下面是 <tt style="white-space: nowrap;">fink</tt> 工具的命令清单：</p>
     
     <h3><a name="usage.install">6.2 install</a></h3>
@@ -885,7 +884,7 @@ fink apropos -s=kde irc   - 同上，但只在 kde 部分寻找
     
     <h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
       
-      <p>下载 <b>所有</b> 软件包源程序文件。这个命令只下载系统中没有的文件。</p>
+      <p>下载 <b>所有</b> 缺失的软件包源程序文件。这个命令只下载系统中没有的文件。</p>
     
     <h3><a name="usage.build">6.11 build</a></h3>
       
@@ -951,4 +950,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.zh.xml,v 1.2 2004/03/07 01:55:45 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.zh.xml,v 1.3 2004/03/10 22:55:12 jeff_yecn Exp $</i></p></body></html>
