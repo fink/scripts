@@ -1139,6 +1139,10 @@ Ceci convient pour les paquets utilisant GNU autoconf. Pour ceux de type perl (i
 <p>
 Si le paquet l'admet, il est préférable d'utiliser <tt style="white-space: nowrap;">make install DESTDIR=%d</tt>. L'interprétation des raccourcis (voir section précédente) a lieu avant que les commandes ne soient exécutées .
 </p>
+</td></tr><tr valign="top"><td>AppBundles</td><td>
+<p><b>Introduit dans une version postérieure à la version 0.23.1.</b> Ce champ installe le(s) lot(s) dans le répertoire <tt style="white-space: nowrap;">%p/Applications</tt>. Il crée également un lien symbolique vers le répertoire <tt style="white-space: nowrap;">/Applications/Fink</tt>. Exemple:
+</p>
+<pre>AppBundles: build/*.app Foo.app</pre>
 </td></tr><tr valign="top"><td>JarFiles</td><td>
 <p>
 <b>Introduit dans la version 0.10.0 de fink.</b>
@@ -1346,4 +1350,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.47 2004/09/12 20:17:31 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.49 2004/11/02 02:38:51 michga Exp $</i></p></body></html>

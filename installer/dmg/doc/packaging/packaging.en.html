@@ -1951,6 +1951,15 @@ If the package supports it, it is preferably to use <tt style="white-space: nowr
 DESTDIR=%d</tt> instead. Before the commands are executed, percent
 expansion takes place (see previous section).
 </p>
+</td></tr><tr valign="top"><td>AppBundles</td><td>
+<p>
+<b>Introduced in a post-0.23.1 version.</b>
+This field installs the specified application bundle(s) into
+<tt style="white-space: nowrap;">%p/Applications</tt>.  It will also create a
+symlink to the <tt style="white-space: nowrap;">/Applications/Fink</tt> directory.
+Example:
+</p>
+<pre>AppBundles: build/*.app Foo.app</pre>
 </td></tr><tr valign="top"><td>JarFiles</td><td>
 <p>
 <b>Introduced in fink 0.10.0.</b>
@@ -2320,4 +2329,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.52 2004/09/12 14:39:21 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.54 2004/11/02 02:38:51 michga Exp $</i></p></body></html>
