@@ -180,8 +180,10 @@ Fran&ccedil;ais |
 </a>
 <a name="usage-fink.dselect-access">
 <div class="question"><p><b>Q5.11: Pourquoi est-il impossible de télécharger des paquets après avoir utilisé le menu "[A]ccess" dans dselect ?</b></p></div>
-<div class="answer"><p><b>A:</b> Vous avez certainement fait pointer apt sur un miroir Debian, qui ne contient, bien sûr, aucun des fichiers de Fink. Vous pouvez corriger cela manuellement ou via dselect. Pour le faire manuellement, modifiez en tant que super-utilisateur le fichier <tt style="white-space: nowrap;">/sw/etc/apt/sources.list </tt>dans un éditeur de texte. Supprimez les lignes qui mentionnent debian.org et remplacez-les par celles-ci :</p><pre>deb http://us.dl.sourceforge.net/fink/direct_download release main crypto
-deb http://us.dl.sourceforge.net/fink/direct_download current main crypto</pre><p>(Si vous vivez en Europe, remplacez <tt style="white-space: nowrap;">us.dl.sourceforge.net</tt> par <tt style="white-space: nowrap;">eu.dl.sourceforge.net</tt>)</p><p>Pour modifier avec dselect, relancez "[A]ccess", choisissez la méthode "apt" et entrez les informations suivantes :</p><p>URL: http://us.dl.sourceforge.net/fink/direct_download - Distribution: release - Components: main crypto</p><p>Ensuite, spécifiez que vous voulez ajouter une autre source et répétez la procédure avec "current" à la place de "release".</p><p>Une version modifiée du paquet apt (contenant le script de configuration en tant que plug-in de dselect) est en cours de développement dans CVS.</p></div>
+<div class="answer"><p><b>A:</b> Vous avez certainement fait pointer apt sur un miroir Debian, qui ne contient, bien sûr, aucun des fichiers de Fink. Vous pouvez corriger cela manuellement ou via dselect. Pour le faire manuellement, modifiez en tant que super-utilisateur le fichier <tt style="white-space: nowrap;">/sw/etc/apt/sources.list </tt>dans un éditeur de texte. Supprimez les lignes qui mentionnent debian.org et remplacez-les par celles-ci :</p><pre>deb http://us.dl.sourceforge.net/fink/direct_download release \
+main crypto
+deb http://us.dl.sourceforge.net/fink/direct_download current main \
+crypto</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>(Si vous vivez en Europe, remplacez <tt style="white-space: nowrap;">us.dl.sourceforge.net</tt> par <tt style="white-space: nowrap;">eu.dl.sourceforge.net</tt>)</p><p>Pour modifier avec dselect, relancez "[A]ccess", choisissez la méthode "apt" et entrez les informations suivantes :</p><p>URL: http://us.dl.sourceforge.net/fink/direct_download - Distribution: release - Components: main crypto</p><p>Ensuite, spécifiez que vous voulez ajouter une autre source et répétez la procédure avec "current" à la place de "release".</p><p>Une version modifiée du paquet apt (contenant le script de configuration en tant que plug-in de dselect) est en cours de développement dans CVS.</p></div>
 </a>
 <a name="usage-fink.cvs-busy">
 <div class="question"><p><b>Q5.12: Lors de l'exécution de <q>fink selfupdate</q> ou "fink selfupdate-cvs", le message "<tt style="white-space: nowrap;">Updating using CVS failed. Check the error messages above.</tt>" apparaît.</b></p></div>
@@ -192,14 +194,18 @@ CVS password:
 cvs [login aborted]: connect to cvs.sourceforge.net:2401 failed: 
 Connection refused
 ### execution of su failed, exit code 1
-Failed: Logging into the CVS server for anonymous read-only access failed.</pre><p>ou bien un message comme le suivant :</p><pre>cvs [update aborted]: recv() from server cvs.sourceforge.net: 
+Failed: Logging into the CVS server for anonymous read-only access \
+failed.</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>ou bien un message comme le suivant :</p><pre>cvs [update aborted]: recv() from server cvs.sourceforge.net: 
 Connection reset by peer 
 ### execution of su failed, exit code 1 
 Failed: Updating using CVS failed. Check the error messages above.</pre><p>ou :</p><pre>cvs [update aborted]: End of file received from server</pre><p>ou encore :</p><pre>cvs [update aborted]: received broken pipe signal</pre><p>alors il est possible que le serveur CVS soit surchargé. Il vous faudra réessayer plus tard.</p><p>Il se peut que les permissions soient mal définies dans votre dossier CVS et que vous n'y ayez pas accès, ce qui génère des messages "Permission denied" :</p><pre>cvs update: in directory 10.2/stable/main: 
-cvs update: cannot open CVS/Entries for reading: No such file or directory
+cvs update: cannot open CVS/Entries for reading: No such file or \
+directory
 cvs server: Updating 10.2/stable/main 
-cvs update: cannot write 10.2/stable/main/.cvsignore: Permission denied
-cvs [update aborted]: cannot make directory 10.2/stable/main/finkinfo: 
+cvs update: cannot write 10.2/stable/main/.cvsignore: Permission \
+denied
+cvs [update aborted]: cannot make directory \
+10.2/stable/main/finkinfo: 
 No such file or directory 
 ### execution of su failed, exit code 1 Failed: 
 Updating using CVS failed. Check the error messages above.</pre><p>Dans ce cas-là, vous devez remettre à zéro votre répertoire CVS. Utilisez la commande :</p><pre>sudo find /sw/fink -type d -name 'CVS' -exec rm -rf {}\
@@ -231,16 +237,19 @@ fink selfupdate-cvs</pre></div>
 </a>
 <a name="usage-fink.bad-list-file">
 <div class="question"><p><b>Q5.18: Impossible de d'installer ou de supprimer quoi que ce soit à cause d'un problème "files list file".</b></p></div>
-<div class="answer"><p><b>A:</b> En général, ces erreurs sont de la forme :</p><pre>files list file for package <b>nom_du_paquet</b> contains empty filename</pre><p>ou</p><pre>files list file for package <b>nom_du_paquet</b> is missing final newline</pre><p>Cela peut être corrigé relativement facilement. Si vous avez sur votre système le fichier .deb du paquet posant problème, vérifiez son intégrité en tapant la commande suivante :</p><pre>dpkg --contents <b>chemin_complet_du_fichier_deb</b></pre><p>par exemple :</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>Si vous obtenez une liste de répertoires et de fichiers, votre fichier .deb est valide. Si, par contre, le résultat est différent  ou si vous n'avez pas le fichier .deb, vous pouvez continuer car cette erreur n'interfère pas avec les éléments compilés.</p><p>Si vous avez fait l'installation à partir de la distribution binaire, ou bien si vous êtes certain que ce que la version que vous avez installée est identique à celle de la distribution (vous l'avez vérifié dans la <a href="http://fink.sourceforge.net/pdb/index.php"> base de donnée des paquets</a>), alors vous pouvez télécharger un fichier .deb en lançant <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>nom_du_paquet</b></tt>. Vous pouvez aussi le compiler vous-même avec <tt style="white-space: nowrap;">fink rebuild <b>nom_du_paquet</b></tt>, mais cela ne l'installera pas.</p><p>Quand vous aurez un fichier .deb valide, vous pouvez reconstituer le fichier. Tout d'abord, mettez-vous en mode super-utilisateur en utilisant <tt style="white-space: nowrap;">sudo -s</tt> (saisissez votre mot de passe administrateur si nécessaire), puis utilisez la commande suivante :</p><pre>dpkg -c <b>chemin_complet_du_fichier_deb</b> | awk '{if ($6 == "./"){ print "/."; } \
+<div class="answer"><p><b>A:</b> En général, ces erreurs sont de la forme :</p><pre>files list file for package <b>nom_du_paquet</b> contains empty filename</pre><p>ou</p><pre>files list file for package <b>nom_du_paquet</b> is missing final newline</pre><p>Cela peut être corrigé relativement facilement. Si vous avez sur votre système le fichier .deb du paquet posant problème, vérifiez son intégrité en tapant la commande suivante :</p><pre>dpkg --contents <b>chemin_complet_du_fichier_deb</b></pre><p>par exemple :</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin\
+-powerpc.deb</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>Si vous obtenez une liste de répertoires et de fichiers, votre fichier .deb est valide. Si, par contre, le résultat est différent  ou si vous n'avez pas le fichier .deb, vous pouvez continuer car cette erreur n'interfère pas avec les éléments compilés.</p><p>Si vous avez fait l'installation à partir de la distribution binaire, ou bien si vous êtes certain que ce que la version que vous avez installée est identique à celle de la distribution (vous l'avez vérifié dans la <a href="http://fink.sourceforge.net/pdb/index.php"> base de donnée des paquets</a>), alors vous pouvez télécharger un fichier .deb en lançant <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>nom_du_paquet</b></tt>. Vous pouvez aussi le compiler vous-même avec <tt style="white-space: nowrap;">fink rebuild <b>nom_du_paquet</b></tt>, mais cela ne l'installera pas.</p><p>Quand vous aurez un fichier .deb valide, vous pouvez reconstituer le fichier. Tout d'abord, mettez-vous en mode super-utilisateur en utilisant <tt style="white-space: nowrap;">sudo -s</tt> (saisissez votre mot de passe administrateur si nécessaire), puis utilisez la commande suivante :</p><pre>dpkg -c <b>chemin_complet_du_fichier_deb</b> | awk '{if ($6 == "./")\
+{ print "/."; } \
 else if (substr($6, length($6), 1) == "/")\
 {print substr($6, 2, length($6) - 2); } \
 else { print substr($6, 2, length($6) - 1);}}'\ 
-&gt; /sw/var/lib/dpkg/info/<b>nom_du_paquet</b>.list</pre><p>par exemple :</p><pre>dpkg -c /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb | awk \
+&gt; /sw/var/lib/dpkg/info/<b>nom_du_paquet</b>.list</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>par exemple :</p><pre>dpkg -c /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb | \
+awk \
 '{if ($6 == "./") { print "/."; } \
 else if (substr($6, length($6), 1) == "/") \
 {print substr($6, 2, length($6) - 2); } \
 else { print substr($6, 2, length($6) - 1);}}' \ 
-&gt; /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p>Cela a pour effet d'extraire le contenu du fichier .deb, de tout supprimer sauf les noms de fichiers, puis de les écrire dans le fichier .list.</p></div>
+&gt; /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>Cela a pour effet d'extraire le contenu du fichier .deb, de tout supprimer sauf les noms de fichiers, puis de les écrire dans le fichier .list.</p></div>
 </a>
 <a name="usage-fink.error-nineteen">
 <div class="question"><p><b>Q5.19: Lors de l'utilisation du paquet d'installation binaire de Fink, un gros "19" apparaît dans la fenêtre et plus il n'est plus possible d'installer quoi que ce soit.</b></p></div>
@@ -268,7 +277,9 @@ fink selfupdate-cvs</pre></div>
 <div class="question"><p><b>Q5.22: Impossible de mettre à jour Fink.</b></p></div>
 <div class="answer"><p><b>A:</b> Suivez les <a href="http://fink.sourceforge.net/download/fix-upgrade.php">instructions spéciales</a> dans ce cas.</p><p>Quand ni l'exécution de la commande <tt style="white-space: nowrap;">fink selfupdate</tt>, ni celle des commandes <tt style="white-space: nowrap;">sudo apt-get update ; sudo apt-get dist-upgrade</tt> n'aboutissent à la mise à jour effective de Fink, vous devez télécharger une nouvelle version du paquet <tt style="white-space: nowrap;">fink</tt> de la manière suivante :</p><ul>
 <li><b>10.3.x :</b> (distribution 0.7.1)
-<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.7.1-updates/main/binary-darwin-powerpc/base/fink_0.22.4-1_darwin-powerpc.deb
+<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/\
+fink-0.7.1-updates/main/binary-darwin-powerpc\
+/base/fink_0.22.4-1_darwin-powerpc.deb
 sudo dpkg -i fink_0.22.4-1_darwin-powerpc.deb
 rm fink_0.22.4-1_darwin-powerpc.deb
 fink selfupdate</pre></li>
@@ -277,7 +288,7 @@ fink selfupdate</pre></li>
 sudo dpkg -i fink_0.18.3-1_darwin-powerpc.deb
 rm fink_0.18.3-1_darwin-powerpc.deb
 fink selfupdate</pre></li>
-</ul></div>
+</ul><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p></div>
 </a>
 <a name="usage-fink.spaces-in-directory">
 <div class="question"><p><b>Q5.23: Est-il possible d'installer Fink sur un volume ou dans un répertoire contenant un espace dans le nom?</b></p></div>
@@ -303,18 +314,21 @@ Hit http://us.dl.sourceforge.net 10.3/current/main Packages
 Hit http://us.dl.sourceforge.net 10.3/current/main Release
 Hit http://us.dl.sourceforge.net 10.3/current/crypto Packages
 Hit http://us.dl.sourceforge.net 10.3/current/crypto Release
-Failed to fetch file:/sw/fink/dists/local/main/binary-darwin-powerpc/Packages
+Failed to fetch file:/sw/fink/dists/local/main/binary-darwin-\
+powerpc/Packages
 File not found
-Failed to fetch file:/sw/fink/dists/stable/main/binary-darwin-powerpc/Packages
+Failed to fetch file:/sw/fink/dists/stable/main/binary-darwin-\
+powerpc/Packages
 File not found
-Failed to fetch file:/sw/fink/dists/stable/crypto/binary-darwin-powerpc/Packages
+Failed to fetch file:/sw/fink/dists/stable/crypto/binary-darwin\
+-powerpc/Packages
 File not found
 Reading Package Lists... Done
 Building Dependency Tree... Done
 E: Some index files failed to download, 
 they have been ignored, or old ones used instead.
 update available list script returned error exit status 1.
-</pre><p>alors vous devez juste lancer <tt style="white-space: nowrap;">fink scanpackages</tt>. Cela générera les fichiers introuvables.</p></div>
+</pre><p>alors vous devez juste lancer <tt style="white-space: nowrap;">fink scanpackages</tt>. Cela générera les fichiers introuvables.</p><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p></div>
 </a>
 <a name="usage-fink.wrong-tree">
 <div class="question"><p><b>Q5.25: Après mise à jour du système ou des Developer Tools, Fink ne reconnaît pas le changement.</b></p></div>
@@ -486,14 +500,17 @@ undefined reference to _FT_Access_Frame</pre><p>vous êtes probablement en prés
 <a name="comp-general.dlfcn-from-oo">
 <div class="question"><p><b>Q6.16: Messages d'erreur concernant `Dl_info'.</b></p></div>
 <div class="answer"><p><b>A:</b> Si vous avez des messages d'erreur similaire à celui-ci :</p><pre>unix_dl.c: In function `rep_open_dl_library':
-unix_dl.c:328: warning: assignment discards qualifiers from pointer target type 
+unix_dl.c:328: warning: assignment discards qualifiers from pointer \
+target type 
 unix_dl.c: In function `rep_find_c_symbol': 
-unix_dl.c:466: error: `Dl_info' undeclared (first use in this function)
-unix_dl.c:466: error: (Each undeclared identifier is reported only once 
+unix_dl.c:466: error: `Dl_info' undeclared (first use in this \
+function)
+unix_dl.c:466: error: (Each undeclared identifier is reported only \
+once 
 unix_dl.c:466: error: for each function it appears in.)
 unix_dl.c:466: error: parse error before "info" 
 unix_dl.c:467: error: `info' undeclared (first use in this function) 
-make[1]: *** [unix_dl.lo] Error 1</pre><p>vous avez certainement un header <tt style="white-space: nowrap;">/usr/local/include/dlfcn.h</tt>, incompatible avec Panther. Déplacez-le.</p><p>Ce header est, en général, installé par Open Office, et vous devez le remplacer, de même que la librairie <tt style="white-space: nowrap;">/usr/local/lib/libdl.dylib</tt>, par des liens symboliques vers les fichiers inclus dans Panther :</p><pre>sudo ln -s /usr/include/dlfcn.h /usr/local/include/dlfcn.h
+make[1]: *** [unix_dl.lo] Error 1</pre><p>vous avez certainement un header <tt style="white-space: nowrap;">/usr/local/include/dlfcn.h</tt>, incompatible avec Panther. Déplacez-le.</p><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>Ce header est, en général, installé par Open Office, et vous devez le remplacer, de même que la librairie <tt style="white-space: nowrap;">/usr/local/lib/libdl.dylib</tt>, par des liens symboliques vers les fichiers inclus dans Panther :</p><pre>sudo ln -s /usr/include/dlfcn.h /usr/local/include/dlfcn.h
 sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
 </a>
 <a name="comp-general.gcc2">
@@ -727,17 +744,19 @@ sudo apt-get install fink</pre>
 </a>
 <a name="usage-packages.wants-xfree86-on-upgrade">
 <div class="question"><p><b>Q9.12: Après passage de la version 10.2 de Fink à la version 10.2-gcc3.3 ou 10.3, Fink veut installer XFree86 ou X.org alors que X11 d'Apple est déjà installé.</b></p></div>
-<div class="answer"><p><b>A:</b> Il se peut que vous deviez supprimer un des paquets fantômes antérieurs : <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt> ou <tt style="white-space: nowrap;">system-xfree86-43</tt>. Fink sait maintenant reconnaître si vous avez une version de X11 installée manuellement, par exemple celle d'Apple, et génère des paquets virtuels. Comme d'autres paquets dépendent de <tt style="white-space: nowrap;">system-xfree86</tt>, vous devez utiliser la commande :</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>pour supprimer les versions obsolètes. Vous pouvez vérifier votre installation en lançant :</p><pre>fink list -i system-xfree86</pre><p>et vous assurer que les paquets <tt style="white-space: nowrap;">system-xfree86</tt> et <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>sont présents. Si vous avez installé le X11SDK, vous devez aussi avoir le paquet <tt style="white-space: nowrap;">system-xfree86-dev</tt>.</p><p>Si le problème persiste, voir plus haut <a href="#usage-packages.apple-x11-wants-xfree86">Fink continue à vouloir installer XFree86 ou X.org</a>.</p></div>
+<div class="answer"><p><b>A:</b> Il se peut que vous deviez supprimer un des paquets fantômes antérieurs : <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt> ou <tt style="white-space: nowrap;">system-xfree86-43</tt>. Fink sait maintenant reconnaître si vous avez une version de X11 installée manuellement, par exemple celle d'Apple, et génère des paquets virtuels. Comme d'autres paquets dépendent de <tt style="white-space: nowrap;">system-xfree86</tt>, vous devez utiliser la commande :</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 \
+ system-xfree86-43</pre><p>pour supprimer les versions obsolètes. Vous pouvez vérifier votre installation en lançant :</p><pre>fink list -i system-xfree86</pre><p>et vous assurer que les paquets <tt style="white-space: nowrap;">system-xfree86</tt> et <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>sont présents. Si vous avez installé le X11SDK, vous devez aussi avoir le paquet <tt style="white-space: nowrap;">system-xfree86-dev</tt>.</p><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>Si le problème persiste, voir plus haut <a href="#usage-packages.apple-x11-wants-xfree86">Fink continue à vouloir installer XFree86 ou X.org</a>.</p></div>
 </a>
 <a name="usage-packages.special-x11-debug">
 <div class="question"><p><b>Q9.13: Problèmes persistents entre X11 et Fink</b></p></div>
 <div class="answer"><p><b>A:</b> Si les solutions données aux sections <a href="#usage-packages.apples-x11-wants-xfree86">Fink continue à vouloir installer XFree86 ou X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">Fink veut installer XFree86</a> ne résolvent pas votre problème, ou ne sont pas applicables à votre cas, vous devrez supprimer entièrement X11 et tous les paquets fantômes antérieurs ainsi que les paquets relatifs à X11, qu'ils soient installés partiellement ou non  :</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
 xorg xorg-shlibs xfree86 xfree86-shlibs \
-xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
+xfree86-base xfree86-base-shlibs xfree86-rootless \
+xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
 xfree86-rootless-threaded xfree86-rootless-threaded-shlibs
 rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg
-fink selfupdate; fink index</pre><p>(Vous verrez peut-être apparaître un message généré par la première ligne vous indiquant que vous tentez de supprimer des paquets qui ne sont pas installés). Réinstallez ensuite X11 d'Apple (et le X11SDK, si besoin est) ou XFree86 ou encore X.org.</p><p>Si le problème persiste et que vous utilisez <tt style="white-space: nowrap;">fink-0.19.0</tt> ou une version postérieure, vous pouvez lancer :</p><pre>fink-virtual-pkgs --debug</pre><p>pour savoir quels sont les paquets manquants.</p><p>Si vous utilisez une version antérieure de <tt style="white-space: nowrap;">fink</tt>, vous pouvez télécharger et lancer un script Perl, écrit par Martin Costabel, qui fournit les mêmes informations.</p><ul>
+fink selfupdate; fink index</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>(Vous verrez peut-être apparaître un message généré par la première ligne vous indiquant que vous tentez de supprimer des paquets qui ne sont pas installés). Réinstallez ensuite X11 d'Apple (et le X11SDK, si besoin est) ou XFree86 ou encore X.org.</p><p>Si le problème persiste et que vous utilisez <tt style="white-space: nowrap;">fink-0.19.0</tt> ou une version postérieure, vous pouvez lancer :</p><pre>fink-virtual-pkgs --debug</pre><p>pour savoir quels sont les paquets manquants.</p><p>Si vous utilisez une version antérieure de <tt style="white-space: nowrap;">fink</tt>, vous pouvez télécharger et lancer un script Perl, écrit par Martin Costabel, qui fournit les mêmes informations.</p><ul>
 <li>Vous le trouverez ici : <a href="http://perso.wanadoo.fr/costabel/fink-x11-debug">http://perso.wanadoo.fr/costabel/fink-x11-debug</a>
 </li>
 <li>Sauvegardez-le où vous voulez.</li>
@@ -752,4 +771,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.43 2005/02/01 08:26:56 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.44 2005/02/23 07:50:12 michga Exp $</i></p></body></html>
