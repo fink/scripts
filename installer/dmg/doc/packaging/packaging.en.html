@@ -665,7 +665,49 @@ dependency of the main package barN (which can be abbreviated
 This ensures that the versions match, and also guarantees that barN
 automatically "inherits" all the dependencies of barN-shlibs.
 </p>
-<p><b>The Shlibs field:</b>
+<p><b>The BuildDependsOnly field</b>
+</p><p>
+When libraries are being upgraded over time, it is often necessary to have
+two versions of the header files available during a transition period,
+with one version used for compiling some things and the other version
+used for compiling others.  For this reason, the packages containing
+header files must be constructed with some care.  If both foo-dev and
+bar-dev contain overlapping headers, then foo-dev should declare
+</p>
+<pre>
+  Conflicts: bar-dev
+  Replaces: bar-dev
+</pre>
+<p>and similarly bar-dev declares Conflicts/Replaces on foo-dev.
+</p><p>
+In addition, both packages should declare
+</p>
+<pre>
+  BuildDependsOnly: True
+</pre>
+<p>This inhibits others from writing packages which depend on foo-dev or
+bar-dev, since any such dependency will prevent the smooth operation of the
+Conflicts/Replaces method.
+</p><p>
+There are some packages containing header files for which it's not
+appropriate to declare BuildDependsOnly to be true.  In that case,
+the package should declare
+</p>
+<pre>
+  BuildDependsOnly: False
+</pre>
+<p>and the reason must be given in the DescPackaging field.
+</p><p>
+The BuildDependsOnly field should only be mentioned in the package's .info
+file if the package contains header files, installed into /sw/include.
+</p><p>
+As of fink 0.20.5, "fink validate" will issue a warning for any .deb
+which contains header files and at least one dylib, and does not declare
+BuildDependsOnly to be either true or false.  (It is possible that in
+future versions of fink, this warning will be expanded to cover the case of
+a .deb with header files and a static library as well.)
+</p>
+<p><b>The Shlibs field</b>
 </p><p>
 In addition to putting the shared libraries in the correct package, as of
 version 4 of this policy, you must also declare all of the shared libraries
@@ -1387,9 +1429,11 @@ special flags are used to override this.
 A boolean value which indicates that no other packages should Depend on
 this one, they should only BuildDepend.
 </p>
-<p>As of fink 0.20.3, the value of this field is recorded into the .deb
-file when a package is built.  Therefore, <b>if you change the value of
-BuildDependsOnly you must increase the revision number</b> of the package.
+<p>As of fink 0.20.5, the presence or absence of this field, and its value
+if present, are recorded into the .deb
+file when the package is built.  Therefore, <b>if you change the value of
+BuildDependsOnly or if you add or remove it,
+you must increase the revision number</b> of the package.
 </p>
 </td></tr></table>
 <p><b>Unpack Phase:</b></p>
@@ -2193,4 +2237,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.32 2004/06/15 18:31:38 dmrrsn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.en.xml,v 1.33 2004/06/23 22:22:52 dmrrsn Exp $</i></p></body></html>
