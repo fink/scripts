@@ -917,19 +917,16 @@ endif</pre></div>
         </p><p>1. Remove <tt style="white-space: nowrap;">system-xfree86</tt>. If you don't have any
         packages that depend on X11, this is straightforward. Frequently,
         however, many packages that depend on X11 are installed. Rather than
-        uninstalling all of them, you can use</p><p>
-          <tt style="white-space: nowrap;">sudo dpkg --remove --force-depends system-xfree86</tt>
-        </p><p>to remove it, leaving everything in place. If you don't have
-        <tt style="white-space: nowrap;">system-xfree86</tt> installed then proceed to step 3.</p><p>2. Manually remove all of XFree86. This can be done with</p><p>
-          <tt style="white-space: nowrap;">sudo rm -rf /Applications/XDarwin.app /usr/X11R6
-        /etc/X11</tt>
-        </p><p>If you are switching from Apple X11, remove the X11 application,
-        too.</p><p>3. To get XFree86-4.2.1, Install Fink's <tt style="white-space: nowrap;">xfree86-base</tt>
+        uninstalling all of them, you can use</p><pre>sudo dpkg --remove --force-depends system-xfree86</pre><p>to remove it, leaving everything in place. If you don't have
+        <tt style="white-space: nowrap;">system-xfree86</tt> installed then proceed to step 3.</p><p>2. Manually remove all of XFree86. This can be done with</p><pre>sudo rm -rf /Applications/XDarwin.app /usr/X11R6
+        /etc/X11</pre><p>If you are switching from Apple X11, remove the X11 application,
+        too.</p><p>3. To get XFree86-4.2.1, install Fink's <tt style="white-space: nowrap;">xfree86-base</tt>
         and <tt style="white-space: nowrap;">xfree86-rootless</tt> packages by the usual means:
         "<tt style="white-space: nowrap;">fink install</tt>" for source users, "<tt style="white-space: nowrap;">apt-get
-        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x, install Fink's <tt style="white-space: nowrap;">xfree86</tt>
-        package, with "fink install xfree86"--this version isn't in the binary
-        distro yet, and is currently only in the unstable tree [FAQ 3.9].</p></div>
+        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x and above, install Fink's <tt style="white-space: nowrap;">xfree86</tt>
+        package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004 isn't in the binary
+        distro yet, and is currently only in the unstable tree [see <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">how to install unstable package</a>].
+FAQ 3.9].</p></div>
     </a>
     <a name="comp-packages.change-thread-nothread">
       <div class="question"><p><b>Q7.3: How do I change from the non-threaded version of Fink's XFree86
@@ -987,7 +984,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
         compromised and suddenly had write permission to all files on the
         system). Thus, the passwd package takes the work out of setting up
         these extra users for Fink packages that require this.</p><p>It can be alarming to suddenly discover a number of unexpected
-        users in your "System Preferences: Users" pane, but suppress the urge
+        users in your "System Preferences: Users" pane (on 10.2.x) or "System Preferences: Accounts" pane (on 10.3.x), but suppress the urge
         to delete them:</p><ul>
           <li>First of all, you have obviously chosen to install a package
           which requires their use, so deleting the user doesn't make much
@@ -1001,7 +998,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
           running <tt style="white-space: nowrap;">niutil -list . /users</tt>
           </li>
           <li>If you do decide to delete these users, be very careful of how
-          you go about it. Using the "System Preferences: Users" pane will
+          you go about it. Using the "System Preferences: Users" pane (on 10.2.x) or "System Preferences: Accounts" pane (on 10.3.x) will
           assign all of their files to a random administrator account, and
           there have been reports of havoc played with the administrator
           account's permissions. This is a bug with System Preferences, and
@@ -1407,4 +1404,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.15 2004/05/04 01:23:53 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.16 2004/05/24 09:25:52 michga Exp $</i></p></body></html>
