@@ -22,7 +22,7 @@ my $config = &read_config("/sw/etc/fink.conf");
 
 ### read package info
 
-Fink::Package->scan_all();
+Fink::Package->require_packages();
 
 ### loop over packages
 
