@@ -40,27 +40,25 @@ Apart from that, the installer is pretty safe to use. It will not touch your sys
 
 \f1\b \cf0 Configuration
 \f0\b0 \
-To actually use the programs installed by Fink, you must edit the configuration file of your shell. Open a new Terminal.app window and type \'d4pico .cshrc\'d5. A text file editor will pop up. Enter the following line right at the top:\
+At the end of the installation, a Terminal.app window will be launched, and the pathsetup.command script will automatically be run.  You will be asked for permission before your shell's configuration files are edited.  If anything goes wrong during this process, you can try again by launching 
+\f2\b\fs26 pathsetup.command 
+\f0\b0\fs28 file which appears on the installer disk, or by running (from the command line in a Terminal.app window)\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
 
 \f2\b\fs16 \cf0 \
 
-\fs26 source /sw/bin/init.csh
+\fs26 open /sw/bin/pathsetup.command <RETURN>
 \fs16 \
 \
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
 
-\f0\b0\fs28 \cf0 Then, press Ctrl-O, press Return, press Ctrl-X. Quit Terminal.app and restart it. You're now ready to use Fink.  Try a first command such as\
-\pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
-
-\f2\b\fs16 \cf0 \
-
-\fs26 fink list -i <RETURN>
-\fs16 \
+\f0\b0\fs28 \cf0 (This step should also be repeated by any other users on your system: each user must run  
+\f2\b\fs26 pathsetup.command
+\f0\b0\fs28  in his or her own account.)\
 \
-\pard\tx1440\tx2880\tx4320\tx5760\tx7200\ql\qnatural
-
-\f0\b0\fs28 \cf0 which should show you the packages already installed.  (If you get an error message "fink: Command not found", you may need to edit additional files: see section 2.3 "Setting Up Your Environment" of the User's Guide.)\
+If 
+\f2\b\fs26 pathsetup.command 
+\f0\b0\fs28 generates errors messages, consult the documentation, particularly section 2.3 "Setting Up Your Environment" of the User's Guide.\
 \
 More detailed instructions can be found in Documentation.html and FAQ.html provided on the Fink IN_VERSION Installer disk.  The same information (and more) can be found on the Fink website:\
 \pard\tx1440\tx2880\tx4320\tx5760\tx7200\li420\ql\qnatural
