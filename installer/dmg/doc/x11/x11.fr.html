@@ -651,31 +651,12 @@ XDarwin 1.0a2 et les versions suivantes lancent un shell interactif en arrière-
       <pre>Fatal server error:
 failed to connect as window server!</pre>
       <p>
-Class: Fatal.
-This means that the console-mode server (for pure Darwin) got started
-while you were logged into Aqua.
-Usually this happens when you installed the official XFree86 binary
-distribution and left out the Xquartz.tgz tarball.
-It can also happen when the symlinks in /usr/X11R6/bin are messed up
-or when you issue the command <tt style="white-space: nowrap;">XDarwin</tt> in a Terminal
-window to start the server (you should use startx instead in that
-case, see <a href="#run-xfree86">Starting XFree86</a>).
+Sévérité : fatal.
+Cela signifie que le serveur a démarré en mode console (pour Darwin seul), alors que vous étiez connecté sous Aqua. Ceci arrive lorsque vous installez la distribution officielle binaire XFree86 et que vous oubliez d'installer l'archive tar Xquartz.tgz. Cela peut aussi survenir quand les liens symboliques dans /usr/X11R6/bin ne pointent pas sur les bons fichiers et quand vous lancez la commande <tt style="white-space: nowrap;">XDarwin</tt> dans une fenêtre de Terminal pour démarrer le serveur (vous devez utiliser startx dans ce cas, voir <a href="#run-xfree86">Lancement de XFree86</a>).
 </p>
       <p>
-In any case, you can run <tt style="white-space: nowrap;">ls -l /usr/X11R6/bin/X*</tt> and
-check the output.
-You should see four relevant entries:
-<tt style="white-space: nowrap;">X</tt>, a symlink pointing at <tt style="white-space: nowrap;">XDarwinStartup</tt>;
-<tt style="white-space: nowrap;">XDarwin</tt>, an executable file (this is the console
-mode server);
-<tt style="white-space: nowrap;">XDarwinQuartz</tt>, a symlink pointing at
-<tt style="white-space: nowrap;">/Applications/XDarwin.app/Contents/MacOS/XDarwin</tt>;
-and <tt style="white-space: nowrap;">XDarwinStartup</tt>, a small executable file.
-If any of these are missing or pointing at different files, you need
-to fix that.
-How you do that depends on the method you used to install XFree86.
-See the <a href="#inst-xfree86.rootless">Roaming
-Rootless Servers</a> section for more hints.
+Vous pouvez toujours lancer la commande <tt style="white-space: nowrap;">ls -l /usr/X11R6/bin/X*</tt> et vérifier son résultat. Vous devez voir quatre lignes remarquables :
+<tt style="white-space: nowrap;">X</tt>, un lien symbolique pointant sur <tt style="white-space: nowrap;">XDarwinStartup</tt> ; <tt style="white-space: nowrap;">XDarwin</tt>, un fichier exécutable (c'est le serveur en mode console) ; <tt style="white-space: nowrap;">XDarwinQuartz</tt>, un lien symbolique pointant sur <tt style="white-space: nowrap;">/Applications/XDarwin.app/Contents/MacOS/XDarwin</tt> ; et <tt style="white-space: nowrap;">XDarwinStartup</tt>, un petit fichier exécutable. Si l'un de ces fichiers manque ou ne pointe pas sur le bon fichier, vous devez corriger l'erreur. La façon de le faire dépend de la méthode que vous avez utilisée pour installer XFree86. Si vous avez installé XFree86 via Fink, vous devez réinstaller le paquet <tt style="white-space: nowrap;">xfree86</tt> (ou <tt style="white-space: nowrap;">xfree86-rootless</tt> pour Mac OS 10.2 ou versions antérieures). Si vous l'avez installé manuellement, vous devez récupérer les fichiers à partir d'une copie de Xquartz.tgz.
 </p>
       <pre>The XKEYBOARD keymap compiler (xkbcomp) reports:
 &gt; Error:            Can't find file "unknown" for geometry include
@@ -683,21 +664,13 @@ Rootless Servers</a> section for more hints.
 &gt;                   Abandoning geometry file "(null)"
 Errors from xkbcomp are not fatal to the X server</pre>
       <p>
-Class: Mostly harmless.
-As the message says, it is not fatal.
-To my knowledge, XDarwin doesn't use the XKB extension at all.
-Probably some client program tries to use it anyway...
+Sévérité : quasi inoffensif.
+Cette erreur n'est pas fatale. À ma connaissance, XDarwin n'utilise pas du tout l'extension XKB. Il est probable qu'un programme client tente, malgré tout, de l'utiliser...
 </p>
       <pre>startx: Command not found.</pre>
       <p>
-Class: Fatal.
-This can happen with XDarwin 1.0a2 and 1.0a3 when your shell
-initialization files are not set up to add /usr/X11R6/bin to the PATH
-variable.
-If you use Fink and haven't changed your default shell, adding the
-line <tt style="white-space: nowrap;">source /sw/bin/init.csh</tt> to <tt style="white-space: nowrap;">.cshrc</tt>
-in your home directory (as recommended by the Fink instructions) should
-be sufficient.
+Sévérité : fatal.
+Ceci arrive avec XDarwin 1.0a2 et 1.0a3 quand les fichiers d'initialisation de votre shell ne comprennent aucune commande pour ajouter le chemin /usr/X11R6/bin à la variable d'environnement PATH. Si vous utilisez Fink et que vous n'avez pas changer votre shell par défaut, il vous suffit d'ajouter la ligne <tt style="white-space: nowrap;">source /sw/bin/init.csh</tt> au fichier <tt style="white-space: nowrap;">.cshrc</tt> situé dans votre répertoire utilisateur, comme indiqué dans les instructions de Fink.
 </p>
       <pre>_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed
 _XSERVTransMakeAllCOTSServerListeners: server already running</pre>
@@ -705,46 +678,20 @@ _XSERVTransMakeAllCOTSServerListeners: server already running</pre>
 Cannot establish any listening sockets - Make sure an X server isn't already
 running</pre>
       <p>
-Class: Fatal.
-This can happen when you accidentally run several instances of XDarwin
-at once,
-or maybe after an unclean shutdown (i.e. crash) of XDarwin.
-It might also be a file permission problem with the sockets for local
-connections.
-You can try to clean that up with <tt style="white-space: nowrap;">rm -rf /tmp/.X11-unix</tt>.
-Restarting the computer also helps in most cases (Mac OS X
-automatically cleans up /tmp when it boots, and the network stack is
-reset).
+Sévérité : fatal.
+Ceci arrive quand vous lancez involontairement plusieurs instances de XDarwin en même temps, ou après une déconnexion sauvage (un crash) de XDarwin. Cela peut provenir aussi d'un problème de permission sur les fichiers sockets utilisés pour les connexions locales. Vous pouvez tenter de résoudre le problème en exécutant <tt style="white-space: nowrap;">rm -rf /tmp/.X11-unix</tt>. Le redémarrage de l'ordinateur résout aussi le problème dans la plupart des cas (Mac OS X vide automatiquement le répertoire /tmp lors du démarrage, et la pile réseau est redéfinie).
 </p>
       <pre>Xlib: connection to ":0.0" refused by server
 Xlib: Client is not authorized to connect to Server</pre>
       <p>
-Class: Fatal.
-The client programs can't connect to the display server (XDarwin)
-because they use bogus authentication data.
-This can be caused by some VNC installations,
-by running XDarwin through sudo,
-and probably some other freak accidents.
-The usual fix is to delete the .Xauthority file (which stores the
-authentication data) in your home directory and re-create an empty
-file:
+Sévérité : fatal.
+Les programmes client sont incapables de se connecter au serveur d'affichage (XDarwin), car ils utilisent des données d'authentification incorrectes. La cause peut en être certaines installations VNC, le lancement de XDarwin via sudo, ou autres bizarreries. Pour résoudre le problème, il suffit de supprimer le fichier .Xauthority (qui stocke les données d'authentification) situé dans votre répertoire utilisateur et de recréer un fichier vide de la façon suivante :
 </p>
       <pre>cd
 rm .Xauthority
 touch .Xauthority</pre>
       <p>
-Another common cause for XFree86 startup failures is an incorrect
-<tt style="white-space: nowrap;">.xinitrc</tt> file.
-What happens is that the <tt style="white-space: nowrap;">.xinitrc</tt> is run and for some
-reason terminates almost immediately.
-<tt style="white-space: nowrap;">xinit</tt> interprets this as "the user's session has ended"
-and kills XDarwin.
-See the <a href="#run-xfree86.xinitrc">.xinitrc
-section</a> for more details.
-Remember to set up the PATH and to have one long-lived program that is
-not started in the background.
-It is a good idea to add <tt style="white-space: nowrap;">exec xterm</tt> as a fallback when
-your window manager or similar can't be found.
+Une autre cause fréquente d'échec de démarrage de XFree86 est un fichier <tt style="white-space: nowrap;">.xinitrc</tt> incorrect. Le fichier <tt style="white-space: nowrap;">.xinitrc</tt> est lancé et, pour une raison inconnue, se termine quasi immédiatement. <tt style="white-space: nowrap;">xinit</tt> interprète cette fin comme "une fin de session demandée par l'utilisateur" et tue XDarwin. Voir la <a href="#run-xfree86.xinitrc">section Fichier .xinitrc</a> pour de plus amples informations. N'oubliez pas de définir le PATH et de choisir comme dernière commande un programme de longue durée ne tournant pas en arrière-plan. Conseil : ajoutez <tt style="white-space: nowrap;">exec xterm</tt> comme roue de secours pour le cas où il serait impossible de trouver votre gestionnaire de fenêtres ou un programme équivalent.
 </p>
     
     <h3><a name="trouble.black">7.2 Black icons in the GNOME panel or in the
@@ -946,4 +893,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.fr.xml,v 1.12 2004/05/09 11:05:39 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: x11.fr.xml,v 1.13 2004/05/13 01:48:06 michga Exp $</i></p></body></html>
