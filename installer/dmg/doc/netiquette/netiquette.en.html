@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - How to Post to a Fink Mailing List</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+English | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">How to Post to a Fink Mailing List</h1>
+    <p><b>This document is under construction.</b></p>
+    <p>This document is intended to be a guideline for new posters to a Fink mailing list.  The idea is to educate users of the lists on how to post effictively, in ordeitr to promote efficient solutions to problems.  </p>
+    <p>You may have been referred to a page on this list in a reply to a post.  Don't take offense!  What has most likely happened is that you need to provide more information to clarify the cause of your problem, and what you need to provide is listed here.</p>
+  <h2>Contents</h2><ul><li><a href="#before-post"><b>1 What to do Before You Post</b></a><ul><li><a href="#before-post.research">1.1 Research your question.</a></li></ul></li><li><a href="#first-post"><b>2 Intial Post</b></a><ul><li><a href="#first-post.system">2.1 What do you have installed?</a></li><li><a href="#first-post.problem-description">2.2 What's Going Wrong?</a></li><li><a href="#first-post.remedies">2.3 What have you tried?</a></li><li><a href="#first-post.future-plans">2.4 What will you try next?</a></li></ul></li><li><a href="#reply"><b>3 Replying to Posts</b></a><ul><li><a href="#reply.reply-to-list">3.1 Make Sure to Reply to the List</a></li></ul></li><li><a href="#unsubscribe"><b>4 How to Unsubscribe from the Lists</b></a><ul><li><a href="#unsubscribe.unsubscribing">4.1 How do I unsubscribe?</a></li></ul></li></ul><h2><a name="before-post">1 What to do Before You Post</a></h2>
+    
+    
+    <h3><a name="before-post.research">1.1 Research your question.</a></h3>
+      
+      <p>You should do a little research before you post, in case your question has been answered before.  Examples of places to check are:</p>
+      <ul>
+        <li>the online documentation</li>
+        <li>the mailing list archives</li>
+        <li>Google</li>
+      </ul>
+    
+  <h2><a name="first-post">2 Intial Post</a></h2>
+    
+    
+    <h3><a name="first-post.system">2.1 What do you have installed?</a></h3>
+      
+      <p>If you are having a problem installing a package, you should provide the following information about your system:</p>
+      <ul>
+        <li>Your OS version.</li>
+        <li>The version of Fink you are running.  A useful technique here is to post the output that you get from running<pre>fink --version</pre>in a terminal window.</li>
+        <li>You should specify whether you are installing from binaries, e.g. using <tt style="white-space: nowrap;">apt-get</tt>, or from source, e.g. using <tt style="white-space: nowrap;">fink install</tt>.<p>If the latter, you should also indicate what version of the Developer Tools you are using.</p></li>
+        <li><p>If you are installing a package that requires X11, you should specify what you are using:  Apple's X11 or XFree86.  If the latter, specify its version.  </p><p>If in doubt, go ahead and provide this information.</p></li>
+      </ul>
+    
+    <h3><a name="first-post.problem-description">2.2 What's Going Wrong?</a></h3>
+      
+      <ul>
+        <li><b>Specify the name and version of the package that is causing the problem.</b>  <p>This should be in the subject line of your message.</p><p>This means that if you are having problems with <tt style="white-space: nowrap;">foo-3.141-6</tt>, don't just report a problem with <tt style="white-space: nowrap;">foo</tt>.</p><p>In particular, if you are installing a package (e.g. <tt style="white-space: nowrap;">baz-2.18-1</tt>) that depends on other packages, (<tt style="white-space: nowrap;">foo-3.141-6</tt>, <tt style="white-space: nowrap;">bar-16.0-9</tt>, ...) , and you are having problems with <tt style="white-space: nowrap;">foo</tt>, you should report a problem with <tt style="white-space: nowrap;">foo-3.141-6</tt>, not with <tt style="white-space: nowrap;">baz-2.18-1</tt>.</p></li>
+        <li><b>Describe the problem.</b>  <p>This means that you should post a sample of an error message.</p><ol>
+            <li>For binary installation problems, start with where the troublesome package is being unpacked:<pre>...
+Selecting previously deselected package foo
+error unpacking foo
+...</pre>and go on until the end.<p></p></li>
+            <li>There are a few possible issues with installation from source:<ol>
+                <li>If the failure is during the initial configuration, this is usually immediate.  Post from the last couple of tests that were run before the error message on to the end:<pre>....
+Checking for bar-config...no
+Error:  bar-config not found
+....</pre><p>If you think it might help, then you can post the relevant section of the configuration log file, e.g. <tt style="white-space: nowrap;">/sw/src/foo-3.141-6/foo-3.141/config.log</tt>.  <b>Please don't post the whole file, since they can be large.</b></p></li>
+                <li>Or, the error can show up immediately when you've actually started building the package.  In this case, post from the last line the compiler tried to run to the end:<pre>...
+gcc &lt;flags, files etc.&gt;
+&lt;error messages&gt;
+...</pre></li>
+                <li>If you get the dreaded <tt style="white-space: nowrap;">execution of mv failed</tt> error, you'll be told to search your build output for an earlier error, so you may want to try hunting for it before you post.</li>
+              </ol></li>
+          </ol>    </li>
+      </ul>
+    
+    <h3><a name="first-post.remedies">2.3 What have you tried?</a></h3>
+      
+      <p>It's a good idea to mention what you've tried, e.g.</p>
+      <ul>
+        <li>Instructions in the FAQ or other documentation</li>
+        <li>Removing packages that appeared to cause a conflict</li>
+        <li>Rebuilding/reinstalling</li>
+        <li>Updating package descriptions again</li>
+        <li>etc.</li>
+      </ul>
+      <p>That way, people won't start by suggesting things that you've already done.</p>
+    
+    <h3><a name="first-post.future-plans">2.4 What will you try next?</a></h3>
+      
+      <p>A couple of items come under this category:</p>
+      <ul>
+        <li>Posting what you plan to do if you don't get an immediate response.</li>
+        <li>Asking about the suitability of a course of action.</li>
+      </ul>
+    
+  <h2><a name="reply">3 Replying to Posts</a></h2>
+    
+    
+    
+      <p>This chapter covers what to do when replying to posts.</p>
+    
+    <h3><a name="reply.reply-to-list">3.1 Make Sure to Reply to the List</a></h3>
+      
+      <p>Unlike some other mailing lists to which you may be subscribed, the Fink lists are set up such that if you simply reply to a message, you will reply to the person who posted it, but <b>not</b> to the list.  Please make sure that you reply to the list:  </p>
+      <ul>
+        <li>You get more people looking at your problem.</li>
+        <li>You don't monopolize one person's time.  Remember:  people who reply on the lists are volunteers.</li>
+        <li>Others can benefit, as well.  Having the full set of email exchanges in the public view means that they go into the mailing list archives, and may ultimately wind up in the documentation.</li>
+      </ul>
+      <p>Frequently people will use <q>Reply to All</q> to accomplish this:</p>
+      <ul>
+        <li>It's typically just as easy as hitting "Reply".</li>
+        <li>Even though this sends both to the list and to the author of the prior message, this can be desirable, since sometimes the list mail gets delayed, e.g. for virus filtering during major outbreaks, and the message will get to the prior poster more quickly.</li>
+      </ul>
+      <p>However, if you do this, you may want to trim out any extra recipients (from crossposts, or other people who have replied on this thread).</p>
+    
+  <h2><a name="unsubscribe">4 How to Unsubscribe from the Lists</a></h2>
+    
+    
+    <h3><a name="unsubscribe.unsubscribing">4.1 How do I unsubscribe?</a></h3>
+      
+      <p>To unsubscribe, <b>don't</b> send a message to the list.</p>
+      <ol>
+        <li>Go to the <a href="http://fink.sourceforge.net/lists/index.php">Mailing Lists</a> page.  <p>Note:  don't use the MacOSX version  Internet Explorer.</p></li>
+        <li>Select the link for the list from which you wish to unsubscribe.</li>
+        <li>Go to the bottom of the page where it says:  <q>To change your subscription (set options like digest and delivery modes, get a reminder of your password, or unsubscribe), enter your subscription email address:</q>, and enter the email address where you are receiving the Fink mail, then click the <q>Edit Options</q> button.   </li>
+        <li>On the page that opens up next, there's a field in the upper left where you can unsubscribe.</li>
+      </ol>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: netiquette.en.xml,v 1.1 2004/03/29 01:06:40 alexkhansen Exp $</i></p></body></html>
