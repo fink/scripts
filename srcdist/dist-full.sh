@@ -70,13 +70,17 @@ if [ ! -d pkginfo ]; then
   exit 1
 fi
 
-mv pkginfo $fullname/
-
 ### versioning
 
 echo $fversion >$fullname/VERSION
+if [ -f pkginfo/stamp-cvs-live ]; then
+  rm -f pkginfo/stamp-cvs-live
+  touch pkginfo/stamp-rel-$dversion
+fi
 
 ### roll the tarball
+
+mv pkginfo $fullname/
 
 echo "Creating tarball $fullname.tar:"
 rm -f $fullname.tar $fullname.tar.gz
