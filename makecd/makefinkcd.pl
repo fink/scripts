@@ -101,7 +101,7 @@ foreach $pkgspec (sort keys %PACKAGES) {
 		<DF>;
 		my (undef, undef, undef, $usage) = split(/\s+/, <DF>);
 		close(DF);
-		if ($usage < $stat[12]) {
+		if (($usage - 200) < $stat[12]) {
 			$cdnum++;
 			$dirname = make_cd_image("${VOLNAME}${cdnum}") or die "can't make CD image for ${VOLNAME}${cdnum}\n";
 		}
@@ -155,9 +155,10 @@ the same for each one.
 END
 	close(README);
 
-	sleep(5);
 	system("hdiutil unmount '/Volumes/${volname}'");
+	system("sync");
 	sleep(2);
+	system("hdiutil unmount '/Volumes/${volname}'");
 
 	if (-d $OUTPUTDIR) {
 		system("cp '/tmp/${filename}' '${OUTPUTDIR}'");
@@ -251,6 +252,7 @@ sub make_cd_image {
 
 	if (-d "/Volumes/${volume}") {
 		system("mkdir -p /Volumes/${volume}/${BASEDIR}");
+		system("sudo rm -rf '/Volumes/${volume}/.Trashes' '/Volumes/${volume}/Desktop DB' '/Volumes/${volume}/Desktop DF'");
 		unlink("/Volumes/${volume}/dists/finkcd");
 		symlink(${RELEASE}, "/Volumes/${volume}/dists/finkcd");
 
