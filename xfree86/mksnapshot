@@ -1,0 +1,36 @@
+#!/bin/sh -e
+
+### config
+
+cvsroot=':pserver:anoncvs@anoncvs.xfree86.org:/cvs'
+
+### init
+
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 <date-in-yyyymmdd-format>"
+  exit 1
+fi
+
+### cleanup before us
+
+echo "Cleaning up..."
+rm -rf xc xfree86-snapshot-$1.tar*
+
+### get the stuff
+
+echo "Enter 'anoncvs' as the password below."
+cvs -d $cvsroot login
+echo "Checking out source..."
+cvs -Q -z3 -d $cvsroot export -r HEAD xc
+
+### build the tarball
+
+echo "Creating tarball..."
+tar -cf xfree86-snapshot-$1.tar xc
+echo "Removing xc directory..."
+rm -rf xc
+echo "Compressing tarball..."
+gzip -9 xfree86-snapshot-$1.tar
+
+echo "Done."
+exit 0
