@@ -1821,9 +1821,9 @@ last.</p>
 
 <p>
 If your package needs some run-time initialization  (e.g. to setup environment variables), you can use profile.d scripts.
-These scripts are sourced by the <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt> scripts. Normally, all fink users will load these scripts in their shell startup files (<tt style="white-space: nowrap;">.cshrc</tt> and comparable files).
+These script fragments are sourced by the <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt> scripts. Normally, all fink users will load these scripts in their shell startup files (<tt style="white-space: nowrap;">.cshrc</tt> and comparable files).
 Your package must provide each script in two variants: one for sh compatible shells (sh, zsh, bash, ksh, ...) and one for csh compatible shells (csh, tcsh). They have to be installed as <tt style="white-space: nowrap;">/sw/etc/profile.d/%n.[c]sh</tt> (where %n as usual stands for the package name).
-Also, their executable bit has to be set (i.e. install them with -m 755), otherwise they will not be loaded correctly.
+Also, their executable and read bits have to be set (i.e. install them with -m 755), otherwise they will not be loaded correctly.
 </p>
 <p>
 If you just need to set some environment variables (for example, QTDIR to /sw), you can use the RuntimeVars field which is provided as a convenient way to achieve exactly this.
@@ -1836,4 +1836,4 @@ Copyright (c) 2001-2003 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.49 2003/10/10 02:08:42 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.xml,v 1.50 2003/11/04 10:16:03 dmacks Exp $</i></p></body></html>
