@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+my $filename = @ARGV[0];
+my $LOGDIR = $ENV{LOGDIR} or die "You must set the environment variable LOGDIR before running this script";
+system "./purge-nonbase.sh";
+print "Non-essential files purged...\n";
+print "printf '\\n\\n' | sudo fink --yes build $filename > $LOGDIR/$filename.log 2>&1\n";
+my $output = system "printf '\n\n' | sudo fink --yes build $filename > $LOGDIR/$filename.log 2>&1";
+
