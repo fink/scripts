@@ -35,6 +35,10 @@ Step 6:
  Check permissions in your /sw directory to verify things are world-readable 
  when appropriate
 
+Step 6a:
+ Run "chmod 1755 IN_BASEDIR/contents" to get the permissions of the 
+ "contents" directory to match those of / on the target machine.
+
 Step 7:
  Move the entire /sw directory into a subdirectory of IN_BASEDIR/contents 
  (that is, you should have a directory IN_BASEDIR/contents/sw/ when you are 
