@@ -19,7 +19,7 @@ Package installation and maintenance is covered as well.
 </p>
   <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 What is Fink?</a></li><li><a href="#intro.req">1.2 Requirements</a></li><li><a href="#intro.supported-os">1.3 Supported Systems</a></li><li><a href="#intro.src-vs-bin">1.4 Source vs. Binary</a></li></ul></li><li><a href="#install"><b>2 First Time Installation</b></a><ul><li><a href="#install.bin">2.1 Installing the Binary Distribution</a></li><li><a href="#install.src">2.2 Installing the Source Distribution</a></li><li><a href="#install.setup">2.3 Setting Up Your Environment</a></li></ul></li><li><a href="#packages"><b>3 Installing Packages</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installing Binary Packages with
 dselect</a></li><li><a href="#packages.bin-apt">3.2 Installing Binary Packages with
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Packages from Source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloding">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Packages from Source</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.checksums">6.19 checksums</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.what">1.1 What is Fink?</a></h3>
@@ -176,9 +176,8 @@ After downloading the disk image from the
 <a href="http://fink.sourceforge.net/download/bindist.php">download page</a>
 (you may have to use your browser's "Save Target as..." or "Download
 to Disk" function), double-click it to mount it.
-Open the "Fink 0.x.x Installer" disk icon that appears on your desktop
-after Disk Copy has verified the file.
-Inside you'll find some documentation and a installer package.
+Open the "Fink 0.x.x Installer" disk icon that appears on your desktop (or wherever you downloaded it) after Disk Utility (Disk Copy for OS versions prior to 10.3) has verified the file.
+Inside you'll find some documentation and an installer package.
 Double-click the installer package and follow the instructions on
 screen.
 </p>
@@ -286,7 +285,7 @@ running the command:
    you have an existing <tt style="white-space: nowrap;">.bash_profile</tt> file, you should use that
    instead):
   </p>
-          <pre>source /sw/bin/init.sh</pre>
+          <pre>. /sw/bin/init.sh</pre>
           <p>
    If you don't know how to add the line, run these commands:
   </p>
@@ -294,7 +293,7 @@ running the command:
 pico .profile</pre>
           <p>
    You are now in a full-screen (well, full terminal window) text editor and
-   can simply start typing the <tt style="white-space: nowrap;">source /sw/bin/init.sh</tt> line.  It's
+   can simply start typing the <tt style="white-space: nowrap;">. /sw/bin/init.sh</tt> line.  It's
    okay if there is a note that says "New file".  Be sure that you pressed
    Return at least once after the line, then press Control-O, Return,
    Control-X to get out of the editor.
@@ -304,7 +303,7 @@ pico .profile</pre>
           <p>
             C Shell (default on Mac OS X 10.2 and earlier) </p>
           <p>
-   If you use tcsh (the default on Mac OS X), add the following line to
+   If you use tcsh, add the following line to
    the file <tt style="white-space: nowrap;">.cshrc</tt> in your home directory:
   </p>
           <pre>source /sw/bin/init.csh</pre>
@@ -338,8 +337,7 @@ pico .cshrc</pre>
             <li>
               <p>You followed the instructions under <tt style="white-space: nowrap;">/usr/share/tcsh/examples/README</tt>.</p>
               <p>These instructions tell you to create a <tt style="white-space: nowrap;">~/.tcshrc</tt> and a<tt style="white-space: nowrap;"> ~/.login</tt> .  The problem in this case is with <tt style="white-space: nowrap;">~/.login</tt>, which gets run after <tt style="white-space: nowrap;">~/.tcshrc</tt>, and sources <tt style="white-space: nowrap;">/usr/share/tcsh/examples/login</tt>.  The latter contains a line that overwrites your previous PATH setup.  What you should do in this case is create <tt style="white-space: nowrap;">~/Library/init/tcsh/path</tt>:</p>
-              <pre>mkdir ~/Library/init
-  mkdir ~/Library/init/tcsh
+              <pre>mkdir -p ~/Library/init/tcsh
   pico ~/library/init/tcsh/path</pre>
               <p>and put:</p>
               <pre>source ~/.cshrc</pre>
@@ -357,7 +355,7 @@ pico .cshrc</pre>
       </ul>
       <p>
 Note that the scripts also add <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> and
-<tt style="white-space: nowrap;">/usr/X11R6/man</tt> to your path so you can use X11 when
+<tt style="white-space: nowrap;">/usr/X11R6/man</tt> to your PATH so you can use X11 when
 it is installed.
 Fink packages have the ability to add settings of their own, e.g. the
 qt package sets the QTDIR environment variable.
@@ -390,13 +388,12 @@ available packages and select which ones you want installed.
 It runs inside Terminal.app, but takes over the whole "screen" and
 uses simple keyboard navigation.
 Like the other package management tools, <tt style="white-space: nowrap;">dselect</tt> requires
-root privileges, so you must either become root before you start it or
-use sudo:
+root privileges, so you should use sudo (from an account with administrator privileges):
 </p>
       <pre>sudo dselect</pre>
       <p>
         <b>Note:</b>
-        <tt style="white-space: nowrap;">dselect</tt> has known difficulties with the OSX Terminal application.  You should run the following commands before using it, or put them in the appropriate startup file (e.g. <tt style="white-space: nowrap;">.cshrc</tt> | <tt style="white-space: nowrap;">.profile</tt>):</p>
+        <tt style="white-space: nowrap;">dselect</tt> has known difficulties with the Mac OS X Terminal application.  You should run the following commands before using it, or put them in the appropriate startup file (e.g. <tt style="white-space: nowrap;">.cshrc</tt> / <tt style="white-space: nowrap;">.profile</tt>):</p>
       <p>tcsh users:</p>
       <pre>setenv TERM xterm-color</pre>
       <p>bash users:</p>
@@ -885,7 +882,7 @@ manually.</p>
         </li>
       </ul>
     
-    <h3><a name="conf.downloding">5.5 Download Settings</a></h3>
+    <h3><a name="conf.downloading">5.5 Download Settings</a></h3>
       
       <p>There are various settings which influence the way Fink downloads
 package data.</p>
@@ -1018,8 +1015,7 @@ fill your hard-disk quickly!</b>
 Some of them need at
 least one package name, but can handle several package names at
 once. You can specify just the package name (e.g. gimp), or a fully
-qualified name with a version number (e.g. gimp-1.2.1 or
-gimp-1.2.1-3). Fink will automatically choose the latest available
+qualified name with a version number (e.g. gimp-1.2.1) or with both version and revision numbers (e.g. gimp-1.2.1-3). Fink will automatically choose the latest available
 version and revision when they are not specified.  Others have different options.</p>
       <p>What follows is a list of the commands for the <tt style="white-space: nowrap;">fink</tt> tool:</p>
     
@@ -1155,7 +1151,7 @@ tarballs even when they were downloaded before.</p>
     
     <h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
       
-      <p>Downloads <b>all</b> package source files. This command will only download
+      <p>Downloads <b>all</b> missing package source files. This command will only download
 files that are not present on the system.</p>
     
     <h3><a name="usage.build">6.11 build</a></h3>
@@ -1243,4 +1239,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.2 2004/03/09 23:50:43 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.3 2004/03/10 11:34:52 michga Exp $</i></p></body></html>
