@@ -731,6 +731,16 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 负责本软件包的人的姓名和电子邮件地址。这是一个必需字段，而且必需是下面格式的一个名字和地址：
 </p>
 <pre>Firstname Lastname &lt;user@host.domain.com&gt;</pre>
+</td></tr><tr valign="top"><td>InfoN</td><td>
+<p>
+本字段允许 fink 在软件包描述文件中实现后向兼容的语法改变。
+一个给定版本的 fink 被配置为能够处理某个最大的 "N" 整数值。
+任意在更高的 InfoN 字段的软件包会被忽略，所以这种机制仅在有需要的时候才使用，否则那些使用较旧版本的用户就会被没有必要地区别出去了。
+本文档其它字段的说明会描述必须使用哪个特定的 InfoN。
+要使用这个机制，把整个软件包描述放到合适的 InfoN 字段中间。
+参考前面的 "File Format" 部分了解多行字段的语法。
+</p>
+
 </td></tr></table>
 <p><b>依赖关系：</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Depends</td><td>
@@ -1362,4 +1372,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.3 2004/03/11 05:41:57 jeff_yecn Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.4 2004/03/11 15:43:25 jeff_yecn Exp $</i></p></body></html>
