@@ -15,9 +15,12 @@ Fran&ccedil;ais |
 <p><b>En cours de traduction</b></p>
 <p>Voici la liste des questions fréquemment posées sur Fink. Comme la plupart des QFP, une partie correspond à des questions réelles, d'autres ont été élaborées spécialement pour ces QFP. Il s'agit en fait d'un document écrit dans le style question-réponse.</p>
 <p>Ces QFP comprennent plusieurs pages, une par chapitre. Le sommaire ci-dessous donne la liste de toutes les questions ainsi qu'un lien pour chacune d'elles.</p>
-<h2>Contents</h2><ul><li><a href="#general"><b>1 Questions générales</b></a><ul><li><a href="#general.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#general.naming">1.2 Que signifie Fink ?</a></li><li><a href="#general.bsd-ports">1.3 En quoi Fink se différencie-t-il du mécanisme de portage BSD (qui comprend OpenPackages et GNU-Darwin) ?</a></li><li><a href="#general.usr-local">1.4 Pourquoi Fink n'installe rien dans /usr/local ?</a></li><li><a href="#general.why-sw">1.5 Pourquoi avoir choisi /sw ?</a></li></ul></li><li><a href="#relations"><b>2 Relations avec d'autres projets</b></a><ul><li><a href="#relations.upstream">2.1 Envoyez-vous aux mainteneurs situés en amont de vous les rustines que vous faites ?</a></li><li><a href="#relations.debian">2.2 Quelles sont vos relations avec le projet Debian ? Portez-vous Debian Linux sur Mac OS X ?</a></li><li><a href="#relations.apple">2.3 Quelles sont vos relations avec Apple ?</a></li><li><a href="#relations.openosx">2.4 Quelles sont vos relations avec OpenOSX.com ?</a></li><li><a href="#relations.forked">2.5 Quelles sont vos relations avec macosx.forked.net ?</a></li><li><a href="#relations.darwinports">2.6 Quelles sont vos relations avec Darwinports ?</a></li></ul></li><li><a href="#mirrors"><b>3 Miroirs de Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Qu'est-ce qu'un miroir Fink ?</a></li><li><a href="#mirrors.why">3.2 Pourquoi utiliser des miroirs rsync ?</a></li><li><a href="#mirrors.where">3.3 Où trouver de plus amples informations sur les miroirs Fink ?</a></li><li><a href="#mirrors.when-not">3.4 Impossible de se connecter au serveur rsync. Que faire ?</a></li><li><a href="#mirrors.otherinfogone">3.5 Après passage à la méthode rsync, tous les fichiers info des arborescences inutilisées ont disparu.</a></li><li><a href="#mirrors.howswitch">3.6 Comment passer d'une méthode à une autre à volonté ?</a></li><li><a href="#mirrors.status">3.7 Comment connaître l'état actuel des miroirs rsync ?</a></li><li><a href="#mirrors.Master">3.8 Qu'est-ce qu'un miroir Distfiles ?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Mise à jour de Fink (Résolution de problèmes spécifiques à une version donnée)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 Je viens de passer à la version 0.16.0 et fink me dit que ma version du compilateur gcc 3.3 est obsolète. Que faire ?</a></li></ul></li><li><a href="#usage-fink"><b>5 Installing, Using and Maintaining Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 How can I find out what packages Fink supports?</a></li><li><a href="#usage-fink.proxy">5.2 I'm behind a firewall. How do I configure Fink to use an HTTP proxy?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 How do I update available packages from CVS when I am behind a firewall?</a></li><li><a href="#usage-fink.moving">5.4 Can I move Fink to another location after installation?</a></li><li><a href="#usage-fink.moving-symlink">5.5 If I move Fink after installation and provide a symlink from the
-        old location, will it work?</a></li><li><a href="#usage-fink.removing">5.6 How can I uninstall all of Fink?</a></li><li><a href="#usage-fink.bindist">5.7 The package database at the website lists package xxx, but apt-get
-        and dselect know nothing about it. Who's lying?</a></li><li><a href="#usage-fink.unstable">5.8 There's this package in unstable that I want to install, but the
+<h2>Contents</h2><ul><li><a href="#general"><b>1 Questions générales</b></a><ul><li><a href="#general.what">1.1 Qu'est-ce que Fink ?</a></li><li><a href="#general.naming">1.2 Que signifie Fink ?</a></li><li><a href="#general.bsd-ports">1.3 En quoi Fink se différencie-t-il du mécanisme de portage BSD (qui comprend OpenPackages et GNU-Darwin) ?</a></li><li><a href="#general.usr-local">1.4 Pourquoi Fink n'installe rien dans /usr/local ?</a></li><li><a href="#general.why-sw">1.5 Pourquoi avoir choisi /sw ?</a></li></ul></li><li><a href="#relations"><b>2 Relations avec d'autres projets</b></a><ul><li><a href="#relations.upstream">2.1 Envoyez-vous aux mainteneurs situés en amont de vous les rustines que vous faites ?</a></li><li><a href="#relations.debian">2.2 Quelles sont vos relations avec le projet Debian ? Portez-vous Debian Linux sur Mac OS X ?</a></li><li><a href="#relations.apple">2.3 Quelles sont vos relations avec Apple ?</a></li><li><a href="#relations.openosx">2.4 Quelles sont vos relations avec OpenOSX.com ?</a></li><li><a href="#relations.forked">2.5 Quelles sont vos relations avec macosx.forked.net ?</a></li><li><a href="#relations.darwinports">2.6 Quelles sont vos relations avec Darwinports ?</a></li></ul></li><li><a href="#mirrors"><b>3 Miroirs de Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Qu'est-ce qu'un miroir Fink ?</a></li><li><a href="#mirrors.why">3.2 Pourquoi utiliser des miroirs rsync ?</a></li><li><a href="#mirrors.where">3.3 Où trouver de plus amples informations sur les miroirs Fink ?</a></li><li><a href="#mirrors.when-not">3.4 Impossible de se connecter au serveur rsync. Que faire ?</a></li><li><a href="#mirrors.otherinfogone">3.5 Après passage à la méthode rsync, tous les fichiers info des arborescences inutilisées ont disparu.</a></li><li><a href="#mirrors.howswitch">3.6 Comment passer d'une méthode à une autre à volonté ?</a></li><li><a href="#mirrors.status">3.7 Comment connaître l'état actuel des miroirs rsync ?</a></li><li><a href="#mirrors.Master">3.8 Qu'est-ce qu'un miroir Distfiles ?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Mise à jour de Fink (Résolution de problèmes spécifiques à une version donnée)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 Je viens de passer à la version 0.16.0 et fink me dit que ma version du compilateur gcc 3.3 est obsolète. Que faire ?</a></li></ul></li><li><a href="#usage-fink"><b>5 Installer, Utiliser et Entretenir Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Comment savoir quels sont les paquets gérés par Fink ?</a></li><li><a href="#usage-fink.proxy">5.2 J'utilise un firewall. Comment configurer fink pour utiliser
+	un proxy HTTP ?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 Comment mettre à jour les paquets disponibles sur CVS lorsqu'on utilise
+	un firewall ?</a></li><li><a href="#usage-fink.moving">5.4 Est-il possible de déplacer Fink vers un autre dossier après
+	l'installation ?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Est-ce que cela fonctionne si Fink est déplacé après l'installation
+	et qu'un lien symbolique est crée vers l'ancien emplacement ?</a></li><li><a href="#usage-fink.removing">5.6 Comment désinstaller la totalité de Fink ?</a></li><li><a href="#usage-fink.bindist">5.7 La base de donnée des paquets sur le site web indique le paquet xxx,
+	mais apt-get ou dselect eux ne l'indiquent pas. Qui a raison ?</a></li><li><a href="#usage-fink.unstable">5.8 There's this package in unstable that I want to install, but the
         fink command just says 'no package found'. How can I install it?</a></li><li><a href="#usage-fink.sudo">5.9 I'm tired of typing my password into sudo again and again. Is there
         a way around this?</a></li><li><a href="#usage-fink.exec-init-csh">5.10 When I try to run init.csh or init.sh, I get a "Permission denied"
         error. What am I doing wrong?</a></li><li><a href="#usage-fink.dselect-access">5.11 Help! I used the "[A]ccess" menu entry in dselect and now I can't
@@ -231,96 +234,105 @@ Lire le <a href="http://fink.sourceforge.net/pr/forked.php">communiqué officiel
       <div class="answer"><p><b>A:</b> À partir de Panther, Fink a été mis à jour pour fonctionner avec le nouveau compilateur gcc 3.3. Pour pouvoir gérer à la fois 10.2 (Jaguar) et 10.3 (Panther), il faut que tous les utilisateurs installent la dernière mise à jour de gcc 3.3 (mise à jour d'août 2003 pour les utilisateurs de Jaguar, outils XCode de Panther pour les utilisateurs de Panther). Ce message d'alerte apparaîtra si vous avez installé la béta précédente de XCode correspondant aux Developer Tools de décembre 2002 pour Max OS X 10.2. Si vous utilisez 10.2, la commande :</p><pre>gcc --version</pre><p>vous dira quelle version est installée sur votre système. À partir du 24 octobre 2003, il faut avoir le build 1493 ou supérieur.</p><p>Les utilisateurs de 10.2 peuvent télécharger la mise à jour d'août 2003 sur <a href="http://developer.apple.com/">Apple Developer Connection</a>
 (enregistrement gratuit obligatoire).</p><p>Les utilisateurs de 10.3 doivent installer les outils de développement compatibles avec Panther (c'est-à-dire XCode). Vous devez trouver un CD contenant XCode parmi ceux reçus avec Panther.</p></div>
     </a>
-  <h2><a name="usage-fink">5 Installing, Using and Maintaining Fink</a></h2>
+  <h2><a name="usage-fink">5 Installer, Utiliser et Entretenir Fink</a></h2>
     
     
     <a name="usage-fink.what-packages">
-      <div class="question"><p><b>Q5.1: How can I find out what packages Fink supports?</b></p></div>
-      <div class="answer"><p><b>A:</b> Since Fink 0.2.3, there is the <tt style="white-space: nowrap;">list</tt> command. It produces a list of all packages known to your Fink installation. Example:</p><pre>fink list</pre><p>If you're using the binary distribution, <tt style="white-space: nowrap;">dselect</tt> gives you a nice browsable listing of available packages. Note that you must run it as root if you want to select and install packages from within dselect.</p><p>There's also the <a href="http://fink.sourceforge.net/pdb/">package database</a> at the
-        website.</p></div>
+      <div class="question"><p><b>Q5.1: Comment savoir quels sont les paquets gérés par Fink ?</b></p></div>
+      <div class="answer"><p><b>A:</b> Depuis Fink 0.2.3, il y a la commande list.  Elle produit une liste
+	de tous les paquets connus de votre installation de Fink.
+	Exemple:</p><pre>fink list</pre><p>Si vous utilisez la distribution binaire, <tt style="white-space: nowrap;">dselect</tt> vous
+	donne une liste des paquets disponibles dans laquelle vous pouvez naviguer.
+	Remarque : vous devez utiliser la commande sudo si vous voulez
+	sélectionner
+	et installer des paquets depuis dselect.</p><p>Il y a aussi la <a href="http://fink.sourceforge.net/pdb/">base de
+	donnée de paquets</a> sur le site web. </p></div>
     </a>
     <a name="usage-fink.proxy">
-      <div class="question"><p><b>Q5.2: I'm behind a firewall. How do I configure Fink to use an HTTP proxy?</b></p></div>
-      <div class="answer"><p><b>A:</b> The <tt style="white-space: nowrap;">fink</tt> command supports explicit proxy settings that are passed on to <tt style="white-space: nowrap;">wget</tt>/<tt style="white-space: nowrap;">curl</tt>. If you were not asked for proxies on first time installation, you can run <tt style="white-space: nowrap;">fink configure</tt> to set it up. You can also run that command at any time to reconfigure the <tt style="white-space: nowrap;">fink</tt> command. If you  followed the instructions in the installation guide, and use  <tt style="white-space: nowrap;">/sw/bin/init.csh</tt> (or <tt style="white-space: nowrap;">/sw/bin/init.sh</tt>), then <tt style="white-space: nowrap;">apt-get</tt> and <tt style="white-space: nowrap;">dselect</tt> also will use these proxy settings. Make sure that you put the protocol in front of the proxy, e.g.</p><pre>ftp://proxy.yoursite.somewhere</pre><p>If you are still having problems, go into System Preferences, select the Network pane, select the Proxies tab, and make sure that the box labeled "Use Passive FTP Mode (PASV)" is checked.</p></div>
+      <div class="question"><p><b>Q5.2: J'utilise un firewall. Comment configurer fink pour utiliser
+	un proxy HTTP ?</b></p></div>
+      <div class="answer"><p><b>A:</b> La commande <tt style="white-space: nowrap;">fink</tt> permet de prendre en compte des réglages
+	de proxy qui seront utilisés par  <tt style="white-space: nowrap;">wget</tt>/<tt style="white-space: nowrap;">curl</tt>.
+	Si on ne vous a pas posé de question sur vos réglages de proxies lors de
+	la première installation, vous pouvez taper <tt style="white-space: nowrap;">fink configure</tt>
+	pour les régle. Vous pouvez aussi utiliser cette commande à
+	n'importe quel moment pour reconfigurer la commande <tt style="white-space: nowrap;">fink</tt>.
+	Si vous avez suivi les instructions du guide d'installation et utilisé
+	<tt style="white-space: nowrap;">/sw/bin/init.csh</tt> (ou <tt style="white-space: nowrap;">/sw/bin/init.sh
+	</tt>), alors <tt style="white-space: nowrap;">apt-get</tt> et <tt style="white-space: nowrap;">dselect</tt> utiliseront
+	aussi ces réglages de proxies. Assurez-vous d'avoir bien indiqué le
+	protocole utilisé, par exemple :</p><pre>ftp://proxy.yoursite.somewhere</pre><p>Si vous avez toujours des problèmes, allez dans Préférences système,
+	cliquez sur Réseaux, sélectionnez l'onglet proxies et assurez-vous que
+	la case "Utiliser le mode FTP passif (PASV)" est cochée.</p></div>
     </a>
     <a name="usage-fink.firewalled-cvs">
-      <div class="question"><p><b>Q5.3: How do I update available packages from CVS when I am behind a firewall?</b></p></div>
-      <div class="answer"><p><b>A:</b> The package <b>cvs-proxy</b> can tunnel through HTTP proxies.</p><ul>
-          <li>
-            <p>First download the <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/fink/dists/10.2/unstable/main/finkinfo/devel/">cvs-proxy</a>
-          files (an .info file and a .patch file) and place them into your
-          local tree (i.e. /sw/fink/dists/local/main/finkinfo/).</p>
-          </li>
-          <li>
-            <p>Install the <b>cvs-proxy</b> package with the command:</p>
-            <p>
-              <tt style="white-space: nowrap;">fink install <b>cvs-proxy</b>
-              </tt>
-            </p>
-          </li>
-          <li>
-            <p>Packages are then updated with the commands:</p>
-            <p>
-              <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>
-            </p>
-            <p>
-              <tt style="white-space: nowrap;">fink
-          update-all</tt>
-            </p>
-          </li>
-        </ul><p>If fink is not configured to use your proxy, change the settings
-        using:</p><p>
-          <tt style="white-space: nowrap;">fink configure</tt>.</p></div>
+      <div class="question"><p><b>Q5.3: Comment mettre à jour les paquets disponibles sur CVS lorsqu'on utilise
+	un firewall ?</b></p></div>
+      <div class="answer"><p><b>A:</b> Le paquet<b> cvs-proxy</b> peut créer un tunnel à travers les proxies
+	HTTP.</p><ul>
+          <li><p>Tout d'abord, téléchargez les fichiers <a href="http://cvs.%20%20%20%20sourceforge.net/cgi-bin/viewcvs.cgi/fink/dists/10.2/unstable/main/%20%20%20%20finkinfo/devel/">cvs-proxy</a> (un fichier .info et un fichier .patch)
+	  et placez-les dans votre arborescence locale.
+	  (i.e. /sw/fink/dists/local/main/finkinfo/).</p></li>
+          <li><p>Installez le paquet <b>cvs-proxy</b> avec la commande :</p>
+	  <p><tt style="white-space: nowrap;">fink install <b>cvs-proxy</b></tt></p></li>
+          <li><p>Les paquets sont alors mis à jour avec les commandes :</p>
+	  <p><tt style="white-space: nowrap;">fink selfupdate-cvs</tt></p>
+	  <p><tt style="white-space: nowrap;">fink update-all</tt></p></li>
+        </ul><p>Si Fink n'est pas configuré pour utiliser un proxy, changez les
+	réglages en utilisant :</p><p><tt style="white-space: nowrap;">fink configure</tt>.</p></div>
     </a>
     <a name="usage-fink.moving">
-      <div class="question"><p><b>Q5.4: Can I move Fink to another location after installation?</b></p></div>
-      <div class="answer"><p><b>A:</b> No. Well, of course you can move the files using mv or the Finder,
-        but 99% of the programs will stop working when you do. That's because
-        basically all Unix software depends on hardcoded paths to find data
-        files, libraries and other stuff.</p></div>
+      <div class="question"><p><b>Q5.4: Est-il possible de déplacer Fink vers un autre dossier après
+	l'installation ?</b></p></div>
+      <div class="answer"><p><b>A:</b> Non. Enfin, vous pouvez bien sûr déplacer les fichiers en utilisant
+	mv ou le Finder, mais 99% des programmes ne fonctionnerons plus si vous
+	faites cela. En effet, la majorité des programmes Unix utilisent des
+	chemins d'accès directement inclus dans le fichier binaire pour accéder
+	entre autres à des données et des librairies.</p></div>
     </a>
     <a name="usage-fink.moving-symlink">
-      <div class="question"><p><b>Q5.5: If I move Fink after installation and provide a symlink from the
-        old location, will it work?</b></p></div>
-      <div class="answer"><p><b>A:</b> Maybe. The general expectation is that it should work, but there
-        may be hidden traps somewhere.</p></div>
+      <div class="question"><p><b>Q5.5: Est-ce que cela fonctionne si Fink est déplacé après l'installation
+	et qu'un lien symbolique est crée vers l'ancien emplacement ?</b></p></div>
+      <div class="answer"><p><b>A:</b> Peut-être. On peut supposer un fonctionnement correct dans l'ensemble,
+	mais il y aura certainement des problèmes ici et là.</p></div>
     </a>
     <a name="usage-fink.removing">
-      <div class="question"><p><b>Q5.6: How can I uninstall all of Fink?</b></p></div>
-      <div class="answer"><p><b>A:</b> Almost all files installed by Fink are in /sw (or wherever you
-        chose to install it). Thus in order to get rid of Fink, enter this
-        command:</p><pre>sudo rm -rf /sw</pre><p>The only exception to this rule is XFree86. If you installed
-        XFree86 through Fink (i.e., you installed the <tt style="white-space: nowrap;">xfree86</tt> or
-        <tt style="white-space: nowrap;">xfree86-rootless</tt> packages, instead of using
-        <tt style="white-space: nowrap;">system-xfree86</tt>) and want to remove it, you will need
-        additionally to enter this:</p><pre>sudo rm -rf /usr/X11R6 /etc/X11 /Applications/XDarwin.app</pre><p>If you aren't planning to reinstall Fink you also will want to
-        remove the "<tt style="white-space: nowrap;">source /sw/bin/init.csh</tt>" line you added to
-        your <tt style="white-space: nowrap;">.cshrc</tt> file or the "<tt style="white-space: nowrap;">source
-        /sw/bin/init.sh</tt>" line you added to your
-        <tt style="white-space: nowrap;">.bashrc</tt> file, whichever is appropriate to your
-        setup, using a text editor.</p></div>
+      <div class="question"><p><b>Q5.6: Comment désinstaller la totalité de Fink ?</b></p></div>
+      <div class="answer"><p><b>A:</b> Presque tous les fichiers installés par fink se trouvent dans le
+	répertoire /sw (ou bien l'endroit où vous avez choisi de faire
+	l'installation). Donc, pour supprimez Fink, entrez cette
+	commande :</p><pre>sudo rm -rf /sw</pre><p>La seule exception concerne XFRee86. Si vous avez installé XFree86
+	via Fink (par exemple., vous avez installé le paquet <tt style="white-space: nowrap;">xfree86</tt> ou 
+	<tt style="white-space: nowrap;">xfree86-rootless</tt>, au lieu d'utiliser
+	<tt style="white-space: nowrap;">system-xfree86</tt>) et que vous voulez le supprimer, vous devrez aussi saisir ceci :</p><pre>sudo rm -rf /usr/X11R6 /etc/X11 /Applications/XDarwin.app
+	</pre><p>Si vous ne pensez pas réinstaller Fink, vous pourrez aussi
+	supprimer la ligne "<tt style="white-space: nowrap;">source /sw/bin/init.csh</tt>" que
+	vous aviez ajoutée dans le fichier <tt style="white-space: nowrap;">.cshrc</tt> ou la ligne
+	"<tt style="white-space: nowrap;">source /sw/bin/init.sh</tt>" que vous aviez ajoutée dans le fichier
+	<tt style="white-space: nowrap;">.bashrc</tt> , suivant vos réglages, en utilisant un
+	éditeur de texte.</p></div>
     </a>
     <a name="usage-fink.bindist">
-      <div class="question"><p><b>Q5.7: The package database at the website lists package xxx, but apt-get
-        and dselect know nothing about it. Who's lying?</b></p></div>
-      <div class="answer"><p><b>A:</b> Both are correct. The <a href="http://fink.sourceforge.net/pdb/">package database</a> knows
-        about every package, including those that are still in the unstable
-        section. The <tt style="white-space: nowrap;">dselect</tt> and <tt style="white-space: nowrap;">apt-get</tt> tools on
-        the other hand only know about the packages available as precompiled
-        binary packages. Many packages are not available in precompiled form
-        through these tools for a variety of reasons. A package must be in the
-        "stable" section of the latest point release to be considered, and it
-        must pass additional checks for policy compliance as well as licensing
-        and patent restrictions.</p><p>If you want to install a package that is not available via
-        <tt style="white-space: nowrap;">dselect</tt> / <tt style="white-space: nowrap;">apt-get</tt>, you have to compile it
-        from source using <tt style="white-space: nowrap;">fink install <b>packagename</b>
-          </tt>.
-        Make sure you have the Developer Tools installed before you try this.
-        (If there is no installer for the Developer Tools in your
-        <tt style="white-space: nowrap;">/Applications</tt> folder, you can get them from the <a href="http://connect.apple.com/">Apple Developer Connection</a>
-        after free registration.) See also the question about unstable
-        below.</p></div>
-    </a>
+      <div class="question"><p><b>Q5.7: La base de donnée des paquets sur le site web indique le paquet xxx,
+	mais apt-get ou dselect eux ne l'indiquent pas. Qui a raison ?</b></p></div>
+      <div class="answer"><p><b>A:</b> Ils ont tous raison. La <a href="http://fink.sourceforge.net/pdb/">base
+	de donnée des paquets</a> donne la liste tous les paquets, même ceux
+	qui sont encore dans la section instable.  Les outils <tt style="white-space: nowrap;">dselect</tt>
+	et <tt style="white-space: nowrap;">apt-get</tt> de leur côté donnent la liste des paquets disponibles en
+	tant que binaires précompilés. De nombreux paquets ne sont pas
+	disponibles sous forme précompilée via ces outils pour plusieurs raisons.
+	Un paquet doit être dans la section "stable" de la dernière mise à jour
+	de Fink pour être pris en compte, et il doit, de plus, passer avec succès un certain nombre de tests relatifs aux règles de fink et aux restrictions de licences et brevets.</p><p>Si vous voulez installer un paquet qui n'est pas disponible via
+	<tt style="white-space: nowrap;">dselect</tt> / <tt style="white-space: nowrap;">apt-get</tt>, vous devez le compiler
+	à partir du code source en utilisant<tt style="white-space: nowrap;"> fink install <b>nom_du_paquet</b>
+	</tt>.
+	Vérifiez que vous avez installé les Developer Tools installés avant d'essayer
+	ceci. (S'il n'y a pas d'installeur pour les Developer Tools dans votre
+	répertoire <tt style="white-space: nowrap;">/Applications</tt> , vous pouvez les télécharger sur
+	<a href="http://connect.apple.com/">Apple Developer Connection</a>
+	après enregistrement gratuit). Voir aussi la question à propos des
+	instables ci-dessous.</p></div>
+	</a>
     <a name="usage-fink.unstable">
       <div class="question"><p><b>Q5.8: There's this package in unstable that I want to install, but the
         fink command just says 'no package found'. How can I install it?</b></p></div>
@@ -1333,4 +1345,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.10 2004/03/25 01:26:51 michga Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.fr.xml,v 1.11 2004/03/25 02:33:35 michga Exp $</i></p></body></html>
