@@ -73,6 +73,7 @@ fi
 ### versioning
 
 echo $fversion >$fullname/VERSION
+echo $dversion >pkginfo/VERSION
 if [ -f pkginfo/stamp-cvs-live ]; then
   rm -f pkginfo/stamp-cvs-live
   touch pkginfo/stamp-rel-$dversion
