@@ -1813,18 +1813,33 @@ ConfigureParams: --mandir=%p/share/man (%type_pkg[-x11]) --with-x11 --disable-sh
 </p>
 </td></tr><tr valign="top"><td>GCC</td><td>
 <p>
-The required version of the gcc compiler to use.  Allowed values are: 
-<tt style="white-space: nowrap;">2.95.2</tt> or <tt style="white-space: nowrap;">2.95</tt>
-(for use in the 10.1 package tree only), <tt style="white-space: nowrap;">3.1</tt>
-(for use in the 10.2 package tree only), and <tt style="white-space: nowrap;">3.3</tt>
-(for use in the 10.2-gcc3.3 and 10.3 package trees only).
+This field specifies the GCC-ABI used by C++ code in this package.
+(It is needed because that ABI has changed twice, and any libraries
+which you link to containing C++ code must be compiled with the same ABI
+you are currently using.)
+</p><p>
+The allowed values are:
+<tt style="white-space: nowrap;">2.95.2</tt> (or <tt style="white-space: nowrap;">2.95</tt>),
+ <tt style="white-space: nowrap;">3.1</tt>,
+and <tt style="white-space: nowrap;">3.3</tt>.
+This last is expected to be the GCC-ABI for gcc 3.3 and all subsequent
+versions of gcc.
+The default values for the various package trees are:
+<tt style="white-space: nowrap;">2.95</tt> in the 10.1 tree, <tt style="white-space: nowrap;">3.1</tt> in the 10.2 tree,
+and <tt style="white-space: nowrap;">3.3</tt> in the 10.2-gcc3.3, 10.3, and all subsequent trees.
+</p><p>
+Note that when the GCC value is different from the default, the compiler
+must be specified within the package (typically by setting the CC or CXX
+flags), and a dependency on one of the (virtual) gcc packages should be
+specified.
 </p>
 <p>As of fink 0.13.8, when this flag is present, the version of gcc
 is tested using <tt style="white-space: nowrap;">gcc_select</tt>, and fink exits with an error
 if the wrong version is present.
 </p>
 <p>
-This field was added to fink to aid in the transition between the gcc
+This field was added to fink to aid maintainers
+in tracking the transition between the gcc
 compilers, which introduced a binary incompatibility between libraries
 that involve C++ code which is not reflected in the versioning
 scheme.
@@ -2334,4 +2349,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.55 2004/11/02 10:14:27 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.56 2004/12/13 23:24:13 dmrrsn Exp $</i></p></body></html>
