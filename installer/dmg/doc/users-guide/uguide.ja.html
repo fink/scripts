@@ -15,20 +15,20 @@ Available Languages:  |
 </table>
 <h1 style="text-align: center;">Fink ユーザーガイド</h1>
 <p>
-<b>このドキュメントは未完成です。</b>
-以下のドキュメントはより広範囲なことについて書かれています:
+このドキュメントは、 Fink の全ての機能を概説します。
+(以下のドキュメントはより広範囲なことについて書かれています:
 <a href="http://fink.sourceforge.net/doc/bundled/install.php">インストール</a>,
 <a href="http://fink.sourceforge.net/doc/bundled/usage.php">使用方法</a>
-およびバイナリのディスクイメージにある ReadMe.rtf 。
-ウェブサイト中の <a href="http://fink.sourceforge.net/doc/">Documentation セクション</a> も併せて参照ください。
-ここにあるドキュメントも役に立つでしょう。
+およびバイナリのディスクイメージにある ReadMe.rtf 。)
+ウェブサイト中の <a href="http://fink.sourceforge.net/doc/">文書 セクション</a> も併せて参照ください。
+ここに書かれていること以上の内容を含んでいます。
 </p>
 <p>
 Fink ユーザーズガイドへようこそ。
 このガイドでは、ソースからとバイナリからの両方について、初めてのインストールとアップグレードの仕方について書かれています。
 パッケージインストールとメンテナンスのことも書かれています。
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.cleanup">6.19 cleanup</a></li><li><a href="#usage.dumpinfo">6.20 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 Global オプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.update-all">6.5 update-all</a></li><li><a href="#usage.list">6.6 list</a></li><li><a href="#usage.apropos">6.7 apropos</a></li><li><a href="#usage.describe">6.8 describe</a></li><li><a href="#usage.fetch">6.9 fetch</a></li><li><a href="#usage.fetch-all">6.10 fetch-all</a></li><li><a href="#usage.fetch-missing">6.11 fetch-missing</a></li><li><a href="#usage.build">6.12 build</a></li><li><a href="#usage.rebuild">6.13 rebuild</a></li><li><a href="#usage.reinstall">6.14 reinstall</a></li><li><a href="#usage.configure">6.15 configure</a></li><li><a href="#usage.selfupdate">6.16 selfupdate</a></li><li><a href="#usage.index">6.17 index</a></li><li><a href="#usage.validate">6.18 validate</a></li><li><a href="#usage.scanpackages">6.19 scanpackages</a></li><li><a href="#usage.cleanup">6.20 cleanup</a></li><li><a href="#usage.dumpinfo">6.21 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
 
 
 <h3><a name="intro.what">1.1 Fink とは何ですか?</a></h3>
@@ -462,19 +462,42 @@ E: Sorry, broken packages</pre>
 この作業は時間がかかります。
 この作業中にエラーが発生した場合、まず <a href="http://fink.sourceforge.net/faq/">FAQ</a> を確認して下さい。
 </p>
+<p>
+<tt style="white-space: nowrap;">fink</tt> のバージョン 0.23.0 以降では、コンパイル済みバイナリパッケージを優先的にダウンロードするように指定することができます。
+使い方は、
+<a href="#usage.options">--use-binary-dist (or -b) option</a>
+というオプションを<tt style="white-space: nowrap;">fink</tt> に指定します。
+これによって時間を大幅に節約することができます。
+例えば、
+</p>
+<pre>fink --use-binary-dist install wget-ssl</pre>
+<p>あるいは</p>
+<pre>fink -b install wget-ssl</pre>
+<p>
+とすることで、 wget-ssl が依存しているものをバイナリディストリビューションから最初にダウンロードし、
+能古炉だけをソースからビルドします。
+このオプションは、
+<a href="#conf">Fink 設定ファイル</a> (<tt style="white-space: nowrap;">fink.conf</tt>)
+あるいは <tt style="white-space: nowrap;">fink configure</tt> を実行することで、常に使用するように指定することができます。
+</p>
+<p>
+<tt style="white-space: nowrap;">fink</tt> ツールの詳細は、
+<a href="#usage">"コマンドライン fink ツールの使用方法"</a>
+の章を参照してください。
+</p>
 
 <h3><a name="packages.fink-commander">3.5 Fink Commander</a></h3> 
  
 <p>
 Fink Commander は <tt style="white-space: nowrap;">apt-get</tt> と <tt style="white-space: nowrap;">fink</tt> の Aqua インターフェイスです。
 Binary メニューはバイナリディストリビューションの、 Source メニューはソースディストリビューションの操作を行います。
-</p> 
+</p>
 <p>
 Fink Commander は Fink バイナリインストーラに付属しています。
 Fink をソースからインストールした場合など、別にダウンロードしたい場合や詳しい情報は、
 <a href="http://finkcommander.sourceforge.net%20">Fink Commander website</a> リンクを辿って下さい。
-</p> 
- 
+</p>
+
 <h3><a name="packages.">3.6 用意されているバージョン</a></h3>
 
 <p>パッケージをインストールする場合、まず<a href="http://fink.sourceforge.net/pdb/index.php">Package Database</a>を確認して Fink にあるかどうか確認して下さい。
@@ -599,7 +622,6 @@ Binary-&gt;Dist-Upgrade
 <h3><a name="upgrade.src">4.2 ソースディストリビューションのアップグレード</a></h3>
 
 <p>
-ソースディストリビューションを使用している場合、アップグレードは多少複雑になります。
 アップグレードは２ステップあります。
 1. パッケージ記述をダウンロードします。
 2. このパッケージ記述を使って新しいパッケージをコンパイルします。
@@ -638,9 +660,21 @@ Source-&gt;Updata-all
 <h3><a name="upgrade.mix">4.3 バイナリとソースの混在</a></h3>
 
 <p>
-もし、コンパイル済みパッケージとソースからビルドしたものを使っている場合、両方のアップグレード方法に従わなくてはなりません。
-つまり、最初に <tt style="white-space: nowrap;">dselect</tt> か <tt style="white-space: nowrap;">apt-get</tt> を使ってバイナリで提供されているパッケージの最新バージョンを取得し、次に <tt style="white-space: nowrap;">fink selfupdate</tt> と <tt style="white-space: nowrap;">fink update-all</tt> で現在のパッケージ記述を取得し、残りのパッケージを更新します。
-Fink Commander を使用している場合、まず <a href="#upgrade.bin">バイナリの更新</a> を実行してから <a href="#upgrade.src">ソースの更新</a> を実行します。 
+もし、コンパイル済みパッケージとソースからビルドしたものを使っている場合、両方のアップグレード方法をする必要があります。
+最初に <tt style="white-space: nowrap;">dselect</tt> か <tt style="white-space: nowrap;">apt-get</tt> を使ってバイナリで提供されているパッケージの最新バージョンを取得し、次に <tt style="white-space: nowrap;">fink selfupdate</tt> と <tt style="white-space: nowrap;">fink update-all</tt> で現在のパッケージ記述を取得し、残りのパッケージを更新します。
+</p>
+<p>
+fink 0.23.0 からは、 UseBinaryDist オプション (
+<a href="#usage.options">--use-binary-dist (or -b) オプション</a>
+あるいは <a href="#conf">Fink 設定ファイル</a>で設定可能) 
+を使用することで、 <tt style="white-space: nowrap;">fink selfupdate</tt> 実行時にソースとバイナリ記述を更新します。
+これにより、 <tt style="white-space: nowrap;">apt-get</tt> の実行は必要なくなりました。
+</p>
+<p>
+Fink Commander を使用している場合、 Binary-&gt;Update descriptions を選択してパッケージ一覧を更新し，
+Binary-&gt;Dist-Upgrade packages でパッケージを更新します。
+この後、 Source-&gt;Selfupdate で新しい情報ファイルをダウンロードし、
+Source-&gt;Update-all を行います(詳細は前の節を参照)。
 </p>
 
 <h2><a name="conf">5 Fink 設定ファイル</a></h2>
@@ -838,6 +872,30 @@ FTP サーバーやネットワークによっては、このオプションが 
 <b>DownloadMethod に選択したアプリケーションはインストールされている必要があります!</b>
 </p>
 </li>
+<li>
+<p>
+<b>SelfUpdateMethod:</b> point, rsync あるいは cvs</p>
+<p>
+Fink は、数種類の手段でパッケージ情報ファイルを更新することができます。
+<b>rsync</b> が推奨される設定で、 rsync を用いて、ユーザーにより指定されたツリー中の、変更されたファイルだけをダウンロードします。
+stable や unstable 中のファイルを編集したり、新たに追加していた場合、削除されることに注意してください。
+これらのファイルを必ず事前にバックアップしてください。
+<b>cvs</b> では、 anonymous か :ext: cvs アクセスを使用して fink レポジトリから ダウンロードします。
+cvs はミラーを使えないという欠点があるため、 CVS サーバに接続することができない時は更新できません。
+<b>point</b> は最近リリースされたものだけをダウンロードします。
+ユーザのパッケージがかなり古い場合は更新されないので、おすすめはできません。
+</p>
+</li>
+<li>
+<p>
+<b>UseBinaryDist:</b> ブール値</p>
+<p>
+fink に、バイナリ版があり、まだシステム上にバイナリない場合はバイナリをダウンロードするように指示します。
+これによりインストール時間を短縮できるので、このオプションを設定することをおすすめします。
+<a href="#usage">--use-binary-dist オプション</a>を使用しても同じですが、これは一度だけ有効です。 
+<b>fink バージョン 0.23.0 から有効</b>.
+</p>
+</li>
 </ul>
 
 <h3><a name="conf.mirrors">5.6 ミラー設定</a></h3>
@@ -933,18 +991,18 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
 			<li>
 				<p><b>CCacheDir:</b> パス</p>
 				<p>
-					<b>0.20.5 CVS バージョン以降の fink で導入</b>
 					Fink パッケージ ccache-default がインストールされている場合、
 					Fink パッケージを作成中にこれがつくるキャッシュがここに保存される。
 					規定値は <tt style="white-space: nowrap;">/sw/var/ccache</tt> 。
 					<tt style="white-space: nowrap;">none</tt> と設定された場合、 fink は CCACHE_DIR 環境変数を設定せず、
 					ccache は <tt style="white-space: nowrap;">$HOME/.ccache</tt> を使用する。
 					ルートに所有されているファイルを自分のホームディレクトリに保存することもあり得る。
+					<b>0.21.0 以降でのみ有効</b>.
 				</p>
 			</li>
 		</ul>
 	
-	<h3><a name="conf.sourceslist">5.9 Managing apt's sources.list file</a></h3>
+	<h3><a name="conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></h3>
 		
 		<p>
 			fink 0.21.0 より、 fink は apt がバイナリファイルをインストールする際に使う
@@ -1000,7 +1058,34 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 </p>
 <p>以下は、 <tt style="white-space: nowrap;">fink</tt> ツールのコマンド一覧です:</p>
 
-<h3><a name="usage.install">6.2 install</a></h3>
+<h3><a name="usage.options">6.2 Global オプション</a></h3>
+
+<p>
+全ての fink コマンドに共通のオプションがあります。
+これは、 <tt style="white-space: nowrap;">fink --help</tt> を実行することで一覧が出ます:
+</p>
+<pre>
+ -h, --help            - このヘルプテキストを表示
+ -q, --quiet           - fink をやかましくなくさせます --verboseの反対
+ -V, --version         - バージョン情報を表示
+ -v, --verbose         - fink をやかましくなくさせます --quietの反対
+ -y, --yes             - 全ての質問にデフォルト値を自動的に回答
+ -b, --use-binary-dist - コンパイル済みバイナリがあれば、それを使用
+</pre>
+<p>(訳注: 利便性のためここでは訳しましたが、実際は英語で出力されます)</p>
+<p>
+ほとんどのオプションは名前から内容が推測できると思います。
+一回限りではなく、常に使用したいオプションは
+<a href="#conf">Fink 設定ファイル</a> (fink.conf)
+で設定することができます。
+</p>
+<p>
+<tt style="white-space: nowrap;">--use-binary-dist</tt> を使用すると， <tt style="white-space: nowrap;">fink</tt> to try to
+コンパイル済みバイナリがあり、システムにインストールされていない場合、バイナリ版をダウンロードします
+(<tt style="white-space: nowrap;">fink</tt> バージョン 0.23.0 以降で有効)。
+</p>
+
+<h3><a name="usage.install">6.3 install</a></h3>
 
 <p>install コマンドは、パッケージをインストールするのに使用します。
 指定したパッケージをダウンロード、 configure 、ビルド、インストールを行ないます。
@@ -1013,10 +1098,15 @@ Information about 131 packages read.
 The following additional package will be installed:
  lesstif
 Do you want to continue? [Y/n]</pre>
+<p>
+<a href="#usage.options">--use-binary-dist</a> を使用すると， <tt style="white-space: nowrap;">fink</tt> to try to
+コンパイル済みバイナリがあり、システムにインストールされていない場合、バイナリ版をダウンロードします。
+これにより時間を節約することができます。
+</p>
 <p>install コマンドのエイリアス: update, enable, activate, use (ほとんどは歴史的な理由による).
 </p>
 
-<h3><a name="usage.remove">6.3 remove</a></h3>
+<h3><a name="usage.remove">6.4 remove</a></h3>
 
 <p>
 remove コマンドは、 'dpkg --remove' を呼び出してシステムからパッケージを削除します。
@@ -1029,15 +1119,18 @@ remove コマンドは実際のパッケージファイルを削除するだけ�
 </p>
 <p>エイリアス: disable, deactivate, unuse, delete.</p>
 
-<h3><a name="usage.update-all">6.4 update-all</a></h3>
+<h3><a name="usage.update-all">6.5 update-all</a></h3>
 
 <p>
 このコマンドは、全てのインストール済パッケージを最新バージョンに更新します。
 パッケージ一覧は必要ないので、入力するだけです:
 </p>
 <pre>fink update-all</pre>
+<p>
+<a href="#usage.options">--use-binary-dist option</a> はここでも使用することができます。
+</p>
 
-<h3><a name="usage.list">6.5 list</a></h3>
+<h3><a name="usage.list">6.6 list</a></h3>
 
 <p>
 このコマンドは、パッケージ一覧を作成し、インストール状況、最新バージョン、短い説明を表示します。
@@ -1091,7 +1184,7 @@ fink list "gnome*"         - 'gnome' から始まるパッケージのみ表示�
 最後の例のクォーテーションは、シェルが解釈しないように必要です。
 </p>
 
-<h3><a name="usage.apropos">6.6 apropos</a></h3>
+<h3><a name="usage.apropos">6.7 apropos</a></h3>
 
 <p>
 このコマンドはほとんど <tt style="white-space: nowrap;">fink list</tt> と同じです。
@@ -1103,7 +1196,7 @@ fink apropos irc          - 名称か詳細に 'irc' が含まれるパッケー
 fink apropos -s=kde irc   - 上と同様。ただし、 kde セクションに限定。
 </pre>
 
-<h3><a name="usage.describe">6.7 describe</a></h3>
+<h3><a name="usage.describe">6.8 describe</a></h3>
 
 <p>
 このコマンドは、指定したパッケージの詳細を表示します。
@@ -1113,25 +1206,25 @@ fink apropos -s=kde irc   - 上と同様。ただし、 kde セクションに�
 エイリアス: desc, description, info
 </p>
 
-<h3><a name="usage.fetch">6.8 fetch</a></h3>
+<h3><a name="usage.fetch">6.9 fetch</a></h3>
 
 <p>指定したパッケージをダウンロードしますが、インストールはしません。
 このコマンドは、以前ダウンロードしたかどうかに関わらず tarball をダウンロードします。</p>
 
-<h3><a name="usage.fetch-all">6.9 fetch-all</a></h3>
+<h3><a name="usage.fetch-all">6.10 fetch-all</a></h3>
 
 <p>
 <b>全ての</b>パッケージソースファイルをダウンロードします。
 fetch と同様、以前ダウンロードしたかどうかに関わらず tarball をダウンロードします。
 </p>
 
-<h3><a name="usage.fetch-missing">6.10 fetch-missing</a></h3>
+<h3><a name="usage.fetch-missing">6.11 fetch-missing</a></h3>
 
 <p>
 ローカルに存在しない<b>全ての</b>パッケージソースファイルをダウンロードします。
 このコマンドは、システム上に無いパッケージのみダウンロードします。</p>
 
-<h3><a name="usage.build">6.11 build</a></h3>
+<h3><a name="usage.build">6.12 build</a></h3>
 
 <p>
 パッケージをビルドしますが、インストールはしません。
@@ -1140,29 +1233,35 @@ fetch と同様、以前ダウンロードしたかどうかに関わらず tarb
 すでに .deb ファイルがある場合は何もしません。
 依存パッケージは、ビルドだけではなく、<b>インストールされます</b>ので注意して下さい。
 </p>
+<p>
+<a href="#usage.options">--use-binary-dist option</a> はここでも使用することができます。
+</p>
 
-<h3><a name="usage.rebuild">6.12 rebuild</a></h3>
+<h3><a name="usage.rebuild">6.13 rebuild</a></h3>
 
 <p>パッケージをビルドします (build コマンドと同様に) が、すでにある .deb ファイルは無視し、上書きします。
 パッケージがインストールされたら、新しい .deb ファイルは <tt style="white-space: nowrap;">dpkg</tt> を用いてインストールされます。
 パッケージの開発中にはとても役に立ちます。
 </p>
+<p>
+<a href="#usage.options">--use-binary-dist option</a> はここでも使用することができます。
+</p>
 
-<h3><a name="usage.reinstall">6.13 reinstall</a></h3>
+<h3><a name="usage.reinstall">6.14 reinstall</a></h3>
 
 <p>
 インストールと同様ですが、インストールされていても <tt style="white-space: nowrap;">dpkg </tt>を通してインストールします。
 これは、誤ってパッケージファイルを消したり、設定ファイルを変えてデフォルトに戻したい場合などにも使えます。
 </p>
 
-<h3><a name="usage.configure">6.14 configure</a></h3>
+<h3><a name="usage.configure">6.15 configure</a></h3>
 
 <p>
 Fink を再設定します。
 ミラーサイトの設定やプロキシの設定も行なうことができます。
 </p>
 
-<h3><a name="usage.selfupdate">6.15 selfupdate</a></h3>
+<h3><a name="usage.selfupdate">6.16 selfupdate</a></h3>
 
 <p>
 このコマンドは、自動的に Fink の新リリースにアップグレードします。
@@ -1170,15 +1269,18 @@ Fink のウェブサイトへ新しいバージョンがあるか確認し、 <t
 通常リリースの他、 <tt style="white-space: nowrap;">/sw/fink/dists</tt> を設定して直接 CVS アップデートすることもできます。
 これを行なうと、全てのパッケージの最新版へアクセスできるようになります。
 </p>
+<p>
+<a href="#usage.options">--use-binary-dist option</a> を使用すると、バイナリディストリビューション中の一覧も更新されます。
+</p>
 
-<h3><a name="usage.index">6.16 index</a></h3>
+<h3><a name="usage.index">6.17 index</a></h3>
 
 <p>
 パッケージキャッシュを再構築します。
 通常は <tt style="white-space: nowrap;">fink</tt> が更新の必要に応じて自動検出するので、手動で行なう必要はありません。
 </p>
 
-<h3><a name="usage.validate">6.17 validate</a></h3>
+<h3><a name="usage.validate">6.18 validate</a></h3>
 
 <p>
 このコマンドは、 .info と .deb ファイルについていくつかチェックを行ないます。
@@ -1188,23 +1290,26 @@ Fink のウェブサイトへ新しいバージョンがあるか確認し、 <t
 エイリアス: check
 </p>
 
-<h3><a name="usage.scanpackages">6.18 scanpackages</a></h3>
+<h3><a name="usage.scanpackages">6.19 scanpackages</a></h3>
 
 <p>
 指定したツリーに対し、 dpkg-scanpackages(8) を呼び出します。
 </p>
 
-<h3><a name="usage.cleanup">6.19 cleanup</a></h3>
+<h3><a name="usage.cleanup">6.20 cleanup</a></h3>
 
 <p>
 新しいバージョンがある場合、古いパッケージファイル (.info, .patch, .deb) を削除します。
 かなりのディスク容量が利用できるようになります。
 </p>
+<p>
+<a href="#usage.options">--use-binary-dist option</a> を使用すると，古いバイナリパッケージも削除されます。
+</p>
 
-    <h3><a name="usage.dumpinfo">6.20 dumpinfo</a></h3>
+    <h3><a name="usage.dumpinfo">6.21 dumpinfo</a></h3>
       
       <p>
-	  注記: 0.20.0 以降の CVS 版より前は未対応
+	  注記: 0.21.0 以降の <tt style="white-space: nowrap;">fink</tt> で有効。
 	  </p>
 	  <p>
 	Shows how Fink parses parts of a package's .info file.
