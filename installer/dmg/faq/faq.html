@@ -21,9 +21,7 @@ location after installation?</a></li><li><a href="#usage-fink.moving-symlink">4.
 installation and provide a symlink from the old location, will it
 work?</a></li><li><a href="#usage-fink.removing">4.6 How can I uninstall all of Fink?</a></li><li><a href="#usage-fink.bindist">4.7 The package database at the
 website lists package xxx, but apt-get and dselect know nothing about
-it. Who's lying?</a></li><li><a href="#usage-fink.unstable">4.8 There's this package in
-unstable that I want to install, but the fink command just says 'no
-package found'. How can I install it?</a></li><li><a href="#usage-fink.sudo">4.9 I'm tired of typing my password into sudo again
+it. Who's lying?</a></li><li><a href="#usage-fink.unstable">4.8 There's this package in unstable that I want to install, but the fink command just says 'no package found'. How can I install it?</a></li><li><a href="#usage-fink.sudo">4.9 I'm tired of typing my password into sudo again
 and again. Is there a way around this?</a></li><li><a href="#usage-fink.exec-init-csh">4.10 When I try to run init.csh or init.sh, I get a "Permission denied" error. What am I doing wrong?</a></li><li><a href="#usage-fink.dselect-access">4.11 Help! I used the
 "[A]ccess" menu entry in dselect and now I can't download packages any
 more!</a></li><li><a href="#usage-fink.cvs-busy">4.12 When I try to run <q>fink selfupdate</q> or "fink selfupdate-cvs", I get the error "<tt style="white-space: nowrap;">Updating using CVS failed. Check the error messages above.</tt>"</a></li><li><a href="#usage-fink.kernel-panics">4.13 When I use Fink, my whole machine 
@@ -33,7 +31,7 @@ from the head command. What's broken?</a></li><li><a href="#comp-general.also_in
 like "locale not supported by C library". Is that bad?</a></li><li><a href="#usage-general.passwd">7.2 There are suddenly a number of 
 strange users on my system, with names like "mysql", "pgsql", and "games".
 Where did they come from?</a></li><li><a href="#usage-general.compile-myself">7.3 How do I compile something
-myself using Fink-installed software?</a></li><li><a href="#usage-general.apple-x11-applications-menu">7.4 I can't run any of my Fink-installed applications using the Applications menu in Apple X11.</a></li><li><a href="#usage-general.x-options">7.5 I'm bewildered by the Xwindows options: Apple X11, XFree86, etc. What should I install?</a></li><li><a href="#usage-general.no-display">7.6 When I try to run an application, I get a message that says "cannot open display:". What do I need to do?</a></li><li><a href="#usage-general.suggest-package">7.7 I don't see my favorite program in Fink. How do I suggest a new package for inclusion in Fink?</a></li></ul></li><li><a href="#usage-packages"><b>8 Package Usage Problems - Specific Packages</b></a><ul><li><a href="#usage-packages.xmms-quiet">8.1 I get no sound from
+myself using Fink-installed software?</a></li><li><a href="#usage-general.apple-x11-applications-menu">7.4 I can't run any of my Fink-installed applications using the Applications menu in Apple X11.</a></li><li><a href="#usage-general.x-options">7.5 I'm bewildered by the X11 options: Apple X11, XFree86, etc. What should I install?</a></li><li><a href="#usage-general.no-display">7.6 When I try to run an application, I get a message that says "cannot open display:". What do I need to do?</a></li><li><a href="#usage-general.suggest-package">7.7 I don't see my favorite program in Fink. How do I suggest a new package for inclusion in Fink?</a></li></ul></li><li><a href="#usage-packages"><b>8 Package Usage Problems - Specific Packages</b></a><ul><li><a href="#usage-packages.xmms-quiet">8.1 I get no sound from
 XMMS</a></li><li><a href="#usage-packages.nedit-window-locks">8.2 If I am editing a file in nedit, when I open another file its window pops up but is unresponsive.</a></li><li><a href="#usage-packages.xdarwin-start">8.3 Help! When I start
 XDarwin, it immediately quits!</a></li><li><a href="#usage-packages.no-server">8.4 When I try to start XDarwin I get the message "xinit: No such file or directory (errno 2): no server "/usr/X11R6/bin/X" in PATH".</a></li><li><a href="#usage-packages.xterm-error">8.5 xterm fails with "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib".</a></li><li><a href="#usage-packages.libXmuu">8.6 When I try to start XFree86 I get one of the following errors: "dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib" or "dyld: xinit can't open library: /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">8.7 I had Fink's XFree86 installed, and I've replaced it with Apple's X11, and now everything's crashing!</a></li><li><a href="#usage-packages.apple-x-delete">8.8 I want the delete key in Apple's X11.app to behave like that in XDarwin.</a></li><li><a href="#usage-packages.gnome-two">8.9 I upgraded from GNOME 1.x to GNOME 2.x and now <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">8.10 I upgraded to Apple's X11 in Panther and now my window title bars are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">8.11 I installed Apple's X11 in Panther but Fink keeps asking to install xfree86.</a></li><li><a href="#usage-packages.apple-x11-beta-wants-xfree86">8.12 I installed Apple's X11 with the 10.2-gcc3.3 version of Fink but Fink keeps asking to install xfree86.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
 
@@ -212,13 +210,13 @@ statement</a> for details.
 <div class="answer"><p><b>A:</b> 
 			Darwinports and Fink are complementary projects. There is some
 			overlap between the two projects, and several people contribute to
-			both the Fink and Opendarwin projects. For example, Benjamin Reed
-			is doing the KDE packages for both. Darwinports/Opendarwin makes
+			both the Fink and OpenDarwin projects. For example, Benjamin Reed
+			is doing the KDE packages for both. Darwinports/OpenDarwin makes
 			use of patches from Fink, and we have discussed collaboration
 			on a new dependency engine.
 		</p><p>
-			Opendarwin started from scratch to try a different approach to a
-			packaging system. Read the statement on <a href="http://www.opendarwin.org/projects/darwinports/en/faq.php">Opendarwin.org</a>
+			OpenDarwin started from scratch to try a different approach to a
+			packaging system. Read the statement on <a href="http://www.opendarwin.org/projects/darwinports/en/faq.php">OpenDarwin.org</a>
 			for details.
 		</p></div>
 </a>
@@ -364,30 +362,15 @@ from source using <tt style="white-space: nowrap;">fink install <b>packagename</
 </tt>.
 Make sure you have the Developer Tools installed before you try this.
 (If there is no installer for the Developer Tools in your
-<tt style="white-space: nowrap;">/Applications</tt> folder, you can get them from the <a href="http://connect.apple.com/">Apple Developer Connection</a> after
-free registration.)
+<tt style="white-space: nowrap;">/Applications</tt> folder, you can get them from the <a href="http://connect.apple.com/">Apple Developer Connection</a> after free registration.)
 See also the question about unstable below.
 </p></div>
 </a>
 <a name="usage-fink.unstable">
-<div class="question"><p><b>Q4.8: There's this package in
-unstable that I want to install, but the fink command just says 'no
-package found'. How can I install it?</b></p></div>
-<div class="answer"><p><b>A:</b> 
-First make sure you understand what 'unstable' means.
-Packages in there usually have not been tested at all, many have
-problems or just won't compile.
-That is why Fink doesn't search the unstable tree by default.
-</p><p>
-If you only want one or two specific packages, and nothing else from unstable, then you need to switch over to CVS updating, because rsync only updates the trees that are active in your <tt style="white-space: nowrap;">fink.conf</tt>. Edit <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> and add <tt style="white-space: nowrap;">local/main</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line, if not present.  Then you'll need to run <tt style="white-space: nowrap;">fink selfupdate</tt> to download the package description files. Now copy the relevant <tt style="white-space: nowrap;">.info</tt> files (and their associated <tt style="white-space: nowrap;">.patch</tt> files, if there are
-any) from <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo</tt>
-to <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo</tt>. However, note that your package may depend on other packages (or particular versions) which are also only in unstable. You will have to move their .info and .patch files as well. After you move all of the files, make sure to run <tt style="white-space: nowrap;">fink index</tt>, so that Fink's record of available packages is updated.</p><p>If you want Fink to use all of unstable, edit
-<tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, add
-<tt style="white-space: nowrap;">unstable/main</tt> and <tt style="white-space: nowrap;">unstable/crypto</tt> 
-to the <tt style="white-space: nowrap;">Trees:</tt>
-line, and then run <tt style="white-space: nowrap;">fink selfupdate; fink index</tt>.
-</p></div>
+	<div class="question"><p><b>Q4.8: There's this package in unstable that I want to install, but the fink command just says 'no package found'. How can I install it?</b></p></div>
+	<div class="answer"><p><b>A:</b> First make sure you understand what 'unstable' means. Packages in the unstable tree usually have not been tested by more than one person. For that reason, Fink doesn't search the unstable tree by default.</p><p>Packages often have dependencies, and packages in unstable often depend on other packages in unstable. For that reason, it is best to activate all of unstable.</p><p>If you want Fink to use all of unstable, edit <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, add <tt style="white-space: nowrap;">unstable/main</tt> and <tt style="white-space: nowrap;">unstable/crypto</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line, and then run <tt style="white-space: nowrap;">fink selfupdate; fink index</tt>.</p><p>If you only want one or two specific packages, and nothing else from unstable, then you need to switch over to CVS updating, because rsync only updates the trees that are active in your <tt style="white-space: nowrap;">fink.conf</tt>. Edit <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> and add <tt style="white-space: nowrap;">local/main</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line, if not present. Then you'll need to run <tt style="white-space: nowrap;">fink selfupdate</tt> to download the package description files. Now copy the relevant <tt style="white-space: nowrap;">.info</tt> files (and their associated <tt style="white-space: nowrap;">.patch</tt> files, if there are any) from <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo</tt> to <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo</tt>. However, note that your package may depend on other packages (or particular versions) which are also only in unstable. You will have to move their .info and .patch files as well. After you move all of the files, make sure to run <tt style="white-space: nowrap;">fink index</tt>, so that Fink's record of available packages is updated.</p></div>
 </a>
+
 <a name="usage-fink.sudo">
 <div class="question"><p><b>Q4.9: I'm tired of typing my password into sudo again
 and again. Is there a way around this?</b></p></div>
@@ -829,7 +812,7 @@ options.
 <div class="answer"><p><b>A:</b> Apple X11 doesn't keep track of the Fink environment settings, which means that the Applications menu doesn't have the PATH set correctly to find your Fink applications. The solution is to preface the name of a Fink-installed application with</p><pre>source /sw/bin/init.sh ; </pre><p>For example, if you want to run a Fink-installed GIMP, then put</p><pre>source /sw/bin/init.sh ; gimp</pre><p>in the Command field of your GIMP entry.</p><p>You can also edit your .xinitrc file (in your user directory) and add:</p><pre>source /sw/bin/init.sh</pre><p>after the first line.</p></div>
 </a>
 <a name="usage-general.x-options">
-<div class="question"><p><b>Q7.5: I'm bewildered by the Xwindows options: Apple X11, XFree86, etc. What should I install?</b></p></div>
+<div class="question"><p><b>Q7.5: I'm bewildered by the X11 options: Apple X11, XFree86, etc. What should I install?</b></p></div>
 <div class="answer"><p><b>A:</b> All are variants on XFree86 (they're all based on the XFree86 code), but have some slight differences between them. Apple's X11, which is a modification of XFree86-4.2.1, and XFree86-4.3 are faster than standard XFree86-4.2.1.1, but the latter is more stable. There is also a modification of 4.2.1.1 with threading support added, which is required by a few packages.</p><p>Currently, under Panther, Apple's X11 (on the third disk) is the only choice. Don't forget to install the X11 SDK (on the XCode disk) if you want to compile programs.</p><p> Under Jaguar, the most popular choices, and the Fink packages to make them work are:</p><ul>
 		<li>
 			<p>4.2.x built via Fink: install <tt style="white-space: nowrap;">xfree86-base</tt> and <tt style="white-space: nowrap;">xfree86-rootless</tt> or <tt style="white-space: nowrap;">xfree86-base-threaded</tt> and <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt> (and the respective <tt style="white-space: nowrap;">-shlibs</tt>)</p>
@@ -844,7 +827,7 @@ options.
 </a>
 <a name="usage-general.no-display">
 <div class="question"><p><b>Q7.6: When I try to run an application, I get a message that says "cannot open display:". What do I need to do?</b></p></div>
-<div class="answer"><p><b>A:</b> This error means that the system isn't connecting with your Xwindows display. Make sure you do the following:</p><p>1. Start Xwindows (Apple's X11, XFree86, ...).</p><p>2. Make sure your DISPLAY environment variable is set correctly. If you are using the default setup for Xwindows, you can do this with</p><pre>setenv DISPLAY :0</pre><p>if you are running <tt style="white-space: nowrap;">tcsh</tt>, or</p><pre>export DISPLAY=:0</pre><p>if you're running <tt style="white-space: nowrap;">bash</tt>.</p></div>
+<div class="answer"><p><b>A:</b> This error means that the system isn't connecting with your X display. Make sure you do the following:</p><p>1. Start X (Apple's X11, XFree86, ...).</p><p>2. Make sure your DISPLAY environment variable is set correctly. If you are using the default setup for X, you can do this with</p><pre>setenv DISPLAY :0</pre><p>if you are running <tt style="white-space: nowrap;">tcsh</tt>, or</p><pre>export DISPLAY=:0</pre><p>if you're running <tt style="white-space: nowrap;">bash</tt>.</p></div>
 
 </a>
 <a name="usage-general.suggest-package">
