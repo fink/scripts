@@ -1,0 +1,1365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - 创建 Fink 软件包</title></head><body><h1 style="text-align: center;">创建 Fink 软件包</h1>
+<p>
+本手册记录如何创建 Fink 软件包管理的软件包描述文件。
+它还提供关于 Fink 发布的一些规则和指引。
+描述文件格式和发布规则都在不断完善中，所以请查看"最后修改"信息和 CVS 标记来检查是否更新。
+你现在阅读的是用于 fink 0.9.0 开发版软件包管理器之后的描述文件和规则。
+</p>
+<p>
+如果你打算为 Fink 创建软件包，你可以订阅
+<a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a>
+邮件列表。
+如果你希望帮助 Fink 项目，而你在这方面又有专长，你可以考虑选择接受一个
+<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">尚未有维护人员的软件包。</a>
+</p>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.prefix">3.2 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.3 共享函数库</a></li><li><a href="#policy.perlmods">3.4 Perl 模块</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#reference"><b>5 操作手册</b></a><ul><li><a href="#reference.build">5.1 构建过程</a></li><li><a href="#reference.fields">5.2 字段</a></li><li><a href="#reference.splitoffs">5.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">5.4 脚本</a></li><li><a href="#reference.patches">5.5 补丁</a></li><li><a href="#reference.profile.d">5.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+
+
+
+
+<h3><a name="intro.def1">1.1 什么是软件包？</a></h3>
+<p>
+软件包是一个以原子状态（也就是说，它不可以被分割成更细小的可独立存在软件）存在的一个软件。
+典型的软件包包括一个可执行的程序，必须的数据文件，供国际化和文档使用的消息目录。
+在 Fink 中，软件包有两种形式：软件包描述文件和可安装二进制软件包文件。
+</p>
+<p>
+软件包描述文件是一个可阅读的纯文本文件，它包括了构建一个软件包（即，创建二进制软件包文件）所需要的全部信息。
+信息包括：元数据（比如软件包的名字，它的作用等），源代码的下载网址和应该如果配置，编译，封装软件包的指引。
+描述文件可以还会附有一个补丁文件。
+</p>
+<p>
+二进制软件包文件是一个构成软件包的实际文件的压缩档。这些实际文件包括可执行程序，数据文件，信息目录，函数库，头文件等等。
+这种软件包问题还会包括软件包的一些元数据。
+安装一个二进制软件包的过程主要就是解压缩而已，因为它实际上已经出于立刻可以使用的状态了。
+由于 Fink 构建在 dpkg 软件包管理器上，二进制软件包文件采用 dpkg 的文件格式并具有 .deb 的扩展名。
+</p>
+
+
+
+<h3><a name="intro.ident">1.2 识别一个软件包</a></h3>
+<p>
+一个软件包由三个字串来标识：软件包名，版本号和修订版号。
+他们均由小写字母（a-z），数字（0-9），减号（-），加号（+）以及句点（.）组成。不允许使用其它的字符。
+特别地，不能使用大写字母和下划线。
+</p>
+<p>
+软件包名就是软件的名称，例如：openssh。
+版本号，也称为上游版本号，是原始软件包的版本标识号。
+在版本号中可以使用字母，例如：2.9p1。
+fink 和 dpkg 都知道如何正确地给它们排序。
+修订版号是一个递增的反映软件包描述被修改的计数。
+它从 1 开始递增，让上游版本号发生改变以后，又回到 1 重新开始。
+修订版号不可以包括减号。
+完整的软件包名称是它们三项的连接，中间用减号分隔，例如：openssh-2.9p1-2。
+</p>
+
+
+<h2><a name="format">2 软件包描述文件</a></h2>
+
+
+
+<h3><a name="format.trees">2.1 文件树结构</a></h3>
+<p>
+软件包描述文件保存在 <tt style="white-space: nowrap;">/sw/fink/dists</tt> 目录树内的 <tt style="white-space: nowrap;">finkinfo</tt> 目录中。
+<tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> 中的 "Trees" 设置控制会控制应该读取那个目录。
+软件包描述文件的名字必须要软件包全名加上 ".info" 扩展名组成。
+从 fink 0.13.0 开始，为了简化软件包的升级，也可以允许简单地使用软件包加 ".info" 来组成。
+</p>
+<p>
+到软件包描述文件的目录树由几层目录组成。
+自上而下顺序为：
+</p>
+<ul>
+<li><tt style="white-space: nowrap;">dists</tt> 是目录的起点。<tt style="white-space: nowrap;">dists</tt>
+对 Debian 工具来说是必须的。</li>
+<li>发布类型。可以是 <tt style="white-space: nowrap;">stable</tt>，
+<tt style="white-space: nowrap;">unstable</tt> 和 <tt style="white-space: nowrap;">local</tt>。<tt style="white-space: nowrap;">local</tt>
+目录由本机的管理员／用户控制。<tt style="white-space: nowrap;">stable</tt> 和 <tt style="white-space: nowrap;">unstable</tt> 目录则是 Fink 的一部分。</li>
+<li>目录树。<tt style="white-space: nowrap;">main</tt> 目录树包含软件包的实际部分。加密功能的软件被放到一个称为 <tt style="white-space: nowrap;">crypto</tt> 的单独的目录树中，使得需要删除的时候会容易一些。</li>
+<li><tt style="white-space: nowrap;">finkinfo</tt>
+及 <tt style="white-space: nowrap;">binary-darwin-powerpc</tt>。<tt style="white-space: nowrap;">finkinfo</tt> 目录中包含了  Fink 软件包描述文件和补丁，而
+<tt style="white-space: nowrap;">binary-darwin-powerpc</tt> 则包含了 <tt style="white-space: nowrap;">.deb</tt>
+二进制软件包。</li>
+<li>分组。<tt style="white-space: nowrap;">main</tt>目录树按类别被分成几组以方便管理。<tt style="white-space: nowrap;">crypto</tt> 目录树目前没有被分组。</li>
+</ul>
+
+
+<h3><a name="format.format">2.2 文件格式</a></h3>
+<p>
+描述文件只是键－值对的简单列表，一个键－值对有时也称为一个“字段”。
+每一行由一个以冒号（:）为结束的键开始，然后跟着是相对应的值，就象这样：
+</p>
+<pre>Key: Value</pre>
+<p>
+当你需要把一个分成几行书写的时候，可以有两种标记办法。
+</p><p>
+推荐的方式是通常用于在 shell 脚本 here-document 语法。这种方法第一行是键，然后跟着以 <tt style="white-space: nowrap;">&lt;&lt;</tt> 为它的取值。
+在这之后，在下一个 <tt style="white-space: nowrap;">&lt;&lt;</tt> 之前的所有行会被视作实际的取值。
+下面是一个例子：
+</p>
+<pre>InstallScript: &lt;&lt;
+mkdir -p %i/share/man
+make install prefix=%i mandir=%i/share/man
+mkdir -p %i/share/doc/%n
+install -m 644 COPYING %i/share/doc/%n
+&lt;&lt;</pre>
+<p>
+在这种格式下，缩进是可选的，但它可以改进可阅读性。
+</p><p>
+这种 here-document 语法格式可以嵌套使用。这通常使用于 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 字段。
+这些字段包含其它字段（多行），因此通过这种语法可以使得子字段也可以具有多行。在子的 here-document 块中同样使用的 <tt style="white-space: nowrap;">&lt;&lt;</tt> 作为终结符。
+下面是一个例子：
+</p>
+<pre>
+SplitOff: &lt;&lt;
+  Package: %N-shlibs
+  InstallScript: &lt;&lt;
+    ln -s %p/lib/libfoo.2.dylib %i/lib/libfoo.%v.dylib
+  &lt;&lt;
+&lt;&lt;
+</pre>
+<p>
+另外一种旧的，已经过时的标记方法是参照 RFC 822 数据包头的分行方式。
+以空白字符开始的行会被当作上一行的继续。
+例子：
+</p>
+<pre>InstallScript: mkdir -p %i/share/man
+ make install prefix=%i mandir=%i/share/man
+ mkdir -p %i/share/doc/%n
+ install -m 644 COPYING %i/share/doc/%n</pre>
+<p>
+注意上面续行中强制要求的缩进格式。
+</p><p>
+在两种格式中，空行或以井号（#）打头的行都会被忽略。
+键（字段名）在 Fink 中是区分大小写的，你可以随便使用
+<tt style="white-space: nowrap;">InstallScript</tt>，<tt style="white-space: nowrap;">installscript</tt> 或
+<tt style="white-space: nowrap;">INSTALLSCRIPT</tt>。
+不过，建议使用首字母大写的方式以方便阅读。
+对于那些使用布尔值的字段－"true"，"yes"，"on"，"1"（不区分大小写），都会被认为是真值，而其它的值则会被认为是假值。
+</p>
+
+
+<h3><a name="format.percent">2.3 百分号展开</a></h3>
+<p>
+为了简化一些书写，Fink 在一些字段中支持一套展开（替换）规则。
+目前支持的展开包括：
+</p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left"></th><th align="left"></th></tr><tr valign="top"><td>%n</td><td>
+<p>
+当前软件包的名字（<b>n</b>ame）
+</p>
+</td></tr><tr valign="top"><td>%N</td><td>
+<p>
+父软件包的名字（<b>N</b>ame），除非在 <tt style="white-space: nowrap;">SplitOff</tt> 中，否则应该和 %n 相同
+</p>
+</td></tr><tr valign="top"><td>%e</td><td>
+<p>
+软件包的额外版本标识（<b>e</b>poch）。它主要用于强行替代版本号的顺序，比方说你现在已经有一个 2.0Beta1 版，然后现在 2.0 版出来了，显然 2.0 版应该是一个更新的版本。但是 字符串比较的结果却是 2.0Beta1 &lt; 2.0。所以，要么你只能把 2.0 命名为 2.0Final，要么你使用 epoch 来强行制定版本的先后顺序。比方说：epcho 1, version 1.0 是一个比 epcho 0, version 2.0 更新的版本。
+</p>
+</td></tr><tr valign="top"><td>%v</td><td>
+<p>
+软件包的版本号（<b>v</b>ersion）
+</p>
+</td></tr><tr valign="top"><td>%r</td><td>
+<p>
+软件包的修订版号（<b>r</b>evision）
+</p>
+</td></tr><tr valign="top"><td>%f</td><td>
+<p>
+完整的（<b>f</b>ull）软件包名，即 %n-%v-%r
+</p>
+</td></tr><tr valign="top"><td>%p, %P</td><td>
+<p>
+标识 Fink 安装位置的前缀（<b>p</b>refix）比如：<tt style="white-space: nowrap;">/sw</tt>
+</p>
+</td></tr><tr valign="top"><td>%d</td><td>
+<p>
+要打包的全套文件将被构建于的目标（<b>d</b>estination）目录，例如：
+<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>
+</p>
+</td></tr><tr valign="top"><td>%D</td><td>
+<p>
+父文件包的目标（<b>D</b>estination）目录（除非是在 <tt style="white-space: nowrap;">SplitOff</tt> 中，否则和 %d 相同）
+</p>
+</td></tr><tr valign="top"><td>%i</td><td>
+<p>
+安装态（<b>i</b>nstall-phase）的完整路径前缀，等于 %d%p。安装态是指从源代码编译安装到临时位置后的状态，然后我们需要把它封装成 .deb 包。
+</p>
+</td></tr><tr valign="top"><td>%I</td><td>
+<p>
+父软件包的安装（<b>I</b>nstall）态路径前缀，等于 %D%P（除非是 <tt style="white-space: nowrap;">SplitOff</tt> 中，否则应该和 %i 相等）
+</p>
+</td></tr><tr valign="top"><td>%a</td><td>
+<p>
+补丁（p<b>a</b>tches）程序所在的路径
+</p>
+</td></tr><tr valign="top"><td>%b</td><td>
+<p>
+构建（<b>b</b>uild）过程所在的目录，例如：<tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>
+</p>
+<p>
+注意：仅在没有其它选择的情况下才使用它。构建目录是脚本运行的当前目录；在命令中你应该使用相对路径。
+</p>
+</td></tr><tr valign="top"><td>%c</td><td>
+<p>
+<b>c</b>onfigure 命令将使用的参数：<tt style="white-space: nowrap;">--prefix=%p</tt> 加上 ConfigureParams 指定的其它参数。
+</p>
+</td></tr><tr valign="top"><td>%m</td><td>
+<p>
+机器（<b>m</b>achine）体系架构类型字符串，这和
+<tt style="white-space: nowrap;">uname -p</tt> 的输出一致。目前 'powerpc' 代表 ppc 类的计算机，'i386' 代表 x86 类（在 0.12.1 之后的一个 CVS 版本开始引入）
+</p>
+</td></tr><tr valign="top"><td>%%</td><td>
+<p>
+百分号字符（它部分展开后面跟着它的东西）。展开严格按照从左到右的顺序进行，所以 %%n 和软件包名没有关系，而只是字符串 %n。（从 fink-0.18.0 开始引入）
+</p>
+</td></tr></table>
+
+
+
+<h2><a name="policy">3 打包相关规则</a></h2>
+
+
+
+<h3><a name="policy.licenses">3.1 软件包授权协议</a></h3>
+<p>
+Fink 中包括的软件包包括很广范围的授权协议种类。
+多数都对重新发布全部源代码有限制，尤其对发布二进制版本有限制。
+有些软件包因为这些授权协议而不能提供二进制发行版。因此，很重要的一点是软件包的维护者需要仔细地检查他们维护的软件包的授权协议限制。
+</p>
+<p>
+每个以二进制包形式发布的软件都必须包含一些授权协议。
+它必须被安装在 doc 目录，
+也就是说：<tt style="white-space: nowrap;">%p/share/doc/%n</tt>。
+（当然，在 InstallScript 中，应该用 %i 代替 %p。DocFiles 字段会自动处理这些细节。）
+如果在原始的程序中没有明确的授权协议声明，那个包含一小段文字来说明这个软件包的状态。
+多数的授权协议要求在发布版中包括一份授权协议。
+Fink 的规则要求总是这么做，即使软件本身没有明确要求。
+</p>
+<p>
+为了使得二进制发行版的维护可以自动化，所有准备发布的软件包都必须有一个 <tt style="white-space: nowrap;">License</tt> 字段。
+这个字段表明授权协议的性质，并被用于决定是否为它制作二进制发行版。
+按照前面解释的原因，只有在实际的授权协议条文被放进二进制包中，这个字段才会起作用。</p>
+<p>
+要使得 <tt style="white-space: nowrap;">License</tt> 字段有用，必须使用下面之一的预定义值。
+如果你在打包的程序并不适合下面中的一种，请在开发者邮件列表中要求帮助。
+</p>
+<ul>
+
+<li><tt style="white-space: nowrap;">GPL</tt>－GNU 通用公开授权协议。这个协议要求与二进制包一起提供源代码。</li>
+<li><tt style="white-space: nowrap;">LGPL</tt>－GNU 较宽松通用公开授权协议。
+这个协议要求与二进制包一起提供源代码。</li>
+<li><tt style="white-space: nowrap;">GPL/LGPL</tt>－这是一种混合使用 GPL 和 LGPL 的特殊情况，比如说可执行程序部分使用 GPL，而库部分则使用 LGPL。</li>
+
+<li><tt style="white-space: nowrap;">BSD</tt>－BSD 风格授权协议。
+这包括：称为"原始的" BSD 授权协议，"修改的"" BSD
+授权协议和 MIT 授权协议。Apache 授权协议也被认为是 BSD 的一种。这些协议下发布源代码是可选的。</li>
+
+<li><tt style="white-space: nowrap;">Artistic</tt>－对于 Artistic 授权协议及其派生授权协议。</li>
+
+<li><tt style="white-space: nowrap;">Artistic/GPL</tt>－在 Artistic 和 GPL 下的双重授权协议。</li> 
+
+<li><tt style="white-space: nowrap;">GNU Free Documentation License</tt> 和 <tt style="white-space: nowrap;">Linux
+Documentation Project</tt>－如果文档中的其中一个软件包明显地被指出是这两种授权协议之一。那么应该在原来的协议后面加上 <tt style="white-space: nowrap;">/GFDL</tt> 或 <tt style="white-space: nowrap;">/LDP</tt>，这应该是下面的组合之一："GFDL"，"GPL/GFDL"，"LGPL/GFDL"，"GPL/LGPL/GFDL"，"LDP"，或"GPL/LGPL/LDP"。
+</li>
+
+<li><tt style="white-space: nowrap;">OSI-Approved</tt>－那些由<a href="http://www.opensource.org/">开放源码组织</a>所批准的开放源码授权协议。OSI 的要求之一是二进制文件和源代码的自由发放。这个值也用于对双重协议的软件包的遮蔽。</li>
+
+<li><tt style="white-space: nowrap;">Restrictive</tt>－限制性授权协议。
+用于那些作者允许免费使用源代码，但不允许自由地重新发布的软件包。</li>
+
+<li><tt style="white-space: nowrap;">Restrictive/Distributable</tt>－针对那些允许发布源和二进制包的限制性授权协议。这应用那些提供源程序，允许对源程序和二进制包进行再发布，但是却有些限制性的条款使得它称为非开源协议的软件包。</li>
+
+<li><tt style="white-space: nowrap;">Commercial</tt>－对于限制性，商业授权协议。
+应用商业软件包（比如：免费软件，共享软件），它们不允许对源程序或二进制程序进行自由的重发布。</li>
+
+<li><tt style="white-space: nowrap;">Public Domain</tt>－对于那些在公开域的软件包，即那些作者放弃对代码的版权的软件。这些软件包没有授权协议，任何人都可以随意使用它。</li>
+
+</ul>
+
+
+
+
+<h3><a name="policy.prefix">3.2 避免干扰基本系统</a></h3>
+<p>
+Fink 是一个安装在基本系统之外的独立目录里面的外加的软件系统。
+保证不要把文件安装到 Fink 的目录之外对一个软件包来说是非常重要的。
+</p>
+<p>
+唯一的例外是没有其它的选择的情况下，比如：XFree86。
+这种情况下，软件包必须在安装前检查现有的文件，如果发现可能要覆盖现有的文件，它应该拒绝安装。
+软件包必须要保证它安装在 Fink 目录之外的文件要能够在删除软件包的时候同时被删除。或者留在那里保证不会造成危害（就是说，他们需要在调用它之前检查它是否在那里）。
+</p>
+
+
+<h3><a name="policy.sharedlibs">3.3 共享函数库</a></h3>
+<p>
+Fink 对于共享库有了新的规则，它从 2002 年 2 月开始生效。
+本段内容讨论的是规则的第四版，它是与 Fink's 0.5.0 一同发布的。
+我们首先以一个简要的概括开始，然后讨论更多的细节问题。
+</p><p>
+任何会产生共享库的软件包，无论它是⑴被放在稳定树中，或是⑵一个新的软件包，都应该使得他们的库满足 Fink 的规则。即：</p>
+<ul>
+<li>   使用 <tt style="white-space: nowrap;">otool -L</tt> 验证每个库的安装名（install_name），兼容性和当前版本号是正确的。</li>
+<li>   把共享库放到一个单独的软件包（除了从 libfoo.dylib 连接 install_name 的以外），并在软件包中包括 <tt style="white-space: nowrap;">Shlibs</tt> 字段</li>
+<li>   把头文件以最终从 libfoo.dylib 的连接放到一个软件包中，并分类为： <tt style="white-space: nowrap;">BuildDependsOnly: True</tt>，应该不会有其他软件包会依赖它。</li>
+</ul>
+<p>
+  如果某个维护者因为某个原因而不能遵循这个规则，没有分离软件包的话，应该在 DescPackaging 字段中说明原因。
+</p><p>
+对于一些软件，可以通过一个主软件包和一个 -shlibs 软件包来组成；另外的一些情况下，你还需要第三个软件包。新的
+<tt style="white-space: nowrap;">SplitOff</tt> 字段正是为了简化这种情况。
+</p><p>
+当需要第三个软件包的时候，有两种不同的命名办法，取决于共享库是软件包的主要功能，还是可执行程序是主要功能。对于第一种情况，使用下面的命名模式：
+</p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Package</th><th align="left">Contents</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-shlibs</tt></td><td><p>共享库</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo</tt></td><td><p>头文件</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-bin</tt></td><td><p>二进制执行文件，等等</p></td></tr></table>
+
+<p>对于第二种情况，使用下面的命名模式：</p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Package</th><th align="left">Contents</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-shlibs</tt></td><td><p>共享库</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-dev</tt></td><td><p>头文件</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo</tt></td><td><p>二进制执行文件，等等</p></td></tr></table>
+
+<p>
+对于方法 2，升级一个现存软件包会比较困难：在升级的同时，你需要添加 <tt style="white-space: nowrap;">BuildDepends: foo-dev</tt> 到每一个包含 <tt style="white-space: nowrap;">Depends: foo</tt> 的软件包中。
+另外一个需要记住的升级问题是：为了保证一个成功的升级，间接依赖于（依赖于另外一个软件包，而那个软件软件需要依赖于你）你这个软件包的软件也需要添加 <tt style="white-space: nowrap;">BuildDepends: foo</tt> or <tt style="white-space: nowrap;">BuildDepends: foo-dev</tt>。
+添加 <tt style="white-space: nowrap;">BuildDepends</tt> 字段的责任在于你。
+</p>
+<p><b>规则细节</b></p>
+<p>
+我们现在讨论更多的细节，我们首先讨论关于一个新移植的软件包的规则，然后转到讨论升级一个现存的软件的问题。我们使用 libpng，libjpeg 和 libtiff 软件包作为规则的实际例子。
+</p><p>
+已经移植到 Darwin 的软件应该尽可能编译共享库（当然，根据软件包的实际需要，维护者也可以选择编译静态库；如果他们愿意的话，也可以只提交包含静态库的版本）。
+当编译共享库的时候，应该创建<b>两个</b>密切相关的 fink 软件包，分别名为 foo 
+和 foo-shlibs。共享库放到 foo-shlibs 中，而头文件在放到 foo 中。这两个软件包可以用同一个 .info 文件产生，象下面描述的那样，使用 <tt style="white-space: nowrap;">SplitOff</tt> 字段（事实上，通常需要从源程序中编译出不止两个软件包，这时可以使用 <tt style="white-space: nowrap;">SplitOff2</tt>，<tt style="white-space: nowrap;">SplitOff3</tt>…，等等）
+</p><p>
+每个有共享库的软件包都有一个<b>主版本号</b> N。当共享库的 API 不再后向兼容以后，才会去改变主版本号。Fink 使用下面的命名约定：如果上游的软件包叫做 bar，那么 fink 软件称为 barN 和 
+barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，才会严格应用这个规则）。例如，现存的 libpng 软件包的主版本号是 3，但当前版本的库的主版本号是 3。所以现在有四个软件包：libpng, libpng-shlibs, libpng3, libpng3-shlibs。
+在 libpng 和 libpng3 之间只能同时安装一个，但 libpng-shlibs 和 libpng3-shlibs 则可以同时安装。
+（注意创建这四个软件包只需要两个 .info 文件）
+</p><p>
+共享库本身和一些相关文件会被放到 barN-shlibs 软件包中；头文件和一些其它文件会被放到 barN 的软件包。两个软件包中间没有相同的文件，放在 barN-shlibs 的文件的路径应该包含主版本号 N。多数情况下，你的软件包在运行时需要的文件原本时安装到 <tt style="white-space: nowrap;">%i/lib/bar/</tt> 或 
+<tt style="white-space: nowrap;">%i/share/bar/</tt> 目录中；你应该把安装路径调整到 <tt style="white-space: nowrap;">%i/lib/bar/N/</tt> 或
+<tt style="white-space: nowrap;">%i/share/bar/N/</tt>。
+</p><p>
+所有依赖于主版本号为 N 的 bar 软件包的其它软件，需要使用依赖关系
+</p>
+<pre>
+  Depends: barN-shlibs
+  BuildDepends: barN
+</pre>
+<p>
+当本依赖规则系统完全使用以后，将不允许其它软件包依赖于 barN 它自己（为了后向兼容，这种依赖关系允许存在于现存的软件包）。这通过在 barN 的软件包描述中的一个布尔字段：
+</p>
+<pre>
+  BuildDependsOnly: True
+</pre>
+<p>
+来告诉其它开发者。
+</p><p>
+如果你的软件包包括共享库和二进制文件，而且二进制文件需要在运行时使用（而不仅仅时编译时），那么这些二进制文件应该被分离到第三个软件包中，这个软件包命名为 barN-bin。其它软件包可以依赖于 barN-shlibs 及 barN-bin。
+</p><p>
+当编译主版本号为 N 的共享库时，很重要的是要使 <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt> 来作为 "install_name"。（你可以用 <tt style="white-space: nowrap;">otool -L</tt> 来查看你的库的 install_name）。实际的库文件应该被安装在
+</p>
+<pre>
+  %i/lib/bar.N.x.y.dylib
+</pre>
+<p>
+而你的软件包应该创建符号链接
+</p>
+<pre>
+  %i/lib/bar.N.dylib -&gt; %p/lib/bar.N.x.y.dylib
+  %i/lib/bar.dylib -&gt; %p/lib/bar.N.x.y.dylib
+</pre>
+<p>
+如果还构建了静态库，那么它应该被安装在
+</p>
+<pre>
+  %i/lib/bar.a
+</pre>
+<p>
+如果软件包使用 libtool，这些事情通常会被自动处理，
+但无论任何情况下，你都应该检查结果时候正确。你还应该检查你的共享库是否已经定义了正确的 current_version 和 compatibility_version 值（
+<tt style="white-space: nowrap;">otool -L</tt> 应该也可以查询得到这些设置值）。
+</p><p>
+文件应该象下面一样分到两个文件包中
+</p>
+<ul>
+<li>  在 barN-shlibs 软件包中：
+<pre>
+  %i/lib/bar.N.x.y.dylib
+  %i/lib/bar.N.dylib -&gt; %p/lib/bar.N.x.y.dylib
+  %i/lib/bar/N/*
+  %i/share/bar/N/*
+  %i/share/doc/barN-shlibs/*
+</pre></li>
+<li>  在 barN 软件包中：
+<pre>
+  %i/include/*
+  %i/lib/bar.dylib -&gt; %p/lib/bar.N.x.y.dylib
+  %i/lib/bar.a
+  %i/share/doc/barN/*
+  如果需要的话，包括其它文件
+</pre></li></ul>
+<p>
+注意两个文件包都需要一些关于授权协议的文档，但包括文档文件的目录是不同的。
+</p><p>
+在实践中使用它是很容易的，这可以使用 
+<tt style="white-space: nowrap;">SplitOff</tt> 字段。下面是关于如何实现上面情况的例子（部分）：
+</p>
+<pre>
+Package: barN
+Version: N.x.y
+Revision: 1
+License: GPL
+Depends: barN-shlibs (= %v-%r)
+BuildDependsOnly: True
+DocFiles: COPYING
+SplitOff: &lt;&lt;
+  Package: barN-shlibs
+  Files: lib/bar.N.x.y.dylib lib/bar.N.dylib lib/bar/N
+  DocFiles: COPYING
+&lt;&lt;
+</pre>
+<p>
+在 <tt style="white-space: nowrap;">SplitOff</tt> 字段执行的时候，有关的文件和目录会被从主文件包的 %I 安装目录移动到剥离的文件包的 %i 目录（对于名字同样有类似的约定：%N 是主软件包的名字，%n 是当前软件包的名字）。
+<tt style="white-space: nowrap;">DocFiles</tt> 命令然后会把一份文档放到
+<tt style="white-space: nowrap;">%i/share/doc/barN-shlibs</tt> 中。
+</p><p>
+注意我们已经把当前版本的 barN-shlibs 包含为主软件包 barN（
+%N-shlibs (= %v-%r) 的缩写）的依赖关系。
+这可以确保版本会匹配，而且保证 barN
+自动继承 "inherits" barN-shlibs 的所有依赖关系。
+</p>
+<p><b>Shlibs 字段：</b>
+</p><p>
+除了把共享库放到合适的软件包中外，作为规则版本 4，你还需要用 <tt style="white-space: nowrap;">Shlibs</tt> 字段声明全部共享库。这个字段每个共享库占一行，这行中包含库的 <tt style="white-space: nowrap;">-install_name</tt>，<tt style="white-space: nowrap;">-compatibility_version</tt>，以及版本依赖信息，这个信息指明在本兼容版本中提供库的 Fink 软件包。依赖关系应该用 <tt style="white-space: nowrap;">foo (&gt;= version-revision)</tt> 的形式指明。其中
+<tt style="white-space: nowrap;">version-revision</tt> 指提供这个与（本版本兼容）的共享库的 Fink 软件包的<b>第一个</b>版本。例如，这样</p>
+<pre>
+  Shlibs: &lt;&lt;
+    %p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2)
+  &lt;&lt;
+</pre>
+<p>一个声明表示从 <b>bar1</b> 软件包的版本 1.1-2 开始，已经开始安装一个 <tt style="white-space: nowrap;">-install_name</tt> 为 %p/lib/bar.1.dylib，<tt style="white-space: nowrap;">-compatibiliary_version</tt> 为 2.1.0 的函数库。另外，这个声明还表示维护者承诺这个名字及 compatibility-version 至少为 2.1.0 以上的函数库可以在 <b>bar1</b> 软件包的以后版本中找到。
+</p><p>
+注意在库的名字中使用 %p，这使得无论他们选择什么安装路径前缀，Fink 的所有用户都可以找到正确的 <tt style="white-space: nowrap;">-install_name</tt> 代表的函数库。
+</p><p>
+当一个软件包被更新的时候，通常 <tt style="white-space: nowrap;">Shlibs</tt> 字段会被简单地拷贝到软件包的下一个版本／修订版中。例外的情况是如果 <tt style="white-space: nowrap;">-compatibility_version</tt> 增加了：那种情况下，依赖信息的版本号应该改变到当前的版本号／修订版号（这是使用新兼容版本号的第一个函数库）。
+</p><p>
+<b>当主版本号发生变化的时候应该做什么：</b>
+</p><p>
+如果主版本号从 N 改到了 M，你需要创建两个新的软件包 barM 和 barM-shlibs。 软件包 barM-shlibs 可以不覆盖 barN-shlibs，因为许多用户会同时安装这两个版本。在软件包 barM 中，你应该使用依赖关系
+</p>
+<pre>
+  Conflicts: barN
+  Replaces: barN
+</pre>
+<p>
+类似地，你应该修改 barN 来包括依赖关系
+</p>
+<pre>
+  Conflicts: barM
+  Replaces: barM
+</pre>
+<p>
+用户会看到在构建其它软件包的时候，根据不同的软件的设置，会选择连接 barN 或 barM 作为共享库。这样，我们实现 barN-shlibs 和 barM-shlibs 在系统里面的共存。
+</p><p>
+<b>How to upgrade an existing fink package:</b>
+</p><p>
+对于一个现用的 Fink 软件包，无论它是静态库还是共享库，升级的最好版本是为你的软件包创建一个新的版本 foo，以及一个新的软件包 foo-shlibs，来满足上述的规则要求。如果共享库以前已经安装(或者有些文件现在放到 foo-shlibs 中了)，那么这些软件包应该声明
+</p>
+<pre>
+  Replaces: foo (&lt;&lt; earliest.compliant.version)
+</pre>
+<p>
+这样可以使得升级对用户是透明的。(你<b>不</b>应该说"Conflicts: foo"，因为这样会使得升级无法进行)。
+</p><p>
+在你升级以后，那些声明 "Depends: foo" 的软件包仍然可以正常工作。不过，你应该连接这些软件包的维护者，要求他们尽快修改他们的软件包描述为  "Depends: foo-shlibs, BuildDepends: foo"。在他们修改完毕以前，你不能够创建使用新的主版本号的 fooM，fooM-shlibs 软件包。</p><p>
+那些没有使用正确的 install_name 的现存软件包或者那些没有使用正确的名字或符号连接到共享库的软件包在升级的时候必须很小心，这需要逐个情况进行分析。如果你在使你的软件包在符合新规则上碰到困难，请在 fink-devel 邮件列表中进行讨论。</p><p>
+<b>Packages containing both binary files and libraries:</b>
+</p><p>
+如果上游软件包包含二进制文件和库，那么在构建 fink 软件包的时候有些事情需要特别注意。有些情况下，那些二进制文件仅仅是一些类似 <tt style="white-space: nowrap;">foo-config</tt> 的程序 ，它们只需要在构建的时候使用，而不需要在运行时使用。这种情况下，二进制文件可以和头文件一样包括在 <tt style="white-space: nowrap;">foo</tt>
+软件包中。
+</p><p>
+其它情况下，这些二进制文件可能需要在运行时被其它软件包使用，这时，它们需要被剥离到一个单独的文件包中，这个软件包的名字大约是 <tt style="white-space: nowrap;">foo-bin</tt>。<tt style="white-space: nowrap;">foo-bin</tt> 软件包应该依赖于 <tt style="white-space: nowrap;">foo-shlibs</tt> 软件包，其它软件包的维护者最好能够使用：
+</p>
+<pre>
+  Depends: foo-bin
+  BuildDepends: foo
+</pre>
+<p>
+来隐式地处理 foo-shlibs。
+</p><p>
+在升级的时候会有一个问题，因为用户不会被提示安装 <tt style="white-space: nowrap;">foo-bin</tt>。要避免这个问题，在全部其它软件包维护者象上面所说的一样修改它们的软件包之前，你的 <tt style="white-space: nowrap;">foo</tt> 软件包可以这样声明：
+</p>
+<pre>
+  Depends: foo-shlibs (= exact.version), foo-bin
+</pre>
+<p>
+这可以强制安装 foo-bin 在多数用户的系统里面，只要有一天其它软件包维护者也升级了依赖于 <tt style="white-space: nowrap;">foo</tt> 的软件包。
+</p>
+
+
+
+<h3><a name="policy.perlmods">3.4 Perl 模块</a></h3>
+<p>Fink 对 perl 模块有一个新的规则，它从 2003 年 5 月开始生效。
+</p><p>
+传统上，关于 perl 模块的 Fink 软件包具有
+<tt style="white-space: nowrap;">-pm</tt> 后缀，并使用 <tt style="white-space: nowrap;">Type: perl</tt> 
+指令来构建，它把 perl 模块的文件保存在 <tt style="white-space: nowrap;">/sw/lib/perl5</tt> 和/或
+<tt style="white-space: nowrap;">/sw/lib/perl5/darwin</tt>中。而在新的规则下，这个存储位置仅允许用于那些与编译它们的 perl 程序版本无关的 perl 模块。
+</p><p>
+那些版本相关的 perl 模块称为 XS 模块，
+通常除了纯粹的 perl 子程序外，还包括编译好的 C 代码。有很多办法可以识别这个情况，包括存在带有 <tt style="white-space: nowrap;">.bundle</tt> 后缀的文件等。
+</p><p>
+版本相关的 perl 模块必须使用标明版本号的 perl 程序来编译，比方说 <tt style="white-space: nowrap;">perl5.6.0</tt>，而且必须把它的文件标准 perl 目录下面的一个标明版本号的子目录中，例如
+<tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> 和 <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt>。一个使用后缀 <tt style="white-space: nowrap;">-pm560</tt> 的新命名约定被引入来代表针对 5.6.0 的 perl 模块。类似的存储和命名约定也会用于其它版本的 perl，如果说很快会包括的 
+perl 5.6.1 和 perl 5.8.0。  
+</p><p>
+新的 <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> 指令会自动使用相应标定版本的 perl 程序，并把文件存储在正确的子目录中。
+(这个指令从 fink 0.13.0 版本开始提供)。</p><p>
+可以允许创建一个 <tt style="white-space: nowrap;">-pm</tt> 软件包，它实际是去加载 <tt style="white-space: nowrap;">-pm560</tt> 或其它存在的相应版本的"束"软件包。我们通过提供一个平滑升级的方法，来鼓励对现存的 XS 模块使用这个策略，。
+</p><p>
+从 fink 0.13.0 版本开始，对 <tt style="white-space: nowrap;">.deb</tt> 文件使用 <tt style="white-space: nowrap;">fink validate</tt> 命令的时候，将会检查这个 fink 软件包是否一个安装在没有标定版本的目录中的 XS 模块，如果是的话，将给出一个警告信息。
+</p>
+
+
+
+<h2><a name="fslayout">4 文件系统布局</a></h2>
+
+
+
+
+
+<p>
+下述的文件系统布局指南是 Fink 打包规则的一部分。
+</p>
+
+
+
+<h3><a name="fslayout.fhs">4.1 文件系统层次结构标准</a></h3>
+<p>
+Fink 遵循<a href="http://www.pathname.com/fhs/">《文件系统层次结构标准》(Filesystem Hierarchy
+Standard)</a>，简称 FHS 的精神。
+我们只能说遵循它的精神，是因为 FHS 是为操作系统提供者所涉及的，因此它是在 <tt style="white-space: nowrap;">/</tt> 和
+<tt style="white-space: nowrap;">/usr</tt> 层次级别上来控制。而 Fink 只是一个附加的系统，它指控制它自己的安装目录(或安装前缀指定的目录)。
+本章的例子使用默认的前缀 <tt style="white-space: nowrap;">/sw</tt>。
+</p>
+
+
+<h3><a name="fslayout.dirs">4.2 目录</a></h3>
+<p>
+文件应该分类存放在层次结构中下列子目录中：
+</p>
+
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/bin</tt></td><td>
+<p>
+这个目录存放通常的可执行程序。里面没有子目录。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/sbin</tt></td><td>
+<p>
+这个目录存放那些应该只由系统管理员使用的命令。
+后台守护进程程序会放在这里。
+里面没有子目录。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/include</tt></td><td>
+<p>
+这个目录存放 C 和 C++ 头文件。
+如果需要的话，可以创建子目录。
+如果软件包安装的头文件可能与标准的 C 头文件发生混淆的话，这些头文件<b>必须</b>放到子目录中。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/lib</tt></td><td>
+<p>
+这个目录存放那些系统架构相关的数据文件和函数库。
+除非有特别的理由，否则静态和动态连接库应该直接保存在 <tt style="white-space: nowrap;">/sw/lib</tt>。
+这里通常还保存那些不应该由用户直接运行的可执行程序(否则的话，应该放在 libexec)。
+</p>
+<p>
+软件包可以创建子目录来存放私有数据或可加载模块。
+请确定使用那些对保持兼容性有利的目录名。
+在目录名或目录层次中使用主版本号是个好办法，例如：<tt style="white-space: nowrap;">/sw/lib/perl5</tt>
+或 <tt style="white-space: nowrap;">/sw/lib/apache/1.3</tt>。
+Care should be taken when the host type is used to create
+directories.
+<tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> 这样的目录对兼容性是不利的，<tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> 或仅仅是
+<tt style="white-space: nowrap;">powerpc-apple-darwin</tt> 是个好些的选择。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share</tt></td><td>
+<p>
+这个目录是存放那些系统体系架构无关的数据文件。
+那些 <tt style="white-space: nowrap;">/sw/lib</tt> 中的规则也适用于这里。
+下面描述一些通常的子目录。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/man</tt></td><td>
+<p>
+这些目录中包括帮助页。它按照通常的分类方法进行组织。
+在 <tt style="white-space: nowrap;">/sw/bin</tt> 和
+<tt style="white-space: nowrap;">/sw/sbin</tt> 中的每个程序都应该有一个对应的帮助页。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/info</tt></td><td>
+<p>
+这个目录包含 Info 格式(从 Texinfo 源文件产生)的文档。
+<tt style="white-space: nowrap;">dir</tt> 文件的维护是通过 Debian 版本的 <tt style="white-space: nowrap;">install-info</tt> (<tt style="white-space: nowrap;">dpkg</tt> 软件包的一部分) 来自动进行的。
+适用 <tt style="white-space: nowrap;">InfoDocs</tt> 描述字段来自动生成 <tt style="white-space: nowrap;">postinst</tt> 和 <tt style="white-space: nowrap;">prerm</tt> 软件包脚本的合适代码。
+Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowrap;">dir</tt> 文件。
+这里不会有子目录。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/doc</tt></td><td>
+<p>
+这个目录包括那些既不是帮助页，也不是 Info 的文档。
+例如 README，LICENSE 和 COPYING 文件等。
+每个软件包必须在这里创建一个子目录，以软件包的名字命名。
+目录名不能包括版本号(除非它正好是软件包名的一部分)。
+提示：使用 <tt style="white-space: nowrap;">%n</tt> 就好了。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/locale</tt></td><td>
+<p>
+这个目录包含国际化所需要的信息目录。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/var</tt></td><td>
+<p>
+<tt style="white-space: nowrap;">var</tt> 目录保存可变数据。
+它包括队列目录，访问锁文件，状态数据库，游戏最高分和日志文件。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/etc</tt></td><td>
+<p>
+这个目录保存配置文件。
+对于那些需要在这里保存比较多文件(比方超过一两个的数目)的软件包，应该建立一个子目录。
+子目录应该和软件包或者里面的程序同名，以方便识别。
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/src</tt></td><td>
+<p>
+这个目录用于保存和构建源代码。
+软件包不应该在这个目录里面安装任何东西。
+</p>
+</td></tr></table>
+
+
+
+<h3><a name="fslayout.avoid">4.3 应该避免的事情</a></h3>
+<p>
+除了上面提到的以外，在 <tt style="white-space: nowrap;">/sw</tt> 中不应该有其它的目录。
+特别地，不应该使用下面这些目录：
+<tt style="white-space: nowrap;">/sw/man</tt>，<tt style="white-space: nowrap;">/sw/info</tt>，
+<tt style="white-space: nowrap;">/sw/doc</tt>，<tt style="white-space: nowrap;">/sw/libexec</tt>，
+<tt style="white-space: nowrap;">/sw/lib/locale</tt>。
+</p>
+
+
+
+<h2><a name="reference">5 操作手册</a></h2>
+
+
+
+
+<h3><a name="reference.build">5.1 构建过程</a></h3>
+
+<p>要理解一些字段的含义，你需要有对 Fink 所采用的构建过程有些了解。它由五个阶段组成：解压，补丁，编译，安装和构建。下面的示例路径是关于安装在 <tt style="white-space: nowrap;">/sw</tt> 的 gimp-1.2.1-1 软件包的。</p>
+<p>在<b>解压阶段</b>，<tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1</tt> 这个目录会被创建，源代码压缩档会被在这里解压。多数情况下，这会创建一个名为 gimp-1.2.1 的目录，里面包括源代码；下面的操作步骤会在那个目录里面执行(即 <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>)。我们可以使用 SourceDirectory，NoSourceDirectory 和 Source<b>N</b>ExtractDir
+这三个字段来控制有关细节。</p>
+<p>在<b>补丁阶段</b>，源代码会被打上补丁，以使得可以在 Darwin 下面编译。由 UpdateConfigGuess，UpdateLibtool，Patch 和 PatchScrip 这几个字段所指明的操作将被按照顺序执行。</p>
+<p>在<b>编译阶段</b>，源代码被配置和编译。通常这会以某些参数来调用 <tt style="white-space: nowrap;">configure</tt> 脚本，然后执行一个 <tt style="white-space: nowrap;">make</tt> 命令。
+详细信息请查看 CompileScript 字段的描述。</p>
+<p>在<b>安装阶段</b>，软件包被安装到一个临时目录，<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt> (= %d)。(注意 "root-" 部分。)
+所有通常应该安装到 <tt style="white-space: nowrap;">/sw</tt> 的文件现在被安装在
+<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1/sw</tt> (= %i = %d%p)。 
+详细信息请查看 InstallScript 字段的描述。</p>
+<p>(<b>从 fink 0.9.9 开始，</b>可以通过 <tt style="white-space: nowrap;">SplitOff</tt> 字段从一个软件包描述文件生成几个软件包。在安装阶段的尾段，会为每个软件包建立一个单独的安装目录，文件会被移到相应的目录中，)</p>
+<p>在<b>构建阶段</b>，会根据临时文件夹的内容构建一个二进制安装包(.deb)文件。你不能直接影响这个步骤，但软件包描述里面的许多字段会用于生成 dpkg 的 <tt style="white-space: nowrap;">control</tt> 文件。</p>
+
+
+<h3><a name="reference.fields">5.2 字段</a></h3>
+
+<p>我们在这里把字段分成几类。这里所描述的内容并不一定包括全部的字段。<tt style="white-space: nowrap;">:-)</tt></p>
+<p><b>初始化数据：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Package</td><td>
+<p>
+软件包名。
+可以包括小写字母，数字和这几个特殊字符："."'，
+"+" 和 "-"。
+不可以使用下划线("_"),不可以使用大写字母。
+这是一个必需字段。
+</p>
+<p>从 fink 0.9.9 开始，这个字段以及 Depends，BuildDepends，Provides，Conflicts，Replaces，Recommends，Suggests 和 Enhances 字段可以使用百分号展开。</p>
+</td></tr><tr valign="top"><td>Version</td><td>
+<p>
+上游版本号。与 Package 字段具有同样的限制。
+这是一个必需字段。
+</p>
+</td></tr><tr valign="top"><td>Revision</td><td>
+<p>
+软件包的修订版号。
+当你对一个相同的上游版本提供一个新的描述文件的时候，需要增加它。
+修订版号从 1 开始。
+这是一个必需字段。
+</p>
+</td></tr><tr valign="top"><td>Epoch</td><td>
+<p>
+<b>从 fink 0.12.0 开始。</b>
+这个可选字段可以用来指明软件包关键版本号(如果没有提供，默认值为 0).更多信息参考<a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version">Debian
+规则手册</a>.
+</p>
+</td></tr><tr valign="top"><td>Description</td><td>
+<p>
+对软件包的一个简单描述(有关它是什么东西的问题。)这是一个会显示在列表中的一行描述，所以它要简单明了。它应该少于 45 字符，必需少于 60 字符。在这个字段里面不需要重复软件包的名字-它总会被显式正确的上下文中。这是一个必需字段。
+</p>
+</td></tr><tr valign="top"><td>Type</td><td>
+<p>
+这可以设为 <tt style="white-space: nowrap;">bundle</tt>。
+束(Bundle)软件包可以用于一套相关的软件包归类在一起。
+它们只有依赖管理，但没有代码和安装文件。
+对于束文件包，Source，PatchScript，CompileScript，InstallScript 以及其它相关的字段都会被忽略。
+</p>
+<p>
+<tt style="white-space: nowrap;">nosource</tt> 是一个很类似的类型。
+它表明没有源程序压缩档，所以不会有东西被下载，解压阶段只是创建一个空目录。
+不过，补丁，编译和安装阶段则会正常执行。
+这样你可以通过补丁放进全部代码，或者只是在 InstallScript 中创建一些目录。
+从 fink 0.18.0 开始，你可以通过设置 <tt style="white-space: nowrap;">Source: none</tt> 来获得同样的效果。这样你可以把 "Type" 字段用于其它目的(比如：<tt style="white-space: nowrap;">Type: perl</tt>，等等)。
+</p>
+<p>
+最后，从 fink 0.9.5 开始，开始有 <tt style="white-space: nowrap;">perl</tt> 类型，它会对编译和安装脚本使用另外一套默认值。
+从 fink 0.13.0 开始，有个这种类型的变种，
+<tt style="white-space: nowrap;">perl $version</tt>，其中 $version 是 perl 的一个版本号，它由句点分开的三个数字组成，例如： 
+<tt style="white-space: nowrap;">perl 5.6.0</tt>。
+</p>
+</td></tr><tr valign="top"><td>License</td><td>
+<p>
+本字段给出软件包发布所依据的授权协议的性质。它必须是本文档前面<a href="#policy.licenses">软件包授权协议</a>中所描述的值之一。 另外，只有软件包确实满足打包规则在这方面的要求时，比如已经在软件包的 doc 目录安装了一份授权协议，才能够设置这个字段。
+</p>
+</td></tr><tr valign="top"><td>Maintainer</td><td>
+<p>
+负责本软件包的人的姓名和电子邮件地址。这是一个必需字段，而且必需是下面格式的一个名字和地址：
+</p>
+<pre>Firstname Lastname &lt;user@host.domain.com&gt;</pre>
+</td></tr></table>
+<p><b>依赖关系：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Depends</td><td>
+<p>
+在本软件包构建前必需安装的软件包的列表。
+通常，它只是以逗号分割软件包名清单，但 Fink 现在也和 dpkg 一样支持替代软件包和版本子句。
+一个体现全部特性的例子是：
+</p>
+<pre>Depends: daemonic (&gt;= 20010902-1), emacs | xemacs</pre>
+<p>
+注意，其实没有办法去表达真正的可选依赖关系。
+如果一个软件包在有和没有另外一个软件包的情况下都可以工作，你必需要么确定即使有那个软件包存在的情况下都不会去使用它，或者把它添加到依赖关系字段中。
+如果你想提供给用户两种选择，你应该使用两个软件包，例如：wget 和 wget-ssl。
+</p><p>
+从 fink 的 0.18.2 后 CVS 版本开始，你可以使用条件依赖关系。它通过在软件包名字前面放置
+<tt style="white-space: nowrap;">(string1 op string2)</tt> 来指定。首先会对这两个字符串进行通常的百分号展开，然后这两个字符串会按照 <tt style="white-space: nowrap;">op</tt> 运算符进行比较：&lt;&lt;， &lt;=，=，!=，&gt;&gt;，&gt;=。只有在比较的结果为真的时候，后面的软件包才会被认为是一个依赖关系。
+</p><p>
+你可以使用这个格式来简化维护几个类似的软件包的工作。例如，elinks 和 elinks-ssl 里面都可以这样写：
+</p>
+<pre>Depends: (%n = elinks-ssl) openssl097-shlibs, expat-shlibs</pre>
+<p>
+这和在 elinks 中写：
+</p>
+<pre>Depends: expat-shlibs</pre>
+<p>
+elinks-ssl 中写：
+</p>
+<pre>Depends: openssl097-shlibs, expat-shlibs</pre>
+<p>是等价的。</p></td></tr><tr valign="top"><td>BuildDepends</td><td>
+<p>
+<b>从 fink 0.9.0 开始。</b>
+只在编译时需要的依赖关系的清单。
+这可以用于列出构建软件包必须使用工具(比如 flex)。它支持和 Depends 相同的语法。
+</p>
+</td></tr><tr valign="top"><td>Provides</td><td>
+<p>
+一个逗号分隔的软件包名字清单，它表示本软件包会"提供"那些软件包的功能。
+如果一个名为 "pine" 的软件包指明 <tt style="white-space: nowrap;">Provides: mailer</tt> 的话，那么只要安装了"pine"，所有对"mailer"的依赖关系都会被认为已经满足。
+你通常会把这些软件包名字同时列在 "Conflicts" 和 "Replaces" 字段。
+</p>
+</td></tr><tr valign="top"><td>Conflicts</td><td>
+<p>
+一个逗号分隔的软件包名清单，这些软件包不应该和本软件安装在同一台机器上。
+对于虚拟软件包，可以把它们代表的软件包的名字列在这里，它们会被自动正确处理。这个也支持和 Depend 字段类似的版本相关的依赖关系，但没有替换选择(这也不符合逻辑)。如果一个软件被列为它自己的 Conflicts 字段中，它将被从中清除(不会有特别的提示)，这个功能在 fink 的 0.18.2 后 CVS 版本中提供。
+</p>
+<p>
+<b>注意：</b>Fink 自己本身会忽略这个字段。不过，它会被传递给 dpkg 并做相应的处理。概括来说，它仅影响运行时，而不应该构建时。
+</p>
+</td></tr><tr valign="top"><td>Replaces</td><td>
+<p>
+这和 "Conflicts" 同时使用，当软件包不仅仅替代冲突的软件包的功能，还会有一些共同的文件的时候。
+没有这个字段的话，dpkg 会按安装的时候报错，因为这些文件还由别的软件包所拥有。
+它也可以作为一个提示说，这两个软件是真正的完全替代的，一个可以完全替代另外一个。如果一个软件列为它自己的 Replaces，它会被自动(没有提示)地从中清除(从 fink 的 0.18.2 后 CVS 版本开始提供)。
+</p>
+<p>
+<b>注意：</b>Fink 自己本身会忽略这个字段。不过，它会被传递给 dpkg 并做相应的处理。概括来说，它仅影响运行时，而不应该构建时。
+</p>
+</td></tr><tr valign="top"><td>Recommends, Suggests, Enhances</td><td>
+<p>
+这些字段以其它依赖关系的风格，指明一些额外的软件包关系。这三个关系不会影响通过<tt style="white-space: nowrap;">dpkg</tt> 或 <tt style="white-space: nowrap;">apt-get</tt> 的实际安装过程。
+它们由 <tt style="white-space: nowrap;">dselect</tt> 或其它前端程序来帮助用户作出合理的选择。
+</p>
+</td></tr><tr valign="top"><td>Pre-Depends</td><td>
+<p>
+对 Depends 字段进行更强的要求的特殊变量。
+本字段只有在开发者邮件列表中经过讨论，并被大部分人同意需要这样做以后才可以使用。
+</p>
+</td></tr><tr valign="top"><td>Essential</td><td>
+<p>
+一个表明是关键软件包的布尔值。关键软件包会被作为初始环境建立的过程的一部分而安装。所有的非关键软件包都隐含地依赖于关键软件包。dpkg 会拒绝从系统中删除关键软件包，除非设置了特别的标识来覆盖它。
+</p>
+</td></tr><tr valign="top"><td>BuildDependsOnly</td><td>
+<p>
+<b>从 fink 0.9.9 开始。</b>
+一个布尔值，它表明没有其它软件包会依赖于它，它们应该只是 BuildDepend。
+</p>
+</td></tr></table>
+<p><b>解压阶段：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>CustomMirror</td><td>
+<p>
+镜像站点的列表。每个镜像站点占一行，格式如下：<tt style="white-space: nowrap;">&lt;location&gt;: &lt;url&gt;</tt>。
+<b>location</b> 可以是洲代号(例如 <tt style="white-space: nowrap;">nam</tt>)，也可以是国家代号(比如 <tt style="white-space: nowrap;">nam-us</tt>)，或者其它的东西；镜像站点会按照它的顺序来进行尝试。
+例如：
+</p>
+<pre>CustomMirror: &lt;&lt;
+nam-US: ftp://ftp.fooquux.com/pub/bar
+asi-JP: ftp://ftp.qiixbar.jp/pub/mirror/bar
+eur-DE: ftp://ftp.barfoo.de/bar
+Primary: ftp://ftp.barbarorg/pub/
+&gt;&gt;</pre>
+</td></tr><tr valign="top"><td>Source</td><td>
+<p>
+源代码压缩档的 URL。它应该是一个 HTTP 或 FTP URL，但 Fink 本身并不关心这一点-它只是把它传递给 wget。这个字段对镜像站点的 URL 标记模式：
+<tt style="white-space: nowrap;">mirror:&lt;mirror-name&gt;:&lt;relative-path&gt;</tt>。
+这会在 Fink 的配置中寻找 <b>mirror-name</b> 镜像的设置，然后添加  <b>relative-path</b> 部分，并把结果作为实际的 URL。已知的 <b>mirror-name</b> 被列在 <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt> 中。它是 fink 或 fink-mirror 软件包的一部分。另一方面，使用 <tt style="white-space: nowrap;">custom</tt> 作为 <b>mirror-name</b> 会使 Fink 使用 <tt style="white-space: nowrap;">CustomMirror</tt>
+字段。
+在 URL 使用前，会进行百分号展开。
+</p>
+<p>
+从 0.18.0 开始，<tt style="white-space: nowrap;">Source: none</tt> 具有特别的含义。它标识不需要下载源文件。参考
+<tt style="white-space: nowrap;">Type</tt> 字段的描述获取更多信息。
+<tt style="white-space: nowrap;">gnu</tt> 这个值代表
+<tt style="white-space: nowrap;">mirror:gnu:%n/%n-%v.tar.gz</tt>；<tt style="white-space: nowrap;">gnome</tt> 则代表
+<tt style="white-space: nowrap;">mirror:gnome:stable/sources/%n/%n-%v.tar.gz</tt>。默认值是 <tt style="white-space: nowrap;">%n-%v.tar.gz</tt> (即一个手工指定的下载)。
+</p>
+</td></tr><tr valign="top"><td>Source<b>N</b></td><td>
+<p>
+如果一个软件包包含几个压缩档，在这些额外的字段中说明它们呢，从 N = 2 开始。所以，第一个压缩档(它应该是所谓的"主"压缩档)会被放在 <tt style="white-space: nowrap;">Source</tt>，第二个压缩档则作为 <tt style="white-space: nowrap;">Source2</tt>，依此类推。这里的规则和 Source 是一样的，区别只是 "gnu" 和 "gnome" 捷径不会被展开-那样做并没有意义。
+</p>
+</td></tr><tr valign="top"><td>SourceDirectory</td><td>
+<p>
+在压缩档被解压到一个目录里面的时候必须使用，但目录名会和压缩档的基本部分不同。
+通常，一个名为 "foo-1.0.tar.gz" 会产生一个名为 "foo-1.0" 的目录。如果它产生不同名字的目录，用这个参数指明它。对这个字段会应用百分号展开。
+</p>
+</td></tr><tr valign="top"><td>NoSourceDirectory</td><td>
+<p>
+把这个布尔值参数设为真的话，压缩档不会展开到一个单独的目录中。
+通常，一个名为 "foo-1.0.tar.gz"
+会产生一个名为 "foo-1.0" 的目录。如果它只是把文件解压到当前目录，使用这个参数并把它设为真。
+</p>
+</td></tr><tr valign="top"><td>Source<b>N</b>ExtractDir</td><td>
+<p>
+通常，一个辅助压缩档会被解压到主压缩档相同的目录中。如果你需要把它解压到一个特别的子目录中，使用这个字段来指明它。
+正如一般人想象的一样，Source2ExtractDir 对应于 Source2 压缩档。查阅 ghostscript，vim 和 tetex 作为使用的例子。
+</p>
+</td></tr><tr valign="top"><td>SourceRename</td><td>
+<p>
+这个字段可以在下载过程中改变源程序压缩档的名字。它经常用于在服务器上用目录来区别不同的版本，但压缩档的名字却都是相同的场合。例如：
+://www.foobar.org/coolapp/1.2.3/source.tar.gz。要解决这个问题，你可以使用：
+</p>
+<pre>SourceRename: %n-%v.tar.gz</pre>
+<p>
+对于上面的例子，这会使得下载的源代码压缩档保存在
+<tt style="white-space: nowrap;">/sw/src/coolapp-1.2.3.tar.gz</tt>，以满足我们的一般命名约定。
+</p>
+</td></tr><tr valign="top"><td>Source<b>N</b>Rename</td><td>
+<p>
+这和 <tt style="white-space: nowrap;">SourceRename</tt> 字段是一模一样的，除了它是用来重命名 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段指定的第 N 个压缩档外。参考其它有关的部分来了解使用的例子。
+</p>
+</td></tr><tr valign="top"><td>Source-MD5</td><td>
+<p>
+<b>从 fink 0.10.0 开始。</b>
+在这个字段中，你可以指定源程序文件的 MD5 校验值。
+这个信息会被 Fink 用来检测是否使用了错误的源文件版本，也就是说，
+那些和维护者所使用的版本不同的软件包。通常引起这个问题的原因是：未完全下载的压缩档；上游维护者在未通知的情况下修改了源代码；木马或类似的攻击；等等。
+</p>
+<p>
+典型的使用例子是：
+</p>
+<pre>Source-MD5: 4499443fa1d604243467afe64522abac</pre>
+<p>
+要计算校验值，可以使用 <tt style="white-space: nowrap;">md5sum</tt> 工具。如果你希望检查压缩档 <tt style="white-space: nowrap;">/sw/src/apache_1.3.23.tar.gz</tt> 的校验值，
+你可以运行下面的命令(下面还包括命令的输出结果)：
+</p>
+<pre>fingolfin% md5sum /sw/src/apache_1.3.23.tar.gz 
+4499443fa1d604243467afe64522abac  /sw/src/apache_1.3.23.tar.gz</pre>
+<p>
+正如你所看见的一样，靠左边的数值就是你需要的结果。
+</p>
+</td></tr><tr valign="top"><td>Source<b>N</b>-MD5</td><td>
+<p>
+<b>从 fink 0.10.0 开始。</b>
+这个字段和 <tt style="white-space: nowrap;">Source-MD5</tt> 字段完全一样，除了它是指定与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的第 N 个压缩档的 MD5 校验值。
+</p>
+</td></tr><tr valign="top"><td>TarFilesRename</td><td>
+<p>
+<b>从 fink 0.10.0 开始。</b>
+这个字段只对那些使用 tar 格式的源程序文件有效。
+</p>
+<p>
+通过这个字段，你可以在解压压缩档的时候，重命名给定的源程序压缩档里面的文件。这是针对 HFS+ 文件系统大小写不敏感的特性的一个解决办法。比方说在标准的 Mac OS X 环境下 <tt style="white-space: nowrap;">install</tt> 和 <tt style="white-space: nowrap;">INSTALL</tt> 这两个文件会发生冲突。通过这个字段，你可以不需要重新建立一个新的压缩档(过去需要这样做)就可以避免这个问题。
+</p>
+<p>
+这个字段中，你只需要简单第列出需要重命名的文件。你可以使用通配符。
+默认情况下，这些文件名后面会被加上 <tt style="white-space: nowrap;">_tmp</tt>。你可以通过使用在 <tt style="white-space: nowrap;">Files</tt> 和 <tt style="white-space: nowrap;">DocFiles</tt>
+字段中的相同语法来修改这个默认行为，就是在原来的文件名后面加上一个冒号，然后再加上新的文件名。
+例如：
+</p>
+<pre>TarFilesRename: foo bar.* qux:quux
+Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
+<p>
+<b>注意：</b>这个字段的程序实现利用了 BSD tar 程序的特别特性。GNU tar 不支持这个特性。默认时，Fink 使用 GNU tar
+(因为有些压缩档只能用 GNU tar 解开)，但当一个软件包使用了 TarFilesRename 字段，Fink 会通过直接调用
+<tt style="white-space: nowrap;">/usr/bin/tar</tt> 的方法来使用 BSD tar。
+</p>
+</td></tr><tr valign="top"><td>Tar<b>N</b>FilesRename</td><td>
+<p>
+<b>从 fink 0.10.0 开始。</b>
+这和 <tt style="white-space: nowrap;">TarFilesRename</tt> 字段一致，除了它作用于与 <tt style="white-space: nowrap;">Source<b>N</b></tt> 字段对应的第 N 个压缩档以外。
+</p>
+</td></tr></table>
+
+
+<p><b>补丁阶段：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>UpdateConfigGuess</td><td>
+<p>
+一个布尔值。如果为真的话，构建目录中的 config.guess 和 config.sub
+会被替换为了解 Darwin 的版本。这发生在补丁阶段，并在 PatchScript
+运行之前。<b>仅仅</b> 在你确定必须这么做的时候才使用它，即，当配置脚本以 "unknown host" 而失败的时候。
+</p>
+</td></tr><tr valign="top"><td>UpdateConfigGuessInDirs</td><td>
+<p>
+<b>从 0.9.0 后 CVS 版本开始。</b>
+这是一些子目录的清单。
+这和 UpdateConfigGuess 完成相同的工作，但只对那些在几个子目录里面的  config.guess 文件是过期的情况下使用。
+以前，你需要在 PatchScript 中手工拷贝/移动那里面的文件。
+而有了这个新的字段以后，你可以仅仅是列出目录。
+使用 <tt style="white-space: nowrap;">.</tt> 来更新处于构建目录本身的文件。
+</p>
+</td></tr><tr valign="top"><td>UpdateLibtool</td><td>
+<p>
+这是一个布尔值。如果为真的话，那么构建目录里面的 ltconfig 和 ltmain.sh 文件会被替换为与 Darwin 兼容的版本。
+这发生在补丁阶段，在 PatchScript 脚本运行之前。
+<b>仅仅</b>在你肯定需要软件包需要它的时候才这样做。
+有些软件包会因为替换不正确版本的 libtool 脚本而被破坏。
+查看<a href="http://fink.sourceforge.net/doc/porting/libtool.php">libtool
+网页</a>获取更进一步的信息。
+</p>
+</td></tr><tr valign="top"><td>UpdateLibtoolInDirs</td><td>
+<p>
+<b>从 0.9.0 后 CVS 版本开始。</b>
+一个子目录的清单。
+它和 UpdateLibtool 的作用一样，但只对那些源代码中几个目录中有过期的 libtool 1.3.x 脚本的软件包有用。
+以前你需要在 PatchScript 脚本中手工拷贝/移动这些文件。
+有了这个新的字段以后，你只需要指定这些目录。
+使用 <tt style="white-space: nowrap;">.</tt> 来更新在构建目录本身里面的文件。
+</p>
+</td></tr><tr valign="top"><td>UpdatePoMakefile</td><td>
+<p>
+一个布尔值。
+为真的话，在 <tt style="white-space: nowrap;">po</tt> 目录中的 <tt style="white-space: nowrap;">Makefile.in.in</tt> 文件会被替换为打过补丁的版本。
+这发生在补丁阶段，并在 PatchScript 脚本运行之前。
+</p>
+<p>
+打过补丁的版本可以识别 DESTDIR 并确保信息目录是在 <tt style="white-space: nowrap;">/sw/share/locale</tt>，而不是 <tt style="white-space: nowrap;">/sw/lib/locale</tt>。
+在使用这个字段之前，确定你不会破坏软件包以及的确有这个必要。
+你可以运行 <tt style="white-space: nowrap;">diff</tt> 命令来找出软件包的版本和 Fink 的版本的区别(在
+<tt style="white-space: nowrap;">/sw/lib/fink/update</tt>)。
+</p>
+</td></tr><tr valign="top"><td>Patch</td><td>
+<p>
+应用于 <tt style="white-space: nowrap;">patch -p1
+&lt;<b>patch-file</b></tt> 命令的补丁文件的名字。这应该只是一个文件名；正确的路径会被自动添加。在本字段中会应用百分号展开。所以典型的设置值只是
+<tt style="white-space: nowrap;">%f.patch</tt> 或 <tt style="white-space: nowrap;">%n.patch</tt>。补丁会在 PatchScript 脚本运行之前应用(如果有的话)。
+</p>
+</td></tr><tr valign="top"><td>PatchScript</td><td>
+<p>
+在补丁阶段运行的一系列命令。参阅下面关于脚本的注意事项。这是对软件包打补丁或修改软件包的地方。在这里没有默认运行的命令。在命令运行之前，会进行百分号展开。(查阅上一部分)。
+</p>
+</td></tr></table>
+<p><b>编译阶段：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Set<b>ENVVAR</b></td><td>
+<p>
+在编译和安装阶段设置一些环境变量。这可以用于传递一些编译器标志等信息到  configure 脚本和 Makefile 文件。目前支持的变量包括：CC，CFLAGS，CPP，CPPFLAGS，CXX，CXXFLAGS，LD，LDFLAGS，LIBS，MAKE，MFLAGS，MAKEFLAGS。你指定的值也会应用前面说过百分号展开。一个常见的例子是：
+</p>
+<pre>SetCPPFLAGS: -no-cpp-precomp</pre>
+<p>
+CPPFLAGS 和 LDFLAGS 变量是比较特别的。它们的默认值分别为
+<tt style="white-space: nowrap;">-I%p/include</tt> 和 <tt style="white-space: nowrap;">-L%p/lib</tt>。如果你指定了这些值之一，它会被认为是默认值。
+</p>
+</td></tr><tr valign="top"><td>NoSet<b>ENVVAR</b></td><td>
+<p>
+当设为真时，停用上面所提到的
+CPPFLAGS 和 LDFLAGS 的默认值设置。也就是说，如果你希望 LDFLAGS 保持没有设置，指定 <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt>。
+</p>
+</td></tr><tr valign="top"><td>ConfigureParams</td><td>
+<p>
+传递给 configure 脚本的额外参数(查阅
+CompileScript 字段的说明获取详细信息)。
+
+对于 &lt; 0.13.7 的 fink 版本，这个参数也对 perl 模块<tt style="white-space: nowrap;">Type: Perl</tt>有效，并会添加到默认的 perl Makefile.PL
+字符串中。
+</p>
+</td></tr><tr valign="top"><td>GCC</td><td>
+<p>
+要求使用的 gcc 编译器版本。允许值包括：
+<tt style="white-space: nowrap;">2.95.2</tt> 或 <tt style="white-space: nowrap;">2.95</tt>
+(仅用于 10.1 软件包代码树)，<tt style="white-space: nowrap;">3.1</tt>
+(仅用于 10.2 软件包代码树)，和 <tt style="white-space: nowrap;">3.3</tt>
+(仅用于 10.2-gcc3.3 和 10.3 软件包代码树)。
+</p>
+<p>对于 fink 0.13.8，如果使用了这个标志，会使用 <tt style="white-space: nowrap;">gcc_select</tt> 来检测 gcc 的版本，如果检测到错误的版本，fink 会出错退出。
+</p>
+<p>
+这个字段被添加到 fink 以辅助在 gcc
+编译器之间的转换，因为这些不同的编译器在涉及有关没有考虑版本区别的 C++ 代码中存在着不兼容。
+</p>
+</td></tr><tr valign="top"><td>CompileScript</td><td>
+<p>
+在编译阶段运行的一系列命令。参阅下面关于脚本的注解。这里是放置配置和编译软件包的命令的地方。通常默认值是：
+</p>
+<pre>./configure %c
+make</pre>
+<p>
+这对于使用 GNU autoconf 的软件包是恰当的。
+对于那些是 perl (通过 Type 字段指定)类型，但却没有指明 perl 版本的软件包，默认的替代值是：
+</p>
+<pre>perl Makefile.PL PREFIX=%p \
+ INSTALLPRIVLIB=%p/lib/perl5 \
+ INSTALLARCHLIB=%p/lib/perl5/darwin \
+ INSTALLSITELIB=%p/lib/perl5 \
+ INSTALLSITEARCH=%p/lib/perl5/darwin \
+ INSTALLMAN1DIR=%p/share/man/man1 \
+ INSTALLMAN3DIR=%p/share/man/man3
+make
+make test</pre>
+<p>如果是指定版本的 <tt style="white-space: nowrap;">perl $version</tt> 类型(比如 $version 可能是 5.6.0)，
+默认值是：
+</p>
+<pre>perl$version Makefile.PL \
+ PERL=perl$version PREFIX=%p \
+ INSTALLPRIVLIB=%p/lib/perl5/$version \
+ INSTALLARCHLIB=%p/lib/perl5/$version/darwin \
+ INSTALLSITELIB=%p/lib/perl5/$version \
+ INSTALLSITEARCH=%p/lib/perl5/$version/darwin \
+ INSTALLMAN1DIR=%p/share/man/man1 \
+ INSTALLMAN3DIR=%p/share/man/man3
+make
+make test</pre>
+<p>
+在命令执行之前，会进行百分号展开(参阅前面的章节)。
+</p>
+</td></tr><tr valign="top"><td>NoPerlTests</td><td> 
+<p>
+<b>从 fink 0.13.7 之后开始。</b>
+一个针对 perl 模块软件包的布尔值。如果为真的话，<tt style="white-space: nowrap;">CompileScript</tt> 的 <tt style="white-space: nowrap;">make test</tt> 部分会对那些指定的 perl 模块忽略。
+</p>
+</td></tr></table>
+<p><b>安装阶段：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>UpdatePOD</td><td>
+<p>
+<b>从 fink 0.9.5 开始。</b>
+一个针对 perl 模块软件包的布尔值。
+为真的话，它会添加代码到 install，postrm 和 postinst
+脚本来维护 perl 软件包所提供的 .pod 文件。
+这包括在中央的<tt style="white-space: nowrap;">/sw/lib/perl5/darwin/perllocal.pod</tt>文件中添加和删除 .pod 数据。
+(如果类型是以 <tt style="white-space: nowrap;">perl $version</tt> 这样包括特定版本的形式给出，例如 5.6.0，那么这些脚本会被用于处理在
+<tt style="white-space: nowrap;">/sw/lib/perl5/$version/perllocal.pod</tt> 的中央 .pod 文件。)
+</p>
+</td></tr><tr valign="top"><td>InstallScript</td><td>
+<p>
+一系列在安装阶段运行的命令。查看下面关于脚本的注解。
+这是把软件包的需要文件拷贝到正确的地方的指令。
+通常的默认值是：
+</p>
+<pre>make install prefix=%i</pre>
+<p>
+这么默认值对使用 GNU autoconf 的软件包是合适的。
+对于那些 perl (通过 Type 字段指明) 模块类型的软件包，
+如果没有指定 perl 版本的话，
+默认的值为：
+</p>
+<pre>make install INSTALLPRIVLIB=%i/lib/perl5 \
+ INSTALLARCHLIB=%i/lib/perl5/darwin \
+ INSTALLSITELIB=%i/lib/perl5 \
+ INSTALLSITEARCH=%i/lib/perl5/darwin \
+ INSTALLMAN1DIR=%i/share/man/man1 \
+ INSTALLMAN3DIR=%i/share/man/man3</pre>
+<p>如果类型是指定版本 <tt style="white-space: nowrap;">perl $version</tt> (比如 $version 为 5.6.0)的 perl 模块，
+默认值为：
+</p>
+<pre>make install INSTALLPRIVLIB=%i/lib/perl5/$version \
+ INSTALLARCHLIB=%i/lib/perl5/$version/darwin \
+ INSTALLSITELIB=%i/lib/perl5/$version \
+ INSTALLSITEARCH=%i/lib/perl5/$version/darwin \
+ INSTALLMAN1DIR=%i/share/man/man1 \
+ INSTALLMAN3DIR=%i/share/man/man3</pre>
+<p>
+如果软件包支持的话，首选会使用 <tt style="white-space: nowrap;">make install
+DESTDIR=%d</tt>。在命令执行之前，会进行百分号替换(参看前面的章节)。
+</p>
+</td></tr><tr valign="top"><td>JarFiles</td><td>
+<p>
+<b>从 fink 0.10.0 开始。</b>
+这个字段和 DocFiles 有些类似。它安装指定的 jar
+文件到 <tt style="white-space: nowrap;">%p/share/java/%n</tt> 目录中。
+例如：
+</p>
+<pre>JarFiles: lib/*.jar foo.jar:fooBar.jar</pre>
+<p>
+这将安装全部原来在 lib 目录中 jar 文件，同时会把
+foo.jar 安装为 fooBar.jar。
+</p>
+<p>
+它同时确保这些 jar 文件(尤其是：所有在 <tt style="white-space: nowrap;">%p/share/java/%n</tt> 目录中以 .jar 结尾的文件)
+被添加到 CLASSPATH 环境变量中。
+这使得象
+configure 或 ant 之类的工具能够正确地检测到已安装的 jar 文件。
+</p>
+</td></tr><tr valign="top"><td>DocFiles</td><td>
+<p>
+这个字段提供一个安装软件包中 doc 目录中<tt style="white-space: nowrap;">%p/share/doc/%n</tt> README 或 COPYING
+文件的方便方法。
+它的值是一些以空格分开的文件清单。
+你可以从构建目录的子目录拷贝文件，但最后它们应该拷贝到 doc 目录本身，而不是它的子目录。
+可以使用 Shell 通配符。
+也可以在拷贝的同时重命名某个文件，这可以在一个冒号后面添加新的文件名来实现，
+比如 <tt style="white-space: nowrap;">libgimp/COPYING:COPYING.libgimp</tt>。
+这个字段的功能是通过在 InstallScript 中添加合适的 <tt style="white-space: nowrap;">install</tt> 命令。
+</p>
+</td></tr><tr valign="top"><td>Shlibs</td><td>
+<p>
+<b>从 fink 0.11.0 开始。</b>
+这个字段声明软件包中要安装的共享库。
+每个共享库占一行，每行包括以空格分开的三项：
+共享库的 <tt style="white-space: nowrap;">-install_name</tt>(安装名)，<tt style="white-space: nowrap;">-compatibility_version</tt>(兼容版本号)，和版本相关的指明提供这个兼容版本的 Fink 软件包的依赖信息
+依赖信息应该以下面的形式描述：<tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> 其中 
+<tt style="white-space: nowrap;">version-revision</tt> 指提供(这个兼容版本)函数库的 Fink 软件包的 <b>第一个</b>版本。
+Shlibs 声明表明维护者承诺这个名字和至少
+<tt style="white-space: nowrap;">-compatibility_version</tt>的兼容版本号的函数库会在这个 Fink 软件包的新版本中找到。
+</p></td></tr><tr valign="top"><td>RuntimeVars</td><td>
+<p>
+<b>从 fink 0.10.0 开始。</b>
+这个字段提供设置运行时环境变量为一些静态值的简便方法(如果你需要更灵活的方式，参考 <a href="#reference.profile.d">profile.d 脚本部分</a>)。在你的软件包安装以后，这些变量会通过 <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt> 脚本设置。
+</p>
+<p>
+你的环境的值可以包括空格(尾部的连续空格会被截断)；另外，百分号展开也会进行。例如：
+</p>
+<pre>RuntimeVars: &lt;&lt;
+ SomeVar: %p/Value
+ AnotherVar: foo bar
+&lt;&lt;</pre>
+<p>
+会设置两个环境变量 "SomeVar" 和 "AnotherVar"，它们的值相应地被设置为 "/sw/Value" (或你选择的前缀)以及 "foo bar"。
+</p>
+<p>
+这个字段通过添加合适的命令到 InstallScript 来实现。
+这些命令为每个变量添加一行 setenv/export 到软件包的 profile.d 脚本，所以你也提供你自己，它们不会被覆盖。这些行被作为脚本考虑，你可以在你的脚本中使用这些变量。
+</p>
+</td></tr><tr valign="top"><td>SplitOff</td><td>
+<p>
+<b>从 fink 0.9.9 开始。</b>
+在同一个编译/安装过程中产生第二个软件包。
+有关详细信息，查看下面单独的
+<a href="#splitoffs">剥离(splitoff)部分</a>。
+</p>
+</td></tr><tr valign="top"><td>SplitOff<b>N</b></td><td>
+<p>
+<b>Introduced in fink 0.9.9.</b>
+这和 <tt style="white-space: nowrap;">SplitOff</tt> 一样，用于从同一个编译/安装过程产生第三、第四个等等软件包。
+</p>
+</td></tr><tr valign="top"><td>Files</td><td>
+<p>
+<b>从 fink 0.9.9 开始。</b>
+<b>仅</b>
+在 <tt style="white-space: nowrap;">SplitOff</tt> 或 <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> 字段内使用，
+它用于指定哪些文件和目录需要从父文件包的安装目录 %I 移动到当前安装目录 %i。 注意这在父文件包的 InstallScript 和 DocFiles 之后，但在当前文件包的 InstallScript 和 Docfiles 之前执行。
+</p>
+</td></tr></table>
+<p><b>构建阶段：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>PreInstScript, PostInstScript, PreRmScript, PostRmScript</td><td>
+<p>
+这些字段指明当软件包安装、升级或删除的时候执行的 shell 脚本。
+Fink 会自动添加脚本的头部
+<tt style="white-space: nowrap;">#!/bin/sh</tt>，并调用 <tt style="white-space: nowrap;">set -e</tt>，所以任何失败的命令都会导致脚本的立即终止。
+Fink 还会在最后添加一个 <tt style="white-space: nowrap;">exit 0</tt>。
+要指明错误，从脚本中以一个非零值退出。
+第一个参数 (<tt style="white-space: nowrap;">$1</tt>) 被设为一个指明应该采用什么操作的值。
+一些可能的值包括 <tt style="white-space: nowrap;">install</tt>，<tt style="white-space: nowrap;">upgrade</tt>，<tt style="white-space: nowrap;">remove</tt> 和 <tt style="white-space: nowrap;">purge</tt>。
+注意还有更多的值，用于错误回退或因为另外一个文件包而删除的情况。
+</p>
+<p>
+脚本会在下面的时候被调用：
+</p>
+<ul>
+<li>PreInstScript: 当软件包第一次安装和升级到这个版本时。</li>
+<li>PostInstScript: 解压和设置软件包之后。</li>
+<li>PreRmScript: 软件包被删除或升级到新版本之前。</li>
+<li>PostRmScript: 软件包被删除或升级到新版本之后。</li>
+</ul>
+<p>
+更清楚地说，升级过程包括：新版本的 Inst scripts，和旧版本的 Rm scripts。
+细节可以在 Debian 规则手册找到，
+<a href="http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html">第六章</a>.
+</p>
+<p>
+脚本中会进行百分号展开。
+命令通常会不使用完整路径来调用。
+</p>
+</td></tr><tr valign="top"><td>ConfFiles</td><td>
+<p>
+以空格分开的用户可以编辑的配置文件的列表。
+这些文件必须以绝对路径指明，例如，<tt style="white-space: nowrap;">%p/etc/foo.conf</tt>。
+这些文件会被 dpkg 特别对待。
+当软件包被升级，而软件包和磁盘上的文件相比被改动过的话，用户会被询问使用哪个版本，以及是否需要进行备份。
+当一个软件包被删除后，配置文件仍然还保留在磁盘上。
+只有 "purge" 会删除配置文件。
+</p>
+</td></tr><tr valign="top"><td>InfoDocs</td><td>
+<p>
+软件包安装在 %p/share/info 目录的信息文件的清单。
+这会在 postinst 和 prerm 脚本中添加合适的代码来维护 Info 目录的文件 <tt style="white-space: nowrap;">dir</tt>文件。
+这个特性仍然在增加过程，将来可能会加入更多的字段以获得更精细的控制。
+</p>
+</td></tr><tr valign="top"><td>DaemonicFile</td><td>
+<p>
+给出 <tt style="white-space: nowrap;">daemonic</tt> 的服务描述。
+<tt style="white-space: nowrap;">daemonic</tt> 被 Fink 用于创建和删除 daemon 进程的
+StartupItems (例如 web 服务器)。
+描述会被作为一个名为 <tt style="white-space: nowrap;">%p/etc/daemons/<b>name</b>.xml</tt> 的文件添加到软件包中，这里 <b>name</b> 由 DaemonicName 字段指定，默认为软件包名字。
+对本字段的内容可以进行百分号展开。
+注意如果你的软件包需要使用它的时候，你必须添加 <tt style="white-space: nowrap;">daemonic</tt> 到依赖关系清单中。
+</p>
+</td></tr><tr valign="top"><td>DaemonicName</td><td>
+<p>
+<tt style="white-space: nowrap;">daemonic</tt> 服务描述文件的名字。
+查看 DaemonicFile 字段的描述获取更多的信息。
+</p>
+</td></tr></table>
+<p><b>额外数据：</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Homepage</td><td>
+<p>
+软件包上游提供者的首页 URL。
+</p>
+</td></tr><tr valign="top"><td>DescDetail</td><td>
+<p>
+一个相比 <tt style="white-space: nowrap;">Description</tt> 字段更详细的描述(内容包括它是什么，我可以用它来做什么？)。
+这里允许使用多行。因为这个字段在显示的时候不会由自动单词绕回，你应该手工插入分行符，使得每行不超过 79 个字符(如果可能的话)。
+</p>
+</td></tr><tr valign="top"><td>DescUsage</td><td>
+<p>
+这是对如果使用软件有关的信息(我怎么使用它？)。
+就好象 "在使用 WindowMaker 运行 wmaker.inst 一次" 这样的信息。可以使用多行。因为这个字段在显示的时候不会由自动单词绕回，你应该手工插入分行符，使得每行不超过 79 个字符(如果可能的话)。
+</p>
+</td></tr><tr valign="top"><td>DescPackaging</td><td>
+<p>
+关于软件包的注解。类似 "对 Makefile 进行修正已使得正确放置所有的文件" 之类的信息会放在这里。可以使用多行。
+</p>
+</td></tr><tr valign="top"><td>DescPort</td><td>
+<p>
+这是专门针对移植到 Darwin 的软件包的。
+象 "config.guess 和 libtool 脚本已被更新，需要使用 -no-cpp-precomp
+" 之类的信息会被放在这里。可以使用多行。
+</p>
+</td></tr></table>
+
+
+<h3><a name="reference.splitoffs">5.3 剥离分支(SplitOffs)</a></h3>
+<p>从 fink 0.9.9 开始，可以用一个单独的 .info 文件来构建多个软件包。
+安装阶段和正常的类似，执行
+<tt style="white-space: nowrap;">InstallScript</tt> 和 <tt style="white-space: nowrap;">DocFiles</tt> 命令。
+如果存在 <tt style="white-space: nowrap;">SplitOff</tt> 字段，会触发第二个安装目录的创建。
+在 <tt style="white-space: nowrap;">SplitOff</tt> 字段里面，新的安装目录以 %i 代表，
+而父文件包的原始安装目录则用 %I 代表。
+</p>
+<p>
+<tt style="white-space: nowrap;">SplitOff</tt> 字段必须包含它自己的一系列字段。
+事实上，它由一个备有包含字段的一个完整的软件包描述组成。下面是在子描述里面可以包含的内容(分类说明)：
+</p>
+<ul>
+<li>初始化数据：只需要指明 <tt style="white-space: nowrap;">Package</tt> 字段，其它的内容都可以从父软件包进行继承。你可能需要通过声明 <tt style="white-space: nowrap;">SplitOff</tt> 内的字段修改 <tt style="white-space: nowrap;">Type</tt> 和 <tt style="white-space: nowrap;">License</tt> 字段。可以使用百分号扩展，而且通常使用 %N 来引用父软件包的名字会很方便。</li>
+<li>依赖关系：所有的依赖关系有关的字段都可以使用。</li>
+<li>解压阶段，补丁阶段，编译阶段：这些字段是无关的，会被忽略。</li>
+<li>安装阶段，构建阶段：全部的字段都可以使用(除了 <tt style="white-space: nowrap;">SplitOff</tt> 字段不能在 <tt style="white-space: nowrap;">SplitOff</tt>
+字段里面使用以外)。</li>
+<li>额外数据：这会从父软件包继承，但可以通过在 <tt style="white-space: nowrap;">SplitOff</tt> 中声明这些字段而进行修改。</li>
+</ul>
+<p>
+在安装阶段，父文件包的 <tt style="white-space: nowrap;">InstallScript</tt> 和 
+<tt style="white-space: nowrap;">DocFiles</tt> 会被首先执行。
+然后是 <tt style="white-space: nowrap;">SplitOff</tt> 字段里面的 <tt style="white-space: nowrap;">Files</tt> 命令，它会导致命令中所列的文件和目录会从父文件包的安装目录 %I 移到当前的安装目录 %i。然后<tt style="white-space: nowrap;">SplitOff</tt> 软件包的 <tt style="white-space: nowrap;">InstallScript</tt>
+和 <tt style="white-space: nowrap;">DocFiles</tt> 会被执行。
+</p><p>
+如果还有通过 <tt style="white-space: nowrap;">SplitOff2</tt>，<tt style="white-space: nowrap;">SplitOff3</tt>等等指明的更多子软件包，命令
+(<tt style="white-space: nowrap;">Files</tt>，<tt style="white-space: nowrap;">InstallScript</tt>，<tt style="white-space: nowrap;">DocFiles</tt>)
+会以同样的顺序依此对它们进行执行。
+</p><p>
+在构建阶段，每个软件包的安装/删除的前/后脚本会通过相应软件包构建阶段的命令来生成。
+</p><p>
+每个被构建的软件包都要求把授权协议文件存放到 %i/share/doc/%n (当然对于每个软件包 %n 有不同的取值)目录中。
+注意
+<tt style="white-space: nowrap;">DocFiles</tt> 是拷贝文件而不是移动它们，所以可以通过多次使用 <tt style="white-space: nowrap;">DocFiles</tt> 命令而把一个相同文档拷贝安装在几个不同的地方。
+</p>
+
+
+
+
+<h3><a name="reference.scripts">5.4 脚本</a></h3>
+
+<p>PatchScript，CompileScript 和 InstallScript 字段允许你指定需要执行的 shell 命令。支持两种形式。
+</p><p>
+这个字段可以是命令的简单罗列。它和一个
+shell 脚本类似。不过，命令是通过 system() 调用执行的，每次一行，所以设置环境变量和更改路径只对同一行有效。从 fink 0.18.2 后的 CVS 版本开始，你可以用与普通 shell 脚本类似的方法来绕回太长的行：
+在一行末尾的反斜线 (<tt style="white-space: nowrap;">\</tt>) 表明下一行是一个续行。
+</p><p>
+作为替代方案，你可以在这里嵌入一个完整的脚本，使用你选择的解析器。
+对于任何 Unix 脚本，第一行必须以 <tt style="white-space: nowrap;">#!</tt> 开始，后面紧跟解析器的完整路径名以及需要的标志(例如 <tt style="white-space: nowrap;">#!/bin/csh</tt>，<tt style="white-space: nowrap;">#!/bin/bash -ev</tt>等等)。在这种情况下，整个
+*Script 字段会被写到一个临时文件，然后被执行。
+</p>
+
+
+<h3><a name="reference.patches">5.5 补丁</a></h3>
+
+<p>如果你的软件包需要补丁采可以在 Darwin 上编译(或与 Fink 配合)，
+把补丁命名为与软件包描述文件相同的名字，使用 ".patch" 来取代 ".info" 作为扩展名，并把它放在和 .info 文件相同的目录下面。
+如果你在文件名中使用完整的软件包名，那么使用下面的任意一种方式(它们是等效的)：</p>
+<pre>Patch: %f.patch</pre>
+<pre>PatchScript: patch -p1 &lt;%a/%f.patch</pre>
+<p>如果你使用比较新的简单软件包命名约定，使用 %n
+来代替 %f。这两个字段不是互斥的，你可以两个都使用，它们都会被执行。这种情况下，PatchScript 会在后面被执行。</p>
+<p>因为你可能会在补丁文件中允许用户选择安装前缀，建议在补丁文件中使用类似 <tt style="white-space: nowrap;">@PREFIX@</tt> 的变量来代替 <tt style="white-space: nowrap;">/sw</tt>，然后使用：</p>
+<pre>PatchScript: sed 's|@PREFIX@|%p|g' &lt;%a/%f.patch | patch -p1</pre>
+<p>补丁文件应该是 unidiff 格式，而且一般应该通过：</p>
+<pre>diff -urN &lt;originalsourcedir&gt; &lt;patchedsourcedir&gt;</pre>
+<p>命令产生。</p>
+<p>如果你用过 emacs 编辑文件，你可以在上面的 diff 命令中加上 <tt style="white-space: nowrap;">-x'*~'</tt> 来派出自动产生的后备文件。</p>
+<p>另外需要注意的是非常大的补丁不应该放到 CVS 中。
+它们应该被放到一个 web/ftp 服务器，并使用
+<tt style="white-space: nowrap;">SourceN:</tt> 字段来指明。如果你自己没有网站，fink 项目管理员可以把它放到 fink 自己的网站上。如果你的补丁大于 30Kb，你应该考虑把它作为一个单独的下载。
+</p>
+
+
+<h3><a name="reference.profile.d">5.6 Profile.d 脚本</a></h3>
+
+<p>
+如果你的软件包需要一些运行时的初始化(例如，设置环境变量)，你可以使用 profile.d 脚本。
+这些脚本片段由 <tt style="white-space: nowrap;">/sw/bin/init.[c]sh</tt> 脚本所运行。通常，所有 fink 的用户都会把这些脚本放到它们的起动文件(<tt style="white-space: nowrap;">.cshrc</tt> 或类似的文件)中。
+你的软件包必须为两个变种都提供脚本：一个给 sh 兼容的 shells (sh, zsh, bash, ksh, ...) 而另一个给 csh 兼容的 shells (csh, tcsh)。它们应该被安装在 <tt style="white-space: nowrap;">/sw/etc/profile.d/%n.[c]sh</tt> (和往常一样，%n 代表软件包名)。
+另外，它们的可读和可执行属性都应该被设置(即，用 -m 755 参数安装它们)，否则它们不能被正确加载。
+</p>
+<p>
+如果你只需要设置一些环境变量(例如，把 QTDIR 设置为 '/sw')，你可以使用 RuntimeVars 字段来比较方便地实现这个所说的功能。
+</p>
+
+
+
+<hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2004 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: packaging.zh.xml,v 1.3 2004/03/11 05:41:57 jeff_yecn Exp $</i></p></body></html>
