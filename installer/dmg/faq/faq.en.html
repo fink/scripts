@@ -434,12 +434,11 @@ fink selfupdate-cvs</pre></div>
     <a name="usage-fink.fink-not-found">
       <div class="question"><p><b>Q5.15: I get "command not found" errors when I run Fink or anything that I
         installed with Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> If this always happens, then you may have inadvertently modified
-        your startup scripts. Run the
+      <div class="answer"><p><b>A:</b> If this always happens, then you may have inadvertently modified (or failed to modify) your startup scripts. Run the
         <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt> script (either by
         double-clicking in the Finder or in a terminal), which will attempt to
         detect your startup configuration. You'll then need to open a new
-        terminal session so that your environment settings are loaded.</p><p>On the other hand, if you only have problems in the Apple X11
+        terminal session so that your environment settings are loaded.  <b>Note:</b>  for <tt style="white-space: nowrap;">fink-0.18.3</tt> and <tt style="white-space: nowrap;">fink-0.19.2</tt>, the script has been changed to <tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt>, and must be run in a terminal.</p><p>On the other hand, if you only have problems in the Apple X11
         terminal, this probably means that you need to create a <a href="http://fink.sourceforge.net/doc/x11/run-xfree86.php#xinitrc">.xinitrc</a>
         file and add the line</p><pre>. /sw/bin/init.sh</pre><p>near the beginning (i.e. before any programs get run). Restart X11
         (if running) after you do this.</p></div>
@@ -601,7 +600,9 @@ update available list script returned error exit status 1.</pre><p>then all you 
       <div class="answer"><p><b>A:</b> Errors of the form:</p><pre>gzip -dc /sw/src/dpkg-1.10.9.tar.gz | /sw/bin/tar -xf - 
 ### execution of gzip failed, exit code 139</pre><p>or</p><pre>gzip -dc /sw/src/aquaterm-0.3.0a.tar.gz | /sw/bin/tar -xf -
 gzip: stdout: Broken pipe 
-### execution of gzip failed, exit code 138</pre><p>or</p><pre>dpkg-deb -b root-base-files-1.9.0-1 /sw/fink/dists/unstable/main/binary-darwin-powerpc/base ### executionof dpkg-deb failed, exit code 10 
+### execution of gzip failed, exit code 138</pre><p>or</p><pre>dpkg-deb -b root-base-files-1.9.0-1 /sw/fink/dists/unstable/main/binary-darwin-powerpc/base
+
+### execution of dpkg-deb failed, exit code 1
 Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>or segmentation faults when running utilities from<tt style="white-space: nowrap;">
         fileutils</tt>, e.g. <tt style="white-space: nowrap;">ls</tt> or <tt style="white-space: nowrap;">mv</tt>, are likely
         to be due to a prebinding error in a library, and can be fixed by
@@ -1290,4 +1291,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.7 2004/03/23 02:01:41 alexkhansen Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: faq.en.xml,v 1.8 2004/03/24 01:55:05 alexkhansen Exp $</i></p></body></html>

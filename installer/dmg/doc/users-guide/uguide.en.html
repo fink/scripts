@@ -104,7 +104,7 @@ All developers run it, and packages are tested on this system.
 It is considered "fully supported and tested", although there may
 still be stray compile problems with single packages.
 </p>
-<p><b>Mac OS X 10.2</b> is still supported, though some newer packages may not have 10.2 versions available.</p>
+      <p><b>Mac OS X 10.2</b> is still supported, though some newer packages may not have 10.2 versions available.</p>
       <p>
         <b>Mac OS X 10.1</b> is still supported to some extent.
 You must run Fink 0.4.1 and no later versions.
@@ -275,8 +275,10 @@ environment variable (and some others) accordingly.
 In most cases, you can do this via the command
 </p>
       <pre>open /sw/bin/pathsetup.command</pre>
-      <p>
-However, if that doesn't work for some reason, you can configure it
+      <p>, or for <tt style="white-space: nowrap;">fink-0.18.3</tt> or <tt style="white-space: nowrap;">fink-0.19.2</tt>, by running (exactly as shown below):
+</p>
+      <pre>/sw/bin/pathsetup.sh</pre>
+      <p>However, if that doesn't work for some reason, you can configure it
 manually.  This will depend on the shell you are using, however.
 You can determine the shell you are using by opening a terminal and
 running the command:
@@ -581,15 +583,15 @@ If you run into errors during that process, please first check the
           <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS | rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
 </p>
         </li>
-<li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS | rsync access may be needed to access this version.</p>
-</li> 
+        <li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS | rsync access may be needed to access this version.</p>
+</li>
         <li>
           <p>
             <b>10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
           <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
 </p>
         </li>
-<li><b>10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
+        <li><b>10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
       </ul>
     
     <h3><a name="packages.x11">3.7 Getting X11 Sorted Out</a></h3>
@@ -674,7 +676,7 @@ For apt, run <tt style="white-space: nowrap;">apt-get update</tt> to get the lat
 list, then <tt style="white-space: nowrap;">apt-get upgrade</tt> to update all packages that
 have new versions available.
 </p>
-<p>For Fink Commander, select Binary-&gt;Update descriptions to update the package list, and then Binary-&gt;Dist-Upgrade packages to update to new versions.</p>
+      <p>For Fink Commander, select Binary-&gt;Update descriptions to update the package list, and then Binary-&gt;Dist-Upgrade packages to update to new versions.</p>
       <p>
 For more information, especially about upgrading from Fink versions
 older than 0.3.0, see the
@@ -723,7 +725,7 @@ Once you have updated your package descriptions (no matter which way),
 you should update all packages at once with the command <tt style="white-space: nowrap;">fink
 update-all</tt>.
 </p>
-<p>To update the source distribution using Fink Commander, select Source-&gt;Selfupdate to download new package information files, and then Source-&gt;Update-all to update your outdated packages.</p>
+      <p>To update the source distribution using Fink Commander, select Source-&gt;Selfupdate to download new package information files, and then Source-&gt;Update-all to update your outdated packages.</p>
     
     <h3><a name="upgrade.mix">4.3 Mixing Binaries and Source</a></h3>
       
@@ -737,7 +739,6 @@ then use <tt style="white-space: nowrap;">fink selfupdate</tt> and <tt style="wh
 to get the current package descriptions and to update the remaining
 packages.  If you are using Fink commander, then follow the <a href="#upgrade.bin">binary</a> instructions, followed by those for <a href="#upgrade.src">source</a>.
 </p>
-
     
   <h2><a name="conf">5 The Fink Configuration File</a></h2>
     
@@ -893,7 +894,7 @@ True. It is set automatically by the <tt style="white-space: nowrap;">fink
 selfupdate-cvs</tt> command, so you should not need to change it
 manually.</p>
         </li>
-	<li>
+        <li>
 	  <p>
 	    <b>Buildpath:</b> path</p>
 	  <p>Fink needs to create several temporary directories for
@@ -1264,4 +1265,4 @@ Copyright (c) 2001-2004 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
-requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.4 2004/03/18 10:06:26 dmacks Exp $</i></p></body></html>
+requires the explicit consent of the author.</p><hr><p>Generated from <i>$Fink: uguide.en.xml,v 1.5 2004/03/24 01:56:46 alexkhansen Exp $</i></p></body></html>
