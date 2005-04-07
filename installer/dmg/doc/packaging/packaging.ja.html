@@ -26,7 +26,7 @@ Available Languages:  |
 			<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">現在メンテナのいないパッケージ</a>
 			のメンテナンスをお願いいたします．
 		</p>
-	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.prefix">3.2 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.3 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.4 Perl モジュール</a></li><li><a href="#policy.emacs">3.5 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#reference"><b>5 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">5.1 ビルドプロセス</a></li><li><a href="#reference.fields">5.2 フィールド</a></li><li><a href="#reference.splitoffs">5.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">5.4 スクリプト</a></li><li><a href="#reference.patches">5.5 パッチ</a></li><li><a href="#reference.profile.d">5.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
+	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#reference"><b>5 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">5.1 ビルドプロセス</a></li><li><a href="#reference.fields">5.2 フィールド</a></li><li><a href="#reference.splitoffs">5.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">5.4 スクリプト</a></li><li><a href="#reference.patches">5.5 パッチ</a></li><li><a href="#reference.profile.d">5.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
 		
 		
 		<h3><a name="intro.def1">1.1 パッケージとは何か?</a></h3>
@@ -403,7 +403,21 @@ SplitOff: &lt;&lt;
 				</li>
 			</ul>
 		
-		<h3><a name="policy.prefix">3.2 基盤システムへの干渉問題</a></h3>
+		<h3><a name="policy.openssl">3.2 The GPL and OpenSSL</a></h3>
+			<p>
+				(2005年４月より施行)
+			</p>
+			<p>
+				OpenSSL ライセンスが GPL と LPGL ライセンスが明らかに整合性を欠いていることから，
+				openssl にリンクをしている fink パッケージのうち， GPL または LGPL ライセンスを使用しているものは
+				"Restrictive" となる．
+				Fink プロジェクトはこれらのパッケージをバイナリ配布しないことになるが，利用者は自己判断でコンパイルすることができる．				
+			</p>
+			<p>
+				パッケージメンテナは，元のパッケージライセンスを <tt style="white-space: nowrap;">DescPackaging</tt> に記述されたい．
+			</p>
+		
+		<h3><a name="policy.prefix">3.3 基盤システムへの干渉問題</a></h3>
 			
 			<p>
 				Finkは基盤システムから分離したディレクトリにインストールされるアドオン・ディストリビューションです．
@@ -417,7 +431,7 @@ SplitOff: &lt;&lt;
 				(すなわち，実行可能ファイルを呼び出す前にそれが存在するかどうか調べたりする必要があります)．
 			</p>
 		
-		<h3><a name="policy.sharedlibs">3.3 共有ライブラリ</a></h3>
+		<h3><a name="policy.sharedlibs">3.4 共有ライブラリ</a></h3>
 			
 			<p>
 				Fink は共有ライブラリに関して新しいポリシーを定め， 2002 年 2 月から施行しています．
@@ -811,7 +825,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				ユーザのシステムでは大抵 <tt style="white-space: nowrap;">foo-bin</tt> のインストールが要求されます．
 			</p>
 		
-		<h3><a name="policy.perlmods">3.4 Perl モジュール</a></h3>
+		<h3><a name="policy.perlmods">3.5 Perl モジュール</a></h3>
 			
 			<p>
 				2003 年 5 月以来， Fink には Perl モジュールに対する新しいポリシーがあります．
@@ -870,7 +884,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				その Fink パッケージが XS モジュールで，バージョンの付かないディレクトリにインストールされるかチェックし，そうなら警告を発します．
 			</p>
 		
-		<h3><a name="policy.emacs">3.5 Emacs ポリシー</a></h3>
+		<h3><a name="policy.emacs">3.6 Emacs ポリシー</a></h3>
 			
 			<p>
 				Fink プロジェクトでは Emacs について Debian プロジェクトのポリシーに従うことに決定しましたが，小さな違いもあります．
