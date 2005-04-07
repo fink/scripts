@@ -639,9 +639,9 @@ Depends: barN-shlibs (= %v-%r)
 BuildDependsOnly: True
 DocFiles: COPYING
 SplitOff: &lt;&lt;
-Package: barN-shlibs
-Files: lib/bar.N.x.y.dylib lib/bar.N.dylib lib/bar/N
-DocFiles: COPYING
+  Package: barN-shlibs
+  Files: lib/bar.N.x.y.dylib lib/bar.N.dylib lib/bar/N
+  DocFiles: COPYING
 &lt;&lt;
 </pre>
 			<p>
@@ -1758,17 +1758,17 @@ make</pre>
 							デフォルト値は次のようになる (0.13.4) ．
 						</p>
 <pre>perl Makefile.PL PREFIX=%p \
-INSTALLPRIVLIB=%p/lib/perl5 \
-INSTALLARCHLIB=%p/lib/perl5/darwin \
-INSTALLSITELIB=%p/lib/perl5 \
-INSTALLSITEARCH=%p/lib/perl5/darwin \
-INSTALLMAN1DIR=%p/share/man/man1 \
-INSTALLMAN3DIR=%p/share/man/man3 \
-INSTALLSITEMAN1DIR=%p/share/man/man1 \
-INSTALLSITEMAN3DIR=%p/share/man/man3 \
-INSTALLBIN=%p/bin \
-INSTALLSITEBIN=%p/bin \
-INSTALLSCRIPT=%p/bin
+ INSTALLPRIVLIB=%p/lib/perl5 \
+ INSTALLARCHLIB=%p/lib/perl5/darwin \
+ INSTALLSITELIB=%p/lib/perl5 \
+ INSTALLSITEARCH=%p/lib/perl5/darwin \
+ INSTALLMAN1DIR=%p/share/man/man1 \
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
 						<p>
@@ -1777,18 +1777,18 @@ make test</pre>
 							デフォルト値は次のようになる．
 						</p>
 <pre>perl$version Makefile.PL \
-PERL=perl$version PREFIX=%p \
-INSTALLPRIVLIB=%p/lib/perl5/$version \
-INSTALLARCHLIB=%p/lib/perl5/$version/$perlarchdir \
-INSTALLSITELIB=%p/lib/perl5/$version \
-INSTALLSITEARCH=%p/lib/perl5/$version/$perlarchdir \
-INSTALLMAN1DIR=%p/share/man/man1 \
-INSTALLMAN3DIR=%p/share/man/man3 \
-INSTALLSITEMAN1DIR=%p/share/man/man1 \
-INSTALLSITEMAN3DIR=%p/share/man/man3 \
-INSTALLBIN=%p/bin \
-INSTALLSITEBIN=%p/bin \
-INSTALLSCRIPT=%p/bin
+ PERL=perl$version PREFIX=%p \
+ INSTALLPRIVLIB=%p/lib/perl5/$version \
+ INSTALLARCHLIB=%p/lib/perl5/$version/$perlarchdir \
+ INSTALLSITELIB=%p/lib/perl5/$version \
+ INSTALLSITEARCH=%p/lib/perl5/$version/$perlarchdir \
+ INSTALLMAN1DIR=%p/share/man/man1 \
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
 <p>
@@ -2240,4 +2240,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.19 2005/02/08 00:22:05 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.20 2005/04/07 06:47:42 babayoshihiko Exp $</i></p></body></html>
