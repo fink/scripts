@@ -25,7 +25,7 @@ Available Languages:  |
 如果你希望帮助 Fink 项目，而你在这方面又有专长，你可以考虑选择接受一个
 <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">尚未有维护人员的软件包。</a>
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.prefix">3.2 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.3 共享函数库</a></li><li><a href="#policy.perlmods">3.4 Perl 模块</a></li><li><a href="#policy.emacs">3.5 Emacs 规则</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#reference"><b>5 操作手册</b></a><ul><li><a href="#reference.build">5.1 构建过程</a></li><li><a href="#reference.fields">5.2 字段</a></li><li><a href="#reference.splitoffs">5.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">5.4 脚本</a></li><li><a href="#reference.patches">5.5 补丁</a></li><li><a href="#reference.profile.d">5.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.4 共享函数库</a></li><li><a href="#policy.perlmods">3.5 Perl 模块</a></li><li><a href="#policy.emacs">3.6 Emacs 规则</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#reference"><b>5 操作手册</b></a><ul><li><a href="#reference.build">5.1 构建过程</a></li><li><a href="#reference.fields">5.2 字段</a></li><li><a href="#reference.splitoffs">5.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">5.4 脚本</a></li><li><a href="#reference.patches">5.5 补丁</a></li><li><a href="#reference.profile.d">5.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
 
 
 
@@ -188,9 +188,11 @@ SplitOff: &lt;&lt;
 完整的（<b>f</b>ull）软件包名，即 %n-%v-%r
 </p>
 </td></tr><tr valign="top"><td>%p, %P</td><td>
+
 <p>
-标识 Fink 安装位置的前缀（<b>p</b>refix）比如：<tt style="white-space: nowrap;">/sw</tt>
+the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;">/sw</tt>. You must not assume all users have Fink installed in <tt style="white-space: nowrap;">/sw</tt>; use <tt style="white-space: nowrap;">%p</tt> to ge the correct path.
 </p>
+
 </td></tr><tr valign="top"><td>%d</td><td>
 <p>
 要打包的全套文件将被构建于的目标（<b>d</b>estination）目录，例如：
@@ -243,12 +245,22 @@ SplitOff: &lt;&lt;
 _raw 形式表明使用子类型字符串的精确形式，
 _pkg 形式表明使用去除句点之后的形式(就好象 Fink 的语言版本软件包的命名约定一样)。(在 fink 的 CVS 0.19.2 后版本中引入)。
 </p>
-</td></tr><tr valign="top"><td>%ni, %Ni</td><td>
+</td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>
 软件包的固定名称(<b>n</b>ame <b>i</b>nvariant)部分。
 它们和 %n 和 %N 类似，除了所有 %type_pkg[] 和 %type_raw[] 被去掉。
 (在 fink 的 CVS 0.19.2 后版本中引入)。
 你应该使用 %{ni} 和 %{Ni} 以避免与 %n 和 %N 扩展相混淆。
+</p>
+</td></tr><tr valign="top"><td>%{default_script}</td><td>
+<p>
+Valid only in <tt style="white-space: nowrap;">*Script</tt> fields, the default contents of
+that type of field. The value is often dependent on
+the <tt style="white-space: nowrap;">Type</tt> field, and is always defined (though it may be
+blank). When used in a <tt style="white-space: nowrap;">SplitOff: InstallScript</tt>, this
+expansion will yield the <b>parent's</b> default, even though the
+default for <tt style="white-space: nowrap;">InstallScript</tt> in a <tt style="white-space: nowrap;">SplitOff</tt>
+package is blank. (Introduced in fink-0.20.6)
 </p>
 </td></tr></table>
 
@@ -317,7 +329,26 @@ Documentation Project</tt>－如果文档中的其中一个软件包明显地被
 
 
 
-<h3><a name="policy.prefix">3.2 避免干扰基本系统</a></h3>
+<h3><a name="policy.openssl">3.2 The GPL and OpenSSL</a></h3>
+<p>
+(Policy change effective April, 2005.)
+</p>
+<p>
+Due to the apparent incompatibilty of the OpenSSL license with the GPL and 
+LGPL licenses, fink packages which link to openssl but are licensed under 
+the GPL or LGPL are marked as "Restrictive."  As a consequence, the Fink 
+project will not distribute binaries of such packages, although users are 
+free to compile them from source at their discretion.
+</p>
+<p>
+Package maintainers are encouraged to record the original package license in 
+the <tt style="white-space: nowrap;">DescPackaging</tt> field.
+</p>
+
+
+
+
+<h3><a name="policy.prefix">3.3 避免干扰基本系统</a></h3>
 <p>
 Fink 是一个安装在基本系统之外的独立目录里面的外加的软件系统。
 保证不要把文件安装到 Fink 的目录之外对一个软件包来说是非常重要的。
@@ -329,7 +360,7 @@ Fink 是一个安装在基本系统之外的独立目录里面的外加的软件
 </p>
 
 
-<h3><a name="policy.sharedlibs">3.3 共享函数库</a></h3>
+<h3><a name="policy.sharedlibs">3.4 共享函数库</a></h3>
 <p>
 Fink 对于共享库有了新的规则，它从 2002 年 2 月开始生效。
 本段内容讨论的是规则的第四版，它是与 Fink's 0.5.0 一同发布的。
@@ -465,6 +496,50 @@ SplitOff: &lt;&lt;
 这可以确保版本会匹配，而且保证 barN
 自动继承 "inherits" barN-shlibs 的所有依赖关系。
 </p>
+
+<p><b>The BuildDependsOnly field</b>
+</p><p>
+When libraries are being upgraded over time, it is often necessary to have
+two versions of the header files available during a transition period,
+with one version used for compiling some things and the other version
+used for compiling others.  For this reason, the packages containing
+header files must be constructed with some care.  If both foo-dev and
+bar-dev contain overlapping headers, then foo-dev should declare
+</p>
+<pre>
+  Conflicts: bar-dev
+  Replaces: bar-dev
+</pre>
+<p>and similarly bar-dev declares Conflicts/Replaces on foo-dev.
+</p><p>
+In addition, both packages should declare
+</p>
+<pre>
+  BuildDependsOnly: True
+</pre>
+<p>This inhibits others from writing packages which depend on foo-dev or
+bar-dev, since any such dependency will prevent the smooth operation of the
+Conflicts/Replaces method.
+</p><p>
+There are some packages containing header files for which it's not
+appropriate to declare BuildDependsOnly to be true.  In that case,
+the package should declare
+</p>
+<pre>
+  BuildDependsOnly: False
+</pre>
+<p>and the reason must be given in the DescPackaging field.
+</p><p>
+The BuildDependsOnly field should only be mentioned in the package's .info
+file if the package contains header files, installed into /sw/include.
+</p><p>
+As of fink 0.20.5, "fink validate" will issue a warning for any .deb
+which contains header files and at least one dylib, and does not declare
+BuildDependsOnly to be either true or false.  (It is possible that in
+future versions of fink, this warning will be expanded to cover the case of
+a .deb with header files and a static library as well.)
+</p>
+
 <p><b>Shlibs 字段：</b>
 </p><p>
 除了把共享库放到合适的软件包中外，作为规则版本 4，你还需要用 <tt style="white-space: nowrap;">Shlibs</tt> 字段声明全部共享库。这个字段每个共享库占一行，这行中包含库的 <tt style="white-space: nowrap;">-install_name</tt>，<tt style="white-space: nowrap;">-compatibility_version</tt>，以及版本依赖信息，这个信息指明在本兼容版本中提供库的 Fink 软件包。依赖关系应该用 <tt style="white-space: nowrap;">foo (&gt;= version-revision)</tt> 的形式指明。其中
@@ -535,7 +610,7 @@ SplitOff: &lt;&lt;
 
 
 
-<h3><a name="policy.perlmods">3.4 Perl 模块</a></h3>
+<h3><a name="policy.perlmods">3.5 Perl 模块</a></h3>
 <p>Fink 从 2003 年 5 月开始实施的对 perl 模块的规则，在 2004 年 4 月进行了修改。
 </p><p>
 传统上，关于 perl 模块的 Fink 软件包具有
@@ -552,13 +627,23 @@ SplitOff: &lt;&lt;
 <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> 指令会自动使用相应标定版本的 perl 程序，并把文件存储在正确的子目录中。
 (这个指令从 fink 0.13.0 版本开始提供)。</p>
 <p>按照 2003 年 5 月的规则，可以允创建一个 <tt style="white-space: nowrap;">-pm</tt> 软件包，它实际是去加载 <tt style="white-space: nowrap;">-pm560</tt> 或其它存在的相应版本的"束"软件包。按照 2004 年 4 月的规则，不再鼓励这样做，而且经过一个过渡期后，将会完全放弃这种做法。(唯一的例外是 <tt style="white-space: nowrap;">storable-pm</tt> 软件包因为自举的需要仍然需要保持这种形式)。</p>
-<p>对于 fink 0.20.1，如果当前 perl 版本号至少是 5.8.0 的时候，system-perl 虚拟软件包会自动”提供”一些 perl 模块。对于 system-perl-5.8.1-1，它们是：<b>attribute-handlers-pm, cgi-pm, digest-md5-pm581, file-spec-pm, file-temp-pm, filter-simple-pm581, filter-util-pm581, getopt-long-pm, i18n-langtags-pm, libnet-pm, locale-maketext-pm, memoize-pm, mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm, test-simple-pm, time-hires-pm581。</b></p>
-<p>从 fink 0.13.0 版本开始，对 <tt style="white-space: nowrap;">.deb</tt> 文件使用 <tt style="white-space: nowrap;">fink validate</tt> 命令的时候，将会检查这个 fink 软件包是否一个安装在没有标定版本的目录中的 XS 模块，如果是的话，将给出一个警告信息。
+
+<p>As of fink 0.20.2, the system-perl virtual package automatically
+"Provides" certain perl modules when the version of Perl present on
+the system is at
+least 5.8.0.  In the case of system-perl-5.8.1-1, these are:
+<b>attribute-handlers-pm581, cgi-pm581, digest-md5-pm581, file-spec-pm581, 
+file-temp-pm581, filter-simple-pm581, filter-util-pm581, getopt-long-pm581, 
+i18n-langtags-pm581, libnet-pm581, locale-maketext-pm581, memoize-pm581, 
+mime-base64-pm581, scalar-list-utils-pm581, test-harness-pm581, 
+test-simple-pm581, time-hires-pm581.</b>
+(This list was slightly different in fink 0.20.1: package maintainers are
+encouraged to check to be sure that they are assuming the correct list.)
 </p>
 
 
 
-<h3><a name="policy.emacs">3.5 Emacs 规则</a></h3>
+<h3><a name="policy.emacs">3.6 Emacs 规则</a></h3>
 <p>Fink 项目选择遵循 Debian 项目针对 emacs 的规则，但稍微有些差别。
 （Debian 规则文档可以在
 <a href="http://www.debian.org/doc/packaging-manuals/debian-emacs-policy">
@@ -725,7 +810,7 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 不可以使用下划线("_"),不可以使用大写字母。
 这是一个必需字段。
 </p>
-<p>对这个字段，只可应用 %N、%Ni、%type_raw[] 和 %type_pkg[] 这几种百分号扩展。</p>
+<p>对这个字段，只可应用 %N、%{Ni}、%type_raw[] 和 %type_pkg[] 这几种百分号扩展。</p>
 <p>
 作为 Fink 的打包规则，给定的软件包应该总是使用相同的选项进行编译。
 如果对一个软件包由多个变种(查阅关于 <tt style="white-space: nowrap;">Type</tt> 字段的文档)，你必须在 <tt style="white-space: nowrap;">Package</tt> 字段中加入特定变种的信息(查阅关于 %type_pkg[] 百分号展开的文档)。
@@ -737,6 +822,26 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 上游版本号。与 Package 字段具有同样的限制。
 这是一个必需字段。
 </p>
+
+<p>
+  Note that some programs use nonstandard version numbering schemes
+  that may cause sorting confusion or that contain characters that are
+  not allowed in this field. In these situations, when writing the
+  Fink package, you must convert the upstream value to one that is
+  acceptable and that allows the versions to be arranged in the
+  correct order. When in doubt about how version strings will be
+  sorted, you can use the <tt style="white-space: nowrap;">dpkg</tt> command at a shell
+  prompt. For example,
+</p>
+<pre>
+  dpkg --compare-versions 1.2.1 lt 1.3 &amp;&amp; echo "true"
+</pre>
+<p>
+  will print "true" because version string "1.2.1"
+  is less than "1.3". See the <tt style="white-space: nowrap;">dpkg</tt> manpage for
+  more details.
+</p>
+
 </td></tr><tr valign="top"><td>Revision</td><td>
 <p>
 软件包的修订版号。
@@ -744,6 +849,22 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 修订版号从 1 开始。
 这是一个必需字段。
 </p>
+
+<p>
+  Fink's policy is that <b>any</b> time you make a change to the
+  <tt style="white-space: nowrap;">.info</tt> file that results in changes to the
+  binary (compiled) form of a package (the <tt style="white-space: nowrap;">.deb</tt>
+  file), you <b>must</b> increase <tt style="white-space: nowrap;">Revision</tt>. This
+  includes changing the <tt style="white-space: nowrap;">Depends</tt> or other package lists,
+  and adding,
+  removing, or renaming splitoff packages or shifting files among
+  them. When migrating a package to a new tree (from 10.2 to 10.3, for
+  example) involves such changes, you should
+  increase <tt style="white-space: nowrap;">Revision</tt> by 10 in the newer tree in order to
+  leave space for future updates to the package in the older
+  tree.
+</p>
+
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p>
 <b>从 fink 0.12.0 开始。</b>
@@ -884,6 +1005,34 @@ Type: -x11 (boolean)
 Depends: (%type_pkg[-x11]) x11
 </pre>
 <p>会把软件包 X11 设为 nethack-x11 变量的一个依赖关系，而不是 nethack。</p>
+
+<p>
+  Note that when using Depends/BuildDepends for shared library packages
+  for which more than one major-version is available, you must
+  <b>not</b> do the following:
+</p>
+<pre>
+  Package: foo
+  Depends: id3lib3.7-shlibs | id3lib3.7-shlibs
+  BuildDepends: id3lib3.7-dev | id3lib4-dev
+</pre>
+<p>
+  even if your package could work with either library. Pick one
+  (preferably the highest version that can be used successfully) and
+  use it consistently in your package.
+</p>
+<p>
+  As explained in the <a href="#policy.sharedlibs">Shared Library Policy</a>, only one of the
+  -dev packages can be installed at a time, and each has links of the
+  same name that could point to different filenames in the associated
+  -shlibs package. When compiling package foo, the actual filename (in
+  the -shlibs package) gets hard-coded into the foo binary. That means
+  the resulting package needs the specific -shlibs package associated
+  with the -dev that was installed at compile-time. As a result, one
+  cannot have a <tt style="white-space: nowrap;">Depends</tt> that indicates that either one
+  will suffice.
+</p>
+
 </td></tr><tr valign="top"><td>BuildDepends</td><td>
 <p>
 <b>从 fink 0.9.0 开始。</b>
@@ -896,6 +1045,16 @@ Depends: (%type_pkg[-x11]) x11
 如果一个名为 "pine" 的软件包指明 <tt style="white-space: nowrap;">Provides: mailer</tt> 的话，那么只要安装了"pine"，所有对"mailer"的依赖关系都会被认为已经满足。
 你通常会把这些软件包名字同时列在 "Conflicts" 和 "Replaces" 字段。
 </p>
+
+<p>
+Note that there is no versioning data associated with Provides
+items. They do not inherit from the parent package that contains the
+Provides list nor is there a syntax for specifing an arbitrary version
+in the Provides field itself. Further, a dependency that contains a
+version specification is not satisfied by a package that Provides that
+needed package name. As a result, having many variants provide a common surrogate package may be harmful, because it precludes the use of versioned dependencies. For example, if foo-gnome and foo-nognome both have "Provides: foo", another package with "Depends: foo (&gt; 1.1)" will not work.
+</p>
+
 </td></tr><tr valign="top"><td>Conflicts</td><td>
 <p>
 一个逗号分隔的软件包名清单，这些软件包不应该和本软件安装在同一台机器上。
@@ -931,7 +1090,19 @@ Depends: (%type_pkg[-x11]) x11
 <p>
 <b>从 fink 0.9.9 开始。</b>
 一个布尔值，它表明没有其它软件包会依赖于它，它们应该只是 BuildDepend。
+
+Unlike usual boolean fields, <tt style="white-space: nowrap;">BuildDependsOnly</tt> is
+tri-state: leaving it undefined (not specifying it at all) is
+different than defining it as logically false. See the <a href="#policy.sharedlibs">Shared Library Policy</a> for
+more information.
 </p>
+<p>As of fink 0.20.5, the presence or absence of this field, and its value
+if present, are recorded into the .deb
+file when the package is built.  Therefore, <b>if you change the value of
+BuildDependsOnly or if you add or remove it,
+you must increase the revision number</b> of the package.
+</p>
+
 </td></tr></table>
 <p><b>解压阶段：</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>CustomMirror</td><td>
@@ -946,6 +1117,13 @@ asi-JP: ftp://ftp.qiixbar.jp/pub/mirror/bar
 eur-DE: ftp://ftp.barfoo.de/bar
 Primary: ftp://ftp.barbarorg/pub/
 &gt;&gt;</pre>
+
+<p>
+  The standard continent and country codes are listed in
+  <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_keys</tt>, which is part of the
+  fink or fink-mirrors package.
+</p>
+
 </td></tr><tr valign="top"><td>Source</td><td>
 <p>
 源代码压缩档的 URL。它应该是一个 HTTP 或 FTP URL，但 Fink 本身并不关心这一点-它只是把它传递给 wget。这个字段对镜像站点的 URL 标记模式：
@@ -953,7 +1131,7 @@ Primary: ftp://ftp.barbarorg/pub/
 这会在 Fink 的配置中寻找 <b>mirror-name</b> 镜像的设置，然后添加  <b>relative-path</b> 部分，并把结果作为实际的 URL。已知的 <b>mirror-name</b> 被列在 <tt style="white-space: nowrap;">/sw/lib/fink/mirror/_list</tt> 中。它是 fink 或 fink-mirror 软件包的一部分。另一方面，使用 <tt style="white-space: nowrap;">custom</tt> 作为 <b>mirror-name</b> 会使 Fink 使用 <tt style="white-space: nowrap;">CustomMirror</tt>
 字段。
 在 URL 使用前，会进行百分号展开。
-记住 %n 包括所有 %type_ 变种数据，所以你可能会希望在这里使用 %ni(也许还包括一些特定的 %type_ 展开)。
+记住 %n 包括所有 %type_ 变种数据，所以你可能会希望在这里使用 %{ni}(也许还包括一些特定的 %type_ 展开)。
 </p>
 <p>
 从 0.18.0 开始，<tt style="white-space: nowrap;">Source: none</tt> 具有特别的含义。它标识不需要下载源文件。参考
@@ -961,7 +1139,11 @@ Primary: ftp://ftp.barbarorg/pub/
 <tt style="white-space: nowrap;">gnu</tt> 这个值代表
 <tt style="white-space: nowrap;">mirror:gnu:%n/%n-%v.tar.gz</tt>；<tt style="white-space: nowrap;">gnome</tt> 则代表
 <tt style="white-space: nowrap;">mirror:gnome:stable/sources/%n/%n-%v.tar.gz</tt>。默认值是 <tt style="white-space: nowrap;">%n-%v.tar.gz</tt> (即一个手工指定的下载)。
+
+This implicitly-defined <tt style="white-space: nowrap;">Source</tt> form is deprecated
+(explicitly-stated simple filename/manual download is still okay).
 </p>
+
 </td></tr><tr valign="top"><td>Source<b>N</b></td><td>
 <p>
 如果一个软件包包含几个压缩档，在这些额外的字段中说明它们呢，从 N = 2 开始。所以，第一个压缩档(它应该是所谓的"主"压缩档)会被放在 <tt style="white-space: nowrap;">Source</tt>，第二个压缩档则作为 <tt style="white-space: nowrap;">Source2</tt>，依此类推。这里的规则和 Source 是一样的，区别只是 "gnu" 和 "gnome" 捷径不会被展开-那样做并没有意义。从 fink 的 0.19.2 后的一个 CVS 版本开始，你可以使用任意(不需要连续)的 N &gt;= 2 的整数值。不过，你仍然要保证它们是不重复的。
@@ -1098,7 +1280,7 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <tt style="white-space: nowrap;">%f.patch</tt> 或 <tt style="white-space: nowrap;">%n.patch</tt>。补丁会在 PatchScript 脚本运行之前应用(如果有的话)。
 </p>
 <p>
-记住 %n 包括所有 %type_ 变种数据，所以你可能需要在这里使用 %ni (也许需要包括一些特定的 %type_ 展开)。
+记住 %n 包括所有 %type_ 变种数据，所以你可能需要在这里使用 %{ni} (也许需要包括一些特定的 %type_ 展开)。
 维护一个单独的补丁文件，然后在 <tt style="white-space: nowrap;">PatchScript</tt> 字段中列出与变种有关的修改会比对每个变种使用单独的补丁文件容易些。
 </p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
@@ -1129,20 +1311,55 @@ CompileScript 字段的说明获取详细信息)。
 对于 &lt; 0.13.7 的 fink 版本，这个参数也对 perl 模块<tt style="white-space: nowrap;">Type: Perl</tt>有效，并会添加到默认的 perl Makefile.PL
 字符串中。
 </p>
-</td></tr><tr valign="top"><td>GCC</td><td>
+
 <p>
-要求使用的 gcc 编译器版本。允许值包括：
-<tt style="white-space: nowrap;">2.95.2</tt> 或 <tt style="white-space: nowrap;">2.95</tt>
-(仅用于 10.1 软件包代码树)，<tt style="white-space: nowrap;">3.1</tt>
-(仅用于 10.2 软件包代码树)，和 <tt style="white-space: nowrap;">3.3</tt>
-(仅用于 10.2-gcc3.3 和 10.3 软件包代码树)。
+  Starting in fink-0.22.0, this field supports conditionals. The
+  syntax is the same as that used in the <tt style="white-space: nowrap;">Depends</tt> and
+  other package-list fields. The conditional expression only applies
+  to the whitespace-delimited "word" immediately following
+  it. For example
+</p>
+<pre>
+Type: -x11 (boolean)
+ConfigureParams: --mandir=%p/share/man (%type_pkg[-x11]) --with-x11 --disable-shared
+</pre>
+<p>
+  will always pass the <tt style="white-space: nowrap;">--mandir</tt> and <tt style="white-space: nowrap;">--disable-shared</tt> flags, but only pass <tt style="white-space: nowrap;">--with-x11</tt> in the -x11 variant.
+</p>
+
+</td></tr><tr valign="top"><td>GCC</td><td>
+
+<p>
+This field specifies the GCC-ABI used by C++ code in this package.
+(It is needed because that ABI has changed twice, and any libraries
+which you link to containing C++ code must be compiled with the same ABI
+you are currently using.)
+</p><p>
+The allowed values are:
+<tt style="white-space: nowrap;">2.95.2</tt> (or <tt style="white-space: nowrap;">2.95</tt>),
+ <tt style="white-space: nowrap;">3.1</tt>,
+and <tt style="white-space: nowrap;">3.3</tt>.
+This last is expected to be the GCC-ABI for gcc 3.3 and all subsequent
+versions of gcc.
+The default values for the various package trees are:
+<tt style="white-space: nowrap;">2.95</tt> in the 10.1 tree, <tt style="white-space: nowrap;">3.1</tt> in the 10.2 tree,
+and <tt style="white-space: nowrap;">3.3</tt> in the 10.2-gcc3.3, 10.3, and all subsequent trees.
+</p><p>
+Note that when the GCC value is different from the default, the compiler
+must be specified within the package (typically by setting the CC or CXX
+flags), and a dependency on one of the (virtual) gcc packages should be
+specified.
 </p>
 <p>对于 fink 0.13.8，如果使用了这个标志，会使用 <tt style="white-space: nowrap;">gcc_select</tt> 来检测 gcc 的版本，如果检测到错误的版本，fink 会出错退出。
 </p>
 <p>
-这个字段被添加到 fink 以辅助在 gcc
-编译器之间的转换，因为这些不同的编译器在涉及有关没有考虑版本区别的 C++ 代码中存在着不兼容。
+This field was added to fink to aid maintainers
+in tracking the transition between the gcc
+compilers, which introduced a binary incompatibility between libraries
+that involve C++ code which is not reflected in the versioning
+scheme.
 </p>
+
 </td></tr><tr valign="top"><td>CompileScript</td><td>
 <p>
 在编译阶段运行的一系列命令。参阅下面关于脚本的注解。这里是放置配置和编译软件包的命令的地方。通常默认值是：
@@ -1159,22 +1376,37 @@ make</pre>
  INSTALLSITELIB=%p/lib/perl5 \
  INSTALLSITEARCH=%p/lib/perl5/darwin \
  INSTALLMAN1DIR=%p/share/man/man1 \
- INSTALLMAN3DIR=%p/share/man/man3
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
-<p>如果是指定版本的 <tt style="white-space: nowrap;">perl $version</tt> 类型(比如 $version 可能是 5.6.0)，
+<p>如果是指定版本的 <tt style="white-space: nowrap;">perl $version</tt> 类型(比如 <tt style="white-space: nowrap;">$version</tt> 可能是 5.6.0)，
 默认值是：
 </p>
 <pre>perl$version Makefile.PL \
  PERL=perl$version PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5/$version \
- INSTALLARCHLIB=%p/lib/perl5/$version/darwin \
+ INSTALLARCHLIB=%p/lib/perl5/$version/$perlarchdir \
  INSTALLSITELIB=%p/lib/perl5/$version \
- INSTALLSITEARCH=%p/lib/perl5/$version/darwin \
+ INSTALLSITEARCH=%p/lib/perl5/$version/$perlarchdir \
  INSTALLMAN1DIR=%p/share/man/man1 \
- INSTALLMAN3DIR=%p/share/man/man3
+ INSTALLMAN3DIR=%p/share/man/man3 \
+ INSTALLSITEMAN1DIR=%p/share/man/man1 \
+ INSTALLSITEMAN3DIR=%p/share/man/man3 \
+ INSTALLBIN=%p/bin \
+ INSTALLSITEBIN=%p/bin \
+ INSTALLSCRIPT=%p/bin
 make
 make test</pre>
+
+<p>where <tt style="white-space: nowrap;">$perlarchdir</tt> is "darwin" for versions 5.8.0 and 
+earlier, and is 
+"darwin-thread-multi-2level" for versions 5.8.1 and later.</p>
+
 <p>
 在命令执行之前，会进行百分号展开(参阅前面的章节)。
 </p>
@@ -1227,6 +1459,17 @@ make test</pre>
 如果软件包支持的话，首选会使用 <tt style="white-space: nowrap;">make install
 DESTDIR=%d</tt>。在命令执行之前，会进行百分号替换(参看前面的章节)。
 </p>
+</td></tr><tr valign="top"><td>AppBundles</td><td>
+
+<p>
+<b>Introduced in a post-0.23.1 version.</b>
+This field installs the specified application bundle(s) into
+<tt style="white-space: nowrap;">%p/Applications</tt>.  It will also create a
+symlink to the <tt style="white-space: nowrap;">/Applications/Fink</tt> directory.
+Example:
+</p>
+
+<pre>AppBundles: build/*.app Foo.app</pre>
 </td></tr><tr valign="top"><td>JarFiles</td><td>
 <p>
 <b>从 fink 0.10.0 开始。</b>
@@ -1339,7 +1582,8 @@ Fink 还会在最后添加一个 <tt style="white-space: nowrap;">exit 0</tt>。
 </td></tr><tr valign="top"><td>ConfFiles</td><td>
 <p>
 以空格分开的用户可以编辑的配置文件的列表。
-这些文件必须以绝对路径指明，例如，<tt style="white-space: nowrap;">%p/etc/foo.conf</tt>。
+Percent expansion  is performed on this field.
+这些文件必须以绝对路径指明，例如，<tt style="white-space: nowrap;">%p/etc/%n.conf</tt>。
 这些文件会被 dpkg 特别对待。
 当软件包被升级，而软件包和磁盘上的文件相比被改动过的话，用户会被询问使用哪个版本，以及是否需要进行备份。
 当一个软件包被删除后，配置文件仍然还保留在磁盘上。
