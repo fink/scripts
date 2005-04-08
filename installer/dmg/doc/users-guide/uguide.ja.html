@@ -29,7 +29,7 @@ Fink ユーザーズガイドへようこそ。
 このガイドでは、ソースからとバイナリからの両方について、初めてのインストールとアップグレードの仕方について書かれています。
 パッケージインストールとメンテナンスのことも書かれています。
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 グローバルオプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.fetch">6.10 fetch</a></li><li><a href="#usage.fetch-all">6.11 fetch-all</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing</a></li><li><a href="#usage.build">6.13 build</a></li><li><a href="#usage.rebuild">6.14 rebuild</a></li><li><a href="#usage.reinstall">6.15 reinstall</a></li><li><a href="#usage.configure">6.16 configure</a></li><li><a href="#usage.selfupdate">6.17 selfupdate</a></li><li><a href="#usage.index">6.18 index</a></li><li><a href="#usage.validate">6.19 validate</a></li><li><a href="#usage.scanpackages">6.20 scanpackages</a></li><li><a href="#usage.cleanup">6.21 cleanup</a></li><li><a href="#usage.dumpinfo">6.22 dumpinfo</a></li><li><a href="#usage.show-deps">6.23 show-deps</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 グローバルオプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.fetch">6.10 fetch</a></li><li><a href="#usage.fetch-all">6.11 fetch-all</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing</a></li><li><a href="#usage.build">6.13 build</a></li><li><a href="#usage.rebuild">6.14 rebuild</a></li><li><a href="#usage.reinstall">6.15 reinstall</a></li><li><a href="#usage.configure">6.16 configure</a></li><li><a href="#usage.selfupdate">6.17 selfupdate</a></li><li><a href="#usage.index">6.18 index</a></li><li><a href="#usage.validate">6.19 validate</a></li><li><a href="#usage.scanpackages">6.20 scanpackages</a></li><li><a href="#usage.cleanup">6.21 cleanup</a></li><li><a href="#usage.dumpinfo">6.22 dumpinfo</a></li><li><a href="#usage.show-deps">6.23 show-deps</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
 
 
 <h3><a name="intro.what">1.1 Fink とは何ですか?</a></h3>
@@ -502,7 +502,7 @@ Fink をソースからインストールした場合など、別にダウンロ
 <a href="http://finkcommander.sourceforge.net%20">Fink Commander website</a> リンクを辿って下さい。
 </p>
 
-<h3><a name="packages.">3.6 用意されているバージョン</a></h3>
+<h3><a name="packages.available-versions">3.6 用意されているバージョン</a></h3>
 
 <p>パッケージをインストールする場合、まず<a href="http://fink.sourceforge.net/pdb/index.php">Package Database</a>を確認して Fink にあるかどうか確認して下さい。
 用意されているバージョンは次の行に書かれてあります:</p>
@@ -511,6 +511,7 @@ Fink をソースからインストールした場合など、別にダウンロ
 <p>
 <b>0.4.1-stable:</b> OS 10.1 でバイナリインストールできる最新バージョン</p>
 </li>
+<li><b>0.6.3:</b> OS 10.2 でバイナリインストールできる最新バージョン</li>
 <li>
 <p>
 <b>0.7.1:</b> これは OS 10.3 と 10.2 向けのバイナリインストールできる基本バージョン。
@@ -519,7 +520,7 @@ Fink を <a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php">ア�
 </li>
 <li>
 <p>
-<b>10.2-gcc3.3 stable:</b> これはソースから <tt style="white-space: nowrap;">gcc 3.3</tt> でインストールできる OS 10.2 向け最新バージョン。
+<b>current-10.2-gcc3.3 stable:</b> これはソースから <tt style="white-space: nowrap;">gcc 3.3</tt> でインストールできる OS 10.2 向け最新バージョン。
 このバージョンをインストールできるようにするには、 <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS </a> または rsync アクセスを有効にする必要がある。
 もし <tt style="white-space: nowrap;">gcc 3.3</tt> に更新していない場合、このバージョン (あるいはパッケージ自体) が表示されない可能性がある。
 </p>
@@ -530,17 +531,10 @@ CVS | rsync を有効にすることで、バイナリディストリビュー�
 </li>
 <li>
 <p>
-<b>10.3 stable:</b> これはソースからインストールできる OS 10.3 向け最新バージョン。
+<b>current-10.3 stable:</b> これはソースからインストールできる OS 10.3 向け最新バージョン。
 CVS または rsync アクセスを有効にする必要がある。
 </p> 
-</li> 
-<li>
-<p>
-<b>In latest-unstable:</b> 最新の非安定バージョン。
-このバージョンをインストールするには、非安定バージョンのインストール方法の<a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">説明</a> に従って下さい。
-</p>
-<p>注意: 非安定バージョンは使用できないと言うわけではありませんが、自己責任で使用して下さい。
-</p></li>
+</li>
 </ul>
 
 <h3><a name="packages.x11">3.7 X11 を使う</a></h3>
@@ -1188,9 +1182,9 @@ p   インストールされたパッケージにより提供されたバーチ
 	  未インストールパッケージのみ表示。
 -s=expr,--section=expr
 	  正規表現 expr にマッチするセクションのパッケージのみ表示。
- -m expr,--maintainer=expr
+-m expr,--maintainer=expr
 	  正規表現 expr にマッチするメンテナによるパッケージのみ表示
- -t expr,--tree=expr
+-t expr,--tree=expr
 	  正規表現 expr にマッチするツリ−内にあるパッケージのみ表示
 -w=xyz,--width=xyz.
 	  出力形式の幅を設定する。
