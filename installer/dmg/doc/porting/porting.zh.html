@@ -15,7 +15,7 @@ Available Languages:  |
 		<p>本文档包含如何移植 Unix 软件到 Darwin 和 Mac OS X 平台上的提示。
 		这里的信息适用于 Mac OS X 10.0.x 和 Darwin 1.3.x。
 		这两种操作系统我们都用 Darwin 来指代，因为 Mac OS X 实际上只是 Darwin 的一个超集。</p>
-	<h2>Contents</h2><ul><li><a href="#basics"><b>1 基本知识</b></a><ul><li><a href="#basics.heritage">1.1 Darwin 的来历</a></li><li><a href="#basics.compiler">1.2 编译器和工具</a></li><li><a href="#basics.host-type">1.3 主机类型</a></li><li><a href="#basics.libraries">1.4 函数库</a></li><li><a href="#basics.other-sources">1.5 其它信息来源</a></li></ul></li><li><a href="#shared"><b>2 共享代码</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共享库和可加载模块对比</a></li><li><a href="#shared.version">2.2 版本编号</a></li><li><a href="#shared.cflags">2.3 编译器标志</a></li><li><a href="#shared.build-lib">2.4 构建一个共享库</a></li><li><a href="#shared.build-mod">2.5 构建一个模块</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 有关情况</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 补丁</a></li><li><a href="#libtool.fixing-14x">3.3 修正 1.4.x</a></li><li><a href="#libtool.dylibversionfix">3.4 修正 libtool 产生的 dylib 的版本字符串</a></li><li><a href="#libtool.notes">3.5 更多注解</a></li></ul></li><li><a href="#preparing-10.2"><b>4 为 10.2 做准备</b></a><ul><li><a href="#preparing-10.2.bash">4.1 bash shell</a></li><li><a href="#preparing-10.2.gcc3">4.2 gcc3 编译器</a></li></ul></li><li><a href="#preparing-10.3"><b>5 为 10.3 做准备</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li></ul></li></ul><h2><a name="basics">1 基本知识</a></h2>
+	<h2>Contents</h2><ul><li><a href="#basics"><b>1 基本知识</b></a><ul><li><a href="#basics.heritage">1.1 Darwin 的来历</a></li><li><a href="#basics.compiler">1.2 编译器和工具</a></li><li><a href="#basics.host-type">1.3 主机类型</a></li><li><a href="#basics.libraries">1.4 函数库</a></li><li><a href="#basics.other-sources">1.5 其它信息来源</a></li></ul></li><li><a href="#shared"><b>2 共享代码</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共享库和可加载模块对比</a></li><li><a href="#shared.version">2.2 版本编号</a></li><li><a href="#shared.cflags">2.3 编译器标志</a></li><li><a href="#shared.build-lib">2.4 构建一个共享库</a></li><li><a href="#shared.build-mod">2.5 构建一个模块</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 有关情况</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 补丁</a></li><li><a href="#libtool.fixing-14x">3.3 修正 1.4.x</a></li><li><a href="#libtool.notes">3.4 更多注解</a></li></ul></li><li><a href="#preparing-10.2"><b>4 为 10.2 做准备</b></a><ul><li><a href="#preparing-10.2.bash">4.1 bash shell</a></li><li><a href="#preparing-10.2.gcc3">4.2 gcc3 编译器</a></li></ul></li><li><a href="#preparing-10.3"><b>5 为 10.3 做准备</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li><li><a href="#preparing-10.3.typedef">5.2 New symbol definitions</a></li><li><a href="#preparing-10.3.system-libs">5.3 New builtin system libraries</a></li></ul></li></ul><h2><a name="basics">1 基本知识</a></h2>
 		
 		
 
@@ -65,7 +65,11 @@ Available Languages:  |
 			有些时候会加上第四部分-这时第三部分表示内核，而第四部分表示操作系统。
 			所有部分都使用小写字母，并以破折号连接。
 			例如：<tt style="white-space: nowrap;">i586-pc-linux-gnu</tt>，<tt style="white-space: nowrap;">hppa1.1-hp-hpux10.20</tt>，<tt style="white-space: nowrap;">sparc-sun-solaris2.6</tt>。
-			对应于 Mac OS X 10.0 的主机类型是 <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt>。</p>
+			对应于 Mac OS X 10.0 的主机类型是 <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt>。
+			
+			Versions of Mac OS X 10.2 bring various <tt style="white-space: nowrap;">powerpc-apple-darwin6.x.0</tt> and 10.3 gives <tt style="white-space: nowrap;">powerpc-apple-darwin7.x.0</tt>, where "x" depends on the exact OS version.
+			
+			</p>
 
 			<p>许多使用 autoconf 的软件包需要知道它们所编译于的系统平台。(附注：为了支持交叉编译和移植，实际上会有三种类型-主机类型，构建类型，目标类型。通常来说，它们是相同的)。
 			你可以把主机类型作为参数传递给 configure 脚本，或让它自己猜测。</p>
@@ -75,7 +79,11 @@ Available Languages:  |
 			直到最近，这些脚本才能够认识 Darwin 或 Mac OS X。
 			如果你有一个不认识 Darwin 的软件包，你需要替换包括在软件包里面的 config.guess 和 config.sub 脚本。
 			幸运的是，苹果放了一个可用的版本在 /usr/share/libtool (对 10.2 之前的版本是 /usr/libexec) 中，所以你只需要从那里拷贝就可以了。</p>
-
+            
+			<p>If you are constructing a Fink package, you can use the <tt style="white-space: nowrap;">UpdateConfigGuess</tt>
+			and/or <tt style="white-space: nowrap;">UpdateConfigGuessInDirs</tt> fields in your <tt style="white-space: nowrap;">.info</tt> 
+			package description file to do this update automatically.</p>
+            
 		
 
 		<h3><a name="basics.libraries">1.4 函数库</a></h3>
@@ -94,7 +102,7 @@ Available Languages:  |
 		<h3><a name="basics.other-sources">1.5 其它信息来源</a></h3>
 			
 
-			<p>关于移植的另外一个信息来源是一个在<a href="http://www.metapkg.org/wiki">MetaPkg Wiki</a> 的 Wiki 站点。</p>
+			<p>关于移植的另外一个信息来源是一个在 <a href="http://www.metapkg.org/wiki">MetaPkg Wiki</a> 的 Wiki 站点。</p>
 
 			<p>你可以阅读苹果的技术文摘 <a href="http://developer.apple.com/technotes/tn2002/tn2071.html">TN2071</a>：《移植 Unix 命令行工具到 Mac OS X》。</p>
 
@@ -109,7 +117,11 @@ Available Languages:  |
 			
 
 			<p>Mach-O 的一个令人吃惊的特性是对共享函数库和可加载模块的严格区分。
-			在 ELF 系统上，两者是相同的；任何的共享代码都可以作为函数库或作为动态加载模块。</p>
+			在 ELF 系统上，两者是相同的；任何的共享代码都可以作为函数库或作为动态加载模块。
+			
+			Use <tt style="white-space: nowrap;">otool -hv <b>some_file</b></tt> to see the filetype of <tt style="white-space: nowrap;">some_file</tt>.
+			
+			</p>
 
 			<p>Mach-O 共享函数库具有 MH_DYLIB 文件类型，扩展名为 <tt style="white-space: nowrap;">.dylib</tt>。
 			它们可以通过常用的静态连接标志进行连接，，比如 <tt style="white-space: nowrap;">-lfoo</tt> 会连接 libfoo.dylib。
@@ -148,13 +160,16 @@ Available Languages:  |
 			第一个数字必需为非零值。
 			第二和第三个数字可以不提供，这时缺省为零值。
 			没有指定版本号的时候，默认为 0.0.0，这是一种通配值。</p>
-
-			<p>"current"版本号主要是用于信息的用途。
-			"compatibility" 版本号用于后面的版本检查。
-			当一个可执行程序要连接的时候，库的版本信息被拷贝到可执行程序中。
-			当可执行程序运行的时候，这个版本信息会用来和要使用的库的版本进行进行核对。
-			除非使用的版本号等于或高于连接时候的库的版本号，否则 dyld 会产生一个运行时错误并终止程序的执行。</p>
-
+            
+            <p>The "current" version is for informational purposes only. The 
+            "compatibility" version is used for checking as follows. 
+            When an executable is linked, the version information from the library 
+            is copied into the executable. When that executable is run, the stored 
+            version information is checked against the version information in the 
+            library that is loaded. dyld generates a run-time error and terminates 
+            the program unless the loaded library version is equal to or newer 
+            than the one used during linking.</p>
+            
 		
 
 		<h3><a name="shared.cflags">2.3 编译器标志</a></h3>
@@ -174,7 +189,7 @@ Available Languages:  |
 			这可以通过一个完整的例子来演示。
 			我们要编译一个名为 libfoo 的库，它由 source.c 和 code.c 两个源程序文件组成。
 			版本号是 2.4.5，2 是主版本号(发生了不兼容的 API 改变)，4 是次要版本号(后向兼容的 API 改变)，5 是修正错误的修订版计数(有些人把这称为 "teeny" 修订版，它包含完全兼容的改变)。
-			函数库不依赖于其它共享库，会被安装在 /usr/local/lib。</p>
+			函数库不依赖于其它共享库，会被安装在 <tt style="white-space: nowrap;">/usr/local/lib</tt>。</p>
 
 <pre>cc -fno-common -c source.c
 cc -fno-common -c code.c
@@ -186,9 +201,15 @@ ln -s libfoo.2.4.5.dylib libfoo.2.dylib
 ln -s libfoo.2.4.5.dylib libfoo.dylib</pre>
 <p>
 注意版本号的各个部分所使用的地方。
-同时也注意静态连接器会使用 libfoo.dylib 符号连接，
-而动态连接器会使用 libfoo.2.dylib 符号连接。
-也可以把这些符号连接指到函数库的不同次要修订版上。
+
+When linking against this library, one would normally use the <tt style="white-space: nowrap;">-lfoo</tt> 
+flag, which accesses the <tt style="white-space: nowrap;">libfoo.dylib</tt> symlink. Regardless of 
+which symlink or file is specified, though, it is the <tt style="white-space: nowrap;">install_name</tt> 
+that is written into one's program. That means one can delete the "higher" 
+(less version-specific) symlink <tt style="white-space: nowrap;">libfoo.dylib</tt> after compiling. 
+During a minor-revision library upgrade, one just changes the target of the 
+<tt style="white-space: nowrap;">libfoo.2.dylib</tt> symlink that is used by the runtime dynamic linker.
+
 </p>
 
 
@@ -208,7 +229,10 @@ cc -bundle -flat_namespace -undefined suppress \
 注意这里没有使用版本号码。
 理论上来说，可以使用版本号码，但从实用的角度来说，这样做是没有意义的。
 另外注意的是，对束没有命名限制。
-一些软件包喜欢使用 "lib"，因为在其它系统会有这个要求。这样做不会有问题。
+一些软件包喜欢使用 "lib"，因为在其它系统会有这个要求。这样做不会有问题
+
+since a program would use the full filename when loading a module.
+
 </p>
 
 
@@ -273,13 +297,17 @@ Fink 团队的成员仍然不对 libtool 进行改进，并把他们的结果反
 <p>
 附注：
 所有 libtool 版本所包括的 libltdl 库只有在安装了 dlcompat 的 Darwin 才可以使用。
+
+This is included with OS X starting with 10.3. For previous versions,
+one can install the fink "dlcompat" family of packages.
+
 </p>
 
 
 
 <h3><a name="libtool.patch-135">3.2 1.3.5 补丁</a></h3>
 <p>
-如果你自己构建 libtool 1.3.5，你需要应用<a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">这个补丁</a> <b>[updated 2002-06-09]</b> 到 libtool 1.3.5 的源程序，然后删除 ltconfig 和 ltmain.sh 两个文件(它们会在你运行 configure 和 make 的时候从合适的 .in 文件中重建)。
+如果你自己构建 libtool 1.3.5，你需要应用<a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">这个补丁</a> <b>[updated 2002-06-09]</b> 到 libtool 1.3.5 的源程序，然后删除 <tt style="white-space: nowrap;">ltconfig</tt> 和 <tt style="white-space: nowrap;">ltmain.sh</tt> 两个文件(它们会在你运行 configure 和 make 的时候从合适的 .in 文件中重建)。
 在 Fink 的 libtool 1.3.5 软件包中，这个过程是自动的。</p><p>
 但那仅是全部工作的一半 ─ 每个软件包是通过它自己附带的 ltconfig 和 ltmain.sh 来使用 libtool。
 所以如果你需要构建共享库的时候，你要把每个软件包里面的这两个文件替换掉。
@@ -292,8 +320,8 @@ Fink 团队的成员仍然不对 libtool 进行改进，并把他们的结果反
 
 <h3><a name="libtool.fixing-14x">3.3 修正 1.4.x</a></h3>
 <p>
-现在广泛使用的 libtool 1.4.x 至少有三个不同版本(1.4.1，1.4.2，和更新的开发版本)，它们在 Darwin 上都有一些问题。不过在它们上面如何修正的方法却是不同的。Fink 所提供的 libtool14 软件包已经包括了所有需要的修正。
-不过，你仍然需要手工修正受影响的文件包的 ltmain.sh/configure 文件来使它可以正常工作。
+现在广泛使用的 libtool 1.4.x 至少有三个不同版本(1.4.1，1.4.2，和更新的开发版本)，它们在 Darwin 上都有一些问题。不过在它们上面如何修正的方法却是不同的。Fink 所提供的 "libtool14" 软件包已经包括了所有需要的修正。
+不过，你仍然需要手工修正受影响的文件包的  <tt style="white-space: nowrap;">ltconfig</tt> 和 <tt style="white-space: nowrap;">ltmain.sh</tt> 文件来使它可以正常工作。
 </p>
 
 <ol>
@@ -319,7 +347,7 @@ diff -Naur gdk-pixbuf-0.16.0.old/configure gdk-pixbuf-0.16.0.new/configure
 </li>
 <li>
 <b>可加载模块问题</b>：
-这个问题是由于 zsh (在 10.0 和 10.1 上是默认的 shell；从 10.2 开始，它被替换为 bash) 的非标准行为引起的。
+这个问题是由于 zsh (在 10.0 和 10.1 上是默认的 shell；starting in 10.2 bash is the default) 的非标准行为引起的。
 Zsh 的非标准引号处理方式使得可加载模块不能正确地构建，最后它们被构建程共享库(不象 Linux，在 Darwin 上这是完全不同的东西)。一个典型的修正办法是(你不能完全不经修改地照搬)：
 <pre>
 diff -Naur gnome-core-1.4.0.6.old/configure gnome-core-1.4.0.6.new/configure
@@ -382,75 +410,7 @@ diff -Naur gnome-core-1.4.0.6.old/configure gnome-core-1.4.0.6.new/configure
 </ol>
 
 
-<h3><a name="libtool.dylibversionfix">3.4 修正 libtool 产生的 dylib 的版本字符串</a></h3>
-
-<p>由 libtool 产生的库可能会有错误的版本号。
-这是由于软件包的 Makefile 文件的一个错误标识而导致的。
-当 libtool 在这样一个 Makefile 文件里面被调用的时候：
-<tt style="white-space: nowrap;">
--release "version"
-</tt>
-在 make 命令运行以后产生的二进制文件是这样的：</p>
-<ol>
-<li> libname.dylib</li>
-<li> libname-"version".dylib</li>
-</ol>
-<p>
-你可以很容易分辨在你的 Makefile 里面是不是使用了 <tt style="white-space: nowrap;">-release</tt>。
-你也许还注意到在函数库名后面的 <b>-</b>。
-这表明 libtool 是以 <tt style="white-space: nowrap;">-release</tt> 参数被调用来产生二进制文件的。
-一些其它的情况下，产生的二进制文件是类似这样的：
-</p>
-
-<ol>
-<li>libname.dylib</li>
-<li>libname-"version".x.x.x.dylib</li>
-</ol>
-<p>
-表明两个的标志 <tt style="white-space: nowrap;">-release</tt> 和 <tt style="white-space: nowrap;">-version-info</tt> 都被使用了。</p>
-<p>
-设置正确的 <tt style="white-space: nowrap;">-version-info</tt> 可以是一项很复杂的工作。
-苹果在它的开发者工具文档里面提供了一些很有用的信息。 
-因为你在运行 Fink，所以你应该安装了某个版本的开发工具。
-对当前 Mac OS X 系统的 libtool 的精确解释可以在<a href="file://localhost/Developer/Documentation/DeveloperTools/libtool/libtool_6.html#SEC34">文档</a>中找到。
-为了使本文档完整化，我们引用了上面提到的文档的一个摘要。
-</p>
-<p>
-引自《开发者文档》：
-libtool 库版本由三个整数来描述：
-</p>
-
-<ul><li>
-<b>当前</b>
-<p>
-这个函数库实现的最近的调用界面版本。
-</p>
-</li>
-<li>
-<b>修订版</b>
-<p>
-当前调用界面的实现版本。
-</p>
-</li>
-<li>
-<b>年龄</b>
-<p>
-这个函数库实现的最近和最旧的调用界面的版本号差别。
-换句话说，这个函数库实现从当前版本往前年龄范围内的全部调用界面─到现在的年龄。如果两个函数库由相同的当前和年龄号，那么动态连接器选择比较大修订版号的一个进行连接。
-</p>
-
-</li>
-</ul>
-<p>
-使用 libtool 设置和更新函数库的版本的更多信息可以在上面链接的文档中找到。
-它完整地包括了如何使用 <tt style="white-space: nowrap;">-version-info</tt> 创建和更新一个函数库版本号。
-</p>
-
-
-
-
-
-<h3><a name="libtool.notes">3.5 更多注解</a></h3>
+<h3><a name="libtool.notes">3.4 更多注解</a></h3>
 <p>关于 libtool 本身以及它的进展的更多信息，查看<a href="http://www.gnu.org/software/libtool/libtool.html">libtool 首页</a>。</p>
 
 <p>
@@ -564,6 +524,108 @@ diff -Naur gdk-pixbuf-0.16.0/ltmain.sh gp-new/ltmain.sh
 
 
 <h3><a name="preparing-10.3.perl">5.1 Perl</a></h3>
+
+  <p>
+    In OS X 10.2, <tt style="white-space: nowrap;">/usr/bin/perl</tt> was perl 5.6.0
+    and the architecture string was "darwin". In OS X
+    10.3, <tt style="white-space: nowrap;">/usr/bin/perl</tt> was upgraded to perl
+    5.8.1 and the architecture string was changed to
+    "darwin-thread-multi-2level". These changes <b>probably</b> do
+    not affect ordinary uses of the perl executable for package
+    creation since each perl executable knows where to find its own modules.
+    Maintainers of perl-module ("-pm") packages who follow the current
+    <a href="http://fink.sourceforge.net/packaging/policy.php#perlmods">Perl
+    Modules packaging policy</a> and are careful to follow the
+    <tt style="white-space: nowrap;">CompileScript</tt> and <tt style="white-space: nowrap;">InstallScript</tt>
+    documentation will already have things set up correctly.
+  </p>
+
+
+
+<h3><a name="preparing-10.3.typedef">5.2 New symbol definitions</a></h3>
+
+  <p>
+    Starting in Mac OS X 10.3, there is now always a complete
+    definition for the <tt style="white-space: nowrap;">socklen_t</tt> type. To get this
+    typedef defined, you may need to add to your program:
+  </p>
+  <pre>
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+  </pre>
+
+
+
+<h3><a name="preparing-10.3.system-libs">5.3 New builtin system libraries</a></h3>
+
+  <p>
+    Mac OS X 10.3 includes several libraries that were not in previous
+    system releases, and so were provided as fink packages:
+  </p>
+
+  <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>libpoll</td><td>
+	<p>
+	  The files <tt style="white-space: nowrap;">/usr/lib/libpoll.dylib</tt> and
+	  <tt style="white-space: nowrap;">/usr/include/poll.h</tt> are now included,
+	  however the OS X-supplied implementation of this library is
+	  not complete. If it is sufficient for your purposes, you can
+	  remove dependencies on the Fink "libpoll" and
+	  "libpoll-shlibs" packages. The library code is
+	  actually incorporated into libSystem, which is automatically
+	  linked. That means that <tt style="white-space: nowrap;">-lpoll</tt> is not necessary
+	  if you wish to use the OS X implementation. Be aware that OS
+	  X supplies a <tt style="white-space: nowrap;">libpoll.dylib</tt>, so
+	  <tt style="white-space: nowrap;">-lpoll</tt> may give different results depending on
+	  whether you have the Fink "libpoll" package
+	  installed or not.
+	</p>
+      </td></tr><tr valign="top"><td>libdl</td><td>
+	<p>
+	  The files <tt style="white-space: nowrap;">/usr/lib/libdl.dylib</tt>
+	  and <tt style="white-space: nowrap;">/usr/include/dlfcn.h</tt> are now included, so you should
+	  not need dependencies on the Fink "dlcompat",
+	  "dlcompat-dev", and "dlcompat-shlibs" packages. The library
+	  code is actually incorportated into libSystem, which is
+	  automatically linked. That means that <tt style="white-space: nowrap;">-ldl</tt> is
+	  not necessary (but has no effect if used).
+	</p>
+      </td></tr><tr valign="top"><td>GNU getopt</td><td>
+	<p>
+	  This library, including the <tt style="white-space: nowrap;">getopt_long()</tt>
+	  function, has been incorportated into libSystem and
+	  <tt style="white-space: nowrap;">/usr/include/getopt.h</tt>, so you may not
+	  need to use the Fink "libgnugetopt" and
+	  "libgnugetopt-shlibs" packages. Because libSystem is
+	  automatically linked and <tt style="white-space: nowrap;">/usr/include</tt>
+	  is automatically searched for headers, you could remove any
+	  <tt style="white-space: nowrap;">-lgnugetopt</tt>
+	  and <tt style="white-space: nowrap;">-I/sw/include/gnugetopt</tt> flags that were
+	  manually added in order to access Fink's
+	  "libgnugetopt".
+	</p>
+      </td></tr></table>
+
+  <p>
+    When migrating a package to OS X 10.3, try to remove these
+    deprecated dependencies, as those packages may be removed from these
+    newer package trees in the future. This means you will need a separate
+    package description file for each tree. As always,
+    the <tt style="white-space: nowrap;">Revision</tt> must be increased when making changes to
+    a package. In this manner, a user who upgrades from OS X 10.2 to
+    10.3 will see 10.3-specific packages as "newer" than his
+    existing 10.2 ones. By convention, the <tt style="white-space: nowrap;">Revision</tt>
+    should be increased by 10 when changes are made for migration to a
+    higher tree inn order to leave space for the lower-tree package to be
+    updated in the future.
+  </p>
+
+  <p>
+    When testing a migrated package, make sure to uninstall the
+    packages whose <tt style="white-space: nowrap;">BuildDepends</tt> you removed. Otherwise
+    the compiler may still link the Fink-supplied libraries.
+  </p>
+
+
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
