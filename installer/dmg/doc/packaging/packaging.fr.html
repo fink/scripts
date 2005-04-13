@@ -555,11 +555,30 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 </td></tr></table>
 <p><b>Phase de compilation :</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>Set<b>ENVVAR</b></td><td>
-<p>Définit certaines variables d'environnement pendant les phases de compilation et d'installation. On peut utiliser ce champ pour passer des drapeaux de compilation, etc... aux scripts configure et aux Makefile. Les variables reconnues à l'heure actuelle sont : CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, LD, LDFLAGS, LIBS, MAKE, MFLAGS, MAKEFLAGS. L'interprétation des raccourcis a lieu sur la valeur spécifiée, comme expliquée dans la section précédente. Exemple courant :</p>
+<p>Définit certaines variables d'environnement pendant les phases de compilation et d'installation. On peut utiliser ce champ pour passer des drapeaux de compilation, etc... aux scripts configure et aux Makefile. Les variables reconnues à l'heure actuelle sont : CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, DYLD_LIBRARY_PATH, JAVA_HOME, LD, LD_PREBIND, LD_PREBIND_ALLOW_OVERLAP, LD_FORCE_NO_PREBIND, LD_SEG_ADDR_TABLE, LDFLAGS, LIBRARY_PATH, LIBS, MACOSX_DEPLOYMENT_TARGET, MAKE, MFLAGS, MAKEFLAGS. L'interprétation des raccourcis a lieu sur la valeur spécifiée, comme expliquée dans la section précédente. Exemple courant :</p>
 <pre>SetCPPFLAGS: -no-cpp-precomp</pre>
-<p>Les variables CPPFLAGS et LDFLAGS sont spéciales. Elles ont pour valeur par défaut respective : <tt style="white-space: nowrap;">-I%p/include</tt> et <tt style="white-space: nowrap;">-L%p/lib</tt>. Si vous spécifiez une valeur pour l'une de ces deux variables, elle sera ajoutée avant la valeur par défaut.</p>
+<p>Certaines de ces variables ont des valeurs pré-établies par défaut. Si vous leur donnez une valeur, celle-ci sera ajoutée dans la liste devant la valeur par défaut. Les variables à valeur pré-établies sont les suivantes :</p>
+<pre>
+CPPFLAGS: -I%p/include
+LDFLAGS: -L%p/lib
+</pre>
+<p>Puis, à partir de la version 0.17.0 de fink :</p>
+<pre>
+LD_PREBIND: 1
+LD_PREBIND_ALLOW_OVERLAP: 1
+LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
+</pre>
+<p>Enfin, à partir des versions 0.24.3 et 0.23.7 de fink, on trouve  dans les branches 103 et 10.4-transitionnelle :</p>
+<pre>
+CXXFLAGS: -fabi-version=1
+</pre>
+<p>et dans la branche 10.4 et les branches suivantes :</p>
+<pre>
+CXXFLAGS: -fabi-version=2
+</pre>
+<p>Enfin, la variable MACOSX_DEPLOYMENT_TARGET a une valeur par défaut qui dépend de la version de Mac OS X en cours d'exécution, mais le fait d'affecter une valeur à cette variable pour un paquet donné remplace la valeur par défaut, elle ne vient pas s'ajouter devant la valeur par défaut.</p>
 </td></tr><tr valign="top"><td>NoSet<b>ENVVAR</b></td><td>
-<p>Quand la valeur de ce champ est true (vraie), les valeurs par défaut de CPPFLAGS et LDFLAGS mentionnées ci-dessus sont désactivées. Autrement dit, si vous ne voulez pas que LDFLAGS ait une valeur par défaut, utilisez <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt>.</p>
+<p>Quand la valeur de ce champ est true (vraie), les valeurs par défaut des variables à valeurs pré-établies, telles CPPFLAGS, LDFLAGS et CXXFLAGS mentionnées ci-dessus, sont désactivées. Autrement dit, si vous ne voulez pas que LDFLAGS ait une valeur par défaut, utilisez <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt>.</p>
 </td></tr><tr valign="top"><td>ConfigureParams</td><td>
 <p>Paramètres supplémentaires à passer au script configure. (Voir CompileScript pour de plus amples informations). À partir des versions de fink &gt; 0.13.7, ce champ fonctionne aussi avec les modules perl <tt style="white-space: nowrap;">Type: Perl</tt> ; il ajoute les paramètres à la chaîne perl par défaut Makefile.PL.</p>
 <p>À partir de la version 0.22.0 de fink, ce champ gère les expressions conditionnelles. La syntaxe est la même que celle utilisée dans le champ <tt style="white-space: nowrap;">Depends</tt> et les autres champs basés sur des listes de paquets. L'expression conditionnelle s'applique au "mot" délimité par des espaces suivant immédiatement l'expression. Par exemple :</p>
@@ -761,4 +780,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.53 2005/04/06 03:15:32 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.54 2005/04/13 02:56:01 michga Exp $</i></p></body></html>
