@@ -1692,15 +1692,45 @@ Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
 						</p>
 <pre>SetCPPFLAGS: -no-cpp-precomp</pre>
 						<p>
-							変数 CPPFLAGS および LDFLAGS は特別で，それぞれ <tt style="white-space: nowrap;">-I%p/include</tt> および <tt style="white-space: nowrap;">-L%p/lib</tt> というデフォルト値を持つ．
-							これらに値を指定すると，指定した値はデフォルト値の前に追加される (デフォルト値は常に含まれる)．
+							環境変数には，既定値を持つものもある．
+							この場合に値を指定すると，既定値に追加される．
+							既定値を持つ変数とその値は:
 						</p>
+<pre>
+CPPFLAGS: -I%p/include
+LDFLAGS: -L%p/lib
+</pre>
+						<p>
+							fink 0.17.0 からはさらに以下が追加されている:
+						</p>
+<pre>
+LD_PREBIND: 1
+LD_PREBIND_ALLOW_OVERLAP: 1
+LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
+</pre>
+						<p>
+							fink 0.24.3 (と 0.23.7) からの 10.3 および 10.4-transitional 用ディストリビューションでは
+						</p>
+<pre>
+CXXFLAGS: -fabi-version=1
+</pre>
+						<p>
+							10.4 以降のディストリビューションでは
+						</p>
+<pre>
+CXXFLAGS: -fabi-version=2
+</pre>
+						<p>
+							がある．
+							MACOSX_DEPLOYMENT_TARGET は OSX のバージョンを既定値として持つ．
+							これに値を指定することで (値の追加ではなく) 既定値を書き換える．
+						</p>
+
 					</td></tr><tr valign="top"><td>NoSet<b>環境変数名</b>
 					</td><td>
 						<p>
-							真偽値フィールド．
-							"true" にすると，上述の CPPFLAGS および LDFLAGS に対するデフォルト値は無効になる．
-							すなわち， LDFLAGS の値を空にしたいときには <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> とする．
+							真の場合，既定値を持つ変数 (上述の CPPFLAGS, LDFLAGS, CXXFLAGS など) の既定値を使わない．
+							例えば，LDFLAGS を unset のままにしたい場合， <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> とする．
 						</p>
 					</td></tr><tr valign="top"><td>ConfigureParams</td><td>
 						<p>
@@ -2244,4 +2274,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.21 2005/04/07 08:04:52 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.22 2005/04/24 02:10:00 babayoshihiko Exp $</i></p></body></html>
