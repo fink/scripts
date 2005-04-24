@@ -1291,7 +1291,12 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <p><b>编译阶段：</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Set<b>ENVVAR</b></td><td>
 <p>
-在编译和安装阶段设置一些环境变量。这可以用于传递一些编译器标志等信息到  configure 脚本和 Makefile 文件。目前支持的变量包括：CC，CFLAGS，CPP，CPPFLAGS，CXX，CXXFLAGS，LD，LDFLAGS，LIBS，MAKE，MFLAGS，MAKEFLAGS。你指定的值也会应用前面说过百分号展开。一个常见的例子是：
+在编译和安装阶段设置一些环境变量。这可以用于传递一些编译器标志等信息到  configure 脚本和 Makefile 文件。目前支持的变量包括：
+CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, DYLD_LIBRARY_PATH, JAVA_HOME,
+LD_PREBIND, LD_PREBIND_ALLOW_OVERLAP, LD_FORCE_NO_PREBIND, LD_SEG_ADDR_TABLE,
+LD, LDFLAGS, LIBRARY_PATH, LIBS, MACOSX_DEPLOYMENT_TARGET, MAKE, 
+MFLAGS, MAKEFLAGS。
+你指定的值也会应用前面说过百分号展开。一个常见的例子是：
 </p>
 <pre>SetCPPFLAGS: -no-cpp-precomp</pre>
 <p>

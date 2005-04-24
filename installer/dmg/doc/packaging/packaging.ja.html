@@ -26,7 +26,7 @@ Available Languages:  |
 			<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">現在メンテナのいないパッケージ</a>
 			のメンテナンスをお願いいたします．
 		</p>
-	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#reference"><b>5 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">5.1 ビルドプロセス</a></li><li><a href="#reference.fields">5.2 フィールド</a></li><li><a href="#reference.splitoffs">5.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">5.4 スクリプト</a></li><li><a href="#reference.patches">5.5 パッチ</a></li><li><a href="#reference.profile.d">5.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
+	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 GPL と OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#reference"><b>5 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">5.1 ビルドプロセス</a></li><li><a href="#reference.fields">5.2 フィールド</a></li><li><a href="#reference.splitoffs">5.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">5.4 スクリプト</a></li><li><a href="#reference.patches">5.5 パッチ</a></li><li><a href="#reference.profile.d">5.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
 		
 		
 		<h3><a name="intro.def1">1.1 パッケージとは何か?</a></h3>
@@ -403,7 +403,7 @@ SplitOff: &lt;&lt;
 				</li>
 			</ul>
 		
-		<h3><a name="policy.openssl">3.2 The GPL and OpenSSL</a></h3>
+		<h3><a name="policy.openssl">3.2 GPL と OpenSSL</a></h3>
 			<p>
 				(2005年４月より施行)
 			</p>
@@ -1682,7 +1682,11 @@ Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
 						<p>
 							コンパイルおよびインストールの段階の間，環境変数を設定しておく．
 							コンパイラフラグなどを configure スクリプトや Makefile に渡すために使われる．
-							現在，対応している変数は次の通り: CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, LD, LDFLAGS, LIBS, MAKE, MFLAGS, MAKEFLAGS.
+							現在，対応している変数は次の通り: 
+							CC, CFLAGS, CPP, CPPFLAGS, CXX, CXXFLAGS, DYLD_LIBRARY_PATH, JAVA_HOME,
+							LD_PREBIND, LD_PREBIND_ALLOW_OVERLAP, LD_FORCE_NO_PREBIND, LD_SEG_ADDR_TABLE,
+							LD, LDFLAGS, LIBRARY_PATH, LIBS, MACOSX_DEPLOYMENT_TARGET, MAKE, 
+							MFLAGS, MAKEFLAGS.
 							指定した値の中では前節で説明したパーセント展開が行われる．
 							よく使われる例:
 						</p>
