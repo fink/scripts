@@ -73,7 +73,7 @@ foreach $package (Fink::Package->list_packages()) {
   $vo = $po->get_version($version);
   
   # Skip splitoffs
-  #next if $vo->has_param("parent");
+  #next if $vo->has_parent();
 
   # gather fields
   $maintainer = $vo->param_default("Maintainer", "(not set)");
@@ -89,7 +89,7 @@ foreach $package (Fink::Package->list_packages()) {
 	    'name' => $vo->get_name(),
 	    'version' => $vo->get_version(),
 	    'revision' => $vo->get_revision(),
-	    'epoch' => $vo->{_epoch},
+	    'epoch' => $vo->get_epoch(),
 	    'descshort' => $vo->get_shortdescription(),
 	    'desclong' => $desc,
 	    'maintainer' => $maintainer,
@@ -99,8 +99,8 @@ foreach $package (Fink::Package->list_packages()) {
 	  );
 	    
   # Determine the splitoff parent of this package
-  if ($vo->has_param("parent")) {
-		$data{"parentname"} = $vo->param("parent")->get_name();  # package is a splitoff
+  if ($vo->has_parent()) {
+		$data{"parentname"} = $vo->get_parent()->get_name();  # package is a splitoff
   } 
 
   # generate SQL query
@@ -117,7 +117,7 @@ foreach $package (Fink::Package->list_packages()) {
   print "# $package-$version\n";
   print "$q\n";
 
-  if ($vo->has_param("parent")) {  
+  if ($vo->has_parent()) {  
 	  %splitoffdata = ('name' => $vo->get_name(),
 					   'parentkey' => $release . $data{"parentname"},
 					   'descshort' => $vo->get_shortdescription()
