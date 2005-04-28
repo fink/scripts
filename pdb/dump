@@ -38,9 +38,6 @@ my $distribution = shift || "10.3";
 my $tree = shift || "stable";
 my $release = shift || "current-$distribution-$tree";
 
-$config->set_param("Trees", "$tree/main $tree/crypto");
-# this is a volatile change, we don't (and mustn't) call save()
-
 ### read package info
 
 # temporarily send stdout to stderr
@@ -48,7 +45,24 @@ open(OLDOUT, ">&STDOUT");
 open(STDOUT, ">&STDERR") or die "Can't dup stderr";
 select(OLDOUT); select(STDOUT);  # keep 'use strict' happy
 
-Fink::Package->forget_packages(0, 0);
+# if possible, use a symlink $distribution-$tree -> $tree
+# so that each .info pathname is unique across all distributions
+# (since we may use the dists/ symlink not the actual $distribution dir)
+my $treelink = $config->{'basepath'} . "/fink/dists/$distribution-$tree";
+rm_f $treelink;
+if (-e $treelink) {
+    print "Could not remove old $treelink\n";
+} else {
+    if (symlink $tree, $treelink) {
+	$tree = "$distribution-$tree";
+    } else {
+	print "Could not create symlink $treelink: $!\n";
+    }
+}
+
+$config->set_param("Trees", "$tree/main $tree/crypto");
+# this is a volatile change, we don't (and mustn't) call save()
+
 Fink::Package->require_packages();
 
 # restore stdout
