@@ -28,6 +28,7 @@ use strict;
 use Fink::Services qw(&read_config &latest_version);
 use Fink::Config;
 use Fink::Package;
+use Fink::Command qw(rm_f);
 
 ### read config
 
@@ -52,11 +53,13 @@ my $treelink = $config->{'basepath'} . "/fink/dists/$distribution-$tree";
 rm_f $treelink;
 if (-e $treelink) {
     print "Could not remove old $treelink\n";
+    undef $treelink;
 } else {
     if (symlink $tree, $treelink) {
 	$tree = "$distribution-$tree";
     } else {
 	print "Could not create symlink $treelink: $!\n";
+	undef $treelink;
     }
 }
 
@@ -161,6 +164,9 @@ open(OUT,">timestamp.inc") or die "can't write timestamp.inc: $!\n";
 print OUT "<?\n\$dyndate = ".time().";\n?>";
 close(OUT) or die "can't write timestamp.inc: $!\n";
 
+if (defined $treelink) {
+    rm_f $treelink or print "Could not remove $treelink\n";
+}
 
 ### eof
 exit 0;
