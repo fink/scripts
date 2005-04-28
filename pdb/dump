@@ -48,6 +48,7 @@ open(OLDOUT, ">&STDOUT");
 open(STDOUT, ">&STDERR") or die "Can't dup stderr";
 select(OLDOUT); select(STDOUT);  # keep 'use strict' happy
 
+Fink::Package->forget_packages(0, 0);
 Fink::Package->require_packages();
 
 # restore stdout
