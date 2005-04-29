@@ -11,12 +11,19 @@ dpkg --get-selections | \
 	grep -v '^debianutils[[:space:]]' | \
 	grep -v '^dpkg[[:space:]]' | \
 	grep -v '^fink[[:space:]]' | \
+	grep -v '^fink-mirrors[[:space:]]' | \
 	grep -v '^fink-prebinding[[:space:]]' | \
 	grep -v '^gettext[[:space:]]' | \
 	grep -v '^gettext-bin[[:space:]]' | \
+	grep -v '^gettext-tools[[:space:]]' | \
 	grep -v '^gzip[[:space:]]' | \
+	grep -v '^libgettext3-shlibs[[:space:]]' | \
 	grep -v '^libiconv[[:space:]]' | \
 	grep -v '^libiconv-bin[[:space:]]' | \
+	grep -v '^libjpeg[[:space:]]' | \
+	grep -v '^libjpeg-bin[[:space:]]' | \
+	grep -v '^libjpeg-shlibs[[:space:]]' | \
+	grep -v '^libncurses5-shlibs[[:space:]]' | \
 	grep -v '^ncurses[[:space:]]' | \
 	grep -v '^ncurses-shlibs[[:space:]]' | \
 	grep -v '^storable-pm[[:space:]]' | \
