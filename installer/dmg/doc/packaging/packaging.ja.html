@@ -1334,6 +1334,18 @@ CompileScript:  &lt;&lt;
 							とすることと同じである．
 						</p>
 						<p>
+							この他の文法として， <tt style="white-space: nowrap;">(string)</tt> 指定をすることもできる．
+							<tt style="white-space: nowrap;">string</tt> が null でない場合， "true" を返す．
+						</p>
+<pre>
+Package: nethack%type_pkg[-x11]
+Type: -x11 (boolean)
+Depends: (%type_pkg[-x11]) x11
+</pre>
+						<p>
+							これにより，nethack-x11 は x11 パッケージに依存するが， nethack は依存しない．
+						</p>
+						<p>
 							Depends/BuildDepends を，複数のメジャーバージョンを持つ共有ライブラリパッケージに使用する場合，下記のようにしては<b>いけない</b>:
  </p>
 <pre>
@@ -2274,4 +2286,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.22 2005/04/24 02:10:00 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.23 2005/04/24 02:28:18 babayoshihiko Exp $</i></p></body></html>
