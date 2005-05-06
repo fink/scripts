@@ -40,7 +40,8 @@ foreach $pname (@ARGV) {
 #$package = Fink::Package->package_by_name($pname);
 $package = Fink::PkgVersion->match_package($pname);
 #print "$package\n";
-if (not $license = $package->param("License")) {
+$license = $package->get_license();
+if (not length $license) {
     if ($package->is_type('bundle')) {
 	$license = "Bundle";
     } else {
