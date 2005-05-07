@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Fink 上級者向けトピックガイド</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="advanced.en.html">English</a> | 
+<a href="advanced.fr.html">Fran&ccedil;ais</a> | 
+&#26085;&#26412;&#35486; (Nihongo) | 
+</td>
+</tr>
+</table>
+<h1 style="text-align: center;">Fink 上級者向けトピックガイド</h1>
+    <p>
+この文書には、
+<a href="http://fink.sourceforge.net/doc/users-guide/">ユーザーガイド</a>にない、より高度な内容が書かれています。
+    </p>
+  <h2>Contents</h2><ul><li><a href="#bindist"><b>1 バイナリ・ディストリビューション・サーバーの設定</b></a><ul><li><a href="#bindist.intro">1.1 はじめに</a></li><li><a href="#bindist.master">1.2 "master" (build) サーバーでの作業</a></li><li><a href="#bindist.client">1.3 クライアント・マシンでの操作</a></li><li><a href="#bindist.remarks">1.4 注意点</a></li></ul></li></ul><h2><a name="bindist">1 バイナリ・ディストリビューション・サーバーの設定</a></h2>
+    
+    
+    <h3><a name="bindist.intro">1.1 はじめに</a></h3>
+      
+      <p>
+本節では、複数の Fink ユーザーの環境へバイナリを提供するための中央ビルドサーバーを構築方法について解説します。
+      </p>
+      <p>
+(<b>注記:</b> この文書中では fink version &gt;= 0.24.0 を想定しています。
+これより古いバージョンの場合は<a href="#bindist.remarks">注意点を参照</a>してください。)
+      </p>
+      <p>
+<a href="#bindist.master">"master" サーバー</a> と
+<a href="#bindist.client">client マシン</a>での作業が必要となります:
+      </p>
+    
+    <h3><a name="bindist.master">1.2 "master" (build) サーバーでの作業</a></h3>
+      
+      <ol>
+        <li>
+Fink を <tt style="white-space: nowrap;">/sw</tt> にインストール (既定のパス、あるいは必要に応じて symlink を作成)。
+        </li>
+        <li>
+パッケージを通常通りビルド。
+ビルドのみ必要で、インストールする必要はない。
+        </li>
+        <li>
+          <p>
+ビルドしたパッケージのあるディレクトリ内で <tt style="white-space: nowrap;">fink scanpackages</tt> を実行。
+これにより、 fink は有効なツリー内の apt インデックスを作成する。
+          </p>
+          <p>
+若しくは、 <tt style="white-space: nowrap;">fink cleanup</tt> を実行して古いソースとバイナリパッケージを削除しても良い。
+<tt style="white-space: nowrap;">scanpackages</tt> は cleanup プロセスの最後に呼び出される。
+          </p>
+        </li>
+        <li>
+ウェブサーバーを開始: 例えば、システム環境設定中のネットワーク共有で、"パーソナルWeb共有" を開始する。
+<tt style="white-space: nowrap;">/etc/httpd/httpd.conf</tt> ファイルを以下のように編集し、 <tt style="white-space: nowrap;">/sw/fink</tt> を提供するように設定する。
+<pre>Alias /fink /sw/fink
+&lt;Directory /sw/fink&gt;
+  Options Indexes FollowSymLinks
+&lt;/Directory&gt;</pre>
+        </li>
+        <li>
+<tt style="white-space: nowrap;">sudo /usr/sbin/apachectl graceful</tt> を実行し、ウェブサーバーを(再)起動する。
+        </li>
+      </ol>
+      <p>
+"master" サーバー上の、ビルド・更新したパッケージのあるディレクトリ中で
+<tt style="white-space: nowrap;">fink scanpackages</tt> (または <tt style="white-space: nowrap;">fink cleanup</tt>) を(再)実行し、
+外のマシンから見えるようにする。
+      </p>
+      <p>
+<b>注記:</b>
+      </p>
+      <p>
+'fink' というユーザーを作成し、上記の行を
+<tt style="white-space: nowrap;">/etc/httpd/users/fink.conf</tt>
+に追加しても良い。
+      </p>
+      <p>
+Fink の apache2 パッケージを使用している場合は、上記のパスを適宜変更する必要がある。
+      </p>
+    
+    <h3><a name="bindist.client">1.3 クライアント・マシンでの操作</a></h3>
+      
+      <ol>
+        <li>
+Fink を <tt style="white-space: nowrap;">/sw</tt> (既定のパス) にインストール
+        </li>
+        <li>
+<tt style="white-space: nowrap;">fink configure</tt> を実行し、
+バイナリ・ディストリビューションからパッケージをダウンロードするようオプション設定します。
+ (<tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> ファイル中で "UseBinaryDist: true")
+        </li>
+        <li>
+<tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> を編集し、 Fink ツリーを表す行を追加します。
+例えば、ビルドボックスの IP アドレスが 192.168.42.7 であれば、以下のように追加します:
+<pre>deb http://192.168.42.7/fink stable main crypto
+deb http://192.168.42.7/fink unstable main crypto
+deb http://192.168.42.7/fink local main</pre>
+        </li>
+        <li>
+<tt style="white-space: nowrap;">fink selfupdate</tt>を実行します。
+(verbose レベルが &gt;=1 の場合) 更新プロセスの最後のあたりで以下のように表示されるはずです:
+<pre>...
+Hit http://192.168.42.7 stable/main Packages
+Hit http://192.168.42.7 stable/main Release
+Hit http://192.168.42.7 stable/crypto Packages
+...</pre>
+        </li>
+      </ol>
+      <p>
+<tt style="white-space: nowrap;">fink update-all</tt> または <tt style="white-space: nowrap;">fink install &lt;package&gt;</tt>
+を実行し、 "master" サーバーにバイナリがある場合は、そこからダウンロードします。
+      </p>
+    
+    <h3><a name="bindist.remarks">1.4 注意点</a></h3>
+      
+      <ul>
+        <li>
+"master" サーバーは、クライアントマシンで使われている最低バージョンの X11 を使う必要があります。
+クライアント側の一台でも Apple X11 を使用している場合、"master" でも同じものを使わなければなりません。
+        </li>
+        <li>
+such as <tt style="white-space: nowrap;">apt</tt>. 
+ビルドマシンの容量を節約したい場合、ビルド時依存のみのパッケージ (実行されないパッケージ) は削除してもかまいません。
+<tt style="white-space: nowrap;">debfoster</tt> パッケージは便利なツールです。
+<tt style="white-space: nowrap;">apt</tt> のような必須パッケージを削除しないように注意してください。
+       </li>
+        <li>
+fink version &lt; 0.24.0 をクライアント側で使用している場合、
+<tt style="white-space: nowrap;">fink selfupdate</tt> ではなく
+<tt style="white-space: nowrap;">sudo apt-get update</tt> を実行する必要があります。
+その後、 <tt style="white-space: nowrap;">sudo apt-get install &lt;package&gt;</tt> でバイナリパッケージをインストールします。
+      </li>
+      </ul>
+      <p>
+この文書の一部は、 RangerRick の
+<a href="http://ranger.befunk.com/blog/archives/000258.html">"Sharing the Fink"</a>
+から引用しています。
+感謝!
+      </p>
+    
+  <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2005 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr>
+<p>Generated from <i>$Fink: advanced.en.xml,v 1.3 2005/01/21 00:49:17 alexkhansen Exp $</i></p></body></html>
