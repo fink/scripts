@@ -160,7 +160,7 @@ SplitOff: &lt;&lt;
 &lt;&lt;
 </pre>
 			<p>
-				推奨されない，旧式の記法は「RFC 822 ヘッダ折り畳み方法」を手本に作られました．
+				今は推奨されない旧式の記法は「RFC 822 ヘッダ折り畳み方法」を手本に作られました．
 				空白で始まる行を前の行からの続きと認識します．
 				例:
 			</p>
@@ -243,7 +243,7 @@ SplitOff: &lt;&lt;
 						</p>
 					</td></tr><tr valign="top"><td>%a</td><td>
 						<p>
-							p<b>a</b>tches ．
+							p<b>a</b>tches．
 							パッチを検索するディレクトリパス．
 						</p>
 					</td></tr><tr valign="top"><td>%b</td><td>
@@ -313,8 +313,8 @@ SplitOff: &lt;&lt;
 		<h3><a name="policy.licenses">3.1 パッケージのライセンス</a></h3>
 			
 			<p>
-				Fink に含まれるパッケージのライセンスは多肢に渡ります．
-				それらの大部分は，ソース全体の再配布と，特に実行可能ファイルの配布に制限を課します．
+				Fink に含まれるパッケージのライセンスは多岐に渡ります．
+				大部分は，ソース全体の再配布と，特に実行可能ファイルの配布に何らかの制限を課します．
 				パッケージの中には，ライセンスのために Fink でバイナリ配布を行えないものもあります．
 				そのため，パッケージのメンテナがライセンスを注意深くチェックすることが大変に重要です．
 			</p>
@@ -410,11 +410,11 @@ SplitOff: &lt;&lt;
 			<p>
 				OpenSSL ライセンスが GPL と LPGL ライセンスが明らかに整合性を欠いていることから，
 				openssl にリンクをしている fink パッケージのうち， GPL または LGPL ライセンスを使用しているものは
-				"Restrictive" となる．
-				Fink プロジェクトはこれらのパッケージをバイナリ配布しないことになるが，利用者は自己判断でコンパイルすることができる．				
+				"Restrictive" となります．
+				Fink プロジェクトはこれらのパッケージをバイナリ配布しないことになるが，利用者は自己判断でコンパイルすることができます．				
 			</p>
 			<p>
-				パッケージメンテナは，元のパッケージライセンスを <tt style="white-space: nowrap;">DescPackaging</tt> に記述されたい．
+				パッケージメンテナは，元のパッケージライセンスを <tt style="white-space: nowrap;">DescPackaging</tt> に記述してください．
 			</p>
 		
 		<h3><a name="policy.prefix">3.3 基盤システムへの干渉問題</a></h3>
@@ -428,7 +428,7 @@ SplitOff: &lt;&lt;
 				この場合，パッケージはインストール前に既存のファイルを調べ，上書きの恐れがある場合はインストールを中止する必要があります．
 				そのようなパッケージは， Fink ディレクトリ外にインストールしたファイルはそのパッケージが取り除かれるときに全て削除されること，
 				あるいはそのようなファイルは残しても問題がないことを保証しなければいけません
-				(すなわち，実行可能ファイルを呼び出す前にそれが存在するかどうか調べたりする必要があります)．
+				(すなわち，実行可能ファイルを呼び出す前にそれが存在するかどうか調べるなどする必要があります)．
 			</p>
 		
 		<h3><a name="policy.sharedlibs">3.4 共有ライブラリ</a></h3>
@@ -500,7 +500,7 @@ SplitOff: &lt;&lt;
 						<p>実行可能プログラムなど</p>
 					</td></tr></table>
 			<p>
-				選択肢 2 を選ぶと既存のパッケージのアップグレードに手間がかかります．
+				選択肢 2 を選ぶと，既存のパッケージのアップグレードに手間がかかります．
 				アップグレードと同時に， <tt style="white-space: nowrap;">Depends: foo</tt> との記述のある全てのパッケージに
 				<tt style="white-space: nowrap;">BuildDepends: foo-dev</tt> を加える必要があるのです．
 				注意すべき点は他にもあります．
@@ -519,8 +519,8 @@ SplitOff: &lt;&lt;
 			</p>
 			<p>
 				Darwin にポートされたソフトウェアは可能な限り共有ライブラリをビルドしなければいけません．
-				(パッケージメンテナが必要に応じて共有ライブラリの他に静的ライブラリもビルドすることは自由です．
-				または静的ライブラリのみを含むパッケージを登録することも問題ありません．)
+				(パッケージメンテナが，必要に応じて共有ライブラリの他に静的ライブラリもビルドすることは自由です．
+				または，静的ライブラリのみを含むパッケージを登録することも問題ありません．)
 				共有ライブラリをビルドする場合，<b>ふたつの</b>相互関連する Fink パッケージを作成しなければいけません．
 				それらの名称は例えば foo と foo-shlibs となります．
 				共有ライブラリは foo-shlibs に，ヘッダは foo に入ります．
@@ -530,7 +530,7 @@ SplitOff: &lt;&lt;
 				この場合は <tt style="white-space: nowrap;">SplitOff2</tt>, <tt style="white-space: nowrap;">SplitOff3</tt> などを使えばだいじょうぶです．)
 			</p>
 			<p>
-				共有ライブラリが作れるソフトウェアパッケージには <b>「メジャーバージョン」</b> N がなければいけません．
+				共有ライブラリを伴うソフトウェアパッケージには， <b>「メジャーバージョン」</b> N がなければいけません．
 				「メジャーバージョン」は，ライブラリの API にパッケージ間で非互換な変更が加えられたときのみ変わることになっています．
 				Fink では，名称は以下の要領で作成されます．
 				すなわち， upstream パッケージ名が bar なら，そのFinkパッケージの名前は barN と barN-shlibs になります．
@@ -543,7 +543,7 @@ SplitOff: &lt;&lt;
 				(これら 4 つのパッケージのビルドに必要な .info ファイルは 2 つだけであることに注意して下さい．)
 			</p>
 			<p>
-				共有ライブラリ自身とそれに関わるファイルはパッケージ barN-shlibs に入ります．
+				共有ライブラリ自身とそれに関わるファイルは，パッケージ barN-shlibs に入ります．
 				また「インクルード」ファイルとその他のファイルはパッケージ barN に入ります．
 				これら 2 つに重複して含まれるファイルがあってはならず，また barN-shlibs に含まれるどのファイルのパス名にも，
 				何らかの形で「メジャーバージョン」 N が含まれなくてはいけません．
@@ -562,15 +562,15 @@ BuildDepends: barN
 			<p>
 				この方式が機能するようになって以降は，他のパッケージが barN 自体に依存するようにしてはいけません．
 				(後方互換性のため，既存のパッケージは barN に依存して構いません．)
-				以上を他の開発者に知らせるため，barN のパッケージ記述の中に次の真偽値フィールドを設けます．
+				以上を他の開発者がわかるように，barN のパッケージ記述の中に次の真偽値フィールドを設けます．
 			</p>
 <pre>
 BuildDependsOnly: True
 </pre>
 			<p>
 				共有ライブラリと実行可能プログラムの両方を含むパッケージの場合，実行可能プログラムが (ビルド時だけでなく) 実行時に必要であれば，
-				それらの実行可能プログラムは barN-bin という名の第 3 のパッケージに分離されなければいけません．
-				他のパッケージが barN-shlibs の他に barN-bin に依存することは構いません．
+				それらの実行可能プログラムは barN-bin という名の第 3 のパッケージに分離されます．
+				他のパッケージが barN-shlibs の他に barN-bin に依存しても構いません．
 			</p>
 			<p>
 				「メジャーバージョン」が N の共有ライブラリをビルドするとき，その共有ライブラリの "install_name" が
@@ -596,7 +596,7 @@ BuildDependsOnly: True
 </pre>
 			<p>
 				パッケージが libtool を利用する場合，上記のことはほぼ自動的に処理されますが，
-				どの段階でも処理が適切に行われたかチェックしなければいけません．
+				どの段階でも処理が適切に行われたか確認する必要があります．
 				また，共有ライブラリの current_version と compatibility_version が適切に定義されているかどうかも確認して下さい．
 				(これらも <tt style="white-space: nowrap;">otool -L</tt> で表示されます．)
 			</p>
@@ -653,16 +653,15 @@ SplitOff: &lt;&lt;
 			</p>
 			<p>
 				barN-shlibs の正確な「バージョン」 (これは "%N-shlibs (= %v-%r)" と略記できます)
-				をメインパッケージ barN の依存情報に含めたことに注意して下さい．
+				を親パッケージ barN の依存情報に含めたことに注意して下さい．
 				これにより「バージョン」が確かに適合するようになり，
 				さらにパッケージ barN がパッケージ barN-shlibs の依存情報を自動的に「継承する」ことを保証します．
 			</p>
 			<p><b>フィールド BuildDependsOnly:</b></p>
 			<p>
-				ライブラリが時とともにアップグレードされる場合，
-				移行期に二つのバージョンのヘッダファイルが必要になる時もしばしばある．
-				一つのバージョンはコンパイル時に使われ，もう一つはまた他のコンパイルに使われる．
-				このため，ヘッダファイルを含むパッケージの作成には注意が必要である．
+				ライブラリがアップグレードされる場合，移行期に二つのバージョンのヘッダファイルが必要になる時もあるでしょう．
+				一つのバージョンはコンパイル時に使われ，もう一つは他のコンパイルに使われるような場合です．
+				このため，ヘッダファイルを含むパッケージの作成には注意が必要となります．
 				foo-dev と bar-dev が重複するヘッダを含む場合， foo-dev で，
 			</p>
 <pre>
@@ -670,7 +669,7 @@ SplitOff: &lt;&lt;
    Replaces: bar-dev
 </pre>
 			<p>
-				と宣言し，同様に bar-dev では foo-dev を Conflicts/Replaces として宣言する．
+				と宣言し，同様に bar-dev では foo-dev を Conflicts/Replaces として宣言します．
 			</p>
 			<p>
 				さらに，両方のパッケージで
@@ -679,25 +678,25 @@ SplitOff: &lt;&lt;
    BuildDependsOnly: True 
 </pre>
 			<p>
-				を宣言する．
-				これにより，foo-dev または bar-dev に依存してパッケージを記述することを防ぐことができる．
-				このような依存性が Conflicts/Replaces 手段を実行することを防ぐからである．
+				を宣言します．
+				これにより，foo-dev または bar-dev に依存してパッケージを記述することを防ぐことができます．
+				このような依存性が Conflicts/Replaces 手段を実行することを防ぐためです．
 			</p>
 			<p>
-				ヘッダファイル付きのパッケージで， BuildDependsOnly を True にするのが適切ではないものもある．
+				ヘッダファイル付きのパッケージで， BuildDependsOnly を True にするのが適切ではないものもあります．
 				この場合，そのパッケージでは
 			</p>
 <pre>
    BuildDependsOnly: False
 </pre>
-			<p>と宣言し，その理由を DescPackaging に記述しなければならない．</p>
+			<p>と宣言し，その理由を DescPackaging に記述します．</p>
 			<p>
 				BuildDependsOnly フィールドは，パッケージがヘッダファイルを含み /sw/include にインストールされる場合，
-				パッケージの .info ファイルに記述されていなければならない．
+				パッケージの .info ファイルに記述されていなければなりません．
 			</p>
 			<p>
 				fink 0.20.5 の時点で， "fink validate" とすることで，
-				ヘッダファイルと，最低一つの dylib を含み， BuildDependsOnly 値で真偽を宣言していない .deb ファイルに警告を出す．
+				ヘッダファイルと，最低一つの dylib を含み， BuildDependsOnly 値で真偽を宣言していない .deb ファイルに警告を出します．
 				(将来のバージョンでは，この機能をヘッダファイルと静的ライブラリに対応するように拡張する可能性もある．)
 			</p>
 			<p><b>フィールド Shlibs:</b></p>
@@ -725,7 +724,7 @@ Shlibs: &lt;&lt;
 			</p>
 			<p>
 				ライブラリの名称には %p を使用するよう注意して下さい．
-				これによって， Fink ユーザはインストールディレクトリに関係なく正しい <tt style="white-space: nowrap;">-install_name</tt> を検索できます．
+				これによって， Fink ユーザはインストールディレクトリに関係なく，正しい <tt style="white-space: nowrap;">-install_name</tt> を検索できます．
 			</p>
 			<p>
 				パッケージが更新されたとき，
@@ -756,8 +755,8 @@ Conflicts: barM
 Replaces: barM
 </pre>
 			<p>
-				するとユーザは，問題の共有ライブラリの片方のバージョンに依存する他の様々なパッケージがビルドされるときに
-				barN と barM が代わる代わる入ってくるのを目にするでしょうが，
+				これにより，問題の共有ライブラリの片方のバージョンに依存する他の様々なパッケージがビルドされるときに
+				barN と barM が入れ替わり入ってくるのを目にするでしょうが，
 				barN-shlibs と barM-shlibs はいつまでもインストールしたままでいられます．
 			</p>
 			<p>
@@ -781,7 +780,7 @@ Replaces: foo (&lt;&lt; 同等な.旧式パッケージの.バージョン)
 				アップグレード後，"Depends: foo" となっているパッケージは普通に機能し続けます．
 				しかし，そのようなFinkパッケージのメンテナ全てに連絡し，
 				できる限り早くそれらのパッケージで "Depends: foo-shlibs, BuildDepends: foo" とするよう要請しなければいけません．
-				そのようなメンテナ全員がその措置を終えるまで，
+				メンテナ全員がその措置を終えるまで，
 				新しい「メジャーバージョン」の共有ライブラリを提供する新パッケージ fooM と fooM-shlibs を作ることはできません．
 			</p>
 			<p>
@@ -848,11 +847,11 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 			<p>
 				Perl のバージョンに依存する Perl モジュールは該当バージョンの付いた Perl の実行可能プログラム (perl5.6.0 など)
 				を使ってビルドされなければいけません．
-				またモジュールの含むファイルは，標準の Perl のディレクトリ内の，バージョンの付いたサブディレクトリ
+				また，モジュールの含むファイルは，標準の Perl のディレクトリ内の，バージョンの付いたサブディレクトリ
 				(<tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> や <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt> など) に格納しなければいけません．
-				命名規約により，バージョン 5.6.0 に依存する Perl モジュールに <tt style="white-space: nowrap;">-pm560</tt> を後置するというものです．
+				命名規約により，バージョン 5.6.0 に依存する Perl モジュールに <tt style="white-space: nowrap;">-pm560</tt> を後置します．
 				格納場所と命名方法に関する同様の規約が他のバージョンの Perl に対しても有効で，
-				perl 5.6.1 (10.2 ツリー) と perl 5.8.0， perl 5.8.1， perl 5.8.4 (間もなく) でもそうなります．
+				perl 5.6.1 (10.2 ツリー) と perl 5.8.0， perl 5.8.1， perl 5.8.4 (間もなく) でもそのように対応されます．
 			</p>
 			<p>
 				ディレクティブ <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> は自動的にバージョンの付いた Perl の実行可能ファイルを使い，
@@ -877,7 +876,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 			 test-simple-pm581, time-hires-pm581.</b>
 				です．
 				(この一覧は 0.20.1 から若干変更されています．
-				パッケージメンテナは正しい一覧を使用しているかかならず確認してください．)
+				パッケージメンテナは正しい一覧を使用しているか必ず確認してください．)
 			</p>
 			<p>
 				Fink 0.13.0 から利用可能になったコマンド <tt style="white-space: nowrap;">fink validate</tt> を .deb ファイルに適用すると，
@@ -955,19 +954,19 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 					</td><td>
 						<p>
 							アーキテクチャ依存のデータファイルやライブラリ用．
-							静的および共有ライブラリは，避ける理由が特にない限り <tt style="white-space: nowrap;">/sw/lib</tt> 直下に置く．
+							静的および共有ライブラリは，避ける理由が特にない限り <tt style="white-space: nowrap;">/sw/lib</tt> 直下に置きます．
 							ユーザが直接起動することのない実行可能プログラム
-							(普通なら <tt style="white-space: nowrap;">libexec</tt> 下に置かれるはずのもの) もここに置く．
+							(普通なら <tt style="white-space: nowrap;">libexec</tt> 下に置かれるはずのもの) もここに置きます．
 						</p>
 						<p>
-							パッケージは固有のデータやロード可能モジュールを保存するサブディレクトリを自由に作成できます．
+							パッケージは，固有のデータやロード可能モジュールを保存するサブディレクトリを自由に作成できます．
 							必ず互換性を考慮したディレクトリ名を使って下さい．
 							賢明な方法は，そのサブディレクトリの名前にパッケージの「メジャーバージョン」を含めたり，
 							「メジャーバージョン」をディレクトリ名にしたさらに深い階層を作ることです
 							(<tt style="white-space: nowrap;">/sw/lib/perl5</tt> や <tt style="white-space: nowrap;">/sw/lib/apache/1.3</tt> など)．
-							ディレクトリにホストの種類を使うときには注意して下さい．
-							<tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> は互換性の観点から問題があります．
-							<tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> または単に <tt style="white-space: nowrap;">powerpc-apple-darwin</tt> とすべきです．
+							ディレクトリにホストの種類を使うときには注意が必要です．
+							<tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> は，互換性の観点から問題があります．
+							<tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> または単に <tt style="white-space: nowrap;">powerpc-apple-darwin</tt> とします．
 						</p>
 					</td></tr><tr valign="top"><td>
 						<tt style="white-space: nowrap;">/sw/share</tt>
@@ -1005,7 +1004,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 							README, LICENSE, COPYING はここに保存する．
 							全てのパッケージは，ここに各「パッケージ名」に対応したサブディレクトリを作らなければいけない．
 							名前には (「パッケージ名」そのものの一部でない限り) 「バージョン」を含めてはいけない．
-							ヒント: 単に <tt style="white-space: nowrap;">%n</tt> を使うとよい．
+							単に <tt style="white-space: nowrap;">%n</tt> を使うとよいでしょう．
 						</p>
 					</td></tr><tr valign="top"><td>
 						<tt style="white-space: nowrap;">/sw/share/locale</tt>
@@ -1025,7 +1024,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 					</td><td>
 						<p>
 							設定ファイル用．
-							複数のファイルを使用するパッケージはここにサブディレクトリを作らなければいけない．
+							複数のファイルを使用するパッケージは，ここにサブディレクトリを作らなければいけない．
 							区別のため，そのサブディレクトリにはパッケージまたはその中のプログラムの名前を付けなければいけない．
 						</p>
 					</td></tr><tr valign="top"><td>
@@ -1052,7 +1051,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 		<h3><a name="reference.build">5.1 ビルドプロセス</a></h3>
 			
 			<p>
-				各フィールドの意味を理解するには， Fink のビルドプロセスに関する知識がいくらか必要です．
+				各フィールドの意味を理解するには， Fink のビルドプロセスに関する知識がある程度必要です．
 				このプロセスは 5 段階になっていて，それぞれ解凍段階，パッチ段階，コンパイル段階，インストール段階，ビルド段階 と呼ばれます．
 				下記の例では <tt style="white-space: nowrap;">/sw</tt> にパッケージ gimp-1.2.1-1 をインストールするものとします．
 			</p>
@@ -1109,18 +1108,18 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 							必須フィールド．
 						</p>
 						<p>
-							このフィールドで行われるパーセント展開は %N, %{Ni}, %type_raw[] と %type_pkg[] のみ．
+							このフィールドで行われるパーセント展開は %N, %{Ni}, %type_raw[] と %type_pkg[] のみです．
 						</p>
 						<p>
 							Fink のパッケージングポリシーでは，
-							どのパッケージも常に同じオプションを有効にしてコンパイルしなければいけません．
+							どのパッケージも常に同じオプションを有効にしてコンパイルされるようにします．
 							あるパッケージに複数の変種を設ける場合は (フィールド <tt style="white-space: nowrap;">Type</tt> の説明を参照)，
 							変種を区別する情報をフィールド <tt style="white-space: nowrap;">Package</tt> に含めなければいけません
 							(パーセント展開 %type_pkg[] の説明を参照)．
-							そのようにしてどの変種にも固有の (どのオプションが有効かが分かる) 「パッケージ名」が与えられます．
+							これにより，各変種に固有の (どのオプションが有効かが分かる) 「パッケージ名」が与えられます．
 							フィールド <tt style="white-space: nowrap;">Package</tt> 内でパーセント展開 %type_pkg[] および %type_raw[] を使うことは最近導入されたばかりで，
-							古い Fink とはひどく非互換であることに注意して下さい．
-							そのため，そのようなパッケージ記述はフィールド <tt style="white-space: nowrap;">InfoN</tt> (ただし N&gt;=2) 内に埋め込まれていなければいけません．
+							古い Fink とは非互換であるため，注意が必要です．
+							そのため，そのようなパッケージ記述はフィールド <tt style="white-space: nowrap;">InfoN</tt> (ただし N&gt;=2) 内に埋め込むようにします．
 						</p>
 					</td></tr><tr valign="top"><td>Version</td><td>
 						<p>
@@ -1174,26 +1173,26 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 					</td></tr><tr valign="top"><td>Type</td><td>
 						<p>
 							値が <tt style="white-space: nowrap;">bundle</tt> の場合:
-							バンドルパッケージは関連するパッケージをひとまとめにするために使われる．
-							それらには依存関係こそあるが，ソースコードにも，インストールされるファイルにも関連はない．
+							バンドルパッケージは関連するパッケージをひとまとめにするために使われます．
+							各パッケージには，依存関係はありえますが，ソースコードにも，インストールされるファイルにも関連はありません．
 							フィールド Source, PatchScript, CompileScript, InstallScript とそれらの関連フィールドは，
-							バンドルパッケージでは無視される．
+							バンドルパッケージでは無視されます．
 						</p>
 						<p>
 							値が <tt style="white-space: nowrap;">nosource</tt> の場合:
-							これは <tt style="white-space: nowrap;">bundle</tt> と非常に似ている．
-							これはソースの tar ボールが存在しないことを示す．
-							よって何も取り寄せられず，解凍段階では空ディレクトリが作られるだけになる．
-							しかしパッチ，コンパイル，インストールの各段階は通常通り実行される．
+							これは <tt style="white-space: nowrap;">bundle</tt> と非常に似ています．
+							これはソースの tar ボールが存在しないことを示します．
+							よって何も取り寄せられず，解凍段階では空ディレクトリが作られます．
+							しかしパッチ，コンパイル，インストールの各段階は通常通り実行されます．
 							このようにして全てのソースコードをパッチと共に配布したり，
-							または InstallScript を使ってディレクトリを作るだけのことができる．
-							Fink 0.18.0 以降では <tt style="white-space: nowrap;">Source: none</tt> と設定しても同じ挙動が実現できる．
-							そうするとフィールド <tt style="white-space: nowrap;">Type</tt> を他の目的に使える (<tt style="white-space: nowrap;">Type: perl</tt> など)．
+							または InstallScript を使ってディレクトリを作るだけのことができます．
+							Fink 0.18.0 以降では <tt style="white-space: nowrap;">Source: none</tt> と設定しても同じ挙動が実現できます．
+							これにより，フィールド <tt style="white-space: nowrap;">Type</tt> を他の目的に使えます (<tt style="white-space: nowrap;">Type: perl</tt> など)．
 						</p>
 						<p>
 							値が <tt style="white-space: nowrap;">perl</tt> の場合 (Fink 0.9.5 以降):
-							コンパイル及びインストール段階のスクリプトのデフォルト値が変わる．
-							Fink 0.13.0 からは，この値の変種として <tt style="white-space: nowrap;">perl $version</tt> が使える．
+							コンパイル及びインストール段階のスクリプトのデフォルト値が変わります．
+							Fink 0.13.0 からは，この値の変種として <tt style="white-space: nowrap;">perl $version</tt> が使えます．
 							ここで "$version" は perl の特定のバージョンで，3つの数をピリオドで区切ったもの
 							(<tt style="white-space: nowrap;">perl 5.6.0</tt> など)．
 						</p>
@@ -1277,6 +1276,10 @@ CompileScript:  &lt;&lt;
 							値は以下の形式で，名前とメールアドレスはそれぞれ一つだけとする．
 						</p>
 <pre>名前 名字 &lt;アカウント@ドメイン.example.com&gt;</pre>
+						<p>
+							訳注: 名前はローマ字表記です．
+							順序は，特に指定はありませんが， YAMADA Taro などとするのが一般的です．
+						</p>
 					</td></tr><tr valign="top"><td>InfoN</td><td>
 						<p>
 							このフィールドにより Fink はパッケージ記述の構文の非互換な変更に対処できる．
@@ -1439,15 +1442,15 @@ Depends: (%type_pkg[-x11]) x11
 						<p>
 							<b>Fink 0.9.9 で導入:</b>
 							真偽値フィールド．
-							他パッケージはこのパッケージを BuildDepend に入れてもよいが， Depend に入れてはいけないことを示す．
-							通常の真偽値とは異なり，<tt style="white-space: nowrap;">BuildDependsOnly</tt> は３つの状態を持つ．
-							未定義 (何も指定しない) の場合，明示的に False を指定するのとは異なる．
-							詳細は<a href="#policy.sharedlibs">共有ライブラリポリシー</a>を参照．
+							他パッケージはこのパッケージを BuildDepend に入れてもよいが， Depend に入れてはいけないことを示します．
+							通常の真偽値とは異なり，<tt style="white-space: nowrap;">BuildDependsOnly</tt> は３つの状態があります．
+							未定義 (何も指定しない) の場合と明示的に False を指定するのとは異なります．
+							詳細は<a href="#policy.sharedlibs">共有ライブラリポリシー</a>を参照してください．
 						</p>
 						<p>
 							fink 0.20.5 より，このフィールドが設定されているか，設定されている場合その値が，
-							パッケージがビルドされる際に .deb ファイルに記録される．
-							このため， BuildDependsOnly の値を変更したり，追加・削除時にはリビジョン番号をあげなければならない．
+							パッケージがビルドされる際には .deb ファイルに記録されます．
+							このため， BuildDependsOnly の値を変更したり，追加・削除時には Rivision 番号をあげる必要があります．
 						</p>
 					</td></tr></table>
 			<p>
@@ -1550,10 +1553,10 @@ Primary: ftp://ftp.barbarorg/pub/
 					</td></tr><tr valign="top"><td>Source-MD5</td><td>
 						<p>
 							<b>Fink 0.10.0 で導入:</b>
-							このフィールドではソースファイルの MD5 チェックサムを指定する．
+							このフィールドではソースファイルの MD5 チェックサムを指定します．
 							Fink はこの情報によりおかしなソースファイル，
-							すなわち Fink パッケージの作成者が指定したものではない tar ボールを見分けられる．
-							この問題の原因は，大抵次のようなものだ:
+							すなわち Fink パッケージの作成者が指定したものではない tar ボールを見分けられます．
+							この問題の原因には，以下のようなものがあります:
 							tar ボールのダウンロードに失敗した，upstreamのメンテナが知らないうちに tar ボールを更新した，トロイの木馬などの攻撃，など．
 						</p>
 						<p>
@@ -1561,14 +1564,14 @@ Primary: ftp://ftp.barbarorg/pub/
 						</p>
 <pre>Source-MD5: 4499443fa1d604243467afe64522abac</pre>
 						<p>
-							チェックサムの算出にはツール <tt style="white-space: nowrap;">md5sum</tt> を使う．
+							チェックサムの算出にはツール <tt style="white-space: nowrap;">md5sum</tt> を使います．
 							tar ボール <tt style="white-space: nowrap;">/sw/src/apache_1.3.23.tar.gz</tt> のチェックサムが知りたいときには，
-							次のコマンドを実行する (出力も一緒に示した)．
+							次のコマンドを実行します (出力も一緒に示した)．
 						</p>
 <pre>fingolfin% md5sum /sw/src/apache_1.3.23.tar.gz
 4499443fa1d604243467afe64522abac  /sw/src/apache_1.3.23.tar.gz</pre>
 						<p>
-							ご覧のように，左に表示された値がここで必要なものだ．
+							左に表示された値がここで必要なものです．
 						</p>
 					</td></tr><tr valign="top"><td>Source<b>N</b>-MD5</td><td>
 						<p>
@@ -1579,22 +1582,22 @@ Primary: ftp://ftp.barbarorg/pub/
 					</td></tr><tr valign="top"><td>TarFilesRename</td><td>
 						<p>
 							<b>Fink 0.10.0 で導入:</b>
-							このフィールドは tar 形式を使うソースファイルにのみ適用される．
+							このフィールドは tar 形式を使うソースファイルにのみ適用されます．
 						</p>
 						<p>
-							このフィールドを使うと，任意のソース tar ボールの中のファイルを， tar ボールの展開中にリネームできる．
-							ファイルシステム HFS+ がケースインセンシティブである (大文字と小文字を区別しない) ことを回避するために非常に便利．
-							普通の Mac OS X システムでは，ファイル <tt style="white-space: nowrap;">install</tt> と <tt style="white-space: nowrap;">INSTALL</tt> は衝突してしまう．
-							このフィールドを使うと， tar ボールをわざわざ再パッケージしなくとも (以前，そういう場合には行われていた)，
-							そういった問題を回避できる．
+							このフィールドを使うと，任意のソース tar ボールの中のファイルを， tar ボールの展開中にリネームできます．
+							ファイルシステム HFS+ がケースインセンシティブである (大文字と小文字を区別しない) ことを回避するために非常に便利でしょう．
+							普通の Mac OS X システムでは，ファイル <tt style="white-space: nowrap;">install</tt> と <tt style="white-space: nowrap;">INSTALL</tt> は衝突してしまいます．
+							このフィールドを使うと， tar ボールをわざわざ再パッケージしなくとも (以前はこのような場合に行われていた)，
+							こういった問題を回避することができます．
 						</p>
 						<p>
-							このフィールドでは，単に，リネームされるファイルのリストを指定する．
-							ワイルドカードも使える．
-							デフォルトでは，指定されたファイルは，いずれも元の名前に <tt style="white-space: nowrap;">_tmp</tt> を後置したファイル名にリネームされる．
+							このフィールドでは，単に，リネームされるファイルのリストを指定します．
+							ワイルドカードも使うことができます．
+							デフォルトでは，指定されたファイルは，いずれも元の名前に <tt style="white-space: nowrap;">_tmp</tt> を後置したファイル名にリネームされます．
 							デフォルト値に優先する指定をするには，
-							フィールド <tt style="white-space: nowrap;">Files</tt> や <tt style="white-space: nowrap;">DocFiles</tt> と同様の書式を使う．
-							すなわち 元のファイル名，コロン (:)，新ファイル名，という順だ．
+							フィールド <tt style="white-space: nowrap;">Files</tt> や <tt style="white-space: nowrap;">DocFiles</tt> と同様の書式を使います．
+							すなわち 元のファイル名，コロン (:)，新ファイル名，という順です．
 							例:
 						</p>
 <pre>TarFilesRename: foo bar.* qux:quux
@@ -1792,16 +1795,16 @@ ConfigureParams: --mandir=%p/share/man (%type_pkg[-x11]) --with-x11 --disable-sh
 					</td></tr><tr valign="top"><td>CompileScript</td><td>
 						<p>
 							コンパイル段階で実行されるコマンドのリスト．
-							下記のスクリプトの注意書きを参照．
-							パッケージの configure およびコンパイルを行うコマンドをここに指定する．
-							普通，デフォルトは次のようなものだ．
+							下記のスクリプトの注意書きを参照してください．
+							パッケージの configure およびコンパイルを行うコマンドをここに指定します．
+							通常は以下の通り．
 						</p>
 <pre>./configure %c
 make</pre>
 						<p>
-							これは GNU autoconf を利用するパッケージには適切だ．
+							これは GNU autoconf を利用するパッケージには適切でしょう．
 							Perl タイプ (フィールド Type で指定される) のパッケージのうち perl のバージョン指定がないものでは，
-							デフォルト値は次のようになる (0.13.4) ．
+							通常，次のようになります (0.13.4) ．
 						</p>
 <pre>perl Makefile.PL PREFIX=%p \
  INSTALLPRIVLIB=%p/lib/perl5 \
@@ -2027,19 +2030,18 @@ AnotherVar: foo bar
 			</p>
 			<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>PreInstScript, PostInstScript, PreRmScript, PostRmScript</td><td>
 						<p>
-							これらのフィールドには，パッケージがインストール，アップグレード，または削除されるときに実行される
-							シェルスクリプトの断片を記述する．
-							Fink はシェルスクリプトのヘッダ <tt style="white-space: nowrap;">#!/bin/sh</tt> を自動的に追加する．
-							また <tt style="white-space: nowrap;">set -e</tt> で実行するので，どのコマンドが実行に失敗しても，スクリプトはその時点で停止する．
-							また Fink は末尾に <tt style="white-space: nowrap;">exit 0</tt> を追加する．
-							エラーの発生を示すには，非ゼロの終了コードでスクリプトから exit する．
-							第 1 実引数 (<tt style="white-space: nowrap;">$1</tt>) は，どのアクションが実行されているかを示す値に設定される．
-							値としては <tt style="white-space: nowrap;">install</tt>, <tt style="white-space: nowrap;">upgrade</tt>, <tt style="white-space: nowrap;">remove</tt> および <tt style="white-space: nowrap;">purge</tt> が使われ得る．
-							ただしこれらの他にも使われる値があることに注意．
-							エラー回復や，別パッケージのインストールによりパッケージを取り除くことを表す値がある．
+							これらのフィールドには，パッケージがインストール，アップグレード，または削除される時点で実行されるシェルスクリプトの断片を記述します．
+							Fink はシェルスクリプトのヘッダ <tt style="white-space: nowrap;">#!/bin/sh</tt> を自動的に追加します．
+							また <tt style="white-space: nowrap;">set -e</tt> で実行するので，どのコマンドが実行に失敗しても，スクリプトはその時点で停止します．
+							また Fink は末尾に <tt style="white-space: nowrap;">exit 0</tt> を追加します．
+							エラーの発生を示すには，非ゼロの終了コードでスクリプトから exit します．
+							第 1 実引数 (<tt style="white-space: nowrap;">$1</tt>) は，どのアクションが実行されているかを示す値に設定されます．
+							値としては <tt style="white-space: nowrap;">install</tt>, <tt style="white-space: nowrap;">upgrade</tt>, <tt style="white-space: nowrap;">remove</tt> および <tt style="white-space: nowrap;">purge</tt> が使用できます．
+							ただしこれらの他にも使われる値があることに注意してください．
+							エラー回復や，別パッケージのインストールによりパッケージを取り除くことを表す値などがあります．
 						</p>
 						<p>
-							このスクリプトは以下のタイミングで実行される．
+							各スクリプトは以下のタイミングで実行される．
 						</p>
 						<ul>
 							<li>PreInstScript: パッケージが初めてインストールされたときと，パッケージをそのバージョンにアップグレードする前．</li>
@@ -2048,13 +2050,13 @@ AnotherVar: foo bar
 							<li>PostRmScript: パッケージが削除された後，または新しいバージョンにアップグレードされた後．</li>
 						</ul>
 						<p>
-							補足説明: アップグレードは新バージョンの ...Inst スクリプトと，旧バージョンの ...Rm スクリプトを実行する．
+							補足説明: アップグレードは新バージョンの ...InstScript と，旧バージョンの ...RmScript を実行します．
 							詳細については the Debian Policy Manual,
 							<a href="http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html">第6章</a> を参照．
 						</p>
 						<p>
-							スクリプト内ではパーセント展開が行われる．
-							一般に，コマンドはフルパスを指定しなくても実行できる．
+							スクリプト内ではパーセント展開が行われます．
+							一般に，コマンドはフルパスを指定しなくても実行できます．
 						</p>
 					</td></tr><tr valign="top"><td>ConfFiles</td><td>
 						<p>
@@ -2102,15 +2104,15 @@ AnotherVar: foo bar
 							フィールド <tt style="white-space: nowrap;">Description</tt> よりも詳しい説明．
 							(それが何であるか，何のために使うものか？)
 							複数行に渡ってよい．
-							このフィールドはワードラップの恩恵に預らずに表示されるので， (可能ならば) 手動で改行を挿入して各行 79 文字以内に収めること．
+							このフィールドは児童開業されずに表示されるので， (可能ならば) 手動で改行を挿入して各行 79 文字以内に収める．
 						</p>
 					</td></tr><tr valign="top"><td>DescUsage</td><td>
 						<p>
 							パッケージを利用する上で必要になる情報を記述する．
 							(そのパッケージはどのように使うものなのか？)
-							例えば「 WindowMaker を使う前に wmaker.inst を起動．」等を (英語で) ここに記述する．
+							例えば「 WindowMaker を使う前に wmaker.inst を起動．」等を (訳注: 英語で) ここに記述します．
 							複数行に渡ってよい．
-							このフィールドはワードラップの恩恵に預らずに表示されるので， (可能ならば) 手動で改行を挿入して各行 79 文字以内に収めること．
+							このフィールドはワードラップの恩恵に預らずに表示されるので， (可能ならば) 手動で改行を挿入して各行 79 文字以内に収める．
 						</p>
 					</td></tr><tr valign="top"><td>DescPackaging</td><td>
 						<p>
@@ -2130,16 +2132,16 @@ AnotherVar: foo bar
 			
 			<p>
 				Fink 0.9.9 で導入．
-				単一の .info ファイルで複数のパッケージを作成できる．
-				インストール段階は普通に始まり， <tt style="white-space: nowrap;">InstallScript</tt> と <tt style="white-space: nowrap;">DocFiles</tt> コマンドを実行する．
-				フィールド <tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> が存在すれば，それらに対しインストールディレクトリを作成する．
+				単一の .info ファイルで複数のパッケージを作成することが可能です．
+				インストール段階は普通に始まり， <tt style="white-space: nowrap;">InstallScript</tt> と <tt style="white-space: nowrap;">DocFiles</tt> コマンドを実行します．
+				フィールド <tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> が存在すれば，それらに対しインストールディレクトリを作成します．
 				<tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> の中では，対応して新しく作られたインストールディレクトリは %i で，
-				親パッケージのインストールディレクトリは %I で参照される．
+				親パッケージのインストールディレクトリは %I で参照されます．
 			</p>
 			<p>
-				フィールド <tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> はそれぞれいくつものフィールドを含んでいなければいけない．
-				実際，完全なパッケージ記述とよく似ているが，抜けているフィールドもある．
-				以下は <tt style="white-space: nowrap;">SplitOff</tt> に含まれる部分パッケージ記述 (分野別)．
+				フィールド <tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> には，独自のフィールドが多数あります．
+				完全なパッケージ記述とよく似ていますが，抜けているフィールドもあります．
+				以下は <tt style="white-space: nowrap;">SplitOff</tt> に含まれる部分パッケージ記述 (分野別)です．
 			</p>
 			<ul>
 				<li>
@@ -2177,8 +2179,8 @@ AnotherVar: foo bar
 			<p>
 				現在の Fink では，最初に <tt style="white-space: nowrap;">SplitOff</tt> が (あれば) 処理され，その後に
 				<tt style="white-space: nowrap;">SplitOff2</tt>, <tt style="white-space: nowrap;">SplitOff3</tt> などがさらに存在する場合，数の順に処理される．
-				しかしこの順番は将来変更されるかもしれない．
-				だから， <tt style="white-space: nowrap;">SplitOff</tt> が <tt style="white-space: nowrap;">SplitOff2</tt> より先に処理される現状でしか正しく動作しない次のようなコードを避け，
+				しかしこの順番は将来変更されるかもしれません．
+				よって， <tt style="white-space: nowrap;">SplitOff</tt> が <tt style="white-space: nowrap;">SplitOff2</tt> より先に処理される現状でしか正しく動作しない，次のようなコード
 			</p>
 <pre>
 SplitOff: &lt;&lt;
@@ -2191,16 +2193,16 @@ SplitOff2: &lt;&lt;
 &lt;&lt;
 </pre>
 			<p>
-				それぞれの中で明示的なファイル名を使うか，より精密なファイルグロブ (いわゆるワイルドカード) を使う方がよい．
+				を避け，それぞれの中で明示的なファイル名を使うか，より精密なファイルグロブ (いわゆるワイルドカード) を使う方がよいでしょう．
 			</p>
 			<p>
-				ビルド段階では，各パッケージの pre/post install/remove スクリプトをビルド段階コマンドを使って作成する．
+				ビルド段階では，各パッケージの pre/post install/remove スクリプトをビルド段階コマンドを使って作成します．
 			</p>
 			<p>
-				ビルドされるパッケージは，ライセンス条項を <tt style="white-space: nowrap;">%i/share/doc/%n</tt> に明記する必要がある
+				ビルドされるパッケージは，ライセンス条項を <tt style="white-space: nowrap;">%i/share/doc/%n</tt> に明記する必要があります
 				(%n の値は当然パッケージ毎に異なる)．
 				<tt style="white-space: nowrap;">DocFiles</tt> はファイルを移動ではなくコピーすることに注意．
-				よって <tt style="white-space: nowrap;">DocFiles</tt> を使えば同一のドキュメントを各 splitoff パッケージ向けに複数回インストールできる．
+				よって <tt style="white-space: nowrap;">DocFiles</tt> を使えば同一のドキュメントを各 splitoff パッケージ向けに複数回インストールできます．
 			</p>
 		
 		<h3><a name="reference.scripts">5.4 スクリプト</a></h3>
@@ -2210,27 +2212,26 @@ SplitOff2: &lt;&lt;
 				形式は 2 種類ある．
 			</p>
 			<p>
-				このフィールドには単にコマンドを列挙してもよい．
-				シェルスクリプトのような感じだ．
-				しかしそれらのコマンドは，一行ごとに system() によって実行される．
+				このフィールドには単にコマンドを列挙すれば，シェルスクリプトと同様です．
+				しかし，コマンドが一行ごとに system() によって実行される点が異なります．
 				よって変数の設定やディレクトリの移動はその行内でのみ有効になる．
 				0.18.2 以降の CVS 版 Fink では，
-				通常のシェルスクリプトと同様に長い行を改行できる．
-				行末にバックスラッシュ (<tt style="white-space: nowrap;">\</tt>) を置くと次の行は継続行になる．
+				通常のシェルスクリプトと同様に長い行を改行できます．
+				行末にバックスラッシュ (<tt style="white-space: nowrap;">\</tt>) を置くと次の行は継続行になります．
 			</p>
 			<p>
-				または，任意のスクリプト処理系の完全なスクリプトを記述することもできる．
+				または，任意のスクリプト処理系の完全なスクリプトを記述することもできます．
 				その場合，他の Unix のスクリプトファイルと同様，第1行目は <tt style="white-space: nowrap;">#!</tt> にインタプリタのフルパス名を続け，
 				さらに必要なフラグを続けたものでなければいけない
 				(<tt style="white-space: nowrap;">#!/bin/csh</tt>, <tt style="white-space: nowrap;">#!/bin/bash -ev</tt> など)．
-				その場合，フィールド *Script の値全体が一時ファイルにダンプされ，実行される．
+				その場合，フィールド *Script の値全体が一時ファイルにダンプされ，実行されます．
 			</p>
 		
 		<h3><a name="reference.patches">5.5 パッチ</a></h3>
 			
 			<p>
 				パッケージを Darwin でコンパイルするために (または Fink と協調して動作するようにするために) パッチが必要な場合，
-				パッチにはパッケージ記述の拡張子 ".info" を ".patch" に変えたファイル名を使い， .info ファイルと同じディレクトリに入れる．
+				パッチにはパッケージ記述の拡張子 ".info" を ".patch" に変えたファイル名を使い， .info ファイルと同じディレクトリに入れます．
 				パッケージファイル名に完全名を使っている場合は，次のどちらかを使う (どちらも同等)．
 			</p>
 <pre>Patch: %f.patch</pre>
@@ -2241,25 +2242,25 @@ SplitOff2: &lt;&lt;
 			</p>
 			<p>
 				パッチファイルではユーザがインストールディレクトリを選択できるようにする方がよいので，
-				<tt style="white-space: nowrap;">/sw</tt> という決め打ちではなく <tt style="white-space: nowrap;">@PREFIX@</tt> 等の変数を使った方がよい．
-				そして次のようにする．
+				<tt style="white-space: nowrap;">/sw</tt> という決め打ちではなく <tt style="white-space: nowrap;">@PREFIX@</tt> 等の変数を使います．
+				以下のようにすると良いでしょう．
 			</p>
 <pre>PatchScript: sed 's|@PREFIX@|%p|g' &lt;%a/%f.patch | patch -p1</pre>
 			<p>
-				パッチの書式は unidiff (unified diff) でなければいけない．
-				普通，次のようにして生成できる．
+				パッチの書式は unidiff (unified diff) でなければいけません．
+				普通，次のようにして生成できます．
 			</p>
 <pre>diff -urN &lt;originalsourcedir&gt; &lt;patchedsourcedir&gt;</pre>
 			<p>
 				エディタに Emacs を使っているなら，上記のコマンド diff の引数に <tt style="white-space: nowrap;">-x'*~'</tt> を加え，
-				自動生成されたバックアップファイルを比較対象から除くとよい．
+				自動生成されたバックアップファイルを比較対象から除きます．
 			</p>
 			<p>
-				巨大なサイズのパッチを cvs に入れるのはまずいことにも注意．
-				そういうパッチは web/ftp サーバに置き，フィールド <tt style="white-space: nowrap;">SourceN:</tt> に指定する．
+				巨大なサイズのパッチを cvs に入れるのは好ましくないことにも注意．
+				そういうパッチは web/ftp サーバに置き，フィールド <tt style="white-space: nowrap;">SourceN:</tt> に指定します．
 				自分のウェブサイトを持っていなくても，
-				Fink プロジェクトの管理者がそのファイルを Fink のサイトそのものからダウンロードできるようにしてくれる．
-				パッチが 30KB より大きければ，独立にダウンロードする方法を考慮した方がよい．
+				Fink プロジェクトの管理者がそのファイルを Fink のサイトからダウンロードできるようにすることも可能です．
+				パッチが 30KB より大きければ，独立にダウンロードする方法を考慮した方がよいでしょう．
 			</p>
 		
 		<h3><a name="reference.profile.d">5.6 Profile.d スクリプト</a></h3>
