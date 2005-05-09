@@ -551,7 +551,7 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <p>Le nom d'une rustine à appliquer avec <tt style="white-space: nowrap;">patch -p1 &lt;<b>nom-rustine</b></tt>. Ne donnez que le nom du fichier ; le chemin est ajouté automatiquement devant le nom du fichier. L'interprétation des raccourcis y est effectuée, si bien qu'on trouve, en général : <tt style="white-space: nowrap;">%f.patch</tt> ou <tt style="white-space: nowrap;">%n.patch</tt>. La rustine est appliquée avant que le script PatchScript soit exécuté (s'il existe).</p>
 <p>N'oubliez pas que %n inclut implicitement toutes les variantes %type_. Le cas échéant, utilisez %{ni} (éventuellement avec des variantes spécifiques %type_). Il est plus facile de gérer une seule rustine et de faire des changements spécifiques à certaines variantes dans le script <tt style="white-space: nowrap;">PatchScript</tt> que de gérer une rustine par variante.</p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
-<p>Liste de commandes à exécuter lors de la phase d'application des rustines. Voir plus bas la note sur les scripts. C'est là où vous pouvez placer les commandes qui modifient le paquet. Il n'existe pas de script par défaut. L'interprétation des raccourcis (voir la section précédente) a lieu avant que les commandes ne soient exécutées.</p>
+<p>Liste de commandes à exécuter lors de la phase d'application des rustines. C'est là où vous pouvez placer les commandes qui corrigent ou modifient le paquet source. Voir plus loin la <a href="#reference.scripts">note au sujet des scripts</a>. L'<a href="#format.percent">interprétation des raccourcis</a> a lieu avant que les commandes ne soient exécutées. Il n'existe pas de script par défaut.</p>
 </td></tr></table>
 <p><b>Phase de compilation :</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>Set<b>ENVVAR</b></td><td>
@@ -595,7 +595,7 @@ ConfigureParams: --mandir=%p/share/man (%type_pkg[-x11]) \
 <p>À partir de la version 0.13.8 de fink, quand ce champ est utilisé, la version de gcc est testée via <tt style="white-space: nowrap;">gcc_select</tt>, et fink se termine avec un message d'erreur si la version requise n'est pas présente.</p>
 <p>Ce champ a été ajouté pour faciliter la transition entre les compilateurs gcc, qui ont introduit une incompatibilité binaire entre librairies ; cette incompatibilité concerne des parties de code C++ non reproduites dans les différentes versions.</p>
 </td></tr><tr valign="top"><td>CompileScript</td><td>
-<p>Liste de commandes à exécuter durant la phase de compilation. Voir plus bas la note au sujet des scripts. C'est là qu'il faut mettre les commandes de configuration et de compilation du paquet. Normalement, les commandes sont les suivantes :</p>
+<p>Liste de commandes à exécuter durant la phase de compilation. C'est là qu'il faut mettre les commandes de configuration et de compilation du paquet. Voir plus loin la <a href="#reference.scripts">note au sujet des scripts</a>. L'<a href="#format.percent">interprétation des raccourcis</a> a lieu avant que les commandes ne soient exécutées. Normalement, les commandes sont les suivantes :</p>
 <pre>./configure %c
 make</pre>
 <p>Elles conviennent pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut (à partir de la version 0.13.4 de fink) sont les suivantes :</p>
@@ -630,7 +630,6 @@ make test</pre>
 make
 make test</pre>
 <p>où <tt style="white-space: nowrap;">$perlarchdir</tt> est "darwin" pour les versions antérieures ou égales à 5.8.0, "darwin-thread-multi-2level" pour les versions postérieures ou égales à 5.8.1.</p>
-<p>L'interprétation des raccourcis (voir la section précédente) a lieu avant que les commandes soient exécutées.</p>
 </td></tr><tr valign="top"><td>NoPerlTests</td><td> 
 <p><b>Introduite dans une version de fink &gt; 0.13.7.</b> Valeur booléenne spécifique aux paquets de module perl. Si sa valeur est true (vraie), la partie <tt style="white-space: nowrap;">make test</tt> de <tt style="white-space: nowrap;">CompileScript</tt> est ignorée pour ce paquet.</p>
 </td></tr></table>
@@ -638,7 +637,7 @@ make test</pre>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Champ</th><th align="left">Utilisation</th></tr><tr valign="top"><td>UpdatePOD</td><td>
 <p><b>Introduit dans la version 0.9.5 de fink.</b> Valeur booléenne réservée aux paquets de module perl. Si sa valeur est true (vraie), du code est ajouté aux scripts install, postrm et postinst, qui gèrent les fichiers .pod fournis par les paquets perl. En particulier, la date .pod est ajoutée et ôtée du fichier central <tt style="white-space: nowrap;">/sw/lib/perl5/darwin/perllocal.pod</tt>. (Si le type est du style <tt style="white-space: nowrap;">perl $version</tt>, où $version est, par exemple, 5.6.0, les scripts sont adaptés pour gérer le fichier central .pod <tt style="white-space: nowrap;">/sw/lib/perl5/$version/perllocal.pod</tt>).</p>
 </td></tr><tr valign="top"><td>InstallScript</td><td>
-<p>Liste de commandes à exécuter durant la phase d'installation. Voir plus bas la note au sujet des scripts. C'est là où il faut mettre les commandes qui copient tous les fichiers requis dans le répertoire de construction du paquet. Normalement, on utilise :</p>
+<p>Liste de commandes à exécuter durant la phase d'installation. C'est là où il faut mettre les commandes qui copient tous les fichiers requis dans le répertoire de construction du paquet. Voir plus loin la <a href="#reference.scripts">note au sujet des scripts</a>. L'<a href="#format.percent">interprétation des raccourcis</a> a lieu avant que les commandes ne soient exécutées. Normalement, on utilise :</p>
 <pre>make install prefix=%i</pre>
 <p>Ceci convient pour les paquets utilisant GNU autoconf. Pour ceux de type perl (indiqué via le champ Type) dont la version perl n'est pas indiquée, les commandes par défaut (à partir de la version 0.13.4 de fink) sont les suivantes :</p>
 <pre>make install INSTALLPRIVLIB=%i/lib/perl5 \
@@ -665,7 +664,7 @@ make test</pre>
  INSTALLSITEBIN=%i/bin \
  INSTALLSCRIPT=%i/bin</pre>
 <p>où <tt style="white-space: nowrap;">$perlarchdir</tt> est "darwin" pour les versions antérieures ou égales à 5.8.0, et "darwin-thread-multi-2level" pour les versions postérieures ou égales à 5.8.1.</p>
-<p>Si le paquet l'admet, il est préférable d'utiliser <tt style="white-space: nowrap;">make install DESTDIR=%d</tt>. L'interprétation des raccourcis (voir section précédente) a lieu avant que les commandes ne soient exécutées .</p>
+<p>Si le paquet l'admet, il est préférable d'utiliser <tt style="white-space: nowrap;">make install DESTDIR=%d</tt>.</p>
 </td></tr><tr valign="top"><td>AppBundles</td><td>
 <p><b>Introduit dans une version postérieure à la version 0.23.1.</b> Ce champ installe le(s) lot(s) dans le répertoire <tt style="white-space: nowrap;">%p/Applications</tt>. Il crée également un lien symbolique vers le répertoire <tt style="white-space: nowrap;">/Applications/Fink</tt>. Exemple :</p>
 <pre>AppBundles: build/*.app Foo.app</pre>
