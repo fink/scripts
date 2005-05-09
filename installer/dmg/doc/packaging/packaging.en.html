@@ -1781,13 +1781,13 @@ easier to maintain a single patchfile and then make variant-specific
 changes in <tt style="white-space: nowrap;">PatchScript</tt> than to have a separate patchfile
 for each variant.
 </p>
-</td></tr><tr valign="top"><td>PatchScript</td><td>
+</td></tr><tr valign="top"><td>aaaPatchScript</td><td>
 <p>
-A list of commands that are run in the patch phase. See the note
-on scripts below. This is the place to put commands that patch or
-otherwise modify the package. There is no default. Before the
-commands are executed, percent expansion takes place (see last
-section).
+A list of commands that are run in the patch phase. This is the place
+to put commands that patch or otherwise modify the package source. See
+the <a href="#reference.scripts">note on scripts</a>
+below. Before the commands are executed, <a href="#format.percent">percent expansion</a> takes place. There is no
+default.
 </p>
 </td></tr></table>
 <p><b>Compile Phase:</b></p>
@@ -1906,11 +1906,13 @@ compilers, which introduced a binary incompatibility between libraries
 that involve C++ code which is not reflected in the versioning
 scheme.
 </p>
-</td></tr><tr valign="top"><td>CompileScript</td><td>
+</td></tr><tr valign="top"><td>aaaCompileScript</td><td>
 <p>
-A list of commands that are run in the compile phase. See the note
-on scripts below. This is the place to put commands that configure and
-compile the package. Normally the default is:
+A list of commands that are run in the compile phase. This is the
+place to put commands that configure and compile the package. See
+the <a href="#reference.scripts">note on scripts</a>
+below. Before the commands are executed, <a href="#format.percent">percent expansion</a> takes place. Normally the
+default is:
 </p>
 <pre>./configure %c
 make</pre>
@@ -1956,10 +1958,6 @@ make test</pre>
 <p>where <tt style="white-space: nowrap;">$perlarchdir</tt> is "darwin" for versions 5.8.0 and 
 earlier, and is 
 "darwin-thread-multi-2level" for versions 5.8.1 and later.</p>
-<p>
-Before the commands are executed, percent expansion takes place
-(see previous section).
-</p>
 </td></tr><tr valign="top"><td>NoPerlTests</td><td> 
 <p>
 <b>Introduced in fink &gt; 0.13.7.</b>
@@ -1983,11 +1981,12 @@ specific version of perl such as 5.6.0,
 then these scripts are adapted to deal with the central .pod file
 <tt style="white-space: nowrap;">/sw/lib/perl5/$version/perllocal.pod</tt>.)
 </p>
-</td></tr><tr valign="top"><td>InstallScript</td><td>
+</td></tr><tr valign="top"><td>aaaInstallScript</td><td>
 <p>
-A list of commands that are run in the install phase. See the note
-on scripts below. This is the place to put commands that copy all
-necessary files to the stow directory for the package. Normally the
+A list of commands that are run in the install phase. This is the
+place to put commands that copy all the necessary files into the
+temporary dpkg directory for the package. See the <a href="#reference.scripts">note on scripts</a>
+below. Before the commands are executed, <a href="#format.percent">percent expansion</a> takes place. Normally the
 default is:
 </p>
 <pre>make install prefix=%i</pre>
@@ -2030,8 +2029,7 @@ earlier, and is
 "darwin-thread-multi-2level" for versions 5.8.1 and later.</p>
 <p>
 If the package supports it, it is preferably to use <tt style="white-space: nowrap;">make install
-DESTDIR=%d</tt> instead. Before the commands are executed, percent
-expansion takes place (see previous section).
+DESTDIR=%d</tt> instead.
 </p>
 </td></tr><tr valign="top"><td>AppBundles</td><td>
 <p>
@@ -2411,4 +2409,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.60 2005/04/11 23:07:20 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.61 2005/05/09 00:59:43 dmacks Exp $</i></p></body></html>
