@@ -1,0 +1,67 @@
+#!/usr/bin/perl
+
+#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+use strict;
+use warnings;
+
+die "Usage: $0 pkgindex.html pkgindex.html\n" unless @ARGV == 2;
+
+sub parseLine {
+	my $line = shift;
+	$line =~ m!<a.*?>(.*?)</a>: <a.*>(.*)</a>!;
+
+	my($pkg, $cat) = ($1, $2);
+	$pkg =~ s/\.log$//;
+	return ($pkg, $cat);
+}
+
+sub parsePkgIndex {
+	my $file = shift;
+	open(FILE, $file) or die "Couldn't open pkgindex: $!\n";
+	my %ret;
+	while(<FILE>) {
+		my($pkg, $cat) = parseLine($_);
+		$ret{$pkg} = $cat;
+	}
+
+	return %ret;
+}
+
+my(%a) = parsePkgIndex(shift);
+my(%b) = parsePkgIndex(shift);
+
+my $wroteheader = 0;
+foreach my $pkg (sort keys %a) {
+	next if exists($b{$pkg});
+	print "New in a:\n" if !$wroteheader++;
+	print "\t$pkg\n";
+}
+
+$wroteheader = 0;
+foreach my $pkg (sort keys %b) {
+	next if exists($a{$pkg});
+	print "New in b:\n" if !$wroteheader++;
+	print "\t$pkg\n";
+}
+
+$wroteheader = 0;
+foreach my $pkg (sort keys %a) {
+	next if !exists($b{$pkg}) or $a{$pkg} eq $b{$pkg};
+	print "Changed:\n" if !$wroteheader++;
+	print "\t$pkg: $a{$pkg} => $b{$pkg}\n";
+}

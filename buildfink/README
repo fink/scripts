@@ -1,0 +1,30 @@
+The following scripts are part of the 'buildfink' system:
+
+*analyze
+	Assigns the outcome of each package's build to a category,
+	as determined by filters.xml and the filter script.
+*buildfink
+	The core script; performs the actual build.
+*buildstats
+	See how long each package took to build and how large its log was.
+*cmplink
+	HTML-ify the output from cmpruns.
+*cmpruns
+	Compare two runs and get a list of packages which are unique to
+	each run and packages which which transitioned either to or away
+	from failure.
+*filter
+	A tool used by 'analyze' to sort the logs.  It tests files against
+	a series of regular expressions and sorts them into lists depending
+	on which regex they match.
+*finkfilter_sysgcc
+	An info file filter, to be used in conjunction with
+	"buildfink --infofilter", which causes /usr/bin/gcc to be
+	used to compile the package, removing any attempts by the
+	package to build with an alternate compiler, such as /usr/bin/gcc-3.3
+*report
+	Running this script from the 'out' subdirectory of a run after running
+	'analyze' will produce the HTML and text reports.
+
+Any questions should be directed to Matthew Sachs <msachs@apple.com> .
+See COPYING for licensing information.

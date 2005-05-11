@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+
+# This filter forces all packages to build with /usr/bin/gcc
+# (as opposed to, say, gcc-3.3.)
+
+#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+# Read the entire file into $_.
+$/ = undef;
+$_ = <STDIN>;
+
+# Now, perform the substitions.
+s/g(cc|\+\+)-(3\.[13]|2)/g$1/g;
+s/^BuildDepends: gcc(3\.[13]|2)$//m;
+s/^BuildDepends:(.*)gcc(3\.[13]|2)(, )?/BuildDepends:$1/m;
+s/^GCC:.*//m;
+s/^BuildDepends: <<(.*\n)\s+gcc(3\.[13]|2)(,\n)?/BuildDepends: <<$1/sm;
+s/^SetC(C|XX):.*//m;
+s/(SYSCONF_CC.*= gcc)(3\.[13]|2)/$1/;
+
+# And print it.
+print $_;

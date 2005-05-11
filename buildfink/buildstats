@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+
+#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+use strict;
+use warnings;
+
+use FindBin qw($Bin);
+use Config;
+use lib "$Bin/../plib";
+use lib "$Bin/../plib/site_perl";
+use lib sprintf("$Bin/../plib/site_perl/%vd/%s", $^V, $Config{archname});
+
+use Date::Parse;
+use File::stat;
+
+# Show build time in seconds and log size in bytes for each package built.
+# Run this from the otherworld run directory.
+
+my $starttime;
+open(LOG, "log.txt") or die "Couldn't open log.txt: $!\n";
+while(<LOG>) {
+	/^(.*?): (.*)/;
+	my($time, $text) = ($1, $2);
+	next unless $text and $text =~ /(Build of|Building package) (\S+)/;
+	my($type, $name) = ($1, $2);
+	$name =~ s/\.\.\.$//;
+
+	if($type eq "Building package") {
+		$starttime = str2time($time);
+	} else {
+		my $endtime = str2time($time);
+		my $buildlen = $endtime - $starttime;
+
+		my $logsize = stat("logs/$name.log")->size;
+		print "$name $buildlen $logsize\n";
+	}
+}
