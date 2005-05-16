@@ -9,14 +9,6 @@ else
   cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
 fi
 
-# Dump the 10.2-gcc3.3 tree
-rm -f fink/dists var/db/fink.db
-ln -s 10.2-gcc3.3 fink/dists
-echo "Dumping 10.2-gcc3.3/stable..."
-./dump 10.2-gcc3.3 stable current-10.2-gcc3.3-stable >current.sql
-echo "Dumping 10.2-gcc3.3/unstable..."
-./dump 10.2-gcc3.3 unstable current-10.2-gcc3.3-unstable >>current.sql
-
 # Dump the 10.3 tree
 rm -f fink/dists var/db/fink.db
 ln -s 10.3 fink/dists
