@@ -41,7 +41,7 @@ English |
         the change.</a></li><li><a href="#usage-fink.seg-fault">5.26 I get errors with <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
         applications from the<tt style="white-space: nowrap;"> fileutils </tt>package! Help!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 When I open a Terminal window, I get a message that "Your
         environment seems to be correctly set up for Fink already.", and it
-        logs out.</a></li><li><a href="#usage-fink.ext-drive">5.28 I have Fink installed away from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</a></li><li><a href="#usage-fink.mirror-gnu">5.29 Fink won't update my packages because it says it can't find the 'gnu' mirror.</a></li><li><a href="#usage-fink.cant-move-fink">5.30 I can't update Fink, because it can't move /sw/fink out of the way.</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
+        logs out.</a></li><li><a href="#usage-fink.ext-drive">5.28 I have Fink installed away from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</a></li><li><a href="#usage-fink.mirror-gnu">5.29 Fink won't update my packages because it says it can't find the 'gnu' mirror.</a></li><li><a href="#usage-fink.cant-move-fink">5.30 I can't update Fink, because it can't move /sw/fink out of the way.</a></li><li><a href="#usage-fink.four-oh-three">5.31 I keep getting 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> or <tt style="white-space: nowrap;">dselect</tt> or the Fink Commander Binary menu.</a></li><li><a href="#usage-fink.fc-cache">5.32 I get a message that says "No fonts found".</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
         What's that?</a></li><li><a href="#comp-general.cvs">6.2 When I try a "fink selfupdate-cvs" I get this message: "cvs:
         Command not found."</a></li><li><a href="#comp-general.missing-make">6.3 I'm getting an error message involving <tt style="white-space: nowrap;">make</tt>
         </a></li><li><a href="#comp-general.head">6.4 I'm getting a strange usage message from the head command. What's
@@ -607,7 +607,9 @@ Reading Package Lists... Done
 Building Dependency Tree...Done 
 E: Some index files failed to download, 
 they have been ignored, or old ones used instead. 
-update available list script returned error exit status 1.</pre><p>then all you need to do is run <tt style="white-space: nowrap;">fink scanpackages</tt>. This
+update available list script returned error exit status 1.</pre><p>or</p><pre>W: Couldn't stat source package list file: unstable/main Packages
+(/sw/var/lib/apt/lists/_sw_fink_dists_unstable_main_binary-darwin-
+powerpc_Packages) - stat (2 No such file or directory)</pre><p>then all you need to do is run <tt style="white-space: nowrap;">fink scanpackages</tt>. This
         generates the files that aren't being found.</p></div>
     </a>
     <a name="usage-fink.wrong-tree">
@@ -666,7 +668,37 @@ Failed test (./Command/chowname.t at line 27)
       <div class="question"><p><b>Q5.30: I can't update Fink, because it can't move /sw/fink out of the way.</b></p></div>
       <div class="answer"><p><b>A:</b> This error:</p><pre>Failed: Can't move "/sw/fink" out of the way.</pre><p>is usually due, in spite of what it says, to permissions errors in one of the temporary directories that get created during a <tt style="white-space: nowrap;">selfupdate</tt>.  Remove these:</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
     </a>
+<a name="usage-fink.four-oh-three"><div class="question"><p><b>Q5.31: I keep getting 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> or <tt style="white-space: nowrap;">dselect</tt> or the Fink Commander Binary menu.</b></p></div>
+<div class="answer"><p><b>A:</b> There have been problems with the Sourceforge download servers, and therefore we are moving the binary distribution repository for this very reason.</p><ul>
+<li>If you have the Developer Tools installed then install the latest version of the <tt style="white-space: nowrap;">fink-mirrors</tt> package (&gt;= 0.24.4.1), and then reinstall <tt style="white-space: nowrap;">fink</tt>, either via:
+<pre>fink reinstall fink</pre>
+<p>or</p>
+<pre>sudo apt-get install fink</pre>
+<p>(if for whatever reason you don't want to use the source distribution).</p>
+</li>
+<li>If you don't have the Developer Tools installed, then you'll have to set things up manually.  Edit your <tt style="white-space: nowrap;">sources.list</tt> file as root, e.g..via
+<pre>sudo pico /sw/etc/apt/sources.list</pre>
+<p>(use your favorite Unix-line-ending-compatible text editor). Change the liines that start with "Official binary distribtution:" thusly:</p>
+<pre># Official binary distribution: download location for packages
+# from the latest release
+deb http://bindist.finkmirrors.net/bindist 10.3/release main crypto
+
+# Official binary distribution: download location for updated
+# packages built between releases
+deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
+<p>Then save your work and quit the editor.  Now update your binary package list again, </p>
+</li>
+</ul></div></a>
+
+<a name="usage-fink.fc-cache">
+<div class="question"><p><b>Q5.32: I get a message that says "No fonts found".</b></p></div>
+<div class="answer"><p><b>A:</b> If you see the following (so far only seen on OS 10.4):</p><pre>No fonts found; this probably means that the fontconfig
+library is not correctly configured. You may need to
+edit the fonts.conf configuration file. More information
+about fontconfig can be found in the fontconfig(3) manual
+page and on http://fontconfig.org.</pre><p>then you can fix it by running</p><pre>sudo fc-cache</pre></div></a>
   <h2><a name="comp-general">6 Compile Problems - General</a></h2>
+    
     
     
     <a name="comp-general.compiler">
@@ -899,6 +931,7 @@ make[1]: *** [unix_dl.lo] Error 1</pre><p>then most likely you have a header fil
 sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.gcc2">
+      
       <div class="question"><p><b>Q6.17: Fink says I'm missing <tt style="white-space: nowrap;">gcc2</tt> or <tt style="white-space: nowrap;">gcc3.1</tt> but I can't seem to
         install it.</b></p></div>
       <div class="answer"><p><b>A:</b> This is because <tt style="white-space: nowrap;">gcc2</tt> and <tt style="white-space: nowrap;">gcc3.1</tt> are  virtual packages to
@@ -1001,6 +1034,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
 fink install libiconv</pre></div>
     </a>
   <h2><a name="usage-general">8 Package Usage Problems - General</a></h2>
+    
     
     
     <a name="usage-general.xlocale">
@@ -1138,6 +1172,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
         Request Tracker</a> on the Fink project page.</p><p>Note that you must have a SourceForge id to do so.</p></div>
     </a>
     <a name="usage-general.virtpackage">
+      
       <div class="question"><p><b>Q8.8: What are all these <tt style="white-space: nowrap;">system-*</tt> "virtual
 	  packages" that are sometimes present, but that I can't
 	  seem to install or remove myself?</b></p></div>
@@ -1230,6 +1265,7 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
         </ul></div>
     </a>
   <h2><a name="usage-packages">9 Package Usage Problems - Specific Packages</a></h2>
+    
     
     
     <a name="usage-packages.xmms-quiet">
@@ -1358,6 +1394,7 @@ exec metacity &amp; exec gnome-session</pre><p>Note:  this is no longer true for
         included with Panther. You can install X11 from X11.pkg on Disk 3.</p></div>
     </a>
     <a name="usage-packages.apple-x11-wants-xfree86">
+      
       <div class="question"><p><b>Q9.11: I installed Apple's X11 but Fink keeps asking to install
         XFree86 or X.org.</b></p></div>
       <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
@@ -1415,4 +1452,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.43 2005/03/01 19:18:38 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.45 2005/05/17 02:28:38 alexkhansen Exp $</i></p></body></html>
