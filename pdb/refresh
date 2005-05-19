@@ -10,6 +10,9 @@ else
   cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
 fi
 
+# flush the previous dump
+echo -n "" > current.sql
+
 # Dump the 10.3 tree
 rm -f fink/dists var/db/fink.db
 ln -s 10.3 fink/dists
