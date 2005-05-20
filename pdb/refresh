@@ -4,7 +4,7 @@ set -e
 echo "Updating from CVS..."
 if [ -d fink ]; then
   cd fink
-  cvs -z3 -q update -Ap
+  cvs -z3 -q update -Ad
   cd ..
 else
   cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
