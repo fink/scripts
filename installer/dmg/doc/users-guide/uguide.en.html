@@ -34,7 +34,7 @@ Package installation and maintenance is covered as well.
 </p>
   <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.what">1.1 What is Fink?</a></li><li><a href="#intro.req">1.2 Requirements</a></li><li><a href="#intro.supported-os">1.3 Supported Systems</a></li><li><a href="#intro.src-vs-bin">1.4 Source vs. Binary</a></li></ul></li><li><a href="#install"><b>2 First Time Installation</b></a><ul><li><a href="#install.bin">2.1 Installing the Binary Distribution</a></li><li><a href="#install.src">2.2 Installing the Source Distribution</a></li><li><a href="#install.setup">2.3 Setting Up Your Environment</a></li></ul></li><li><a href="#packages"><b>3 Installing Packages</b></a><ul><li><a href="#packages.bin-dselect">3.1 Installing Binary Packages with
 dselect</a></li><li><a href="#packages.bin-apt">3.2 Installing Binary Packages with
-apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Binary and Source Packages with fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li><li><a href="#conf.advanced">5.8 Advanced Settings</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.options">6.2 Global options</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.fetch">6.10 fetch</a></li><li><a href="#usage.fetch-all">6.11 fetch-all</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing</a></li><li><a href="#usage.build">6.13 build</a></li><li><a href="#usage.rebuild">6.14 rebuild</a></li><li><a href="#usage.reinstall">6.15 reinstall</a></li><li><a href="#usage.configure">6.16 configure</a></li><li><a href="#usage.selfupdate">6.17 selfupdate</a></li><li><a href="#usage.index">6.18 index</a></li><li><a href="#usage.validate">6.19 validate</a></li><li><a href="#usage.scanpackages">6.20 scanpackages</a></li><li><a href="#usage.cleanup">6.21 cleanup</a></li><li><a href="#usage.dumpinfo">6.22 dumpinfo</a></li><li><a href="#usage.show-deps">6.23 show-deps</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
+apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Installing Dependent Packages that are Unavailable in the Binary Distribution</a></li><li><a href="#packages.src">3.4 Installing Binary and Source Packages with fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Available versions</a></li><li><a href="#packages.x11">3.7 Getting X11 Sorted Out</a></li></ul></li><li><a href="#upgrade"><b>4 Upgrading Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Upgrading using Binary Packages</a></li><li><a href="#upgrade.src">4.2 Upgrading the Source Distribution</a></li><li><a href="#upgrade.mix">4.3 Mixing Binaries and Source</a></li></ul></li><li><a href="#conf"><b>5 The Fink Configuration File</b></a><ul><li><a href="#conf.about">5.1 About fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf syntax</a></li><li><a href="#conf.required">5.3 Required Settings</a></li><li><a href="#conf.optional">5.4 Optional User Settings</a></li><li><a href="#conf.downloading">5.5 Download Settings</a></li><li><a href="#conf.mirrors">5.6 Mirror Settings</a></li><li><a href="#conf.developer">5.7 Developer Settings</a></li><li><a href="#conf.advanced">5.8 Advanced Settings</a></li><li><a href="#conf.sourceslist">5.9 Managing apt's sources.list file</a></li></ul></li><li><a href="#usage"><b>6 Using the fink Tool from the Command Line</b></a><ul><li><a href="#usage.using">6.1 Using the fink tool</a></li><li><a href="#usage.options">6.2 Global options</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.fetch">6.10 fetch</a></li><li><a href="#usage.fetch-all">6.11 fetch-all</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing</a></li><li><a href="#usage.build">6.13 build</a></li><li><a href="#usage.rebuild">6.14 rebuild</a></li><li><a href="#usage.reinstall">6.15 reinstall</a></li><li><a href="#usage.configure">6.16 configure</a></li><li><a href="#usage.selfupdate">6.17 selfupdate</a></li><li><a href="#usage.selfupdate-cvs">6.18 selfupdate-rsync</a></li><li><a href="#usage.selfupdate-cvs">6.19 selfupdate-cvs</a></li><li><a href="#usage.index">6.20 index</a></li><li><a href="#usage.validate">6.21 validate</a></li><li><a href="#usage.scanpackages">6.22 scanpackages</a></li><li><a href="#usage.cleanup">6.23 cleanup</a></li><li><a href="#usage.dumpinfo">6.24 dumpinfo</a></li><li><a href="#usage.show-deps">6.25 show-deps</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
     
     <h3><a name="intro.what">1.1 What is Fink?</a></h3>
@@ -1205,7 +1205,7 @@ version and revision when they are not specified.  Others have different options
 There are some options, which apply to all fink commands. If you 
 type <tt style="white-space: nowrap;">fink --help</tt> you get the list of options: 
       </p>
-      <p>(as of <tt style="white-space: nowrap;">fink-0.24.1</tt>)</p>
+      <p>(as of <tt style="white-space: nowrap;">fink-0.24.6</tt>)</p>
       <pre>-h, --help            - display this help text
 -q, --quiet           - causes fink to be less verbose, opposite of --verbose
 -V, --version         - display version information
@@ -1308,6 +1308,8 @@ meanings:
  i   latest version is installed
 (i)  installed, but a newer version is available
  p   a virtual package provided by a package that is installed</pre>
+      <p> The version column always lists the latest (highest) version known for the package, regardless of what version (if any) you have installed.  To see all versions of a package available on your sys-
+           tem, use the <a href="#usage.dumpinfo">dumpinfo</a> command.</p>
       <p>
 There are also some flags for the <tt style="white-space: nowrap;">fink list</tt> command
 </p>
@@ -1325,7 +1327,7 @@ There are also some flags for the <tt style="white-space: nowrap;">fink list</tt
 	  Show only packages which are up to date.
 -n,--notinstalled
 	  Show packages which are not currently installed.
--s=expr,--section=expr
+-s expr,--section=expr
 	  Show only packages in the sections matching the regular
 	  expression expr.
 -m expr,--maintainer=expr
@@ -1384,8 +1386,18 @@ Aliases: desc, description, info
     
     <h3><a name="usage.fetch">6.10 fetch</a></h3>
       
-      <p>Downloads the named packages, but does not install it. This command
+      <p>Downloads the named packages, but does not install them. This command
 will download the tarballs even if they were downloaded before.</p>
+      <p>The following flags can be used with the <tt style="white-space: nowrap;">fetch</tt> command:</p>
+      <pre>-h,--help		Show the options which are available.
+-i,--ignore-restrictive	Do not fetch packages that are &amp;quot;License: Restrictive&amp;quot;.
+                      	Useful for mirrors, because some restrictive packages
+                      	do not allow source mirroring.
+-d,--dry-run		Just display information about the file(s) that would
+			be downloaded for the package(s) to be fetched; do not
+			actually download anything.
+-r,--recursive		Also fetch packages that are dependencies of the
+			package(s) to be fetched.</pre>
     
     <h3><a name="usage.fetch-all">6.11 fetch-all</a></h3>
       
@@ -1447,7 +1459,7 @@ others.
 	available. It then downloads the package descriptions and updates
 	the core packages, including <tt style="white-space: nowrap;">fink</tt> itself. This command can upgrade
 	to regular releases, but it can also setup your <tt style="white-space: nowrap;">/sw/fink/dists</tt>
-	directory tree for direct CVS updates.  This means that you then
+	directory tree for direct CVS or rsync updates, if you select one of those options the first time this command is run.  This means that you then
 	will be able to access the very latest revisions of all packages.
 </p>
       <p>
@@ -1455,14 +1467,25 @@ If the <a href="#usage.options">--use-binary-dist option</a> is enabled
 the list of available packages in the binary distribution is also updated.
       </p>
     
-    <h3><a name="usage.index">6.18 index</a></h3>
+    <h3><a name="usage.selfupdate-cvs">6.18 selfupdate-rsync</a></h3>
+      
+      <p>Use this command to make <tt style="white-space: nowrap;">fink selfupdate</tt> use rsync to update its package list.</p>
+      <p>This is the recommended way to use Fink when building from source.</p>
+      <p><b>Note:</b>  rsync updates only update the active <a href="#conf.optional">trees</a> (e.g. if unstable isn't turned on in <tt style="white-space: nowrap;">fink.conf</tt> the list of unstable packages won't be updated.</p>
+    
+    <h3><a name="usage.selfupdate-cvs">6.19 selfupdate-cvs</a></h3>
+      
+      <p>Use this command to make <tt style="white-space: nowrap;">fink selfupdate</tt> use CVS access to update its package list.</p>
+      <p>CVS updating is deprecated, except for developers and those people who are behind firewalls that disallow rsync.</p>
+    
+    <h3><a name="usage.index">6.20 index</a></h3>
       
       <p>
    Rebuilds the package cache. You should not normally need to execute
    this manually, as <tt style="white-space: nowrap;">fink</tt> should auto-detect when it needs to be updated.
 </p>
     
-    <h3><a name="usage.validate">6.19 validate</a></h3>
+    <h3><a name="usage.validate">6.21 validate</a></h3>
       
       <p>
    This command performs various checks on .info and .deb files. Package
@@ -1479,13 +1502,13 @@ the list of available packages in the binary distribution is also updated.
    Aliases: check
 </p>
     
-    <h3><a name="usage.scanpackages">6.20 scanpackages</a></h3>
+    <h3><a name="usage.scanpackages">6.22 scanpackages</a></h3>
       
       <p>
    Calls dpkg-scanpackages(8) with the specified trees.
 </p>
     
-    <h3><a name="usage.cleanup">6.21 cleanup</a></h3>
+    <h3><a name="usage.cleanup">6.23 cleanup</a></h3>
       
       <p>
    Removes obsolete package files (.info, .patch, .deb) if newer versions are available. 
@@ -1496,7 +1519,7 @@ If the <a href="#usage.options">--use-binary-dist option</a> is enabled
 obsolete downloaded binary packages are also deleted and <tt style="white-space: nowrap;">fink scanpackages</tt> is run as well.
       </p>
     
-    <h3><a name="usage.dumpinfo">6.22 dumpinfo</a></h3>
+    <h3><a name="usage.dumpinfo">6.24 dumpinfo</a></h3>
       
       <p>
 Only available in <tt style="white-space: nowrap;">fink</tt> newer than version 0.21.0
@@ -1517,10 +1540,10 @@ Only available in <tt style="white-space: nowrap;">fink</tt> newer than version 
    --percent=key       in the order listed.
       </pre>
     
-    <h3><a name="usage.show-deps">6.23 show-deps</a></h3>
+    <h3><a name="usage.show-deps">6.25 show-deps</a></h3>
       
       <p>Only available in fink-0.23-6 and later.</p>
-<p>Displays a human-readable list of the compile-time (build) and run-
+      <p>Displays a human-readable list of the compile-time (build) and run-
            time (installation) dependencies of the listed package(s).</p>
     
     
@@ -1530,4 +1553,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.29 2005/04/01 16:08:57 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.30 2005/05/21 01:26:36 alexkhansen Exp $</i></p></body></html>
