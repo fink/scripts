@@ -221,7 +221,7 @@ sub logPackageFail {
 # Allow Fink to see our modified packages and only those packages
 sub injectPackages {
 	symlink("$rundir/pkginfo", "$FinkDir/fink/dists/buildfink");
-	$FinkConfig->set_param("Trees", "buildfink");
+	$FinkConfig->set_param("Trees" => "buildfink");
 }
 
 # Copy all package files to the buildfink repository and, if necessary,  patch the .info/.patch files.
@@ -371,16 +371,18 @@ sub buildAll {
 
 		doLog("Building package $pkg...");
 		purgeNonBase();
-		my $srcdir = "$FinkDir/src/$pkg-" . $obj->{_fullversion};
+		my $srcdir = $FinkConfig::buildpath; # Suppress "used only once" warning
+		$srcdir = "$FinkConfig::buildpath/" . $obj->get_fullname();
 
 		if(system("printf '\n\n' | fink --yes rebuild $pkg > $rundir/logs/$pkg.log 2>&1") != 0) {
 			doLog("Build of $pkg failed!");
 			$failures->{$pkg} = 1;
 			push @newfails, $pkg;
 
-			# Also, any splitoffs of this package have failed
-			if($obj->{_relatives}) {
-				foreach (@{$obj->{_relatives}}) {
+			# Also, any splitoffs of this package have failed.
+			my $relatives = getRelatives($obj);
+			if($relatives) {
+				foreach (@$relatives) {
 					my $name = $_->get_name();
 					$failures->{$name} = 1;
 					push @newfails, $name;
@@ -400,6 +402,21 @@ sub buildAll {
 
 
 ### ==== Generic Fink-related functions ====
+
+# Get split-offs of a package
+sub getRelatives {
+	my $obj = shift;
+
+	# _relatives has been replaced by a real method in
+	# Fink CVS.
+	my $relatives;
+	eval {
+		$relatives = $obj->{_relatives};
+		$relatives = $obj->get_relatives();
+	};
+
+	return $relatives;
+}
 
 # Buildlocks are how Fink stops a package from being built twice
 # at the same time.  They can get left over if the system crashes
@@ -491,8 +508,9 @@ sub orderByDepends {
 			next;
 		}
 
-		if($obj->{_relatives}) {
-			foreach (@{$obj->{_relatives}}) {
+		my $relatives = getRelatives($obj);
+		if($relatives) {
+			foreach (@$relatives) {
 				my $name = $_->get_name();
 				push @queue, $name;
 			}
@@ -541,8 +559,10 @@ sub orderByDepends {
 				doLog("Couldn't order $obj: $@");
 				next;
 			}
-			if($obj->{_relatives}) {
-				foreach (@{$obj->{_relatives}}) {
+
+			my $relatives = getRelatives($obj);
+			if($relatives) {
+				foreach (@$relatives) {
 					my $name = $_->get_name();
 					push @queue, $name;
 				}
@@ -707,10 +727,8 @@ sub purgeNonBase {
 
 # Rescan the .info files and rebuild the package database
 sub scanPackages {
-	# Touching fink.conf makes Fink think the package database is outdated
-	system("touch", "$FinkDir/etc/fink.conf");
-
-	Fink::Package->scan_all();
+	Fink::Package->forget_packages(2, 0);
+	Fink::Package->require_packages();
 }
 
 # Take a list of package names and filter out the ones which are split-offs.
