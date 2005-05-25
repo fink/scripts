@@ -403,7 +403,7 @@ sub buildAll {
 
 # Get split-offs of a package
 sub getRelatives {
-	my $obj = shift;
+	my $obj = shift or return;
 
 	# _relatives has been replaced by a real method in
 	# Fink CVS.
