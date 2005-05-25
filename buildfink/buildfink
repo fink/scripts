@@ -407,7 +407,7 @@ sub getRelatives {
 
 	# _relatives has been replaced by a real method in
 	# Fink CVS.
-	my @relatives = $obj->can("get_relatives") ? $obj->get_relatives() : @{$obj->{_relatives}};
+	my @relatives = $obj->can("get_relatives") ? $obj->get_relatives() : @{$obj->{_relatives} || []};
 	return @relatives;
 }
 
