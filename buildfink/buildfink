@@ -380,8 +380,8 @@ sub buildAll {
 			push @newfails, $pkg;
 
 			# Also, any splitoffs of this package have failed.
-			my $relatives = getRelatives($obj);
-			foreach (@$relatives) {
+			my @relatives = getRelatives($obj);
+			foreach (@relatives) {
 				my $name = $_->get_name();
 				$failures->{$name} = 1;
 				push @newfails, $name;
@@ -407,8 +407,8 @@ sub getRelatives {
 
 	# _relatives has been replaced by a real method in
 	# Fink CVS.
-	my $relatives = $obj->can("get_relatives") ? $obj->get_relatives() : $obj->{_relatives};
-	return $relatives || [];
+	my @relatives = $obj->can("get_relatives") ? $obj->get_relatives() : @{$obj->{_relatives}};
+	return @relatives;
 }
 
 # Buildlocks are how Fink stops a package from being built twice
@@ -501,8 +501,8 @@ sub orderByDepends {
 			next;
 		}
 
-		my $relatives = getRelatives($obj);
-		foreach (@$relatives) {
+		my @relatives = getRelatives($obj);
+		foreach (@relatives) {
 			my $name = $_->get_name();
 			push @queue, $name;
 		}
@@ -551,8 +551,8 @@ sub orderByDepends {
 				next;
 			}
 
-			my $relatives = getRelatives($obj);
-			foreach (@$relatives) {
+			my @relatives = getRelatives($obj);
+			foreach (@relatives) {
 				my $name = $_->get_name();
 				push @queue, $name;
 			}
