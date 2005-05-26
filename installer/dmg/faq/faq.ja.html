@@ -43,7 +43,7 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 	</a></li><li><a href="#usage-fink.cant-move-fink">5.30 
 	Fink を更新できません。
 	/sw/fink を移動できないからです。
-	</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
+	</a></li><li><a href="#usage-fink.four-oh-three">5.31 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</a></li><li><a href="#usage-fink.fc-cache">5.32 "No fonts found" というメッセージが出ます。</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
 これは何ですか?</a></li><li><a href="#comp-general.cvs">6.2 "fink selfupdate-cvs" をしようとしたら、このメッセージが出てきました: "cvs: Command not found."
 </a></li><li><a href="#comp-general.missing-make">6.3 <tt style="white-space: nowrap;">make</tt> に関連したエラーがでました。</a></li><li><a href="#comp-general.head">6.4 head コマンドから変な使用方法メッセージが出ています。何がおかしいのですか?</a></li><li><a href="#comp-general.also_in">6.5 あるパッケージをインストールしようとすると、他のパッケージのファイルを上書きしようとしているというエラーメッセージが出ました。
 </a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local にインストールされているライブラリやヘッダが 
@@ -600,7 +600,9 @@ E: Some index files failed to download, they have been ignored, or old
 ones used instead.
 
 update available list script returned error exit status 1.
-</pre><p><tt style="white-space: nowrap;">fink scanpackages</tt> をするだけです。
+</pre><p>あるいは</p><pre>W: Couldn't stat source package list file: unstable/main Packages
+(/sw/var/lib/apt/lists/_sw_fink_dists_unstable_main_binary-darwin-
+powerpc_Packages) - stat (2 No such file or directory)</pre><p><tt style="white-space: nowrap;">fink scanpackages</tt> をするだけです。
 これによって見つからなかったファイルを作成します。</p></div>
 </a>
 <a name="usage-fink.wrong-tree"> 
@@ -675,7 +677,54 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 	これを削除するには:
 	</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
 </a>
+    <a name="usage-fink.four-oh-three">
+      <div class="question"><p><b>Q5.31: 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</b></p></div>
+      <div class="answer"><p><b>A:</b> 
+          SourceForge のダウンロードサーバに問題があるようです。
+          このため、バイナリディストリビューション用のレポジトリに移行しました。
+        </p><ul>
+          <li>
+            Developer Tools がインストールされている場合、最新の
+            <tt style="white-space: nowrap;">fink-mirrors</tt> package (&gt;= 0.24.4.1) をインストールし、
+            <tt style="white-space: nowrap;">fink</tt> を次のように再インストールします:
+<pre>fink reinstall fink</pre>
+            <p>あるいは</p>
+<pre>sudo apt-get install --reinstall fink</pre>
+            <p>ソースディストリビューションを使用したくない場合).</p>
+          </li>
+          <li>
+            Developer Tools をインストールしていない場合は、手動で行う必要があります。
+            <tt style="white-space: nowrap;">sources.list</tt> ファイルを root で編集してください。
+            例えば、
+<pre>sudo pico /sw/etc/apt/sources.list</pre>
+            <p>
+              (お好きな Unix-line-ending-compatible テキストエディタを使用)。
+              "Official binary distribution:" から始まる行を
+            </p>
+<pre># Official binary distribution: download location for packages
+# from the latest release
+deb http://bindist.finkmirrors.net/bindist 10.3/release main crypto
+
+# Official binary distribution: download location for updated
+# packages built between releases
+deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
+            <p>
+              とし、保存してエディタを終了します。
+              この後、バイナリパッケージリストを更新してください。
+            </p>
+          </li>
+        </ul></div>
+    </a>
+    <a name="usage-fink.fc-cache">
+      <div class="question"><p><b>Q5.32: "No fonts found" というメッセージが出ます。</b></p></div>
+      <div class="answer"><p><b>A:</b> 次のようであれば (OS 10.4 のみ):</p><pre>No fonts found; this probably means that the fontconfig
+library is not correctly configured. You may need to
+edit the fonts.conf configuration file. More information
+about fontconfig can be found in the fontconfig(3) manual
+page and on http://fontconfig.org.</pre><p>次のように実行します:</p><pre>sudo fc-cache</pre></div>
+    </a>
 <h2><a name="comp-general">6 コンパイルの問題 - 一般</a></h2>
+    
 
 
 <a name="comp-general.compiler">
@@ -860,6 +909,7 @@ make[1]: *** [unix_dl.lo] Error 1</pre><p>おそらくヘッダファイル <tt 
 sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div> 
 </a>
 <a name="comp-general.gcc2"> 
+    
 <div class="question"><p><b>Q6.17: Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</b></p></div> 
 <div class="answer"><p><b>A:</b> 
 <tt style="white-space: nowrap;">gcc2</tt> は gcc-2.95 のバーチャルパッケージです。
@@ -984,6 +1034,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
 fink install libiconv</pre></div>
 </a>
 <h2><a name="usage-general">8 パッケージ使用上の問題 - 一般</a></h2>
+    
 
 
 <a name="usage-general.xlocale">
@@ -1120,6 +1171,7 @@ Fink に推薦したいのですが、どうしたら良いですか?</b></p></d
 の Fink プロジェクトページから推薦してください。</p><p>注記: SourceFourge の ID が必要です。</p></div>
 </a>
 <a name="usage-general.virtpackage">
+    
 <div class="question"><p><b>Q8.8: 
 	  <tt style="white-space: nowrap;">system-*</tt> "virtual packages" というのを時々見かけますが、
 	  インストールも削除もできません。
@@ -1196,6 +1248,7 @@ Fink に推薦したいのですが、どうしたら良いですか?</b></p></d
 	</ul></div>
 </a>
 <h2><a name="usage-packages">9 パッケージ使用上の問題 - 特定のパッケージ</a></h2>
+    
 
 
 <a name="usage-packages.xmms-quiet">
@@ -1296,6 +1349,7 @@ exec gnome-session</pre><p>
 Disk 3 の X11.pkg から X11 をインストールできます。</p></div>
 </a>
 <a name="usage-packages.apple-x11-wants-xfree86">
+    
 <div class="question"><p><b>Q9.11: Apple X11 をインストールしたけれども、 Fink が XFree86 か X.org をインストールしろといい続けます。</b></p></div>
 <div class="answer"><p><b>A:</b> 二つの可能性があります。</p><ul>
 		<li><b>バイナリからのインストール:</b> 
@@ -1421,4 +1475,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.27 2005/03/25 22:22:47 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.28 2005/05/26 01:24:04 babayoshihiko Exp $</i></p></body></html>
