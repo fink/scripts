@@ -44,4 +44,32 @@ sub initFink($) {
 	return $FinkConfig;
 }
 
+# Purge packages we may have previously built
+sub purgeNonEssential {
+	my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();
+	my $re = "^(?:" . join("|", @essentials) . ")\$";
+
+	$Fink::Status::the_instance ||= Fink::Status->new();
+	$Fink::Status::the_instance->read();
+
+	my @packages = Fink::Package->list_packages();
+	my @purgelist;
+	foreach my $pkgname (@packages) {
+		next if $pkgname =~ /$re/i;
+		next if $pkgname =~ /^fink-buildlock/;
+		next if Fink::VirtPackage->query_package($pkgname);
+
+		my $obj;
+		eval {
+			$obj = Fink::Package->package_by_name($pkgname);
+		};
+		next if $@ or !$obj;
+		next unless $obj->is_any_installed();
+
+		push @purgelist, $pkgname;
+	}
+
+	system("dpkg --purge " . join(" ", @purgelist) . " 2>&1 | grep -v 'not installed'") if @purgelist;
+}
+
 1;

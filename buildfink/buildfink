@@ -129,7 +129,7 @@ if($checkpoint) {
 
 restoreSystem();
 prepSystem();
-purgeNonBase();
+FinkLib::purgeNonEssential();
 
 # Rebuild the package database, just to be paranoid.
 scanPackages();
@@ -370,7 +370,7 @@ sub buildAll {
 		next if $obj->{type} and $obj->{type} eq "dummy";
 
 		doLog("Building package $pkg...");
-		purgeNonBase();
+		FinkLib::purgeNonEssential();
 		my $srcdir = $Fink::Config::buildpath; # Suppress "used only once" warning
 		$srcdir = "$Fink::Config::buildpath/" . $obj->get_fullname();
 
@@ -684,34 +684,6 @@ sub findFailedDep {
 
 	$depcache->{$pkg} = "";
 	return "";
-}
-
-# Purge packages we may have previously built
-sub purgeNonBase {
-	my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();
-	my $re = "^(?:" . join("|", @essentials) . ")\$";
-
-	$Fink::Status::the_instance ||= Fink::Status->new();
-	$Fink::Status::the_instance->read();
-
-	my @packages = Fink::Package->list_packages();
-	my @purgelist;
-	foreach my $pkgname (@packages) {
-		next if $pkgname =~ /$re/i;
-		next if $pkgname =~ /^fink-buildlock/;
-		next if Fink::VirtPackage->query_package($pkgname);
-
-		my $obj;
-		eval {
-			$obj = Fink::Package->package_by_name($pkgname);
-		};
-		next if $@ or !$obj;
-		next unless $obj->is_any_installed();
-
-		push @purgelist, $pkgname;
-	}
-
-	system("dpkg --purge " . join(" ", @purgelist) . " 2>&1 | grep -v 'not installed'") if @purgelist;
 }
 
 # Rescan the .info files and rebuild the package database
