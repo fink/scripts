@@ -12,8 +12,8 @@ Step 1:
 
 Step 2:
  Download fink-IN_VERSION-full.tar.gz from sourceforge (or use the copy
- you generated when building the srcdist), unpack it and run ./bootstrap.sh,
- installing into /sw.  Choose the "Quiet" option during configuration.
+ you generated when building the srcdist), unpack it and run "./bootstrap.sh",
+ installing into /sw.  Accept all default choices during configuration.
 
 Step 3:
  Run "/sw/bin/fink update-all" in case there were updates to base-packages 
@@ -60,6 +60,9 @@ Step 8.
  Additionally you may need to update the InstallationCheck file and
  localized error .strings files to contain the minimum supported system
  version. (eg, 6C115 for 10.2.0) 
+
+ Be sure to clean out any *~ files or other stray files generated during 
+ editing.
 
 Step 9.
  Run "sudo ./buildpkg.sh". This should copy the resources and dmg directories,
