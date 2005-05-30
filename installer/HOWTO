@@ -16,8 +16,8 @@ Step 2:
  installing into /sw.  Choose the "Quiet" option during configuration.
 
 Step 3:
- Run "fink update-all" in case there were updates to base-packages since
- the last package manager release.
+ Run "/sw/bin/fink update-all" in case there were updates to base-packages 
+ since the last package manager release.
 
 Step 4:
  Remove /sw/fink/dists/local/bootstrap as well as any .deb's in
@@ -30,12 +30,12 @@ Step 5:
  Remove /sw/src/*
 
 Step 6:
- Run "fink scanpackages", and then "sudo apt-get update" to properly
- prepare for distribution. 
+ Run "/sw/bin/fink scanpackages", and then "sudo /sw/bin/apt-get update" to 
+ properly prepare for distribution. 
 
 Step6a:
- Run "fink list --installed" to be ready with the information when needed
- in step 8.
+ Run "/sw/bin/fink list --installed" to be ready with the information when 
+ needed in step 8.
 
 Step 6b:
  Check permissions in your /sw directory to verify things are world-readable 
@@ -63,7 +63,7 @@ Step 8.
  version. (eg, 6C115 for 10.2.0) 
 
 Step 9.
- Run sudo ./buildpkg.sh. This should copy the resources and dmg directories,
+ Run "sudo ./buildpkg.sh". This should copy the resources and dmg directories,
  subsituting versions in the various read me files. It will then create the
  pkg file in the dmg-IN_VERSION directory. Then, a .dmg will be created and 
  end up in the IN_BASEDIR. The Volume name should be "Fink IN_VERSION Installer". 
