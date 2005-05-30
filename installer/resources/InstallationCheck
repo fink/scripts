@@ -19,9 +19,10 @@ DO_CHECKS:
 	$TargetSystemBuild = GetPathEntry("/System/Library/CoreServices/SystemVersion.plist", "ProductBuildVersion");
 #6C35
 #6C115
-	if (($TargetSystemBuild lt "7B85") || ($TargetSystemBuild gt "8A427"))
+#7B85
+	if ($TargetSystemBuild lt "8A428")
 	{
-	print "Fink Installer: Fink requires Mac OS X 10.3 (Panther)! Bailing out..\n";
+	print "Fink Installer: Fink requires Mac OS X 10.4 (Tiger) or later! Bailing out..\n";
        	$result = ((1 << 6) | (1 << 5) | 20);
         last;
 	}
