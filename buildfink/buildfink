@@ -852,8 +852,8 @@ sub initCheckpoint {
 	open(CHECKPOINT, ">", "$rundir/checkpoint");
 
 	print CHECKPOINT Data::Dumper->Dump(
-		[$FinkDir, $rundir, \@skiplist, $orderedPkgs, $deps, $failures],
-		[qw(FinkDir rundir skiplist orderedPkgs deps failures)]
+		[$FinkDir, $rundir, $BuildNobody, $DoValidate, \@skiplist, $orderedPkgs, $deps, $failures],
+		[qw(FinkDir rundir BuildNobody DoValidate skiplist orderedPkgs deps failures)]
 	);
 
 	close CHECKPOINT;
