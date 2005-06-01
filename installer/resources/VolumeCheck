@@ -10,7 +10,7 @@ DO_CHECKS:
 {
 	# The "18" specifies the index of the localized error string in
 	# {English,Spanish,etc}.lproj/VolumeCheck.strings
-	if (-e "$targetdir")
+	if ((-e "$targetdir") || (-l "$targetdir"))
 	{
 	  print "Fink Installer: $targetdir exists!\n";
 	  $result = ((1 << 5) | 18);
