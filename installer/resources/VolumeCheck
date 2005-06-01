@@ -16,6 +16,15 @@ DO_CHECKS:
 	  $result = ((1 << 5) | 18);
   	  last;
 	}
+
+	if (symlink("$targetdir.tmp", "$targetdir"))
+	{
+	    unlink("$targetdir");
+	} else {
+	    print "Fink Installer: ${TARGET_VOLUME} does not support symlinks!\n";
+	    $result = ((1 << 5) | 21);
+	    last;
+	}
 }
 
 exit $result;
