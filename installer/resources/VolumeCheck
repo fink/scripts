@@ -4,14 +4,15 @@ use File::Find;
 my $result = 0, $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 my $TARGET_VOLUME = $ARGV[0];
+my $targetdir = "$TARGET_VOLUME/$basedir";
 
 DO_CHECKS:
 {
 	# The "18" specifies the index of the localized error string in
 	# {English,Spanish,etc}.lproj/VolumeCheck.strings
-	if (-e "${TARGET_VOLUME}/$basedir")
+	if (-e "$targetdir")
 	{
-	  print "Fink Installer: ${TARGET_VOLUME}/sw exists!\n";
+	  print "Fink Installer: $targetdir exists!\n";
 	  $result = ((1 << 5) | 18);
   	  last;
 	}
