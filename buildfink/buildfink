@@ -24,7 +24,7 @@ buildfink -- Build every package in Fink
 
 =head1 USAGE
 
-	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] FINKDIR OUTDIR
+	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--validate] [--build-as-nobody] FINKDIR OUTDIR
 	buildfink [-r CHECKPOINT]
 
 C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
@@ -52,6 +52,14 @@ obtained via this mechanism are not subject to filtering via C<--infofilter>.
 The C<--skip> option, which may be specified multiple times, allows the given package to be skipped.
 Skipped packages will not be built, nor will any packages which depend on them.
 
+The C<--validate> option, if specified, causes buildfink to validate packages
+as it builds them.
+
+The C<--build-as-nobody> option, if present, causes buildfink to build
+packages as "nobody" instead of root; if C<--build-as-nobody=try> is specified,
+it will try building as root if that fails and keep track of which packages
+only succeed when built as root.
+
 =head2 CHECKPOINTS
 
 Sometimes there will be system issues partway through a build.  For instance, a recalcitrant
@@ -66,6 +74,7 @@ use strict;
 use warnings;
 use File::Basename;
 use File::Copy;
+use File::Find;
 use Data::Dumper;
 use POSIX qw(dup2);
 use Getopt::Long;
@@ -73,7 +82,7 @@ use FindBin qw($Bin);
 use lib "$Bin";
 use FinkLib;
 
-our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint);
+our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody);
 our $VERSION = '$Revision$';
 
 my $opts_ok = GetOptions(
@@ -81,7 +90,9 @@ my $opts_ok = GetOptions(
 	"infofilter=s" => \$infofilter,
 	"patchdir=s" => \$patchdir,
 	"skip=s" => \@skiplist,
-	"r=s" => \$checkpoint
+	"r=s" => \$checkpoint,
+	"validate" => \$DoValidate,
+	"build-as-nobody:s" => \$BuildNobody
 );
 if(@ARGV != 2 and not (($dryrun and @ARGV == 1) or $checkpoint)) {
 	warn "You must specify a Fink directory and an output directory.\n";
@@ -113,6 +124,10 @@ if($infofilter and not -x $infofilter) {
 }
 if($patchdir and not -d $patchdir) {
 	warn "The specified patch directory does not exist or is not a directory.\n";
+	$opts_ok = 0;
+}
+if($BuildNobody and $BuildNobody ne "try") {
+	warn "The only valid value for '--build-as-nobody' is 'try'.\n";
 	$opts_ok = 0;
 }
 
@@ -176,7 +191,7 @@ sub prepSystem {
 	return if $dryrun;
 
 	mkdir($rundir);
-	mkdir("$rundir/$_") for qw(pkginfo logs src out);
+	mkdir("$rundir/$_") for qw(pkginfo logs src out validate nobody);
 	mkdir("$rundir/pkginfo/finkinfo");
 	mkdir("$rundir/pkginfo/binary-darwin-powerpc");
 
@@ -208,6 +223,16 @@ sub doLog {
 	my($out) = sprintf($fmt, @args);
 	chomp($out);
 	print "$out\n";
+}
+
+sub doValidateWarn {
+	my($pkg, $fmt, @args) = @_;
+
+	open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
+	my($out) = sprintf($fmt, @args);
+	chomp($out);
+	print VAL "$out\n";
+	close VAL;
 }
 
 # Log a package-specific failure
@@ -341,6 +366,17 @@ sub buildAll {
 	# Also set packages on the skiplist to failed
 	$failures->{$_} = 1 foreach keys %skiphash;
 
+	my %finkfiles;
+	if($DoValidate) {
+		Fink::Config::set_options({"Pedantic" => 1});
+
+		# One of the validation steps is to identify files left in /sw
+		# by the build process.
+		find({no_chdir => 1, wanted => sub {
+			$finkfiles{$File::Find::name} = 1;
+		}}, $FinkDir);
+	}
+
 	my @newfails;
 	PACKAGE: foreach my $pkg(@$pkgs) {
 		doLog("Thinking about building $pkg");
@@ -369,12 +405,36 @@ sub buildAll {
 
 		next if $obj->{type} and $obj->{type} eq "dummy";
 
+		if($DoValidate) {
+			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
+			my $oldfh = select(VAL);
+			Fink::Validation::validate_info_file($obj->get_info_filename());
+			close(VAL);
+			select($oldfh);
+		}
+
 		doLog("Building package $pkg...");
-		FinkLib::purgeNonEssential();
 		my $srcdir = $Fink::Config::buildpath; # Suppress "used only once" warning
 		$srcdir = "$Fink::Config::buildpath/" . $obj->get_fullname();
 
-		if(system("printf '\n\n' | fink --yes rebuild $pkg > $rundir/logs/$pkg.log 2>&1") != 0) {
+		my $buildcmd = "printf '\n\n' | fink --yes";
+		$buildcmd .= " --build-as-nobody" if $BuildNobody;
+		$buildcmd .= " rebuild $pkg > $rundir/logs/$pkg.log 2>&1";
+		my $ret = system($buildcmd);
+
+		if($ret != 0 and defined($BuildNobody) and $BuildNobody eq "try") {
+			$buildcmd =~ s/ --build-as-nobody//;
+			move("$rundir/logs/$pkg.log", "$rundir/logs/$pkg.log.nobody");
+			doLog("Build of $pkg failed, trying as root...");
+			$ret = system($buildcmd);
+			if($ret != 0) {
+				unlink("$rundir/logs/$pkg.log.nobody");
+			} else {
+				move("$rundir/logs/$pkg.log.nobody", "$rundir/nobody/$pkg.log");
+			}
+		}
+		
+		if($ret != 0) {
 			doLog("Build of $pkg failed!");
 			$failures->{$pkg} = 1;
 			push @newfails, $pkg;
@@ -391,6 +451,34 @@ sub buildAll {
 		} else {
 			doLog("Build of $pkg succeeded!");
 			system("rm", "-rf", $srcdir);
+		}
+
+		FinkLib::purgeNonEssential();
+
+		if($DoValidate) {
+			my @killqueue;
+
+			find({no_chdir => 1, wanted => sub {
+				if(!$finkfiles{$File::Find::name}) {
+					doValidateWarn($pkg, "Leftover file $File::Find::name");
+					push @killqueue, $File::Find::name;
+				}
+			}}, $FinkDir);
+
+			#system("rm", "-rf", @killqueue);
+			$finkfiles{$_} = 1 foreach @killqueue;
+
+
+			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
+			my $oldfh = select(VAL);
+
+			Fink::Validation::validate_dpkg_file($obj->get_debname());
+			foreach my $relative(getRelatives($obj)) {
+				Fink::Validation::validate_dpkg_file($relative->get_debname());
+			}
+
+			close(VAL);
+			select($oldfh);
 		}
 	} continue {
 		updateCheckpoint(@newfails);
