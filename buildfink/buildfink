@@ -409,8 +409,8 @@ sub buildAll {
 			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
 			my $oldfh = select(VAL);
 			Fink::Validation::validate_info_file($obj->get_info_filename());
-			close(VAL);
 			select($oldfh);
+			close(VAL);
 		}
 
 		doLog("Building package $pkg...");
@@ -459,7 +459,9 @@ sub buildAll {
 			my @killqueue;
 
 			find({no_chdir => 1, wanted => sub {
-				if(!$finkfiles{$File::Find::name}) {
+				if(/\.deb$/ or $_ =~ /fink\.build$/  or $File::Find::name eq "$FinkDir/var/lib/fink/finkinfodb") {
+					$File::Find::prune = 1;
+				} elsif(!$finkfiles{$File::Find::name}) {
 					doValidateWarn($pkg, "Leftover file $File::Find::name");
 					push @killqueue, $File::Find::name;
 				}
@@ -477,8 +479,8 @@ sub buildAll {
 				Fink::Validation::validate_dpkg_file($relative->get_debname());
 			}
 
-			close(VAL);
 			select($oldfh);
+			close(VAL);
 		}
 	} continue {
 		updateCheckpoint(@newfails);
