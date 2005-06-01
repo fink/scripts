@@ -33,6 +33,7 @@ sub initFink($) {
 	require Fink::PkgVersion;
 	require Fink::VirtPackage;
 	require Fink::Status;
+	require Fink::Validation;
 
 	$ENV{PATH} = "$FinkDir/bin:$FinkDir/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin";
 	$ENV{PERL5LIB} = "$FinkDir/lib/perl5:$FinkDir/lib/perl5/darwin";
@@ -45,28 +46,17 @@ sub initFink($) {
 }
 
 # Purge packages we may have previously built
+# Thanks to Dave Vasilevsky for this routine.
 sub purgeNonEssential {
-	my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();
-	my $re = "^(?:" . join("|", @essentials) . ")\$";
-
 	$Fink::Status::the_instance ||= Fink::Status->new();
-	$Fink::Status::the_instance->read();
+	my $list = $Fink::Status::the_instance->list();
 
-	my @packages = Fink::Package->list_packages();
 	my @purgelist;
-	foreach my $pkgname (@packages) {
-		next if $pkgname =~ /$re/i;
-		next if $pkgname =~ /^fink-buildlock/;
-		next if Fink::VirtPackage->query_package($pkgname);
-
-		my $obj;
-		eval {
-			$obj = Fink::Package->package_by_name($pkgname);
-		};
-		next if $@ or !$obj;
-		next unless $obj->is_any_installed();
-
-		push @purgelist, $pkgname;
+	foreach my $pkg (keys %$list) {
+		next if exists $Fink::Status::the_instance->{$pkg}{essential};
+		next if $pkg =~ /^fink-buildlock/;
+		next if Fink::VirtPackage->query_package($pkg);
+		push @purgelist, $pkg;
 	}
 
 	system("dpkg --purge " . join(" ", @purgelist) . " 2>&1 | grep -v 'not installed'") if @purgelist;
