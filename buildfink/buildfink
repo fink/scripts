@@ -451,6 +451,19 @@ sub buildAll {
 		} else {
 			doLog("Build of $pkg succeeded!");
 			system("rm", "-rf", $srcdir);
+
+
+			my $deb = $obj->get_debname();
+			move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
+			unlink("$FinkDir/fink/debs/$deb");
+			symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+
+			foreach my $relative(getRelatives($obj)) {
+				my $deb = $relative->get_debname();
+				move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
+				unlink("$FinkDir/fink/debs/$deb");
+				symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+			}
 		}
 
 		FinkLib::purgeNonEssential();
@@ -474,9 +487,11 @@ sub buildAll {
 			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
 			my $oldfh = select(VAL);
 
-			Fink::Validation::validate_dpkg_file($obj->get_debfile());
+			my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $obj->get_debname();
+			Fink::Validation::validate_dpkg_file($deb) if -f $deb;
 			foreach my $relative(getRelatives($obj)) {
-				Fink::Validation::validate_dpkg_file($relative->get_debfile());
+				my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $relative->get_debname();
+				Fink::Validation::validate_dpkg_file($deb) if -f $deb;
 			}
 
 			select($oldfh);
