@@ -474,9 +474,9 @@ sub buildAll {
 			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
 			my $oldfh = select(VAL);
 
-			Fink::Validation::validate_dpkg_file($obj->get_debname());
+			Fink::Validation::validate_dpkg_file($obj->get_debfile());
 			foreach my $relative(getRelatives($obj)) {
-				Fink::Validation::validate_dpkg_file($relative->get_debname());
+				Fink::Validation::validate_dpkg_file($relative->get_debfile());
 			}
 
 			select($oldfh);
