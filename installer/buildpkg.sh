@@ -1,4 +1,24 @@
-#!/bin/sh
+#!/bin/bash
+
+# sanity check: presence of target directory
+if [[ ! -d $IN_BASEDIR ]]; then
+    echo "IN_BASEDIR '$IN_BASEDIR' does not exist!"
+    exit 1
+fi
+
+# sanity check: bindist version number format is #.#.#
+shopt -q extglob
+save_shopt=$?
+shopt -qs extglob
+echo "IN_VERSION=$IN_VERSION"
+if [[ "$IN_VERSION" != +([0-9]).+([0-9]).+([0-9]) ]]; then
+    echo "IN_VERSION '$IN_VERSION' does not match (majornum).(minornum).(teenynum)"
+    exit 1
+fi
+if [[ $save_shopt -ne 0 ]]; then
+  shopt -qu extglob
+fi
+
 RESDIR=$IN_BASEDIR/resources-$IN_VERSION;
 DMGDIR=$IN_BASEDIR/dmg-$IN_VERSION;
 CONDIR=$IN_BASEDIR/contents-$IN_VERSION;
