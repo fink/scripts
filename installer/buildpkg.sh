@@ -75,7 +75,7 @@ done
 
 echo "running PackageMaker...";
 /Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/Info.plist -d $RESDIR/English.lproj/Description.plist
-#perl -pi -e 's#</dict>#<key>IFPkgFlagAuthorizationAction</key>\n<string>RootAuthorization</string>\n</dict>#g' "$DMGDIR/Fink $IN_VERSION Installer.pkg/Contents/Info.plist"
+#defaults write "$DMGDIR/Fink $IN_VERSION Installer.pkg/Contents/Info.plist" IFPkgFlagAuthorizationAction RootAuthorization
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
 chmod -R a+rX $DMGDIR
