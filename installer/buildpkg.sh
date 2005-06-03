@@ -65,6 +65,14 @@ chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
 # Substitute the version for IN_VERSION where appropriate
 perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
 
+# Prepare Info.plist for this specific .pkg
+cp $IN_BASEDIR/Info.plist.in $IN_BASEDIR/Info.plist
+read IN_VERSION_MAJOR IN_VERSION_MINOR <<EOCMD
+  $(IFS=.; echo $IN_VERSION)
+EOCMD
+defaults write $IN_BASEDIR/Info.plist IFMajorVersion $IN_VERSION_MAJOR
+defaults write $IN_BASEDIR/Info.plist IFMinorVersion $IN_VERSION_MINOR
+
 # Add "missing" language directories to work around a bug in Installer.app
 for lang in Dutch French German Italian Japanese Spanish da fi ko no pt sv zh_CN zh_TW; do
   if test ! -d $RESDIR/${lang}.lproj ; then
@@ -75,7 +83,6 @@ done
 
 echo "running PackageMaker...";
 /Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/Info.plist -d $RESDIR/English.lproj/Description.plist
-#defaults write "$DMGDIR/Fink $IN_VERSION Installer.pkg/Contents/Info.plist" IFPkgFlagAuthorizationAction RootAuthorization
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
 chmod -R a+rX $DMGDIR
