@@ -849,7 +849,6 @@ sub restoreCheckpoint {
 	die "$@\n" if $@;
 
 	prepSystem();
-	initFink();
 	scanPackages();
 	injectPackages();
 	scanPackages();
