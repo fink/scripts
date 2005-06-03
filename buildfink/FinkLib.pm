@@ -65,6 +65,8 @@ sub purgeNonEssential {
 		};
 		next if $@ or !$obj;
 		next unless $obj->is_any_installed();
+		my $vo = Fink::PkgVersion->match_package($pkgname);
+		next if $vo->is_type('dummy');
 
 		push @purgelist, $pkgname;
 	}

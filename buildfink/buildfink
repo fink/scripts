@@ -266,7 +266,7 @@ sub patchPackages {
 			doLog("Couldn't get version for $pkgname: $@");
 			next;
 		}
-		next if $pkg->{type} and $pkg->{type} eq "dummy";
+		next if $pkg->is_type('dummy');
 
 		my $info = $pkg->get_info_filename();
 		if(!$info) {
@@ -403,7 +403,7 @@ sub buildAll {
 			next;
 		}
 
-		next if $obj->{type} and $obj->{type} eq "dummy";
+		next if $obj->is_type('dummy');
 
 		if($DoValidate) {
 			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
