@@ -57,7 +57,6 @@ sub purgeNonEssential {
 	my @purgelist;
 	foreach my $pkgname (@packages) {
 		next if $pkgname =~ /$re/i;
-		next if $pkgname =~ /^fink-buildlock/;
 		next if Fink::VirtPackage->query_package($pkgname);
 
 		my $obj;
