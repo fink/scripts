@@ -9,4 +9,4 @@ cd ..
 echo "Fixing permissions"
 chgrp -R fink .
 chmod -f -R g+w,a+r .
-chmod 0440 db.inc.pl
+chmod o-rwx db.inc.pl
