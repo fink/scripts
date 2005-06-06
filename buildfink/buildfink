@@ -257,6 +257,7 @@ sub patchPackages {
 
 	foreach my $pkgname(@pkgnames) {
 		next unless $pkgname;
+		next if grep { $_ eq $pkgname } @skiplist;
 
 		my $pkg;
 		eval {
