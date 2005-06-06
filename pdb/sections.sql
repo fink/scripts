@@ -1,13 +1,13 @@
 delete from sections;
 insert into sections values ('base', 'Core packages');
 insert into sections values ('crypto', 'Cryptographic software (subject to national regulations)');
-insert into sections values ('database', 'SQL database software');
+insert into sections values ('database', 'SQL and other database software');
 insert into sections values ('devel', 'Software for software development');
 insert into sections values ('editors', 'Text editors');
 insert into sections values ('games', 'Games and other fun stuff');
-insert into sections values ('gnome', 'The GNOME desktop environment (version 1.4)');
+insert into sections values ('gnome', 'The GNOME desktop environment (version 2.6.0)');
 insert into sections values ('graphics', 'Graphics applications and libraries');
-insert into sections values ('kde', 'K Desktop Environment (version 3.0)');
+insert into sections values ('kde', 'K Desktop Environment (version 3.4.1)');
 insert into sections values ('languages', 'Programming languages (compilers, interpreters)');
 insert into sections values ('libs', 'General purpose libraries');
 insert into sections values ('libs/perlmods', 'Perl libraries');
