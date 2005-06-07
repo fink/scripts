@@ -1,10 +1,18 @@
 #!/bin/sh
 set -e
 
+# allow user to pass dist(s) on command-line
+if [ $# -gt 0 ]; then
+  dists=($@)
+else
+  dists=(10.2-gcc3.3 10.3 10.4-transitional)
+fi
+
 echo "Updating from CVS..."
 if [ -d fink ]; then
   cd fink
-  cvs -z3 -q update -Ad
+  cvs -z3 -q update -Al
+  cvs -z3 -q update -Ad ${dists[@]}
   cd ..
 else
   cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
@@ -14,7 +22,7 @@ fi
 echo -n "" > current.sql
 
 # Dump each supported source tree of the dists
-for dist in 10.2-gcc3.3 10.3 10.4-transitional; do
+for dist in ${dists[@]}; do
     rm -f fink/dists var/db/fink.db
     ln -s $dist fink/dists
     echo ""
