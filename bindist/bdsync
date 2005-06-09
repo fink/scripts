@@ -7,14 +7,11 @@ if [ -z "$BDBASE" ]; then
 fi
 cd "$BDBASE"
 
-if [ -z "$SFUSER" ]; then
-  SFUSER="fingolfin"
-fi
-
 # locations
-source="$BDBASE"
+source="${BDBASE}dists"
+echo source $source
 
-destination="${SFUSER}@shell.sourceforge.net:/home/groups/f/fi/fink/htdocs/bindist"
+destination="sancho.opendarwin.org:/Volumes/src/finkbindist/bindist"
 
 # rsync options
 options="-e ssh -av --partial --progress"

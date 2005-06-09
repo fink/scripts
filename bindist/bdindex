@@ -16,7 +16,15 @@ sub perdir {
   $level = scalar(split(/\//, $dir));
   $fn = "$dir/index.php";
 
-  $new = "<?\n\$level = $level;\ninclude \"".("../"x$level)."index.php\";\n?>";
+  $new = "<?\n\$level = $level;\n";
+  if ($level == 1) {
+      $new = $new . "\$excluded = array(\"current\", \"release\",\"README\");\n";
+  }
+  $new = $new . "\$symlinked = 0;\n";
+  $new = $new . "\$parts = split(\"/\", \$SCRIPT_NAME);\n";
+  $new = $new . "if (\$parts[4] == \"release\" || \$parts[4] == \"current\") {\n";
+  $new = $new . "  \$level++;\n  \$symlinked = 1;\n}\n";
+  $new = $new . "include \"".("../"x$level)."index.php\";\n?>";
 
   if (-f $fn) {
     $old = "";
