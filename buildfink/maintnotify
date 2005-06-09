@@ -65,9 +65,13 @@ string.  So, C<package%s> will be either C<packages> or C<package>.
 The first alternative if the message is about one package; otherwise,
 the second alternative.
 
-=item B<%p>
+=item B<%p{and }{0}>
 
 A comma-separated list of the packages this message is about.
+If the optional parameter is specified, it will be prepended to the last
+package if there are more than one; it defaults to "and ".  If the
+second optional parameter is set to 1, there will be a comma if
+there are only two items; normally, there won't be.
 
 =item B<%P>
 
@@ -180,7 +184,16 @@ sub applyTemplate {
 				}
 			}
 		} elsif($1 eq "p") {
-			join(", ", @pkgs);
+			my $finalsuffix = $2;
+			$finalsuffix = "and " if !defined($2);
+
+			$pkgs[-1] = $finalsuffix . $pkgs[-1] if @pkgs > 1;
+
+			if(@pkgs == 2 and !$3) {
+				join(" ", @pkgs);
+			} else {
+				join(", ", @pkgs);
+			}
 		} elsif($1 eq "P") {
 			my $prefix = $2 || "";
 			my $suffix = $3 || "";
