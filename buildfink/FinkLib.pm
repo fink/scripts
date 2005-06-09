@@ -45,6 +45,12 @@ sub initFink($) {
 	return $FinkConfig;
 }
 
+# Make sure all essential packages are installed
+sub installEssentials {
+	my @essentials = Fink::Package->list_essential_packages();
+	system("fink", "reinstall", @essentials);
+}
+
 # Purge packages we may have previously built
 sub purgeNonEssential {
 	my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();

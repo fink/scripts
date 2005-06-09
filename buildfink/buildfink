@@ -177,6 +177,7 @@ if($dryrun) {
 
 # Now do the run
 initCheckpoint(\@orderedPkgs, \%deps, {});
+FinkLib::installEssentials();
 buildAll(\@orderedPkgs, \@skiplist, \%deps, {});
 doLog("Done building");
 
