@@ -360,7 +360,7 @@ unstable を使用する場合、何か上手くいったら（上手くいか�
 あなたのようなユーザーからのフィードバックが、 stable にするかどうかの判定材料なのです!
 メンテナの情報は <tt style="white-space: nowrap;">fink info &lt;packagename&gt;</tt> で取得できます。</p><p>パッケージには依存性があり、 unstable にあるパッケージは unstable にある他のパッケージに依存していることも多いのです。
 このため、全ての unstable を更新するのが最適です。</p><p>Fink が unstable を使うようにするには、 <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> ファイルの <tt style="white-space: nowrap;">Trees:</tt> の行に <tt style="white-space: nowrap;">unstable/main</tt> と <tt style="white-space: nowrap;">unstable/crypto</tt> を追加します。
-この後、 <tt style="white-space: nowrap;">fink selfupdate; fink index</tt> を実行します。
+この後、 <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行します。
 </p><p>unstable のパッケージのうち、一つか小数だけ使用したいのであれば、 CVS アップデート (<tt style="white-space: nowrap;">fink selfupdate-cvs</tt>) に切替えます。デフォルトの rsync は <tt style="white-space: nowrap;">fink.conf</tt> にあるツリーしかアップデートしないからです。
 次に、<tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> ファイルの <tt style="white-space: nowrap;">Trees:</tt> の行に <tt style="white-space: nowrap;">local/main</tt> を追加します。
 次に、 <tt style="white-space: nowrap;">.info</tt> ファイルと <tt style="white-space: nowrap;">.patch</tt> ファイルを <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo</tt> (または <tt style="white-space: nowrap;">/sw/fink/dists/unstable/crypto/finkinfo</tt>) から、 <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo</tt> にコピーします。
@@ -1475,4 +1475,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.28 2005/05/26 01:24:04 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.29 2005/06/09 21:34:45 babayoshihiko Exp $</i></p></body></html>
