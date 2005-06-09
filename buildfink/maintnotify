@@ -1,0 +1,179 @@
+#!/usr/bin/perl
+
+# Notify maintainers about problems with their packages
+
+#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+=pod
+
+=head1 SYNOPSIS
+
+maintnotify -- Notify maintainers about problems with their packages
+
+=head1 USAGE
+
+	maintnotify --finkdir FINKDIR --pkgfile PKGFILE --template TEMPLATE --from FROM [--subject SUBJ] [--cc CC]
+
+C<maintnotify> sends an email to the maintainers of all packages which you
+specify.  It sends one email per maintainer.  Messages are sent via the Mail::Send module.
+
+C<FINKDIR> specifies the root of your Fink installation; this is usually C</sw>.
+
+C<PKGFILE> is a file containing a list of packages to send emails about.
+
+C<TEMPLATE> is a file describing the contents of the email; see L<"EMAIL TEMPLATES"> below.
+
+C<FROM> is the email address which the messages should appear to be from.
+
+C<SUBJ> is the subject which the emails should have; it will be processed
+as a template.
+
+C<CC> is an optional email address to send copies of all messages to.
+
+=head1 EMAIL TEMPLATES
+
+There are some escape codes you can use in emails which will get replaced
+by different values for each message.
+
+=over 4
+
+=item B<%%>
+
+A literal %.
+
+=item B<%s>
+
+'s' if the message is about multiple packages; otherwise, the empty
+string.  So, C<package%s> will be either C<packages> or C<package>.
+
+=item B<%p>
+
+A comma-separated list of the packages this message is about.
+
+=item B<%P>
+
+A newline-separated list of the packages this message is about.
+
+=item B<%P{foo}>
+
+A newline-separated list of the packages this message is about; each
+package will be preceeded by C<foo>.  This can be used to indent
+the list of packages or turn it into a list of URLs.
+
+=back
+
+=cut
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Mail::Send;
+use FindBin qw($Bin);
+use lib "$Bin";
+use FinkLib;
+
+our(%options);
+
+my $opts_ok = GetOptions(
+	"finkdir=s" => \$options{finkdir},
+	"pkgfile=s" => \$options{pkgfile},
+	"template=s" => \$options{template},
+	"from=s" => \$options{from},
+	"subject=s" => \$options{subject},
+	"cc=s" => \$options{cc}
+);
+if(@ARGV) {
+	warn "Extra command-line arguments left over after option processing.\n";
+	$opts_ok = 0;
+}
+foreach my $opt(qw(finkdir pkgfile template from subject)) {
+	if(!$options{$opt}) {
+		warn "You must specify the '$opt' option.\n";
+		$opts_ok = 0;
+	}
+}
+if($opts_ok) {
+	if(not -d $options{finkdir}) {
+		die "The specified Fink directory does not exist.\n";
+	} elsif(not -x $options{finkdir} . "/bin/fink") {
+		die "The specified Fink directory does not appear to contain a Fink installation.\n";
+	}
+	if(not -f $options{pkgfile}) {
+		die "The specified package file does not exist.\n";
+	}
+	if(not -f $options{template}) {
+		die "The specified template file does not exist.\n";
+	}
+}
+
+if(!$opts_ok) {
+	die "See 'perldoc $0' for more information.\n";
+}
+
+FinkLib::initFink($options{finkdir});
+
+open(PKGFILE, $options{pkgfile}) or die "Couldn't open package file: $!\n";
+my @packages = <PKGFILE>;
+chomp $_ foreach @packages;
+close PKGFILE;
+
+open(TEMPLATE, $options{template}) or die "Couldn't open template: $!\n";
+my $template = join("", <TEMPLATE>);
+close TEMPLATE;
+
+my %maints = FinkLib::sortPackagesByMaintainer(@packages);
+foreach my $maint(keys %maints) {
+	my @pkgs = @{$maints{$maint}};
+	my $to = FinkLib::maintEmail($maint);
+	my $subject = applyTemplate($options{subject}, @pkgs);
+	my $body = applyTemplate($template, @pkgs);
+
+	my $msg = new Mail::Send or die "Couldn't instantiate Mail::Send: $!\n";
+	$msg->to($to);
+	$msg->subject($subject);
+	$msg->cc($options{cc}) if $options{cc};
+	$msg->set("From", $options{from});
+
+	my $fh = $msg->open or die "Couldn't open Mail::Send: $!\n";
+	print $fh $body or die "Couldn't write to Mail::Send: $!\n";
+	$fh->close or die "Couldn't close Mail::Send: $!\n";
+}
+
+sub applyTemplate {
+	my($template, @pkgs) = @_;
+
+	$template =~ s/%(.)(?:{(.*?)})?/
+		if($1 eq "%") {
+			"%";
+		} elsif($1 eq "s") {
+			if(@pkgs == 1) {
+				"";
+			} else {
+				"s";
+			}
+		} elsif($1 eq "p") {
+			join(", ", @pkgs);
+		} elsif($1 eq "P") {
+			my $prefix = $2 || "";
+			join("\n", map { "$prefix$_" } @pkgs);
+		} else {
+			die "Unrecognized escape '$1' in template!\n";
+		}
+	/eg;
+
+	return $template;
+}

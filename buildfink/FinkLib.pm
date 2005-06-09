@@ -80,4 +80,47 @@ sub purgeNonEssential {
 	system("dpkg --purge " . join(" ", @purgelist) . " 2>&1 | grep -v 'not installed'") if @purgelist;
 }
 
+
+# Get either the name or email address from the value of the maintainer field
+sub maintParse {
+	my $maint = shift;
+	my($name, $email);
+
+	if($maint =~ m/^(.*) <(.*)>/) {
+		($name, $email) = ($1, $2);
+		$name =~ s/"//g;
+	} else {
+		($name, $email) = ("", $maint);
+	}
+	return($name, $email);
+}
+sub maintName { return (maintParse(shift))[0]; }
+sub maintEmail { return (maintParse(shift))[1]; }
+
+# Take a list of packages, and return it arranged by maintainer.
+# Returns a hash of listrefs.  Hash keys are maintainers.
+sub sortPackagesByMaintainer {
+	my %maints;
+	foreach my $pkg(@_) {
+		my $obj;
+		eval {
+			$obj = Fink::PkgVersion->match_package($pkg);
+		};
+		if($@ or !$obj) {
+			warn "Couldn't get object for $pkg: $@\n";
+			next;
+		}
+
+		my $maint = "None <fink-devel\@lists.sourceforge.net>";
+		if($obj->has_param('maintainer')) {
+			$maint = $obj->param('maintainer');
+		}
+
+		$maints{$maint} ||= [];
+		push @{$maints{$maint}}, $pkg;
+	}
+
+	return %maints;
+}
+
 1;

@@ -274,30 +274,7 @@ close(PKGIDX);
 
 # And the per-maintainer index.
 
-my %maints;
-foreach my $pkg(keys %catmap) {
-	my $obj;
-	eval {
-		$obj = Fink::PkgVersion->match_package($pkg);
-	};
-	if($@ or !$obj) {
-		warn "Couldn't get object for $pkg: $@\n";
-		next;
-	}
-
-	my $maint = "No Maintainer";
-	if($obj->has_param('maintainer')) {
-		$maint = $obj->param('maintainer');
-
-		# Transform name+email into name
-		$maint =~ s/^(.*) <(.*)>/$1/;
-		$maint =~ s/\@/ /;
-		$maint =~ s/"//g;
-	}
-
-	$maints{$maint} ||= [];
-	push @{$maints{$maint}}, $pkg;
-}
+my %maints = FinkLib::sortPackagesByMaintainer(keys %catmap);
 
 open(MAINTIDX, ">", "maintindex.html") or die "Couldn't open maintindex: $!\n";
 
@@ -309,7 +286,13 @@ print MAINTIDX <<HTMHEAD;
 HTMHEAD
 
 foreach my $maint(sort keys %maints) {
-	print MAINTIDX "<li><b>$maint</b><ul>\n";
+	my $maintname = FinkLib::maintName($maint);
+	if(!$maintname) {
+		$maintname = FinkLib::maintEmail($maint);
+		$maintname =~ s/\@/ _at_ /;
+	}
+
+	print MAINTIDX "<li><b>$maintname</b><ul>\n";
 	foreach my $pkg(sort @{$maints{$maint}}) {
 		my $result = $catmap{$pkg};
 		print MAINTIDX "<li><a href=\"../logs/$pkg.log\">$pkg</a>: <a href=\"$result\">$result</a></li>\n";
