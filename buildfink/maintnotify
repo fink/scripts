@@ -60,6 +60,11 @@ A literal %.
 's' if the message is about multiple packages; otherwise, the empty
 string.  So, C<package%s> will be either C<packages> or C<package>.
 
+=item B<%s{foo}{foos}
+
+The first alternative if the message is about one package; otherwise,
+the second alternative.
+
 =item B<%p>
 
 A comma-separated list of the packages this message is about.
@@ -68,11 +73,12 @@ A comma-separated list of the packages this message is about.
 
 A newline-separated list of the packages this message is about.
 
-=item B<%P{foo}>
+=item B<%P{foo}{bar}>
 
 A newline-separated list of the packages this message is about; each
-package will be preceeded by C<foo>.  This can be used to indent
-the list of packages or turn it into a list of URLs.
+package will be preceeded by C<foo> and followed by C<bar>.
+This can be used to indent the list of packages or turn it into a list of URLs.
+The suffix is optional.
 
 =back
 
@@ -156,20 +162,29 @@ foreach my $maint(keys %maints) {
 sub applyTemplate {
 	my($template, @pkgs) = @_;
 
-	$template =~ s/%(.)(?:{(.*?)})?/
+	$template =~ s/%(.)(?:{(.*?)})?(?:{(.*?)})?/
 		if($1 eq "%") {
 			"%";
 		} elsif($1 eq "s") {
-			if(@pkgs == 1) {
-				"";
+			if($2 and $3) {
+				if(@pkgs == 1) {
+					$2;
+				} else {
+					$3;
+				}
 			} else {
-				"s";
+				if(@pkgs == 1) {
+					"";
+				} else {
+					"s";
+				}
 			}
 		} elsif($1 eq "p") {
 			join(", ", @pkgs);
 		} elsif($1 eq "P") {
 			my $prefix = $2 || "";
-			join("\n", map { "$prefix$_" } @pkgs);
+			my $suffix = $3 || "";
+			join("\n", map { "$prefix$_$suffix" } @pkgs);
 		} else {
 			die "Unrecognized escape '$1' in template!\n";
 		}
