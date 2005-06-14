@@ -26,7 +26,7 @@ maintnotify -- Notify maintainers about problems with their packages
 
 =head1 USAGE
 
-	maintnotify --finkdir FINKDIR --pkgfile PKGFILE --template TEMPLATE --from FROM [--subject SUBJ] [--cc CC]
+	maintnotify --finkdir FINKDIR --pkgfile PKGFILE --template TEMPLATE --from FROM [--subject SUBJ] [--cc CC] [--attachdir ATTACHDIR]
 
 C<maintnotify> sends an email to the maintainers of all packages which you
 specify.  It sends one email per maintainer.  Messages are sent via the Mail::Send module.
@@ -43,6 +43,11 @@ C<SUBJ> is the subject which the emails should have; it will be processed
 as a template.
 
 C<CC> is an optional email address to send copies of all messages to.
+
+C<ATTACHDIR> is an optional path to a directory containing files to
+attach to the email.  For a message about package foo, any files in that
+directory which start with "foo." will be attached (for instance foo.info
+or foo.patch.)  This requires the MIME::Lite and MIME::Types modules.
 
 =head1 EMAIL TEMPLATES
 
@@ -104,7 +109,8 @@ my $opts_ok = GetOptions(
 	"template=s" => \$options{template},
 	"from=s" => \$options{from},
 	"subject=s" => \$options{subject},
-	"cc=s" => \$options{cc}
+	"cc=s" => \$options{cc},
+	"attachdir=s" => \$options{attachdir},
 );
 if(@ARGV) {
 	warn "Extra command-line arguments left over after option processing.\n";
@@ -128,10 +134,18 @@ if($opts_ok) {
 	if(not -f $options{template}) {
 		die "The specified template file does not exist.\n";
 	}
+	if($options{attachdir} and not -d $options{attachdir}) {
+		die "The specified attachments directory does not exist.\n";
+	}
 }
 
 if(!$opts_ok) {
 	die "See 'perldoc $0' for more information.\n";
+}
+
+if($options{attachdir}) {
+	require MIME::Lite;
+	require MIME::Types;
 }
 
 FinkLib::initFink($options{finkdir});
@@ -145,6 +159,13 @@ open(TEMPLATE, $options{template}) or die "Couldn't open template: $!\n";
 my $template = join("", <TEMPLATE>);
 close TEMPLATE;
 
+my @attachfiles;
+if($options{attachdir}) {
+	opendir(ADIR, $options{attachdir}) or die "Couldn't open attachdir: $!\n";
+	@attachfiles = grep { $_ ne "." and $_ ne ".." } readdir(ADIR);
+	close(ADIR);
+}
+
 my %maints = FinkLib::sortPackagesByMaintainer(@packages);
 foreach my $maint(keys %maints) {
 	my @pkgs = @{$maints{$maint}};
@@ -152,15 +173,43 @@ foreach my $maint(keys %maints) {
 	my $subject = applyTemplate($options{subject}, @pkgs);
 	my $body = applyTemplate($template, @pkgs);
 
-	my $msg = new Mail::Send or die "Couldn't instantiate Mail::Send: $!\n";
-	$msg->to($to);
-	$msg->subject($subject);
-	$msg->cc($options{cc}) if $options{cc};
-	$msg->set("From", $options{from});
+	my @afiles;
+	foreach my $pkg(@pkgs) {
+		push @afiles,
+			map { $options{attachdir} . "/$_" }
+			grep { /^\Q$pkg\E\./ } @attachfiles;
+	}
+	if(@afiles) {
+		my(%args) = (
+			From => $options{from},
+			To => $to,
+			Subject => $subject,
+			Type => 'multipart/mixed'
+		);
+		$args{Cc} = $options{cc} if $options{cc};
+		my $msg = MIME::Lite->new(%args);
 
-	my $fh = $msg->open or die "Couldn't open Mail::Send: $!\n";
-	print $fh $body or die "Couldn't write to Mail::Send: $!\n";
-	$fh->close or die "Couldn't close Mail::Send: $!\n";
+		$msg->attach(Type => 'TEXT', Data => $body);
+		foreach my $afile (@afiles) {
+			$msg->attach(
+				Path => $afile,
+				Disposition => 'attachment',
+				Type => "AUTO"
+			);
+		}
+
+		$msg->send();
+	} else {
+		my $msg = new Mail::Send or die "Couldn't instantiate Mail::Send: $!\n";
+		$msg->to($to);
+		$msg->subject($subject);
+		$msg->cc($options{cc}) if $options{cc};
+		$msg->set("From", $options{from});
+
+		my $fh = $msg->open or die "Couldn't open Mail::Send: $!\n";
+		print $fh $body or die "Couldn't write to Mail::Send: $!\n";
+		$fh->close or die "Couldn't close Mail::Send: $!\n";
+	}
 }
 
 sub applyTemplate {
