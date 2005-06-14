@@ -233,15 +233,17 @@ sub applyTemplate {
 				}
 			}
 		} elsif($1 eq "p") {
+			my @pkgtemp = @pkgs;
+
 			my $finalsuffix = $2;
 			$finalsuffix = "and " if !defined($2);
 
-			$pkgs[-1] = $finalsuffix . $pkgs[-1] if @pkgs > 1;
+			$pkgtemp[-1] = $finalsuffix . $pkgtemp[-1] if @pkgtemp > 1;
 
-			if(@pkgs == 2 and !$3) {
-				join(" ", @pkgs);
+			if(@pkgtemp == 2 and !$3) {
+				join(" ", @pkgtemp);
 			} else {
-				join(", ", @pkgs);
+				join(", ", @pkgtemp);
 			}
 		} elsif($1 eq "P") {
 			my $prefix = $2 || "";
