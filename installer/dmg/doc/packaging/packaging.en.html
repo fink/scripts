@@ -1435,6 +1435,10 @@ but not for the nethack variant.
   cannot have a <tt style="white-space: nowrap;">Depends</tt> that indicates that either one
   will suffice.
 </p>
+<p>
+In the past, non-essential packages implicitly depended on the
+essential ones; this is no longer true.
+</p>
 </td></tr><tr valign="top"><td>BuildDepends</td><td>
 <p>
 <b>Introduced in fink 0.9.0.</b>
@@ -1515,10 +1519,11 @@ necessary.
 </td></tr><tr valign="top"><td>Essential</td><td>
 <p>
 A boolean value that denotes essential packages. Essential
-packages are installed as part of the bootstrap process. All
-non-essential packages implicitly depend on the essential ones. dpkg
+packages are installed as part of the bootstrap process. <tt style="white-space: nowrap;">dpkg</tt>
 will refuse to remove essential packages from the system unless
 special flags are used to override this.
+In the past, non-essential packages implicitly depended on the
+essential ones; this is no longer true.
 </p>
 </td></tr><tr valign="top"><td>BuildDependsOnly</td><td>
 <p>
@@ -2413,4 +2418,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.63 2005/06/08 06:45:57 dmalloc Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.64 2005/06/14 12:51:41 dmacks Exp $</i></p></body></html>
