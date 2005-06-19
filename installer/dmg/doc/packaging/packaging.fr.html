@@ -569,14 +569,6 @@ LD_PREBIND: 1
 LD_PREBIND_ALLOW_OVERLAP: 1
 LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
 </pre>
-<p>Enfin, à partir des versions 0.24.3 et 0.23.7 de fink, on trouve  dans les branches 103 et 10.4-transitionnelle :</p>
-<pre>
-CXXFLAGS: -fabi-version=1
-</pre>
-<p>et dans la branche 10.4 et les branches suivantes :</p>
-<pre>
-CXXFLAGS: -fabi-version=2
-</pre>
 <p>Enfin, la variable MACOSX_DEPLOYMENT_TARGET a une valeur par défaut qui dépend de la version de Mac OS X en cours d'exécution, mais le fait d'affecter une valeur à cette variable pour un paquet donné remplace la valeur par défaut, elle ne vient pas s'ajouter devant la valeur par défaut.</p>
 </td></tr><tr valign="top"><td>NoSet<b>ENVVAR</b></td><td>
 <p>Quand la valeur de ce champ est true (vraie), les valeurs par défaut des variables à valeurs pré-établies, telles CPPFLAGS, LDFLAGS et CXXFLAGS mentionnées ci-dessus, sont désactivées. Autrement dit, si vous ne voulez pas que LDFLAGS ait une valeur par défaut, utilisez <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt>.</p>
@@ -780,4 +772,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.56 2005/06/15 20:03:11 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.57 2005/06/19 23:14:55 michga Exp $</i></p></body></html>
