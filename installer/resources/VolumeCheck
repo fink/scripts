@@ -4,7 +4,7 @@ use File::Find;
 my $result = 0, $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 my $TARGET_VOLUME = $ARGV[0];
-my $targetdir = "$TARGET_VOLUME/$basedir";
+my $targetdir = "$TARGET_VOLUME$basedir";
 
 DO_CHECKS:
 {
@@ -21,7 +21,7 @@ DO_CHECKS:
 	{
 	    unlink("$targetdir");
 	} else {
-	    print "Fink Installer: ${TARGET_VOLUME} does not support symlinks!\n";
+	    print "Fink Installer: ${TARGET_VOLUME} does not support symlinks ($!)!\n";
 	    $result = ((1 << 5) | 21);
 	    last;
 	}
