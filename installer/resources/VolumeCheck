@@ -17,6 +17,13 @@ DO_CHECKS:
   	  last;
 	}
 
+	if (! -w "${TARGET_VOLUME}")
+	{
+	    print "Fink Installer: User $ENV{USER} cannot write to ${TARGET_VOLUME} to perform symlink test!\n";
+	    $result = ((1 << 5) | 22);
+	    last;
+	}
+
 	if (symlink("$targetdir.tmp", "$targetdir"))
 	{
 	    unlink("$targetdir");
