@@ -1,3 +1,5 @@
+(Originally written circa 2002 by Max Horn; revised in 2005 by Dave Morrison.)
+
 This is an attempt to explain how to use the binary distro related scripts in
 this directory. I had to discover this on my own, so it might not always be
 fully correct or complete, but it should at least help to start using them.
@@ -33,6 +35,9 @@ SFUSER
     distribution.  Defaults to the current dist maintainer.
   Example:
     fingolfin
+
+(Added in 2005: we no longer store the bindist at SourceForge, and this
+variable is obsolete.)
 
 CURREL
   Description:
@@ -95,6 +100,11 @@ bdsync
   If you have to remove things again from the online tree, you have to do
   so manually (for security reasons, so you don't wipe out by accident the whole
   online bindist)
+  Note added 2005: This now syncs to the bindist at sancho.opendarwin.org.
+  All the files are placed into the "fink" group so that responsibility
+  for maintaining them can be shared by the members of the group.
+  Also note: the source tree created by the scripts here is no longer
+  synced to the the distribution: see below.
 
 
 ---------------------------------------------------------------------------------
@@ -136,3 +146,12 @@ version. Then, ssh into shell.sourceforge.net and run this script:
 
 ---------------------------------------------------------------------------------
 
+NOTE (added 2005): because the bindist is again available for browsing on
+the web, we are using it to fulfill our obligations under the GPL.  The
+source links from the bindist all point (on the webserver sancho.opendarwin)
+to the collection of source files used by the fink mirrors system; thus,
+the source is being made available.  However,  we also have a responsibility
+to make the .info and .patch files which correspond to the binaries available,
+and this is done in the finkinfo directories in the bindist.  Unfortunately,
+these finkinfo files are not deposited automatically by these scripts,
+and must be put there by hand.
