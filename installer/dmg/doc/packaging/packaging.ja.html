@@ -26,7 +26,7 @@ Available Languages:  |
 			<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">現在メンテナのいないパッケージ</a>
 			のメンテナンスをお願いいたします．
 		</p>
-	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 GPL と OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#reference"><b>5 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">5.1 ビルドプロセス</a></li><li><a href="#reference.fields">5.2 フィールド</a></li><li><a href="#reference.splitoffs">5.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">5.4 スクリプト</a></li><li><a href="#reference.patches">5.5 パッチ</a></li><li><a href="#reference.profile.d">5.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
+	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 GPL と OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#compilers"><b>5 Compilers</b></a><ul><li><a href="#compilers.versions">5.1 Compiler Versions</a></li><li><a href="#compilers.abi">5.2 The g++ ABI</a></li></ul></li><li><a href="#reference"><b>6 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">6.1 ビルドプロセス</a></li><li><a href="#reference.fields">6.2 フィールド</a></li><li><a href="#reference.splitoffs">6.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">6.4 スクリプト</a></li><li><a href="#reference.patches">6.5 パッチ</a></li><li><a href="#reference.profile.d">6.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
 		
 		
 		<h3><a name="intro.def1">1.1 パッケージとは何か?</a></h3>
@@ -1049,10 +1049,85 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				<tt style="white-space: nowrap;">/sw/libexec</tt>, <tt style="white-space: nowrap;">/sw/lib/locale</tt>
 			</p>
 		
-	<h2><a name="reference">5 リファレンスマニュアル</a></h2>
+	<h2><a name="compilers">5 Compilers</a></h2>
+
+
+
+<h3><a name="compilers.versions">5.1 Compiler Versions</a></h3>
+<p>Fink uses the gcc family of compilers, as provided by Apple computer
+through the Apple Developer Connection.  As these compilers have evolved,
+there have been different fink "distributions" to cope with the changes.
+</p><p>
+Each distribution has had certain default values for the gcc and g++
+compilers, which any user compiling from source is expected to have
+installed.  You can expect that direct calls to "gcc" and "g++" from
+within your package will use these default values.  If you need to use
+a different value (for example, during a transition to a new distribution,
+your packages .info file must specify this using the versioned binaries
+provided by Apple.  Exactly how you will do this depends on the build
+system of your software, but for many packages, the <tt style="white-space: nowrap;">SetCC</tt>
+and <tt style="white-space: nowrap;">SetCXX</tt> fink fields can be used for this puporse.
+For example, you might change the g++ compiler to version 3.3 by the setting
+<tt style="white-space: nowrap;">SetCXX: g++-3.3</tt>.  Examine the output when building your
+package to make sure that the correct compiler is being used.
+</p><p>
+The 10.1 distribution assumes that the compiler version is 2.95; the
+10.2 distribution assumes that the compiler version is 3.1; the 10.2-gcc3.3
+and 10.3 distributions assume tha the compiler version is 3.3.   The compiler
+for the 10.4-transitional distribution is complicated: g++-3.3 is being
+used along with gcc-4.0.  This will change again in the 10.4 distribution,
+which will use both gcc-4.0 and g++-4.0.
+</p>
+<p>A new method was introduced for ensuring the correct g++ compiler starting
+with the 10.4-transitional distribution.  During compilation, a directory
+<tt style="white-space: nowrap;">/sw/var/lib/fink/path-prefix-g++-XXX</tt> (where XXX is the version
+number) is added to the PATH during compilation.  This directory contains
+shell scripts which ensure that the correct version of g++ is used.
+</p>
+
+
+<h3><a name="compilers.abi">5.2 The g++ ABI</a></h3>
+<p>
+The g++ ABI has changed 3 times during the lifetime of OS X: the ABI is
+different for versions 2.95, 3.1, 3.3 and 4.0.  These different ABIs
+are not compatible with each other, and any libraries which use C++
+code and are linked to by your project must be compiled with the same
+ABI as the one currently being used.
+</p>
+<p>
+Fink keeps track of the g++ ABI by means of the GCC field.  This field
+should be defined for any package which invokes the g++ or c++ compilers.
+(It should NOT be defined for packages which don't invoke those compilers.)
+Whenever an ABI upgrade occurs, all the dependencies of the packages must
+be checked for their own GCC field.  When all of the dependencies have
+been upgraded, the package itself may be upgraded.  The versions of the
+dependencies must be changed to guarantee that users will have the correct,
+updated, dependencies in place before they attempt to build the new version
+of your package.
+</p>
+<p>
+A small group of packages which depend only on each other can be left 
+at the previous version of the ABI when the distribution changes, if they
+are not ready to be upgrade.  When the upgrade is eventually done, they
+must be all upgraded together with the correct versioning on all the
+packages.  For this reason, it is best to upgrade most packages at
+the time the distribution changes.
+</p>
+<p>
+Fink uses the GCC field to ensure that users have the correct version of
+the g++ compiler installed.  If the GCC field is defined by the package,
+fink checks to see if the <tt style="white-space: nowrap;">gcc_select</tt> command has been
+set to the correct current value.  (This correct value is 3.3 for the 10.2
+and 10.3 versions of OS X, and 4.0 for the 10.4 version of OS X.  The 
+<tt style="white-space: nowrap;">gcc_select</tt> command was not available prior to OS X 10.2.)
+</p>
+
+
+
+<h2><a name="reference">6 リファレンスマニュアル</a></h2>
 		
 		
-		<h3><a name="reference.build">5.1 ビルドプロセス</a></h3>
+		<h3><a name="reference.build">6.1 ビルドプロセス</a></h3>
 			
 			<p>
 				各フィールドの意味を理解するには， Fink のビルドプロセスに関する知識がある程度必要です．
@@ -1094,7 +1169,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				代わりに，パッケージ記述からの様々な情報を使って dpkg 用の <tt style="white-space: nowrap;">control</tt> ファイルが作成できます．
 			</p>
 		
-		<h3><a name="reference.fields">5.2 フィールド</a></h3>
+		<h3><a name="reference.fields">6.2 フィールド</a></h3>
 			
 			<p>
 				フィールドを分類して解説します．
@@ -2133,7 +2208,7 @@ AnotherVar: foo bar
 						</p>
 					</td></tr></table>
 		
-		<h3><a name="reference.splitoffs">5.3 スプリットオフ (SplitOff)</a></h3>
+		<h3><a name="reference.splitoffs">6.3 スプリットオフ (SplitOff)</a></h3>
 			
 			<p>
 				Fink 0.9.9 で導入．
@@ -2210,7 +2285,7 @@ SplitOff2: &lt;&lt;
 				よって <tt style="white-space: nowrap;">DocFiles</tt> を使えば同一のドキュメントを各 splitoff パッケージ向けに複数回インストールできます．
 			</p>
 		
-		<h3><a name="reference.scripts">5.4 スクリプト</a></h3>
+		<h3><a name="reference.scripts">6.4 スクリプト</a></h3>
 			
 			<p>
 				フィールド PatchScript, CompileScript, InstallScript には，実行させたいシェルコマンドを記述できる．
@@ -2232,7 +2307,7 @@ SplitOff2: &lt;&lt;
 				その場合，フィールド *Script の値全体が一時ファイルにダンプされ，実行されます．
 			</p>
 		
-		<h3><a name="reference.patches">5.5 パッチ</a></h3>
+		<h3><a name="reference.patches">6.5 パッチ</a></h3>
 			
 			<p>
 				パッケージを Darwin でコンパイルするために (または Fink と協調して動作するようにするために) パッチが必要な場合，
@@ -2269,7 +2344,7 @@ SplitOff2: &lt;&lt;
 				パッチが 30KB より大きければ，独立にダウンロードする方法を考慮した方がよいでしょう．
 			</p>
 		
-		<h3><a name="reference.profile.d">5.6 Profile.d スクリプト</a></h3>
+		<h3><a name="reference.profile.d">6.6 Profile.d スクリプト</a></h3>
 			
 			<p>
 				パッケージが実行時に何らかの初期化 (環境変数の設定など) を必要とするなら， profile.d スクリプトを使えばよいでしょう．
@@ -2293,4 +2368,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.28 2005/06/09 21:45:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.29 2005/06/23 20:16:36 dmrrsn Exp $</i></p></body></html>

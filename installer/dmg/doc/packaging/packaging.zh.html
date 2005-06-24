@@ -25,7 +25,7 @@ Available Languages:  |
 如果你希望帮助 Fink 项目，而你在这方面又有专长，你可以考虑选择接受一个
 <a href="http://fink.sourceforge.net/pdb/nomaintainer.php">尚未有维护人员的软件包。</a>
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.4 共享函数库</a></li><li><a href="#policy.perlmods">3.5 Perl 模块</a></li><li><a href="#policy.emacs">3.6 Emacs 规则</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#reference"><b>5 操作手册</b></a><ul><li><a href="#reference.build">5.1 构建过程</a></li><li><a href="#reference.fields">5.2 字段</a></li><li><a href="#reference.splitoffs">5.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">5.4 脚本</a></li><li><a href="#reference.patches">5.5 补丁</a></li><li><a href="#reference.profile.d">5.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 介绍</b></a><ul><li><a href="#intro.def1">1.1 什么是软件包？</a></li><li><a href="#intro.ident">1.2 识别一个软件包</a></li></ul></li><li><a href="#format"><b>2 软件包描述文件</b></a><ul><li><a href="#format.trees">2.1 文件树结构</a></li><li><a href="#format.format">2.2 文件格式</a></li><li><a href="#format.percent">2.3 百分号展开</a></li></ul></li><li><a href="#policy"><b>3 打包相关规则</b></a><ul><li><a href="#policy.licenses">3.1 软件包授权协议</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 避免干扰基本系统</a></li><li><a href="#policy.sharedlibs">3.4 共享函数库</a></li><li><a href="#policy.perlmods">3.5 Perl 模块</a></li><li><a href="#policy.emacs">3.6 Emacs 规则</a></li></ul></li><li><a href="#fslayout"><b>4 文件系统布局</b></a><ul><li><a href="#fslayout.fhs">4.1 文件系统层次结构标准</a></li><li><a href="#fslayout.dirs">4.2 目录</a></li><li><a href="#fslayout.avoid">4.3 应该避免的事情</a></li></ul></li><li><a href="#compilers"><b>5 Compilers</b></a><ul><li><a href="#compilers.versions">5.1 Compiler Versions</a></li><li><a href="#compilers.abi">5.2 The g++ ABI</a></li></ul></li><li><a href="#reference"><b>6 操作手册</b></a><ul><li><a href="#reference.build">6.1 构建过程</a></li><li><a href="#reference.fields">6.2 字段</a></li><li><a href="#reference.splitoffs">6.3 剥离分支(SplitOffs)</a></li><li><a href="#reference.scripts">6.4 脚本</a></li><li><a href="#reference.patches">6.5 补丁</a></li><li><a href="#reference.profile.d">6.6 Profile.d 脚本</a></li></ul></li></ul><h2><a name="intro">1 介绍</a></h2>
 
 
 
@@ -783,12 +783,87 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 
 
 
-<h2><a name="reference">5 操作手册</a></h2>
+<h2><a name="compilers">5 Compilers</a></h2>
+
+
+
+<h3><a name="compilers.versions">5.1 Compiler Versions</a></h3>
+<p>Fink uses the gcc family of compilers, as provided by Apple computer
+through the Apple Developer Connection.  As these compilers have evolved,
+there have been different fink "distributions" to cope with the changes.
+</p><p>
+Each distribution has had certain default values for the gcc and g++
+compilers, which any user compiling from source is expected to have
+installed.  You can expect that direct calls to "gcc" and "g++" from
+within your package will use these default values.  If you need to use
+a different value (for example, during a transition to a new distribution,
+your packages .info file must specify this using the versioned binaries
+provided by Apple.  Exactly how you will do this depends on the build
+system of your software, but for many packages, the <tt style="white-space: nowrap;">SetCC</tt>
+and <tt style="white-space: nowrap;">SetCXX</tt> fink fields can be used for this puporse.
+For example, you might change the g++ compiler to version 3.3 by the setting
+<tt style="white-space: nowrap;">SetCXX: g++-3.3</tt>.  Examine the output when building your
+package to make sure that the correct compiler is being used.
+</p><p>
+The 10.1 distribution assumes that the compiler version is 2.95; the
+10.2 distribution assumes that the compiler version is 3.1; the 10.2-gcc3.3
+and 10.3 distributions assume tha the compiler version is 3.3.   The compiler
+for the 10.4-transitional distribution is complicated: g++-3.3 is being
+used along with gcc-4.0.  This will change again in the 10.4 distribution,
+which will use both gcc-4.0 and g++-4.0.
+</p>
+<p>A new method was introduced for ensuring the correct g++ compiler starting
+with the 10.4-transitional distribution.  During compilation, a directory
+<tt style="white-space: nowrap;">/sw/var/lib/fink/path-prefix-g++-XXX</tt> (where XXX is the version
+number) is added to the PATH during compilation.  This directory contains
+shell scripts which ensure that the correct version of g++ is used.
+</p>
+
+
+<h3><a name="compilers.abi">5.2 The g++ ABI</a></h3>
+<p>
+The g++ ABI has changed 3 times during the lifetime of OS X: the ABI is
+different for versions 2.95, 3.1, 3.3 and 4.0.  These different ABIs
+are not compatible with each other, and any libraries which use C++
+code and are linked to by your project must be compiled with the same
+ABI as the one currently being used.
+</p>
+<p>
+Fink keeps track of the g++ ABI by means of the GCC field.  This field
+should be defined for any package which invokes the g++ or c++ compilers.
+(It should NOT be defined for packages which don't invoke those compilers.)
+Whenever an ABI upgrade occurs, all the dependencies of the packages must
+be checked for their own GCC field.  When all of the dependencies have
+been upgraded, the package itself may be upgraded.  The versions of the
+dependencies must be changed to guarantee that users will have the correct,
+updated, dependencies in place before they attempt to build the new version
+of your package.
+</p>
+<p>
+A small group of packages which depend only on each other can be left 
+at the previous version of the ABI when the distribution changes, if they
+are not ready to be upgrade.  When the upgrade is eventually done, they
+must be all upgraded together with the correct versioning on all the
+packages.  For this reason, it is best to upgrade most packages at
+the time the distribution changes.
+</p>
+<p>
+Fink uses the GCC field to ensure that users have the correct version of
+the g++ compiler installed.  If the GCC field is defined by the package,
+fink checks to see if the <tt style="white-space: nowrap;">gcc_select</tt> command has been
+set to the correct current value.  (This correct value is 3.3 for the 10.2
+and 10.3 versions of OS X, and 4.0 for the 10.4 version of OS X.  The 
+<tt style="white-space: nowrap;">gcc_select</tt> command was not available prior to OS X 10.2.)
+</p>
+
+
+
+<h2><a name="reference">6 操作手册</a></h2>
 
 
 
 
-<h3><a name="reference.build">5.1 构建过程</a></h3>
+<h3><a name="reference.build">6.1 构建过程</a></h3>
 
 <p>要理解一些字段的含义，你需要有对 Fink 所采用的构建过程有些了解。它由五个阶段组成：解压，补丁，编译，安装和构建。下面的示例路径是关于安装在 <tt style="white-space: nowrap;">/sw</tt> 的 gimp-1.2.1-1 软件包的。</p>
 <p>在<b>解压阶段</b>，<tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1</tt> 这个目录会被创建，源代码压缩档会被在这里解压。多数情况下，这会创建一个名为 gimp-1.2.1 的目录，里面包括源代码；下面的操作步骤会在那个目录里面执行(即 <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>)。我们可以使用 SourceDirectory，NoSourceDirectory 和 Source<b>N</b>ExtractDir
@@ -804,7 +879,7 @@ Fink 确保不会有软件包会安装它自己的 <tt style="white-space: nowra
 <p>在<b>构建阶段</b>，会根据临时文件夹的内容构建一个二进制安装包(.deb)文件。你不能直接影响这个步骤，但软件包描述里面的许多字段会用于生成 dpkg 的 <tt style="white-space: nowrap;">control</tt> 文件。</p>
 
 
-<h3><a name="reference.fields">5.2 字段</a></h3>
+<h3><a name="reference.fields">6.2 字段</a></h3>
 
 <p>我们在这里把字段分成几类。这里所描述的内容并不一定包括全部的字段。<tt style="white-space: nowrap;">:-)</tt></p>
 <p><b>初始化数据：</b></p>
@@ -1689,7 +1764,7 @@ StartupItems (例如 web 服务器)。
 </td></tr></table>
 
 
-<h3><a name="reference.splitoffs">5.3 剥离分支(SplitOffs)</a></h3>
+<h3><a name="reference.splitoffs">6.3 剥离分支(SplitOffs)</a></h3>
 <p>从 fink 0.9.9 开始，可以用一个单独的 .info 文件来构建多个软件包。
 安装阶段和正常的类似，执行
 <tt style="white-space: nowrap;">InstallScript</tt> 和 <tt style="white-space: nowrap;">DocFiles</tt> 命令。
@@ -1743,7 +1818,7 @@ SplitOff2: &lt;&lt;
 
 
 
-<h3><a name="reference.scripts">5.4 脚本</a></h3>
+<h3><a name="reference.scripts">6.4 脚本</a></h3>
 
 <p>PatchScript，CompileScript 和 InstallScript 字段允许你指定需要执行的 shell 命令。
 构建目录(<tt style="white-space: nowrap;">%b</tt>)是脚本执行的当前目录。
@@ -1760,7 +1835,7 @@ shell 脚本类似。不过，命令是通过 system() 调用执行的，每次�
 </p>
 
 
-<h3><a name="reference.patches">5.5 补丁</a></h3>
+<h3><a name="reference.patches">6.5 补丁</a></h3>
 
 <p>如果你的软件包需要补丁采可以在 Darwin 上编译(或与 Fink 配合)，
 把补丁命名为与软件包描述文件相同的名字，使用 ".patch" 来取代 ".info" 作为扩展名，并把它放在和 .info 文件相同的目录下面。
@@ -1781,7 +1856,7 @@ shell 脚本类似。不过，命令是通过 system() 调用执行的，每次�
 </p>
 
 
-<h3><a name="reference.profile.d">5.6 Profile.d 脚本</a></h3>
+<h3><a name="reference.profile.d">6.6 Profile.d 脚本</a></h3>
 
 <p>
 如果你的软件包需要一些运行时的初始化(例如，设置环境变量)，你可以使用 profile.d 脚本。
@@ -1801,4 +1876,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.19 2005/06/09 21:45:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.20 2005/06/23 20:16:37 dmrrsn Exp $</i></p></body></html>
