@@ -1444,6 +1444,10 @@ Depends: (%type_pkg[-x11]) x11
 							パッケージは，コンパイル時にインストールされた -dev に合った -shlibs パッケージを必要とする．
 							このため， <tt style="white-space: nowrap;">Depends</tt> でどちらも満たすようにはできないのである．
 						</p>
+						<p>
+							以前は，必須でないパッケージは暗黙のうちに必須パッケージに依存していたが，
+							現在はそうなっていない．
+						</p>
 					</td></tr><tr valign="top"><td>BuildDepends</td><td>
 						<p>
 							<b>Fink 0.9.0 で導入:</b>
@@ -1512,9 +1516,9 @@ Depends: (%type_pkg[-x11]) x11
 					</td></tr><tr valign="top"><td>Essential</td><td>
 						<p>
 							必須パッケージを表す真偽値フィールド．
-							必須パッケージはブートストラップ・プロセスの一環としてインストールされる．
 							必須パッケージでないパッケージは必須パッケージに暗黙のうちに依存して構わない．
-							dpkg は，このフィールドの指示に優先する特別なフラグを使わない限り，必須パッケージをシステムから取り除くことを拒む．
+							<tt style="white-space: nowrap;">dpkg</tt> は，このフィールドの指示に優先する特別なフラグを使わない限り，必須パッケージをシステムから取り除くことを拒む．
+							以前は，必須でないパッケージは暗黙のうちに必須パッケージに依存していたが，現在はそうではない．
 						</p>
 					</td></tr><tr valign="top"><td>BuildDependsOnly</td><td>
 						<p>
@@ -1804,19 +1808,6 @@ LD_PREBIND_ALLOW_OVERLAP: 1
 LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
 </pre>
 						<p>
-							fink 0.24.3 (と 0.23.7) からの 10.3 および 10.4-transitional 用ディストリビューションでは
-						</p>
-<pre>
-CXXFLAGS: -fabi-version=1
-</pre>
-						<p>
-							10.4 以降のディストリビューションでは
-						</p>
-<pre>
-CXXFLAGS: -fabi-version=2
-</pre>
-						<p>
-							となります．
 							MACOSX_DEPLOYMENT_TARGET は OSX のバージョンを既定値として持ちます．
 							これに値を指定することで (値の追加ではなく) 既定値を書き換えることができます．
 						</p>
@@ -2368,4 +2359,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.29 2005/06/23 20:16:36 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.30 2005/06/27 12:58:42 babayoshihiko Exp $</i></p></body></html>
