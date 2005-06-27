@@ -64,7 +64,7 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 	</a></li><li><a href="#comp-general.master-problems">6.21 
 		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
-	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> 我インストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
+	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
         これはどこにありますか?</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
@@ -733,7 +733,6 @@ page and on http://fontconfig.org.</pre><p>次のように実行します:</p><p
         	このメッセージは、 Fink インストーラを管理者権限のないユーザーで実行すると発生します。
         	ログイン時に権限のあるユーザーにログインするか、Finder でユーザーを切り替えてください。
         </p><p>
-        	the <b>First Aid</b> tab, and press <b>Repair Disk Permissions</b>.
         	管理者アカウントを使っていても問題が発生する場合、システムのトップレベルディレクトリの
         	パーミッションに問題があるかもしれません。 Apple の ディスクユーティリティを使い、問題の
         	ボリュームを選択し、 <b>First Aid</b> タブから <b>ディスクのアクセス権を修復</b>
@@ -985,7 +984,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 	</p><p>これを直すには、 <tt style="white-space: nowrap;">fink configure</tt> を実行し、マスターミラーを最後に検索するように設定を変更します。</p></div>
 </a>
 <a name="comp-general.compile-options">
-	<div class="question"><p><b>Q6.22: パッケージをビルドするときに、 Fink に違うオプションを使わせたい</b></p></div>
+	<div class="question"><p><b>Q6.22: パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</b></p></div>
 	<div class="answer"><p><b>A:</b> 
 			まず最初に、バリエーションを作成するようにパッケージメンテナに伝えてみてください。
 			これが比較的簡単な方法です。
@@ -1051,7 +1050,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
 fink install libiconv</pre></div>
 </a>
     <a name="comp-packages.cplusplus-filt">
-      <div class="question"><p><b>Q7.6: <tt style="white-space: nowrap;">g77</tt> 我インストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
+      <div class="question"><p><b>Q7.6: <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
         これはどこにありますか?</b></p></div>
       <div class="answer"><p><b>A:</b> もし、Tiger にアップデート後にエラーが</p><pre>xgcc: installation problem, cannot exec `c++filt': No such file or directory</pre><p>とでたら、以下のようにします:</p><ul>
           <li>ターミナルで、
@@ -1519,4 +1518,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.30 2005/06/27 12:56:55 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.31 2005/06/27 13:22:34 babayoshihiko Exp $</i></p></body></html>
