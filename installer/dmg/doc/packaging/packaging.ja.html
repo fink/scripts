@@ -26,7 +26,7 @@ Available Languages:  |
 			<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">現在メンテナのいないパッケージ</a>
 			のメンテナンスをお願いいたします．
 		</p>
-	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 GPL と OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#compilers"><b>5 Compilers</b></a><ul><li><a href="#compilers.versions">5.1 コンパイラバージョン</a></li><li><a href="#compilers.abi">5.2 g++ ABI</a></li></ul></li><li><a href="#reference"><b>6 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">6.1 ビルドプロセス</a></li><li><a href="#reference.fields">6.2 フィールド</a></li><li><a href="#reference.splitoffs">6.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">6.4 スクリプト</a></li><li><a href="#reference.patches">6.5 パッチ</a></li><li><a href="#reference.profile.d">6.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
+	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 GPL と OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#compilers"><b>5 コンパイラ</b></a><ul><li><a href="#compilers.versions">5.1 コンパイラバージョン</a></li><li><a href="#compilers.abi">5.2 g++ ABI</a></li></ul></li><li><a href="#reference"><b>6 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">6.1 ビルドプロセス</a></li><li><a href="#reference.fields">6.2 フィールド</a></li><li><a href="#reference.splitoffs">6.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">6.4 スクリプト</a></li><li><a href="#reference.patches">6.5 パッチ</a></li><li><a href="#reference.profile.d">6.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
 		
 		
 		<h3><a name="intro.def1">1.1 パッケージとは何か?</a></h3>
@@ -1049,7 +1049,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				<tt style="white-space: nowrap;">/sw/libexec</tt>, <tt style="white-space: nowrap;">/sw/lib/locale</tt>
 			</p>
 		
-	<h2><a name="compilers">5 Compilers</a></h2>
+	<h2><a name="compilers">5 コンパイラ</a></h2>
 
 
 
@@ -1074,8 +1074,8 @@ Apple 提供の特定バージョンのバイナリを指定しなければな�
 10.1 ディストリビューションは，コンパイラに 2.95 の使用を前提とします．
 10.2 ディストリビューションは，コンパイラに 3.1 の使用を前提とします．
 10.2-gcc と 10.3 ディストリビューションは，コンパイラに 3.3 の使用を前提とします．
-10.4-transitional ディストリビューションは複雑です．これは g++-3.3 と gcc-4.0 を使用しています．
-１０．４ディストリビューションでは，gcc-4.0 と g++-4.0 を使用するようになる予定です．
+10.4-transitional ディストリビューションは複雑で，これは g++-3.3 と gcc-4.0 を使用しています．
+10.4 ディストリビューションでは，gcc-4.0 と g++-4.0 を使用するようになる予定です．
 </p>
 <p>
 正しい g++ コンパイラが使用されるよう新手法が 10.4-transitional ディストリビューションから採用されました．
@@ -1095,7 +1095,7 @@ Fink では，g++ ABI は GCC フィールドで扱っています．
 g++ あるいは c++ コンパイラを呼び出すパッケージは，GCC フィールドを定義しなければなりません
 (逆に，呼び出さないパッケージには定義してはいけません)．
 ABI が更新された場合，パッケージ依存性に GCC フィールドも確認しなければいけません．
-依存するパッケージ全てがアップグレードされて，パッケージもアップグレードすることができます．
+依存するパッケージ全てがアップグレードされて，始めてそのパッケージもアップグレードすることができます．
 ユーザーがパッケージをビルドするより前に正しく更新された依存性を持つためには，依存パッケージのバージョンを変える必要があります．
 </p>
 <p>
@@ -1110,7 +1110,7 @@ GCC フィールドがパッケージによって定義されている場合，f
 コマンドが正しい値に設定されているかを確認します．
 (10.2 と 10.3 での正しい値は　3.3 で，
 10.4 での正しい値は　4.0 です．
-<tt style="white-space: nowrap;">gcc_select</tt> は OS X 10.2 以前にはありません．)
+OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はありません．)
 </p>
 
 
@@ -2350,4 +2350,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.31 2005/06/28 00:25:03 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.32 2005/06/28 00:34:18 babayoshihiko Exp $</i></p></body></html>
