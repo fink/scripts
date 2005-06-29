@@ -1096,12 +1096,24 @@ In particular, the following should not be used:
 
 
 
-<h3><a name="compilers.versions">5.1 Compiler Versions</a></h3>
-<p>Fink uses the gcc family of compilers, as provided by Apple computer
-through the Apple Developer Connection.  As these compilers have evolved,
-there have been different fink "distributions" to cope with the changes.
+
+<p>
+Fink uses the gcc family of compilers, as provided by Apple computer
+through the Apple Developer Connection. Different versions of gcc exist,
+and usually more than one is available on a Mac OS X system.
 </p><p>
-Each distribution has had certain default values for the gcc and g++
+This section explains some of the ways Fink deals with these different versions
+of gcc. An email to the Fink mailing list has <a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg11877.html">more explanation</a>.
+</p>
+
+
+<h3><a name="compilers.versions">5.1 Compiler Versions</a></h3>
+<p>
+As GCC has evolved,
+there have been different fink "distributions" to cope with the changes.
+</p>
+<p>
+Each Fink distribution has had certain default values for the gcc and g++
 compilers, which any user compiling from source is expected to have
 installed.  You can expect that direct calls to "gcc" and "g++" from
 within your package will use these default values.  If you need to use
@@ -2480,4 +2492,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.66 2005/06/23 20:16:35 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.67 2005/06/29 20:04:07 vasi Exp $</i></p></body></html>
