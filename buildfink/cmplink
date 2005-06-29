@@ -18,8 +18,8 @@
 
 print "<tt>\n";
 while(<>) {
-	s!^(.*?):!<a href="logs/$1.log">$1:!;
-	s!$!</a><br>!;
+	s!^(.*?):!<a href="logs/$1.log">$1</a>:!;
+	s!$!<br>!;
 	print $_;
 }
 print "</tt>\n";
