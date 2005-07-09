@@ -1053,14 +1053,23 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 
 
 
+
+<p>
+Fink は，Apple Developer Connection によってアップルコンピュータから提供される gcc コンパイラを使用しています．
+バージョンはいくつかあり， Mac OS X システムでも通常は複数のバージョンが存在します．
+</p>
+<p>
+<a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg11877.html">より詳しい解説</a>がメーリングリスト中にあります．
+</p>
+
+
 <h3><a name="compilers.versions">5.1 コンパイラバージョン</a></h3>
 <p>
-gcc ファミリーのコンパイラを使用します．
-これらのコンパイラの発展に伴い，fink は "ディストリビューション" をつくって
+コンパイラの発展に伴い，fink は "ディストリビューション" をつくって
 変化に対応してきました．
 </p>
 <p>
-各ディストリビューションには，ソースからコンパイルするユーザー全員がもっていると想定されている
+各 Fink ディストリビューションには，ソースからコンパイルするユーザー全員がもっていると想定されている
 既定の gcc と g++ コンパイラがあります．
 パッケージ中で直接 "gcc" や "g++" を使用すると，この既定値が使われます． 
 これと違う値を使用する必要がある場合，(例えば，ディストリビューションの移行中に) パッケージ .info ファイルは
@@ -1321,7 +1330,7 @@ Type: -x11 (boolean)
 Depends: (%type_raw[-x11] = -x11) x11
 CompileScript:  &lt;&lt;
   #!/bin/bash -ev
-  if ["%type_raw[-x11]" == "-x11"]; then
+  if [ "%type_raw[-x11]" == "-x11" ]; then
     ./configure %c --with-x11
   else
     ./configure %c --without-x11
