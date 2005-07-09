@@ -64,7 +64,9 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 	</a></li><li><a href="#comp-general.master-problems">6.21 
 		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
-	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
+	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li><li><a href="#comp-general.gettext">6.23 
+        	ソースからビルドするとき、 <tt style="white-space: nowrap;">gettext-dev</tt> と <tt style="white-space: nowrap;">libgettext3-dev</tt> の間でたらい回しです。
+        </a></li><li><a href="#comp-general.python-mods">6.24 Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
         これはどこにありますか?</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
@@ -197,7 +199,7 @@ Apple ありがとう!</p></div>
 </a>
 <a name="relations.darwinports">
 <div class="question"><p><b>Q2.6: Darwinports とは関係がありますか?</b></p></div>
-<div class="answer"><p><b>A:</b> Darwinports と Fink は補間的なプロジェクトです。
+<div class="answer"><p><b>A:</b> Darwinports と Fink は補完的なプロジェクトです。
 両者は重なる部分があり、 Fink と OpenDarwin プロジェクトの両方に貢献している人もいま。
 例えば、 Benjamin Reed は双方の KDE パッケージを担当しています。
 Darwinports/OpenDarwin は Fink からのパッチを利用していて、両者は現在新しいディペンダンシー・エンジンの協働を検討しています。</p><p>
@@ -993,6 +995,48 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 			と <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a> をお読みください。
 		</p><p><b>注記:</b>Fink は、ビルドされたマシンに依存しないよう、全ての公式パッケージにはG5 最適化などのことはされません。このようなことをしたい場合、各自でする必要があります。</p></div>
 </a>
+    <a name="comp-general.gettext">
+      <div class="question"><p><b>Q6.23: 
+        	ソースからビルドするとき、 <tt style="white-space: nowrap;">gettext-dev</tt> と <tt style="white-space: nowrap;">libgettext3-dev</tt> の間でたらい回しです。
+        </b></p></div>
+      <div class="answer"><p><b>A:</b> 
+        	パッケージによっては、 <tt style="white-space: nowrap;">gettext</tt> ヘッダから <tt style="white-space: nowrap;">libgettext3-dev</tt>
+        	へと依存性が更新されました。
+        	この結果、Fink はビルド依存性を満たすためにインストールされていない方に変更しようとします。
+        	さらに、 <tt style="white-space: nowrap;">fink</tt> ツールが <tt style="white-space: nowrap;">gettext-dev</tt> を必須としているため、
+        	selfupdate 時には必ずインストールします。
+        </p><p>
+        	同様の問題は、他のパッケージペアでも発生しえます。
+        </p><p>
+        	ビルド依存性エンジンの制限のため、このようなパッケージが交互にインストールされ、
+        	不幸にもビルドが不完全で終わるかもしれません。この場合、<tt style="white-space: nowrap;">update</tt> コマンドを
+        	繰り返すことで先に進めるでしょう。
+        </p><p>この問題の解決は <tt style="white-space: nowrap;">fink-0.2.5</tt> で予定されています。</p></div>
+    </a>
+    <a name="comp-general.python-mods">
+      <div class="question"><p><b>Q6.24: Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</b></p></div>
+      <div class="answer"><p><b>A:</b> 以下のようであれば:</p><pre>running build
+running build_ext
+Traceback (most recent call last):
+  File "setup_socket_ssl.py", line 21, in ?
+    depends = ['socketmodule.h'] )
+  File "/sw/src/root-python24-2.4.1-1/sw/lib/python2.4/distutils/core.py", line 166, in setup
+SystemExit: error: $MACOSX_DEPLOYMENT_TARGET mismatch: now "10.4" but "10.3" during configure
+### execution of /sw/bin/python2.4 failed, exit code 1</pre><p>
+        	<tt style="white-space: nowrap;">python2*</tt> パッケージは、ビルド時に <tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET</tt> 
+        	をある設定ファイルに書き、Python ビルドユーティリティはモジュールをコンパイルする際に
+        	この値を使っています。
+        	これは、10.3 上でビルドした <tt style="white-space: nowrap;">python24</tt> を 10.4 上で使う場合、
+        	つまり 10.3 =&gt; 10.4 とアップグレードしたり、 <b>10.4-transitional</b> 
+        	バイナリディストリビューションを使ってビルドせずに更新した場合、
+        	Python は、実際は 10.4 のところ <tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET</tt> の
+        	値が 10.3 だと思い込むミスマッチが発生します。
+        </p><p>
+        <tt style="white-space: nowrap;">fink rebuild python24</tt> for the case above.
+        	上記の問題の場合であれば、<tt style="white-space: nowrap;">fink rebuild python24</tt> を実行し、
+        	<tt style="white-space: nowrap;">python</tt> パッケージを更新すれば修正されます。
+        </p></div>
+    </a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
 
 
@@ -1518,4 +1562,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.31 2005/06/27 13:22:34 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.32 2005/07/09 13:56:39 babayoshihiko Exp $</i></p></body></html>
