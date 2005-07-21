@@ -821,7 +821,8 @@ sub filterSplitOffs {
 		}
 
 		if($pkgobj->{parent}) {
-			my $parent = ref($pkgobj->{parent}) eq "HASH" ? $pkgobj->{parent}->get_name() : $pkgobj->get_parent()->get_name();
+			my $parent = $pkgobj->can("get_parent") ? $pkgobj->get_parent()->get_name() : $pkgobj->{parent}->get_name();
+
 			next if $got_families{$parent};
 			$got_families{$parent} = 1;
 			push @ret, $parent;
