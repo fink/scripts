@@ -891,8 +891,8 @@ versioned subdirectories of the standard perl directories, such as
 use the suffix <tt style="white-space: nowrap;">-pm560</tt> for
 a perl module of version 5.6.0.  Similar storage and naming conventions
 are in force for other versions of perl, which include 
-perl 5.6.1 (in the 10.2 trees only),  perl 5.8.0, perl 5.8.1, and
-perl 5.8.4 (coming soon).
+perl 5.6.1 (in the 10.2 trees only), perl 5.8.0 (in the 10.3 trees only),
+perl 5.8.1, perl 5.8.4, and perl 5.8.6.
 </p><p>
 The directive <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> automatically uses the
 versioned perl binary and stores the files in the correct subdirectories. 
@@ -1915,10 +1915,12 @@ LDFLAGS: -L%p/lib
 In addition, starting in fink 0.17.0:
 </p>
 <pre>
-LD_PREBIND: 1
+LD_PREBIND: 1 (for the 10.4-transitional distribution and earlier)
 LD_PREBIND_ALLOW_OVERLAP: 1
 LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
 </pre>
+<p>(Note: LD_PREBIND is set to 0 in the 10.4 distribution and later.)
+</p>
 <p>
 Finally, MACOSX_DEPLOYMENT_TARGET is set to a default value depending
 on which version of OSX is being run, but setting a value for it for 
@@ -2492,4 +2494,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.67 2005/06/29 20:04:07 vasi Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.71 2005/07/22 16:18:48 dmacks Exp $</i></p></body></html>
