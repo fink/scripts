@@ -924,6 +924,95 @@ command when applied to a <tt style="white-space: nowrap;">.deb</tt> file will c
 the fink package is an XS module which has been installed in a non-versioned 
 directory, and will issue a warning if so.
 </p>
+<p>
+Users may have more than one version of perl installed at a time, so
+any perl-versioned module packages must be written to allow more than
+one version of themselves to be installed concurrently. One must use
+care when installing manpages and binary or other script executables
+in these packages in order to prevent installation conflicts due to
+filename collisions. As a simple solution for manpages, starting in
+March 2005, Fink has defined alternate locations in MANPATH:
+<tt style="white-space: nowrap;">%p/lib/perl5/X.Y.Z/man</tt> for each perl-X.Y.Z. For
+example, to avoid conflicts between uri-pm581 and uri-pm586, the
+same-named <tt style="white-space: nowrap;">URI.3pm</tt> manpage is installed
+as <tt style="white-space: nowrap;">%p/lib/perl5/5.8.1/man/man3/URI.3pm</tt> and
+<tt style="white-space: nowrap;">%p/lib/perl5/5.8.6/man/man3/URI.3pm</tt>,
+respectively. Note that the default scripts provided by <tt style="white-space: nowrap;">Type:
+perl X.Y.Z</tt> have not changed, so you will have to locate the
+manpages here manually in your <tt style="white-space: nowrap;">InstallScript</tt>. If you
+don't have a highly customized script, you can still use the default
+one, and then simply move the files manually:
+</p>
+<pre>
+%{default_script}
+mv %i/share/man %i/lib/perl5/5.8.1
+</pre>
+<p>
+That will move all manpages. If you wish to move only one section of
+manpages (for example, only section 3, the module manpages, not script
+manpages in section 1), a similar approach works:
+</p>
+<pre>
+%{default_script}
+mkdir -p %i/lib/perl5/5.8.1/man
+mv %i/share/man/man3 %i/lib/perl5/5.8.1/man
+</pre>
+<p>
+If you have executables, for example, demo or utility scripts
+in <tt style="white-space: nowrap;">%p/bin</tt>, you have several options. One example
+is to put these files (and their associated manpages and/or other
+related files) in a %N-bin splitoff package. Use of
+<tt style="white-space: nowrap;">Conflicts</tt> and <tt style="white-space: nowrap;">Replaces</tt> fields ensures that
+installation of different perl-version forms of these packages, which
+contain files of the same name, is mutually excluve. The user can
+install many different perl-versions of the runtime modules, and then
+choose whichever one perl-version of the scripts he wants at a given
+time. For example, Tk.pm comes with an
+executable <tt style="white-space: nowrap;">ptksh</tt>, so the set of tk-pm* packages
+could be constructed as follows:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: tk-pm%type_pkg[perl]
+Type: perl (5.8.1 5.8.4 5.8.6)
+InstallScript: &lt;&lt;
+  %{default_script}
+  mkdir -p %i/lib/perl5/%type_raw[perl]/man
+  mv %i/share/man/man3 %i/lib/perl5/%type_raw[perl]/man
+&lt;&lt;
+SplitOff: &lt;&lt;
+  Package: %N-bin
+  Depends: %N
+  Conflicts: %{Ni}5.8.1, %{Ni}5.8.4, %{Ni}5.8.6
+  Replaces: %{Ni}5.8.1, %{Ni}5.8.4, %{Ni}5.8.6
+  Files: bin share/man/man1
+&lt;&lt;
+&lt;&lt;
+</pre>
+<p>
+An alternative arrangement is to rename the scripts and their manpages
+to include perl-version information. This method means there is no
+naming conflict at all, so one does not need the mutually-exclusive
+%N-bin splitoffs:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: tk-pm%type_pkg[perl]
+Type: perl (5.8.1 5.8.4 5.8.6)
+InstallScript: &lt;&lt;
+  %{default_script}
+  mkdir -p %i/lib/perl5/%type_raw[perl]/man
+  mv %i/share/man/man3 %i/lib/perl5/%type_raw[perl]/man
+  mv %i/bin/ptksh %i/bin/ptksh%type_raw[perl]
+  mv %i/share/man/man1/ptksh.1 %i/share/man/man1/ptksh%type_raw[perl].1
+&lt;&lt;
+&lt;&lt;
+</pre>
+<p>
+The user accesses ptksh for whichever perl she wants. For convenience,
+one could use <tt style="white-space: nowrap;">update-alternatives</tt> to allow users to be
+able to access these by their generic (no perl-version) names as well.
+</p>
 
 
 
@@ -2494,4 +2583,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.71 2005/07/22 16:18:48 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.72 2005/07/25 05:51:10 dmacks Exp $</i></p></body></html>
