@@ -930,9 +930,17 @@ any perl-versioned module packages must be written to allow more than
 one version of themselves to be installed concurrently. One must use
 care when installing manpages and binary or other script executables
 in these packages in order to prevent installation conflicts due to
-filename collisions. As a simple solution for manpages, starting in
+filename collisions. 
+You are not allowed to have any files in a package whose name ends
+with -pm<b>XYZ</b> that would have an identical pathname across
+different <b>XYZ</b>. Using <tt style="white-space: nowrap;">Replaces</tt> to allow the
+same-named files to overwrite each other in different perl-versions of
+these perl-module packages is no longer acceptable.
+As a simple solution for manpages, starting in
 March 2005, Fink has defined alternate locations in MANPATH:
-<tt style="white-space: nowrap;">%p/lib/perl5/X.Y.Z/man</tt> for each perl-X.Y.Z. For
+<tt style="white-space: nowrap;">%p/lib/perl5/X.Y.Z/man</tt> for each perl-X.Y.Z. You
+no longer need to create mutually-exclusive -man or -doc SplitOff
+packages. For
 example, to avoid conflicts between uri-pm581 and uri-pm586, the
 same-named <tt style="white-space: nowrap;">URI.3pm</tt> manpage is installed
 as <tt style="white-space: nowrap;">%p/lib/perl5/5.8.1/man/man3/URI.3pm</tt> and
@@ -1012,6 +1020,14 @@ InstallScript: &lt;&lt;
 The user accesses ptksh for whichever perl she wants. For convenience,
 one could use <tt style="white-space: nowrap;">update-alternatives</tt> to allow users to be
 able to access these by their generic (no perl-version) names as well.
+</p>
+<p>
+Also as of March 2005, the location of manpages and modules installed
+by fink packages for perl itself (packages perlXYZ and perlXYZ-core
+other than the perl-version provided by Apple) has changed. As a
+result of this relocation, other fink packages that supply updated
+versions of core perl modules should not list any perlXYZ or
+perlXYZ-core packages in the <tt style="white-space: nowrap;">Replaces</tt> field.
 </p>
 
 
@@ -2001,15 +2017,15 @@ CPPFLAGS: -I%p/include
 LDFLAGS: -L%p/lib
 </pre>
 <p>
-In addition, starting in fink 0.17.0:
+In addition, starting in fink 0.17.0, the following values are set for
+the 10.4-transitional distribution and earlier (but are not set for
+the 10.4 distribution and later):
 </p>
 <pre>
-LD_PREBIND: 1 (for the 10.4-transitional distribution and earlier)
+LD_PREBIND: 1
 LD_PREBIND_ALLOW_OVERLAP: 1
 LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
 </pre>
-<p>(Note: LD_PREBIND is set to 0 in the 10.4 distribution and later.)
-</p>
 <p>
 Finally, MACOSX_DEPLOYMENT_TARGET is set to a default value depending
 on which version of OSX is being run, but setting a value for it for 
@@ -2583,4 +2599,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.72 2005/07/25 05:51:10 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.74 2005/07/26 08:38:42 dmacks Exp $</i></p></body></html>
