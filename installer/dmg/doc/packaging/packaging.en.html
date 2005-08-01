@@ -73,7 +73,7 @@ files are in the dpkg format and have the extension .deb.
 A package is identified by three strings: the package name, the
 version and the revision.
 All of these may contain lower-case letters (a-z), numbers (0-9),
-dashes (-), plus signs (+) and dots (.).
+dashes (-; note: not allowed in the revision), plus signs (+) and dots (.).
 Other characters are not allowed.
 In particular, capital letters and underscores are not allowed.
 </p>
@@ -329,10 +329,10 @@ and %{Ni} to avoid confusion with the %n and %N expansions.
 </p>
 </td></tr><tr valign="top"><td>%{default_script}</td><td>
 <p>
-Valid only in <tt style="white-space: nowrap;">*Script</tt> fields, the default contents of
+Valid only in <tt style="white-space: nowrap;">PatchScript</tt>, <tt style="white-space: nowrap;">CompileScript</tt>, and <tt style="white-space: nowrap;">InstallScript</tt> fields, the default contents of
 that type of field. The value is often dependent on
 the <tt style="white-space: nowrap;">Type</tt> field, and is always defined (though it may be
-blank). When used in a <tt style="white-space: nowrap;">SplitOff: InstallScript</tt>, this
+blank). When used in the <tt style="white-space: nowrap;">InstallScript</tt> of a <tt style="white-space: nowrap;">SplitOff</tt> (or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>), this
 expansion will yield the <b>parent's</b> default, even though the
 default for <tt style="white-space: nowrap;">InstallScript</tt> in a <tt style="white-space: nowrap;">SplitOff</tt>
 package is blank. (Introduced in fink-0.20.6)
@@ -1396,7 +1396,7 @@ Required field.
   removing, or renaming splitoff packages or shifting files among
   them. When migrating a package to a new tree (from 10.2 to 10.3, for
   example) involves such changes, you should
-  increase <tt style="white-space: nowrap;">Revision</tt> by 10 in the newer tree in order to
+  increase <tt style="white-space: nowrap;">Revision</tt> by 10 (or some other large number) in the newer tree in order to
   leave space for future updates to the package in the older
   tree.
 </p>
@@ -1673,6 +1673,14 @@ fink.)
 <b>Note:</b> Fink itself currently ignores this field.
 However, it is passed on to dpkg and will be handled accordingly.
 In summary, it only effects run-time, not build-time.
+</p>
+</td></tr><tr valign="top"><td>BuildConflicts</td><td>
+<p>
+A list of packages that must not be installed while this package is
+being compiled. This can be used to prevent <tt style="white-space: nowrap;">./configure</tt>
+or the compiler from seeing undesired library headers or to avoid use
+of a version of a tool that is known to be broken (for example, a bug
+in a certain version of sed).
 </p>
 </td></tr><tr valign="top"><td>Replaces</td><td>
 <p>
@@ -2481,6 +2489,22 @@ that SplitOffs cannot themselves contain additional SplitOffs).</li>
 be modified by declaring the field within the <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>.</li>
 </ul>
 <p>
+Because %n-%v-%r is treated as the unique identifier of a package, you
+must not have the same <tt style="white-space: nowrap;">Package</tt> (at the
+same <tt style="white-space: nowrap;">Version</tt> and <tt style="white-space: nowrap;">Revision</tt>) listed as
+a <tt style="white-space: nowrap;">SplitOff</tt> (or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>) of
+multiple packages. If you use variants, remember that each variant is
+considered an independent package, so the following package layout is
+forbidden:
+</p>
+<pre>
+Package: mime-base64-pm%type_pkg[perl]
+Type: perl (5.8.1 5.8.6)
+SplitOff: %lt;%lt;
+  Package: mime-base64-pm-bin
+%lt;%lt;
+</pre>
+<p>
 During the install phase, the <tt style="white-space: nowrap;">InstallScript</tt> and 
 <tt style="white-space: nowrap;">DocFiles</tt> of the parent package are executed first.
 Next comes processing of the <tt style="white-space: nowrap;">SplitOff</tt> and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> fields. For each such field in turn, the <tt style="white-space: nowrap;">Files</tt> command causes the listed files and directories
@@ -2599,4 +2623,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.74 2005/07/26 08:38:42 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.78 2005/08/01 06:23:58 dmacks Exp $</i></p></body></html>
