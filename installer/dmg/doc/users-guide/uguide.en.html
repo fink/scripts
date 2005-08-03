@@ -944,12 +944,17 @@ manually.</p>
 	    <b>Buildpath:</b> path</p>
 	  <p>Fink needs to create several temporary directories for
 each package it compiles from source. By default, they are placed
-in <tt style="white-space: nowrap;">/sw/src</tt> but if you want them to be somewhere
-else, specify the path here. See the descriptions of
+in <tt style="white-space: nowrap;">/sw/src</tt> on Panther and earlier, and 
+<tt style="white-space: nowrap;">/sw/src/fink.build</tt> on Tiger. If you want them to be
+somewhere else, specify the path here. See the descriptions of
 the <tt style="white-space: nowrap;">KeepRootDir</tt> and <tt style="white-space: nowrap;">KeepBuildDir</tt> fields
 later in this document for more information about these temporary
 directories.
 	    </p>
+	    <p>On Tiger, it is recommended that the Buildpath end with .noindex
+or .build. Otherwise, Spotlight will attempt to index the temporary files in
+the Buildpath, slowing down builds.
+    	</p>
 	</li>
       </ul>
     
@@ -1095,7 +1100,7 @@ them. The following options fall into this category.</p>
         <li>
           <p>
             <b>KeepRootDir:</b> boolean</p>
-          <p>Causes Fink not to delete the /sw/src/root-[name]-[version]-[revision] directory
+          <p>Causes Fink not to delete the directory root-[name]-[version]-[revision] in the <b>Buildpath</b>
 after building a package. Defaults to false. <b>Be careful, this
 option can fill your hard-disk quickly!</b>
 Passing <b>fink</b> the <b>-K</b> flag has the same effect, but
@@ -1105,8 +1110,8 @@ only operates on that single <b>fink</b> invocation.
         <li>
           <p>
             <b>KeepBuildDir:</b> boolean</p>
-          <p>Causes Fink not to delete the /sw/src/[name]-[version]-[revision] directory after
-building a package. Defaults to false. <b>Be careful, this option can
+           <p>Causes Fink not to delete the directory [name]-[version]-[revision] in the <b>Buildpath</b>
+after building a package. Defaults to false. <b>Be careful, this
 fill your hard-disk quickly!</b>
 Passing <b>fink</b> the <b>-k</b> flag has the same effect, but
 only operates on that single <b>fink</b> invocation.

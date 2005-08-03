@@ -253,7 +253,7 @@ the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;"
 </td></tr><tr valign="top"><td>%d</td><td>
 <p>
 the <b>d</b>estination directory where the tree to be packaged is built, e.g.
-<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>. This temporary directory serves
+<tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1</tt>. This temporary directory serves
 as root during the installation phase of compiling a package. You must not assume that
 <tt style="white-space: nowrap;">root-%f</tt> will be in <tt style="white-space: nowrap;">%p/src</tt> since
 a user can change that directory using the <tt style="white-space: nowrap;">Buildpath</tt> field
@@ -279,7 +279,7 @@ the path where the p<b>a</b>tches can be found
 </p>
 </td></tr><tr valign="top"><td>%b</td><td>
 <p>
-the <b>b</b>uild directory, e.g. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>.
+the <b>b</b>uild directory, e.g. <tt style="white-space: nowrap;">/sw/src/fink.build/gimp-1.2.1-1/gimp-1.2.1</tt>.
 You must not assume that
 <tt style="white-space: nowrap;">%f</tt> will be in <tt style="white-space: nowrap;">%p/src</tt> since
 a user can change that directory using the <tt style="white-space: nowrap;">Buildpath</tt> field
@@ -1295,11 +1295,11 @@ and 10.3 versions of OS X, and 4.0 for the 10.4 version of OS X.  The
 build process Fink uses. It consists of five phases: unpack, patch,
 compile, install and build. The example paths below are for an
 installation in <tt style="white-space: nowrap;">/sw</tt> and the package gimp-1.2.1-1.</p>
-<p>In the <b>unpack phase</b> the directory <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1</tt> is created
+<p>In the <b>unpack phase</b> the directory <tt style="white-space: nowrap;">/sw/src/fink.build/gimp-1.2.1-1</tt> is created
 and the source tarball(s) are unpacked there. In most cases, this will
 create a directory gimp-1.2.1 with the source in it; all following
 steps will be executed in that directory
-(i.e. <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>). Details can be controlled with
+(i.e. <tt style="white-space: nowrap;">/sw/src/fink.build/gimp-1.2.1-1/gimp-1.2.1</tt>). Details can be controlled with
 the SourceDirectory, NoSourceDirectory and Source<b>N</b>ExtractDir
 fields.</p>
 <p>In the <b>patch phase</b> the source is patched so that it will
@@ -1311,9 +1311,9 @@ compiled. Usually this means calling the <tt style="white-space: nowrap;">config
 with some parameters and then issuing a <tt style="white-space: nowrap;">make</tt> command. See the
 CompileScript field description for details.</p>
 <p>In the <b>install phase</b> the package is installed to a temporary
-directory, <tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt> (= %d). (Note the "root-" part.)
+directory, <tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1</tt> (= %d). (Note the "root-" part.)
 All files that would normally be installed to <tt style="white-space: nowrap;">/sw</tt> are installed in
-<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1/sw</tt> (= %i = %d%p) instead. See the
+<tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1/sw</tt> (= %i = %d%p) instead. See the
 InstallScript field description for details.</p>
 <p>(<b>Introduced in fink 0.9.9.</b> It is possible to generate several
 packages from a single package description using the <tt style="white-space: nowrap;">SplitOff</tt>
