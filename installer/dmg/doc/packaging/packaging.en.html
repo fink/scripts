@@ -1534,12 +1534,22 @@ changes in package description files. A given version of fink is
 configured with the maximum integer "N" that it can handle. Any
 package in a higher InfoN field will be ignored, so this mechanism
 should only be used when necessary, lest people with older versions of
-fink be needlessly alienated. The documentation of other fields will
-note when a specific InfoN must be used. To use this mechanism, embed
+fink be needlessly alienated. To use this mechanism, embed
 the entire package description in the desired InfoN field. See the
 "File Format" section earlier in this document for a description of
 the syntax for multiline fields.
+Here are the features added for each InfoN level, along with the
+earliest version of fink that supports it:
 </p>
+<ul>
+<li>
+<tt style="white-space: nowrap;">Info2</tt> (fink&gt;=0.20.0): Ability to use percent-expansions
+in the main <tt style="white-space: nowrap;">Package</tt> field of the .info file and the
+ability to use the <tt style="white-space: nowrap;">%type_*</tt> percent-expansions in
+the <tt style="white-space: nowrap;">Package</tt> field of <tt style="white-space: nowrap;">SplitOff</tt>
+(and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>) packages.
+</li>
+</ul>
 </td></tr></table>
 <p><b>Dependencies:</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>Depends</td><td>
@@ -2626,4 +2636,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.79 2005/08/02 03:52:06 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.81 2005/08/08 01:24:37 dmacks Exp $</i></p></body></html>
