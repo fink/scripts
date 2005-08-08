@@ -13,7 +13,7 @@ English |
 </table>
 <h1 style="text-align: center;">Porting Unix software to Darwin and Mac OS X</h1>
 		<p>This document contains hints for porting Unix applications to Darwin and Mac OS X. Much of the information here applies to both Mac OS X version 10.x.x and "pure" Darwin systems. Both systems will be referred to as Darwin, since Mac OS X is actually a superset of Darwin.</p>
-	<h2>Contents</h2><ul><li><a href="#basics"><b>1 Basics</b></a><ul><li><a href="#basics.heritage">1.1 Where Darwin came from</a></li><li><a href="#basics.compiler">1.2 The Compiler and Tools</a></li><li><a href="#basics.host-type">1.3 Host type</a></li><li><a href="#basics.libraries">1.4 Libraries</a></li><li><a href="#basics.other-sources">1.5 Other sources of information</a></li></ul></li><li><a href="#shared"><b>2 Shared Code</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Shared Libraries vs. Loadable Modules</a></li><li><a href="#shared.version">2.2 Version Numbering</a></li><li><a href="#shared.cflags">2.3 Compiler Flags</a></li><li><a href="#shared.build-lib">2.4 Building a Shared Library</a></li><li><a href="#shared.build-mod">2.5 Building a Module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 The Situation</a></li><li><a href="#libtool.patch-135">3.2 The 1.3.5 Patch</a></li><li><a href="#libtool.fixing-14x">3.3 Fixing 1.4.x</a></li><li><a href="#libtool.notes">3.4 Further Notes</a></li></ul></li><li><a href="#preparing-10.2"><b>4 Preparing for 10.2</b></a><ul><li><a href="#preparing-10.2.bash">4.1 The bash shell</a></li><li><a href="#preparing-10.2.gcc3">4.2 The gcc3 compiler</a></li></ul></li><li><a href="#preparing-10.3"><b>5 Preparing for 10.3</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li><li><a href="#preparing-10.3.typedef">5.2 New symbol definitions</a></li><li><a href="#preparing-10.3.system-libs">5.3 New builtin system libraries</a></li></ul></li></ul><h2><a name="basics">1 Basics</a></h2>
+	<h2>Contents</h2><ul><li><a href="#basics"><b>1 Basics</b></a><ul><li><a href="#basics.heritage">1.1 Where Darwin came from</a></li><li><a href="#basics.compiler">1.2 The Compiler and Tools</a></li><li><a href="#basics.host-type">1.3 Host type</a></li><li><a href="#basics.libraries">1.4 Libraries</a></li><li><a href="#basics.other-sources">1.5 Other sources of information</a></li></ul></li><li><a href="#shared"><b>2 Shared Code</b></a><ul><li><a href="#shared.lib-and-mod">2.1 Shared Libraries vs. Loadable Modules</a></li><li><a href="#shared.version">2.2 Version Numbering</a></li><li><a href="#shared.cflags">2.3 Compiler Flags</a></li><li><a href="#shared.build-lib">2.4 Building a Shared Library</a></li><li><a href="#shared.build-mod">2.5 Building a Module</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 The Situation</a></li><li><a href="#libtool.patch-135">3.2 The 1.3.5 Patch</a></li><li><a href="#libtool.fixing-14x">3.3 Fixing 1.4.x</a></li><li><a href="#libtool.notes">3.4 Further Notes</a></li></ul></li><li><a href="#preparing-10.2"><b>4 Preparing for 10.2</b></a><ul><li><a href="#preparing-10.2.bash">4.1 The bash shell</a></li><li><a href="#preparing-10.2.gcc3">4.2 The gcc3 compiler</a></li></ul></li><li><a href="#preparing-10.3"><b>5 Preparing for 10.3</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li><li><a href="#preparing-10.3.typedef">5.2 New symbol definitions</a></li><li><a href="#preparing-10.3.system-libs">5.3 New builtin system libraries</a></li></ul></li><li><a href="#preparing-10.4"><b>6 Preparing for 10.4</b></a><ul><li><a href="#preparing-10.4.perl">6.1 Perl</a></li><li><a href="#preparing-10.4.typedef">6.2 New symbol definitions</a></li><li><a href="#preparing-10.4.system-libs">6.3 New builtin system libraries</a></li></ul></li></ul><h2><a name="basics">1 Basics</a></h2>
 		
 		
 
@@ -593,10 +593,49 @@ with gcc3 cannot link to libraries compiled with gcc2.</p>
 
 
 
+<h2><a name="preparing-10.4">6 Preparing for 10.4</a></h2>
+
+
+
+<h3><a name="preparing-10.4.perl">6.1 Perl</a></h3>
+
+  <p>
+    <tt style="white-space: nowrap;">/usr/bin/perl</tt> is now perl 5.8.6; the
+    architecture string is still "darwin-thread-multi-2level".
+  </p>
+
+
+
+<h3><a name="preparing-10.4.typedef">6.2 New symbol definitions</a></h3>
+
+  <p>
+    Mac OS X 10.4 has changed the types of many symbols. If you
+    previously set a type explicitly, for example,
+    defining <tt style="white-space: nowrap;">socklen_t</tt> as <tt style="white-space: nowrap;">int</tt>, that
+    definition may no longer be correct.
+  </p>
+
+
+
+<h3><a name="preparing-10.4.system-libs">6.3 New builtin system libraries</a></h3>
+
+  <p>
+    The <tt style="white-space: nowrap;">poll()</tt> function in Mac OS X 10.3 was actually an
+    emulation implemented using <tt style="white-space: nowrap;">select()</tt>. In Mac OS X
+    10.4, <tt style="white-space: nowrap;">poll()</tt> is a real function implemented in the
+    kernel, however it is broken when used with sockets. Consider
+    ignoring the system's <tt style="white-space: nowrap;">poll()</tt> completely. Fink's glib2
+    package has been patched to use a fully functional emulation, so
+    it is safe to use that library's implementation of poll-like
+    functions.
+  </p>
+
+
+
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: porting.en.xml,v 1.6 2005/03/16 18:49:05 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: porting.en.xml,v 1.7 2005/08/08 02:59:00 dmacks Exp $</i></p></body></html>
