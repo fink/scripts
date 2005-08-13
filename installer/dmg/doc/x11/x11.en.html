@@ -694,7 +694,7 @@ their menus work.
 <tt style="white-space: nowrap;">exec</tt> before the last line like in the examples below.)
 </p>
       <p>
-A simple example that starts up GNOME:
+A simple example that starts up GNOME on XFree86 or Xorg:
 </p>
       <pre>. /sw/bin/init.sh
 exec gnome-session</pre>
@@ -708,13 +708,8 @@ xterm &amp;
 xterm &amp;
 
 exec enlightenment</pre>
-      <p>To start GNOME 2.2 under Apple's X11, use the following sequence:</p>
-      <pre>. /sw/bin/init.sh
-quartz-wm --only-proxy &amp;
-metacity &amp;
-exec gnome-session
-</pre>
-      <p>To start GNOME 2.4 under Apple's X11, metacity is started up automatically, so the sequence is:</p>
+ 
+      <p>To start GNOME 2.4 and later under Apple's X11:</p>
       <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 exec gnome-session
@@ -1266,4 +1261,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: x11.en.xml,v 1.17 2005/06/10 01:04:10 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: x11.en.xml,v 1.18 2005/08/13 15:00:55 alexkhansen Exp $</i></p></body></html>
