@@ -795,7 +795,14 @@ sub findFailedDep {
 
 # Rescan the .info files and rebuild the package database
 sub scanPackages {
-	Fink::Package->forget_packages(2, 0);
+	eval {
+		Fink::Package->forget_packages(2, 0);
+	};
+	if($@ and $@ =~ /new API for forget_packages/) {
+		Fink::Package->forget_packages({disk => 1});
+	} elsif($@) {
+		die $@;
+	}
 	Fink::Package->require_packages();
 }
 
