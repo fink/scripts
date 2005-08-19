@@ -267,6 +267,9 @@ sub patchPackages {
 		if($@) {
 			doLog("Couldn't get version for $pkgname: $@");
 			next;
+		} elsif(!$pkg) {
+			doLog("Couldn't get package for $pkgname");
+			next;
 		}
 		next if $pkg->is_type('dummy');
 
