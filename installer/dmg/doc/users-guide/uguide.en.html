@@ -77,7 +77,7 @@ also need:
           <p>
 Developer tools.  
 On Mac OS X, install the Developer.pkg package from the Developer
-Tools CD.
+Tools (known as XCode for 10.3 and 10.4) CD (they're on the main DVD for OS 10.4), or <a href="http://connect.apple.com">download</a> the latest version--this is often desirable, as later versions frequently fix issues (though admittedly sometimes they break things).    
 Note that the tools must match your Mac OS X version.
 On Darwin, the tools should be present in the default install.
 </p>
@@ -276,12 +276,11 @@ In most cases, you can do this by entering the command
       </p>
       <pre>/sw/bin/pathsetup.sh</pre>
       <p>
-	in a terminal window. Note that for some older versions of
-	fink called this <tt style="white-space: nowrap;">pathsetup.command</tt>, and one could
-	run it by entering the command:
-      </p>
-      <pre>open /sw/bin/pathsetup.command</pre>
-      <p>However, if that doesn't work for some reason, you can configure it
+	in a terminal window. </p>
+      <p>Note that for some older versions of
+	fink the program was called  <tt style="white-space: nowrap;">pathsetup.command</tt>, and one could
+	run it via <tt style="white-space: nowrap;">open /sw/bin/pathsetup.command</tt>.      </p>
+      <p>However, if this doesn't work for some reason, you can configure it
 manually.  This will depend on the shell you are using, however.
 You can determine the shell you are using by opening a terminal and
 running the command:
@@ -371,7 +370,7 @@ pico .cshrc</pre>
         </li>
       </ul>
       <p>
-Note that the scripts also add <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> and
+Note that the <tt style="white-space: nowrap;">init.sh</tt>and <tt style="white-space: nowrap;">init.csh</tt> scripts also add <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> and
 <tt style="white-space: nowrap;">/usr/X11R6/man</tt> to your PATH so you can use X11 when
 it is installed.
 Fink packages have the ability to add settings of their own, e.g. the
@@ -537,7 +536,7 @@ The <tt style="white-space: nowrap;">fink</tt> tool will allow you to install pa
 available in the <a href="#intro.src-vs-bin">binary
 distribution</a>.
       </p>
-      <p>First of all, you'll need an appropriate version of the Development Tools for your system.  These are available for free download after registration at <a href="http://connect.apple.com">http://connect.apple.com</a>.</p>
+      <p>First of all, you'll need an appropriate version of the Developer Tools for your system.  The latest version is available for free download after registration at <a href="http://connect.apple.com">http://connect.apple.com</a>.  </p>
       <p>
 To get a list of packages that are available for installation from
 source, ask the <tt style="white-space: nowrap;">fink</tt> tool:
@@ -597,30 +596,40 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
       
       <p>When you want to install a package, you should first check the <a href="http://fink.sourceforge.net/pdb/index.php">package database</a> and see if it is available at all through Fink.  The available version(s) of the package will be shown in several rows of a table.  These are:</p>
       <ul>
-        <li>
-          <p>
-            <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p>
+        <li>Binary Distribution
+<ol>
+            <li><p>
+            <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p></li>
+            <li><p><b>0.6.4:</b>  this is the version that can be installed from binaries for OS 10.2.</p></li>
+            <li><p><b>0.7.2</b>
+  This is the base version that can be installed from binaries for OS 10.3.  If you <a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php?phpLang=en#bin">update</a> Fink, later versions of some packages may be available.</p> 
         </li>
-        <li><b>0.6.3:</b>  this is the version that can be installed from binaries for OS 10.2.</li>
-        <li>
-          <p>
-<b>0.8.0:</b>  This is the base version that can be installed from binaries for OS 10.3, under the current Fink release.  If you <a href="#upgrade">upgrade</a> Fink, there may be an OS-specific newer version that isn't shown here.</p> 
+            <li><p><b>0.8.0:</b>  This is the base version that can be installed from binaries for OS 10.4.  If you <a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php?phpLang=en#bin">update</a> Fink, later versions of some packages may be available.
+</p></li>
+          </ol>
+          
         </li>
-        <li>
+      </ul>
+      <ul>
+        <li>CVS/rsync Distributions
+<ol>
+            <li>
           <p>
-            <b>current-10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
+            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from the stable source tree for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
           <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS or rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
 </p>
         </li>
-        <li><p><b>current-10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS or rsync access may be needed to access this version.</p>
-</li>
-        <li>
+            <li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.3.</p></li>
+            <li><p><b>10.4-transitional stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4.</p></li>
+            <li>
           <p>
-            <b>current-10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
+            <b>10.2-gcc3.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
           <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
 </p>
         </li>
-        <li><b>current-10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
+            <li><p><b>10.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.3.</p></li>
+            <li><p><b>10.4-transitional unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.4.</p></li>
+          </ol></li>
       </ul>
     
     <h3><a name="packages.x11">3.7 Getting X11 Sorted Out</a></h3>
@@ -1555,4 +1564,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.33 2005/08/13 15:49:18 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.34 2005/08/23 01:23:11 alexkhansen Exp $</i></p></body></html>
