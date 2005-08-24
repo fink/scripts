@@ -378,7 +378,8 @@ fink selfupdate-cvs</pre></div>
         script <tt style="white-space: nowrap;">pathsetup.command</tt> instead
         of <tt style="white-space: nowrap;">pathsetup.sh</tt>. Alternately, you can run
         the <tt style="white-space: nowrap;">pathsetup.app</tt> application on the Fink
-        binary distribution disk image.</p><p>另一方面，如果你只在苹果的 X11 终端中碰到这个问题，这也许意味着你需要创建一个 <a href="http://fink.sourceforge.net/doc/x11/run-xfree86.php#xinitrc">.xinitrc</a> 文件并在靠近文件开头的地方（就是说，在运行任何程序以前）添加一行：</p><pre>. /sw/bin/init.sh</pre><p>在做完以后，重新运行 X11。</p><p>These <tt style="white-space: nowrap;">/sw/bin/init.*</tt> scripts do much
+        binary distribution disk image.</p><p>On the other hand, if you only have problems in the Apple X11
+        terminal, the easy solution is to modify the "Terminal" entry in the X11 Application menu via the <b>Applications-&gt;Customize Menu... </b>option.  Instead of just</p><pre>xterm</pre><p>change the command field to read</p><pre>xterm -ls</pre><p><tt style="white-space: nowrap;">ls</tt> here means <q>login shell</q>, and the result is that your full login setup gets used (just like the OS X Terminal).</p><p>These <tt style="white-space: nowrap;">/sw/bin/init.*</tt> scripts do much
 		more than just add <tt style="white-space: nowrap;">/sw/bin</tt> to your PATH.
 		Many packages will not work correctly without these additional
 		actions.</p></div>
@@ -551,6 +552,7 @@ deb http://bindist.finkmirrors.net/bindist 10.3/release main crypto
 # Official binary distribution: download location for updated
 # packages built between releases
 deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
+<p>(The above of course assumes you're on 10.3.  If you're on a different OS replace <tt style="white-space: nowrap;">10.3</tt> with what your current distribution is.</p>
             <p>Then save your work and quit the editor.  Now update your binary package list again.</p>
           </li>
         </ul></div>
@@ -762,7 +764,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.gettext">
       <div class="question"><p><b>Q6.23: Whenever I try to build from source, Fink keeps waffling between <tt style="white-space: nowrap;">gettext-dev</tt> and <tt style="white-space: nowrap;">libgettext3-dev</tt>.</b></p></div>
-      <div class="answer"><p><b>A:</b> Some packages that need <tt style="white-space: nowrap;">gettext</tt> headers to build have been updated to use <tt style="white-space: nowrap;">libgettext3-dev</tt> and some still use <tt style="white-space: nowrap;">gettext-dev</tt>.  Consequently, Fink may try to switch to whichever one isn't currently installed in order to satisfy a build dependency for some package that you're trying to update.  In addition, the <tt style="white-space: nowrap;">fink </tt>tool treats <tt style="white-space: nowrap;">gettext-dev</tt> as essential, and will install it any time you selfupdate.</p><p>Similar behavior can happen for other pairs of packages, too. </p><p>Unfortunately, due to limitations in the build-dependency engine, you may find that your build bombs because you've swapped in one of these but some later package in your build chain wants the other one.  You can proceed by repeating your update command again.</p><p>A permanent fix should hopefully be available in <tt style="white-space: nowrap;">fink-0.2.5</tt>.</p></div>
+      <div class="answer"><p><b>A:</b> Some packages that need <tt style="white-space: nowrap;">gettext</tt> headers to build have been updated to use <tt style="white-space: nowrap;">libgettext3-dev</tt> and some still use <tt style="white-space: nowrap;">gettext-dev</tt>.  Consequently, Fink may try to switch to whichever one isn't currently installed in order to satisfy a build dependency for some package that you're trying to update.  In addition, the <tt style="white-space: nowrap;">fink </tt>tool treats <tt style="white-space: nowrap;">gettext-dev</tt> as essential, and will install it any time you selfupdate.</p><p>Similar behavior can happen for other pairs of packages, too. </p><p>Unfortunately, due to limitations in the build-dependency engine, you may find that your build bombs because you've swapped in one of these but some later package in your build chain wants the other one.  You can proceed by repeating your update command again.</p><p>In extreme cases you may wind up having to install those packages which build-depend on <tt style="white-space: nowrap;">gettext-dev</tt> separately from those which want <tt style="white-space: nowrap;">libgettext3-dev</tt> (or whichever pair are causing problems).  You may even have to install packages one by one.</p><p>A permanent fix should hopefully be available in <tt style="white-space: nowrap;">fink-0.2.5</tt>.</p></div>
     </a>
     <a name="comp-general.python-mods">
       <div class="question"><p><b>Q6.24: I get errors involving <tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt>when I try to build a Python module.</b></p></div>
@@ -1068,8 +1070,9 @@ sudo apt-get install fink</pre>
           </li>
           <li>
             <b>You are installing from source:</b>
-	    <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt>, then typically this error means that you need to (re)install the X11SDK, which is <b>mandatory</b> if you want to build packages from source. It is on the Xcode CD, and is <b>not</b> installed by default. Even if you install XCode, the X11SDK is <b>not</b> installed by default. It has to be installed either with a custom Xcode install, or by clicking on the X11SDK pkg in the <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.</p>
-	    <p>If you are still having problems, run </p>
+	        <p>If you have a current version of <tt style="white-space: nowrap;">fink</tt>, then typically this error means that you need to (re)install the X11SDK, which is <b>mandatory</b> if you want to build packages from source. It is on the Panther Xcode CD or in the XCode Tools folder of a TIger DVD, and is <b>not</b> installed by default when you install XCode on Panther--it has to be installed either with a custom Xcode install, or by clicking on the <tt style="white-space: nowrap;">X11SDK pkg</tt> icon in the <tt style="white-space: nowrap;">Packages</tt> folder of the XCode CD.  It <b> is</b>, on the other hand, installed by default when you install Xcode on Tiger (even if X11User isn't present), but it's still possible for the Installer program to miss a file.  </p>
+	        <p>If your computer didn't come with XCode media, then a disk image for it, containing <tt style="white-space: nowrap;">X11SDK.pkg</tt> among other things, is quite likely present on your computer somewhere--check for a directory like <tt style="white-space: nowrap;"> /Applications/Installers </tt> for an XCode disk image.  <tt style="white-space: nowrap;">X11User.pkg</tt> may be present in that directory as well. </p>
+	        <p>If you are still having problems, run </p>
             <pre>fink list -i system-xfree86  </pre>
             <p>It should show the <tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt> packages as installed.  If the <tt style="white-space: nowrap;">-dev</tt> package is missing, reinstall the X11SDK, since sometimes the Apple Installer misses a file.  You may need to keep doing this.  If either of the other two are missing, then reinstall the X11User package (same reason).</p>
             <p>
@@ -1113,7 +1116,8 @@ fink selfupdate; fink index</pre><p>(the first line may give you warnings about 
     <a name="usage-packages.tiger-gtk">
       <div class="question"><p><b>Q9.14: After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</b></p></div>
       <div class="answer"><p><b>A:</b> This is caused by an apparent bug in Tiger's dynamic linker (current as of 10.4.1).  You can work around this via prefixing the the name of you want as follows:
-</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p></div>
+</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p><p>You may find it preferable to set this globally (e.g. in your startup script, and/or in your <tt style="white-space: nowrap;">.xinitrc</tt> , which you may need to do to run GNOME).  Put</p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>in your <tt style="white-space: nowrap;">.xinitrc</tt> (regardless of your login shell) or your <tt style="white-space: nowrap;">.profile</tt> (or other startup script) for <b>bash</b> users and:</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>is the corresponding command to use in e.g. your <tt style="white-space: nowrap;">.cshrc</tt> file for <b>tcsh</b> users.</p><p>This will automatically be set if you install 
+<tt style="white-space: nowrap;">base-files-1.9.7-1</tt> or later.</p></div>
     </a>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
@@ -1122,4 +1126,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.zh.xml,v 1.18 2005/07/09 13:56:39 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.zh.xml,v 1.19 2005/08/24 00:51:50 babayoshihiko Exp $</i></p></body></html>

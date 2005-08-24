@@ -477,12 +477,11 @@ Fink が自動的にここを探しにいきます。
 このプログラムは、デフォルトシェルを判定し、シェルの設定に Fink のシェル初期化スクリプトを読み込むコマンドを追加します。
 <b>注記:</b> 古いバージョンの fink では、スクリプト名が <tt style="white-space: nowrap;">/sw/bin/pathsetup.sh</tt> ではなく <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt> となっていることがあります。
 あるいは、 Fink バイナリディストリビューションのディスクイメージ内にある <tt style="white-space: nowrap;">pathsetup.app</tt> を実行する方法もあります。
-</p><p>このエラーが Apple X11 ターミナルでのみ出る場合，
-<a href="http://fink.sourceforge.net/doc/x11/run-xfree86.php#xinitrc%20">.xinitrc</a> 
-というファイルを作成し、</p><pre>. /sw/bin/init.sh</pre><p>の一行を最初の方
-(他のプログラムが実行される前)
-に追加します。
-X11 が立ち上がっている場合、 X11 を再起動します。</p><pre>source ~/.cshrc</pre></div>
+</p><p>
+Apple X11 terminal でのみこの問題が発生するのであれば、
+簡単な解決方法は X11　アプリケーションメニューの"ターミナル"を、<b>アプリケーション-&gt;メニューをカスタマイズ...</b>から変更します。
+</p><pre>xterm</pre><p>cコマンドの欄を</p><pre>xterm -ls</pre><p>とします。ここで<tt style="white-space: nowrap;">ls</tt> は <q>login shell</q> を意味し、ログインセットアップが (OS X ターミナルと同様に) 使用されることになります。</p><p><tt style="white-space: nowrap;">/sw/bin/init.*</tt> スクリプトは、<tt style="white-space: nowrap;">/sw/bin</tt> をパスに追加する以外にも様々なことをしています。
+	多くのパッケージは、この追加処理がなくては正常に動作しません。</p><pre>source ~/.cshrc</pre></div>
 </a>
 <a name="usage-fink.invisible-sw">
 <div class="question"><p><b>Q5.16: Finder で /sw を隠して、ユーザーが Fink の構成を壊すのを防ぎたい。</b></p></div>
@@ -714,6 +713,7 @@ deb http://bindist.finkmirrors.net/bindist 10.3/release main crypto
 # Official binary distribution: download location for updated
 # packages built between releases
 deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
+<p>(上記は 10.3 を想定しています。 <tt style="white-space: nowrap;">10.3</tt> を、現在しよう中有のディストリビューションに変えて使用してください。</p>
             <p>
               とし、保存してエディタを終了します。
               この後、バイナリパッケージリストを更新してください。
@@ -1011,7 +1011,11 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
         	ビルド依存性エンジンの制限のため、このようなパッケージが交互にインストールされ、
         	不幸にもビルドが不完全で終わるかもしれません。この場合、<tt style="white-space: nowrap;">update</tt> コマンドを
         	繰り返すことで先に進めるでしょう。
-        </p><p>この問題の解決は <tt style="white-space: nowrap;">fink-0.2.5</tt> で予定されています。</p></div>
+        </p><p>
+			極端な状況では、<tt style="white-space: nowrap;">libgettext3-dev</tt> に依存するものと別に、<tt style="white-space: nowrap;">gettext-dev</tt> 
+			(など、問題を起こしているペア) にビルド依存するパッケージをインストールする必要があります。
+			パッケージを一つずつインストールする必要があるかもしれません。
+		</p><p>この問題の解決は <tt style="white-space: nowrap;">fink-0.2.5</tt> で予定されています。</p></div>
     </a>
     <a name="comp-general.python-mods">
       <div class="question"><p><b>Q6.24: Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</b></p></div>
@@ -1457,7 +1461,15 @@ sudo apt-get install fink</pre>
 		これは、パッケージをソースからビルドする際に必須です。
 		X11SDK は Xcode CD にありますが、XCode をインストールしても、デフォルトではインストール<b>されません</b>。
 		インストール時にカスタムを選択してパッケージを選択するか、
-		XCode の CD 内の <tt style="white-space: nowrap;">Packages</tt> フォルダから X11SDK pkg をダブルクリックします。
+		Panther の XCode CD または Tiger DVD の XCode Tools フォルダ内にあります。
+		Panther では、デフォルトではインストールされませんので、カスタムインストールを選択するか、
+		<tt style="white-space: nowrap;">Packages</tt> フォルダ内の <tt style="white-space: nowrap;">X11SDK pkg</tt> アイコンをダブルクリックします。
+		Tiger では、 (たとえ X11User がなくても) デフォルトでインストール<b>されます</b>が、一部のファイルがインストールされないことがあります。
+		</p>
+		<p>
+		XCode ディスクが付随されていないコンピュータの場合、<tt style="white-space: nowrap;">X11SDK.pkg</tt> を含むディスクイメージがある場合があります。
+		<tt style="white-space: nowrap;"> /Applications/Installers </tt> などのディレクトリを探してください。
+		<tt style="white-space: nowrap;">X11User.pkg</tt> も同じディレクトリにある場合があります。
 		</p>
 		<p>
 		これでも問題がある場合、
@@ -1554,7 +1566,10 @@ fink selfupdate; fink index</pre><p>
         	以下のようにコマンド名の前に追加することで、とりあえず起動させることができます:
 		</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>例えば、 <tt style="white-space: nowrap;">gnucash</tt> の場合</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>
         	この方法は、Apple X11 のアプリケーションメニューからでも、ターミナルからでも有効です。
-        </p></div>
+        </p><p>
+        	これをグローバルに設定する (スタートアップスクリプトと <tt style="white-space: nowrap;">.xinitrc</tt>、GNOME を使う場合には必須) のも良いでしょう。
+        	(ログインシェルに関わらず) <tt style="white-space: nowrap;">.xinitrc</tt> と、 <b>bash</b> ユーザーは <tt style="white-space: nowrap;">.profile</tt> (または他のスタートアップスクリプト) に、
+        </p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>と記述し、<b>tcsh</b> ユーザーは、同様に <tt style="white-space: nowrap;">.cshrc</tt> (または他のスタートアップスクリプト) に、</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>と記述します。</p><p>これは <tt style="white-space: nowrap;">base-files-1.9.7-1</tt> 以降では自動的に追加されます。</p></div>
     </a>
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
@@ -1562,4 +1577,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.32 2005/07/09 13:56:39 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.33 2005/08/24 00:51:50 babayoshihiko Exp $</i></p></body></html>
