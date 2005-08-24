@@ -637,49 +637,35 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
       <p>Many of the packages that are available via Fink require the installation of some form of X11.  Because of this, one of the first things that is typically done is to choose an X11 implementation.</p>
       <p>
 Since there are several X11 implementations available for Mac OS X
-(XFree86, Tenon Xtools, eXodus) and several ways to install them
+(Apple's X11, XFree86, X.org) and several ways to install them
 (manually or via Fink), there are several alternative packages - one
-for each setup.
-Fink is very bad at guessing what you have, so it's important to pick
-the right one and install it before you start installing X11
-applications.
-Here is a list of the available packages and X11 installation methods:
+for each setup. 
+Here is a list of the available X11 packages and installation methods:
 </p>
       <ul>
         <li>
           <p>
-            <b>xfree86-base:</b>
-(10.1 or 10.2 only) This package is the real thing.
-It installs the whole load of XFree86 4.2.1.1 as a Fink package.
-For maximum flexibility, this package does not contain the actual
-XDarwin server.
-To get that, you should install the xfree86-rootless package.
+            <b>xfree86, xfree86-shlibs:</b>
+Install both of these packages for XFree86 4.3.0 (OS 10.2 only), 4.4.0 (10.2 or 10.3), or 4.5.0 (10.3 or 10.4).  
+</p>
+        </li>
+        <li><p><b>xorg, xorg-shlibs</b>(10.3 or 10.4)  Install these packages to get the 6.8.2 release of the X.org X11 distribution.</p></li>
+        <li>
+          <p>
+<b>system-xfree86 + -shlibs, -dev:</b>
+These packages are automatically generated (for Fink 0.6.2 or later) if you install Apple's X11, or manually installed XFree86 or X.org.  
+They will then act as
+dependency placeholders.
 </p>
         </li>
         <li>
           <p>
-            <b>xfree86:</b>
-This is a single package (display server is included) that installs XFree86 4.3.0 (10.2 only), or 4.3.99 (10.3 only).   .
-This version is faster than 4.2.1.1, but hasn't been tested quite as much.
+            <b>xfree86-base, xfree86-rootless [-threaded] + -shlibs, -dev</b>
+(10.1 or 10.2 only) These packages install all of XFree86 4.2.1.1 (4.2.0 on 10.1).  The <tt style="white-space: nowrap;">-threaded</tt> variant was provided for applications that required it, and this functionality is standard in later XFree86 versions.  The <tt style="white-space: nowrap;">-rootless</tt> packages include the XDarwin display server--the name is historical.
+</p><p>You must install all six packages to build X11-based packages from source.
 </p>
         </li>
-        <li>
-          <p>
-system-xfree86:
-This package is automatically generated (for Fink 0.6.2 or later) if you install XFree86 manually, either from
-source or from the official (or unofficial) binary distribution; or if you install Apple's X11.
-It will then act as a
-dependency placeholder.
-</p>
-        </li>
-        <li>
-          <p>
-system-xtools:
-Install this package if you have Tenon's Xtools product installed.
-Like system-xfree86, this will just do a sanity check and leave the
-actual files alone.
-</p>
-        </li>
+        
       </ul>
       <p>
 For more information on installing and running X11, refer to the
@@ -1564,4 +1550,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.34 2005/08/23 01:23:11 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.35 2005/08/24 01:00:48 alexkhansen Exp $</i></p></body></html>
