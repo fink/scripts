@@ -80,7 +80,7 @@ English |
         XDarwin.</a></li><li><a href="#usage-packages.gnome-two">9.9 I upgraded from GNOME 1.x to GNOME 2.x and now
         <tt style="white-space: nowrap;">gnome-session</tt> won't open a window manager.</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 I upgraded to Apple's X11 in Panther and now my window title bars
         are missing.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 I installed Apple's X11 but Fink keeps asking to install
-        XFree86 or X.org.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86 or X.org.</a></li><li><a href="#usage-packages.special-x11-debug">9.13 I'm still having problems with X11 and Fink.</a></li><li><a href="#usage-packages.tiger-gtk">9.14 After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
+        XFree86 or X.org.</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 I switched from the 10.2 Fink version to 10.2-gcc3.3 or 10.3, I have Apple's X11, and Fink asks me to install XFree86 or X.org.</a></li><li><a href="#usage-packages.special-x11-debug">9.13 I'm still having problems with X11 and Fink.</a></li><li><a href="#usage-packages.tiger-gtk">9.14 After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</a></li><li><a href="#usage-packages.yelp">9.15 I can't get the help to work for any GNOME application.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
     
     
     <a name="general.what">
@@ -1482,10 +1482,14 @@ fink selfupdate; fink index</pre><p>(the first line may give you warnings about 
 </p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p><p>You may find it preferable to set this globally (e.g. in your startup script, and/or in your <tt style="white-space: nowrap;">.xinitrc</tt> , which you may need to do to run GNOME).  Put</p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>in your <tt style="white-space: nowrap;">.xinitrc</tt> (regardless of your login shell) or your <tt style="white-space: nowrap;">.profile</tt> (or other startup script) for <b>bash</b> users and:</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>is the corresponding command to use in e.g. your <tt style="white-space: nowrap;">.cshrc</tt> file for <b>tcsh</b> users.</p><p>This will automatically be set if you install 
 <tt style="white-space: nowrap;">base-files-1.9.7-1</tt> or later.</p></div>
     </a>
+    <a name="usage-packages.yelp">
+    	<div class="question"><p><b>Q9.15: I can't get the help to work for any GNOME application.</b></p></div>
+	<div class="answer"><p><b>A:</b> You need to install the <tt style="white-space: nowrap;">yelp</tt> package.  This package was not placed within the GNOME bundle because it uses cryptography, and it was decided not to place all of GNOME in the crypto tree just to use the help system.</p></div>
+    </a>
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2005 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.57 2005/08/15 21:03:45 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.58 2005/09/06 01:28:56 alexkhansen Exp $</i></p></body></html>
