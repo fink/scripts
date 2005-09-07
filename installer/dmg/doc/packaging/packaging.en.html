@@ -2094,14 +2094,20 @@ you are currently using.)
 The allowed values are:
 <tt style="white-space: nowrap;">2.95.2</tt> (or <tt style="white-space: nowrap;">2.95</tt>),
  <tt style="white-space: nowrap;">3.1</tt>,
-and <tt style="white-space: nowrap;">3.3</tt>.
-This last is expected to be the GCC-ABI for gcc 3.3 and all subsequent
-versions of gcc.
-The default values for the various package trees are:
-<tt style="white-space: nowrap;">2.95</tt> in the 10.1 tree, <tt style="white-space: nowrap;">3.1</tt> in the 10.2 tree,
-and <tt style="white-space: nowrap;">3.3</tt> in the 10.2-gcc3.3, 10.3, and all subsequent trees.
+ <tt style="white-space: nowrap;">3.3</tt>,
+and <tt style="white-space: nowrap;">4.0</tt>.
+Our understanding is that the GCC authors intend to stabilize the GCC-ABI
+at some point; we can hope that it won't change again.
 </p><p>
-Note that when the GCC value is different from the default, the compiler
+The GCC field does not have a default value, per se, since it is ignored
+if it is not set.  However, for each tree, there is an expected value
+for GCC corresponding to the default g++ compiler for that tree.
+The expected values for the various package trees are:
+<tt style="white-space: nowrap;">2.95</tt> in the 10.1 tree, <tt style="white-space: nowrap;">3.1</tt> in the 10.2 tree,
+ <tt style="white-space: nowrap;">3.3</tt> in the 10.2-gcc3.3, 10.3, and 10.4-transitional
+trees, and <tt style="white-space: nowrap;">4.0</tt> in the (upcoming) 10.4 tree.
+</p><p>
+Note that when the GCC value is different from the expected value, the compiler
 must be specified within the package (typically by setting the CC or CXX
 flags), and a dependency on one of the (virtual) gcc packages should be
 specified.
@@ -2636,4 +2642,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.81 2005/08/08 01:24:37 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.82 2005/09/07 04:27:10 dmrrsn Exp $</i></p></body></html>
