@@ -58,7 +58,7 @@ Available Languages:  |
 			<p>
 				パッケージは3つの文字列で区別されます．
 				すなわち「パッケージ名」，「バージョン」と「版」です．
-				これらのいずれにも英小文字 (a から z)，数字 (0 から 9)， ダッシュ (-)，プラス (+)，ドット (.) のみが使えます．
+				これらのいずれにも英小文字 (a から z)，数字 (0 から 9)， ダッシュ (-; 註: リビジョン中には使えません)，プラス (+)，ドット (.) のみが使えます．
 				この他の字は使えません．
 				特に，大文字と下線 (_) が使えないことに注意して下さい．
 			</p>
@@ -220,7 +220,7 @@ SplitOff: &lt;&lt;
 					</td></tr><tr valign="top"><td>%d</td><td>
 						<p>
 							<b>d</b>estination．パッケージ化するツリーのビルド先．
-							例:<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt>
+							例:<tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1</tt>
 							この一時ディレクトリはパッケージをコンパイルする際のインストール段階でルートディレクトリの役を果たす．
 							<tt style="white-space: nowrap;">root-%f</tt> が <tt style="white-space: nowrap;">%p/src</tt> の中にあることを当てにしてはいけない．
 							ユーザが設定ファイル <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> でフィールド <tt style="white-space: nowrap;">Buildpath</tt>
@@ -249,7 +249,7 @@ SplitOff: &lt;&lt;
 					</td></tr><tr valign="top"><td>%b</td><td>
 						<p>
 							<b>b</b>uild．
-							ビルドディレクトリ．例: <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>
+							ビルドディレクトリ．例: <tt style="white-space: nowrap;">/sw/src/fink.build/gimp-1.2.1-1/gimp-1.2.1</tt>
 							<tt style="white-space: nowrap;">%f</tt> が <tt style="white-space: nowrap;">%p/src</tt> の中にあることを当てにしてはいけない．
 							ユーザが設定ファイル <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> でフィールド <tt style="white-space: nowrap;">Buildpath</tt>
 							を指定すればこの場所は変わってしまう．
@@ -297,10 +297,10 @@ SplitOff: &lt;&lt;
 						</p>
 					</td></tr><tr valign="top"><td>%{default_script}</td><td>
 						<p>
-							<tt style="white-space: nowrap;">*Script</tt> フィールドでのみ有効．
-							<tt style="white-space: nowrap;">*Script</tt> フィールドでのデフォルトフィールド．
+							<tt style="white-space: nowrap;">PatchScript</tt>, <tt style="white-space: nowrap;">CompileScript</tt> および <tt style="white-space: nowrap;">InstallScript</tt> フィールドでのみ有効で，
+							デフォルトの値．
 							値は <tt style="white-space: nowrap;">Type</tt> に依存するが，常に存在する（または空欄）．
-							<tt style="white-space: nowrap;">SplitOff: InstallScript</tt> で使われる場合，
+							<tt style="white-space: nowrap;">SplitOff</tt> (または <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>) 中の <tt style="white-space: nowrap;">InstallScript</tt> で使われる場合，
 							<tt style="white-space: nowrap;">SplitOff</tt> パッケージの <tt style="white-space: nowrap;">InstallScript</tt> デフォルトが空欄であっても，
 							この展開は<b>親</b>のデフォルトになる．
 							
@@ -855,7 +855,7 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				(<tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0</tt> や <tt style="white-space: nowrap;">/sw/lib/perl5/5.6.0/darwin</tt> など) に格納しなければいけません．
 				命名規約により，バージョン 5.6.0 に依存する Perl モジュールに <tt style="white-space: nowrap;">-pm560</tt> を後置します．
 				格納場所と命名方法に関する同様の規約が他のバージョンの Perl に対しても有効で，
-				perl 5.6.1 (10.2 ツリー) と perl 5.8.0， perl 5.8.1， perl 5.8.4 (間もなく) でもそのように対応されます．
+				perl 5.6.1 (10.2 ツリー), perl 5.8.0 (10.3 ツリー), perl 5.8.1， perl 5.8.4 または perl 5.8.6 でもそのように対応されます．
 			</p>
 			<p>
 				ディレクティブ <tt style="white-space: nowrap;">Type: perl 5.6.0</tt> は自動的にバージョンの付いた Perl の実行可能ファイルを使い，
@@ -886,6 +886,111 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				Fink 0.13.0 から利用可能になったコマンド <tt style="white-space: nowrap;">fink validate</tt> を .deb ファイルに適用すると，
 				その Fink パッケージが XS モジュールで，バージョンの付かないディレクトリにインストールされるかチェックし，そうなら警告を発します．
 			</p>
+
+<p>
+ユーザーは，同時に複数のバージョンの perl を持つことができます．
+このため， perl バージョン指定されたモジュールは，複数のバージョンが同時に存在できるようにインストールされなければなりません．
+manpage やばいなり，その他のスクリプトなど，これらのパッケージでのファイル名の重複を避けるよう，
+注意を払わねばなりません．
+
+You are not allowed to have any files in a package whose name ends
+with -pm<b>XYZ</b> that would have an identical pathname across
+different <b>XYZ</b>. Using <tt style="white-space: nowrap;">Replaces</tt> to allow the
+same-named files to overwrite each other in different perl-versions of
+these perl-module packages is no longer acceptable.
+As a simple solution for manpages, starting in
+March 2005, Fink has defined alternate locations in MANPATH:
+<tt style="white-space: nowrap;">%p/lib/perl5/X.Y.Z/man</tt> for each perl-X.Y.Z. You
+no longer need to create mutually-exclusive -man or -doc SplitOff
+packages. For
+example, to avoid conflicts between uri-pm581 and uri-pm586, the
+same-named <tt style="white-space: nowrap;">URI.3pm</tt> manpage is installed
+as <tt style="white-space: nowrap;">%p/lib/perl5/5.8.1/man/man3/URI.3pm</tt> and
+<tt style="white-space: nowrap;">%p/lib/perl5/5.8.6/man/man3/URI.3pm</tt>,
+respectively. Note that the default scripts provided by <tt style="white-space: nowrap;">Type:
+perl X.Y.Z</tt> have not changed, so you will have to locate the
+manpages here manually in your <tt style="white-space: nowrap;">InstallScript</tt>. If you
+don't have a highly customized script, you can still use the default
+one, and then simply move the files manually:
+</p>
+<pre>
+%{default_script}
+mv %i/share/man %i/lib/perl5/5.8.1
+</pre>
+<p>
+That will move all manpages. If you wish to move only one section of
+manpages (for example, only section 3, the module manpages, not script
+manpages in section 1), a similar approach works:
+</p>
+<pre>
+%{default_script}
+mkdir -p %i/lib/perl5/5.8.1/man
+mv %i/share/man/man3 %i/lib/perl5/5.8.1/man
+</pre>
+<p>
+If you have executables, for example, demo or utility scripts
+in <tt style="white-space: nowrap;">%p/bin</tt>, you have several options. One example
+is to put these files (and their associated manpages and/or other
+related files) in a %N-bin splitoff package. Use of
+<tt style="white-space: nowrap;">Conflicts</tt> and <tt style="white-space: nowrap;">Replaces</tt> fields ensures that
+installation of different perl-version forms of these packages, which
+contain files of the same name, is mutually excluve. The user can
+install many different perl-versions of the runtime modules, and then
+choose whichever one perl-version of the scripts he wants at a given
+time. For example, Tk.pm comes with an
+executable <tt style="white-space: nowrap;">ptksh</tt>, so the set of tk-pm* packages
+could be constructed as follows:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: tk-pm%type_pkg[perl]
+Type: perl (5.8.1 5.8.4 5.8.6)
+InstallScript: &lt;&lt;
+  %{default_script}
+  mkdir -p %i/lib/perl5/%type_raw[perl]/man
+  mv %i/share/man/man3 %i/lib/perl5/%type_raw[perl]/man
+&lt;&lt;
+SplitOff: &lt;&lt;
+  Package: %N-bin
+  Depends: %N
+  Conflicts: %{Ni}5.8.1, %{Ni}5.8.4, %{Ni}5.8.6
+  Replaces: %{Ni}5.8.1, %{Ni}5.8.4, %{Ni}5.8.6
+  Files: bin share/man/man1
+&lt;&lt;
+&lt;&lt;
+</pre>
+<p>
+An alternative arrangement is to rename the scripts and their manpages
+to include perl-version information. This method means there is no
+naming conflict at all, so one does not need the mutually-exclusive
+%N-bin splitoffs:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: tk-pm%type_pkg[perl]
+Type: perl (5.8.1 5.8.4 5.8.6)
+InstallScript: &lt;&lt;
+  %{default_script}
+  mkdir -p %i/lib/perl5/%type_raw[perl]/man
+  mv %i/share/man/man3 %i/lib/perl5/%type_raw[perl]/man
+  mv %i/bin/ptksh %i/bin/ptksh%type_raw[perl]
+  mv %i/share/man/man1/ptksh.1 %i/share/man/man1/ptksh%type_raw[perl].1
+&lt;&lt;
+&lt;&lt;
+</pre>
+<p>
+The user accesses ptksh for whichever perl she wants. For convenience,
+one could use <tt style="white-space: nowrap;">update-alternatives</tt> to allow users to be
+able to access these by their generic (no perl-version) names as well.
+</p>
+<p>
+Also as of March 2005, the location of manpages and modules installed
+by fink packages for perl itself (packages perlXYZ and perlXYZ-core
+other than the perl-version provided by Apple) has changed. As a
+result of this relocation, other fink packages that supply updated
+versions of core perl modules should not list any perlXYZ or
+perlXYZ-core packages in the <tt style="white-space: nowrap;">Replaces</tt> field.
+</p>
 		
 		<h3><a name="policy.emacs">3.6 Emacs ポリシー</a></h3>
 			
@@ -1053,14 +1158,23 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 
 
 
+
+<p>
+Fink は，Apple Developer Connection によってアップルコンピュータから提供される gcc コンパイラを使用しています．
+バージョンはいくつかあり， Mac OS X システムでも通常は複数のバージョンが存在します．
+</p>
+<p>
+<a href="http://www.mail-archive.com/fink-devel@lists.sourceforge.net/msg11877.html">より詳しい解説</a>がメーリングリスト中にあります．
+</p>
+
+
 <h3><a name="compilers.versions">5.1 コンパイラバージョン</a></h3>
 <p>
-gcc ファミリーのコンパイラを使用します．
-これらのコンパイラの発展に伴い，fink は "ディストリビューション" をつくって
+GCC の発展に伴い，fink は "ディストリビューション" をつくって
 変化に対応してきました．
 </p>
 <p>
-各ディストリビューションには，ソースからコンパイルするユーザー全員がもっていると想定されている
+各 Fink ディストリビューションには，ソースからコンパイルするユーザー全員がもっていると想定されている
 既定の gcc と g++ コンパイラがあります．
 パッケージ中で直接 "gcc" や "g++" を使用すると，この既定値が使われます． 
 これと違う値を使用する必要がある場合，(例えば，ディストリビューションの移行中に) パッケージ .info ファイルは
@@ -1126,9 +1240,9 @@ OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はあ�
 				下記の例では <tt style="white-space: nowrap;">/sw</tt> にパッケージ gimp-1.2.1-1 をインストールするものとします．
 			</p>
 			<p>
-				<b>解凍段階</b>では，ディレクトリ <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1</tt> が作成されてソースの tar ボールがそこに解凍されます．
+				<b>解凍段階</b>では，ディレクトリ <tt style="white-space: nowrap;">/sw/src/fink.build/gimp-1.2.1-1</tt> が作成されてソースの tar ボールがそこに解凍されます．
 				大抵，解凍によりソースを含むディレクトリ <tt style="white-space: nowrap;">gimp-1.2.1</tt> が作られます．
-				これ以降のステップはすべてこの中 (すなわち <tt style="white-space: nowrap;">/sw/src/gimp-1.2.1-1/gimp-1.2.1</tt>) で行われます．
+				これ以降のステップはすべてこの中 (すなわち <tt style="white-space: nowrap;">/sw/src/fink.build/gimp-1.2.1-1/gimp-1.2.1</tt>) で行われます．
 				詳細はフィールド SourceDirectory, NoSourceDirectory や Source<b>N</b>ExtractDir (Nは数字) で変更できます．
 			</p>
 			<p>
@@ -1142,10 +1256,10 @@ OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はあ�
 			</p>
 			<p>
 				<b>インストール段階</b>では，パッケージは仮ディレクトリ
-				<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1</tt> (%d と同じ) にインストールされます
+				<tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1</tt> (%d と同じ) にインストールされます
 				("root-" が付いていることに注意)．
 				ディレクトリ <tt style="white-space: nowrap;">/sw</tt> にインストールされる予定のファイルは全て，
-				<tt style="white-space: nowrap;">/sw/src/root-gimp-1.2.1-1/sw</tt> (%i すなわち %d%p に同じ) にインストールされます．
+				<tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1/sw</tt> (%i すなわち %d%p に同じ) にインストールされます．
 				詳細はフィールド InstallScript を参照して下さい．
 			</p>
 			<p>
@@ -1219,7 +1333,7 @@ OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はあ�
 						<p>
 							Fink のポリシーでは，パッケージのバイナリ (コンパイル済み) 形式 (<tt style="white-space: nowrap;">.deb</tt> ファイル)が変わる<b>いかなる</b>場合でも，<tt style="white-space: nowrap;">Revision</tt> をあげなければ<b>なりません</b>．
 							例えば，<tt style="white-space: nowrap;">Depends</tt> や他のパッケージ一覧フィールド， Splitoff パッケージの追加・削除・名称変更， Splitoff パッケージ間でのファイルの移動など．
-							パッケージのツリーを統合 (例えば 10.2 から 10.3) する場合，新しい方のツリーでは <tt style="white-space: nowrap;">Revision</tt> を 10 あげて古い方のツリーでのパッケージの更新に対応できるようにします．
+							パッケージのツリーを統合 (例えば 10.2 から 10.3) する場合，新しい方のツリーでは <tt style="white-space: nowrap;">Revision</tt> を 10 (など，大きな数字) あげて古い方のツリーでのパッケージの更新に対応できるようにします．
  						</p>
 					</td></tr><tr valign="top"><td>Epoch</td><td>
 						<p>
@@ -1228,7 +1342,8 @@ OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はあ�
 							詳細は
 							<a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version">Debian Policy Manual</a>
 							を参照．
-							省略可能フィールド．
+							Fink と，元となっている Debian ツールは，name-version-revision をパッケージのユニークな識別子としています．
+							epoch のみが異なるような複数のパッケージを作ってはいけません．
 						</p>
 					</td></tr><tr valign="top"><td>Description</td><td>
 						<p>
@@ -1321,7 +1436,7 @@ Type: -x11 (boolean)
 Depends: (%type_raw[-x11] = -x11) x11
 CompileScript:  &lt;&lt;
   #!/bin/bash -ev
-  if ["%type_raw[-x11]" == "-x11"]; then
+  if [ "%type_raw[-x11]" == "-x11" ]; then
     ./configure %c --with-x11
   else
     ./configure %c --without-x11
@@ -1351,15 +1466,22 @@ CompileScript:  &lt;&lt;
 						</p>
 					</td></tr><tr valign="top"><td>InfoN</td><td>
 						<p>
-							このフィールドにより Fink はパッケージ記述の構文の非互換な変更に対処できる．
-							任意のバージョンの Fink には扱える "N" (整数) の最大値が設定されている．
-							それより大きいNを持つフィールド InfoN はいずれも無視される．
-							だからこの機構の利用は必要最低限に止めなければいけない．
-							そうしないと古いバージョンの Fink のユーザが必然性なしに仲間外れにされてしまう．
-							他のフィールドの解説には，どのバージョンの Fink ではどのNの InfoN を使わなければいけないか記されているだろう．
-							この機構を使うには，パッケージ記述全体をフィールド InfoN の値に埋め込む．
-							複数行に渡る値の記述方法については，前述の「ファイル形式」を参照．
+							このフィールドにより Fink はパッケージ記述の構文の非互換な変更に対処できます．
+							任意のバージョンの Fink には扱える "N" (整数) の最大値が設定されています．
+							それより大きいNを持つフィールド InfoN はいずれも無視されます．
+							だからこの機構の利用は必要最低限に止めなければいけません．
+							そうでないと，古いバージョンの Fink のユーザが必然性なしに仲間外れにされます．
+							この機構を使うには，パッケージ記述全体をフィールド InfoN の値に埋め込んでください．
+							複数行に渡る値の記述方法については，前述の「ファイル形式」を参照してください．
+							以下は，各 InfoN レベルに於いて追加された機能と，最初にサポートされた fink のバージョンです．
 						</p>
+<ul>
+<li>
+<tt style="white-space: nowrap;">Info2</tt> (fink&gt;=0.20.0): 
+.info ファイル中のメインの <tt style="white-space: nowrap;">Package</tt> フィールドでのパーセント展開の使用．
+<tt style="white-space: nowrap;">SplitOff</tt> (および <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>) での <tt style="white-space: nowrap;">%type_*</tt> パーセント展開の使用．
+</li>
+</ul>
 					</td></tr></table>
 			<p>
 				<b>依存性関連</b>
@@ -1464,20 +1586,25 @@ Depends: (%type_pkg[-x11]) x11
 						</p>
 					</td></tr><tr valign="top"><td>Conflicts</td><td>
 						<p>
-							そのパッケージと同時にインストールしてはいけない「パッケージ名」のカンマ区切りのリスト．
-							バーチャルパッケージでは，そのパッケージが提供する「パッケージ名」をここに指定してもよい．
-							それらは適切に扱われる．
-							このフィールドはフィールド Depends のようにバージョン付きの依存性情報にも対応しているが，
-							代替パッケージには対応していない (意味をなさない)．
-							あるパッケージがそれ自身のパッケージ記述の Conflicts に入っていると， (暗黙のうちに) そこから取り除かれる．
+							そのパッケージと同時にインストールしてはいけない「パッケージ名」のカンマ区切りの一覧．
+							バーチャルパッケージでは，そのパッケージが提供する「パッケージ名」をここに指定することができ，適切に扱われます．
+							このフィールドはフィールド Depends のようにバージョン付きの依存性情報にも対応していますが，
+							代替パッケージには対応していません (意味をなさない)．
+							あるパッケージがそれ自身のパッケージ記述の Conflicts に入っていると， (暗黙のうちに) そこから取り除かれます．
 							(Fink のバージョン 0.18.2 CVS 以降で導入)
 						</p>
 						<p>
-							<b>注記:</b> Fink自身はこのフィールドを無視する．
-							しかしこれは dpkg に渡され，そこで適切に扱われる．
-							要するにこのフィールドが影響するのはビルド時でなく実行時だ．
+							<b>注記:</b> Fink 自身はこのフィールドを無視します．
+							これは dpkg に渡され，そこで適切に扱われます．
+							要するに，このフィールドが影響するのはビルド時でなく実行時です．
 						</p>
-					</td></tr><tr valign="top"><td>Replaces</td><td>
+					</td></tr><tr valign="top"><td>BuildConflicts</td><td>
+<p>
+当該パッケージがコンパイル中にインストールされてはいけないパッケージの一覧．
+これは， <tt style="white-space: nowrap;">./configure</tt> やコンパイラが，望ましくないライブラリヘッダを見たり，
+壊れることが分かっているツール (例えば，特定のバージョンの sed にあるバグ) のバージョンを使用することを避けるために使います．
+</p>
+</td></tr><tr valign="top"><td>Replaces</td><td>
 						<p>
 							Conflicts と共に使われる．
 							そのパッケ−ジが，衝突するパッケ−ジの機能の代わりになるだけでなく，共通するファイルを持つときに使われる．
@@ -1791,7 +1918,8 @@ CPPFLAGS: -I%p/include
 LDFLAGS: -L%p/lib
 </pre>
 						<p>
-							fink 0.17.0 からはさらに以下が追加されています:
+fink-0.17.0 より，10.4-transitional ディストリビューションまで，以下の値が設定されます
+(が，10.4 以降では設定されません)．
 						</p>
 <pre>
 LD_PREBIND: 1
@@ -1838,11 +1966,19 @@ ConfigureParams: --mandir=%p/share/man (%type_pkg[-x11]) --with-x11 --disable-sh
 						</p><p>
 							値としては:
 							<tt style="white-space: nowrap;">2.95.2</tt> (or <tt style="white-space: nowrap;">2.95</tt>),
-							<tt style="white-space: nowrap;">3.1</tt>,
-							<tt style="white-space: nowrap;">3.3</tt>
+							<tt style="white-space: nowrap;">3.1</tt>, <tt style="white-space: nowrap;">3.3</tt> および <tt style="white-space: nowrap;">4.0</tt> 
 							があります．
-							最後の値は， gcc 3.1 およびそれ以降の gcc の GCC-ABI です．
-						</p><p>
+							我々の知る限り，GCC の作者は，ある時点で GCC-ABI を固定するものと思われます．
+							これ以上変わらないことを期待しましょう．
+						</p>
+<p>
+GCC フィールドはそれ自体は既定値を持たず，設定されなければ無視されます．
+しかし，各ツリーには，既定の g++ コンパイラが存在し，これに対応する GCC の値が想定されています．
+想定値は，10.1 ツリーでは <tt style="white-space: nowrap;">2.95</tt>， 10.2 ツリーでは <tt style="white-space: nowrap;">3.1</tt>，
+10.2-gcc3.3, 10.3, および 10.4-transitional　ツリーでは <tt style="white-space: nowrap;">3.3</tt>，
+(将来の) 10.4 ツリーでは <tt style="white-space: nowrap;">4.0</tt> となります．
+</p>
+						<p>
 							注記: GCC 値が既定値と異なる場合， (CC や CXX フラグを設定するなど) パッケージ内でコンパイラを指定する必要があります．
 							また， (virtual) gcc パッケージへの依存性を指定します．
 						</p>
@@ -2230,6 +2366,20 @@ AnotherVar: foo bar
 					<tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> の中で宣言して修正することができます．
 				</li>
 			</ul>
+<p>
+%n-%v-%r は，パッケージのユニークな識別子として扱われるため，
+<tt style="white-space: nowrap;">SplitOff</tt> (あるいは <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>)
+を用いて (同じ <tt style="white-space: nowrap;">Version</tt> と <tt style="white-space: nowrap;">Revision</tt> で) <tt style="white-space: nowrap;">Package</tt> を作成しては行けません．
+バリアントを使う際は，各バリアントが独立したパッケージとなるようにしてください．
+つまり，以下のようなパッケージレイアウトは禁止されます:
+</p>
+<pre>
+Package: mime-base64-pm%type_pkg[perl]
+Type: perl (5.8.1 5.8.6)
+SplitOff: %lt;%lt;
+  Package: mime-base64-pm-bin
+%lt;%lt;
+</pre>
 			<p>
 				インストール段階では，まず親パッケージの <tt style="white-space: nowrap;">InstallScript</tt> と <tt style="white-space: nowrap;">DocFiles</tt> が実行されます．
 				次にフィールド <tt style="white-space: nowrap;">SplitOff</tt> や <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> の処理が行われます．
@@ -2350,4 +2500,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.32 2005/06/28 00:34:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.33 2005/09/18 21:16:57 babayoshihiko Exp $</i></p></body></html>
