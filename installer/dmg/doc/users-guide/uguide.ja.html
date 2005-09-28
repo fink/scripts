@@ -65,10 +65,15 @@ Linux や同様のオペレーティングシステム向けに開発された�
 <ul>
 <li>
 <p>
-Development tools。
-Mac OS X では、 Developer.pkg パッケージを Developer Tools CD からインストールします。
-これは Mac OS X のバージョンに対応していなければならないので注意してください。
-Darwin では、デフォルトのインストールでツールがあるはずです。
+Developer tools。
+Mac OS X では、Developer Tools (10.3 と 10.4 では XCode) CD 
+(10.4 では DVD) から、あるいは
+最新版を<a href="http://connect.apple.com">ダウンロード</a>して、 
+Developer.pkg をインストールします。
+最新版のダウンロードの方が、様々な課題を修正しているので望ましいです
+(時々、何かが壊れていることもありますが)。
+ツールは、 Mac OS X のバージョンと合ったものを使用してください。
+Darwin 場では、デフォルトインストールでツールがインストールされます。
 </p>
 <p>
 ソースからパッケージをビルドする予定がなくても、 Developer Tools をインストールしておくと良いでしょう。
@@ -87,19 +92,25 @@ Darwin では、デフォルトのインストールでツールがあるはず�
 <h3><a name="intro.supported-os">1.3 サポートされているシステム</a></h3>
 
 <p>
-<b>Mac OS X 10.3</b> は Fink を実行するのに最適なシステムです。
-全ての開発者がこれを使っていて、パッケージのテストを行なうシステムです。
-"完全にサポートされていて、テストされている" システムではありますが、稀にコンパイルの問題があるパッケージもあります。
+<b>Mac OS X 10.4</b> は、最新のプラットフォームで、<q>完全にサポートとテストされている</q>と考えられますが、
+新しいオペレーティングシステムとして課題も残っています。
+開発者のほとんどはこれを用い、10.3 を使用している人は 10.4 ユーザーにテストしてもらっています。
 </p>
 <p>
-<b>Mac OS X 10.2</b> は現在でもサポートされていますが、パッケージによっては 10.2 版がないものもあります。
+<b>Mac OS X 10.3</b> は、最新のプラットフォームで、<q>完全にサポートとテストされている</q>と考えられますが、
+パッケージに酔ってはコンパイルに問題があるものもあります。
+多くの開発者はこれを使用しますが、所有していない場合は 10.3 ユーザーにテストをしてもらっています。
+</p>
+<p>
+<b>Mac OS X 10.2</b> は現在でも制限付きでサポートされています。
+Fink 0.6.4 が使用できる最新バージョンです。
 </p>
 <p>
 <b>Mac OS X 10.1</b> は現在でも制限付きでサポートされています。
 Fink 0.4.1 が使用できる最新バージョンです。
 </p>
 <p>
-<b>Darwin 7.0.1</b> が Mac OS X 10.3 に、 <b>Darwin 6.0.2</b> が Mac OS X 10.2 相当する Darwin のバージョンです。
+<b>Darwin 8.x</b> が Mac OS X 10.4 に、 <b>Darwin 7.x</b> が Mac OS X 10.3 に、 <b>Darwin 6.x</b> が Mac OS X 10.2 相当する Darwin のバージョンです。
 基本的には動作するはずですが、ほとんどの人は Mac OS X を使用しているので、テストされていません。
 Mac OS X 固有の機能を使っているパッケージでは問題が発生するかも知れません。
 影響するパッケージは、 XFree86 と、おそらく esound です。
@@ -180,6 +191,9 @@ StuffIt Expander が解凍してしまっている場合、作成されたフォ
 <p>
 ソースリリースはコマンドラインからインストールする必要があります。
 まずターミナル.app を開き、 fink-0.x.x-full.tar.gz アーカイブをインストールしたディレクトリに移動します。
+(注記: もし、OS X 10.4 を XCode 2.1 を使っている場合は、
+<tt style="white-space: nowrap;">fink-0.8.0-full-XCode-2.1.tar.gz</tt> 
+を代わりに用い、下記の説明も適切に変えてください。)
 次のコマンドでアーカイブを解凍します。
 </p>
 <pre>tar -xzf fink-0.x.x-full.tar.gz</pre>
@@ -223,9 +237,7 @@ Fink ディレクトリ階層にインストールされたソフトウェア、
 <p>
 と入力します。
 古いバージョンの fink の場合、ファイル名が <tt style="white-space: nowrap;">pathsetup.command</tt> ですので、次のように入力します。
-</p>
-<pre>open /sw/bin/pathsetup.command</pre>
-<p>
+<tt style="white-space: nowrap;">open /sw/bin/pathsetup.command</tt>
 として下さい。
 これが効かない場合は手動で設定することができますが、シェルによってやり方が異なります。
 現在のシェルを知るには、ターミナルを開き:
@@ -310,7 +322,7 @@ pico ~/library/init/tcsh/path</pre>
  </li>
 </ul>
 <p>
-スクリプトは <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> と <tt style="white-space: nowrap;">/usr/X11R6/man</tt> をパスに追加することに注意して下さい。
+<tt style="white-space: nowrap;">init.sh</tt> と <tt style="white-space: nowrap;">init.csh</tt> スクリプトは <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> と <tt style="white-space: nowrap;">/usr/X11R6/man</tt> をパスに追加することに注意して下さい。
 これで X11 がインストールされた時に使えるようになります。
 Fink のパッケージはそれぞれ設定を追加することができます。
 例えば、 qt パッケージは QTDIR 環境変数を設定します。
@@ -444,7 +456,7 @@ E: Sorry, broken packages</pre>
 
 <p>まず、適切なバージョンの Development Tools が必要となります。
 <a href="http://connect.apple.com">http://connect.apple.com</a>
-から入手して下さい。
+から最新版を入手して下さい。
 </p>
 <p>
 ソースからインストールできるパッケージの一覧を取得するには、 <tt style="white-space: nowrap;">fink</tt> ツールに聞きます:
@@ -506,76 +518,139 @@ Fink をソースからインストールした場合など、別にダウンロ
 
 <p>パッケージをインストールする場合、まず<a href="http://fink.sourceforge.net/pdb/index.php">Package Database</a>を確認して Fink にあるかどうか確認して下さい。
 用意されているバージョンは次の行に書かれてあります:</p>
-<ul>
-<li>
-<p>
-<b>0.4.1-stable:</b> OS 10.1 でバイナリインストールできる最新バージョン</p>
-</li>
-<li><b>0.6.3:</b> OS 10.2 でバイナリインストールできる最新バージョン</li>
-<li>
-<p>
-<b>0.8.0:</b> これは OS 10.3 と 10.2 向けのバイナリインストールできる基本バージョン。
-Fink を <a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php">アップグレード</a>  した場合、これより新しいバージョンの場合もある。
-</p>
-</li>
-<li>
-<p>
-<b>current-10.2-gcc3.3 stable:</b> これはソースから <tt style="white-space: nowrap;">gcc 3.3</tt> でインストールできる OS 10.2 向け最新バージョン。
-このバージョンをインストールできるようにするには、 <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS </a> または rsync アクセスを有効にする必要がある。
-もし <tt style="white-space: nowrap;">gcc 3.3</tt> に更新していない場合、このバージョン (あるいはパッケージ自体) が表示されない可能性がある。
-</p>
-<p>
-注意: 他のプロジェクトの場合とは異なり、 Fink は最新の安定バージョンとテストが必要なバージョン (下記参照) を両方ともに CVS で配布している。
-CVS | rsync を有効にすることで、バイナリディストリビューションが更新されるより前に最新安定版を手に入れることができる。
-</p>
-</li>
-<li>
-<p>
-<b>current-10.3 stable:</b> これはソースからインストールできる OS 10.3 向け最新バージョン。
-CVS または rsync アクセスを有効にする必要がある。
-</p> 
-</li>
-</ul>
+      <ul>
+        <li>Binary Distribution
+		  <ol>
+            <li>
+              <p>
+                <b>0.4.1:</b> OS 10.1 用で、バイナリからインストールできるバージョン。
+              </p>
+            </li>
+            <li>
+              <p>
+                <b>0.6.4:</b> OS 10.2 用で、バイナリからインストールできるバージョン。
+              </p>
+            </li>
+            <li>
+              <p>
+                <b>0.7.2:</b> OS 10.3 用で、バイナリからインストールできるバージョン。
+                もし、Fink を<a href="#packages.bin">更新</a>
+                したなら、パッケージに酔っては新しいバージョンがあるかもしれません。
+              </p>
+            </li>
+            <li>
+              <p>
+                <b>0.8.0:</b> OS 10.4 用で、バイナリからインストールできるバージョン。
+                もし、Fink を<a href="#packages.bin">更新</a>
+                したなら、パッケージに酔っては新しいバージョンがあるかもしれません。
+              </p>
+            </li>
+          </ol>
+          
+        </li>
+      </ul>
+      <ul>
+        <li>CVS/rsync Distributions
+          <ol>
+            <li>
+          <p>
+            <b>10.2-gcc3.3 stable:</b>
+            これは、OS 10.2 と Developer Tools の <tt style="white-space: nowrap;">gcc 3.3</tt> アップデートの組み合わせにむけた、
+            安定したソースツリーからインストールされる最新の安定バージョンです。
+            このバージョンをインストールするには、 <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a>
+            または rsync　でのアクセスが必要です。
+            <tt style="white-space: nowrap;">gcc 3.3</tt> アップデートを当てていない場合、このバージョン (あるいはパッケージも) は見えないかもしれません。
+          </p>
+          <p>
+            注記: 他のプロジェクトの場合と異なり、 Fink はパッケージの最新の安定板を、テストが必要なバージョン
+            (下記を参照) と同様に、CVS で配布しています。
+            CVS または rsync 更新をすることで、最新の安定板を、バイナリ配布が更新される前に
+            使うことができます。
+          </p>
+            </li>
+            <li>
+          <p>
+            <b>10.3 stable:</b>
+            これは、OS 10.3 用に安定したソースツリーからインストールされる最新の安定バージョンです。
+          </p>
+            </li>
+            <li>
+          <p>
+            <b>10.4-transitional stable:</b>
+            これは、OS 10.4 用に安定したソースツリーからインストールされる最新の安定バージョンです。
+          </p>
+            </li>
+            <li>
+          <p>
+            <b>10.2-gcc3.3 unstable:</b>
+            <tt style="white-space: nowrap;">gcc 3.3</tt>. これは、OS 10.2 と <tt style="white-space: nowrap;">gcc 3.3</tt> 用の unstable ソースツリーからインストールされる最新の unstable バージョンです。 
+            このバージョンをインストールするには、unstable パッケージの
+            <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">インストール手順</a> 
+            をご覧ください。
+          </p>
+          <p>
+            注記:  unstable は必ずしも不安定な訳ではありませんが、自己責任で使用してください。
+          </p>
+            </li>
+            <li>
+          <p><b>10.3 unstable:</b>  
+            これは、OS 10.3 用に unstable ソースツリーからインストールされる最新の unstable バージョンです。
+          </p>
+            </li>
+            <li>
+          <p>
+              <b>10.4-transitional unstable:</b>
+            これは、OS 10.4 用に unstable ソースツリーからインストールされる最新の unstable バージョンです。
+          </p>
+            </li>
+          </ol>
+        </li>
+      </ul>
 
 <h3><a name="packages.x11">3.7 X11 を使う</a></h3>
 
 <p>
-Mac OS X には、 X11 が数種類 (XFree86, Tenon Xtools, eXodus) あり、インストール方法も数種類 (手動、 Fink を使う) あるため、パッケージも数種類あります。
-Fink は、インストールされているのがどれかをうまく判別できません。
+Mac OS X には、 X11 が数種類 (Apple X11, XFree86, X.org) あり、インストール方法も数種類 (手動、 Fink を使う) あるため、パッケージも数種類あります。
 このため、 X11 アプリケーションをインストールする前に正しいものを選ぶことが重要になります。
 以下がパッケージと X11 のインストール方法の一覧です:
 </p>
 <ul>
-<li>
-<p>
-xfree86-base:
-このパッケージはリアルです。
-XFree86 4.2.1.1 の全てを Fink パッケージとしてインストールします。
-柔軟性に対応できるよう、このパッケージに XDarwin サーバーは含まれていません。
-これを追加するには、 xfree86-rootless パッケージをインストールして下さい
-</p>
-</li>
-<li>
-<p>
-xfree86:
-これは一つのパッケージ (display サーバーを含む) です。
-このバージョンは 4.2.1.1 より速いですが、十分にはテストされていません。
-</p>
-</li>
-<li>
-<p>
-system-xfree86:
-このパッケージは、ソースまたは公式 (非公式) バイナリからインストールした場合、あるいは Apple X11 をインストールした場合など、手動で XFree86 をインストールした時に使います。
-このパッケージはインストールが有効かどうかを確認するだけで、後は依存性のために存在するだけです。
-</p>
-</li>
-<li>
-<p>
-system-xtools:
-Tenon Xtools をインストールした場合、このパッケージをインストールして下さい。
-system-xfree86 と同様、有効性を確認するだけでファイルはそのままにします。
-</p>
-</li>
+        <li>
+          <p>
+            <b>xfree86, xfree86-shlibs:</b>
+            XFree86 4.3.0 (OS 10.2 のみ), 4.4.0 (10.2 または 10.3), または 4.5.0 (10.3 または 10.4) のため、両パッケージをインストール。
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>xorg, xorg-shlibs</b>(10.3 or 10.4)  
+            X.org X11 ディストリビューションの 6.8.2 リリースは、この両パッケージをインストール。
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>system-xfree86 + -shlibs, -dev:</b>
+            これらのパッケージは、 (Fink 0.6.2 以降では) Apple X11 や、手動でインストールした
+            XFree86 や X.org が存在する場合に、自動的に生成されます。
+            これらは依存性の代替物として機能します。
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>xfree86-base, xfree86-rootless [-threaded] + -shlibs, -dev</b>
+            (10.1 または 10.2 のみ) これらのパッケージは、XFree86 4.2.1.1 (10.1 上では 4.2.0)
+            を全てインストールします。
+            <tt style="white-space: nowrap;">-threaded</tt> 亜種は、これを必要とするアプリケーションのために提供され、
+            後の XFree86 では標準的な機能です。
+            <tt style="white-space: nowrap;">-rootless</tt> は XDarwin ディスプレイサーバを含んでいます。
+            --名称は歴史的なものです。
+          </p>
+          <p>
+            X11 ベースのパッケージをソースからインストールするためには、
+            これら６つのパッケージを全てインストールしなければなりません。
+          </p>
+        </li>
+
 </ul>
 <p>
 X11 のインストールと使用の詳細は、
@@ -825,9 +900,14 @@ High (全て報告する)
 <b>Buildpath:</b> パス</p>
 <p>
 Fink はソースからコンパイルする場合、パッケージごとに仮ディレクトリを作成します。
-デフォルトでは <tt style="white-space: nowrap;">/sw/src</tt> 内に作成しますが、別の場所を使いたい場合はここでパスを指定します。
+デフォルトでは Panther 以前では <tt style="white-space: nowrap;">/sw/src</tt> 内に、Tiger からは <tt style="white-space: nowrap;">/sw/src/fink.build</tt> 内に、
+置かれていますが、別の場所を使いたい場合はここでパスを指定します。
 仮ディレクトリについては、後述の <tt style="white-space: nowrap;">KeepRootDir</tt> と <tt style="white-space: nowrap;">KeepBuildDir</tt> のフィールドの解説をご覧下さい。
 </p>
+	    <p>
+          Tiger では、BuildPath は .noindex または .build とつけることをお勧めします。
+          こうしなければ、Spotlight が BuildPath 内にある仮ファイルをすべてインデックスしようとし、ビルドを遅くします。
+    	</p>
 </li>
 </ul>
 
@@ -955,7 +1035,7 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
 <li>
 <p>
 <b>KeepRootDir:</b> ブール値</p>
-<p>パッケージのビルド後に /sw/src/root-[name]-[version]-[revision] ディレクトリを削除しません。
+<p>パッケージのビルド後に <b>BuildPath</b> 内の root-[name]-[version]-[revision] ディレクトリを削除しません。
 デフォルトは false です。
 <b>注意、このオプションはハードディスクをいっぱいにします!</b>
 一度だけ使いたい場合、 <b>fink</b> に <b>-K</b> フラグを渡して同じ効果が得られます。
@@ -964,7 +1044,7 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
 <li>
 <p>
 <b>KeepBuildDir:</b> ブール値</p>
-<p>パッケージのビルド後に /sw/src/[name]-[version]-[revision] ディレクトリを削除しません。
+<p>パッケージのビルド後に <b>BuildPath</b> 内の [name]-[version]-[revision] ディレクトリを削除しません。
 デフォルトは false です。
 <b>注意、このオプションはハードディスクをいっぱいにします!</b>
 一度だけ使いたい場合、 <b>fink</b> に <b>-K</b> フラグを渡して同じ効果が得られます。

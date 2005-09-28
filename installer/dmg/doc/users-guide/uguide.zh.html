@@ -67,10 +67,13 @@ Fink 是 OS X 和 Darwin 上的开放源代码的 Unix 软件。
       <ul>
         <li>
           <p>
-开发工具。
-对 OS X，安装 Developer　Tools CD　上的 Developer.pkg 软件包。
-请注意这些工具包必须与你的 Mac OS X 版本相对应。
-对 Darwin，这些工具应该已经包括在默认安装中。
+
+Developer tools.  
+On Mac OS X, install the Developer.pkg package from the Developer
+Tools (known as XCode for 10.3 and 10.4) CD (they're on the main DVD for OS 10.4), or <a href="http://connect.apple.com">download</a> the latest version--this is often desirable, as later versions frequently fix issues (though admittedly sometimes they break things).    
+Note that the tools must match your Mac OS X version.
+On Darwin, the tools should be present in the default install.
+
 </p>
           <p>
 即使你不打算从源代码编译安装软件，安装开发工具仍然是个很好的主意。
@@ -89,18 +92,21 @@ Fink 是 OS X 和 Darwin 上的开放源代码的 Unix 软件。
     
     <h3><a name="intro.supported-os">1.3 支持的操作系统</a></h3>
       
+      
+      <p><b>Mac OS X 10.4</b> is the leading-edge platform, and is considered to be <q>fully supported and tested</q>, though as a newer operating system there are still some issues.  Most of the developers run it, and those who are running 10.3 have 10.4 users test their work.</p>
       <p>
-        <b>Mac OS X 10.3</b> 是运行 Fink 的首选操作系统。
-所有开发者都运行它，所有软件包都在这个系统上经过测试。
-它可以被认为是 "被全面支持和经过完全测试"的，虽然对于特定的软件包可能会有个别的问题。
+        <b>Mac OS X 10.3</b> is is considered to be <q>fully supported and tested</q>, although there may still be stray compile problems with single packages. Many of the developers run it, and those who don't have 10.3 users test their work.
 </p>
-<p><b>Mac OS X 10.2</b> 仍然被支持，但一些新的软件包可能没有适合 10.2 的版本。</p>
+      <p><b>Mac OS X 10.2</b> is still supported to some extent.  Fink 0.6.4 is the last distribution to suppport this OS.</p>
+      
       <p>
         <b>Mac OS X 10.1</b> 在某种程度仍然被支持。
 你只能运行 Fink 0.4.1，在它上面没有更新的版本。
 </p>
       <p>
-Darwin 7.0.1 是与 Mac OS X 10.3 对应的 Darwin 版本，而 <b>Darwin 6.0.2</b> 则是与 Mac OS X　10.2 相应的版本。
+Darwin 8.x 是与 Mac OS X 10.4 对应的 Darwin 版本，
+而 Darwin 7.x 是与 Mac OS X 10.3 对应的 Darwin 版本，
+而 <b>Darwin 6.x</b> 则是与 Mac OS X　10.2 相应的版本。
 总体来讲它们都可以使用，但没有经过非常详细的测试。因为多数人都只是在 Mac OS X 上运行。
 对于一些使用了 OS X 专有特性的软件你可能会碰到问题 —— 受影响的软件包包括 XFree86，可能也包括 esound。
 </p>
@@ -178,6 +184,11 @@ Fink 可以让你自己在两种方式中间选择。
       <p>
 源代码发行版必须从命令行安装，因此请打开　Terminal.app 并进入到你保存所下载到的
 fink-0.x.x-full.tar.gz 压缩档的目录。
+
+(Note: If you have OS X 10.4 and XCode 2.1, you should use
+<tt style="white-space: nowrap;">fink-0.8.0-full-XCode-2.1.tar.gz</tt> instead, and make
+the appropriate changes below.)
+
 以下的命令将解压压缩档：
 </p>
       <pre>tar -xzf fink-0.x.x-full.tar.gz</pre>
@@ -220,13 +231,10 @@ In most cases, you can do this by entering the command
       </p>
       <pre>/sw/bin/pathsetup.sh</pre>
       
-      <p>
-	in a terminal window. Note that for some older versions of
-	fink called this <tt style="white-space: nowrap;">pathsetup.command</tt>, and one could
-	run it by entering the command:
-      </p>
+      <p>Note that for some older versions of
+	fink the program was called  <tt style="white-space: nowrap;">pathsetup.command</tt>, and one could
+	run it via <tt style="white-space: nowrap;">open /sw/bin/pathsetup.command</tt>.      </p>
       
-      <pre>open /sw/bin/pathsetup.command</pre>
       <p>
 如果由于某种情况这种方法不奏效，你可以手工配置它。不过，这会随你使用的 Shell 程序不同而不同。
 你可以通过打开终端窗口并运行下面指令来查看你 shell 类型：
@@ -295,7 +303,7 @@ pico .cshrc</pre>
         </li>
       </ul>
       <p>
-注意这个脚本还添加了 <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> 和
+注意这个 <tt style="white-space: nowrap;">init.sh</tt> 和 <tt style="white-space: nowrap;">init.csh</tt> 脚本还添加了 <tt style="white-space: nowrap;">/usr/X11R6/bin</tt> 和
 <tt style="white-space: nowrap;">/usr/X11R6/man</tt> 到你 PATH 环境变量中，使得你可以在安装了 X11 以后使用它。
 Fink 软件包可以添加它们自己的设置，例如，qt 软件会设置 QTDIR 环境变量。
 </p>
@@ -431,7 +439,7 @@ available in the <a href="#intro.src-vs-bin">binary
 distribution</a>.
       </p>
       
-      <p>首先，你需要在你的系统中安装合适版本的开发工具。在 <a href="http://connect.apple.com">http://connect.apple.com</a>中免费注册以后可以下载得到它。</p>
+      <p>首先，你需要在你的系统中安装合适版本的开发工具。在 <a href="http://connect.apple.com">http://connect.apple.com</a>中最新版本免费注册以后可以下载得到它。</p>
       <p>
 要获得可以从源代码安装的软件包清单，可以用 <tt style="white-space: nowrap;">fink</tt> 工具查询：
 </p>
@@ -486,30 +494,40 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
       <p>当你希望安装一个软件包，你应该首先查看 <a href="http://fink.sourceforge.net/pdb/index.php">软件包数据库</a> 来找找是不是可以通过 Fink 获得。软件包的各个可用版本会在一个表格的多个行中出现。就象这样：</p>
       
       <ul>
-        <li>
-          <p>
-            <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p>
+        <li>Binary Distribution
+<ol>
+            <li><p>
+            <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p></li>
+            <li><p><b>0.6.4:</b>  this is the version that can be installed from binaries for OS 10.2.</p></li>
+            <li><p><b>0.7.2</b>
+  This is the base version that can be installed from binaries for OS 10.3.  If you <a href="#packages.bin">update</a> Fink, later versions of some packages may be available.</p> 
         </li>
-        <li><b>0.6.3:</b>  this is the version that can be installed from binaries for OS 10.2.</li>
-        <li>
-          <p>
-<b>0.8.0:</b>  This is the base version that can be installed from binaries for OS 10.3, under the current Fink release.  If you <a href="#upgrade">upgrade</a> Fink, there may be an OS-specific newer version that isn't shown here.</p> 
+            <li><p><b>0.8.0:</b>  This is the base version that can be installed from binaries for OS 10.4.  If you <a href="#packages.bin">update</a> Fink, later versions of some packages may be available.
+</p></li>
+          </ol>
+          
         </li>
-        <li>
+      </ul>
+      <ul>
+        <li>CVS/rsync Distributions
+<ol>
+            <li>
           <p>
-            <b>current-10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from source for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
+            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from the stable source tree for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
           <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS or rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
 </p>
         </li>
-        <li><p><b>current-10.3 stable:</b>  This is the most recent version that can be installed from source for OS 10.3.  Once again, CVS or rsync access may be needed to access this version.</p>
-</li>
-        <li>
+            <li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.3.</p></li>
+            <li><p><b>10.4-transitional stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4.</p></li>
+            <li>
           <p>
-            <b>current-10.2-gcc3.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
+            <b>10.2-gcc3.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
           <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
 </p>
         </li>
-        <li><b>current-10.3 unstable:</b>  This is the latest unstable version that can be installed from source for OS 10.3.  Enable the unstable tree as mentioned above.</li>
+            <li><p><b>10.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.3.</p></li>
+            <li><p><b>10.4-transitional unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.4.</p></li>
+          </ol></li>
       </ul>
       
     
@@ -517,39 +535,35 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
       
       <p>许多 Fink 中的软件包都要求已经安装某种形式的 X11。因此，首先要做的第一件事情是选择一种 X11 实现。</p>
       <p>
-由于在 Mac OS X 上有几种 X11 实现（XFree86, Tenon Xtools, eXodus），以及几种不同的方式去安装它们（手工或通过 Fink），所以存在有几种可选的软件包 - 每种设置方式一个。
-Fink 并不能猜测你需要什么，所以很重要的是在你开始安装 X11 应用程序之前先选择一种合适的安装好。
+由于在 Mac OS X 上有几种 X11 实现（Apple X11, XFree86, X.org），以及几种不同的方式去安装它们（手工或通过 Fink），所以存在有几种可选的软件包 - 每种设置方式一个。
 这里是可用的软件包和　X11　安装方法：
 </p>
       <ul>
+      
         <li>
           <p>
-            <b>xfree86-base:</b>
-（仅限 10.1 或 10.2）这个软件包是一个真正的安装包。它把整个 XFree86 4.2.1.1 作为一个 Fink 包进行安装。为了获取最大的灵活性，这个软件包并不包含实际的 XDarwin 服务器。
-要安装它，你需要先安装 xfree86-rootless 软件包。
+            <b>xfree86, xfree86-shlibs:</b>
+Install both of these packages for XFree86 4.3.0 (OS 10.2 only), 4.4.0 (10.2 or 10.3), or 4.5.0 (10.3 or 10.4).  
+</p>
+        </li>
+        <li><p><b>xorg, xorg-shlibs</b>(10.3 or 10.4)  Install these packages to get the 6.8.2 release of the X.org X11 distribution.</p></li>
+        <li>
+          <p>
+<b>system-xfree86 + -shlibs, -dev:</b>
+These packages are automatically generated (for Fink 0.6.2 or later) if you install Apple's X11, or manually installed XFree86 or X.org.  
+They will then act as
+dependency placeholders.
 </p>
         </li>
         <li>
           <p>
-            <b>xfree86:</b>
-这是一个单独的软件包（包括显示服务器），它会安装 XFree86 4.3.0 （仅限 10.2)，或 4.3.99 （仅限10.3 ）。
-这个版本比 4.2.1.1 要快，但没有经过非常多的测试。
+            <b>xfree86-base, xfree86-rootless [-threaded] + -shlibs, -dev</b>
+(10.1 or 10.2 only) These packages install all of XFree86 4.2.1.1 (4.2.0 on 10.1).  The <tt style="white-space: nowrap;">-threaded</tt> variant was provided for applications that required it, and this functionality is standard in later XFree86 versions.  The <tt style="white-space: nowrap;">-rootless</tt> packages include the XDarwin display server--the name is historical.
+</p><p>You must install all six packages to build X11-based packages from source.
 </p>
         </li>
-        <li>
-          <p>
-system-xfree86:
-这个软件包是自动生成的（对于 Fink 0.6.2 或更新），如果你是手工安装 XFree86 的话。这包括从源码安装或从官方（或非官方）的二进制发行包，或者安装苹果的 X11。
-它会作为一个依赖关系的占位符。
-</p>
-        </li>
-        <li>
-          <p>
-system-xtools:
-如果你安装了 Tenon 的 Xtools 产品，你需要安装这个软件包。
-和 system-xfree86 一样，这只是执行一个可用性校验，并不修改实际的文件。
-</p>
-        </li>
+        
+      
       </ul>
       <p>
 关于安装和运行 X11 的更多信息，请参考
@@ -757,7 +771,13 @@ unstable/main   - 其它未稳定软件包
         </li>
         <li>
         		<p><b>Buildpath:</b> 路径</p>
-        		<p>Fink 在从源代码编译的时候，需要创建几个临时的目录。默认情况下，它们被放置在 <tt style="white-space: nowrap;">/sw/src</tt> 下，不过，如果你想把它们放在其它地方的话，可以在这里指明路径。查阅本文档后面关于 <tt style="white-space: nowrap;">KeepRootDir</tt> 和 <tt style="white-space: nowrap;">KeepBuildDir</tt> 字段的描述获取关于这个临时目录的更多信息。</p>
+        		
+        		<p>Fink 在从源代码编译的时候，需要创建几个临时的目录。默认情况下，它们被放置在 <tt style="white-space: nowrap;">/sw/src</tt> (on Panther and earlier) 下， <tt style="white-space: nowrap;">/sw/src/fink.build</tt> (on Tiger) 下，不过，如果你想把它们放在其它地方的话，可以在这里指明路径。查阅本文档后面关于 <tt style="white-space: nowrap;">KeepRootDir</tt> 和 <tt style="white-space: nowrap;">KeepBuildDir</tt> 字段的描述获取关于这个临时目录的更多信息。</p>
+	    <p>On Tiger, it is recommended that the Buildpath end with .noindex
+or .build. Otherwise, Spotlight will attempt to index the temporary files in
+the Buildpath, slowing down builds.
+    	</p>
+                
         </li>
       </ul>
     
@@ -875,14 +895,14 @@ ClosestFirst - 优先搜索最近的镜像服务器（把所有镜像服务器�
         <li>
           <p>
             <b>KeepRootDir:</b> 布尔值</p>
-          <p>使得 Fink 不会在构建好一个软件包以后删除 /sw/src/root-[name]-[version]-[revision] 目录。默认值是 False。<b>注意，使用这个选项可以很快塞满你的硬盘！</b>
+          <p>使得 Fink 不会在构建好一个软件包以后删除 root-[name]-[version]-[revision] 目录会在 <b>BuildPath</b>。默认值是 False。<b>注意，使用这个选项可以很快塞满你的硬盘！</b>
           传递 <b>-K</b> 标志给 <b>fink</b> 可以起到相同的效果，但只对单次的 <b>fink</b> 调用起作用。
           </p>
         </li>
         <li>
           <p>
             <b>KeepBuildDir:</b> boolean</p>
-          <p>使得 Fink 不会在构建好一个软件包以后删除 /sw/src/[name]-[version]-[revision] 目录。默认值是 False。<b>注意，使用这个选项可以很快塞满你的硬盘！</b>
+          <p>使得 Fink 不会在构建好一个软件包以后删除 [name]-[version]-[revision] 目录会在 <b>BuildPath</b>。默认值是 False。<b>注意，使用这个选项可以很快塞满你的硬盘！</b>
           传递 <b>-K</b> 标志给 <b>fink</b> 可以起到相同的效果，但只对单次的 <b>fink</b> 调用起作用。
           </p>
         </li>
