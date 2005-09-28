@@ -673,7 +673,7 @@ Fink を使っている場合、 source <tt style="white-space: nowrap;">init.sh
 (注記: メモリと CPU サイクルを節約するために、下記の例のように <tt style="white-space: nowrap;">exec</tt> を追加すると良いでしょう。)
 </p>
 <p>
-以下のサンプルでは GNOME を起動しています:
+以下の簡単な例では、XFree86 または Xorg　上で GNOME を起動しています:
 </p>
 <pre>source /sw/bin/init.csh
 exec gnome-session</pre>
@@ -689,13 +689,8 @@ xterm &amp;
 xterm &amp;
 
 exec enlightenment</pre>
-<p>GNOME2.2 を Apple X11 下で起動するには、以下の通りです:</p>
-<pre>. /sw/bin/init.sh
-quartz-wm --only-proxy &amp;
-metacity &amp;
-exec gnome-session
-</pre>
-<p>GNOME2.4 を Apple X11 下で起動するには、 metacity が自動的に起動するため、以下の通りです:</p>
+
+<p>GNOME2.4 以降を Apple X11 下で起動するには:</p>
 <pre>. /sw/bin/init.sh
 quartz-wm --only-proxy &amp;
 exec gnome-session
