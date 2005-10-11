@@ -16,7 +16,9 @@ DO_CHECKS:
   	  last;
 	} 
 
-	$TargetSystemBuild = GetPathEntry("/System/Library/CoreServices/SystemVersion.plist", "ProductBuildVersion");
+	$TargetSystemBuild = qx{defaults read /System/Library/CoreServices/SystemVersion ProductBuildVersion};
+	chomp $TargetSystemBuild;
+
 #6C35
 #6C115
 #7B85
@@ -29,86 +31,3 @@ DO_CHECKS:
 }
 
 exit $result;
-
-
-
-##################
-
-sub InfoPlistCheck
-{
-    my $path		= $_[0];
-    my $entry		= $_[1];
-    my $version		= $_[2];
-    my $operator	= $_[3];
-
-    if (!$operator)
-    {
-        $operator = "==";
-    }
-
-    @cfBundleVersionArray = split(/\./, GetPathEntry($path,$entry));
-    for ($i = 0; $i < 3; $i++) {
-        if(!$cfBundleVersionArray[$i]) {
-            $cfBundleVersionArray[$i] = '0';
-        }
-    }
-
-    @versionArray = split(/\./, $version);
-    
-    my $actualVersion;
-
-    for ($i = 0; $i < 3; $i++) {
-        if (($cfBundleVersionArray[$i] != $versionArray[$i]) or ($i == 2)) {
-
-            $actualVersion = $cfBundleVersionArray[$i];
-            $version = $versionArray[$i];
-
-            last;
-        }
-    }
-
-    my $expression = '$actualVersion ' . $operator . ' $version';
-
-    if( eval ($expression) )
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-
-}
-
-##################
-sub GetPathEntry
-{
-    my $path		= $_[0];
-    my $entry		= $_[1];
-
-    my $oldSeperator = $/;
-    $/ = \0;
-
-    open( PLIST, "$path") || do {
-        return 0;
-    };
-
-    $plistData = <PLIST>;
-    $plistData =~ /<dict>(.*?)<\/dict>/gis;
-
-    @items = split(/<key>/, $plistData);
-
-    shift @items;
-    foreach $item (@items) {
-        $item =~ /(.*?)<\/key>.*?<string>(.*?)<\/string>/gis;
-        $versiondata{ $1 } = $2;
-    }
-
-    close(PLIST);
-
-    $/ = $oldSeperator;
-
-    return $versiondata{$entry};
- }
-
-
