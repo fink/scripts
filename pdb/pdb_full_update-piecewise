@@ -1,0 +1,21 @@
+#!/bin/sh
+cd /home/groups/f/fi/fink/pdb
+
+echo "Starting PDB update: `date`"
+
+./refresh 10.2-gcc3.3
+$HOME/bin/finksql <current.sql
+./refresh 10.3
+$HOME/bin/finksql <current.sql
+./refresh 10.4-transitional
+$HOME/bin/finksql <current.sql
+
+echo "" > current.sql && ./inject
+
+echo "Fixing permissions"
+chgrp -R fink .
+chmod -f -R g+w,a+r .
+chmod o-rwx db.inc.pl
+chgrp fink /home/groups/f/fi/fink/htdocs/pdb/timestamp.inc
+
+echo "Finished PDB update: `date`"
