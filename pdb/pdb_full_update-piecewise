@@ -1,5 +1,5 @@
 #!/bin/sh
-cd /home/groups/f/fi/fink/pdb
+cd /Volumes/src2/fink/pdb.finkproject.org/pdb
 
 echo "Starting PDB update: `date`"
 
@@ -16,6 +16,6 @@ echo "Fixing permissions"
 chgrp -R fink .
 chmod -f -R g+w,a+r .
 chmod o-rwx db.inc.pl
-chgrp fink /home/groups/f/fi/fink/htdocs/pdb/timestamp.inc
+chgrp fink /Volumes/src2/fink/pdb.finkproject.org/htdocs/pdb/timestamp.inc
 
 echo "Finished PDB update: `date`"
