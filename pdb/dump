@@ -97,7 +97,7 @@ foreach $package (Fink::Package->list_packages()) {
   # gather fields
   $maintainer = $vo->param_default("Maintainer", "(not set)");
 
-  $desc = "<p>".$vo->get_description(1);
+  $desc = "<p>".$vo->get_description(1,1);
   $desc =~ s/\s+$//s;
   $desc =~ s/\n/<\/p><p>/s;
   $desc =~ s/\n\s*\.\n/<\/p><p>/sg;
