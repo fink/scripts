@@ -2,9 +2,12 @@
 
 echo "Updating CVS..."
 cvs -q update -dP
-cd Fink
+cd basepath
 cvs -q update -dP
-cd ..
+cd perlmod/Fink
+rm -f FinkVersion.pm
+sed "s|@VERSION@|`cat ../../VERSION`|" < FinkVersion.pm.in > FinkVersion.pm
+cd ../../..
 
 echo "Fixing permissions"
 chgrp -R fink .
