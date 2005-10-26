@@ -1,25 +1,25 @@
 Q: How do I update the package database?
 
 A: You normally should never have to do this since we have a cron script in 
-place that performs that job every 4 hours for us. But if for some reasons it
+place that performs that job every 8 hours for us. But if for some reasons it
 is necessary to perform such an update right on the spot, proceed as follows.
 
-First log into the SourceForge.net shell server:
-  ssh MYSFUSERNAME@shell.sourceforge.net
+First log into the opendarwin.org server:
+  ssh MYODUSERNAME@sampson.opendarwin.org
 
 The first time you are doing this, you have to create two auxiliary files:
 ~/bin/finksql:
 #!/bin/sh
-exec mysql -h mysql.sourceforge.net -u fink --password=DBPASSWORD fink
+exec mysql -h localhost -u fink --password=DBPASSWORD fink
 
 ~/.finkdbi:
-DBI:mysql:database=fink;host=mysql.sourceforge.net|fink|DBPASSWORD
+DBI:mysql:database=fink;host=localhost|fink|DBPASSWORD
 
 You probably should chmod go-rw the two files, and also chmod u+x the finksql
 script. If you don't know the value for "DBPASSWORD", ask the project admin.
 
 Now change into the PDB directory:
-  cd /home/groups/f/fi/fink/pdb/
+  cd /Volumes/src2/fink/pdb.finkproject.org/pdb/
 
 Refresh the list of packages (essentially this runs a 'cvs up'):
   ./refresh
@@ -36,13 +36,13 @@ Q: How do I update the PDB for a full fink release?
 A: Assuming you just released fink 0.4.5, you'll want to adjust the package
 database accordingly. 
 
-First log into the SourceForge.net shell server:
-  ssh MYSFUSERNAME@shell.sourceforge.net
+First log into the opendarwin.org server:
+  ssh MYODUSERNAME@sampson.opendarwin.org
 
 We assume that you setup the necessary auxiliary files already, if not read
 the above Q&A for information on how to do it.
 Now change into the PDB directory:
-  cd /home/groups/f/fi/fink/pdb/
+  cd /Volumes/src2/fink/pdb.finkproject.org/pdb/
 
 Next dump the list of packages in the release. Replace 0.7.0 as appropriate, and the
 '10.3' with the Fink tree you want to count as stable:
