@@ -65,8 +65,12 @@ if (-e $treelink) {
 }
 
 $config->set_param("Trees", "$tree/main $tree/crypto");
-# this is a volatile change, we don't (and mustn't) call save()
+# "Trees" is a volatile change vs fink.conf, we don't (and mustn't) call save()
 
+# omit actual locally-installed fink if it is present
+set_options({exclude_trees=>[qw/status/]});
+
+# load the package database
 Fink::Package->require_packages();
 
 # restore stdout
