@@ -60,7 +60,7 @@ English |
         <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt>, because it conflicts
         with <tt style="white-space: nowrap;">system-xfree86</tt>.</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 How do I change from the non-threaded version of Fink's XFree86
         packages to the threaded version (or vice-versa)?</a></li><li><a href="#comp-packages.cctools">7.4 "When I try to install KDE, I get the following message: 'Can't
-        resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 i can't install <tt style="white-space: nowrap;">g77</tt> because <tt style="white-space: nowrap;">c++filt</tt> is missing.  Where do I get it?</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
+        resolve dependency "cctools (&gt;= 446-1)"'"</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 i can't install <tt style="white-space: nowrap;">g77</tt> because <tt style="white-space: nowrap;">c++filt</tt> is missing.  Where do I get it?</a></li><li><a href="#comp-packages.all-others">7.7 I'm having issues with a package that isn't listed here.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
         library". Is that bad?</a></li><li><a href="#usage-general.passwd">8.2 There are suddenly a number of strange users on my system, with
         names like "mysql", "pgsql", and "games". Where did they come
         from?</a></li><li><a href="#usage-general.compile-myself">8.3 How do I compile something myself using Fink-installed
@@ -1055,7 +1055,7 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
     
     <a name="comp-packages.cctools">
       <div class="question"><p><b>Q7.4: "When I try to install KDE, I get the following message: 'Can't
-        resolve dependency "cctools (&gt;= 446-1)"'</b></p></div>
+        resolve dependency "cctools (&gt;= 446-1)"'"</b></p></div>
       <div class="answer"><p><b>A:</b> This somewhat cryptic message means you need to install the
         December 2002 Developer Tools.</p></div>
     </a>
@@ -1073,6 +1073,11 @@ fink install libiconv</pre></div>
         </ul><p>
 1) Flush out your old
 2) Reinstall BSD.pkg (from your main OS install)</p></div>
+    </a>
+    <a name="comp-packages.all-others">
+    <div class="question"><p><b>Q7.7: I'm having issues with a package that isn't listed here.</b></p></div>
+    <div class="answer"><p><b>A:</b> Since package problems tend to be transient, we've decided to put them
+      up on the Fink wiki.  Check the <a href="http://wiki.opendarwin.org/index.php/Fink:Package_issues"> Package issues page</a>.</p></div>
     </a>
   <h2><a name="usage-general">8 Package Usage Problems - General</a></h2>
     
@@ -1370,8 +1375,8 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>It is often easiest just to a
       <div class="answer"><p><b>A:</b> This is caused by using a 10.1 version of XFree86 on 10.2. You must
         upgrade to a 10.2 version.</p><p>If you are using the Fink <tt style="white-space: nowrap;">xfree86</tt> packages, then you
         can get an upgrade by the usual means ("<tt style="white-space: nowrap;">fink selfupdate-cvs ;
-        fink update-all</tt>" for installation from source, <tt style="white-space: nowrap;">fink
-        selfupdate ; ; sudo apt-get update; sudo apt-get dist-upgrade</tt>"
+        fink update-all</tt>" for installation from source, "<tt style="white-space: nowrap;">fink
+        selfupdate ; sudo apt-get update; sudo apt-get dist-upgrade</tt>"
         for installation from binaries.</p><p>If you have installed XFree86 by other means, you can find patches
         to bring you up to date at the <a href="http://mrcla.com/XonX">XonX
         web site</a>.</p></div>
@@ -1489,9 +1494,9 @@ fink selfupdate; fink index</pre><p>(the first line may give you warnings about 
     </a>
     <a name="usage-packages.tiger-gtk">
       <div class="question"><p><b>Q9.14: After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</b></p></div>
-      <div class="answer"><p><b>A:</b> This is caused by an apparent bug in Tiger's dynamic linker (current as of 10.4.1).  You can work around this via prefixing the the name of you want as follows:
-</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p><p>You may find it preferable to set this globally (e.g. in your startup script, and/or in your <tt style="white-space: nowrap;">.xinitrc</tt> , which you may need to do to run GNOME).  Put</p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>in your <tt style="white-space: nowrap;">.xinitrc</tt> (regardless of your login shell) or your <tt style="white-space: nowrap;">.profile</tt> (or other startup script) for <b>bash</b> users and:</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>is the corresponding command to use in e.g. your <tt style="white-space: nowrap;">.cshrc</tt> file for <b>tcsh</b> users.</p><p>This will automatically be set if you install 
-<tt style="white-space: nowrap;">base-files-1.9.7-1</tt> or later.</p></div>
+      <div class="answer"><p><b>A:</b> This is caused by an apparent bug in Tiger's dynamic linker (current as of 10.4.1), but looks to be fixed in 10.4.3, and Fink has had a workaround in the guise of <tt style="white-space: nowrap;">base-files-1.9.7-1</tt> or later.</p><p>If you haven't updated Tiger and/or <tt style="white-space: nowrap;">base_files</tt>yet, ou can work around this issue by prefixing the the name of you want as follows:
+</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p><p>You may find it preferable to set this globally (e.g. in your startup script, and/or in your <tt style="white-space: nowrap;">.xinitrc</tt> , which you may need to do to run GNOME).  Put</p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>in your <tt style="white-space: nowrap;">.xinitrc</tt> (regardless of your login shell) or your <tt style="white-space: nowrap;">.profile</tt> (or other startup script) for <b>bash</b> users and:</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>is the corresponding command to use in e.g. your <tt style="white-space: nowrap;">.cshrc</tt> file for <b>tcsh</b> users.</p><p>Note:  this will automatically be done if you install a recent enough <tt style="white-space: nowrap;">base-files</tt>.
+	</p></div>
     </a>
     <a name="usage-packages.yelp">
     	<div class="question"><p><b>Q9.15: I can't get the help to work for any GNOME application.</b></p></div>
@@ -1503,4 +1508,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.58 2005/09/06 01:28:56 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.59 2005/09/14 16:26:55 rangerrick Exp $</i></p></body></html>
