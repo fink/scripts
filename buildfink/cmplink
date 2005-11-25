@@ -16,9 +16,12 @@
 #along with this program; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+die "Usage: $0 a-dir b-dir\n" unless @ARGV == 2;
+my($adir, $bdir) = @ARGV;
+
 print "<tt>\n";
 while(<>) {
-	s!^(.*?):!<a href="logs/$1.log">$1</a>:!;
+	s!^\s*(.*?): (.*) => (.*)!: <a href="$adir/logs/$1.log">$2</a> => <a href="$bdir/logs/$1.log">$3</a>!;
 	s!$!<br>!;
 	print $_;
 }
