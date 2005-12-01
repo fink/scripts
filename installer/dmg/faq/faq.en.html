@@ -303,7 +303,7 @@ English |
         and <tt style="white-space: nowrap;">unstable/crypto</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line, and
         then run <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt>.
         </p><p>Also note, if you don't want to install any more from unstable than
-        your specific packages and its dependencies, don't use the
+        your specific packages and their dependencies, don't use the
         <tt style="white-space: nowrap;">update-all</tt> command until you turn the unstable tree
         back off.</p></div>
     </a>
@@ -311,7 +311,7 @@ English |
       <div class="question"><p><b>Q5.9: Do I <b>really</b> need to enable all of unstable just to install
         one unstable package that I want?</b></p></div>
       <div class="answer"><p><b>A:</b> No, but it is highly recommended you do.  Mixing and matching can
-        cause unforseen issues that make it difficult to debug problems when
+        cause unforeseen issues that make it difficult to debug problems when
         they do arise.</p><p>That said, if you only want one or two specific packages, and nothing
         else from unstable, then you need to switch over to CVS updating (i.e.
         use <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>), because rsync only updates the
@@ -697,7 +697,7 @@ deb http://bindist.finkmirrors.net/bindist 10.3/release main crypto
 # Official binary distribution: download location for updated
 # packages built between releases
 deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
-<p>(The above of course assumes you're on 10.3.  If you're on a different OS replace <tt style="white-space: nowrap;">10.3</tt> with what your current distribution is.</p>
+<p>The above of course assumes you're on 10.3.  If you're on a different OS replace <tt style="white-space: nowrap;">10.3</tt> with what your current distribution is.</p>
 <p>Then save your work and quit the editor.  Now update your binary package list again.</p>
 </li>
         </ul></div>
@@ -979,7 +979,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.gettext">
       <div class="question"><p><b>Q6.23: Whenever I try to build from source, Fink keeps waffling between <tt style="white-space: nowrap;">gettext-dev</tt> and <tt style="white-space: nowrap;">libgettext3-dev</tt>.</b></p></div>
-      <div class="answer"><p><b>A:</b> Some packages that need <tt style="white-space: nowrap;">gettext</tt> headers to build have been updated to use <tt style="white-space: nowrap;">libgettext3-dev</tt> and some still use <tt style="white-space: nowrap;">gettext-dev</tt>.  Consequently, Fink may try to switch to whichever one isn't currently installed in order to satisfy a build dependency for some package that you're trying to update.  In addition, the <tt style="white-space: nowrap;">fink </tt>tool treats <tt style="white-space: nowrap;">gettext-dev</tt> as essential, and will install it any time you selfupdate.</p><p>Similar behavior can happen for other pairs of packages, too. </p><p>Unfortunately, due to limitations in the build-dependency engine, you may find that your build bombs because you've swapped in one of these but some later package in your build chain wants the other one.  You can usually proceed by repeating your update command again.</p><p>In extreme cases you may wind up having to install those packages which build-depend on <tt style="white-space: nowrap;">gettext-dev</tt> separately from those which want <tt style="white-space: nowrap;">libgettext3-dev</tt> (or whichever pair are causing problems).  You may even have to install packages one by one.</p><p>A permanent fix should hopefully be available in <tt style="white-space: nowrap;">fink-0.24.9</tt>.</p></div>
+      <div class="answer"><p><b>A:</b> Some packages that need <tt style="white-space: nowrap;">gettext</tt> headers to build have been updated to use <tt style="white-space: nowrap;">libgettext3-dev</tt> and some still use <tt style="white-space: nowrap;">gettext-dev</tt>.  Consequently, Fink may try to switch to whichever one isn't currently installed in order to satisfy a build dependency for some package that you're trying to update.  In addition, the <tt style="white-space: nowrap;">fink </tt> tool treats <tt style="white-space: nowrap;">gettext-dev</tt> as essential, and will install it any time you selfupdate.</p><p>Similar behavior can happen for other pairs of packages, too. </p><p>Unfortunately, due to limitations in the build-dependency engine, you may find that your build bombs because you've swapped in one of these but some later package in your build chain wants the other one.  You can usually proceed by repeating your update command again.</p><p>In extreme cases you may wind up having to install those packages which build-depend on <tt style="white-space: nowrap;">gettext-dev</tt> separately from those which want <tt style="white-space: nowrap;">libgettext3-dev</tt> (or whichever pair are causing problems).  You may even have to install packages one by one.</p><p>A permanent fix should hopefully be available in <tt style="white-space: nowrap;">fink-0.24.9</tt>.</p></div>
     </a>
     <a name="comp-general.python-mods">
       <div class="question"><p><b>Q6.24: I get errors involving <tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt>when I try to build a Python module.</b></p></div>
@@ -1494,8 +1494,8 @@ fink selfupdate; fink index</pre><p>(the first line may give you warnings about 
     </a>
     <a name="usage-packages.tiger-gtk">
       <div class="question"><p><b>Q9.14: After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</b></p></div>
-      <div class="answer"><p><b>A:</b> This is caused by an apparent bug in Tiger's dynamic linker (current as of 10.4.1), but looks to be fixed in 10.4.3, and Fink has had a workaround in the guise of <tt style="white-space: nowrap;">base-files-1.9.7-1</tt> or later.</p><p>If you haven't updated Tiger and/or <tt style="white-space: nowrap;">base_files</tt>yet, ou can work around this issue by prefixing the the name of you want as follows:
-</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p><p>You may find it preferable to set this globally (e.g. in your startup script, and/or in your <tt style="white-space: nowrap;">.xinitrc</tt> , which you may need to do to run GNOME).  Put</p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>in your <tt style="white-space: nowrap;">.xinitrc</tt> (regardless of your login shell) or your <tt style="white-space: nowrap;">.profile</tt> (or other startup script) for <b>bash</b> users and:</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>is the corresponding command to use in e.g. your <tt style="white-space: nowrap;">.cshrc</tt> file for <b>tcsh</b> users.</p><p>Note:  this will automatically be done if you install a recent enough <tt style="white-space: nowrap;">base-files</tt>.
+      <div class="answer"><p><b>A:</b> This is caused by an apparent bug in Tiger's dynamic linker (current as of 10.4.1), but looks to be fixed in 10.4.3, and Fink has had a workaround in the guise of <tt style="white-space: nowrap;">base-files-1.9.7-1</tt> or later.</p><p>If you haven't updated Tiger and/or <tt style="white-space: nowrap;">base-files</tt>yet, ou can work around this issue by prefixing the name of the software you want to run as follows:
+</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: </pre><p>E.g., if you want to use <tt style="white-space: nowrap;">gnucash</tt>, you'd use</p><pre>env DYLD_FALLBACK_LIBRARY_PATH=: gnucash</pre><p>This method works for applications that are launched via the Application Menu in Apple's X11 as well as a terminal.</p><p>You may find it preferable to set this globally (e.g. in your startup script, and/or in your <tt style="white-space: nowrap;">.xinitrc</tt>, which you may need to do to run GNOME).  Put</p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>in your <tt style="white-space: nowrap;">.xinitrc</tt> (regardless of your login shell) or your <tt style="white-space: nowrap;">.profile</tt> (or other startup script) for <b>bash</b> users and:</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>is the corresponding command to use in e.g. your <tt style="white-space: nowrap;">.cshrc</tt> file for <b>tcsh</b> users.</p><p>Note:  this will automatically be done if you install a recent enough <tt style="white-space: nowrap;">base-files</tt>.
 	</p></div>
     </a>
     <a name="usage-packages.yelp">
@@ -1508,4 +1508,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.59 2005/09/14 16:26:55 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.60 2005/11/17 01:23:13 alexkhansen Exp $</i></p></body></html>
