@@ -41,9 +41,7 @@ build and exit.
 The C<--infofilter> option, if specified, allows the package .info and .patch files to be filtered
 prior to building packages.  The specified script will be invoked with the basename of the info
 or patch file as an argument and will receive the contents of the file on standard output; it should
-emit the modified file on standard output.  Note that even if this option is not spcified, the
-.info files used by buildfink will differ from the standard ones; we increment the revision number
-of every package we build to ensure that buildfink's .info file is used.
+emit the modified file on standard output.
 
 The C<--patchdir> option, if specified, allows you to have an extra directory of .info and
 .patch files which will be inserted into the package tree.  Any files
