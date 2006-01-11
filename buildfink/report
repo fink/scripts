@@ -140,7 +140,9 @@ sub dologs {
 	my $back = "../" x $depth;
 	$back .= "logs/";
 	while(<IN>) {
-		s/^(\S*)\.log.*/<a href="$back$1.log">$1<\/a><br>/;
+		s/^(\S*)\.log\s+(.+)/<a href="$back$1.log">$1<\/a> ($2)<br>/
+			or
+		s/^(\S*)\.log.*/<a href="$back$1.log">$1<\/a><br>/;;
 		print OUT $_;
 		push @ret, $1;
 	}
