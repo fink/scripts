@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fink Documentation - Настройка доступа к Fink через CVS</title></head><body>
+<table width="100%" cellspacing="0">
+<tr valign="bottom">
+<td align="center">
+Available Languages:  | 
+<a href="cvs.en.html">English</a> | 
+<a href="cvs.es.html">Espa&ntilde;ol</a> | 
+<a href="cvs.fr.html">Fran&ccedil;ais</a> | 
+&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russkiy) | 
+<a href="cvs.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
+</td>
+</tr>
+</table>
+<h1 align="center">Настройка доступа к Fink через CVS</h1>
+        <p> Fink разработан через посредство CVS. Это значит, что вы можете быть в курсе 
+         последних разработок между выпусками версий и всегда получать новейший материал. Данная страница рассказывает о том, 
+           как можно произвести настройку имеющейся инсталляции Fink для обновления через 
+            CVS. Информация на данной странице относится к Fink 0.3.x и более поздним версиям.</p>
+    <h3><a name="index.">Структура CVS Fink </a></h3>
+        
+        <p>Fink имеет несколько модулей CVS. Модуль <tt style="white-space: nowrap;">dists</tt> (<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/fink/dists/">ViewCVS</a>)
+            содержит описание пакетов и патчи для OS X 10.2 и более поздних версий. Есть другие модули, используемые разработчиками Fink,  
+            обзор которых доступен всем, но они не представляют интереса для большинства пользователей.</p>
+    <h3><a name="index.">Обновление описания пакетов</a></h3>
+        
+        <p>Раньше это была довольно нудная процедура, но в текущих версиях Fink
+            это очень просто. Просто дайте следующую команду:</p>
+        <pre>fink selfupdate-cvs</pre>
+        <p>Fink автоматически выполнит все необходимые вам действия, в том числе  
+            найдет последний комплект описания пакетов и обновит несколько основных базовых пакетов 
+            (среди них менеджер пакетов Fink).</p>
+        <p>Если вы находитесь за брандмауэром, см. <a href="http://fink.sourceforge.net/faq/usage-fink.php#proxy">Ч.З.В. 3.2</a>.</p>
+        <p>После обновления своего описания пакетов указанным образом у вас 
+            может появиться желание обновить свои пакеты до последних возможных версий. 
+            Это можно сделать при помощи следующй команды:</p>
+        <pre>fink update-all</pre>
+    <h3><a name="index.">Обновление менеджера пакетов</a></h3>
+        
+        <p>
+            <b>Примечание:</b>С 20 сентября 2001 н. больше нет необходимости 
+            обновлять менеджер пакетов отдельно; с ним обращаются, как с любым другим 
+            пакетом. Все еще возможно обновлять его непосредственно из CVS, хотя
+            это обычно интересует тех, кто создает пакеты, а не средних
+            пользователей.</p>
+        <p>Менеджер пакетов должен обновляться через отдельный каталог и
+            скрипт <tt style="white-space: nowrap;">inject.pl</tt>. Данный скрипт помещает описание 
+            пакетов и тарболы для пакетов fink и базовых файлов 
+            на вашем дереве Fink и осуществляет их построение.</p>
+        <p>При выполнении первоначальной процедуры вам нужен временный каталог (в примере называемый 
+            <tt style="white-space: nowrap;">tempdir</tt>), который должен быть пустым (или по крайней мере не должен содержать
+            подкаталог под именем 'fink'). Порядок действий 
+            следующий:</p>
+        <pre>cd tempdir cvs
+            -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink login cvs -z3
+            -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co fink cd
+            fink ./inject.pl</pre>
+        <p>Команда login запросит пароль - просто нажмите return. Вы
+            можете удалить временный каталог после данной процедуры, но если
+            его оставить, будет легче произвести обновление в следующий раз. Тогда порядок действий таков:</p>
+        <pre>cd tempdir/fink cvs -z3 update -d ./inject.pl</pre>
+    <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
+Copyright (c) 2001-2006 The Fink Project.
+You may distribute this document in print for private purposes,
+provided the document and this copyright notice remain complete and
+unmodified. Any commercial reproduction and any online publication
+requires the explicit consent of the author.</p><hr>
+<p>Generated from <i>$Fink: cvs.ru.xml,v 1.1 2005/01/16 09:43:33 horsager Exp $</i></p></body></html>
