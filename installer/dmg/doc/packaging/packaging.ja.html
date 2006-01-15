@@ -1335,7 +1335,20 @@ OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はあ�
 							例えば，<tt style="white-space: nowrap;">Depends</tt> や他のパッケージ一覧フィールド， Splitoff パッケージの追加・削除・名称変更， Splitoff パッケージ間でのファイルの移動など．
 							パッケージのツリーを統合 (例えば 10.2 から 10.3) する場合，新しい方のツリーでは <tt style="white-space: nowrap;">Revision</tt> を 10 (など，大きな数字) あげて古い方のツリーでのパッケージの更新に対応できるようにします．
  						</p>
-					</td></tr><tr valign="top"><td>Epoch</td><td>
+					</td></tr><tr valign="top"><td>Architecture</td><td>
+<p>
+パッケージが対応しているアーキテクチャー一覧を，コンマ区切りで記述．
+現在のところ，<tt style="white-space: nowrap;">powerpc</tt> と <tt style="white-space: nowrap;">i386</tt> が値として使用できます．
+このフィールドが存在しないパッケージは，<tt style="white-space: nowrap;">powerpc, i386</tt> が指定されたものとして扱われます．
+(0.24.11 CVS バージョン以降 の fink に導入)
+</p>
+<p>
+gcc-4.0 以前のコンパイラを使うパッケージ
+(およびこれに依存するパッケージ)
+の場合に <tt style="white-space: nowrap;">powerpc</tt> と宣言するのが，
+現在のところの主な使用方法です．
+</p>
+</td></tr><tr valign="top"><td>Epoch</td><td>
 						<p>
 							<b>Fink 0.12.0 で導入:</b>
 							パッケージの「エポック」を指定します (指定されていない場合は 0 と見なされる)．
@@ -2500,4 +2513,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.33 2005/09/18 21:16:57 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.34 2006/01/15 06:57:54 babayoshihiko Exp $</i></p></body></html>
