@@ -1400,6 +1400,20 @@ Required field.
   leave space for future updates to the package in the older
   tree.
 </p>
+</td></tr><tr valign="top"><td>Architecture</td><td>
+<p>
+A comma-separated list of architecture(s) the package is intended for.
+At present, the only valid values for architecture are <tt style="white-space: nowrap;">powerpc</tt>
+and <tt style="white-space: nowrap;">i386</tt>.  A package which is missing this field is treated
+as if the value of the field were <tt style="white-space: nowrap;">powerpc, i386</tt>.
+(Introduced in a post-0.24.11 CVS version of fink.)
+</p>
+<p>
+At present, the most common use of this field will be for packages which
+require a compiler earlier than gcc-4.0 (or packages which depend on such
+packages), which should be declared to have architecture 
+<tt style="white-space: nowrap;">powerpc</tt>.
+</p>
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p>
 <b>Introduced in fink 0.12.0.</b>
@@ -2642,4 +2656,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.82 2005/09/07 04:27:10 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.83 2006/01/11 05:02:58 dmrrsn Exp $</i></p></body></html>
