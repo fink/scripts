@@ -17,7 +17,7 @@ Available Languages:  |
 		ここでの情報の多くは， Mac OS X バージョン 10.0.0 と Darwin 1.3.x に適用されます．
 		どちらも Mac OS X は Darwin のスーパーセットなので，両者を Darwin という言葉で示します．
 		</p>
-  <h2>Contents</h2><ul><li><a href="#basics"><b>1 基本</b></a><ul><li><a href="#basics.heritage">1.1 Darwin はどこから来たのか</a></li><li><a href="#basics.compiler">1.2 コンパイラとツール</a></li><li><a href="#basics.host-type">1.3 ホスト種別</a></li><li><a href="#basics.libraries">1.4 ライブラリ</a></li><li><a href="#basics.other-sources">1.5 他の情報源</a></li></ul></li><li><a href="#shared"><b>2 共有コード</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共有ライブラリ vs ローダブル・モジュール</a></li><li><a href="#shared.version">2.2 バージョン番号</a></li><li><a href="#shared.cflags">2.3 コンパイラフラグ</a></li><li><a href="#shared.build-lib">2.4 共有ライブラリ をビルド</a></li><li><a href="#shared.build-mod">2.5 モジュールをビルド</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 状況</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 パッチ</a></li><li><a href="#libtool.fixing-14x">3.3 1.4.x を修正</a></li><li><a href="#libtool.notes">3.4 さらなる注記</a></li></ul></li><li><a href="#preparing-10.2"><b>4 10.2 に向けて</b></a><ul><li><a href="#preparing-10.2.bash">4.1 bash シェル</a></li><li><a href="#preparing-10.2.gcc3">4.2 gcc3 コンパイラ</a></li></ul></li><li><a href="#preparing-10.3"><b>5 10.3 に向けて</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li><li><a href="#preparing-10.3.typedef">5.2 新しいシンボル定義</a></li><li><a href="#preparing-10.3.system-libs">5.3 新しいシステムのライブラリ</a></li></ul></li><li><a href="#preparing-10.4"><b>6 10.4 に向けて</b></a><ul><li><a href="#preparing-10.4.perl">6.1 Perl</a></li></ul></li></ul><h2><a name="basics">1 基本</a></h2>
+  <h2>Contents</h2><ul><li><a href="#basics"><b>1 基本</b></a><ul><li><a href="#basics.heritage">1.1 Darwin はどこから来たのか</a></li><li><a href="#basics.compiler">1.2 コンパイラとツール</a></li><li><a href="#basics.host-type">1.3 ホスト種別</a></li><li><a href="#basics.libraries">1.4 ライブラリ</a></li><li><a href="#basics.other-sources">1.5 他の情報源</a></li></ul></li><li><a href="#shared"><b>2 共有コード</b></a><ul><li><a href="#shared.lib-and-mod">2.1 共有ライブラリ vs ローダブル・モジュール</a></li><li><a href="#shared.version">2.2 バージョン番号</a></li><li><a href="#shared.cflags">2.3 コンパイラフラグ</a></li><li><a href="#shared.build-lib">2.4 共有ライブラリ をビルド</a></li><li><a href="#shared.build-mod">2.5 モジュールをビルド</a></li></ul></li><li><a href="#libtool"><b>3 GNU libtool</b></a><ul><li><a href="#libtool.situation">3.1 状況</a></li><li><a href="#libtool.patch-135">3.2 1.3.5 パッチ</a></li><li><a href="#libtool.fixing-14x">3.3 1.4.x を修正</a></li><li><a href="#libtool.notes">3.4 さらなる注記</a></li></ul></li><li><a href="#preparing-10.2"><b>4 10.2 に向けて</b></a><ul><li><a href="#preparing-10.2.bash">4.1 bash シェル</a></li><li><a href="#preparing-10.2.gcc3">4.2 gcc3 コンパイラ</a></li></ul></li><li><a href="#preparing-10.3"><b>5 10.3 に向けて</b></a><ul><li><a href="#preparing-10.3.perl">5.1 Perl</a></li><li><a href="#preparing-10.3.typedef">5.2 新しいシンボル定義</a></li><li><a href="#preparing-10.3.system-libs">5.3 新しいシステムのライブラリ</a></li></ul></li><li><a href="#preparing-10.4"><b>6 10.4 に向けて</b></a><ul><li><a href="#preparing-10.4.perl">6.1 Perl</a></li><li><a href="#preparing-10.4.typedef">6.2 新しいシンボル定義</a></li><li><a href="#preparing-10.4.system-libs">6.3 新しいシステムライブラリ</a></li></ul></li></ul><h2><a name="basics">1 基本</a></h2>
     
     
     <h3><a name="basics.heritage">1.1 Darwin はどこから来たのか</a></h3>
@@ -569,10 +569,39 @@ gcc2 でコンパイルされたライブラリに gcc3 でコンパイルされ
 
 <h3><a name="preparing-10.4.perl">6.1 Perl</a></h3>
 
+  <p>
+    <tt style="white-space: nowrap;">/usr/bin/perl</tt> は perl 5.8.6 です．
+    architecture string は未だに "darwin-thread-multi-2level" です．
+  </p>
+
+
+
+<h3><a name="preparing-10.4.typedef">6.2 新しいシンボル定義</a></h3>
+
+  <p>
+    Mac OS X 10.4 は，多くのシンボルの型を変更しました．
+    今までに明示的に型を指定したもの、例えば <tt style="white-space: nowrap;">socklen_t</tt> を <tt style="white-space: nowrap;">int</tt> と定義したようなもの，
+    この定義は正しくありません．
+  </p>
+
+
+
+<h3><a name="preparing-10.4.system-libs">6.3 新しいシステムライブラリ</a></h3>
+
+  <p>
+    Mac OS X 10.3 の <tt style="white-space: nowrap;">poll()</tt> 関数は、実際は <tt style="white-space: nowrap;">select()</tt> を利用したエミュレーションでした。
+    Mac OS X 10.4 では、 <tt style="white-space: nowrap;">poll()</tt> はカーネルで実装されている実際の関数です。
+    しかし、ソケットと使用する際には壊れています。
+    システムの <tt style="white-space: nowrap;">poll()</tt> を完全に無視することも検討してください。
+    Fink の glib2 パッケージは、完全に機能するエミュレーションを使うようパッチされていますので、
+    poll のような機能のライブラリを安全に使うことができます。
+  </p>
+
+
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2006 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: porting.ja.xml,v 1.5 2005/08/08 02:59:00 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: porting.ja.xml,v 1.7 2006/01/25 03:57:27 babayoshihiko Exp $</i></p></body></html>
