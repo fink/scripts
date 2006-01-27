@@ -236,7 +236,8 @@ the package <b>e</b>poch
 </p>
 </td></tr><tr valign="top"><td>%v</td><td>
 <p>
-the package <b>v</b>ersion
+the package <b>v</b>ersion. Note that the Epoch is not part
+of <tt style="white-space: nowrap;">%v</tt>.
 </p>
 </td></tr><tr valign="top"><td>%r</td><td>
 <p>
@@ -244,7 +245,8 @@ the package <b>r</b>evision
 </p>
 </td></tr><tr valign="top"><td>%f</td><td>
 <p>
-the <b>f</b>ull package name, i.e. %n-%v-%r
+the <b>f</b>ull package name (%n-%v-%r). Note that the Epoch is not
+part of <tt style="white-space: nowrap;">%f</tt>.
 </p>
 </td></tr><tr valign="top"><td>%p, %P</td><td>
 <p>
@@ -1424,6 +1426,16 @@ Policy Manual</a>.
 Because Fink and some of the underlying Debian tools use
 name-version-revision as the unique identifier of a package, you must
 not create a package that differs from another solely by its epoch.
+</p>
+<p>
+When used in a version string, the Epoch appears before the Version
+value, separated by a colon (1:3.14-2). Note that the Epoch is not
+of <tt style="white-space: nowrap;">%v</tt> (or (<tt style="white-space: nowrap;">%f</tt>). If you add an Epoch field to
+a package description file, you may have to adjust versioned
+dependencies on the packages in it. For example, if you
+add <tt style="white-space: nowrap;">Epoch: 1</tt> and foo-dev declares <tt style="white-space: nowrap;">Depends:
+foo-shlibs (= %v-%r)</tt>, you will need to rewrite that
+as <tt style="white-space: nowrap;">Depends: foo-shlibs (= %e:%v-%r)</tt>.
 </p>
 </td></tr><tr valign="top"><td>Description</td><td>
 <p>
@@ -2656,4 +2668,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.83 2006/01/11 05:02:58 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.84 2006/01/27 03:08:06 dmacks Exp $</i></p></body></html>
