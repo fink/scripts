@@ -456,7 +456,7 @@ them.</li>
 (Policy change effective April, 2005.)
 </p>
 <p>
-Due to the apparent incompatibilty of the OpenSSL license with the GPL and 
+Due to the apparent incompatibility of the OpenSSL license with the GPL and 
 LGPL licenses, fink packages which link to openssl but are licensed under 
 the GPL or LGPL are marked as "Restrictive."  As a consequence, the Fink 
 project will not distribute binaries of such packages, although users are 
@@ -974,7 +974,7 @@ is to put these files (and their associated manpages and/or other
 related files) in a %N-bin splitoff package. Use of
 <tt style="white-space: nowrap;">Conflicts</tt> and <tt style="white-space: nowrap;">Replaces</tt> fields ensures that
 installation of different perl-version forms of these packages, which
-contain files of the same name, is mutually excluve. The user can
+contain files of the same name, is mutually exclusive. The user can
 install many different perl-versions of the runtime modules, and then
 choose whichever one perl-version of the scripts he wants at a given
 time. For example, Tk.pm comes with an
@@ -1228,14 +1228,14 @@ a different value (for example, during a transition to a new distribution,
 your packages .info file must specify this using the versioned binaries
 provided by Apple.  Exactly how you will do this depends on the build
 system of your software, but for many packages, the <tt style="white-space: nowrap;">SetCC</tt>
-and <tt style="white-space: nowrap;">SetCXX</tt> fink fields can be used for this puporse.
+and <tt style="white-space: nowrap;">SetCXX</tt> fink fields can be used for this purpose.
 For example, you might change the g++ compiler to version 3.3 by the setting
 <tt style="white-space: nowrap;">SetCXX: g++-3.3</tt>.  Examine the output when building your
 package to make sure that the correct compiler is being used.
 </p><p>
 The 10.1 distribution assumes that the compiler version is 2.95; the
 10.2 distribution assumes that the compiler version is 3.1; the 10.2-gcc3.3
-and 10.3 distributions assume tha the compiler version is 3.3.   The compiler
+and 10.3 distributions assume that the compiler version is 3.3.   The compiler
 for the 10.4-transitional distribution is complicated: g++-3.3 is being
 used along with gcc-4.0.  This will change again in the 10.4 distribution,
 which will use both gcc-4.0 and g++-4.0.
@@ -1429,7 +1429,7 @@ not create a package that differs from another solely by its epoch.
 </p>
 <p>
 When used in a version string, the Epoch appears before the Version
-value, separated by a colon (1:3.14-2). Note that the Epoch is not
+value, separated by a colon (1:3.14-2). Note that the Epoch is not part 
 of <tt style="white-space: nowrap;">%v</tt> (or (<tt style="white-space: nowrap;">%f</tt>). If you add an Epoch field to
 a package description file, you may have to adjust versioned
 dependencies on the packages in it. For example, if you
@@ -1691,7 +1691,7 @@ the "Replaces" field.
 <p>
 Note that there is no versioning data associated with Provides
 items. They do not inherit from the parent package that contains the
-Provides list nor is there a syntax for specifing an arbitrary version
+Provides list nor is there a syntax for specifying an arbitrary version
 in the Provides field itself. Further, a dependency that contains a
 version specification is not satisfied by a package that Provides that
 needed package name. As a result, having many variants provide a common surrogate package may be harmful, because it precludes the use of versioned dependencies. For example, if foo-gnome and foo-nognome both have "Provides: foo", another package with "Depends: foo (&gt; 1.1)" will not work.
@@ -2331,7 +2331,7 @@ be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revis
 the <b>first</b> version of a Fink package which made
 this library (with this compatibility version) available.
 The Shlibs declaration amounts to a promise
-from the maintainer that a libary with this name and a 
+from the maintainer that a library with this name and a 
 <tt style="white-space: nowrap;">-compatibility_version</tt>
 of at least this number will always be found in later versions of this
 Fink package.
@@ -2668,4 +2668,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.84 2006/01/27 03:08:06 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.85 2006/02/07 10:37:34 michga Exp $</i></p></body></html>

@@ -80,11 +80,11 @@ SplitOff: &lt;&lt;
 </td></tr><tr valign="top"><td>%e</td><td>
 <p>ère du paqu<b>e</b>t</p>
 </td></tr><tr valign="top"><td>%v</td><td>
-<p><b>v</b>ersion du paquet</p>
+<p><b>v</b>ersion du paquet. Notez que l'ère ne fait partie de <tt style="white-space: nowrap;">%v</tt>.</p>
 </td></tr><tr valign="top"><td>%r</td><td>
 <p><b>r</b>évision du paquet</p>
 </td></tr><tr valign="top"><td>%f</td><td>
-<p>nom complet du paquet, c'est-à-dire : %n-%v-%r</p>
+<p>nom complet du paquet, c'est-à-dire : %n-%v-%r. Notez que l'ère ne fait partie de <tt style="white-space: nowrap;">%f</tt>.</p>
 </td></tr><tr valign="top"><td>%p, %P</td><td>
 <p><b>p</b>réfixe d'installation de Fink, par exemple : <tt style="white-space: nowrap;">/sw</tt>. Vous ne devez pas partir du principe que Fink est installé dans <tt style="white-space: nowrap;">/sw</tt>, utilisez <tt style="white-space: nowrap;">%p</tt> pour obtenir le bon chemin.</p>
 </td></tr><tr valign="top"><td>%d</td><td>
@@ -464,6 +464,8 @@ dpkg --compare-versions 1.2.1 lt 1.3 &amp;&amp; echo "vrai"
 </p>
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p><b>Introduit à partir de fink 0.12.0.</b> Ce champ facultatif peut être utilisé pour spécifier l'ère du paquet (défaut 0 si ce champ n'est pas renseigné). Pour de plus amples informations, voir <a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version">Debian Policy Manual</a>. Comme Fink et quelques-uns des outils Debian sous-jacents utilisent nom-version-revision comme identifiant unique d'un paquet, vous ne devez pas créer deux paquets qui ne diffèrent que par le numéro d'ère.</p>
+<p>Quant elle est utilisée dans la version, l'ère apparaît avant la valeur de la version, séparée d'elle par deux-points (1:3.14-2). Notez que l'ère ne fait partie ni de <tt style="white-space: nowrap;">%v</tt>, ni de <tt style="white-space: nowrap;">%f</tt>. Si vous ajoutez un champ ère au fichier de description d'un paquet, vous pouvez être amené à l'introduire également dans ses dépendances. Par exemple, si vous ajoutez <tt style="white-space: nowrap;">Epoch: 1</tt> à foo et que foo-dev déclare <tt style="white-space: nowrap;">Depends: foo-shlibs (= %v-%r)</tt>, vous devez le changer en <tt style="white-space: nowrap;">Depends: foo-shlibs (= %e:%v-%r)</tt>.
+</p>
 </td></tr><tr valign="top"><td>Description</td><td>
 <p>Courte description du paquet (répond à la question qu'est-ce c'est ?). C'est une description d'une ligne qui est affichée sous forme de liste, elle doit donc être courte et bien ciblée. Elle peut avoir moins de 45 caractères, mais ne peut dépasser 60 caractères. Il n'est pas nécessaire d'indiquer le nom du paquet, il sera affiché de toute façon. Champ obligatoire.</p>
 </td></tr><tr valign="top"><td>Type</td><td>
@@ -860,4 +862,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.63 2006/01/17 08:00:00 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.64 2006/02/07 10:37:34 michga Exp $</i></p></body></html>
