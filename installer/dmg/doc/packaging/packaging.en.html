@@ -1404,10 +1404,13 @@ Required field.
 </p>
 </td></tr><tr valign="top"><td>Architecture</td><td>
 <p>
-A comma-separated list of architecture(s) the package is intended for.
+A comma-separated list of CPU architecture(s) for which the package
+(and any splitoff packages) are intended.
 At present, the only valid values for architecture are <tt style="white-space: nowrap;">powerpc</tt>
-and <tt style="white-space: nowrap;">i386</tt>.  A package which is missing this field is treated
-as if the value of the field were <tt style="white-space: nowrap;">powerpc, i386</tt>.
+and <tt style="white-space: nowrap;">i386</tt>. If this field is present and not blank after
+conditional handling, fink will ignore the package description(s) if
+the local machine architecture is not listed. If the field is omitted
+or the value is blank, all architectures are assumed.
 (Introduced in a post-0.24.11 CVS version of fink.)
 </p>
 <p>
@@ -1415,6 +1418,24 @@ At present, the most common use of this field will be for packages which
 require a compiler earlier than gcc-4.0 (or packages which depend on such
 packages), which should be declared to have architecture 
 <tt style="white-space: nowrap;">powerpc</tt>.
+</p>
+<p>
+This field supports the standard conditional syntax for any value in
+the value list and percent-expansions can be used (see
+the <tt style="white-space: nowrap;">Depends</tt> field for more information). In this manner,
+certain variants can be restricted to certain architectures. For
+example:
+</p>
+<pre>
+  Package: foo-pm%type_pkg[perl]
+  Type: perl (5.8.1 5.8.4 5.8.6)
+  Architecture: (%type_pkg[perl] = 581) powerpc
+</pre>
+<p>
+will result in the field for the foo-pm581 variant
+being <tt style="white-space: nowrap;">powerpc</tt> and the field being blank for all other
+variants. Remember that omitting a certain architecture value does not
+mean that the package is not for that architecture.
 </p>
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p>
@@ -2668,4 +2689,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.85 2006/02/07 10:37:34 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.86 2006/02/09 02:26:39 dmacks Exp $</i></p></body></html>
