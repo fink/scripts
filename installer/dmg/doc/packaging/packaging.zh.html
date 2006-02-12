@@ -1069,7 +1069,7 @@ and 10.3 versions of OS X, and 4.0 for the 10.4 version of OS X.  The
 </td></tr><tr valign="top"><td>Architecture</td><td>
 
 <p>
-A comma-separated list of architecture(s) the package is intended for.
+A comma-separated list of CPU architecture(s) the package is intended for.
 At present, the only valid values for architecture are <tt style="white-space: nowrap;">powerpc</tt>
 and <tt style="white-space: nowrap;">i386</tt>.  A package which is missing this field is treated
 as if the value of the field were <tt style="white-space: nowrap;">powerpc, i386</tt>.
@@ -1080,8 +1080,26 @@ At present, the most common use of this field will be for packages which
 require a compiler earlier than gcc-4.0 (or packages which depend on such
 packages), which should be declared to have architecture 
 <tt style="white-space: nowrap;">powerpc</tt>.
-
 </p>
+<p>
+This field supports the standard conditional syntax for any value in
+the value list and percent-expansions can be used (see
+the <tt style="white-space: nowrap;">Depends</tt> field for more information). In this manner,
+certain variants can be restricted to certain architectures. For
+example:
+</p>
+<pre>
+  Package: foo-pm%type_pkg[perl]
+  Type: perl (5.8.1 5.8.4 5.8.6)
+  Architecture: (%type_pkg[perl] = 581) powerpc
+</pre>
+<p>
+will result in the field for the foo-pm581 variant
+being <tt style="white-space: nowrap;">powerpc</tt> and the field being blank for all other
+variants. Remember that omitting a certain architecture value does not
+mean that the package is not for that architecture.
+</p>
+
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p>
 <b>从 fink 0.12.0 开始。</b>
@@ -2060,4 +2078,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.24 2006/02/02 11:31:46 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.25 2006/02/12 04:58:46 babayoshihiko Exp $</i></p></body></html>
