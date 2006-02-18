@@ -887,41 +887,26 @@ Depends: foo-shlibs (= 正確な.バージョン), foo-bin
 				Fink 0.13.0 から利用可能になったコマンド <tt style="white-space: nowrap;">fink validate</tt> を .deb ファイルに適用すると，
 				その Fink パッケージが XS モジュールで，バージョンの付かないディレクトリにインストールされるかチェックし，そうなら警告を発します．
 			</p>
-
 <p>
-ユーザーは，同時に複数のバージョンの perl を持つことができます．
-このため， perl バージョン指定されたモジュールは，複数のバージョンが同時に存在できるようにインストールされなければなりません．
-manpage やばいなり，その他のスクリプトなど，これらのパッケージでのファイル名の重複を避けるよう，
+ユーザーは，同時に複数のバージョンの perl をインストールしておくことができます．
+このため， perl バージョン番号の指定されたモジュールは，複数のバージョンが共存できるようにインストールされなければなりません．
+manpage やバイナリ，その他のスクリプトなど，これらのパッケージでのファイル名の重複を避けるよう，
 注意を払わねばなりません．
-
-You are not allowed to have any files in a package whose name ends
-with -pm<b>XYZ</b> that would have an identical pathname across
-different <b>XYZ</b>. Using <tt style="white-space: nowrap;">Replaces</tt> to allow the
-same-named files to overwrite each other in different perl-versions of
-these perl-module packages is no longer acceptable.
-As a simple solution for manpages, starting in
-March 2005, Fink has defined alternate locations in MANPATH:
-<tt style="white-space: nowrap;">%p/lib/perl5/X.Y.Z/man</tt> for each perl-X.Y.Z. You
-no longer need to create mutually-exclusive -man or -doc SplitOff
-packages. For
-example, to avoid conflicts between uri-pm581 and uri-pm586, the
-same-named <tt style="white-space: nowrap;">URI.3pm</tt> manpage is installed
-as <tt style="white-space: nowrap;">%p/lib/perl5/5.8.1/man/man3/URI.3pm</tt> and
-<tt style="white-space: nowrap;">%p/lib/perl5/5.8.6/man/man3/URI.3pm</tt>,
-respectively. Note that the default scripts provided by <tt style="white-space: nowrap;">Type:
-perl X.Y.Z</tt> have not changed, so you will have to locate the
-manpages here manually in your <tt style="white-space: nowrap;">InstallScript</tt>. If you
-don't have a highly customized script, you can still use the default
-one, and then simply move the files manually:
+-pm<b>XYZ</b> で終わるパッケージのどのファイルも，<b>XYZ</b> 値のことなる他のパッケージと同じパスを使用してはいけません．
+<tt style="white-space: nowrap;">Replaces</tt> を用いることで，同名のファイルがあっても異なる perl バージョンの perl モジュールは，以前は許可されていましたが，今後は許可されません．
+manpage に関する解決として，2005年3月より，それぞれの perl-X.Y.Z に <tt style="white-space: nowrap;">%p/lib/perl5/X.Y.Z/man</tt> という MANPATH を定義しました．
+このため，-man や -doc といった SplitOff を作って対処する必要はなくなりました．
+例えば， uri-pm581 と uri-586 のコンフリクトの場合，どちらにもある <tt style="white-space: nowrap;">URI.3pm</tt> という manpage は，それぞれ <tt style="white-space: nowrap;">%p/lib/perl5/5.8.1/man/man3/URI.3pm</tt> と <tt style="white-space: nowrap;">%p/lib/perl5/5.8.6/man/man3/URI.3pm</tt> にインストールされます．
+ただし，<tt style="white-space: nowrap;">Type: perl X.Y.Z</tt> によるスクリプトは変更されていないので， <tt style="white-space: nowrap;">InstallScript</tt> にてどこに mapnage をインストールするのかを記述する必要があります．
+もし複雑なスクリプトを記述していないのであれば，既存のものを用い，ファイルを移動させるだけで済みます．
 </p>
 <pre>
 %{default_script}
 mv %i/share/man %i/lib/perl5/5.8.1
 </pre>
 <p>
-That will move all manpages. If you wish to move only one section of
-manpages (for example, only section 3, the module manpages, not script
-manpages in section 1), a similar approach works:
+これにより，全ての manpage が移動します．
+もし manpage のうち一つのセクションを以上させたい場合 (例えばセクション3とモジュールの manpage を移し，セクション1のスクリプト manpage は移さない)，同様に:
 </p>
 <pre>
 %{default_script}
@@ -929,18 +914,11 @@ mkdir -p %i/lib/perl5/5.8.1/man
 mv %i/share/man/man3 %i/lib/perl5/5.8.1/man
 </pre>
 <p>
-If you have executables, for example, demo or utility scripts
-in <tt style="white-space: nowrap;">%p/bin</tt>, you have several options. One example
-is to put these files (and their associated manpages and/or other
-related files) in a %N-bin splitoff package. Use of
-<tt style="white-space: nowrap;">Conflicts</tt> and <tt style="white-space: nowrap;">Replaces</tt> fields ensures that
-installation of different perl-version forms of these packages, which
-contain files of the same name, is mutually excluve. The user can
-install many different perl-versions of the runtime modules, and then
-choose whichever one perl-version of the scripts he wants at a given
-time. For example, Tk.pm comes with an
-executable <tt style="white-space: nowrap;">ptksh</tt>, so the set of tk-pm* packages
-could be constructed as follows:
+デモ用やユーティリティ的なスクリプトなどが <tt style="white-space: nowrap;">%p/bin</tt> にある場合は，いくつかの解決方法があります．
+一つ目の例は，これらのファイル (およびその manpage や 関連ファイル) を %N-bin という Splitoff とします．
+<tt style="white-space: nowrap;">Conflicts</tt> と <tt style="white-space: nowrap;">Replaces</tt> のフィールドを用いることで，perl バージョンの異なる，同じファイルを含んでいる複数のパッケージが，相互に排他的になります．
+利用者は，異なる perl バージョンのモジュールを複数インストールしておき，スクリプトに関しては一つの perl バージョンのものだけを選択することになります．
+例えば，Tk.pm は <tt style="white-space: nowrap;">ptksh</tt> と共に来ますが，tk-pm* パッケージは以下のように作られます:
 </p>
 <pre>
 Info2: &lt;&lt;
@@ -961,10 +939,8 @@ SplitOff: &lt;&lt;
 &lt;&lt;
 </pre>
 <p>
-An alternative arrangement is to rename the scripts and their manpages
-to include perl-version information. This method means there is no
-naming conflict at all, so one does not need the mutually-exclusive
-%N-bin splitoffs:
+この他の方法としては，スクリプトの名称と，関連する manpage を，perl バージョン番号を示すように変更することがあります．
+これでコンフリクトを回避できるので，相互排他的な %N-bin の Splitoff を作る必要はありません:
 </p>
 <pre>
 Info2: &lt;&lt;
@@ -980,17 +956,12 @@ InstallScript: &lt;&lt;
 &lt;&lt;
 </pre>
 <p>
-The user accesses ptksh for whichever perl she wants. For convenience,
-one could use <tt style="white-space: nowrap;">update-alternatives</tt> to allow users to be
-able to access these by their generic (no perl-version) names as well.
+利用者は，どのバージョンの perl 用の ptksh も持っておくことができます．
+<tt style="white-space: nowrap;">update-alternatives</tt> を使用すると，利用者は一般的な (perl バージョンのない) 名前でもアクセスすることができ，便利です．
 </p>
 <p>
-Also as of March 2005, the location of manpages and modules installed
-by fink packages for perl itself (packages perlXYZ and perlXYZ-core
-other than the perl-version provided by Apple) has changed. As a
-result of this relocation, other fink packages that supply updated
-versions of core perl modules should not list any perlXYZ or
-perlXYZ-core packages in the <tt style="white-space: nowrap;">Replaces</tt> field.
+2005年3月の時点で，fink パッケージの perl 自体 (Apple が提供する perl バージョン以外の perlXYZ や perlXYZ-core) としては，manpage とモジュールの位置が変わりました．
+このため，上位バージョンのコア perl モジュールを提供するパッケージは，perlXYZ や perlXYZ-core パッケージを <tt style="white-space: nowrap;">Replaces</tt> フィールドに記述しないでください．
 </p>
 		
 		<h3><a name="policy.emacs">3.6 Emacs ポリシー</a></h3>
@@ -2529,4 +2500,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.36 2006/02/12 04:58:47 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.37 2006/02/18 03:54:13 babayoshihiko Exp $</i></p></body></html>
