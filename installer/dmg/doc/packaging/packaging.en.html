@@ -339,6 +339,11 @@ expansion will yield the <b>parent's</b> default, even though the
 default for <tt style="white-space: nowrap;">InstallScript</tt> in a <tt style="white-space: nowrap;">SplitOff</tt>
 package is blank. (Introduced in fink-0.20.6)
 </p>
+</td></tr><tr valign="top"><td>%{PatchFile}</td><td>
+<p>
+The full path to the file given in the <tt style="white-space: nowrap;">PatchFile</tt> field.
+(Introduced in fink-0.24.12)
+</p>
 </td></tr></table>
 
 
@@ -2038,10 +2043,11 @@ package's version and Fink's version (in
 <p>
 The filename of a patch to be applied with <tt style="white-space: nowrap;">patch -p1
 &lt;<b>patch-file</b></tt>. This should be just a filename; the
-appropriate path will be prepended automatically. Percent expansion is
+appropriate path (the same directory where the <tt style="white-space: nowrap;">.info</tt> file
+is located) will be prepended automatically. Percent expansion is
 performed on this field, so a typical value is simply
 <tt style="white-space: nowrap;">%f.patch</tt> or <tt style="white-space: nowrap;">%n.patch</tt>. The patch is applied
-before the PatchScript is run (if any).
+in a separate step before the PatchScript is run (if any).
 </p>
 <p>
 Remember that %n includes all %type_ variant data, so you may want to
@@ -2050,13 +2056,45 @@ easier to maintain a single patchfile and then make variant-specific
 changes in <tt style="white-space: nowrap;">PatchScript</tt> than to have a separate patchfile
 for each variant.
 </p>
+</td></tr><tr valign="top"><td>PatchFile</td><td>
+<p>
+The same syntax as the <tt style="white-space: nowrap;">Patch</tt> field. The full path to this
+file is available using the <tt style="white-space: nowrap;">%{PatchFile}</tt> percent
+expansion--do not use <tt style="white-space: nowrap;">%a</tt> to access this file.
+Unlike <tt style="white-space: nowrap;">Patch</tt>, <tt style="white-space: nowrap;">PatchFile</tt> is applied as part
+of <tt style="white-space: nowrap;">PatchScript</tt>. Fink checks that the listed file exists,
+is readable, and that its checksum matches
+the <tt style="white-space: nowrap;">PatchFile-MD5</tt> field.
+</p>
+<p>
+You may not use both <tt style="white-space: nowrap;">Patch</tt> and <tt style="white-space: nowrap;">PatchFile</tt> in
+the same package description. Any package that
+uses <tt style="white-space: nowrap;">PatchFile</tt> must declare at least
+<tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.24.12)</tt>. Giving a higher version
+requirement is allowed if it is necessary for other reasons.
+</p>
+</td></tr><tr valign="top"><td>PatchFile-MD5</td><td>
+<p>
+The MD5 checksum of the file given in the <tt style="white-space: nowrap;">PatchFile</tt>
+field. This field is required if <tt style="white-space: nowrap;">PatchFile</tt> is used.
+(Introduced in fink-0.24.12)
+</p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
 <p>
 A list of commands that are run in the patch phase. This is the place
 to put commands that patch or otherwise modify the package source. See
 the <a href="#reference.scripts">note on scripts</a>
-below. Before the commands are executed, <a href="#format.percent">percent expansion</a> takes place. There is no
-default.
+below. Before the commands are executed, <a href="#format.percent">percent expansion</a> takes place. If
+a <tt style="white-space: nowrap;">PatchFile</tt> field exists, the
+default <tt style="white-space: nowrap;">PatchScript</tt> is:
+</p>
+<pre>
+patch -p1 &lt; %{PatchFile}
+</pre>
+<p>
+If there is no <tt style="white-space: nowrap;">PatchFile</tt>, the default is blank. If you
+have an explicit <tt style="white-space: nowrap;">PatchScript</tt>, you must apply
+the <tt style="white-space: nowrap;">PatchFile</tt> explicitly.
 </p>
 </td></tr></table>
 <p><b>Compile Phase:</b></p>
@@ -2652,7 +2690,13 @@ filename specify either one of these (they are equivalent):</p>
 <p>If you use the newer simple package filename convention, use %n
 insead of %f. These two fields are not mutually-exclusive - you can
 use both, and they will both be executed. In that case the PatchScript
-is executed last.</p>
+is executed last. Alternately, you can use the
+newer <tt style="white-space: nowrap;">PatchFile</tt> instead of <tt style="white-space: nowrap;">Patch</tt> and apply
+with an implicit or explicit <tt style="white-space: nowrap;">PatchScript</tt>--see the
+descriptions of the <tt style="white-space: nowrap;">PatchFile</tt>
+and <tt style="white-space: nowrap;">PatchScript</tt> fields for more information.</p>
+
+
 <p>Because you may need to have the users chosen prefix in the patch file
 it is recommended that you have a variable such as <tt style="white-space: nowrap;">@PREFIX@</tt> 
 instead of <tt style="white-space: nowrap;">/sw</tt> in the patch and then use:</p>
@@ -2689,4 +2733,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.86 2006/02/09 02:26:39 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.87 2006/02/22 06:31:55 dmacks Exp $</i></p></body></html>
