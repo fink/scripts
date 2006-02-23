@@ -1069,10 +1069,13 @@ and 10.3 versions of OS X, and 4.0 for the 10.4 version of OS X.  The
 </td></tr><tr valign="top"><td>Architecture</td><td>
 
 <p>
-A comma-separated list of CPU architecture(s) the package is intended for.
+A comma-separated list of CPU architecture(s) for which the package
+(and any splitoff packages) are intended.
 At present, the only valid values for architecture are <tt style="white-space: nowrap;">powerpc</tt>
-and <tt style="white-space: nowrap;">i386</tt>.  A package which is missing this field is treated
-as if the value of the field were <tt style="white-space: nowrap;">powerpc, i386</tt>.
+and <tt style="white-space: nowrap;">i386</tt>. If this field is present and not blank after
+conditional handling, fink will ignore the package description(s) if
+the local machine architecture is not listed. If the field is omitted
+or the value is blank, all architectures are assumed.
 (Introduced in a post-0.24.11 CVS version of fink.)
 </p>
 <p>
@@ -2078,4 +2081,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.25 2006/02/12 04:58:46 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.26 2006/02/23 07:22:42 babayoshihiko Exp $</i></p></body></html>

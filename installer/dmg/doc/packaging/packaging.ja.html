@@ -1309,9 +1309,10 @@ OS X 10.2 以前には <tt style="white-space: nowrap;">gcc_select</tt> はあ�
  						</p>
 					</td></tr><tr valign="top"><td>Architecture</td><td>
 <p>
-パッケージが対応している CPU アーキテクチャー一覧を，コンマ区切りで記述．
+パッケージ (および Splitoff) が対応している CPU アーキテクチャー一覧を，コンマ区切りで記述します．
 現在のところ，<tt style="white-space: nowrap;">powerpc</tt> と <tt style="white-space: nowrap;">i386</tt> が値として使用できます．
-このフィールドが存在しないパッケージは，<tt style="white-space: nowrap;">powerpc, i386</tt> が指定されたものとして扱われます．
+このフィールドがあり，値が条件処理後にブランクでなく，ローカルマシンのアーキテクチャーが一覧にない場合，パッケージ記述は無視されます．
+このフィールドがない場合，あるいは値がブランクであるような場合は，全てのアーキテクチャーに対応していると見なされます．
 (0.24.11 CVS バージョン以降 の fink に導入)
 </p>
 <p>
@@ -2500,4 +2501,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.37 2006/02/18 03:54:13 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.38 2006/02/23 07:22:43 babayoshihiko Exp $</i></p></body></html>
