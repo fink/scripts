@@ -636,13 +636,27 @@ sub orderByDepends {
 
 		$deps->{$pkgname}->{ordered} = 2;
 
+		my @revdeps = @{$revdeps{$pkgname} || []};
+		my @provides = ($pkgname);
+
+		my $pkgobj = Fink::Package->package_by_name($pkgname);
+
+		# We've also satisfied things which depend on somethign we provide
+		foreach my $provider ($pkgobj->get_all_providers()) {
+			my $pname = $provider->get_name();
+			push @provides, $pname;
+			push @revdeps, @{$revdeps{$pname} || []};
+		}
+
 		# For every package that is depended on by this one...
-		foreach my $revdep (@{$revdeps{$pkgname}}) {
+		foreach my $revdep (@revdeps) {
 			my $dep = $deps->{$revdep};
 
 			# Remove this one from the list of unsatisfied deps...
-			delete $dep->{unsatisfied}->{run}->{$pkgname};
-			delete $dep->{unsatisfied}->{build}->{$pkgname};
+			foreach my $pname(@provides) {
+				delete $dep->{unsatisfied}->{run}->{$pname};
+				delete $dep->{unsatisfied}->{build}->{$pname};
+			}
 
 			# If we've satisfied all builddeps, we can build it.
 			next if keys(%{$dep->{unsatisfied}->{build}});
