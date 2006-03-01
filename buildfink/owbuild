@@ -1,0 +1,129 @@
+#!/bin/sh
+
+#Script msachs uses to kick off his builds.  Included here more as
+#documentation and an example than anything else, not necessarily
+#directly useful for other people.
+#
+#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+TOOLDIR=/Volumes/SandBox/Tools/otherworld
+FINKDIR=/Volumes/SandBox/fink/sw
+OWDIR=/Volumes/SandBox/fink/otherworld
+BFDIR=/Volumes/SandBox/fink/scripts/buildfink
+
+if [ $# -ne 1 ]
+	then echo "Usage: $0 buildname" >&2
+	exit 1
+fi
+
+if [ -d /usr/local ]
+	then echo "/usr/local exists, refusing to build" >&2
+	exit 1
+fi
+
+. $FINKDIR/bin/init.sh
+perl <<EOF
+	open(FVP, "-|", "fink-virtual-pkgs");
+	while(<FVP>) {
+		next unless /^Package: (system-xfree86.*)/;
+		my \$pkg = \$1;
+		while(<FVP>) {
+			next unless /^Status: (.*)/ or /^$/;
+			my \$status = \$1;
+			\$installed{\$pkg} = 1 if \$status =~ /\binstalled\b/;
+			last;
+		}
+	}
+	die "Missing system-xfree86\n" unless \$installed{"system-xfree86"};
+	die "Missing system-xfree86-dev\n" unless \$installed{"system-xfree86-dev"};
+EOF
+if [ $? -ne 0 ]; then exit 1 ; fi
+
+
+if [ ! -d "$TOOLDIR/path-prefix" ]
+	then echo "$TOOLDIR/path-prefix is missing." >&2
+	exit 1
+fi
+
+
+# Clean-up
+find $FINKDIR/src -type d -mindepth 1 -maxdepth 1 -exec rm -rf \{\} \;
+find $FINKDIR -name \*.deb -exec rm \{\} \;
+
+export PATH="$TOOLDIR/path-prefix:$PATH"
+export FINK_NOTRANS=1
+
+# Don't make core files, autoconf makes lots of these and they fill
+# up the disk
+ulimit -c 0
+
+# Reasons for skipping packages:
+#	hangs:
+#		gwydion-dylan, gwydion-dylan-bootstrap
+#		proc-processtable-pm58* (only hangs intermittently)
+#		cmucl (only intermittently)
+#		fastlink
+#		sbcl
+#		cpanplus-pm586
+#		yorick (interimttent, on fputest)
+#		xerces-j-docs
+#		stylebook
+#	demands interactivity:
+#		applex11tools
+#		bundle-webmin
+#		ccp4lib
+#		cwp-su
+#		system-vhia
+#		localepurge
+#	purge demands interactivity:
+#		webmin
+#	doesn't build and gets in inconsistent state:
+#		fontconfig-path
+#	breaks lots of other packages:
+#		emacs20
+#	has external deps:
+#		fftw-absoft
+#		netcdf-absoft
+#		mac-growl-pm581
+#		mac-growl-pm586
+
+exec $BFDIR/buildfink  \
+	--skip gwydion-dylan-bootstrap \
+	--skip gwydion-dylan \
+	--skip applex11tools \
+	--skip bundle-webmin \
+	--skip cwp-su \
+	--skip webmin \
+	--skip ccp4lib \
+	--skip emacs20 \
+	--skip proc-processtable-pm581 \
+	--skip proc-processtable-pm584 \
+	--skip proc-processtable-pm586 \
+	--skip fontconfig-path \
+	--skip cmucl \
+	--skip system-vhia \
+	--skip fastlink \
+	--skip sbcl \
+	--skip cpanplus-pm586 \
+	--skip yorick \
+	--skip cm3-dev \
+	--skip xerces-j-docs \
+	--skip localepurge \
+	--skip stylebook \
+	--skip fftw-absoft --skip netcdf-absoft \
+	--skip mac-growl-pm581 --skip mac-growl-pm586 \
+$FINKDIR $OWDIR/$1
