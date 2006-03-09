@@ -49,7 +49,7 @@ sub initFink($) {
 sub installEssentials {
 	my @essentials = Fink::Package->list_essential_packages();
 	system("fink", "rebuild", @essentials);
-	system('fink", "reinstall", @essentials);
+	system("fink", "reinstall", @essentials);
 }
 
 # Purge packages we may have previously built
