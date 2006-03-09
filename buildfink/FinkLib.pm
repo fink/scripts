@@ -48,8 +48,14 @@ sub initFink($) {
 # Make sure all essential packages are installed
 sub installEssentials {
 	my @essentials = Fink::Package->list_essential_packages();
-	system("fink", "-y", "rebuild", @essentials);
-	system("fink", "-y", "reinstall", @essentials);
+	my $pid = fork();
+	if($pid) {
+		wait();
+	} else {
+		close(STDIN);
+		system("fink", "-y", "rebuild", @essentials);
+		system("fink", "-y", "reinstall", @essentials);
+	}
 }
 
 # Purge packages we may have previously built
