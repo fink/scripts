@@ -47,6 +47,10 @@ sub initFink($) {
 
 # Make sure all essential packages are installed
 sub installEssentials {
+	# This actually breaks stuff because dpkg gets linked to libgettext3
+	# instead of gettext.
+	return;
+
 	my @essentials = Fink::Package->list_essential_packages();
 	my $pid = fork();
 	if($pid) {
