@@ -24,7 +24,7 @@ buildfink -- Build every package in Fink
 
 =head1 USAGE
 
-	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--validate] [--build-as-nobody] FINKDIR OUTDIR
+	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [FINKDIR OUTDIR
 	buildfink [-r CHECKPOINT]
 
 C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
@@ -58,6 +58,19 @@ packages as "nobody" instead of root; if C<--build-as-nobody=try> is specified,
 it will try building as root if that fails and keep track of which packages
 only succeed when built as root.
 
+buildfink places limits on the maximum size of the log file for an individual
+build and the build time of an individual package to prevent runaway packages
+from breaking the build.  C<--max-log-size N> and C<--max-build-time T> can be
+used to adjust these limits.  An C<N> or C<T> of 0 will disable the
+corresponding limit.  C<N> is in bytes, unless it has a suffix of C<K>, C<M>,
+or C<G> indicating kilobytes, megabytes, and gigabytes respsectively.
+C<T> is in seconds, unless it has a suffix of C<m> or C<h> indicating,
+respectively, minutes and hours.  The defaults are 250 megabytes and 4 hours
+respectively.  Package-specific limits can be provided by specifying
+C<packagename:> in front of the limit value.  For instance,
+C<--max-build-time openoffice.org:24h> would specify a 24-hour limit for 
+openoffice.org.
+
 =head2 CHECKPOINTS
 
 Sometimes there will be system issues partway through a build.  For instance, a recalcitrant
@@ -74,7 +87,7 @@ use File::Basename;
 use File::Copy;
 use File::Find;
 use Data::Dumper;
-use POSIX qw(dup2);
+use POSIX qw(dup2 setsid sys_wait_h);
 use Getopt::Long;
 use FindBin qw($Bin);
 use lib "$Bin";
@@ -83,6 +96,49 @@ use FinkLib;
 our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody);
 our $VERSION = '$Revision$';
 
+our $max_build_time = 60*60*4;
+our $max_log_size = 1024*1024*250;
+our %max_build_time_forpkg = ();
+our %max_log_size_forpkg = ();
+
+sub limit_arg {
+	my($arg, $val) = @_;
+	my $pkg;
+
+	$pkg = $1 if $val =~ s/^(.*)://;
+
+	if($val =~ s/([kmgh])b?$//i) {
+		my $suffix = $1;
+		if($suffix eq "k") {
+			$val *= 1024;
+		} elsif($suffix eq "m") {
+			if($arg =~ /time/) {
+				$val *= 60;
+			} else {
+				$val *= 1024*1024;
+			}
+		} elsif($suffix eq "h") {
+			$val *= 60*60;
+		} elsif($suffix eq "g") {
+			$val *= 1024*1024*1024;
+		}
+	}
+
+	if($arg =~ /time/) {
+		if($pkg) {
+			$max_build_time_forpkg{$pkg} = $val;
+		} else {
+			$max_build_time = $val;
+		}
+	} else {
+		if($pkg) {
+			$max_log_size_forpkg{$pkg} = $val;
+		} else {
+			$max_log_size = $val;
+		}
+	}
+}
+
 my $opts_ok = GetOptions(
 	"n" => \$dryrun,
 	"infofilter=s" => \$infofilter,
@@ -90,7 +146,9 @@ my $opts_ok = GetOptions(
 	"skip=s" => \@skiplist,
 	"r=s" => \$checkpoint,
 	"validate" => \$DoValidate,
-	"build-as-nobody:s" => \$BuildNobody
+	"build-as-nobody:s" => \$BuildNobody,
+	"max-build-time=s" => \&limit_arg,
+	"max-log-size=s" => \&limit_arg
 );
 if(@ARGV != 2 and not (($dryrun and @ARGV == 1) or $checkpoint)) {
 	warn "You must specify a Fink directory and an output directory.\n";
@@ -352,6 +410,83 @@ sub patchFile {
 	}
 }
 
+# Do the build command, logging to the package log and enforcing time and
+# space limits.
+sub doBuild {
+	my($buildcmd, $pkg) = @_;
+	my $logsize = 0;
+
+	# Don't do the naive thing with || because we want to be able to
+	# disable limits for specific packages by specifying a limit of 0.
+	my $max_size = exists($max_log_size_forpkg{$pkg}) ? $max_log_size_forpkg{$pkg} : $max_log_size;
+	my $max_time = exists($max_build_time_forpkg{$pkg}) ? $max_build_time_forpkg{$pkg} : $max_build_time;
+
+	local $SIG{PIPE} = 'IGNORE';
+	my $pid = open(BUILD, "-|");
+	if(!defined($pid)) {
+		doLog("Couldn't fork: $!\n");
+		die "Couldn't fork: $!\n";
+	} elsif($pid == 0) {
+		$| = 1;
+
+		# We want to be able to kill this process and all its children.
+		# Making them be in their own process groups accomplishes this.
+		# TODO: Salt the earth so that nothing can grow in its place.
+		setsid(); 
+
+		exec($buildcmd) or die "Couldn't exec: $!\n";
+	}
+
+	open(BUILDLOG, ">", "$rundir/logs/$pkg.log") or do {
+		doLog("Couldn't open $rundir/logs/$pkg.log: $!");
+		die "Couldn't open $rundir/logs/$pkg.log: $!\n";
+	};
+
+	my($rin, $win, $ein) = ('', '', '');
+	vec($rin, fileno(BUILD), 1) = 1;
+	$ein = $rin;
+	my($rout, $wout, $eout);
+	my $buff;
+
+	eval {
+		local $SIG{ALRM} = sub { die "alarm\n"; };
+		alarm($max_time) if $max_time;
+
+		while(select($rout = $rin, $wout = $win, $eout = $ein, $max_time ? ($max_time + 5) : undef)) {
+			my $nbytes = sysread(BUILD, $buff, 4096);
+			$logsize += $nbytes;
+			last unless $nbytes;
+			print BUILDLOG $buff;
+
+			if($max_size and $logsize > $max_size) {
+				alarm(0);
+				print BUILDLOG "\nFailed: Log size limit exceeded.\n";
+				# Negative signals send to process group
+				kill(-15, $pid);
+				sleep(10) if kill(0, $pid);
+				kill(-9, $pid);
+				last;
+			}
+		}
+	};
+	alarm(0);
+	if($@) {
+		die unless $@ eq "alarm\n";
+		print BUILDLOG "\nFailed: Build process timed out.\n";
+		kill(-15, $pid);
+		sleep(10);
+		kill(-9, $pid);
+	}
+
+	close(BUILDLOG);
+	close(BUILD);
+	if(WIFEXITED($?)) {
+		return WEXITSTATUS($?);
+	} else {
+		return -1;
+	}
+}
+
 # Build all packages, skipping any with failed deps
 # pkglist is a list of package names to build in order.
 # skiplist is a list of package names to never build.
@@ -422,14 +557,14 @@ sub buildAll {
 
 		my $buildcmd = "printf '\n\n' | fink --yes";
 		$buildcmd .= " --build-as-nobody" if $BuildNobody;
-		$buildcmd .= " rebuild $pkg > $rundir/logs/$pkg.log 2>&1";
-		my $ret = system($buildcmd);
+		$buildcmd .= " rebuild $pkg 2>&1";
+		my $ret = doBuild($buildcmd, $pkg);
 
 		if($ret != 0 and defined($BuildNobody) and $BuildNobody eq "try") {
 			$buildcmd =~ s/ --build-as-nobody//;
 			move("$rundir/logs/$pkg.log", "$rundir/logs/$pkg.log.nobody");
 			doLog("Build of $pkg failed, trying as root...");
-			$ret = system($buildcmd);
+			$ret = doBuild($buildcmd, $pkg);
 			if($ret != 0) {
 				unlink("$rundir/logs/$pkg.log.nobody");
 			} else {

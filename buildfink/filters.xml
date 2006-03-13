@@ -151,7 +151,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/typeconflict/mbstate_t">error: conflicting types for '__mbstate_t'</filter>
 
 	<filter name="failures/header/sys_signal_h">sys/signal.h:166</filter>
-	<filter name="failures/unanalyzed" flags="m">^Failed:</filter>
+
+	<filter name="failures/unanalyzed/log_size_limit" flags="m">^Failed: Log size limit exceeded</filter>
+	<filter name="failures/unanalyzed/build_time_limit" flags="m">^Failed: Build process timed out</filter>
+	<filter name="failures/unanalyzed/other" flags="m">^Failed:</filter>
 
 	<filter name="warnings/obsolete_headtail">(head|tail)\s+-[0-9]</filter>
 
