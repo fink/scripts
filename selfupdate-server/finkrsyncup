@@ -1,0 +1,9 @@
+#!/bin/sh
+
+FIROOT="/Volumes/src2/fink/selfupdate"
+
+export HOME=/var/root
+export CVS_RSH=ssh
+cd ${FIROOT} ; /usr/bin/cvs -d :ext:finkcvs@cvs.sourceforge.net:/cvsroot/fink -z3 co -d finkinfo.tmp dists 
+rsync -a --delete --exclude=.cvsignore --exclude=CVS ${FIROOT}/finkinfo.tmp/ ${FIROOT}/finkinfo/
+echo `date -u +%s` > ${FIROOT}/finkinfo/TIMESTAMP
