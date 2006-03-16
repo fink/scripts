@@ -776,6 +776,11 @@ sub orderByDepends {
 
 		my $pkgobj = Fink::Package->package_by_name($pkgname);
 
+		# is_virtual == 1 are the Provides: aliases of regular packages.
+		# This is not to be confused with is_virtual == 2, which are the
+		# regular virtual packages.
+		next if $pkgobj->is_virtual() == 1;
+
 		# We've also satisfied things which depend on somethign we provide
 		foreach my $provider ($pkgobj->get_all_providers()) {
 			my $pname = $provider->get_name();
@@ -820,7 +825,12 @@ sub orderByDepends {
 		my $dep = $deps->{$pkgname};
 		next if $dep->{ordered};
 		my(%unsats) = (%{$dep->{unsatisfied}->{build}}, %{$dep->{unsatisfied}->{run}});
-		logPackageFail($pkgname, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", sort keys %unsats));
+		my $failmsg = "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", sort keys %unsats);
+		if($dryrun) {
+			doLog($failmsg);
+		} else {
+			logPackageFail($pkgname, $failmsg);
+		}
 	}
 
 	return @ret;
