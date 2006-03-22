@@ -31,7 +31,7 @@ import Fink::Bootstrap qw(&modify_description &read_version_revision);
 
 ### configuration
 
-my $cvsroot=':ext:dmrrsn@cvs.sourceforge.net:/cvsroot/fink';
+my $cvsroot=':ext:vasi@cvs.sourceforge.net:/cvsroot/fink';
 my $distribution = "10.3";  #default value
 
 ### init
@@ -136,7 +136,7 @@ foreach $distro (keys %{$revisions}) {
     print "Creating package description file $modulename.info$suffix:\n";
     $revision = ${$revisions}{$distro};
 
-&modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename.info$suffix","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda);
+&modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename.info$suffix","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
 
 }
 
