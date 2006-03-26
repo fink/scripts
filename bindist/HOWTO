@@ -74,10 +74,11 @@ bdlist
 
 bdnewrel
   Prepares a new Fink binary release, by creating the appropriate file
-  structure. You call it with two parameters: the name of the new release,
-  and the name of the previous release (this is used to shared old .debs
-  without the need to recreate them). A typical invocation would be:
-    ./bdnewrel 0.4.0 0.3.2a
+  structure. You call it with three parameters: the name of the new release,
+  the name of the previous release (this is used to shared old .debs
+  without the need to recreate them), and the current architecture (powerpc
+  or i386). A typical invocation would be:
+    ./bdnewrel 0.4.0 0.3.2a powerpc
 
   After running this command, verify that all went right and that the tree
   it generated looks OK. You may also run the "bdindex" command just after

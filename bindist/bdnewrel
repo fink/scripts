@@ -18,35 +18,40 @@ if [ -z "$prevrel" ]; then
   echo "No previous release given."
   exit 1
 fi
+arch=$3
+if [ \z "$arch" ]; then
+  echo "No architecture specified."
+  exit 1
+fi
 
 # create directories and Release files
 for dist in fink-$release fink-$release-updates ; do
   mkdir -p dists/$dist
   for tree in main crypto ; do
     mkdir -p "dists/$dist/$tree/finkinfo"
-    mkdir -p "dists/$dist/$tree/binary-darwin-powerpc"
+    mkdir -p "dists/$dist/$tree/binary-darwin-$arch"
     mkdir -p "dists/$dist/$tree/source"
     ( echo "Archive: $dist"
       echo "Component: $tree"
       echo "Origin: Fink"
       echo "Label: Fink"
-      echo "Architecture: darwin-powerpc"
-    ) | sed 's/fink-//' > "dists/$dist/$tree/binary-darwin-powerpc/Release"
+      echo "Architecture: darwin-$arch"
+    ) | sed 's/fink-//' > "dists/$dist/$tree/binary-darwin-$arch/Release"
   done
 done
 
 # symlink old packages in the main tree (not updates, not crypto)
 from="fink-$prevrel/main"
 to="fink-$release/main"
-cd "$BDBASE/dists/$from/binary-darwin-powerpc"
+cd "$BDBASE/dists/$from/binary-darwin-$arch"
 
 for file in * ; do
   if [ -d "$file" ]; then
-    mkdir -p "$BDBASE/dists/$to/binary-darwin-powerpc/$file"
+    mkdir -p "$BDBASE/dists/$to/binary-darwin-$arch/$file"
   fi
 done
 for file in */*.deb ; do
-  ln -s "../../../../$from/binary-darwin-powerpc/$file" "../../../$to/binary-darwin-powerpc/$file"
+  ln -s "../../../../$from/binary-darwin-$arch/$file" "../../../$to/binary-darwin-$arch/$file"
 done
 
 # Update "current" with the new version
