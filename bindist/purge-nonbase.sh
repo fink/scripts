@@ -3,6 +3,7 @@
 dpkg --get-selections | \
 	grep -E '[[:space:]]install$' | \
 	grep -v '^apt[[:space:]]' | \
+	grep -v '^libgettextpo2-shlibs[[:space:]]' | \
 	grep -v '^apt-shlibs[[:space:]]' | \
 	grep -v '^base-files[[:space:]]' | \
 	grep -v '^bzip2[[:space:]]' | \
@@ -20,9 +21,6 @@ dpkg --get-selections | \
 	grep -v '^libgettext3-shlibs[[:space:]]' | \
 	grep -v '^libiconv[[:space:]]' | \
 	grep -v '^libiconv-bin[[:space:]]' | \
-	grep -v '^libjpeg[[:space:]]' | \
-	grep -v '^libjpeg-bin[[:space:]]' | \
-	grep -v '^libjpeg-shlibs[[:space:]]' | \
 	grep -v '^libncurses5-shlibs[[:space:]]' | \
 	grep -v '^ncurses[[:space:]]' | \
 	grep -v '^ncurses-shlibs[[:space:]]' | \
