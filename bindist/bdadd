@@ -15,6 +15,8 @@ if (exists $ENV{CURREL} and defined $ENV{CURREL}) {
 }
 my $dest = "dists/fink-$currel/main";
 my $dest_crypto = "dists/fink-$currel/crypto";
+my $arch = $ENV{BDARCH};
+die "the environment variable BDARCH must be set" unless defined $ENV{BDARCH};
 
 ### now load the useful modules
 
@@ -50,9 +52,9 @@ foreach $pkgspec (@ARGV) {
   }
   $section = $po->get_section();
   if ($section eq "crypto") {
-    $todir = $dest_crypto."/binary-darwin-powerpc";
+    $todir = $dest_crypto."/binary-darwin-$arch";
   } else {
-    $todir = $dest."/binary-darwin-powerpc/".$section;
+    $todir = $dest."/binary-darwin-$arch/".$section;
   }
   $tofn = $todir."/".&filename($fn);
   if (not -d $todir) {

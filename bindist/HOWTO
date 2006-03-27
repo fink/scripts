@@ -1,4 +1,4 @@
-(Originally written circa 2002 by Max Horn; revised in 2005 by Dave Morrison.)
+(Originally written circa 2002 by Max Horn; revised in 2005 and 2006 by Dave Morrison.)
 
 This is an attempt to explain how to use the binary distro related scripts in
 this directory. I had to discover this on my own, so it might not always be
@@ -46,6 +46,9 @@ CURREL
   Example:
     0.4.0 (will make a dists/fink-0.4.0/ directory)
 
+BDARCH
+  Description:
+    The architecture for this release.  (Possible values are powerpc and i386.)
 ---------------------------------------------------------------------------------
 
 bdadd
@@ -74,11 +77,10 @@ bdlist
 
 bdnewrel
   Prepares a new Fink binary release, by creating the appropriate file
-  structure. You call it with three parameters: the name of the new release,
-  the name of the previous release (this is used to shared old .debs
-  without the need to recreate them), and the current architecture (powerpc
-  or i386). A typical invocation would be:
-    ./bdnewrel 0.4.0 0.3.2a powerpc
+  structure. You call it with two parameters: the name of the new release,
+  and the name of the previous release (this is used to shared old .debs
+  without the need to recreate them).  A typical invocation would be:
+    ./bdnewrel 0.4.0 0.3.2a
 
   After running this command, verify that all went right and that the tree
   it generated looks OK. You may also run the "bdindex" command just after
