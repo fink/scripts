@@ -7,6 +7,11 @@ if [ -z "$BDBASE" ]; then
 fi
 cd "$BDBASE"
 
+if [ -z "$BDARCH" ]; then
+  echo "BDARCH not set"
+  exit 1
+fi
+
 tree=$1
 if [ -z "$tree" ]; then
   if [ -n "$CURREL" ]; then
@@ -23,7 +28,7 @@ if [ ! -d "dists/$tree" ]; then
 fi
 
 for dir in main crypto ; do
-  basedir="dists/$tree/$dir/binary-darwin-powerpc"
+  basedir="dists/$tree/$dir/binary-darwin-$BDARCH"
   if [ ! -d $basedir ]; then
     echo "ERROR: no binary directory for $tree/$dir"
   else
