@@ -31,14 +31,33 @@ use Fink::Config qw(&set_options);
 use Fink::Package;
 use Fink::Command qw(rm_f);
 
-### read config
-
-my $config = &read_config("fink.conf");
+use Getopt::Long;
 
 ### get parameters
-my $distribution = shift || "10.3";
-my $tree = shift || "stable";
-my $release = shift || "current-$distribution-$tree";
+my ($distribution, $tree, $release, $architecture);
+
+# process command-line
+if (@ARGV && $ARGV[0] =~ /^-/) {
+    # have a getopt flag, so use getopt syntax
+    GetOptions(
+	'distribution=s' => \$distribution,
+	'tree=s'         => \$tree,
+	'release=s'      => \$release
+	)
+	or die "$0: Bad syntax\n";
+} else {
+    # no getopt flag, so use old positional-parameter syntax
+    ($distribution, $tree, $release) = @_;
+    die "$0: Bad syntax\n" if @ARGV > 3;
+}
+
+# set defaults for missing values
+defined $distribution or $distribution = "10.3";
+defined $tree         or $tree         = "stable";
+defined $release      or $release      = "current-$distribution-$tree";
+
+### read config
+my $config = &read_config("fink.conf");
 
 ### read package info
 
