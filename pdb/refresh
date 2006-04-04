@@ -25,12 +25,12 @@ echo -n "" > current.sql
 for dist in ${dists[@]}; do
     rm -f fink/dists var/db/fink.db
     ln -s $dist fink/dists
-    echo ""
-    echo "Dumping $dist/stable..."
-    ./dump $dist stable current-$dist-stable >> current.sql
-    echo ""
-    echo "Dumping $dist/unstable..."
-    ./dump $dist unstable current-$dist-unstable >> current.sql
+
+    for tree in stable unstable; do
+	echo ""
+	echo "Dumping $dist/$tree..."
+	./dump --distribution=$dist --tree=$tree --release=current-$dist-$tree >> current.sql
+    done
 done
 
 echo ""
