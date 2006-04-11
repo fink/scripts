@@ -265,6 +265,11 @@ expansion will yield the <b>parent's</b> default, even though the
 default for <tt style="white-space: nowrap;">InstallScript</tt> in a <tt style="white-space: nowrap;">SplitOff</tt>
 package is blank. (Introduced in fink-0.20.6)
 </p>
+</td></tr><tr valign="top"><td>%{PatchFile}</td><td>
+<p>
+The full path to the file given in the <tt style="white-space: nowrap;">PatchFile</tt> field.
+(Introduced in fink-0.24.12)
+</p>
 </td></tr></table>
 
 
@@ -1547,21 +1552,56 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 <tt style="white-space: nowrap;">/sw/lib/fink/update</tt>)。
 </p>
 </td></tr><tr valign="top"><td>Patch</td><td>
+
 <p>
 应用于 <tt style="white-space: nowrap;">patch -p1
-&lt;<b>patch-file</b></tt> 命令的补丁文件的名字。这应该只是一个文件名；正确的路径会被自动添加。在本字段中会应用百分号展开。所以典型的设置值只是
-<tt style="white-space: nowrap;">%f.patch</tt> 或 <tt style="white-space: nowrap;">%n.patch</tt>。补丁会在 PatchScript 脚本运行之前应用(如果有的话)。
+&lt;<b>patch-file</b></tt> 命令的补丁文件的名字。这应该只是一个文件名；正确的路径会被自动添加(the same directory where the <tt style="white-space: nowrap;">.info</tt> file
+ is located)。 在本字段中会应用百分号展开。所以典型的设置值只是
+<tt style="white-space: nowrap;">%f.patch</tt> 或 <tt style="white-space: nowrap;">%n.patch</tt>。补丁会在 PatchScript 脚本运行之前 in a separate step 应用(如果有的话)。
 </p>
+
 <p>
 记住 %n 包括所有 %type_ 变种数据，所以你可能需要在这里使用 %{ni} (也许需要包括一些特定的 %type_ 展开)。
 维护一个单独的补丁文件，然后在 <tt style="white-space: nowrap;">PatchScript</tt> 字段中列出与变种有关的修改会比对每个变种使用单独的补丁文件容易些。
+</p>
+</td></tr><tr valign="top"><td>PatchFile</td><td>
+<p>
+The same syntax as the <tt style="white-space: nowrap;">Patch</tt> field. The full path to this
+file is available using the <tt style="white-space: nowrap;">%{PatchFile}</tt> percent
+expansion--do not use <tt style="white-space: nowrap;">%a</tt> to access this file.
+Unlike <tt style="white-space: nowrap;">Patch</tt>, <tt style="white-space: nowrap;">PatchFile</tt> is applied as part
+of <tt style="white-space: nowrap;">PatchScript</tt>. Fink checks that the listed file exists,
+is readable, and that its checksum matches
+the <tt style="white-space: nowrap;">PatchFile-MD5</tt> field.
+</p>
+<p>
+You may not use both <tt style="white-space: nowrap;">Patch</tt> and <tt style="white-space: nowrap;">PatchFile</tt> in
+the same package description. Any package that
+uses <tt style="white-space: nowrap;">PatchFile</tt> must declare at least
+<tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.24.12)</tt>. Giving a higher version
+requirement is allowed if it is necessary for other reasons.
+</p>
+</td></tr><tr valign="top"><td>PatchFile-MD5</td><td>
+<p>
+The MD5 checksum of the file given in the <tt style="white-space: nowrap;">PatchFile</tt>
+field. This field is required if <tt style="white-space: nowrap;">PatchFile</tt> is used.
+(Introduced in fink-0.24.12)
 </p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
 <p>
 在补丁阶段运行的一系列命令。这是对软件包打补丁或修改软件包的地方。
 参阅下面关于<a href="#reference.scripts">脚本的注意事项</a>。
 在命令运行之前，会进行<a href="#format.percent">百分号展开</a>。
-在这里没有默认运行的命令。
+If a <tt style="white-space: nowrap;">PatchFile</tt> field exists, the
+default <tt style="white-space: nowrap;">PatchScript</tt> is:
+</p>
+<pre>
+patch -p1 &lt; %{PatchFile}
+</pre>
+<p>
+If there is no <tt style="white-space: nowrap;">PatchFile</tt>, the default is blank. If you
+have an explicit <tt style="white-space: nowrap;">PatchScript</tt>, you must apply
+the <tt style="white-space: nowrap;">PatchFile</tt> explicitly.
 </p>
 </td></tr></table>
 <p><b>编译阶段：</b></p>
@@ -2048,7 +2088,16 @@ shell 脚本类似。不过，命令是通过 system() 调用执行的，每次�
 <pre>Patch: %f.patch</pre>
 <pre>PatchScript: patch -p1 &lt;%a/%f.patch</pre>
 <p>如果你使用比较新的简单软件包命名约定，使用 %n
-来代替 %f。这两个字段不是互斥的，你可以两个都使用，它们都会被执行。这种情况下，PatchScript 会在后面被执行。</p>
+来代替 %f。这两个字段不是互斥的，你可以两个都使用，它们都会被执行。这种情况下，PatchScript 会在后面被执行。
+
+Alternately, you can use the
+newer <tt style="white-space: nowrap;">PatchFile</tt> instead of <tt style="white-space: nowrap;">Patch</tt> and apply
+with an implicit or explicit <tt style="white-space: nowrap;">PatchScript</tt>--see the
+descriptions of the <tt style="white-space: nowrap;">PatchFile</tt>
+and <tt style="white-space: nowrap;">PatchScript</tt> fields for more information.
+
+</p>
+
 <p>因为你可能会在补丁文件中允许用户选择安装前缀，建议在补丁文件中使用类似 <tt style="white-space: nowrap;">@PREFIX@</tt> 的变量来代替 <tt style="white-space: nowrap;">/sw</tt>，然后使用：</p>
 <pre>PatchScript: sed 's|@PREFIX@|%p|g' &lt;%a/%f.patch | patch -p1</pre>
 <p>补丁文件应该是 unidiff 格式，而且一般应该通过：</p>
@@ -2081,4 +2130,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.26 2006/02/23 07:22:42 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.27 2006/04/11 23:52:29 babayoshihiko Exp $</i></p></body></html>

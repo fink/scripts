@@ -306,7 +306,12 @@ SplitOff: &lt;&lt;
 							この展開は<b>親</b>のデフォルトになる．
 							
 						</p>
-					</td></tr></table>
+					</td></tr><tr valign="top"><td>%{PatchFile}</td><td>
+<p>
+<tt style="white-space: nowrap;">PatchFile</tt> フィールドで示されたファイルのフルパス．
+(fink-0.24.12 にて導入)
+</p>
+</td></tr></table>
 		
 	<h2><a name="policy">3 パッケージ化ポリシー</a></h2>
 		
@@ -1872,9 +1877,9 @@ Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
 						<p>
 							<tt style="white-space: nowrap;">patch -p1 &lt;<b>パッチファイル</b></tt> として適用されるパッチのファイル名．
 							ここにはファイル名のみを指定します．
-							適切なパスは自動的に前置されます．
+							適切なパス (<tt style="white-space: nowrap;">.info</tt>のあるディレクトリ) は自動的に前置されます．
 							このフィールドではパーセント展開が行われるので，典型的な値は単に <tt style="white-space: nowrap;">%f.patch</tt> または <tt style="white-space: nowrap;">%n.patch</tt> となります．
-							PatchScript が指定されている場合，パッチはその後に実行されます．
+							PatchScript が指定されている場合，パッチはその後に別のステップとして実行されます．
 						</p>
 						<p>
 							%n は %type_ 系で示される変種データ全てを含む文字列に展開されることに注意．
@@ -1883,15 +1888,42 @@ Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
 							各変種固有の変更点を <tt style="white-space: nowrap;">PatchScript</tt> に記述する方が，
 							各変種毎にパッチファイルを作るより手間が少ないでしょう．
 						</p>
-					</td></tr><tr valign="top"><td>PatchScript</td><td>
+					</td></tr><tr valign="top"><td>PatchFile</td><td>
+<p>
+<tt style="white-space: nowrap;">Patch</tt> フィールドと同じ文法．
+このファイルへのフルパスは， <tt style="white-space: nowrap;">%{PatchFile}</tt> パーセント展開で利用することができます．
+<tt style="white-space: nowrap;">Patch</tt> と異なり， <tt style="white-space: nowrap;">PatchFile</tt> は <tt style="white-space: nowrap;">PatchScript</tt> の一部分として適用されます．
+Fink は，そのアイルが存在し，読み取り可能であり，チェックサムが <tt style="white-space: nowrap;">PatchFile-MD5</tt> フィールドと適合していることを確認します．
+</p>
+<p>
+<tt style="white-space: nowrap;">Patch</tt> と <tt style="white-space: nowrap;">PatchFile</tt> を，ひとつのパッケージ記述中に同時に使うことはできません．
+<tt style="white-space: nowrap;">PatchFile</tt> を使うパッケージは，<tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.24.12)</tt> を宣言しなければなりません．
+他の理由があればこれより大きいバージョン番号を使ってもかまいません．
+</p>
+</td></tr><tr valign="top"><td>PatchFile-MD5</td><td>
+<p>
+<tt style="white-space: nowrap;">PatchFile</tt> フィールドで与えられたファイルの MD5 チェックサム．
+<tt style="white-space: nowrap;">PatchFile</tt> を使用する際には必須．
+(fink-0.24.12 で導入)
+</p>
+</td></tr><tr valign="top"><td>PatchScript</td><td>
 						<p>
 							パッチ段階で実行されるコマンドのリスト．
 							下記のスクリプトの注意書きを参照してください．
 							ここには，パッチを当てるか，またはパッケージに変更を加えるコマンドを指定します．
 							下記の<a href="#reference.scripts">スクリプトに関する注記</a>もあわせて参照してください．
 							コマンド実行前に，<a href="#format.percent">パーセント展開</a>が行われます．
-							デフォルト値はありません．
-						</p>
+<tt style="white-space: nowrap;">PatchFile</tt> フィールドが存在する場合，
+<tt style="white-space: nowrap;">PatchScript</tt> の既定値は:
+</p>
+<pre>
+patch -p1 &lt; %{PatchFile}
+</pre>
+<p>
+です．
+<tt style="white-space: nowrap;">PatchFile</tt> がない場合の既定値は空白となります．
+<tt style="white-space: nowrap;">PatchScript</tt> を明示的に用いる場合， <tt style="white-space: nowrap;">PatchFile</tt> を明示しなければなりません．
+</p>
 					</td></tr></table>
 			<p>
 				<b>コンパイル段階関連:</b>
@@ -2453,6 +2485,9 @@ SplitOff2: &lt;&lt;
 			<p>
 				新しく導入された方の簡潔なパッケージファイル命名規則を採用しているなら， %f でなく %n を使うこと．
 				これら2つのフィールドは互いに排他的ではなく，両方指定することもできます (PatchScript, Patch の順に両方実行されます)．
+				あるいは，<tt style="white-space: nowrap;">Patch</tt> の代わりに，新しい <tt style="white-space: nowrap;">PatchFile</tt> を用い，
+				明示的または暗示的に <tt style="white-space: nowrap;">PatchScript</tt> を適用します．
+				詳細は <tt style="white-space: nowrap;">PatchFile</tt> および <tt style="white-space: nowrap;">PatchScript</tt> の説明を参照．
 			</p>
 			<p>
 				パッチファイルではユーザがインストールディレクトリを選択できるようにする方がよいので，
@@ -2501,4 +2536,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.38 2006/02/23 07:22:43 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.39 2006/04/11 23:52:29 babayoshihiko Exp $</i></p></body></html>
