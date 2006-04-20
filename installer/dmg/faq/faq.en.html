@@ -966,7 +966,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.xml-parser">
       <div class="question"><p><b>Q6.20: I get the following message: <q>configure: error: XML::Parser perl module is required for intltool</q>.  What do I do about it?</b></p></div>
-      <div class="answer"><p><b>A:</b> You need to make sure that you have the right variant of the xml-parser-pm package to match the Perl version for your system.  For example, if you're on Panther you should have <tt style="white-space: nowrap;">xml-parser-pm581</tt> rather than <tt style="white-space: nowrap;">xml-parser-pm560</tt> (you may also have the <tt style="white-space: nowrap;">xml-parser-pm</tt> placeholder), since you have <tt style="white-space: nowrap;">Perl-5.8.1</tt> rather than <tt style="white-space: nowrap;">Perl-5.6.0</tt>.  If you're on Jaguar, and are using the default system Perl version, you'll have the <tt style="white-space: nowrap;">pm560</tt> variant, and if you've installed <tt style="white-space: nowrap;">Perl 5.8.0</tt> you may have the <tt style="white-space: nowrap;">pm580</tt> variant.</p></div>
+      <div class="answer"><p><b>A:</b> If you're using the unstable tree, make sure you have intltool-0.34.1or later installed.</p><p>Otherwise, you need to make sure that you have the right variant of the xml-parser-pm package to match the Perl version for your system.  For example, if you're on Panther you should have <tt style="white-space: nowrap;">xml-parser-pm581</tt> rather than <tt style="white-space: nowrap;">xml-parser-pm560</tt> (you may also have the <tt style="white-space: nowrap;">xml-parser-pm</tt> placeholder), since you have <tt style="white-space: nowrap;">Perl-5.8.1</tt> rather than <tt style="white-space: nowrap;">Perl-5.6.0</tt>.  If you're on Jaguar, and are using the default system Perl version, you'll have the <tt style="white-space: nowrap;">pm560</tt> variant, and if you've installed <tt style="white-space: nowrap;">Perl 5.8.0</tt> you may have the <tt style="white-space: nowrap;">pm580</tt> variant.</p></div>
     </a>
     <a name="comp-general.master-problems">
       <div class="question"><p><b>Q6.21: I'm trying to download a package, but Fink goes to some weird site with <q>distfiles</q> in its name, and the file isn't there.</b></p></div>
@@ -1508,4 +1508,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.63 2006/04/16 16:56:28 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.64 2006/04/20 00:38:42 alexkhansen Exp $</i></p></body></html>
