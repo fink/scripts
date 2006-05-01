@@ -7,7 +7,6 @@ echo "Starting PDB update: `date`"
 echo "Fixing permissions"
 chgrp -R fink .
 chmod -f -R g+w,a+r .
-chmod o-rwx db.inc.pl
 chgrp fink /Volumes/src2/fink/pdb.finkproject.org/htdocs/pdb/timestamp.inc
 
 echo "Finished PDB update: `date`"
