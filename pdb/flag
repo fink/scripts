@@ -47,31 +47,48 @@ $q = "SELECT DISTINCT name FROM package";
 $sth = $dbh->prepare($q);
 $sth->execute();
 
-my ($pkgname, $release, $version, $revision, $chosen, %vlist);
 
 while (1) {
-  ($pkgname) = $sth->fetchrow_array;
+  my ($pkgname) = $sth->fetchrow_array;
   last unless defined($pkgname);
 
-  %vlist = ();
+  # gather data for all versions in all releases
   $q = "SELECT name,release,version,revision FROM package WHERE name='$pkgname'";
   $sth2 = $dbh->prepare($q);
   $sth2->execute();
+
+  my %vlist = ();  # $release->%v-%r map
   while (1) {
+      my ($release, $version, $revision);
+      # FIXME: where's the epoch??
     (undef, $release, $version, $revision) = $sth2->fetchrow_array;
     last unless defined($release);
     $vlist{$release} = $version."-".$revision;
   }
+
   $sth2->finish;
 
-  $chosen = "";
+  # set "latest" for the version entry for each package that contains
+  # the version-agnostic info to use (Description, etc)
+  # FIXME: why aren't we just sorting $sth2 by standard version
+  # alogrithm and picking highest?
+  # FIXME: Can the dpkg version sorting alogrithm be imlemented in the
+  # db itself so that consumers could just ORDER BY and other
+  # comparisons instead of needing a script to add sort metadata
+  # flags?
+  my $chosen = "";
   foreach $release (@prio) {
+      # use the pkg from the first release entry in @prio in which the
+      # pkg exists
     if (exists $vlist{$release}) {
       $chosen = $release;
       last;
     }
   }
+
   if ($chosen eq "") {
+      # falback: pkg not found in any @prio releases, so just pick a
+      # release where it does exist
     ($chosen) = keys %vlist;
   }
 
@@ -82,6 +99,8 @@ while (1) {
     print "No release chosen for $pkgname\n";
   }
 
+  # set "needtest" flag for entries of pkgs that are in unstable but
+  # not stable, or whose version in stable is different
   if (exists $vlist{$prio[0]} and
       (not exists $vlist{$prio[1]} or $vlist{$prio[0]} ne $vlist{$prio[1]})) {
     $q = "UPDATE package SET needtest=1 WHERE name='$pkgname' AND release='".$prio[0]."'";
