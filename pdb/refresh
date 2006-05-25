@@ -28,8 +28,15 @@ for dist in ${dists[@]}; do
 
     for tree in stable unstable; do
 	echo ""
-	echo "Dumping $dist/$tree..."
-	./dump --distribution=$dist --tree=$tree --release=current-$dist-$tree >> current.sql
+	if [ $dist = "10.4" ]; then
+	    for arch in powerpc i386; do
+		echo "Dumping $dist/$tree $arch..."
+		./dump --distribution=$dist --tree=$tree --architecture=$arch --release=current-$dist-$tree-$arch >> current.sql
+	    done
+	else
+	    echo "Dumping $dist/$tree..."
+	    ./dump --distribution=$dist --tree=$tree --release=current-$dist-$tree >> current.sql
+	fi
     done
 done
 
