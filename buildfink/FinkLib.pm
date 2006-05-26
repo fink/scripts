@@ -62,13 +62,17 @@ sub installEssentials {
 	}
 }
 
+sub readPackages {
+	$Fink::Status::the_instance ||= Fink::Status->new();
+	$Fink::Status::the_instance->read();
+}
+
 # Purge packages we may have previously built
 sub purgeNonEssential {
 	my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();
 	my $re = "^(?:" . join("|", @essentials) . ")\$";
 
-	$Fink::Status::the_instance ||= Fink::Status->new();
-	$Fink::Status::the_instance->read();
+	readPackages();
 
 	my @packages = Fink::Package->list_packages();
 	my @purgelist;

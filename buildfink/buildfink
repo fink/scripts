@@ -660,6 +660,7 @@ sub getRelatives {
 # at the same time.  They can get left over if the system crashes
 # while building a package.
 sub removeBuildLocks {
+	FinkLib::readPackages();
 	foreach my $pkgname (Fink::Package->list_packages()) {
 		next unless $pkgname =~ /^fink-buildlock-.*/;
 		system("dpkg", "-r", $pkgname);
