@@ -625,12 +625,10 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
 </p><p> <tt style="white-space: nowrap;">xfree86-base-threaded</tt> et <tt style="white-space: nowrap;">xfree86-rootless-threaded</tt>
 </p><p>par les méthodes habituelles : "<tt style="white-space: nowrap;">fink install</tt>" pour les utilisateurs de sources, "<tt style="white-space: nowrap;">apt-get install</tt>" ou <tt style="white-space: nowrap;">dselect</tt> pour les utilisateurs de binaires.</p></div>
 </a>
-
 <a name="comp-packages.cctools">
 <div class="question"><p><b>Q7.4: Lors de l'installation de KDE, le message suivant apparaît : 'Can't resolve dependency "cctools (&gt;= 446-1)"'"</b></p></div>
 <div class="answer"><p><b>A:</b> Ce message quelque peu abscons signifie que vous devez installer les Developer Tools de décembre 2002.</p></div>
 </a>
-
 <a name="comp-packages.libiconv-gettext">
 <div class="question"><p><b>Q7.5: Impossible de mettre à jour libiconv <tt style="white-space: nowrap;">libiconv</tt>.</b></p></div>
 <div class="answer"><p><b>A:</b> Si vous voyez apparaître des messages d'erreur semblables au suivant :</p><pre>libtool: link: cannot find the library `/sw/lib/libiconv.la'</pre><p>vous pouvez résoudre le problème en exécutant :</p><pre>fink remove gettext-dev
@@ -758,7 +756,6 @@ export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>Il est souvent plus simple d'
 <div class="question"><p><b>Q9.4: Au démarrage de XDarwin, le message suivant apparaît : "xinit: No such file or directory (errno 2): no server "/usr/X11R6/bin/X" in PATH".</b></p></div>
 <div class="answer"><p><b>A:</b> Tout d'abord, vérifiez que vous sourcez init.sh dans le fichier de démarrage de X <tt style="white-space: nowrap;">~/.xinitrc</tt>.</p><p>Sous Jaguar, il arrive parfois que tous les paquets <tt style="white-space: nowrap;">xfree86</tt> soient compilés, mais que seuls les paquets <tt style="white-space: nowrap;">xfree86-base</tt> et <tt style="white-space: nowrap;">xfree86-base-shlibs</tt> soient installés. Vérifiez que les paquets <tt style="white-space: nowrap;">xfree86-rootless</tt> et <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt> sont installés. Si ce n'est pas le cas, lancez <tt style="white-space: nowrap;">fink install xfree86-rootless</tt>. Cela devrait résoudre le problème.</p><p>Si ces paquets sont installés, essayez <tt style="white-space: nowrap;">fink rebuild xfree86-rootless</tt>. Si cela ne marche pas, vérifiez que <tt style="white-space: nowrap;">/usr/bin/X11R6</tt> est dans votre PATH.</p></div>
 </a>
-
 <a name="usage-packages.xterm-error">
 <div class="question"><p><b>Q9.5: Le lancement de xterm échoue avec le message suivant : "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib".</b></p></div>
 <div class="answer"><p><b>A:</b> Cela se produit lorsque l'on utilise une version 10.1 de XFree86 sur 10.2. Vous devez passer à une version 10.2.</p><p>Si vous utilisez les paquets Fink <tt style="white-space: nowrap;">xfree86</tt>, vous pouvez passer à une version plus récente de la façon habituelle ("<tt style="white-space: nowrap;">fink selfupdate-cvs ; fink update-all</tt>" pour une installation à partir du source,  <tt style="white-space: nowrap;">fink selfupdate ; sudo apt-get update; sudo apt-get dist-upgrade</tt>" pour une installation à partir des binaires.</p><p>Si vous avez installé XFree86 par d'autres moyens, vous trouverez les rustines qui vous permettront de faire la mise à jour sur le <a href="http://mrcla.com/XonX">site web de XonX</a>.</p></div>
@@ -855,4 +852,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.53 2006/05/07 08:27:26 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.54 2006/05/26 12:32:53 michga Exp $</i></p></body></html>
