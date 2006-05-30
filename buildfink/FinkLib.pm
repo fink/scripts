@@ -129,6 +129,8 @@ sub sortPackagesByMaintainer {
 		my $maint = "None <fink-devel\@lists.sourceforge.net>";
 		if($obj->has_param('maintainer')) {
 			$maint = $obj->param('maintainer');
+			# RangerRick has one email per package, but we want them clustered for maintindex
+			$maint =~ s/<.*\@fink.racoonfink\.com>/<rangerrick\@fink.racoonfink.com>/;
 		}
 
 		$maints{$maint} ||= [];
