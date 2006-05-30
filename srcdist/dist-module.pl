@@ -31,8 +31,8 @@ import Fink::Bootstrap qw(&modify_description &read_version_revision);
 
 ### configuration
 
-my $cvsroot=':ext:vasi@cvs.sourceforge.net:/cvsroot/fink';
-my $distribution = "10.3";  #default value
+my $cvsroot=':ext:dmrrsn@fink.cvs.sourceforge.net:/cvsroot/fink';
+my $distribution = "10.4";  #default value
 
 ### init
 
