@@ -19,7 +19,7 @@ DO_CHECKS:
 
 	if (! -w "${TARGET_VOLUME}")
 	{
-	    print "Fink Installer: User $ENV{USER} cannot write to ${TARGET_VOLUME} to perform symlink test!\n";
+	    print "Fink Installer: User $ENV{USER} cannot write to ${TARGET_VOLUME} to perform symlink test! Try the \"Repair Permissions\" function in Disk Utility.\n";
 	    $result = ((1 << 5) | 22);
 	    last;
 	}
