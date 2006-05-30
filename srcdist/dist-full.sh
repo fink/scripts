@@ -22,7 +22,7 @@
 
 ### configuration
 
-cvsroot=':ext:dmrrsn@cvs.sourceforge.net:/cvsroot/fink'
+cvsroot=':ext:dmrrsn@fink.cvs.sourceforge.net:/cvsroot/fink'
 
 ### init
 
