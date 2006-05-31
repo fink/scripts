@@ -7,25 +7,20 @@ tag=release_`echo $release | sed 's/\./_/g'`
 
 echo "Updating from CVS..."
 if [ ! -d fink ]; then
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
+  cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -d fink dists
 fi
 cd fink
 cvs -z3 -q update -r $tag
 cd ..
 
-#./dump stable $release-stable >$release-stable.sql
-if [ -f var/db/fink.db ]; then
- rm var/db/fink.db
-fi
-touch fink/dists
+rm -f fink/dists var/db/fink.db
+ln -s $tree fink/dists
 
 # As of 0.6.3 / 0.7.0.. you need to specify the tree you want 'stable' to be. 
 # That is, './dumprelease 0.6.3 10.2-gcc3.3' and './dumprelease 0.7.0 10.3'
 # This may be temporary till we find a better solution.
-rm fink/dists
-ln -s $tree fink/dists
 echo "Dumping $tree/stable to $release-stable.sql..."
-./dump $tree stable $release-stable >$release-stable.sql
+./dump --distribution=$tree --tree=stable --release=$release-stable >$release-stable.sql
 if [ -f var/db/fink.db ]; then
  rm var/db/fink.db
 fi
