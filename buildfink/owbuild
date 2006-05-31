@@ -100,6 +100,7 @@ ulimit -c 0
 #		netcdf-absoft
 #		mac-growl-pm581
 #		mac-growl-pm586
+#		system-viha
 
 exec $BFDIR/buildfink  \
 	--skip gwydion-dylan-bootstrap \
@@ -126,5 +127,6 @@ exec $BFDIR/buildfink  \
 	--skip stylebook \
 	--skip fftw-absoft --skip netcdf-absoft \
 	--skip mac-growl-pm581 --skip mac-growl-pm586 \
+	--skip system-viha \
 	--max-build-time gcc4:12h \
 $FINKDIR $OWDIR/$1
