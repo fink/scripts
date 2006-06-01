@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use File::Find;
+use POSIX qw(uname);
 
 my $result = 0, $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
@@ -16,18 +17,29 @@ DO_CHECKS:
   	  last;
 	} 
 
-	$TargetSystemBuild = qx{defaults read /System/Library/CoreServices/SystemVersion ProductBuildVersion};
-	chomp $TargetSystemBuild;
+	# x.y.z form
+	my OSXVersion = qx{defaults read /System/Library/CoreServices/SystemVersion ProductUserVisibleVersion};
+	chomp $OSXVersion;
 
-#6C35
-#6C115
-#7B85
-	if ($TargetSystemBuild lt "8A428")
+	if ($OSXVersion != /^8\./)
 	{
 	print "Fink Installer: Fink requires Mac OS X 10.4 (Tiger) or later! Bailing out..\n";
        	$result = ((1 << 6) | (1 << 5) | 20);
         last;
 	}
+
+	# human-readable string, not a config.guess platform value
+	# ("Power Macintosh" or "i386")
+	my $CPUArch = (uname())[4];
+
+	if ($CPUArch ne 'Power Macintosh')
+	{
+	print "Fink Installer: This Installer is for powerpc machines only! Bailing out..\n";
+       	$result = ((1 << 6) | (1 << 5) | 21);
+        last;
+	}
+
+
 }
 
 exit $result;
