@@ -17,11 +17,11 @@ DO_CHECKS:
   	  last;
 	} 
 
-	# x.y.z form
+	# x.y.z form (10.4.6, for example)
 	my OSXVersion = qx{defaults read /System/Library/CoreServices/SystemVersion ProductUserVisibleVersion};
 	chomp $OSXVersion;
 
-	if ($OSXVersion != /^8\./)
+	if ($OSXVersion != /^10\.4\./)
 	{
 	print "Fink Installer: Fink requires Mac OS X 10.4 (Tiger) or later! Bailing out..\n";
        	$result = ((1 << 6) | (1 << 5) | 20);
