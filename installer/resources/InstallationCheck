@@ -5,6 +5,9 @@ use POSIX qw(uname);
 my $result = 0, $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 
+my $target_OSX = '10.4';
+my $target_CPU = 'Power Macintosh';
+
 DO_CHECKS:
 {
 	# The "19" specifies the index of the localized error string in
@@ -18,12 +21,13 @@ DO_CHECKS:
 	} 
 
 	# x.y.z form (10.4.6, for example)
-	my OSXVersion = qx{defaults read /System/Library/CoreServices/SystemVersion ProductUserVisibleVersion};
+	my $OSXVersion = qx{defaults read /System/Library/CoreServices/SystemVersion ProductUserVisibleVersion};
+	$OSXVersion = '' if !defined $OSXVersion;
 	chomp $OSXVersion;
 
-	if ($OSXVersion != /^10\.4\./)
+	if ($OSXVersion !~ /^\Q$target_OSX./)
 	{
-	print "Fink Installer: Fink requires Mac OS X 10.4 (Tiger) or later! Bailing out..\n";
+	print "Fink Installer: This Installer is for Mac OS X $target_OSX, not $OSXVersion. Bailing out.\n";
        	$result = ((1 << 6) | (1 << 5) | 20);
         last;
 	}
@@ -32,9 +36,9 @@ DO_CHECKS:
 	# ("Power Macintosh" or "i386")
 	my $CPUArch = (uname())[4];
 
-	if ($CPUArch ne 'Power Macintosh')
+	if ($CPUArch ne $target_CPU)
 	{
-	print "Fink Installer: This Installer is for powerpc machines only! Bailing out..\n";
+	print "Fink Installer: This Installer is for $target_CPU machines, not $CPUArch. Bailing out.\n";
        	$result = ((1 << 6) | (1 << 5) | 21);
         last;
 	}
