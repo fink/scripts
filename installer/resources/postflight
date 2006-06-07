@@ -1,11 +1,19 @@
 #!/usr/bin/perl
-#Make the /sw symlink - this should work fine, we checked for /sw in InstallationCheck
-if(! -e "/sw")
-{
- # Only make the link if we didn't install on the root volume
- `/bin/ln -s \"$ARGV[1]/sw\" /sw`;
+# -*- mode: Perl; tab-width: 4; -*-
+
+
+#Make the a root-volume /sw symlink to the /sw on the target volume if
+#user selected non-root volume (InstallationCheck verified that there
+#was no existing /sw on root volume)
+if(! -e "/sw") {
+	`/bin/ln -s \"$ARGV[1]/sw\" /sw`;
 }
+
+# final preparations to create a viable fink installation
 system "/usr/bin/yes '' | /sw/lib/fink/postinstall.pl";
 system "/sw/bin/fink -y index";
+
+# set up user's shell for fink
 system "/sw/bin/pathsetup.sh; osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'";
+
 system "/sw/var/lib/fink/prebound/update-package-prebinding.pl -f";
