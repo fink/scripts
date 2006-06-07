@@ -1,49 +1,55 @@
 #!/usr/bin/perl
+# -*- mode: Perl; tab-width: 4; -*-
+
 use File::Find;
 use POSIX qw(uname);
 
-my $result = 0, $basedir = "/sw";
+my $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 
+# For what OS X major-version are we configured?
 my $target_OSX = '10.4';
+
+# For what CPU arch are are built?
 my $target_CPU = 'Power Macintosh';
+
+# see http://developer.apple.com/documentation/DeveloperTools/Conceptual/SoftwareDistribution/Concepts/sd_install_check_ref.html
+my $result = 0;
 
 DO_CHECKS:
 {
-	# The "19" specifies the index of the localized error string in
-	# {English,Spanish,etc}.lproj/InstallationCheck.strings
 	print "running InstallationCheck...\n";
-	if ((-e "$basedir") || (-l "$basedir"))
-	{
-	  print "Fink Installer: ROOT /sw exists!\n";
-	  $result = ((1 << 6) | (1 << 5) | 19);
-  	  last;
-	} 
+
+	# we're only for virgin systems, not upgrading/overwriting existing fink
+	if ((-e "$basedir") || (-l "$basedir")) {
+		print "Fink Installer: ROOT /sw exists!\n";
+		$result = ((1 << 6) | (1 << 5) | 19);
+		last;
+	}
 
 	# x.y.z form (10.4.6, for example)
 	my $OSXVersion = qx{defaults read /System/Library/CoreServices/SystemVersion ProductUserVisibleVersion};
 	$OSXVersion = '' if !defined $OSXVersion;
 	chomp $OSXVersion;
 
-	if ($OSXVersion !~ /^\Q$target_OSX./)
-	{
-	print "Fink Installer: This Installer is for Mac OS X $target_OSX, not $OSXVersion. Bailing out.\n";
-       	$result = ((1 << 6) | (1 << 5) | 20);
-        last;
+	# make sure OS X version is the distro for which we're configured
+	if ($OSXVersion !~ /^\Q$target_OSX./) {
+		print "Fink Installer: This Installer is for Mac OS X $target_OSX, not $OSXVersion. Bailing out.\n";
+		$result = ((1 << 6) | (1 << 5) | 20);
+		last;
 	}
 
-	# human-readable string, not a config.guess platform value
-	# ("Power Macintosh" or "i386")
+	# human-readable string ("Power Macintosh" or "i386")
+	# not a config.guess platform value
 	my $CPUArch = (uname())[4];
 
-	if ($CPUArch ne $target_CPU)
-	{
-	print "Fink Installer: This Installer is for $target_CPU machines, not $CPUArch. Bailing out.\n";
-       	$result = ((1 << 6) | (1 << 5) | 31);
-        last;
+
+	# make sure CPU arch is the one for which we're built
+	if ($CPUArch ne $target_CPU) {
+		print "Fink Installer: This Installer is for $target_CPU machines, not $CPUArch. Bailing out.\n";
+		$result = ((1 << 6) | (1 << 5) | 31);
+		last;
 	}
-
-
 }
 
 exit $result;
