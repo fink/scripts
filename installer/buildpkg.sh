@@ -60,6 +60,7 @@ rm -rf $DMGDIR
 rm -rf $CONDIR
 
 chmod a+x $IN_BASEDIR/mkdmg.pl 
+chmod a+x $IN_BASEDIR/resources/InstallationCheck
 chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
 
