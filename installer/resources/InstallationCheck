@@ -39,7 +39,7 @@ DO_CHECKS:
 	if ($CPUArch ne $target_CPU)
 	{
 	print "Fink Installer: This Installer is for $target_CPU machines, not $CPUArch. Bailing out.\n";
-       	$result = ((1 << 6) | (1 << 5) | 21);
+       	$result = ((1 << 6) | (1 << 5) | 31);
         last;
 	}
 
