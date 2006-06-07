@@ -86,7 +86,4 @@ echo "running PackageMaker...";
 `find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
 
 chmod -R a+rX $DMGDIR
-#$IN_BASEDIR/mkdmg.pl -v "Fink $IN_VERSION Installer.dmg" $DMGDIR/*
 $IN_BASEDIR/mkdmg.pl -v "Fink-$IN_VERSION-Installer.dmg" $DMGDIR/*
-# "$DMGDIR/Fink $IN_VERSION Installer.pkg" "$DMGDIR/Fink ReadMe.rtf"  "$DMGDIR/Fink Web Site.url" "$DMGDIR/License.rtf" "$DMGDIR/users-guide.html"
-#mv "Fink $IN_VERSION Installer.dmg" Fink-$IN_VERSION-Installer.dmg
