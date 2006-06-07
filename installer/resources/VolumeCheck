@@ -1,39 +1,53 @@
 #!/usr/bin/perl
+# -*- mode: Perl; tab-width: 4; -*-
+
 use File::Find;
 
-my $result = 0, $basedir = "/sw";
+my $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 my $TARGET_VOLUME = $ARGV[0];
 my $targetdir = "$TARGET_VOLUME$basedir";
 
+# set to index (16-31) of msg in *.lproj/InstallationCheck.strings if error
+my $errmsg = 0;
+
 DO_CHECKS:
 {
-	# The "18" specifies the index of the localized error string in
-	# {English,Spanish,etc}.lproj/VolumeCheck.strings
-	if ((-e "$targetdir") || (-l "$targetdir"))
-	{
-	  print "Fink Installer: $targetdir exists!\n";
-	  $result = ((1 << 5) | 18);
-  	  last;
+	print "running VolumeCheck for $TARGET_VOLUME...\n";
+
+	# we're only for virgin systems, not upgrading/overwriting existing fink
+	if ((-e "$targetdir") || (-l "$targetdir")) {
+		print "Fink Installer: $targetdir exists!\n";
+		$errmsg = 18;
+		last;
 	}
 
-	if (! -w "${TARGET_VOLUME}")
-	{
-	    print "Fink Installer: User $ENV{USER} cannot write to ${TARGET_VOLUME} to perform symlink test! Try performing the \"Repair Permissions\" function in Disk Utility.\n";
-	    $result = ((1 << 5) | 22);
-	    last;
+	# Symlink test requires user has write permission target volume.
+	# That usually maps to "user is admin user" && "volume is default
+	# chmod (775)" but the mode sometimes gets corrupted.
+	if (! -w "${TARGET_VOLUME}") {
+		print "Fink Installer: User $ENV{USER} cannot write to ${TARGET_VOLUME} to perform symlink test! Try performing the \"Repair Disk Permissions\" function in Disk Utility.\n";
+		$errmsg = 22;
+		last;
 	}
 
-	if (symlink("$targetdir.tmp", "$targetdir"))
-	{
-	    unlink("$targetdir");
+	# Fink and fink packages are heavily reliant on symlinks. Make
+	# sure they're supported (rules out some non-standard filesystems)
+	if (symlink("$targetdir.tmp", "$targetdir")) {
+		unlink("$targetdir");
 	} else {
-	    print "Fink Installer: ${TARGET_VOLUME} does not support symlinks ($!)!\n";
-	    $result = ((1 << 5) | 21);
-	    last;
+		print "Fink Installer: ${TARGET_VOLUME} does not support symlinks ($!)!\n";
+		$errmsg = 21;
+		last;
 	}
 }
 
+# see http://developer.apple.com/documentation/DeveloperTools/Conceptual/SoftwareDistribution/Concepts/sd_volume_check_ref.html
+my $result = 0;  # all is okay
+if ($errmsg) {
+	if ($errmsg < 16 || $errmsg > 31) {
+		$errmsg = 2;  # generic builtin default msg if out-of-bounds
+	}
+	$result = ( 1 << 5 ) | $errmsg;  # fatal error bit-vector
+}
 exit $result;
-
-
