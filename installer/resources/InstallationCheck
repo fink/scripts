@@ -23,7 +23,7 @@ DO_CHECKS:
 	# we're only for virgin systems, not upgrading/overwriting existing fink
 	if ((-e "$basedir") || (-l "$basedir")) {
 		print "Fink Installer: ROOT /sw exists!\n";
-		$errmsg = 19;
+		$errmsg = 16;
 		last;
 	}
 
@@ -46,7 +46,7 @@ DO_CHECKS:
 	# make sure CPU arch is the one for which we're built
 	if ($CPUArch ne $target_CPU) {
 		print "Fink Installer: This Installer is for $target_CPU machines, not $CPUArch. Bailing out.\n";
-		$errmsg = 31;
+		$errmsg = 25;
 		last;
 	}
 }
