@@ -8,10 +8,10 @@ my $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 
 # For what OS X major-version are we configured?
-my $target_OSX = '10.4';
+my $target_OSX = '10.4';  # INSTALLER BUILDER PATCHME!
 
 # For what CPU arch are are built?
-my $target_CPU = 'Power Macintosh';
+my $target_CPU = 'Power Macintosh';  # INSTALLER BUILDER PATCHME!
 
 # set to index (16-31) of msg in *.lproj/InstallationCheck.strings if error
 my $errmsg = 0;
@@ -35,7 +35,14 @@ DO_CHECKS:
 	# make sure OS X version is the distro for which we're configured
 	if ($OSXVersion !~ /^\Q$target_OSX./) {
 		print "Fink Installer: This Installer is for Mac OS X $target_OSX, not $OSXVersion. Bailing out.\n";
-		$errmsg = 20;
+		# no printf in .strings, so gotta case on hard-coded values:(
+		if ($target_OSX eq '10.3') {
+			$errmsg = 20;
+		} elsif ($target_OSX eq '10.4') {
+			$errmsg = 21;
+		} else {
+			$errmsg = 4;
+		}
 		last;
 	}
 
@@ -46,7 +53,14 @@ DO_CHECKS:
 	# make sure CPU arch is the one for which we're built
 	if ($CPUArch ne $target_CPU) {
 		print "Fink Installer: This Installer is for $target_CPU machines, not $CPUArch. Bailing out.\n";
-		$errmsg = 25;
+		# no printf in .strings, so gotta case on hard-coded values:(
+		if ($target_CPU eq 'Power Macintosh') {
+			$errmsg = 25;
+		} elsif ($target_CPU eq 'i386') {
+			$errmsg = 26;
+		} else {
+			$errmsg = 4;
+		}
 		last;
 	}
 }
