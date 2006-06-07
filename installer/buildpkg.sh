@@ -10,14 +10,30 @@ fi
 shopt -q extglob
 save_shopt=$?
 shopt -qs extglob
-echo "IN_VERSION=$IN_VERSION"
-if [[ "$IN_VERSION" != +([0-9]).+([0-9]).+([0-9]) ]]; then
-    echo "IN_VERSION '$IN_VERSION' does not match (majornum).(minornum).(teenynum)"
+echo "BINDIST_VERSION=$BINDIST_VERSION"
+if [[ "$BINDIST_VERSION" != +([0-9]).+([0-9]).+([0-9]) ]]; then
+    echo "BINDIST_VERSION '$BINDIST_VERSION' does not match (majornum).(minornum).(teenynum)"
     exit 1
 fi
 if [[ $save_shopt -ne 0 ]]; then
   shopt -qu extglob
 fi
+
+# sanity check: ARCH is set correctly (and if so, we set some other stuff)
+case $ARCH in
+powerpc)
+ echo "ARCH=powerpc"
+ ;;
+intel)
+ echo "ARCH=intel"
+ ;;
+*)
+ echo "Error: you must set the environment variable ARCH to either powerpc or intel."
+ exit 1
+ ;;
+esac
+
+IN_VERSION=$BINDIST_VERSION-$ARCH;
 
 RESDIR=$IN_BASEDIR/resources-$IN_VERSION;
 DMGDIR=$IN_BASEDIR/dmg-$IN_VERSION;
@@ -62,8 +78,8 @@ chmod 555 $DMGDIR/pathsetup.app
 chmod 555 $DMGDIR/pathsetup.app/Contents/MacOS
 chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
 
-# Substitute the version for IN_VERSION where appropriate
-perl -pi -e "s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
+# Substitute the version for BINDIST_VERSION where appropriate
+perl -pi -e "s/BINDIST_VERSION/$BINDIST_VERSION/g; s/ARCH/$ARCH/g; s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
 
 # Prepare Info.plist for this specific .pkg
 sed -e "s|@IN_VERSION@|$IN_VERSION|g" < $IN_BASEDIR/Info.plist.in > $IN_BASEDIR/Info.plist

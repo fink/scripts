@@ -3,8 +3,10 @@ versions of OS X prior to 10.3.  If necessary, older versions of buildpkg.sh
 can be obtained from CVS.
 
 Setup environment variables: 
- IN_VERSION is the version of fink you want to install, as a numerical
+ BINDIST_VERSION is the version of fink you want to install, as a numerical
  triplet value such as 0.4.5
+
+ ARCH is the architecture being used (powerpc or intel)
 
  IN_BASEDIR is the directory containing this script (full pathname, with
  no trailing slash).  You are going to need /sw to be clear for this 
@@ -19,7 +21,7 @@ Step 1:
  Clear out /sw so that a fresh version can be installed there.
 
 Step 2:
- Download fink-IN_VERSION-full.tar.gz from sourceforge (or use the copy
+ Download fink-BINDIST_VERSION-full.tar.gz from sourceforge (or use the copy
  you generated when building the srcdist), unpack it and run "./bootstrap.sh",
  installing into /sw.  Accept all default choices during configuration.
 
@@ -64,7 +66,8 @@ Step 8.
  Use TextEdit to examine the files in the resources and dmg subdirs of this
  directory, editing if necessary. You will need to edit the list of 
  installed packages which appears at the end of resources/ReadMe.rtf. 
- Leave IN_VERSION variables as-is, these will be replaced by script.  
+ Leave the BINDIST_VERSION, ARCH, and IN_VERSION variables as-is, these will 
+ be replaced by the script. (IN_VERSION is replaced by BINDIST_VERSION-ARCH.)
  Additionally you may need to update the InstallationCheck file and
  localized error .strings files to contain the minimum supported system
  version. (eg, 6C115 for 10.2.0) 
@@ -75,15 +78,17 @@ Step 8.
 Step 9.
  Run "sudo ./buildpkg.sh". This should copy the resources and dmg directories,
  subsituting versions in the various read me files. It will then create the
- pkg file in the dmg-IN_VERSION directory. Then, a .dmg will be created and 
- end up in the IN_BASEDIR. The Volume name should be "Fink IN_VERSION Installer". 
+ pkg file in the dmg-BINDIST_VERSION-ARCH directory. Then, a .dmg will be 
+ created and end up in the IN_BASEDIR. The Volume name should be 
+ "Fink BINDIST_VERSION-ARCH Installer". 
  
 Step 10.
- Mount and test the .dmg. Send it to someone else to test before release as well.
+ Mount and test the .dmg. Send it to someone else to test before release 
+ as well.
 
 Step 11.
-Commit your revised versions of the .rtf and other files to CVS for the 
-benefit of future releases. Tag the CVS with a release tag of the form
-release_x_y_z .
+ Commit your revised versions of the .rtf and other files to CVS for the 
+ benefit of future releases. Tag the CVS with a release tag of the form
+ release_x_y_z .
 
 That's it, you're done!  
