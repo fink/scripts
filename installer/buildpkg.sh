@@ -36,9 +36,11 @@ fi
 case $ARCH in
 powerpc)
  echo "ARCH=powerpc"
+ CPU_NAME="Power Macintosh"
  ;;
 intel)
  echo "ARCH=intel"
+ CPU_NAME="i386"
  ;;
 *)
  echo "Error: you must set the environment variable ARCH to either powerpc or intel."
@@ -58,7 +60,6 @@ rm -rf $DMGDIR
 rm -rf $CONDIR
 
 chmod a+x $IN_BASEDIR/mkdmg.pl 
-chmod a+x $IN_BASEDIR/resources/InstallationCheck
 chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
 
@@ -90,6 +91,9 @@ chmod a+x $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 chmod 555 $DMGDIR/pathsetup.app
 chmod 555 $DMGDIR/pathsetup.app/Contents/MacOS
 chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
+
+# prepare InstallationCheck for OS X version and hardware
+perl -pi -e "s/OSX_VERSION/$OSX_VERSION/g; s/CPU_NAME/$CPU_NAME/g" $RESDIR/InstallationCheck
 
 # Substitute the version for BINDIST_VERSION where appropriate
 perl -pi -e "s/OSX_VERSION/$OSX_VERSION/g; s/BINDIST_VERSION/$BINDIST_VERSION/g; s/ARCH/$ARCH/g; s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
