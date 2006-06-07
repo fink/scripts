@@ -8,6 +8,8 @@ Setup environment variables:
 
  ARCH is the architecture being used (powerpc or intel)
 
+ OSX_VERSION is the (minimum) OS X version for this installation
+
  IN_BASEDIR is the directory containing this script (full pathname, with
  no trailing slash).  You are going to need /sw to be clear for this 
  installation, so if you move /sw to another location such as /sw.orig, 
@@ -63,14 +65,12 @@ Step 7a:
  Update the copy of FinkCommander in IN_BASEDIR/dmg to the latest version.
 
 Step 8.
- Use TextEdit to examine the files in the resources and dmg subdirs of this
- directory, editing if necessary. You will need to edit the list of 
+ Use TextEdit to examine the files in the resources and dmg subdirs of 
+ IN_BASEDIR, editing if necessary. You will need to edit the list of 
  installed packages which appears at the end of resources/ReadMe.rtf. 
- Leave the BINDIST_VERSION, ARCH, and IN_VERSION variables as-is, these will 
- be replaced by the script. (IN_VERSION is replaced by BINDIST_VERSION-ARCH.)
- Additionally you may need to update the InstallationCheck file and
- localized error .strings files to contain the minimum supported system
- version. (eg, 6C115 for 10.2.0) 
+ Leave the OSX_VERSION, BINDIST_VERSION, ARCH, and IN_VERSION variables as-is;
+ these will be replaced by the script. (IN_VERSION is replaced by 
+ BINDIST_VERSION-ARCH.)
 
  Be sure to clean out any *~ files or other stray files generated during 
  editing.

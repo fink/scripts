@@ -19,6 +19,19 @@ if [[ $save_shopt -ne 0 ]]; then
   shopt -qu extglob
 fi
 
+# sanity check: OSX version number format is #.#
+shopt -q extglob
+save_shopt=$?
+shopt -qs extglob
+echo "OSX_VERSION=$OSX_VERSION"
+if [[ "$OSX_VERSION" != +([0-9]).+([0-9]) ]]; then
+    echo "OSX_VERSION '$OSX_VERSION' does not match (majornum).(minornum)"
+    exit 1
+fi
+if [[ $save_shopt -ne 0 ]]; then
+  shopt -qu extglob
+fi
+
 # sanity check: ARCH is set correctly (and if so, we set some other stuff)
 case $ARCH in
 powerpc)
@@ -79,7 +92,7 @@ chmod 555 $DMGDIR/pathsetup.app/Contents/MacOS
 chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
 
 # Substitute the version for BINDIST_VERSION where appropriate
-perl -pi -e "s/BINDIST_VERSION/$BINDIST_VERSION/g; s/ARCH/$ARCH/g; s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
+perl -pi -e "s/OSX_VERSION/$OSX_VERSION/g; s/BINDIST_VERSION/$BINDIST_VERSION/g; s/ARCH/$ARCH/g; s/IN_VERSION/$IN_VERSION/g" $RESDIR/ReadMe.rtf $RESDIR/Welcome.rtf $RESDIR/*.lproj/Description.plist $DMGDIR/Fink\ ReadMe.rtf
 
 # Prepare Info.plist for this specific .pkg
 sed -e "s|@IN_VERSION@|$IN_VERSION|g" < $IN_BASEDIR/Info.plist.in > $IN_BASEDIR/Info.plist
