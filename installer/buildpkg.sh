@@ -34,16 +34,16 @@ fi
 
 # sanity check: ARCH is set correctly (and if so, we set some other stuff)
 case $ARCH in
-powerpc)
- echo "ARCH=powerpc"
+PowerPC)
+ echo "ARCH=PowerPC"
  CPU_NAME="Power Macintosh"
  ;;
-intel)
- echo "ARCH=intel"
+Intel)
+ echo "ARCH=Intel"
  CPU_NAME="i386"
  ;;
 *)
- echo "Error: you must set the environment variable ARCH to either powerpc or intel."
+ echo "Error: you must set the environment variable ARCH to either PowerPC or Intel."
  exit 1
  ;;
 esac
