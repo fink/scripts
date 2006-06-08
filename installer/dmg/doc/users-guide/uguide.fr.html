@@ -48,7 +48,7 @@ Fran&ccedil;ais |
 
 <h3><a name="intro.supported-os">1.3 Systèmes supportés</a></h3>
 
-<p><b>Mac OS X 10.4</b> est la plateforme d'attaque. On considère qu'elle est <q>complètement supportée et testée</q>, bien qu'il puisse rester encore quelques problèmes car c'est un système opératoire encore relativement nouveau. La plupart des développeurs s'en servent. Pour ceux qui se servent de Mac OS X 10.3, il y a toujours des utilisateurs de Mac OS X 10.4 qui testent leur travail sur leur propre système.</p>
+<p><b>Mac OS X 10.4</b> est la plateforme d'attaque. On considère qu'elle est <q>complètement supportée et testée</q>, bien qu'il puisse rester encore quelques problèmes car c'est un système opératoire encore relativement nouveau. La plupart des développeurs s'en servent. Pour ceux qui se servent de Mac OS X 10.3, il y a toujours des utilisateurs de Mac OS X 10.4 qui testent leur travail sur leur propre système. Notez, néanmoins, que fink sur machine intel est considéré comme une version <b>bêta</b>.</p>
 <p><b>Mac OS X 10.3</b> est <q>complètement supporté et testé</q>, bien qu'il puisse y avoir quelques problèmes de compilation résiduels pour certains paquets isolés. De nombreux développeurs s'en servent. Pour ceux qui ne s'en servent pas, il y a toujours des utilisateurs de Mac OS X 10.3 qui testent leur travail.</p>
 <p><b>Mac OS X 10.2</b> est encore supporté dans une certaine mesure. Fink 0.6.4 est la version la plus récente qui gère ce système.</p>
 <p><b>Mac OS X 10.1</b> est encore supporté dans une certaine mesure. Pour cette version, vous ne pouvez utiliser que Fink 0.4.1 et aucune autre version ultérieure.</p>
@@ -242,7 +242,7 @@ E: Sorry, broken packages</pre>
 <li><p><b>0.4.1 :</b> c'est la version qui peut être installée à partir des binaires pour Mac OS X 10.1.</p></li>
 <li><p><b>0.6.4 :</b> c'est la version qui peut être installée à partir des binaires pour Mac OS X 10.2.</p></li>
 <li><p><b>0.7.2 :</b> c'est la version de base qui peut être installée à partir des binaires pour Mac OS X 10.3. Si vous <a href="#upgrade">mettez à niveau</a> Fink, il se peut qu'il existe une version plus récente pour certains paquets.</p></li>
-<li><p><b>0.8.1 :</b> c'est la version de base qui peut être installée à partir des binaires pour Mac OS X 10.4. Si vous <a href="#upgrade">mettez à niveau</a> Fink, il se peut qu'il existe une version plus récente pour certains paquets.</p></li>
+<li><p><b>0.8.0 :</b> c'est la version de base qui peut être installée à partir des binaires pour Mac OS X 10.4. Si vous <a href="#upgrade">mettez à niveau</a> Fink, il se peut qu'il existe une version plus récente pour certains paquets.</p></li>
 </ol>
 </li>
 </ul>
@@ -252,13 +252,16 @@ E: Sorry, broken packages</pre>
 <li><p><b>10.2-gcc3.3 stable :</b> c'est la version stable la plus récente qui puisse être installée à partir du source pour Mac OS X 10.2 avec la mise à jour de <tt style="white-space: nowrap;">gcc 3.3</tt> contenue dans les Developer Tools. Pour installer cette version, il vous faut activer (si ce n'est déjà fait) l'accès par <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> ou rsync. Si vous n'avez pas mis à jour <tt style="white-space: nowrap;">gcc 3.3</tt>, il se peut que cette version (ou peut-être même le paquet) n'apparaisse pas dans la liste.</p>
 <p>Note : au contraire d'autres projets, Fink distribue les versions les plus récentes des paquets via CVS, tout comme les versions qui requièrent encore certains tests (voir la section instable plus loin). L'activation de CVS ou de rsync vous donne accès aux nouvelles versions binaires des paquets avant que la distribution binaire ne soit mise à jour.</p></li>
 <li><p><b>10.3 stable :</b> c'est la version la plus récente qui puisse être installée à partir du source sur Mac OS X 10.3.</p></li> 
-<li><p><b>10.4-transitional stable :</b> c'est la version la plus récente qui puisse être installée à partir du source sur Mac OS X 10.4.</p></li> 
-<li>
-<p><b>10.2-gcc3.3 unstable :</b> c'est la version instable la plus récente qui puisse être installée à partir du source sur Mac OS X 10.2 avec <tt style="white-space: nowrap;">gcc 3.3</tt>.  Pour installer cette version, suivez les <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> sur l'installation des paquets instables.</p>
+<li><p><b>10.4-transitional stable :</b> c'est la version la plus récente qui puisse être installée à partir du source de l'arborescence stable sur Mac OS X 10.4 pour les utilisateurs qui sont passés de la version système Mac OS X 10.3 à Mac OS X 10.4. Pour machine avec processeur PowerPC uniquement</p></li> 
+<li><p><b>10.4/powerpc stable :</b> c'est la version la plus récente qui puisse être installée à partir du source de l'arborescence stable sur Mac OS X 10.4 pour les utilisateurs qui installent fink pour la première fois. Pour machine avec processeur PowerPC uniquement.</p></li>
+<li><p><b>10.4/intel stable :</b> c'est la version la plus récente qui puisse être installée à partir du source de l'arborescence stable sur Mac OS X 10.4 pour les utilisateurs dont la machine a un processeur Intel.</p></li>
+<li><p><b>10.2-gcc3.3 unstable :</b> c'est la version instable la plus récente qui puisse être installée à partir du source sur Mac OS X 10.2 avec <tt style="white-space: nowrap;">gcc 3.3</tt>.  Pour installer cette version, suivez les <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> sur l'installation des paquets instables.</p>
 <p>Note : instable ne veut pas nécessairement dire non utilisable, cependant sachez que vous installez ces paquets à vos risques et périls.</p>
 </li>
-<li><b>10.3 unstable :</b> c'est la version instable la plus récente qui puisse être installée à partir du source sur Mac OS X 10.3.</li>
-<li><b>10.4-transitional unstable :</b> c'est la version instable la plus récente qui puisse être installée à partir du source sur Mac OS X 10.4.</li>
+<li><b>10.3 unstable :</b> c'est la version la plus récente qui puisse être installée à partir du source de l'arborescence instable sur Mac OS X 10.3.</li>
+<li><b>10.4-transitional unstable :</b> c'est la version la plus récente qui puisse être installée à partir du sourcede l'arborescence instable sur Mac OS X 10.4 pour les utilisateurs qui sont passés de la version système Mac OS X 10.3 à Mac OS X 10.4. Pour machine avec processeur PowerPC uniquement.</li>
+<li><p><b>10.4/powerpc unstable :</b> c'est la version la plus récente qui puisse être installée à partir du source de l'arborescence instable sur Mac OS X 10.4 pour les utilisateurs qui installent fink pour la première fois. Pour machine avec processeur PowerPC uniquement.</p></li>
+<li><p><b>10.4/intel unstable :</b> c'est la version la plus récente qui puisse être installée à partir du source de l'arborescence instable sur Mac OS X 10.4 pour les utilisateurs dont la machine a un processeur Intel.</p></li>
 </ol>
 </li>
 </ul>
@@ -374,8 +377,8 @@ stable/main". Cette liste doit toujours être identique à celle figurant dans l
 <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>. À partir de la version 0.21.0, fink le fait automatiquement pour vous.</p>
 </li>
 <li>
-<p><b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, ou 10.3</p>
-<p>Fink doit savoir quelle version de Mac OS X est installée sur votre système. Mac OS X 10.0 et les versions antérieures ne sont pas gérées, et Mac OS X 10.1 n'est plus maintenue dans cette version de fink. Mac OS X10.2 n'est gérée que si la mise à jour d'août 2003 des Developer Tools a été installée. Ce champ est configuré par l'exécution du script <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>. Il est peu probable que vous ayez à changer cette valeur.</p>
+<p><b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, 10.3, 10.4-transitional ou 10.4</p>
+<p>Fink doit savoir quelle version de Mac OS X est installée sur votre système. Mac OS X 10.0 et les versions antérieures ne sont pas gérées, et Mac OS X 10.1 n'est plus maintenue dans cette version de fink. Les utilisateurs de Mac OS X10.2 ne peuvent installer que la version 0.24.7 de fink sortie en juin 2005. Les utilisateurs de Mac OS X 10.4 utiliseront la distribution 10.4-transitional s'ils avaient installé fink auparavant et sont passés de la version Mac OS X 10.3 à la version Mac OS X 10.4. Il n'existe pas, pour l'instant de méthode officiellement reconnue pour passer de la distribution 10.4-transitional à la distribution 10.4. Ce champ est configuré par l'exécution du script <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>. Il est peu probable que vous ayez à changer cette valeur.</p>
 </li>
 <li>
 <p><b>FetchAltDir:</b> chemin</p>
@@ -878,4 +881,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.fr.xml,v 1.34 2006/03/02 10:24:18 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.fr.xml,v 1.35 2006/06/08 18:41:30 michga Exp $</i></p></body></html>
