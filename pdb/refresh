@@ -15,7 +15,7 @@ if [ -d fink ]; then
   cvs -z3 -q update -Ad ${dists[@]}
   cd ..
 else
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co -d fink dists
+  cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -d fink dists
 fi
 
 # flush the previous dump

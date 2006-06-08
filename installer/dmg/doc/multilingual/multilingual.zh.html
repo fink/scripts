@@ -158,16 +158,16 @@ Available Languages:  |
         <pre>cd ~/Documents/Fink-i18n</pre></li>
 
         <li><b>对于非团队领导的成员（或仍在等待修改许可的团队领导）：
-        </b>以匿名方式登录 cvs.sourceforge.net：<ol>
-            <li><pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink login</pre></li>
+        </b>以匿名方式登录 fink.cvs.sourceforge.net：<ol>
+            <li><pre>cvs -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink login</pre></li>
 
             <li>按回车键（匿名方式不需要密码）</li>
 
             <li>签出 xml 模块：
-            <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink co xml</pre></li>
+            <pre>cvs -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co xml</pre></li>
           </ol><b>对团队领导：</b>用你的用户帐号来签出：<ol>
             <li>你不需要上面的登录步骤，而直接：
-            <pre>cvs -d:ext:yourusername@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
+            <pre>cvs -d:ext:yourusername@fink.cvs.sourceforge.net:/cvsroot/fink co xml</pre>
             其中 <b>yourusername</b> 是你的 SourceForge 用户名。</li>
 
             <li>这时，在提示输入密码的时候，你需要输入你的 SourceForge 用户密码。你也许会得到一个服务器的 DSA 密钥不能识别的警告信息，回答 yes 就可以了。</li>
@@ -209,7 +209,7 @@ Available Languages:  |
         <li><p>按照 2.3 中关于登录的步骤说明，登录到 CVS。</p></li>
 
         <li>进行更新，例如：
-        <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/fink update -dP</pre></li>
+        <pre>cvs -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink update -dP</pre></li>
       </ol>
       <p>对于团队领导：</p>
       <ol>
@@ -402,7 +402,7 @@ include $(basedir)/Makefile.i18n.common</pre>
 <pre>cd ~/Documents/Fink-i18n</pre></li>
 
             <li>签出 xml 代码树：
-<pre>cvs -d:ext:yourusername@cvs.sourceforge.net:/cvsroot/fink co xml</pre>
+<pre>cvs -d:ext:yourusername@fink.cvs.sourceforge.net:/cvsroot/fink co xml</pre>
 				这里 <b>yourusername</b> 当然是你的 SourceForge 用户名。在提示的时候输入你的密码。</li>
 
             <li>把你正在翻译的文件从旧的文件树拷贝回新的代码树。
