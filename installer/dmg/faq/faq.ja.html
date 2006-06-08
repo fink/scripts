@@ -22,7 +22,7 @@ Available Languages:  |
 それぞれリンクされていますので、辿っていってください。</p>
 <h2>Contents</h2><ul><li><a href="#general"><b>1 一般的な質問</b></a><ul><li><a href="#general.what">1.1 Fink とは何ですか?</a></li><li><a href="#general.naming">1.2 Fink とはどういう意味ですか?</a></li><li><a href="#general.bsd-ports">1.3 
 Fink と BSD の port メカニズムはどう違うのですか (OpenPackages や GNU-Darwin も含めて)?
-</a></li><li><a href="#general.usr-local">1.4 なぜ Fink は /usr/local にインストールしないのですか?</a></li><li><a href="#general.why-sw">1.5 ではなぜ /sw を選んだのですか?</a></li></ul></li><li><a href="#relations"><b>2 他のプロジェクトとの関係</b></a><ul><li><a href="#relations.upstream">2.1 パッチを送るなど、本家のメンテナに貢献していますか?</a></li><li><a href="#relations.debian">2.2 Debian プロジェクトとは関係がありますか。 Debian Linux を Mac OS X に移植しようとしているのですか?</a></li><li><a href="#relations.apple">2.3 Apple とは関係がありますか?</a></li><li><a href="#relations.openosx">2.4 OpenOSX.com とは関係がありますか?</a></li><li><a href="#relations.forked">2.5 macosx.forked.net とは関係がありますか?</a></li><li><a href="#relations.darwinports">2.6 Darwinports とは関係がありますか?</a></li></ul></li><li><a href="#mirrors"><b>3 Fink ミラー</b></a><ul><li><a href="#mirrors.when-use">3.1 Fink ミラーとは何ですか?</a></li><li><a href="#mirrors.why">3.2 なぜ rsync ミラーを使わないといけないのですか?</a></li><li><a href="#mirrors.where">3.3 Fink ミラーの情報はどこにありますか?</a></li><li><a href="#mirrors.when-not">3.4 rsync サーバーに接続できません。どうしたら良いですか?</a></li><li><a href="#mirrors.otherinfogone">3.5 rsync 方式に変えたら、unused ツリーの info ファイルが全て消えてしまいました。</a></li><li><a href="#mirrors.howswitch">3.6 どのように方式を切り替えるのですか?</a></li><li><a href="#mirrors.status">3.7 rsync ミラーの現在の状態は見ることが出来ますか?</a></li><li><a href="#mirrors.Master">3.8 Distfiles ミラーとは何ですか?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Fink のアップグレード (バージョン固有の問題対処法)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 バージョン0.16.0にアップグレードして "Your version of the
+</a></li><li><a href="#general.usr-local">1.4 なぜ Fink は /usr/local にインストールしないのですか?</a></li><li><a href="#general.why-sw">1.5 ではなぜ /sw を選んだのですか?</a></li></ul></li><li><a href="#relations"><b>2 他のプロジェクトとの関係</b></a><ul><li><a href="#relations.upstream">2.1 パッチを送るなど、本家のメンテナに貢献していますか?</a></li><li><a href="#relations.debian">2.2 Debian プロジェクトとは関係がありますか。 Debian Linux を Mac OS X に移植しようとしているのですか?</a></li><li><a href="#relations.apple">2.3 Apple とは関係がありますか?</a></li><li><a href="#relations.darwinports">2.4 Darwinports とは関係がありますか?</a></li></ul></li><li><a href="#mirrors"><b>3 Fink ミラー</b></a><ul><li><a href="#mirrors.when-use">3.1 Fink ミラーとは何ですか?</a></li><li><a href="#mirrors.why">3.2 なぜ rsync ミラーを使わないといけないのですか?</a></li><li><a href="#mirrors.where">3.3 Fink ミラーの情報はどこにありますか?</a></li><li><a href="#mirrors.when-not">3.4 rsync サーバーに接続できません。どうしたら良いですか?</a></li><li><a href="#mirrors.otherinfogone">3.5 rsync 方式に変えたら、unused ツリーの info ファイルが全て消えてしまいました。</a></li><li><a href="#mirrors.howswitch">3.6 どのように方式を切り替えるのですか?</a></li><li><a href="#mirrors.status">3.7 rsync ミラーの現在の状態は見ることが出来ますか?</a></li><li><a href="#mirrors.Master">3.8 Distfiles ミラーとは何ですか?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Fink のアップグレード (バージョン固有の問題対処法)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 バージョン0.16.0にアップグレードして "Your version of the
 gcc 3.3 compiler is out of date." と言われました。どうしたらいいですか?</a></li><li><a href="#upgrade-fink.fink-0220">4.2 長いこと Fink からのパッケージ更新がありませんでしたが</a></li></ul></li><li><a href="#usage-fink"><b>5 Fink のインストール、使用、メンテナンス</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Fink がサポートしているパッケージはどのように探せますか?</a></li><li><a href="#usage-fink.proxy">5.2 ファイヤーウォールの内側にいます。どう設定したら Fink で HTTP プロキシが使えますか?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 ファイヤーウォールの内側から CVS でパッケージをアップデートするにはどうしたらいいですか?</a></li><li><a href="#usage-fink.moving">5.4 インストール後に Fink を他の場所に移動できますか?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Fink をインストール後、他の場所に移動してシンボリックリンクを張ったら、動きますか?</a></li><li><a href="#usage-fink.removing">5.6 Fink を全てアンインストールするには?</a></li><li><a href="#usage-fink.bindist">5.7 ウェブのパッケージデータベースは、パッケージ xxx を表示しているのに、 apt-get と dselect は何もしない。どっちが嘘をついてるのですか?
 </a></li><li><a href="#usage-fink.unstable">5.8 unstable にあるパッケージをインストールしようとすると、 fink が 'no package found' といいます。どうしたらインストールできるのですか?</a></li><li><a href="#usage-fink.unstable-onepackage">5.9 
           unstable にあるパッケージをひとつだけインストールするにも、 unstable 全体を有効にしなければなりませんか?
@@ -32,20 +32,20 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 何をしたらいいですか?</a></li><li><a href="#usage-fink.fink-not-found">5.16 Fink や Fink でインストールしたものを実行しようとすると
 "command not found" エラーが出ます。</a></li><li><a href="#usage-fink.invisible-sw">5.17 Finder で /sw を隠して、ユーザーが Fink の構成を壊すのを防ぎたい。</a></li><li><a href="#usage-fink.install-info-bad">5.18 何もインストールできません。
 "install-info: unrecognized option `--infodir=/sw/share/info'"
-のエラーが出るだけです。</a></li><li><a href="#usage-fink.bad-list-file">5.19 何もインストールできないし、削除もできません。 "files list file" と出るだけです。</a></li><li><a href="#usage-fink.error-nineteen">5.20 Fink バイナリインストーラを使うと、ウィンドウ中に大きく "19" と出て、何もインストールできません。</a></li><li><a href="#usage-fink.dselect-garbage">5.21 <tt style="white-space: nowrap;">dselect</tt> でパッケージを選択すると、大量のゴミがでてきます。
-これはどうやったら使えますか?</a></li><li><a href="#usage-fink.perl-undefined-symbol">5.22 なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</a></li><li><a href="#usage-fink.cant-upgrade">5.23 Fink のバージョンをアップデートできないようです。</a></li><li><a href="#usage-fink.spaces-in-directory">5.24 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</a></li><li><a href="#usage-fink.packages-gz">5.25 バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</a></li><li><a href="#usage-fink.wrong-tree">5.26 OS | Developer Tools を変えたら、 Fink が認識してくれません。</a></li><li><a href="#usage-fink.seg-fault">5.27 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.28 ターミナルウィンドウを開くと、
+のエラーが出るだけです。</a></li><li><a href="#usage-fink.bad-list-file">5.19 何もインストールできないし、削除もできません。 "files list file" と出るだけです。</a></li><li><a href="#usage-fink.dselect-garbage">5.20 <tt style="white-space: nowrap;">dselect</tt> でパッケージを選択すると、大量のゴミがでてきます。
+これはどうやったら使えますか?</a></li><li><a href="#usage-fink.perl-undefined-symbol">5.21 なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</a></li><li><a href="#usage-fink.cant-upgrade">5.22 Fink のバージョンをアップデートできないようです。</a></li><li><a href="#usage-fink.spaces-in-directory">5.23 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</a></li><li><a href="#usage-fink.packages-gz">5.24 バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</a></li><li><a href="#usage-fink.wrong-tree">5.25 OS | Developer Tools を変えたら、 Fink が認識してくれません。</a></li><li><a href="#usage-fink.seg-fault">5.26 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 ターミナルウィンドウを開くと、
 "Your environment seems to be correctly set up for Fink already."
-というメッセージが出てログアウトします。</a></li><li><a href="#usage-fink.ext-drive">5.29 
+というメッセージが出てログアウトします。</a></li><li><a href="#usage-fink.ext-drive">5.28 
 	メインパーティション以外に Fink をインストールしていますが、
 	ソースからの更新ができません。
 	<q>chowname</q> を含んだエラーが出ます。
-	</a></li><li><a href="#usage-fink.mirror-gnu">5.30 
+	</a></li><li><a href="#usage-fink.mirror-gnu">5.29 
 	Fink がパッケージを更新しません。
 	'gnu' ミラーが見つからないと言っています。
-	</a></li><li><a href="#usage-fink.cant-move-fink">5.31 
+	</a></li><li><a href="#usage-fink.cant-move-fink">5.30 
 	Fink を更新できません。
 	/sw/fink を移動できないからです。
-	</a></li><li><a href="#usage-fink.four-oh-three">5.32 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</a></li><li><a href="#usage-fink.fc-cache">5.33 "No fonts found" というメッセージが出ます。</a></li><li><a href="#usage-fink.non-admin-installer">5.34 インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
+	</a></li><li><a href="#usage-fink.four-oh-three">5.31 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</a></li><li><a href="#usage-fink.fc-cache">5.32 "No fonts found" というメッセージが出ます。</a></li><li><a href="#usage-fink.non-admin-installer">5.33 インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
 これは何ですか?</a></li><li><a href="#comp-general.cvs">6.2 "fink selfupdate-cvs" をしようとしたら、このメッセージが出てきました: "cvs: Command not found."
 </a></li><li><a href="#comp-general.missing-make">6.3 <tt style="white-space: nowrap;">make</tt> に関連したエラーがでました。</a></li><li><a href="#comp-general.head">6.4 head コマンドから変な使用方法メッセージが出ています。何がおかしいのですか?</a></li><li><a href="#comp-general.also_in">6.5 あるパッケージをインストールしようとすると、他のパッケージのファイルを上書きしようとしているというエラーメッセージが出ました。
 </a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local にインストールされているライブラリやヘッダが 
@@ -189,18 +189,8 @@ Debian パッケージ管理ツール (dpkg, dselect, apt-get) を移植し、 .
 </b>
 Apple ありがとう!</p></div>
 </a>
-<a name="relations.openosx">
-<div class="question"><p><b>Q2.4: OpenOSX.com とは関係がありますか?</b></p></div>
-<div class="answer"><p><b>A:</b> 彼らは Fink を使って GIMP CD のリリースをビルドしましたが、そのことを正しく認めなかった経緯があります。
-<a href="http://fink.sourceforge.net/pr/openosx.php">公式声明</a>に詳細があります。</p></div>
-</a>
-<a name="relations.forked">
-<div class="question"><p><b>Q2.5: macosx.forked.net とは関係がありますか?</b></p></div>
-<div class="answer"><p><b>A:</b> このサイトでは、いくつかの Fink パッケージをそのまま Installer.app パッケージとして再配布していますが、Fink については何も書かれていません。
-<a href="http://fink.sourceforge.net/pr/forked.php">公式声明</a>に詳細があります。</p></div>
-</a>
 <a name="relations.darwinports">
-<div class="question"><p><b>Q2.6: Darwinports とは関係がありますか?</b></p></div>
+<div class="question"><p><b>Q2.4: Darwinports とは関係がありますか?</b></p></div>
 <div class="answer"><p><b>A:</b> Darwinports と Fink は補完的なプロジェクトです。
 両者は重なる部分があり、 Fink と OpenDarwin プロジェクトの両方に貢献している人もいま。
 例えば、 Benjamin Reed は双方の KDE パッケージを担当しています。
@@ -558,24 +548,15 @@ else if (substr($6, length($6), 1) == "/") \
 else { print substr($6, 2, length($6) - 1);}}' \
 &gt; /sw/var/lib/dpkg/info/libgnomeui2-dev.list</pre><p>このコマンドは、 .deb ファイルの中身を解凍して、ファイル名以外を除いて .list ファイルに書き込んでいます。</p></div>
 </a>
-<a name="usage-fink.error-nineteen">
-<div class="question"><p><b>Q5.20: Fink バイナリインストーラを使うと、ウィンドウ中に大きく "19" と出て、何もインストールできません。</b></p></div>
-<div class="answer"><p><b>A:</b> 19 という数字は、 OS X システムのシステム言語が英語以外になっている時に出ることがあります。
-(これは Apple のインストーラのバグで、英語でエラーメッセージを出さないだけです。)</p><p>この19番のメッセージは、英語ではこうなっています。</p><p>"A root directory /sw exists. Please see the Read Me file for update instructions, or for information on installing Fink on a separate volume."</p><p>このエラーは、以前 Fink を使っていて、 <tt style="white-space: nowrap;">/sw</tt> を削除していないと発生します。
-もし Fink をインストールしたことがなければ、 いちばん可能性が高いのは Virex プログラムをインストールしたためです。
-これは .Mac ユーザーには無料で、 Fink のウェブサイトにあるとおり Fink とは互換性がありません。
-(Virex 側の独自方式が原因です)
-</p></div>
-</a>
 <a name="usage-fink.dselect-garbage">
-<div class="question"><p><b>Q5.21: <tt style="white-space: nowrap;">dselect</tt> でパッケージを選択すると、大量のゴミがでてきます。
+<div class="question"><p><b>Q5.20: <tt style="white-space: nowrap;">dselect</tt> でパッケージを選択すると、大量のゴミがでてきます。
 これはどうやったら使えますか?</b></p></div>
 <div class="answer"><p><b>A:</b> <tt style="white-space: nowrap;">dselect</tt> と <tt style="white-space: nowrap;">Terminal.app</tt> の関係に問題があります。
 どうにかするには、 <tt style="white-space: nowrap;">dselect</tt> を実行する前に次のコマンドを入力してください:
 </p><p>tcsh の場合:</p><pre>setenv TERM xterm-color</pre><p>before you run <tt style="white-space: nowrap;">dselect</tt>.</p><p>bash の場合:</p><pre>export TERM=xterm-color</pre><p>このコマンドをログイン時に自動的に実行するには、起動ファイル (例 <tt style="white-space: nowrap;">.cshrc</tt> | <tt style="white-space: nowrap;">.profile</tt>) に記述して下さい。</p></div>
 </a>
 <a name="usage-fink.perl-undefined-symbol">
-<div class="question"><p><b>Q5.22: なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</b></p></div>
+<div class="question"><p><b>Q5.21: なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</b></p></div>
 <div class="answer"><p><b>A:</b> 古すぎる情報</p><p>このようなエラー:</p><pre>dyld: perl Undefined symbols: 
 _Perl_safefree
 _Perl_safemalloc
@@ -592,15 +573,15 @@ fink rebuild storable-pm
 fink selfupdate-cvs</pre></div>
 </a>
 <a name="usage-fink.cant-upgrade">
-<div class="question"><p><b>Q5.23: Fink のバージョンをアップデートできないようです。</b></p></div>
+<div class="question"><p><b>Q5.22: Fink のバージョンをアップデートできないようです。</b></p></div>
 <div class="answer"><p><b>A:</b> この状況専用の <a href="http://fink.sourceforge.net/download/fix-upgrade.php">special instructions</a> に従ってください。</p></div>
 </a>
 <a name="usage-fink.spaces-in-directory">
-<div class="question"><p><b>Q5.24: 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</b></p></div>
+<div class="question"><p><b>Q5.23: 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</b></p></div>
 <div class="answer"><p><b>A:</b> 名前に空白が入っているディレクトリに Fink を入れるないよう薦めます。</p></div>
 </a>
 <a name="usage-fink.packages-gz">
-<div class="question"><p><b>Q5.25: バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</b></p></div>
+<div class="question"><p><b>Q5.24: バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</b></p></div>
 <div class="answer"><p><b>A:</b> もし次のようであれば:</p><pre>
 Err file: local/main Packages
 File not found
@@ -640,13 +621,13 @@ powerpc_Packages) - stat (2 No such file or directory)</pre><p><tt style="white-
 これによって見つからなかったファイルを作成します。</p></div>
 </a>
 <a name="usage-fink.wrong-tree"> 
-<div class="question"><p><b>Q5.26: OS | Developer Tools を変えたら、 Fink が認識してくれません。</b></p></div> 
+<div class="question"><p><b>Q5.25: OS | Developer Tools を変えたら、 Fink が認識してくれません。</b></p></div> 
 <div class="answer"><p><b>A:</b> Fink ディストリビューション（ソースとバイナリはそのサブセットです）を変更するには、 Fink に指示する必要があります。
 これは Fink の新規インストール時に実行するスクリプトを実行します:
 </p><pre>/sw/lib/fink/postinstall.pl</pre><p>これにより、 Fink は正しく場所を指示されます。</p></div> 
 </a> 
 <a name="usage-fink.seg-fault"> 
-<div class="question"><p><b>Q5.27: 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</b></p></div> 
+<div class="question"><p><b>Q5.26: 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</b></p></div> 
 <div class="answer"><p><b>A:</b> 以下の形式のエラー:</p><pre>gzip -dc /sw/src/dpkg-1.10.9.tar.gz | /sw/bin/tar -xf - 
 ### execution of gzip failed, exit code 139</pre><p>あるいは</p><pre>gzip -dc /sw/src/aquaterm-0.3.0a.tar.gz | /sw/bin/tar -xf - 
 gzip: stdout: Broken pipe 
@@ -656,7 +637,7 @@ gzip: stdout: Broken pipe
 Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>であれば、バイナリにおけるプリバインドのエラーです。修正するには:</p><pre>sudo /sw/var/lib/fink/prebound/update-package-prebinding.pl -f</pre><p>と実行します。</p></div> 
 </a> 
 <a name="usage-fink.pathsetup-keeps-running"> 
-<div class="question"><p><b>Q5.28: ターミナルウィンドウを開くと、
+<div class="question"><p><b>Q5.27: ターミナルウィンドウを開くと、
 "Your environment seems to be correctly set up for Fink already."
 というメッセージが出てログアウトします。</b></p></div> 
 <div class="answer"><p><b>A:</b> 
@@ -668,7 +649,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 と書かれている部分を削除します。</p></div> 
 </a>
 <a name="usage-fink.ext-drive">
-<div class="question"><p><b>Q5.29: 
+<div class="question"><p><b>Q5.28: 
 	メインパーティション以外に Fink をインストールしていますが、
 	ソースからの更新ができません。
 	<q>chowname</q> を含んだエラーが出ます。
@@ -690,7 +671,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 </p></div>
 </a>
 <a name="usage-fink.mirror-gnu">
-<div class="question"><p><b>Q5.30: 
+<div class="question"><p><b>Q5.29: 
 	Fink がパッケージを更新しません。
 	'gnu' ミラーが見つからないと言っています。
 	</b></p></div>
@@ -701,7 +682,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 	</p><pre>fink install fink-mirrors</pre></div>
 </a>
 <a name="usage-fink.cant-move-fink">
-<div class="question"><p><b>Q5.31: 
+<div class="question"><p><b>Q5.30: 
 	Fink を更新できません。
 	/sw/fink を移動できないからです。
 	</b></p></div>
@@ -712,7 +693,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 	</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
 </a>
     <a name="usage-fink.four-oh-three">
-      <div class="question"><p><b>Q5.32: 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</b></p></div>
+      <div class="question"><p><b>Q5.31: 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</b></p></div>
       <div class="answer"><p><b>A:</b> 
           SourceForge のダウンロードサーバに問題があるようです。
           このため、バイナリディストリビューション用のレポジトリに移行しました。
@@ -751,7 +732,7 @@ deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
         </ul></div>
     </a>
     <a name="usage-fink.fc-cache">
-      <div class="question"><p><b>Q5.33: "No fonts found" というメッセージが出ます。</b></p></div>
+      <div class="question"><p><b>Q5.32: "No fonts found" というメッセージが出ます。</b></p></div>
       <div class="answer"><p><b>A:</b> 次のようであれば (OS 10.4 のみ):</p><pre>No fonts found; this probably means that the fontconfig
 library is not correctly configured. You may need to
 edit the fonts.conf configuration file. More information
@@ -759,7 +740,7 @@ about fontconfig can be found in the fontconfig(3) manual
 page and on http://fontconfig.org.</pre><p>次のように実行します:</p><pre>sudo fc-cache</pre></div>
     </a>
     <a name="usage-fink.non-admin-installer">
-      <div class="question"><p><b>Q5.34: インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</b></p></div>
+      <div class="question"><p><b>Q5.33: インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</b></p></div>
       <div class="answer"><p><b>A:</b> 
         	このメッセージは、 Fink インストーラを管理者権限のないユーザーで実行すると発生します。
         	ログイン時に権限のあるユーザーにログインするか、Finder でユーザーを切り替えてください。
@@ -1614,4 +1595,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.34 2005/09/17 01:40:27 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.35 2006/06/08 16:15:56 dmrrsn Exp $</i></p></body></html>

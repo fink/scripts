@@ -22,7 +22,7 @@ Available Languages:  |
             Все вопросы приведены с соответствующими ссылками в содержании.</p>
     <h2>Contents</h2><ul><li><a href="#general"><b>1 Общие вопросы</b></a><ul><li><a href="#general.what">1.1 Что такое Fink?</a></li><li><a href="#general.naming">1.2 Что означает название Fink?</a></li><li><a href="#general.bsd-ports">1.3  Чем Fink отличается от механизма переноса BSD (включая
                     OpenPackages и GNU-Darwin)? </a></li><li><a href="#general.usr-local">1.4 Почему Fink ничего не инсталлирует в  /usr/local?</a></li><li><a href="#general.why-sw">1.5 Тогда почему вы выбрали /sw?</a></li></ul></li><li><a href="#relations"><b>2 Связь с другими проектами</b></a><ul><li><a href="#relations.upstream">2.1 Предоставляете ли вы свои патчи координаторам исходного ПО?</a></li><li><a href="#relations.debian">2.2 Какое отношение вы имеете к проекту Debian? 
-                    Переносите ли вы Debian Linux в Mac OS X?</a></li><li><a href="#relations.apple">2.3 Какое отношение вы имеете к Apple?</a></li><li><a href="#relations.openosx">2.4 Какое отношение вы имеете к OpenOSX.com?</a></li><li><a href="#relations.forked">2.5 Какое отношение вы имеете к macosx.forked.net?</a></li><li><a href="#relations.darwinports">2.6 Какое отношение вы имеете к Darwinports?</a></li></ul></li><li><a href="#mirrors"><b>3 Зеркала Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Что такое зеркала Fink?</a></li><li><a href="#mirrors.why">3.2 Почему я должен использовать зеркала rsync?</a></li><li><a href="#mirrors.where">3.3 Где можно найти более подробную информацию о зеркалах Fink?</a></li><li><a href="#mirrors.when-not">3.4 Не устанавливается соединение с сервером rsync. Что делать?</a></li><li><a href="#mirrors.otherinfogone">3.5 После перехода на метод rsync исчезли все информационные файлы на
+                    Переносите ли вы Debian Linux в Mac OS X?</a></li><li><a href="#relations.apple">2.3 Какое отношение вы имеете к Apple?</a></li><li><a href="#relations.darwinports">2.4 Какое отношение вы имеете к Darwinports?</a></li></ul></li><li><a href="#mirrors"><b>3 Зеркала Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 Что такое зеркала Fink?</a></li><li><a href="#mirrors.why">3.2 Почему я должен использовать зеркала rsync?</a></li><li><a href="#mirrors.where">3.3 Где можно найти более подробную информацию о зеркалах Fink?</a></li><li><a href="#mirrors.when-not">3.4 Не устанавливается соединение с сервером rsync. Что делать?</a></li><li><a href="#mirrors.otherinfogone">3.5 После перехода на метод rsync исчезли все информационные файлы на
                     неиспользованных деревьях</a></li><li><a href="#mirrors.howswitch">3.6 Как можно переключаться между методами?</a></li><li><a href="#mirrors.status">3.7 Можно ли видеть текущий статус зеркал rsync?</a></li><li><a href="#mirrors.Master">3.8 Что такое зеркало Distfiles?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Обновление Fink (проблемы, связанные с версиями)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 Я только что сделал обновление до 0.16.0 и получил сообщение: "Ваша версия
                     компилятора gcc 3.3 устарела." Что делать?</a></li><li><a href="#upgrade-fink.fink-0220">4.2 Я не получал обновлений пакетов от Fink в течение некоторого времени.</a></li></ul></li><li><a href="#usage-fink"><b>5 Инсталляция, использование и поддержка Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Как можно узнать, какие пакеты поддерживает Fink?</a></li><li><a href="#usage-fink.proxy">5.2 Я нахожусь за брандмауэром. Как надо конфигурировать Fink для использования прокси HTTP?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 Как можно обновить имеющиеся пакеты при помощи CVS, если я за
                     брандмауэромl?</a></li><li><a href="#usage-fink.moving">5.4 Можно ли переместить Fink на другое место после инсталляции?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Если переместить Fink после инсталляции и предоставить символический указатель (алиас)
@@ -41,18 +41,17 @@ Available Languages:  |
                     то, что инсталлировано при помощи Fink.</a></li><li><a href="#usage-fink.invisible-sw">5.16 Хочу спрятать /sw в Finder, чтобы пользователи не повредили
                     настройки Fink.</a></li><li><a href="#usage-fink.install-info-bad">5.17 Не могу ничего инсталлировать из-за следующей ошибки:
                     "install-info: unrecognized option `--infodir=/sw/share/info'"</a></li><li><a href="#usage-fink.bad-list-file">5.18 Ничего не могу инсталлировать или удалить из-за проблемы с
-                    файлом списка файлов ("files list file").</a></li><li><a href="#usage-fink.error-nineteen">5.19 При использовании пакета бинарного инсталлятора Fink в окне
-                    появляется большая цифра "19" и я не могу ничего инсталлировать.</a></li><li><a href="#usage-fink.dselect-garbage">5.20 Я получил кучу мусора, когда выбирал пакеты в 
-                    <tt style="white-space: nowrap;">dselect</tt>. Как теперь можно его использовать?</a></li><li><a href="#usage-fink.perl-undefined-symbol">5.21 Почему я получаю кучу сообщений об ошибках "dyld: perl undefined symbols",
-                    когда применяю команды Fink?</a></li><li><a href="#usage-fink.cant-upgrade">5.22 Не получается обновить версию Fink.</a></li><li><a href="#usage-fink.spaces-in-directory">5.23 Можно ли разместить Fink в томе или каталоге с пробелом в его имени?</a></li><li><a href="#usage-fink.packages-gz">5.24 При попытке бинарного обновления появляется много сообщений
-                    со словами "File not found"</a></li><li><a href="#usage-fink.wrong-tree">5.25 Я изменил OS | Developer Tools, но Fink не
-                    признает изменение.</a></li><li><a href="#usage-fink.seg-fault">5.26 Получаю сообщения об ошибках с приложениями <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
-                    из пакета <tt style="white-space: nowrap;"> fileutils </tt>! Помогите!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 Когда я открываю окно Terminal, получаю сообщение "Your
+                    файлом списка файлов ("files list file").</a></li><li><a href="#usage-fink.dselect-garbage">5.19 Я получил кучу мусора, когда выбирал пакеты в 
+                    <tt style="white-space: nowrap;">dselect</tt>. Как теперь можно его использовать?</a></li><li><a href="#usage-fink.perl-undefined-symbol">5.20 Почему я получаю кучу сообщений об ошибках "dyld: perl undefined symbols",
+                    когда применяю команды Fink?</a></li><li><a href="#usage-fink.cant-upgrade">5.21 Не получается обновить версию Fink.</a></li><li><a href="#usage-fink.spaces-in-directory">5.22 Можно ли разместить Fink в томе или каталоге с пробелом в его имени?</a></li><li><a href="#usage-fink.packages-gz">5.23 При попытке бинарного обновления появляется много сообщений
+                    со словами "File not found"</a></li><li><a href="#usage-fink.wrong-tree">5.24 Я изменил OS | Developer Tools, но Fink не
+                    признает изменение.</a></li><li><a href="#usage-fink.seg-fault">5.25 Получаю сообщения об ошибках с приложениями <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
+                    из пакета <tt style="white-space: nowrap;"> fileutils </tt>! Помогите!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.26 Когда я открываю окно Terminal, получаю сообщение "Your
                     environment seems to be correctly set up for Fink already.",
-                    и сеанс завершается.</a></li><li><a href="#usage-fink.ext-drive">5.28 Мой Fink инсталлирован отдельно от главного сегмента и я не могу
+                    и сеанс завершается.</a></li><li><a href="#usage-fink.ext-drive">5.27 Мой Fink инсталлирован отдельно от главного сегмента и я не могу
                     обновить пакет fink на основе исходного кода. Появляются сообщения об ошибках
-                    с упоминанием <q>chowname</q>.</a></li><li><a href="#usage-fink.mirror-gnu">5.29 Fink не хочет обновлять мои пакеты, т.к. утверждает, что
-                    не может найти зеркало 'gnu'.</a></li><li><a href="#usage-fink.cant-move-fink">5.30 Не могу обновить Fink, т.к. он не может убрать  /sw/fink..</a></li></ul></li><li><a href="#comp-general"><b>6 Проблемы компиляции  - Общие вопросы</b></a><ul><li><a href="#comp-general.compiler">6.1 Скрипт конфигурации жалуется, что не может найти
+                    с упоминанием <q>chowname</q>.</a></li><li><a href="#usage-fink.mirror-gnu">5.28 Fink не хочет обновлять мои пакеты, т.к. утверждает, что
+                    не может найти зеркало 'gnu'.</a></li><li><a href="#usage-fink.cant-move-fink">5.29 Не могу обновить Fink, т.к. он не может убрать  /sw/fink..</a></li></ul></li><li><a href="#comp-general"><b>6 Проблемы компиляции  - Общие вопросы</b></a><ul><li><a href="#comp-general.compiler">6.1 Скрипт конфигурации жалуется, что не может найти
                     "acceptable cc". Что это значит?</a></li><li><a href="#comp-general.cvs">6.2 При попытке выполнения "fink selfupdate-cvs" получаю сообщение: "cvs:
                     Command not found."</a></li><li><a href="#comp-general.missing-make">6.3 Получил сообщение об ошибке, которое упоминает <tt style="white-space: nowrap;">make</tt>
                 </a></li><li><a href="#comp-general.head">6.4 Я получаю странное сообщение от команды head об использовании.
@@ -239,21 +238,8 @@ Available Languages:  |
                         Со временем наше участие в игре
                     в открытый исходный код станет активнее."</b> Благодарим Apple!</p></div>
         </a>
-        <a name="relations.openosx">
-            <div class="question"><p><b>Q2.4: Какое отношение вы имеете к OpenOSX.com?</b></p></div>
-            <div class="answer"><p><b>A:</b> Они использовали Fink для построения первой версии своего GIMP CD
-                    и отказываются признать это должным образом. См. <a href="http://fink.sourceforge.net/pr/openosx.php">публичное
-                    заявление</a> для получения более подробной информации.</p></div>
-        </a>
-        <a name="relations.forked">
-            <div class="question"><p><b>Q2.5: Какое отношение вы имеете к macosx.forked.net?</b></p></div>
-            <div class="answer"><p><b>A:</b> Этот сайт распространяет некоторые неизмененные пакеты Fink как пакеты Installer.app
-                    со своими шаблонами без
-                    упоминания Fink. См. <a href="http://fink.sourceforge.net/pr/forked.php">публичное
-                    заявление</a> для получения более подробной информации.</p></div>
-        </a>
         <a name="relations.darwinports">
-            <div class="question"><p><b>Q2.6: Какое отношение вы имеете к Darwinports?</b></p></div>
+            <div class="question"><p><b>Q2.4: Какое отношение вы имеете к Darwinports?</b></p></div>
             <div class="answer"><p><b>A:</b> Darwinports и Fink являются взаимодополняющими проектами. Они имеют некоторые
                     точки соприкосновения и несколько человек
                     являются участниками обоих проектов - и Fink, и OpenDarwin.
@@ -695,23 +681,8 @@ Available Languages:  |
                     удалить все, кроме названий файлов, и внести их в файл
                     .list.</p></div>
         </a>
-        <a name="usage-fink.error-nineteen">
-            <div class="question"><p><b>Q5.19: При использовании пакета бинарного инсталлятора Fink в окне
-                    появляется большая цифра "19" и я не могу ничего инсталлировать.</b></p></div>
-            <div class="answer"><p><b>A:</b> Цифра 19 появляется потому, что система OS X локализована
-                    на языке, который не является английским. (Это ошибка в инсталляторе Apple,
-                    который даже не показывает сообщение об ошибке
-                    в связи с английским языком.)</p><p>Сообщение об ошибке в связи с английским языком, соответствующее цифре 19, гласит:</p><p>"Корневой каталог /sw существует. См. файл Read Me для получения
-                    инструкций об обновлении или информации об инсталляции Fink
-                    в отдельном томе."</p><p>Вы можете получить это сообщение, если использовали Fink раньше и не удалили
-                    <tt style="white-space: nowrap;">/sw</tt>. Если вы не устанавливали
-                    Fink раньше, наиболее вероятная причина в том, что
-                    вы инсталлировали программу Virex, бесплатно предоставляемую пользователям .Mac.
-                    Как это объясняется на веб-странице Fink, Virex несовместима
-                    с Fink (т.к. создатели Virex допустили ошибки).</p></div>
-        </a>
         <a name="usage-fink.dselect-garbage">
-            <div class="question"><p><b>Q5.20: Я получил кучу мусора, когда выбирал пакеты в 
+            <div class="question"><p><b>Q5.19: Я получил кучу мусора, когда выбирал пакеты в 
                     <tt style="white-space: nowrap;">dselect</tt>. Как теперь можно его использовать?</b></p></div>
             <div class="answer"><p><b>A:</b> Есть проблематичные вопросы между <tt style="white-space: nowrap;">dselect</tt> и
                     <tt style="white-space: nowrap;">Terminal.app</tt>. Решением может быть ввод
@@ -720,7 +691,7 @@ Available Languages:  |
                     <tt style="white-space: nowrap;">.profile</tt>), чтобы всегда иметь возможность использовать.</p></div>
         </a>
         <a name="usage-fink.perl-undefined-symbol">
-            <div class="question"><p><b>Q5.21: Почему я получаю кучу сообщений об ошибках "dyld: perl undefined symbols",
+            <div class="question"><p><b>Q5.20: Почему я получаю кучу сообщений об ошибках "dyld: perl undefined symbols",
                     когда применяю команды Fink?</b></p></div>
             <div class="answer"><p><b>A:</b> ПО устарело.</p><p>Если вы получаете сообщение об ошибке, подобное такому:</p><pre>dyld: perl Undefined symbols: _Perl_safefree
                     _Perl_safemalloc _Perl_saferealloc _Perl_sv_2pv
@@ -736,7 +707,7 @@ Available Languages:  |
                     storable-pm fink selfupdate-cvs</pre></div>
         </a>
         <a name="usage-fink.cant-upgrade">
-            <div class="question"><p><b>Q5.22: Не получается обновить версию Fink.</b></p></div>
+            <div class="question"><p><b>Q5.21: Не получается обновить версию Fink.</b></p></div>
             <div class="answer"><p><b>A:</b> Если <tt style="white-space: nowrap;">fink selfupdate</tt> и
                         <tt style="white-space: nowrap;">sudo apt-get update ; sudo apt-get
                     dist-upgrade</tt> не делают обновление до новой версии Fink,
@@ -757,12 +728,12 @@ Available Languages:  |
                 </ul></div>
         </a>
         <a name="usage-fink.spaces-in-directory">
-            <div class="question"><p><b>Q5.23: Можно ли разместить Fink в томе или каталоге с пробелом в его имени?</b></p></div>
+            <div class="question"><p><b>Q5.22: Можно ли разместить Fink в томе или каталоге с пробелом в его имени?</b></p></div>
             <div class="answer"><p><b>A:</b> Мы не рекомендуем размещать ваше дерево каталогов Fink в
                     каталог с пробелами в его имени. Не стоит этого делать.</p></div>
         </a>
         <a name="usage-fink.packages-gz">
-            <div class="question"><p><b>Q5.24: При попытке бинарного обновления появляется много сообщений
+            <div class="question"><p><b>Q5.23: При попытке бинарного обновления появляется много сообщений
                     со словами "File not found"</b></p></div>
             <div class="answer"><p><b>A:</b> Если вы видите что-то вроде следующего: </p><pre>Err file: local/main Packages File not found Ign
                     file: local/main Release Err file: stable/main Packages File
@@ -791,7 +762,7 @@ Available Languages:  |
                     файлы.</p></div>
         </a>
         <a name="usage-fink.wrong-tree">
-            <div class="question"><p><b>Q5.25: Я изменил OS | Developer Tools, но Fink не
+            <div class="question"><p><b>Q5.24: Я изменил OS | Developer Tools, но Fink не
                     признает изменение.</b></p></div>
             <div class="answer"><p><b>A:</b> При изменении дистрибуции Fink (подмножествами которой являются исходные и
                     бинарные distros), Fink нуждается в получении информации о том,
@@ -799,7 +770,7 @@ Available Languages:  |
                     запускается при первоначальной инсталляции Fink:</p><pre>/sw/lib/fink/postinstall.pl</pre><p>Выполнив это, вы укажете Fink правильное место.</p></div>
         </a>
         <a name="usage-fink.seg-fault">
-            <div class="question"><p><b>Q5.26: Получаю сообщения об ошибках с приложениями <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
+            <div class="question"><p><b>Q5.25: Получаю сообщения об ошибках с приложениями <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
                     из пакета <tt style="white-space: nowrap;"> fileutils </tt>! Помогите!</b></p></div>
             <div class="answer"><p><b>A:</b> Ошибки типа:</p><pre>gzip -dc /sw/src/dpkg-1.10.9.tar.gz | /sw/bin/tar -xf
                     - ### execution of gzip failed, exit code 139</pre><p>или</p><pre>gzip -dc /sw/src/aquaterm-0.3.0a.tar.gz | /sw/bin/tar
@@ -814,7 +785,7 @@ Available Languages:  |
                     /sw/var/lib/fink/prebound/update-package-prebinding.pl -f</pre></div>
         </a>
         <a name="usage-fink.pathsetup-keeps-running">
-            <div class="question"><p><b>Q5.27: Когда я открываю окно Terminal, получаю сообщение "Your
+            <div class="question"><p><b>Q5.26: Когда я открываю окно Terminal, получаю сообщение "Your
                     environment seems to be correctly set up for Fink already.",
                     и сеанс завершается.</b></p></div>
             <div class="answer"><p><b>A:</b> Дело в том, что каким-то образом программе OSX Terminal поступило указание
@@ -824,7 +795,7 @@ Available Languages:  |
                     файл при помощи текстового редактора и убрать ссылку на <tt style="white-space: nowrap;">/sw/bin/pathsetup.command</tt>.</p></div>
         </a>
         <a name="usage-fink.ext-drive">
-            <div class="question"><p><b>Q5.28: Мой Fink инсталлирован отдельно от главного сегмента и я не могу
+            <div class="question"><p><b>Q5.27: Мой Fink инсталлирован отдельно от главного сегмента и я не могу
                     обновить пакет fink на основе исходного кода. Появляются сообщения об ошибках
                     с упоминанием <q>chowname</q>.</b></p></div>
             <div class="answer"><p><b>A:</b> Если сообщение об ошибке выглядит так:</p><pre>This first test is designed to die, so please ignore
@@ -840,13 +811,13 @@ Available Languages:  |
                     где Fink инсталлирован, и отменить выбор "Ignore ownership".</p></div>
         </a>
         <a name="usage-fink.mirror-gnu">
-            <div class="question"><p><b>Q5.29: Fink не хочет обновлять мои пакеты, т.к. утверждает, что
+            <div class="question"><p><b>Q5.28: Fink не хочет обновлять мои пакеты, т.к. утверждает, что
                     не может найти зеркало 'gnu'.</b></p></div>
             <div class="answer"><p><b>A:</b> Если вы получили сообщение об ошибке, которое оканчивается на </p><pre>Failed: No mirror site list file found for mirror 'gnu'.</pre><p>то наиболее вероятно вам надо обновить пакет
                     <tt style="white-space: nowrap;">fink-mirrors</tt> , н-р через:</p><pre>fink install fink-mirrors</pre></div>
         </a>
         <a name="usage-fink.cant-move-fink">
-            <div class="question"><p><b>Q5.30: Не могу обновить Fink, т.к. он не может убрать  /sw/fink..</b></p></div>
+            <div class="question"><p><b>Q5.29: Не могу обновить Fink, т.к. он не может убрать  /sw/fink..</b></p></div>
             <div class="answer"><p><b>A:</b> Эта ошибка:</p><pre>Failed: Can't move "/sw/fink" out of the way.</pre><p>обычно обусловлена, хотя и утверждает иное, ошибками
                     разрешений в одном из временных каталогов, создаваемых
                     в процессе автообновления - <tt style="white-space: nowrap;">selfupdate</tt>. Удалите</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
@@ -1713,4 +1684,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ru.xml,v 1.5 2005/01/24 03:18:00 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ru.xml,v 1.6 2006/06/08 16:15:56 dmrrsn Exp $</i></p></body></html>
