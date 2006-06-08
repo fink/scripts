@@ -100,7 +100,8 @@ I'm talking hours or even days here.
     
     <h3><a name="intro.supported-os">1.3 Supported Systems</a></h3>
       
-      <p><b>Mac OS X 10.4</b> is the leading-edge platform, and is considered to be <q>fully supported and tested</q>, though as a newer operating system there are still some issues.  Most of the developers run it, and those who are running 10.3 have 10.4 users test their work.</p>
+      <p><b>Mac OS X 10.4</b> is the leading-edge platform, and is considered to be <q>fully supported and tested</q>, though as a newer operating system there are still some issues.  Most of the developers run it, and those who are running 10.3 have 10.4 users test their work.  Note, however, that
+fink on intel hardware is still considered to be of <b>beta</b> quality.</p>
       <p>
         <b>Mac OS X 10.3</b> is considered to be <q>fully supported and tested</q>, although there may still be stray compile problems with single packages. Many of the developers run it, and those who don't have 10.3 users test their work.
 </p>
@@ -623,7 +624,12 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
 </p>
         </li>
             <li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.3.</p></li>
-            <li><p><b>10.4-transitional stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4.</p></li>
+            <li><p><b>10.4-transitional stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users
+who upgraded from 10.3.  PowerPC only.</p></li>
+            <li><p><b>10.4/powerpc stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users
+with new fink installations.  PowerPC only.</p></li>
+            <li><p><b>10.4/intel stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users
+on intel hardware.</p></li>
             <li>
           <p>
             <b>10.2-gcc3.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
@@ -631,7 +637,12 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
 </p>
         </li>
             <li><p><b>10.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.3.</p></li>
-            <li><p><b>10.4-transitional unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.4.</p></li>
+            <li><p><b>10.4-transitional unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.4 users
+who upgraded from 10.3.  PowerPC only.</p></li>
+            <li><p><b>10.4/powerpc unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
+with new fink installations.  PowerPC only.</p></li>
+            <li><p><b>10.4/intel unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
+on intel hardware.</p></li>
           </ol></li>
       </ul>
     
@@ -879,11 +890,14 @@ does this for you automatically.)
         </li>
         <li>
           <p>
-            <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, or 10.3</p>
+            <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, 10.3, 10.4-transitional, or 10.4</p>
           <p>Fink needs to know which version of Mac OS X you are
 running. Mac OS X 10.0 and earlier are not supported, and 10.1 is no
-longer supported by this version of fink. Mac OS X 10.2 is only still
-supported if the August 2003 Developer Tools update is installed. This
+longer supported by this version of fink. Mac OS X 10.2 users are 
+restricted to fink-0.24.7, released in June 2005.  Mac OS X 10.4 users
+use the 10.4-transitional distribution if they have upgraded from 10.3; there
+is not yet an officially supported upgrade strategy from 10.4-transitional
+to 10.4.  This
 field is set by running the <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>
 script. You should not need to alter this value manually.
 </p>
@@ -1552,4 +1566,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.39 2006/03/02 03:03:39 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.43 2006/06/08 15:30:41 dmrrsn Exp $</i></p></body></html>
