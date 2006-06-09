@@ -134,7 +134,7 @@ Fran&ccedil;ais |
 <a name="usage-fink.firewalled-cvs">
 <div class="question"><p><b>Q5.3: Comment mettre à jour les paquets disponibles sur CVS lorsqu'on utilise un firewall ?</b></p></div>
 <div class="answer"><p><b>A:</b> Le paquet<b> cvs-proxy</b> peut créer un tunnel à travers les proxies HTTP.</p><ul>
-<li><p>Tout d'abord, téléchargez les fichiers <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/fink/dists/10.2/unstable/main/finkinfo/devel/">cvs-proxy</a> (un fichier .info et un fichier .patch) et placez-les dans votre arborescence locale. (c'est-à-dire /sw/fink/dists/local/main/finkinfo/).</p></li>
+<li><p>Tout d'abord, téléchargez les fichiers <a href="http://fink.cvs.sourceforge.net/fink/dists/10.2/unstable/main/finkinfo/devel/">cvs-proxy</a> (un fichier .info et un fichier .patch) et placez-les dans votre arborescence locale. (c'est-à-dire /sw/fink/dists/local/main/finkinfo/).</p></li>
 <li><p>Installez le paquet <b>cvs-proxy</b> avec la commande :</p>
 <p><tt style="white-space: nowrap;">fink install <b>cvs-proxy</b></tt></p></li>
 <li><p>Les paquets sont alors mis à jour avec les commandes :</p>
@@ -185,13 +185,13 @@ crypto</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées
 <div class="question"><p><b>Q5.13: Lors de l'exécution de <q>fink selfupdate</q> ou "fink selfupdate-cvs", le message "<tt style="white-space: nowrap;">Updating using CVS failed. Check the error messages above.</tt>" apparaît.</b></p></div>
 <div class="answer"><p><b>A:</b> Si le message est le suivant :</p><pre>Can't exec "cvs": No such file or directory at 
 /sw/lib/perl5/Fink/Services.pm line 216, &lt;STDIN&gt; line 3.
-### execution of cvs failed, exit code -1</pre><p>alors vous devez installer les Developer Tools.</p><p>Si, par contre, la dernière ligne est la suivante :</p><pre>### execution of su failed, exit code 1</pre><p>vous devrez regarder plus haut pour voir l'erreur. Si vous voyez un message précisant que votre connection à été refusée :</p><pre>(Logging in to anonymous@cvs.sourceforge.net)
+### execution of cvs failed, exit code -1</pre><p>alors vous devez installer les Developer Tools.</p><p>Si, par contre, la dernière ligne est la suivante :</p><pre>### execution of su failed, exit code 1</pre><p>vous devrez regarder plus haut pour voir l'erreur. Si vous voyez un message précisant que votre connection à été refusée :</p><pre>(Logging in to anonymous@fink.cvs.sourceforge.net)
 CVS password:
-cvs [login aborted]: connect to cvs.sourceforge.net:2401 failed: 
+cvs [login aborted]: connect to fink.cvs.sourceforge.net:2401 failed: 
 Connection refused
 ### execution of su failed, exit code 1
 Failed: Logging into the CVS server for anonymous read-only access \
-failed.</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>ou bien un message comme le suivant :</p><pre>cvs [update aborted]: recv() from server cvs.sourceforge.net: 
+failed.</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>ou bien un message comme le suivant :</p><pre>cvs [update aborted]: recv() from server fink.cvs.sourceforge.net: 
 Connection reset by peer 
 ### execution of su failed, exit code 1 
 Failed: Updating using CVS failed. Check the error messages above.</pre><p>ou :</p><pre>cvs [update aborted]: End of file received from server</pre><p>ou encore :</p><pre>cvs [update aborted]: received broken pipe signal</pre><p>alors il est possible que le serveur CVS soit surchargé. Il vous faudra réessayer plus tard.</p><p>Il se peut que les permissions soient mal définies dans votre dossier CVS et que vous n'y ayez pas accès, ce qui génère des messages "Permission denied" :</p><pre>cvs update: in directory 10.2/stable/main: 
@@ -840,4 +840,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.56 2006/06/08 17:19:24 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.57 2006/06/09 14:57:47 dmrrsn Exp $</i></p></body></html>
