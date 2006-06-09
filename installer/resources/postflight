@@ -13,6 +13,7 @@ if(! -e "/sw") {
 system "/usr/bin/yes '' | /sw/lib/fink/postinstall.pl";
 system "/sw/bin/fink -y index";
 
+# get ps data for a given PID
 sub process_info {
         my($pid) = shift;
         my $command = "ps axww -p$pid -o user,ppid,tty,command | tail -n 1";
@@ -26,12 +27,11 @@ sub process_info {
 }
 
 # Find the user who launched the parent of this script.
-my %info = process_info($$);
-%info = process_info($info{parent});
-
-# The installer may launch us via some intermediate tools.
+my %info = process_info($$);          # this script
+%info = process_info($info{parent});  # its parent process
 while($info{command} =~ /Install\.framework/) {
-        %info = process_info($info{parent});
+	# The installer may launch us via some intermediate tools.
+	%info = process_info($info{parent});
 }
 
 # For a command-line install, installer is already run as root, so get its parent.
@@ -39,11 +39,17 @@ while($info{command} =~ /Install\.framework/) {
 
 my $real_user = $info{user};
 
+
 # set up user's shell for fink
+# NB: pathsetup.sh requires an Aqua session
 if(!$ENV{COMMAND_LINE_INSTALL}) {
+	# Running from Installer.app: have Aqua session, so run pathsetup.
 	system "sudo -u $real_user /sw/bin/pathsetup.sh";
 	system "osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'";
 } else {
+	# Running from commandline: not certain to have Aqua session, so
+	# don't run pathsetup. Instead print message to terminal about
+	# what to do.
 	open(TTY, ">", "/dev/$info{tty}") or *TTY = *STDOUT;;
 	print TTY <<END_MESSAGE;
 
@@ -51,10 +57,12 @@ In order for a user to use fink, either:
 	test -r /sw/bin/init.sh && . /sw/bin/init.sh
 or
 	test -r /sw/bin/init.csh && source /sw/bin/init.csh
-will need to be placed in that user's startup scripts.
+will need to be placed in that user's shell startup script(s).
 
-/sw/bin/pathsetup.sh will make this change for the user it is run as, or you
-can place it in the system-wide /etc/profile so that all users will get it.
+A user can run /sw/bin/pathsetup.sh to make this change for his/her
+default shell, or you can place the command to load the appropriate
+init file in /etc/profile or other global shell configuration files
+so that all users will get it.
 
 END_MESSAGE
 }
