@@ -13,7 +13,48 @@ if(! -e "/sw") {
 system "/usr/bin/yes '' | /sw/lib/fink/postinstall.pl";
 system "/sw/bin/fink -y index";
 
+sub process_info {
+        my($pid) = shift;
+        my $command = "ps axww -p$pid -o user,ppid,tty,command | tail -n 1";
+        my @info = split(/\s+/, `$command`, 4);
+        return (
+                user => $info[0],
+                parent => $info[1],
+                tty => $info[2],
+                command => $info[3]
+        );
+}
+
+# Find the user who launched the parent of this script.
+my %info = process_info($$);
+%info = process_info($info{parent});
+
+# The installer may launch us via some intermediate tools.
+while($info{command} =~ /Install\.framework/) {
+        %info = process_info($info{parent});
+}
+
+# For a command-line install, installer is already run as root, so get its parent.
+%info = process_info($info{parent}) if $ENV{COMMAND_LINE_INSTALL};
+
+my $real_user = $info{user};
+
 # set up user's shell for fink
-system "/sw/bin/pathsetup.sh; osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'";
+if(!$ENV{COMMAND_LINE_INSTALL}) {
+	system "sudo -u $real_user /sw/bin/pathsetup.sh";
+	system "osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'";
+} else {
+	open(TTY, ">", "/dev/$info{tty}") or *TTY = *STDOUT;;
+	print TTY <<END_MESSAGE;
+In order for a user to use fink, either:
+	test -r /sw/bin/init.sh && . /sw/bin/init.sh
+or
+	test -r /sw/bin/init.csh && source /sw/bin/init.csh
+will need to be placed in that user's startup scripts.
+
+/sw/bin/pathsetup.sh will make this change for the user it is run as, or you
+can place it in the system-wide /etc/profile so that all users will get it.
+END_MESSAGE
+}
 
 system "/sw/var/lib/fink/prebound/update-package-prebinding.pl -f";
