@@ -95,6 +95,7 @@ Darwin 場では、デフォルトインストールでツールがインスト�
 <b>Mac OS X 10.4</b> は、最新のプラットフォームで、<q>完全にサポートとテストされている</q>と考えられますが、
 新しいオペレーティングシステムとして課題も残っています。
 開発者のほとんどはこれを用い、10.3 を使用している人は 10.4 ユーザーにテストしてもらっています。
+注意、しかし intel ハードウェア上での fink は、まだ <b>beta</b> 品質と考えられています。
 </p>
 <p>
 <b>Mac OS X 10.3</b> は、最新のプラットフォームで、<q>完全にサポートとテストされている</q>と考えられますが、
@@ -556,7 +557,7 @@ Fink をソースからインストールした場合など、別にダウンロ
           <p>
             <b>10.2-gcc3.3 stable:</b>
             これは、OS 10.2 と Developer Tools の <tt style="white-space: nowrap;">gcc 3.3</tt> アップデートの組み合わせにむけた、
-            安定したソースツリーからインストールされる最新の安定バージョンです。
+            stable ソースツリーからインストールされる最新の安定バージョンです。
             このバージョンをインストールするには、 <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a>
             または rsync　でのアクセスが必要です。
             <tt style="white-space: nowrap;">gcc 3.3</tt> アップデートを当てていない場合、このバージョン (あるいはパッケージも) は見えないかもしれません。
@@ -571,16 +572,24 @@ Fink をソースからインストールした場合など、別にダウンロ
             <li>
           <p>
             <b>10.3 stable:</b>
-            これは、OS 10.3 用に安定したソースツリーからインストールされる最新の安定バージョンです。
+            これは、OS 10.3 用に stable ソースツリーからインストールされる最新の安定バージョンです。
           </p>
             </li>
             <li>
           <p>
             <b>10.4-transitional stable:</b>
-            これは、OS 10.4 用に安定したソースツリーからインストールされる最新の安定バージョンです。
+            これは、OS 10.3 から 10.4 用へアップグレードしたユーザ用の、stable ソースツリーからインストールされる最新の安定バージョンです。
           </p>
             </li>
-            <li>
+            <li><p><b>10.4/powerpc stable:</b>  
+            これは、新規にインストールされた OS 10.4 ユーザ用に stable ソースツリーからインストールされる最新の安定バージョンです。PowerPC のみ。
+		  </p>
+		    </li>
+            <li><p><b>10.4/intel stable:</b>
+            これは、Intel ハードウェアの OS 10.4 ユーザ用に stable ソースツリーからインストールされる最新の安定バージョンです。
+          </p>
+            </li>
+			<li>
           <p>
             <b>10.2-gcc3.3 unstable:</b>
             <tt style="white-space: nowrap;">gcc 3.3</tt>. これは、OS 10.2 と <tt style="white-space: nowrap;">gcc 3.3</tt> 用の unstable ソースツリーからインストールされる最新の unstable バージョンです。 
@@ -599,8 +608,16 @@ Fink をソースからインストールした場合など、別にダウンロ
             </li>
             <li>
           <p>
-              <b>10.4-transitional unstable:</b>
-            これは、OS 10.4 用に unstable ソースツリーからインストールされる最新の unstable バージョンです。
+            <b>10.4-transitional stable:</b>
+            これは、OS 10.3 から 10.4 用へアップグレードしたユーザ用の、unstable ソースツリーからインストールされる最新の安定バージョンです。
+          </p>
+            </li>
+            <li><p><b>10.4/powerpc stable:</b>  
+            これは、新規にインストールされた OS 10.4 ユーザ用に unstable ソースツリーからインストールされる最新の安定バージョンです。PowerPC のみ。
+		  </p>
+		    </li>
+            <li><p><b>10.4/intel stable:</b>
+            これは、Intel ハードウェアの OS 10.4 ユーザ用に unstable ソースツリーからインストールされる最新の安定バージョンです。
           </p>
             </li>
           </ol>
@@ -1479,4 +1496,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.ja.xml,v 1.23 2006/04/12 00:08:22 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.ja.xml,v 1.24 2006/06/13 11:49:05 babayoshihiko Exp $</i></p></body></html>
