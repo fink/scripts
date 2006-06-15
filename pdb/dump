@@ -34,7 +34,7 @@ use Fink::Command qw(rm_f);
 use Getopt::Long;
 
 ### get parameters
-my ($distribution, $tree, $release, $architecture);
+my ($distribution, $tree, $release, $architecture, $wanthelp);
 
 # process command-line
 if (@ARGV && $ARGV[0] =~ /^-/) {
@@ -43,9 +43,11 @@ if (@ARGV && $ARGV[0] =~ /^-/) {
 	'distribution=s' => \$distribution,
 	'tree=s'         => \$tree,
 	'release=s'      => \$release,
-	'architecture=s' => \$architecture
+	'architecture=s' => \$architecture,
+	'help'           => \$wanthelp,
 	)
-	or die "$0: Bad syntax\n";
+	or &die_with_usage;
+    &die_with_usage if $wanthelp;
 } else {
     # no getopt flag, so use old positional-parameter syntax
     ($distribution, $tree, $release) = @_;
@@ -199,5 +201,20 @@ if (defined $treelink) {
     rm_f $treelink or print "Could not remove $treelink\n";
 }
 
+sub die_with_usage {
+    die <<EOMSG;
+Usage: $0 [options]
+
+Options:
+  --distribution
+  --tree
+  --release
+  --architecture
+  --help
+EOMSG
+}
+
 ### eof
 exit 0;
+
+
