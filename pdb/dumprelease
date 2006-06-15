@@ -3,6 +3,7 @@ set -e
 
 release=$1
 tree=$2
+architecture=$3
 tag=release_`echo $release | sed 's/\./_/g'`
 
 echo "Updating from CVS..."
@@ -19,8 +20,13 @@ ln -s $tree fink/dists
 # As of 0.6.3 / 0.7.0.. you need to specify the tree you want 'stable' to be. 
 # That is, './dumprelease 0.6.3 10.2-gcc3.3' and './dumprelease 0.7.0 10.3'
 # This may be temporary till we find a better solution.
-echo "Dumping $tree/stable to $release-stable.sql..."
-./dump --distribution=$tree --tree=stable --release=$release-stable >$release-stable.sql
+
+# As of 0.8.1, you also need to specify the architecture (either i386
+# or powerpc), and the output filename will contain the architecture string.  
+# That is, './dumprelease 0.8.1 10.4 i386' will produce 
+# $release-$architecture-stable.sql
+echo "Dumping $tree/stable to $release-$architecture-stable.sql..."
+./dump --distribution=$tree --tree=stable --release=$release-stable --architecture=$architecture >$release-$architecture-stable.sql
 if [ -f var/db/fink.db ]; then
  rm var/db/fink.db
 fi
