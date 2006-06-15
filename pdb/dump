@@ -37,28 +37,16 @@ use Getopt::Long;
 my ($distribution, $tree, $release, $architecture, $wanthelp);
 
 # process command-line
-if (@ARGV && $ARGV[0] =~ /^-/) {
-    # have a getopt flag, so use getopt syntax
-    GetOptions(
-	'distribution=s' => \$distribution,
-	'tree=s'         => \$tree,
-	'release=s'      => \$release,
-	'architecture=s' => \$architecture,
-	'help'           => \$wanthelp,
-	)
-	or &die_with_usage;
-    &die_with_usage if $wanthelp;
-} else {
-    # no getopt flag, so use old positional-parameter syntax
-    ($distribution, $tree, $release) = @_;
-    die "$0: Bad syntax\n" if @ARGV > 3;
-}
-
-# set defaults for missing values
-defined $distribution or $distribution = "10.3";
-defined $tree         or $tree         = "stable";
-defined $release      or $release      = "current-$distribution-$tree";
-defined $architecture or $architecture = "powerpc";
+GetOptions(
+    'distribution=s' => \$distribution,
+    'tree=s'         => \$tree,
+    'release=s'      => \$release,
+    'architecture=s' => \$architecture,
+    'help'           => \$wanthelp,
+    ) or &die_with_usage;
+&die_with_usage if $wanthelp;
+&die_with_usage unless defined $distribution && defined $tree && defined $release;
+$architecture = 'powerpc' unless defined $architecture;
 
 ### read config
 my $config = &read_config("fink.conf");
