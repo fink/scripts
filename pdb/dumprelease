@@ -26,7 +26,7 @@ ln -s $tree fink/dists
 # That is, './dumprelease 0.8.1 10.4 i386' will produce 
 # $release-$architecture-stable.sql
 echo "Dumping $tree/stable to $release-$architecture-stable.sql..."
-./dump --distribution=$tree --tree=stable --release=$release-stable --architecture=$architecture >$release-$architecture-stable.sql
+./dump --distribution=$tree --tree=stable --release=$release-$architecture-stable --architecture=$architecture >$release-$architecture-stable.sql
 if [ -f var/db/fink.db ]; then
  rm var/db/fink.db
 fi
