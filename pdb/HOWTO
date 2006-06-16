@@ -68,6 +68,12 @@ Finally, you have to tell the PHP script which renders the package description
 pages to display the information from 0.8.1 along with the current data. To do
 so, edit "pdb/releases.inc" in the "web" CVS module.
 
+(NOTE: prior to 0.8.1, the architecture was not included in the .sql file
+name or the release string.  The current pdb/releases.inc file accounts
+for this correctly, but if the .sql files for earlier releases are ever
+rebuilt, either it will have to be modified or an earlier version of the
+dumprelease script should be used.)
+
 That's it.
 
 ---------------------------------------------------------------------------------
