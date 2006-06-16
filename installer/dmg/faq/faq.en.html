@@ -575,14 +575,7 @@ Ign file: stable/main Release
 Err file: stable/crypto Packages 
 File not found 
 Ign file: stable/crypto Release 
-Hit http://us.dl.sourceforge.net 10.3/release/main Packages 
-Hit http://us.dl.sourceforge.net 10.3/release/main Release 
-Hit http://us.dl.sourceforge.net 10.3/release/crypto Packages 
-Hit http://us.dl.sourceforge.net 10.3/release/crypto Release 
-Hit http://us.dl.sourceforge.net 10.3/current/main Packages 
-Hit http://us.dl.sourceforge.net 10.3/current/main Release 
-Hit http://us.dl.sourceforge.net 10.3/current/crypto Packages 
-Hit http://us.dl.sourceforge.net 10.3/current/crypto Release 
+...
 Failed to fetch file:/sw/fink/dists/local/main/binary-darwin-powerpc/Packages
 File not found 
 Failed to fetch file:/sw/fink/dists/stable/main/binary-darwin-powerpc/Packages
@@ -593,10 +586,13 @@ Reading Package Lists... Done
 Building Dependency Tree...Done 
 E: Some index files failed to download, 
 they have been ignored, or old ones used instead. 
-update available list script returned error exit status 1.</pre><p>or</p><pre>W: Couldn't stat source package list file: unstable/main Packages
+update available list script returned error exit status 1.</pre><p>then all you need to do is run <tt style="white-space: nowrap;">fink scanpackages</tt>. This
+        generates the files that aren't being found.</p><p>If you get an error of the following form:</p><pre>W: Couldn't stat source package list file: unstable/main Packages
 (/sw/var/lib/apt/lists/_sw_fink_dists_unstable_main_binary-darwin-
-powerpc_Packages) - stat (2 No such file or directory)</pre><p>then all you need to do is run <tt style="white-space: nowrap;">fink scanpackages</tt>. This
-        generates the files that aren't being found.</p></div>
+powerpc_Packages) - stat (2 No such file or directory)</pre><p>then you should run</p><pre>
+sudo apt-get update
+fink scanpackages
+</pre><p>to fix it.</p></div>
     </a>
     <a name="usage-fink.wrong-tree">
       <div class="question"><p><b>Q5.25: I've changed my OS | Developer Tools, but Fink doesn't recognize
@@ -1484,4 +1480,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.69 2006/06/09 14:57:47 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.70 2006/06/16 00:30:15 alexkhansen Exp $</i></p></body></html>

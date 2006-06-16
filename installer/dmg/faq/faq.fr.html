@@ -300,14 +300,7 @@ Ign file: stable/main Release
 Err file: stable/crypto Packages
 File not found
 Ign file: stable/crypto Release
-Hit http://us.dl.sourceforge.net 10.3/release/main Packages
-Hit http://us.dl.sourceforge.net 10.3/release/main Release
-Hit http://us.dl.sourceforge.net 10.3/release/crypto Packages
-Hit http://us.dl.sourceforge.net 10.3/release/crypto Release
-Hit http://us.dl.sourceforge.net 10.3/current/main Packages
-Hit http://us.dl.sourceforge.net 10.3/current/main Release
-Hit http://us.dl.sourceforge.net 10.3/current/crypto Packages
-Hit http://us.dl.sourceforge.net 10.3/current/crypto Release
+...
 Failed to fetch file:/sw/fink/dists/local/main/binary-darwin-\
 powerpc/Packages
 File not found
@@ -322,11 +315,14 @@ Building Dependency Tree... Done
 E: Some index files failed to download, 
 they have been ignored, or old ones used instead.
 update available list script returned error exit status 1.
-</pre><p>ou cela :</p><pre>
+</pre><p>Exécutez simplement <tt style="white-space: nowrap;">fink scanpackages</tt>. Cela générera les fichiers introuvables.</p><pre>
 W: Couldn't stat source package list file: unstable/main Packages
 (/sw/var/lib/apt/lists/_sw_fink_dists_unstable_main_binary-darwin-
 powerpc_Packages) - stat (2 No such file or directory)
-</pre><p>Exécutez simplement <tt style="white-space: nowrap;">fink scanpackages</tt>. Cela générera les fichiers introuvables.</p><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p></div>
+</pre><p>Ensuite vous devrez exécuter :</p><pre>
+sudo apt-get update
+fink scanpackages
+</pre><p>pour corriger définitivement le problème.</p><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p></div>
 </a>
 <a name="usage-fink.wrong-tree">
 <div class="question"><p><b>Q5.25: Après mise à jour du système ou des Developer Tools, Fink ne reconnaît pas le changement.</b></p></div>
@@ -840,4 +836,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.57 2006/06/09 14:57:47 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.58 2006/06/16 00:44:03 michga Exp $</i></p></body></html>
