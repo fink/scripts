@@ -45,11 +45,10 @@ Now change into the PDB directory:
   cd /Volumes/src2/fink/pdb.finkproject.org/pdb/
 
 Next dump the list of packages in the release. Replace 0.8.1 as appropriate, 
-replace '10.4' with the Fink tree you want to count as stable, replace
-'i386' with the architecture you wish to use (i386 or powerpc), and
-replace the output filename with something reasonable for what you're doing:
+replace '10.4' with the Fink tree you want to count as stable, and replace
+'i386' with the architecture you wish to use (i386 or powerpc):
 
- ./dumprelease 0.8.1 10.4 i386 > 0.8.1-i386-stable.sql
+ ./dumprelease 0.8.1 10.4 i386
  
 This will produce a file called 0.8.1-i386-stable.sql. Next, you must update the
 releases.sql file for 0.8.1 (just replace the current version with the new
