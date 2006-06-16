@@ -44,27 +44,28 @@ the above Q&A for information on how to do it.
 Now change into the PDB directory:
   cd /Volumes/src2/fink/pdb.finkproject.org/pdb/
 
-Next dump the list of packages in the release. Replace 0.7.0 as appropriate, and the
-'10.3' with the Fink tree you want to count as stable:
- ./dumprelease 0.7.0 10.3
+Next dump the list of packages in the release. Replace 0.8.1 as appropriate, 
+replace '10.4' with the Fink tree you want to count as stable, and replace
+'i386' with the architecture you wish to use (i386 or powerpc):
+
+ ./dumprelease 0.8.1 10.4 i386
  
-or for the 0.6.3 (10.2-gcc3.3 for stable count):
-
- ./dumprelease 0.6.3 10.2-gcc3.3
-
-This will produce a file called 0.7.0-stable.sql. Next, you must update the
-releases.sql file for 0.7.0 (just replace the current version with the new
+This will produce a file called 0.8.1-i386-stable.sql. Next, you must update the
+releases.sql file for 0.8.1 (just replace the current version with the new
 one). You best do that in CVS using a developer checkout on your local machine,
 then check the change in, and run "cvs up" on the shell server.
 Once you did this, run these commands (order is important):
   ~/bin/finksql < releases.sql
-  ~/bin/finksql < 0.7.0-stable.sql
+  ~/bin/finksql < 0.8.1-i386-stable.sql
+
+(If you have released 0.8.1 for multiple architectures, you can add a 
+command to this list such as ~/bin/finksql < 0.8.1-powerpc-stable.sql .)
 
 Now run the "flag" script:
   ./flag
 
 Finally, you have to tell the PHP script which renders the package description
-pages to display the information from 0.7.0 along with the current data. To do
+pages to display the information from 0.8.1 along with the current data. To do
 so, edit "pdb/releases.inc" in the "web" CVS module.
 
 That's it.
