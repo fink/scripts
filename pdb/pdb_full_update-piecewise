@@ -19,4 +19,11 @@ chgrp -R fink .
 chmod -f -R g+w,a+r .
 chgrp fink /Volumes/src2/fink/pdb.finkproject.org/htdocs/pdb/timestamp.inc
 
+echo "Exporting maintainer data"
+maintfile="maintlist.txt"
+echo "select name,maintainer from package where latest=1;" | $HOME/bin/finksql > $maintfile-$$.tmp
+mv $maintfile-$$.tmp $maintfile
+chgrp fink $maintfile
+chmod 664 $maintfile
+
 echo "Finished PDB update: `date`"
