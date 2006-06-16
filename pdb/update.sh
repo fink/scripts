@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Updating CVS..."
-cvs -q update -dP
+cvs -q update -dPl
 cd basepath
 cvs -q update -dP
 cd ..
