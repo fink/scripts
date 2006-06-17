@@ -124,20 +124,22 @@ my ($packageversion, $revisions) = read_version_revision("$tmpdir/$fullname");
 
 my ($distro, $suffix, $revision);
 
-foreach $distro (keys %{$revisions}) {
-    if ($distro eq "all") {
-	$suffix = "";
+if (-f "$tmpdir/$fullname/$modulename.info.in") {
+    foreach $distro (keys %{$revisions}) {
+	if ($distro eq "all") {
+	    $suffix = "";
 	# leave distribution at its default value
-    } else {
-	$suffix = "-$distro";
-	$distribution = $distro;
-    }
-    print "\n";
-    print "Creating package description file $modulename.info$suffix:\n";
-    $revision = ${$revisions}{$distro};
+	} else {
+	    $suffix = "-$distro";
+	    $distribution = $distro;
+	}
+	print "\n";
+	print "Creating package description file $modulename.info$suffix:\n";
+	$revision = ${$revisions}{$distro};
 
-&modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename.info$suffix","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
+    &modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename.info$suffix","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
 
+}
 }
 
 print "Done:\n";
