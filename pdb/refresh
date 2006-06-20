@@ -31,7 +31,7 @@ for dist in ${dists[@]}; do
 	if [ $dist = "10.4" ]; then
 	    for arch in powerpc i386; do
 		echo "Dumping $dist/$tree $arch..."
-		./dump --distribution=$dist --tree=$tree --architecture=$arch --release=current-$dist-$tree-$arch >> current.sql
+		./dump --distribution=$dist --tree=$tree --architecture=$arch --release=current-$dist-$arch-$tree >> current.sql
 	    done
 	else
 	    echo "Dumping $dist/$tree..."
