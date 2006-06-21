@@ -41,7 +41,8 @@ English |
         the change.</a></li><li><a href="#usage-fink.seg-fault">5.26 I get errors with <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt>I
         applications from the<tt style="white-space: nowrap;"> fileutils </tt>package! Help!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 When I open a Terminal window, I get a message that "Your
         environment seems to be correctly set up for Fink already.", and it
-        logs out.</a></li><li><a href="#usage-fink.ext-drive">5.28 I have Fink installed away from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</a></li><li><a href="#usage-fink.mirror-gnu">5.29 Fink won't update my packages because it says it can't find the 'gnu' mirror.</a></li><li><a href="#usage-fink.cant-move-fink">5.30 I can't update Fink, because it can't move /sw/fink out of the way.</a></li><li><a href="#usage-fink.four-oh-three">5.31 I keep getting 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> or <tt style="white-space: nowrap;">dselect</tt> or the Fink Commander Binary menu.</a></li><li><a href="#usage-fink.fc-cache">5.32 I get a message that says "No fonts found".</a></li><li><a href="#usage-fink.non-admin-installer">5.33  I can't install Fink via the Installer package, because I get "volume doesn't support symlinks" errors.</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
+        logs out.</a></li><li><a href="#usage-fink.ext-drive">5.28 I have Fink installed away from the main partition and I can't update the fink package from source.  There are errors involving <q>chowname</q>.</a></li><li><a href="#usage-fink.mirror-gnu">5.29 Fink won't update my packages because it says it can't find the 'gnu' mirror.</a></li><li><a href="#usage-fink.cant-move-fink">5.30 I can't update Fink, because it can't move /sw/fink out of the way.</a></li><li><a href="#usage-fink.four-oh-three">5.31 I keep getting 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> or <tt style="white-space: nowrap;">dselect</tt> or the Fink Commander Binary menu.</a></li><li><a href="#usage-fink.fc-cache">5.32 I get a message that says "No fonts found".</a></li><li><a href="#usage-fink.non-admin-installer">5.33  I can't install Fink via the Installer package, because I get "volume doesn't support symlinks" errors.</a></li><li><a href="#usage-fink.wrong-arch">5.34 I can't update Fink, because <q>package architecture (darwin-i386) does not match system (darwin-powerpc).</q>
+</a></li></ul></li><li><a href="#comp-general"><b>6 Compile Problems - General</b></a><ul><li><a href="#comp-general.compiler">6.1 A configure script complains that it can't find an "acceptable cc".
         What's that?</a></li><li><a href="#comp-general.cvs">6.2 When I try a "fink selfupdate-cvs" I get this message: "cvs:
         Command not found."</a></li><li><a href="#comp-general.missing-make">6.3 I'm getting an error message involving <tt style="white-space: nowrap;">make</tt>
         </a></li><li><a href="#comp-general.head">6.4 I'm getting a strange usage message from the head command. What's
@@ -686,6 +687,11 @@ page and on http://fontconfig.org.</pre><p>then you can fix it by running</p><pr
       <div class="question"><p><b>Q5.33:  I can't install Fink via the Installer package, because I get "volume doesn't support symlinks" errors.</b></p></div>
       <div class="answer"><p><b>A:</b> This message commonly means that you've tried to run the Fink installer as user who doesn't have administrative privileges.  Make sure to log in at the login screen as such a user or switch to such a user in the Finder (i.e. fast user switching) before starting the Fink installer.</p><p>If you're having trouble even when using an admin account, then it's likely a problem with the permissions on your top-level directory.  Use Apple's Disk Utility, select the hard drive in question, choose the <b>First Aid</b> tab, and press <b>Repair Disk Permissions</b>.</p></div>
     </a>
+    <a name="usage-fink.wrong-arch">
+      <div class="question"><p><b>Q5.34: I can't update Fink, because <q>package architecture (darwin-i386) does not match system (darwin-powerpc).</q>
+</b></p></div>
+      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://fink.sourceforge.net/download/index.php">the downloads page</a>.</p></div>
+    </a>
   <h2><a name="comp-general">6 Compile Problems - General</a></h2>
     
     
@@ -1047,8 +1053,8 @@ fink install libiconv</pre></div>
 2) Reinstall BSD.pkg (from your main OS install)</p></div>
     </a>
     <a name="comp-packages.all-others">
-    <div class="question"><p><b>Q7.7: I'm having issues with a package that isn't listed here.</b></p></div>
-    <div class="answer"><p><b>A:</b> Since package problems tend to be transient, we've decided to put them
+      <div class="question"><p><b>Q7.7: I'm having issues with a package that isn't listed here.</b></p></div>
+      <div class="answer"><p><b>A:</b> Since package problems tend to be transient, we've decided to put them
       up on the Fink wiki.  Check the <a href="http://wiki.opendarwin.org/index.php/Fink:Package_issues"> Package issues page</a>.</p></div>
     </a>
   <h2><a name="usage-general">8 Package Usage Problems - General</a></h2>
@@ -1471,8 +1477,8 @@ fink selfupdate; fink index</pre><p>(the first line may give you warnings about 
 	</p></div>
     </a>
     <a name="usage-packages.yelp">
-    	<div class="question"><p><b>Q9.15: I can't get the help to work for any GNOME application.</b></p></div>
-	<div class="answer"><p><b>A:</b> You need to install the <tt style="white-space: nowrap;">yelp</tt> package.  This package was not placed within the GNOME bundle because it uses cryptography, and it was decided not to place all of GNOME in the crypto tree just to use the help system.</p></div>
+      <div class="question"><p><b>Q9.15: I can't get the help to work for any GNOME application.</b></p></div>
+      <div class="answer"><p><b>A:</b> You need to install the <tt style="white-space: nowrap;">yelp</tt> package.  This package was not placed within the GNOME bundle because it uses cryptography, and it was decided not to place all of GNOME in the crypto tree just to use the help system.</p></div>
     </a>
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
 Copyright (c) 2001-2006 The Fink Project.
@@ -1480,4 +1486,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.70 2006/06/16 00:30:15 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.71 2006/06/21 00:46:32 alexkhansen Exp $</i></p></body></html>
