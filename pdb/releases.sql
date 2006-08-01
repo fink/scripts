@@ -4,8 +4,6 @@ insert into release values ('current-10.2-gcc3.3-stable', 'Packages that are in 
 insert into release values ('current-10.2-gcc3.3-unstable', 'Packages that are in 10.2-gcc3.3/unstable in CVS, updated daily.');
 insert into release values ('current-10.3-stable', 'Packages that are in 10.3/stable in CVS, updated daily.');
 insert into release values ('current-10.3-unstable', 'Packages that are in 10.3/unstable in CVS, updated daily.');
-insert into release values ('current-10.4-transitional-stable', 'Packages that are in 10.4-transitional/stable in CVS, updated daily.');
-insert into release values ('current-10.4-transitional-unstable', 'Packages that are in 10.4-transitional/unstable in CVS, updated daily.');
 insert into release values ('current-10.4-powerpc-stable', 'Packages that are in 10.4/stable in CVS for arch=powerpc, updated daily.');
 insert into release values ('current-10.4-powerpc-unstable-powerpc', 'Packages that are in 10.4/unstable in CVS for arch=powerpc, updated daily.');
 insert into release values ('current-10.4-i386-stable', 'Packages that are in 10.4/stable in CVS for arch=i386, updated daily.');
