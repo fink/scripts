@@ -35,7 +35,7 @@ for dist in ${dists[@]}; do
 	    done
 	else
 	    echo "Dumping $dist/$tree..."
-	    ./dump --distribution=$dist --tree=$tree --release=current-$dist-$tree >> current.sql
+	    ./dump --distribution=$dist --tree=$tree --architecture=powerpc --release=current-$dist-$tree >> current.sql
 	fi
     done
 done
