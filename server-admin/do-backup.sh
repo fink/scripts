@@ -20,7 +20,7 @@ do_command() {
 	[ $? -ne 0 ] && do_error "$1 exited non-zero"
 }
 
-do_command tar -C / --exclude='var/www/distfiles' --show-omitted-dirs --totals -czf "/tmp/${BACKUPFILE}" etc home root var usr/local
+do_command tar -C / --exclude='var/www/www.finkproject.org/bindist' --exclude='var/www/distfiles' --show-omitted-dirs --totals -czf "/tmp/${BACKUPFILE}" etc home root var usr/local
 do_command /usr/bin/rsync -av -e 'ssh -i /root/.ssh/id_nopass' "/tmp/${BACKUPFILE}" "$ACCOUNT":~/backups/
 do_command rm "/tmp/${BACKUPFILE}"
 
