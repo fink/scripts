@@ -40,7 +40,7 @@ sub initFink($) {
 
 	$FinkConfig = Fink::Services::read_config("$FinkDir/etc/fink.conf");
 	Fink::Config::set_options({Verbose => 3, KeepBuildDir => 1});
-	Fink::Package->require_packages();
+	readPackages();
 
 	return $FinkConfig;
 }
@@ -65,6 +65,16 @@ sub installEssentials {
 sub readPackages {
 	$Fink::Status::the_instance ||= Fink::Status->new();
 	$Fink::Status::the_instance->read();
+
+	eval {
+		Fink::Package->forget_packages(2, 0);
+	};
+	if($@ and $@ =~ /new API for forget_packages/) {
+		Fink::Package->forget_packages({disk => 1});
+	} elsif($@) {
+		die $@;
+	}
+	Fink::Package->require_packages();
 }
 
 # Purge packages we may have previously built

@@ -201,10 +201,7 @@ if($checkpoint) {
 restoreSystem();
 prepSystem();
 FinkLib::purgeNonEssential();
-
-# Rebuild the package database, just to be paranoid.
-scanPackages();
-
+FinkLib::readPackages();
 removeBuildLocks();
 my(@pkglist) = Fink::Package->list_packages();
 
@@ -214,9 +211,6 @@ if(!$dryrun) {
 
 	# Only let Fink see our modified packages
 	injectPackages();
-
-	# Now that we've patched the info files, rebuild the package database again.
-	scanPackages();
 }
 
 # Now order the list of packages in dependency order, so that all of X's
@@ -304,6 +298,7 @@ sub logPackageFail {
 sub injectPackages {
 	symlink("$rundir/pkginfo", "$FinkDir/fink/dists/buildfink");
 	$FinkConfig->set_param("Trees" => "buildfink");
+	FinkLib::readPackages();
 }
 
 # Copy all package files to the buildfink repository and, if necessary,  patch the .info/.patch files.
@@ -465,6 +460,7 @@ sub doBuild {
 				kill(-15, $pid);
 				sleep(10) if kill(0, $pid);
 				kill(-9, $pid);
+				FinkLib::readPackages();
 				removeBuildLocks();
 				last;
 			}
@@ -477,6 +473,7 @@ sub doBuild {
 		kill(-15, $pid);
 		sleep(10);
 		kill(-9, $pid);
+		FinkLib::readPackages();
 		removeBuildLocks();
 	}
 
@@ -660,7 +657,6 @@ sub getRelatives {
 # at the same time.  They can get left over if the system crashes
 # while building a package.
 sub removeBuildLocks {
-	FinkLib::readPackages();
 	foreach my $pkgname (Fink::Package->list_packages()) {
 		next unless $pkgname =~ /^fink-buildlock-.*/;
 		system("dpkg", "-r", $pkgname);
@@ -956,19 +952,6 @@ sub findFailedDep {
 	return "";
 }
 
-# Rescan the .info files and rebuild the package database
-sub scanPackages {
-	eval {
-		Fink::Package->forget_packages(2, 0);
-	};
-	if($@ and $@ =~ /new API for forget_packages/) {
-		Fink::Package->forget_packages({disk => 1});
-	} elsif($@) {
-		die $@;
-	}
-	Fink::Package->require_packages();
-}
-
 # Take a list of package names and filter out the ones which are split-offs.
 # When we have a split-off in the list, replace it with its parent and suppress
 # any further instances of members of that family.  This preserves our dependency
@@ -1022,9 +1005,7 @@ sub restoreCheckpoint {
 	die "$@\n" if $@;
 
 	prepSystem();
-	scanPackages();
 	injectPackages();
-	scanPackages();
 	removeBuildLocks();
 
 	doLog("Restored from checkpoint");
