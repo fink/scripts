@@ -116,6 +116,7 @@ print `ls -l $tmpdir/*.tar.gz` . "\n";
 
 my $coda = "CustomMirror: <<\n";
 $coda .= " Primary: http://west.dl.sourceforge.net/sourceforge/\n";
+$coda .= " Secondary: http://easynews.dl.sourceforge.net/sourceforge/\n";
 $coda .= " nam-US: http://us.dl.sourceforge.net/sourceforge/\n";
 $coda .= " eur: http://eu.dl.sourceforge.net/sourceforge/\n";
 $coda .= "<<\n";
