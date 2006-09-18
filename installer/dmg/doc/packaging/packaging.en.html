@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.87 2006/02/22 06:31:55 dmacks Exp $
+Generated from $Fink: packaging.en.xml,v 1.88 2006/09/18 14:34:38 msachs Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -1320,7 +1320,10 @@ order.</p>
 <p>In the <b>compile phase</b> the source is configured and
 compiled. Usually this means calling the <tt style="white-space: nowrap;">configure</tt> script
 with some parameters and then issuing a <tt style="white-space: nowrap;">make</tt> command. See the
-CompileScript field description for details.</p>
+CompileScript field description for details.  If test suites are enabled
+for the build (a new feature in fink 0.25, currently achieved by building in
+maintainer mode), the TestScript will be run immediately after the
+CompileScript.</p>
 <p>In the <b>install phase</b> the package is installed to a temporary
 directory, <tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1</tt> (= %d). (Note the "root-" part.)
 All files that would normally be installed to <tt style="white-space: nowrap;">/sw</tt> are installed in
@@ -1706,7 +1709,9 @@ essential ones; this is no longer true.
 A list of dependencies that is applied at build time only.
 This can be used to list tools (e.g. flex) that must be present to
 build the packages, but which are not used at run time.
-Supports the same syntax as Depends.
+Supports the same syntax as Depends.  If a build is being done
+with test suites enabled, the dependencies in the <tt style="white-space: nowrap;">TestDepends</tt>
+field will be added to this list.
 </p>
 </td></tr><tr valign="top"><td>Provides</td><td>
 <p>
@@ -1749,7 +1754,9 @@ A list of packages that must not be installed while this package is
 being compiled. This can be used to prevent <tt style="white-space: nowrap;">./configure</tt>
 or the compiler from seeing undesired library headers or to avoid use
 of a version of a tool that is known to be broken (for example, a bug
-in a certain version of sed).
+in a certain version of sed).  If a build is being done
+with test suites enabled, the packages in the <tt style="white-space: nowrap;">TestConflicts</tt>
+field will be added to this list.
 </p>
 </td></tr><tr valign="top"><td>Replaces</td><td>
 <p>
@@ -1860,6 +1867,10 @@ default is <tt style="white-space: nowrap;">%n-%v.tar.gz</tt> (i.e. a manual
 download).
 This implicitly-defined <tt style="white-space: nowrap;">Source</tt> form is deprecated
 (explicitly-stated simple filename/manual download is still okay).
+</p><p>
+Sources that are only needed in order to run test suites should
+use <tt style="white-space: nowrap;">TestSource</tt> and related fields, inside the
+<tt style="white-space: nowrap;">InfoTest</tt> block.
 </p>
 </td></tr><tr valign="top"><td>Source<b>N</b></td><td>
 <p>
@@ -2153,7 +2164,9 @@ remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
 </td></tr><tr valign="top"><td>ConfigureParams</td><td>
 <p>
 Additional parameters to pass to the configure script. (See
-CompileScript for details.)
+CompileScript for details.)  If a build is being done
+with test suites enabled, the value of the <tt style="white-space: nowrap;">TestConfigureParams</tt>
+field will be appended to this.
 
 As of fink &gt; 0.13.7, this parameter will also work with perl modules
 <tt style="white-space: nowrap;">Type: Perl</tt>, and will append to the default perl Makefile.PL
@@ -2272,6 +2285,42 @@ If true, the <tt style="white-space: nowrap;">make test</tt> portion
 of the <tt style="white-space: nowrap;">CompileScript</tt> will be ignored
 for that specific perl module package.
 </p>
+</td></tr></table>
+<p><b>Test Suites:</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>InfoTest</td><td>
+<p>
+<b>Introduced in fink 0.25.</b>
+This field encapsulates information that will only be used when performing
+a build with test suites enabled.  It contains other fields.
+If present, this field <b>must</b> contain a <tt style="white-space: nowrap;">TestScript</tt>.
+All other fields are optional.  The following fields are allowed inside
+<tt style="white-space: nowrap;">InfoTest</tt>:
+</p><ul>
+<li><tt style="white-space: nowrap;">TestScript</tt>: A script which runs the test suite.  This script should exit
+    with status 0 if the suite passes, 1 to indicate warnings, or any other
+    value to indicate failures serious enough to be considered fatal.
+    Because of this tri-state logic, you should explicitly set an exit value in
+    this script.  For instance, <tt style="white-space: nowrap;">make check</tt> is a bad script,
+    since it will exit with status 1 if the check target doesn't exist.
+    <tt style="white-space: nowrap;">make check || exit 2</tt> would be a better script.</li>
+<li><tt style="white-space: nowrap;">TestConfigureParams</tt>: A value which will be appended to <tt style="white-space: nowrap;">ConfigureParams</tt>.</li>
+<li><tt style="white-space: nowrap;">TestDepends</tt> and <tt style="white-space: nowrap;">TestConflicts</tt>: Lists of packages that will be added to the <tt style="white-space: nowrap;">BuildDepends</tt> or <tt style="white-space: nowrap;">BuildConflicts</tt> lists.</li>
+<li><tt style="white-space: nowrap;">TestSource</tt>: Extra sources necessary to run the test suite.  All of the
+    affiliated fields are also supported, so you <b>must</b> also specify
+    <tt style="white-space: nowrap;">TestSource-MD5</tt>, and you may also have
+    <tt style="white-space: nowrap;">TestSourceN</tt> and corresponding <tt style="white-space: nowrap;">TestSourceN-MD5</tt>,
+    <tt style="white-space: nowrap;">TestTarFilesRename</tt>, etc.</li>
+<li><tt style="white-space: nowrap;">TestSuiteSize</tt>: Describes approximately how long the test suite takes to
+    run.  Valid values are <tt style="white-space: nowrap;">small</tt>, <tt style="white-space: nowrap;">medium</tt>, and <tt style="white-space: nowrap;">large</tt>.
+    This field is currently ignored.</li>
+<li>Any other standard field.  If a field is specified both inside and outside
+<tt style="white-space: nowrap;">InfoTest</tt>, the value inside <tt style="white-space: nowrap;">InfoTest</tt> will replace
+the other value when test suites are active.</li>
+</ul><p>Here's an example:
+</p><pre>InfoTest: &lt;&lt;
+    TestScript: make check || exit 2
+    TestConfigureParams: --enable-tests
+&lt;&lt;</pre>
 </td></tr></table>
 <p><b>Install Phase:</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>UpdatePOD</td><td>
@@ -2737,4 +2786,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.87 2006/02/22 06:31:55 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.88 2006/09/18 14:34:38 msachs Exp $</i></p></body></html>
