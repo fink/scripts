@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.zh.xml,v 1.27 2006/04/11 23:52:29 babayoshihiko Exp $
+Generated from $Fink: packaging.zh.xml,v 1.28 2006/09/19 05:54:30 babayoshihiko Exp $
 -->
 <title>Fink Documentation - 创建 Fink 软件包</title></head><body>
 <table width="100%" cellspacing="0">
@@ -999,7 +999,14 @@ and 10.3 versions of OS X, and 4.0 for the 10.4 version of OS X.  The
 这三个字段来控制有关细节。</p>
 <p>在<b>补丁阶段</b>，源代码会被打上补丁，以使得可以在 Darwin 下面编译。由 UpdateConfigGuess，UpdateLibtool，Patch 和 PatchScrip 这几个字段所指明的操作将被按照顺序执行。</p>
 <p>在<b>编译阶段</b>，源代码被配置和编译。通常这会以某些参数来调用 <tt style="white-space: nowrap;">configure</tt> 脚本，然后执行一个 <tt style="white-space: nowrap;">make</tt> 命令。
-详细信息请查看 CompileScript 字段的描述。</p>
+详细信息请查看 CompileScript 字段的描述。
+
+If test suites are enabled
+for the build (a new feature in fink 0.25, currently achieved by building in
+maintainer mode), the TestScript will be run immediately after the
+CompileScript.
+
+</p>
 <p>在<b>安装阶段</b>，软件包被安装到一个临时目录，<tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1</tt> (= %d)。(注意 "root-" 部分。)
 所有通常应该安装到 <tt style="white-space: nowrap;">/sw</tt> 的文件现在被安装在
 <tt style="white-space: nowrap;">/sw/src/fink.build/root-gimp-1.2.1-1/sw</tt> (= %i = %d%p)。 
@@ -1306,6 +1313,11 @@ essential ones; this is no longer true.
 <b>从 fink 0.9.0 开始。</b>
 只在编译时需要的依赖关系的清单。
 这可以用于列出构建软件包必须使用工具(比如 flex)。它支持和 Depends 相同的语法。
+
+If a build is being done
+with test suites enabled, the dependencies in the <tt style="white-space: nowrap;">TestDepends</tt>
+field will be added to this list.
+
 </p>
 </td></tr><tr valign="top"><td>Provides</td><td>
 <p>
@@ -1337,7 +1349,9 @@ A list of packages that must not be installed while this package is
 being compiled. This can be used to prevent <tt style="white-space: nowrap;">./configure</tt>
 or the compiler from seeing undesired library headers or to avoid use
 of a version of a tool that is known to be broken (for example, a bug
-in a certain version of sed).
+in a certain version of sed).  If a build is being done
+with test suites enabled, the packages in the <tt style="white-space: nowrap;">TestConflicts</tt>
+field will be added to this list.
 </p>
 </td></tr><tr valign="top"><td>Replaces</td><td>
 <p>
@@ -1424,6 +1438,10 @@ Primary: ftp://ftp.barbarorg/pub/
 
 This implicitly-defined <tt style="white-space: nowrap;">Source</tt> form is deprecated
 (explicitly-stated simple filename/manual download is still okay).
+</p><p>
+Sources that are only needed in order to run test suites should
+use <tt style="white-space: nowrap;">TestSource</tt> and related fields, inside the
+<tt style="white-space: nowrap;">InfoTest</tt> block.
 </p>
 
 </td></tr><tr valign="top"><td>Source<b>N</b></td><td>
@@ -1656,6 +1674,9 @@ remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
 <p>
 传递给 configure 脚本的额外参数(查阅
 CompileScript 字段的说明获取详细信息)。
+If a build is being done
+with test suites enabled, the value of the <tt style="white-space: nowrap;">TestConfigureParams</tt>
+field will be appended to this.
 
 对于 &lt; 0.13.7 的 fink 版本，这个参数也对 perl 模块<tt style="white-space: nowrap;">Type: Perl</tt>有效，并会添加到默认的 perl Makefile.PL
 字符串中。
@@ -1764,13 +1785,50 @@ make test</pre>
 <p>where <tt style="white-space: nowrap;">$perlarchdir</tt> is "darwin" for versions 5.8.0 and 
 earlier, and is 
 "darwin-thread-multi-2level" for versions 5.8.1 and later.</p>
-
 </td></tr><tr valign="top"><td>NoPerlTests</td><td> 
 <p>
 <b>从 fink 0.13.7 之后开始。</b>
 一个针对 perl 模块软件包的布尔值。如果为真的话，<tt style="white-space: nowrap;">CompileScript</tt> 的 <tt style="white-space: nowrap;">make test</tt> 部分会对那些指定的 perl 模块忽略。
 </p>
 </td></tr></table>
+<p><b>Test Suites:</b></p>
+<table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>InfoTest</td><td>
+<p>
+<b>Introduced in fink 0.25.</b>
+This field encapsulates information that will only be used when performing
+a build with test suites enabled.  It contains other fields.
+If present, this field <b>must</b> contain a <tt style="white-space: nowrap;">TestScript</tt>.
+All other fields are optional.  The following fields are allowed inside
+<tt style="white-space: nowrap;">InfoTest</tt>:
+</p><ul>
+<li><tt style="white-space: nowrap;">TestScript</tt>: A script which runs the test suite.  This script should exit
+    with status 0 if the suite passes, 1 to indicate warnings, or any other
+    value to indicate failures serious enough to be considered fatal.
+    Because of this tri-state logic, you should explicitly set an exit value in
+    this script.  For instance, <tt style="white-space: nowrap;">make check</tt> is a bad script,
+    since it will exit with status 1 if the check target doesn't exist.
+    <tt style="white-space: nowrap;">make check || exit 2</tt> would be a better script.</li>
+<li><tt style="white-space: nowrap;">TestConfigureParams</tt>: A value which will be appended to <tt style="white-space: nowrap;">ConfigureParams</tt>.</li>
+<li><tt style="white-space: nowrap;">TestDepends</tt> and <tt style="white-space: nowrap;">TestConflicts</tt>: Lists of packages that will be added to the <tt style="white-space: nowrap;">BuildDepends</tt> or <tt style="white-space: nowrap;">BuildConflicts</tt> lists.</li>
+<li><tt style="white-space: nowrap;">TestSource</tt>: Extra sources necessary to run the test suite.  All of the
+    affiliated fields are also supported, so you <b>must</b> also specify
+    <tt style="white-space: nowrap;">TestSource-MD5</tt>, and you may also have
+    <tt style="white-space: nowrap;">TestSourceN</tt> and corresponding <tt style="white-space: nowrap;">TestSourceN-MD5</tt>,
+    <tt style="white-space: nowrap;">TestTarFilesRename</tt>, etc.</li>
+<li><tt style="white-space: nowrap;">TestSuiteSize</tt>: Describes approximately how long the test suite takes to
+    run.  Valid values are <tt style="white-space: nowrap;">small</tt>, <tt style="white-space: nowrap;">medium</tt>, and <tt style="white-space: nowrap;">large</tt>.
+    This field is currently ignored.</li>
+<li>Any other standard field.  If a field is specified both inside and outside
+<tt style="white-space: nowrap;">InfoTest</tt>, the value inside <tt style="white-space: nowrap;">InfoTest</tt> will replace
+the other value when test suites are active.</li>
+</ul><p>Here's an example:
+</p><pre>InfoTest: &lt;&lt;
+    TestScript: make check || exit 2
+    TestConfigureParams: --enable-tests
+&lt;&lt;</pre>
+</td></tr></table>
+
+
 <p><b>安装阶段：</b></p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Field</th><th align="left">Value</th></tr><tr valign="top"><td>UpdatePOD</td><td>
 <p>
@@ -2134,4 +2192,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.27 2006/04/11 23:52:29 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.28 2006/09/19 05:54:30 babayoshihiko Exp $</i></p></body></html>
