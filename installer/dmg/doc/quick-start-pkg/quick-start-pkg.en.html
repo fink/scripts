@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.en.xml,v 1.7 2006/06/08 22:13:34 dmacks Exp $
+Generated from $Fink: quick-start-pkg.en.xml,v 1.8 2006/09/25 23:48:53 chris01 Exp $
 -->
 <title>Fink Documentation - Create a Fink Package - Tutorial</title></head><body>
 <table width="100%" cellspacing="0">
@@ -36,7 +36,7 @@ package for <a href="http://maxwell.sourceforge.net">maxwell</a>.
 
 <h3><a name="howtostart.Learn">1.1 Learn the Basics</a></h3>
 <p>
-<b>Please note:</b> In this document we assume that fink is installed into
+<b>Please note:</b> In this document we assume that <tt style="white-space: nowrap;">fink</tt> is installed into
 <tt style="white-space: nowrap;">/sw</tt> - the default location. If you see a codeblock similar to
 </p>
 <pre>
@@ -99,9 +99,15 @@ Save your new info file (and patch file - if needed) into your
 <tt style="white-space: nowrap;">packagename</tt> is the name of your package. If this directory doesn't 
 exist you need to create it manually.
 </p>
-
 <p>
-Check if fink found your package by typing:
+<b>Please note:</b>
+Make sure you are running an up-to-date <tt style="white-space: nowrap;">fink</tt> tool by running
+</p>
+<pre>
+finkdev% fink selfupdate
+</pre>
+<p>
+Check if <tt style="white-space: nowrap;">fink</tt> found your package by typing:
 </p>
 <pre>
 finkdev% fink list packagename
@@ -131,8 +137,8 @@ mailing list.
 
 <h3><a name="howtostart.Validate">1.3 Validate your Package</a></h3>
 <p>
-During validation of your package you should set the verbose level of fink
-to the highest possible value. Check the section on the
+During validation of your package you should set the verbose level of 
+<tt style="white-space: nowrap;">fink</tt> to the highest possible value. Check the section on the
 <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fink configuration file</a>
 about how to change the verbose level.
 </p>
@@ -146,23 +152,23 @@ finkdev% fink validate packagename.info
 If the validation passes try to build your package with:
 </p>
 <pre>
-finkdev% fink build packagename
+finkdev% fink -m --build-as-nobody rebuild packagename
 </pre>
 <p>
 Watch the output of the build process carefully for errors or warnings.
 Especially make sure that everything is installed into the destination directory
 (which is located at <tt style="white-space: nowrap;">/sw/src/root-packagename-%v-%r/sw</tt>) from where
-fink builds the binary package. Nothing should be installed directly into
+<tt style="white-space: nowrap;">fink</tt> builds the binary package. Nothing should be installed directly into
 <tt style="white-space: nowrap;">/sw</tt>.
 </p>
 <p>
-If you use the <tt style="white-space: nowrap;">--keep-build-dir</tt> or <tt style="white-space: nowrap;">-k</tt> option to fink, it will 
-keep the build directory. This is where fink expands the downloaded source and 
+If you use the <tt style="white-space: nowrap;">--keep-build-dir</tt> or <tt style="white-space: nowrap;">-k</tt> option to <tt style="white-space: nowrap;">fink</tt>, it will 
+keep the build directory. This is where <tt style="white-space: nowrap;">fink</tt> expands the downloaded source and 
 where the package gets built. This might help if you need to debug the build
 process. Type <tt style="white-space: nowrap;">man fink</tt> for details.
 </p>
 <p>
-You may also want to use the <tt style="white-space: nowrap;">--keep-root-dir</tt> or <tt style="white-space: nowrap;">-K</tt> option, it will keep the destination directory. This is where fink builds the installation tree for the package. Comparing build and destination directories may help you debugging the installation phase.
+You may also want to use the <tt style="white-space: nowrap;">--keep-root-dir</tt> or <tt style="white-space: nowrap;">-K</tt> option, it will keep the destination directory. This is where <tt style="white-space: nowrap;">fink</tt> builds the installation tree for the package. Comparing build and destination directories may help you debugging the installation phase.
 </p>
 <p>
 If the build succeeds check the content of the binary package with:
@@ -264,7 +270,7 @@ Version, on the other hand is the upstream source version. Since this is the
 first time we have attempted to make a maxwell-0.5.1 package, it is revision 1.
 </p>
 <p>
-The Source field is where fink will grab the source tarball from. Because 
+The Source field is where <tt style="white-space: nowrap;">fink</tt> will grab the source tarball from. Because 
 <a href="http://sourceforge.net">Sourceforge</a> has a system where
 packages are mirrored around the world, and since <tt style="white-space: nowrap;">fink</tt> knows about it,
 we use <tt style="white-space: nowrap;">mirror:sourceforge:</tt>. <tt style="white-space: nowrap;">%n</tt> expands to the package name,
@@ -314,7 +320,7 @@ Description: Mac OS X S.M.A.R.T. Tool
 </pre>
 <p>
 But what to do about that warning about MD5 checksums? Well, why don't we just
-ask fink to fetch the source?
+ask <tt style="white-space: nowrap;">fink</tt> to fetch the source?
 </p>
 <pre>
 finkdev% fink fetch maxwell
@@ -368,7 +374,7 @@ And now we find that <tt style="white-space: nowrap;">fink validate</tt> passes,
 Now we can build the package, let's just try it:
 </p>
 <pre>
-finkdev% fink build maxwell
+finkdev% fink -m --build-as-nobody rebuild maxwell
 /usr/bin/sudo /sw/bin/fink  build maxwell
 Reading package info...
 Updating package index... done.
@@ -410,7 +416,7 @@ make install prefix=%i
 &lt;&lt;
 </pre>
 <p>
-We need to use <tt style="white-space: nowrap;">prefix=%i</tt> since fink builds the binary deb file
+We need to use <tt style="white-space: nowrap;">prefix=%i</tt> since <tt style="white-space: nowrap;">fink</tt> builds the binary deb file
 from the files in <tt style="white-space: nowrap;">%i</tt>. These files are later installed into 
 <tt style="white-space: nowrap;">%p</tt> (which is <tt style="white-space: nowrap;">/sw</tt> by default) when you use 
 <tt style="white-space: nowrap;">fink install maxwell</tt>. For more details about <tt style="white-space: nowrap;">%p</tt> and
@@ -420,7 +426,7 @@ Packaging Manual</a>.
 </p>
 <p>
 Normally the lines in the Script fields are passed line by line to the shell.
-But the <tt style="white-space: nowrap;">#! /bin/sh -ev</tt> line makes fink run it as a separate script.
+But the <tt style="white-space: nowrap;">#! /bin/sh -ev</tt> line makes <tt style="white-space: nowrap;">fink</tt> run it as a separate script.
 The parameter <tt style="white-space: nowrap;">-e</tt> means "die on error" and <tt style="white-space: nowrap;">-v</tt> means
 "verbose".
 </p>
@@ -431,7 +437,7 @@ So, let's validate the package again and try to rebuild it:
 finkdev% fink validate maxwell.info 
 Validating package file maxwell.info...
 Package looks good!
-finkdev% fink build maxwell
+finkdev% fink -m --build-as-nobody rebuild maxwell
 /usr/bin/sudo /sw/bin/fink  build maxwell
 Reading package info...
 Updating package index... done.
@@ -480,8 +486,8 @@ Fink seems to have installed everything into the correct place:
 <tt style="white-space: nowrap;">maxwell_0.5.1-1_darwin-powerpc.deb</tt> was built.
 </p>
 <p>
-Also note how fink automatically included some compiler flags to enable it to
-access other fink packages (e.g. <tt style="white-space: nowrap;">-I/sw/include</tt>).
+Also note how <tt style="white-space: nowrap;">fink</tt> automatically included some compiler flags to enable it to
+access other Fink packages (e.g. <tt style="white-space: nowrap;">-I/sw/include</tt>).
 </p>
 <p>
 Let's have a look at what is in the binary package:
@@ -555,7 +561,7 @@ make install prefix=%i mandir=%i/share/man datadir=%i/share/doc/%n
 and rebuild the package with
 </p>
 <pre>
-finkdev% fink rebuild maxwell
+finkdev% fink -m --build-as-nobody rebuild maxwell
 </pre>
 <p>
 (We used <tt style="white-space: nowrap;">fink rebuild</tt> because <tt style="white-space: nowrap;">fink build</tt> would not do 
@@ -602,4 +608,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.7 2006/06/08 22:13:34 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.8 2006/09/25 23:48:53 chris01 Exp $</i></p></body></html>
