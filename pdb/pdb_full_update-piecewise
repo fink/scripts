@@ -24,4 +24,7 @@ mv $maintfile-$$.tmp $maintfile
 chgrp fink $maintfile
 chmod 664 $maintfile
 
+echo "Refreshing section list"
+$HOME/bin/finksql <sections.sql
+
 echo "Finished PDB update: `date`"
