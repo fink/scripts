@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.76 2006/09/07 01:23:10 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.77 2006/09/26 18:31:50 bmaret Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -208,25 +208,16 @@ English |
       <div class="question"><p><b>Q5.3: How do I update available packages from CVS when I am behind a firewall?</b></p></div>
       <div class="answer"><p><b>A:</b> The package <b>cvs-proxy</b> can tunnel through HTTP proxies.</p><ul>
           <li>
-            <p>First download the <a href="http://fink.cvs.sourceforge.net/fink/dists/10.2/unstable/main/finkinfo/devel/">cvs-proxy</a>
-          files (an .info file and a .patch file) and place them into your
-          local tree (i.e. /sw/fink/dists/local/main/finkinfo/).</p>
-          </li>
-          <li>
             <p>Install the <b>cvs-proxy</b> package with the command:</p>
             <p>
-              <tt style="white-space: nowrap;">fink install <b>cvs-proxy</b>
+              <tt style="white-space: nowrap;">fink --use-binary-dist install <b>cvs-proxy</b>
               </tt>
             </p>
           </li>
           <li>
-            <p>Packages are then updated with the commands:</p>
-            <p>
+	    <p>Switch to the CVS update method with the command:</p>
+             <p>
               <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>
-            </p>
-            <p>
-              <tt style="white-space: nowrap;">fink
-          update-all</tt>
             </p>
           </li>
         </ul><p>If fink is not configured to use your proxy, change the settings
@@ -1505,4 +1496,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.76 2006/09/07 01:23:10 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.77 2006/09/26 18:31:50 bmaret Exp $</i></p></body></html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.fr.xml,v 1.6 2006/06/08 22:13:34 dmacks Exp $
+Generated from $Fink: quick-start-pkg.fr.xml,v 1.7 2006/10/02 17:04:37 michga Exp $
 -->
 <title>Fink Documentation - Création d'un paquet pour Fink - Tutoriel</title></head><body>
 <table width="100%" cellspacing="0">
@@ -27,7 +27,7 @@ Nous commencerons par les généralités, puis nous verrons en détail la créat
 
 
 <h3><a name="howtostart.Learn">1.1 Apprentissage des bases</a></h3>
-<p><b>Note :</b> dans ce document, nous supposons que fink est installé dans <tt style="white-space: nowrap;">/sw</tt> - son emplacement par défaut. Quand vous verrez un bloc de code semblable à celui-ci :</p>
+<p><b>Note :</b> dans ce document, nous supposons que <tt style="white-space: nowrap;">fink</tt> est installé dans <tt style="white-space: nowrap;">/sw</tt> - son emplacement par défaut. Quand vous verrez un bloc de code semblable à celui-ci :</p>
 <pre>
 finkdev% unecommandequelconque
 </pre>
@@ -49,7 +49,11 @@ de lire et de tenter de comprendre l'<a href="#example.basics">exemple donné ic
 
 <h3><a name="howtostart.Make">1.2 Création d'un paquet</a></h3>
 <p>Sauvegardez le nouveau fichier info (et le fichier rustine si nécessaire) dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo/</tt>. Le fichier doit avoir pour nom <tt style="white-space: nowrap;">nomdupaquet.info</tt> (et la rustine doit s'appeler <tt style="white-space: nowrap;">nomdupaquet.patch</tt>), où <tt style="white-space: nowrap;">nomdupaquet</tt> est le nom de votre paquet. Si ce répertoire n'existe pas, vous devez le créer.</p>
-<p>Vérifiez que fink trouve votre paquet en exécutant :</p>
+<p><b>Note importante :</b> vérifiez que <tt style="white-space: nowrap;">fink</tt> est à jour en exécutant la commande :</p>
+<pre>
+finkdev% fink selfupdate
+</pre>
+<p>Vérifiez que <tt style="white-space: nowrap;">fink</tt> trouve votre paquet en exécutant :</p>
 <pre>
 finkdev% fink list nomdupaquet
 </pre>
@@ -61,18 +65,18 @@ finkdev% fink index
 <p>Si vous souhaitez de plus amples informations, lisez le <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de création de paquets</a> ou utilisez l'une ou l'autre des différentes <a href="http://fink.sourceforge.net/help/index.php">sources d'aide</a>. Vous devez aussi vous abonner à la liste de diffusion <a href="http://fink.sourceforge.net/lists/index.php">fink-devel</a>.</p>
 
 <h3><a name="howtostart.Validate">1.3 Validation d'un paquet</a></h3>
-<p>Pendant le processus de validation de votre paquet, vous devez régler le niveau de verbosité de fink à la plus haute valeur possible. Voir la section <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a> pour savoir comment le changer.</p>
+<p>Pendant le processus de validation de votre paquet, vous devez régler le niveau de verbosité de <tt style="white-space: nowrap;">fink</tt> à la plus haute valeur possible. Voir la section <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a> pour savoir comment le changer.</p>
 <p>Vérifiez que votre paquet est valide en exécutant :</p>
 <pre>
 finkdev% fink validate nomdupaquet.info
 </pre>
 <p>Si c'est le cas, essayez de construire le paquet en exécutant :</p>
 <pre>
-finkdev% fink build nomdupaquet
+finkdev% fink -m --build-as-nobody rebuild nomdupaquet
 </pre>
-<p>Observez attentivement les messages d'erreur or d'attention du processus de construction. Assurez-vous, en particulier, que tout s'installe dans le répertoire de destination (qui est <tt style="white-space: nowrap;">/sw/src/root-nomdupaquet-%v-%r/sw</tt>) à partir duquel fink construit le paquet binaire. Rien ne doit être installé directement dans <tt style="white-space: nowrap;">/sw</tt>.</p>
-<p>Si vous utilisez l'option <tt style="white-space: nowrap;">--keep-build-dir</tt> ou <tt style="white-space: nowrap;">-k</tt> de fink, le répertoire de construction sera conservé. C'est là que fink décompresse le fichier source téléchargé et que le paquet est construit. Cela vous aidera à déboguer le processus de construction. Voir <tt style="white-space: nowrap;">man fink</tt> pour de plus amples informations.</p>
-<p>Vous pouvez aussi utiliser l'option <tt style="white-space: nowrap;">--keep-root-dir</tt> ou <tt style="white-space: nowrap;">-K</tt>, elle permet de conserver le répertoire de destination. C'est là que fink construit l'arborescence d'installation du paquet. La comparaison entre les répertoires de construction et d'installation peut aider à déboguer la phase d'installation.</p>
+<p>Observez attentivement les messages d'erreur or d'attention du processus de construction. Assurez-vous, en particulier, que tout s'installe dans le répertoire de destination (qui est <tt style="white-space: nowrap;">/sw/src/root-nomdupaquet-%v-%r/sw</tt>) à partir duquel <tt style="white-space: nowrap;">fink</tt> construit le paquet binaire. Rien ne doit être installé directement dans <tt style="white-space: nowrap;">/sw</tt>.</p>
+<p>Si vous utilisez l'option <tt style="white-space: nowrap;">--keep-build-dir</tt> ou <tt style="white-space: nowrap;">-k</tt> de <tt style="white-space: nowrap;">fink</tt>, le répertoire de construction sera conservé. C'est là que <tt style="white-space: nowrap;">fink</tt> décompresse le fichier source téléchargé et que le paquet est construit. Cela vous aidera à déboguer le processus de construction. Voir <tt style="white-space: nowrap;">man fink</tt> pour de plus amples informations.</p>
+<p>Vous pouvez aussi utiliser l'option <tt style="white-space: nowrap;">--keep-root-dir</tt> ou <tt style="white-space: nowrap;">-K</tt>, elle permet de conserver le répertoire de destination. C'est là que <tt style="white-space: nowrap;">fink</tt> construit l'arborescence d'installation du paquet. La comparaison entre les répertoires de construction et d'installation peut aider à déboguer la phase d'installation.</p>
 <p>Si la construction du paquet se passe bien, vérifiez le contenu du paquet binaire en exécutant :</p>
 <pre>
 finkdev% dpkg -c /sw/fink/dists/local/main/binary-darwin-powerpc/nomdupaquet.deb
@@ -116,7 +120,7 @@ Revision: 1
 Source: mirror:sourceforge:%n/%n-%v.tar.gz
 </pre>
 <p>Les champs nom (Package) et version sont faciles à comprendre, mais qu'en est-il des autres champs ? Le champ Revision correspond à la "version" du paquet dans Fink, tandis que le champ Version correspond à la version du source en amont. Comme c'est la première fois que nous tentons de construire un paquet maxwell-0.5.1 dans Fink, son numéro de révision est 1.</p>
-<p>Le champ Source donne l'adresse à partir de laquelle fink téléchargera l'archive tar source. Comme <a href="http://sourceforge.net">Sourceforge</a> comprend un système mondial de miroirs pour les paquets et que <tt style="white-space: nowrap;">fink</tt> le connaît, on utilise <tt style="white-space: nowrap;">mirror:sourceforge:</tt>. <tt style="white-space: nowrap;">%n</tt> est un raccourci pour le nom du paquet, maxwell, et <tt style="white-space: nowrap;">%v</tt> un raccourci pour la version du paquet, 0.5.1.</p>
+<p>Le champ Source donne l'adresse à partir de laquelle <tt style="white-space: nowrap;">fink</tt> téléchargera l'archive tar source. Comme <a href="http://sourceforge.net">Sourceforge</a> comprend un système mondial de miroirs pour les paquets et que <tt style="white-space: nowrap;">fink</tt> le connaît, on utilise <tt style="white-space: nowrap;">mirror:sourceforge:</tt>. <tt style="white-space: nowrap;">%n</tt> est un raccourci pour le nom du paquet, maxwell, et <tt style="white-space: nowrap;">%v</tt> un raccourci pour la version du paquet, 0.5.1.</p>
 <p>Nous pouvons maintenant sauvegarder ceci sous le nom <tt style="white-space: nowrap;">maxwell.info</tt> dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo/</tt>. Ceci fait, voyons ce que cela donne avec <tt style="white-space: nowrap;">fink validate</tt>.</p>
 <pre>
 finkdev% fink validate maxwell.info 
@@ -142,7 +146,7 @@ Error: No package description supplied. (maxwell.info)
 License: OSI-Approved
 Description: Mac OS X S.M.A.R.T. Tool
 </pre>
-<p>Mais que faire de l'erreur concernant les sommes de contrôle MD5 ? Pourquoi ne pas tout simplement demander à fink de récupérer le source ?</p>
+<p>Mais que faire de l'erreur concernant les sommes de contrôle MD5 ? Pourquoi ne pas tout simplement demander à <tt style="white-space: nowrap;">fink</tt> de récupérer le source ?</p>
 <pre>
 finkdev% fink fetch maxwell
 /usr/bin/sudo /sw/bin/fink  fetch maxwell
@@ -181,7 +185,7 @@ Source-MD5: ce5c354b2fed4e237524ad0bc59997a3
 <h3><a name="example.build">2.2 Construction</a></h3>
 <p>Désormais, nous pouvons construire le paquet, essayons :</p>
 <pre>
-finkdev% fink build maxwell
+finkdev% fink -m --build-as-nobody rebuild maxwell
 /usr/bin/sudo /sw/bin/fink  build maxwell
 Reading package info...
 Updating package index... done.
@@ -215,14 +219,14 @@ InstallScript: &lt;&lt;
 make install prefix=%i
 &lt;&lt;
 </pre>
-<p>Nous devons utiliser <tt style="white-space: nowrap;">prefix=%i</tt> car fink construit le fichier binaire à partir des fichiers se trouvant dans <tt style="white-space: nowrap;">%i</tt>. Ces fichiers seront ensuite installés dans <tt style="white-space: nowrap;">%p</tt> (qui correspond par défaut à <tt style="white-space: nowrap;">/sw</tt>) quand on exécutera <tt style="white-space: nowrap;">fink install maxwell</tt>. Pour de plus amples informations sur <tt style="white-space: nowrap;">%p</tt> et <tt style="white-space: nowrap;">%i</tt>, consultez le <a href="http://fink.sourceforge.net/doc/packaging/format.php#percent">Guide de construction des paquets</a>.</p>
-<p>Normalement, les lignes des champs Script sont passées au shell ligne après ligne. Mais la ligne  <tt style="white-space: nowrap;">#! /bin/sh -ev</tt> permet à fink d'exécuter l'ensemble comme un script séparé. Le paramètre <tt style="white-space: nowrap;">-e</tt> correspond à  "die on error" et <tt style="white-space: nowrap;">-v</tt> à "verbose".</p>
+<p>Nous devons utiliser <tt style="white-space: nowrap;">prefix=%i</tt> car <tt style="white-space: nowrap;">fink</tt> construit le fichier binaire à partir des fichiers se trouvant dans <tt style="white-space: nowrap;">%i</tt>. Ces fichiers seront ensuite installés dans <tt style="white-space: nowrap;">%p</tt> (qui correspond par défaut à <tt style="white-space: nowrap;">/sw</tt>) quand on exécutera <tt style="white-space: nowrap;">fink install maxwell</tt>. Pour de plus amples informations sur <tt style="white-space: nowrap;">%p</tt> et <tt style="white-space: nowrap;">%i</tt>, consultez le <a href="http://fink.sourceforge.net/doc/packaging/format.php#percent">Guide de construction des paquets</a>.</p>
+<p>Normalement, les lignes des champs Script sont passées au shell ligne après ligne. Mais la ligne  <tt style="white-space: nowrap;">#! /bin/sh -ev</tt> permet à <tt style="white-space: nowrap;">fink</tt> d'exécuter l'ensemble comme un script séparé. Le paramètre <tt style="white-space: nowrap;">-e</tt> correspond à  "die on error" et <tt style="white-space: nowrap;">-v</tt> à "verbose".</p>
 <p>Validons de nouveau le paquet et tentons de le construire :</p>
 <pre>
 finkdev% fink validate maxwell.info 
 Validating package file maxwell.info...
 Package looks good!
-finkdev% fink build maxwell
+finkdev% fink -m --build-as-nobody rebuild maxwell
 /usr/bin/sudo /sw/bin/fink  build maxwell
 Reading package info...
 Updating package index... done.
@@ -266,7 +270,7 @@ dpkg-deb: building package `maxwell' in \
 `/sw/fink/dists/local/main/binary-darwin-powerpc/maxwell_0.5.1-1_darwin-powerpc.deb'.
 </pre>
 <p>Fink semble avoir tout installé au bon endroit : <tt style="white-space: nowrap;">/sw/src/root-maxwell-0.5.1-1</tt> à partir de l'emplacement où le paquet binaire <tt style="white-space: nowrap;">maxwell_0.5.1-1_darwin-powerpc.deb</tt> a été construit.</p>
-<p>Notez aussi que fink inclut automatiquement certains drapeaux de compilation pour lui permettre d'accéder à d'autres paquets fink (par exemple <tt style="white-space: nowrap;">-I/sw/include</tt>).</p>
+<p>Notez aussi que <tt style="white-space: nowrap;">fink</tt> inclut automatiquement certains drapeaux de compilation pour lui permettre d'accéder à d'autres paquets <tt style="white-space: nowrap;">fink</tt> (par exemple <tt style="white-space: nowrap;">-I/sw/include</tt>).</p>
 <p>Regardons ce qu'il y a à l'intérieur du paquet binaire :</p>
 <pre>
 finkdev% dpkg -c \
@@ -324,9 +328,9 @@ make install prefix=%i mandir=%i/share/man datadir=%i/share/doc/%n
 </pre>
 <p>et reconstruire le paquet avec :</p>
 <pre>
-finkdev% fink rebuild maxwell
+finkdev% fink -m --build-as-nobody rebuild maxwell
 </pre>
-<p>(On utilise <tt style="white-space: nowrap;">fink rebuild</tt> car <tt style="white-space: nowrap;">fink build</tt> ne ferait rien du tout, puisque le paquet a déjà été construit.)</p>
+<p>(On utilise <tt style="white-space: nowrap;">fink ... rebuild</tt> car <tt style="white-space: nowrap;">fink build</tt> ne ferait rien du tout, puisque le paquet a déjà été construit.)</p>
 <p>Revérifiez le contenu du fichier .deb (avec <tt style="white-space: nowrap;">dpkg -c</tt>) pour voir où les fichiers sont installés maintenant. Puis validez de nouveau le fichier .deb avec <tt style="white-space: nowrap;">fink validate</tt>. Si tout se passe bien, vous pouvez installer le nouveau paquet avec :</p>
 <pre>
 finkdev% fink install maxwell
@@ -353,4 +357,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.6 2006/06/08 22:13:34 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.7 2006/10/02 17:04:37 michga Exp $</i></p></body></html>
