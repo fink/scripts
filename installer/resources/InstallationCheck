@@ -33,7 +33,8 @@ DO_CHECKS:
 	chomp $OSXVersion;
 
 	# make sure OS X version is the distro for which we're configured
-	if ($OSXVersion !~ /^\Q$target_OSX./) {
+      # note: if this regex doesn't work, a simpler version is /^Q$target_OSX/
+	if ($OSXVersion !~ /^\Q$target_OSX\E(\.|\Z)/) {
 		print "Fink Installer: This Installer is for Mac OS X $target_OSX, not $OSXVersion. Bailing out.\n";
 		# no printf in .strings, so gotta case on hard-coded values:(
 		if ($target_OSX eq '10.3') {
