@@ -168,7 +168,7 @@ my $opts_ok = GetOptions(
 	"dirty" => \$Dirty,
 	"rebuild-dependents" => \$RebuildDeps,
 	"packages=s" => sub {
-		%pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(split(/,/, $_[1]));
+		%pkglist = map { $_ => PKGSTATUS_REBUILD } split(/,/, $_[1]);
 		$BuildAll = 0;
 	},
 	"build-as-nobody:s" => \$BuildNobody,
@@ -226,7 +226,16 @@ prepSystem();
 FinkLib::purgeNonEssential() unless $Dirty;
 FinkLib::readPackages();
 removeBuildLocks();
-%pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(Fink::Package->list_packages()) if $BuildAll;
+
+if($BuildAll) {
+	%pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(Fink::Package->list_packages()) if $BuildAll;
+} else {
+	# filterSplitoffs isn't available until we've initialized Fink.
+	# We can't initialize Fink until after option processing is done.
+	# So, --packages doesn't filter splitoffs, and we do it here...
+	%pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(keys %pkglist);
+}
+
 foreach (filterSplitoffs(@skiplist)) {
 	$pkglist{$_} = PKGSTATUS_SKIP;
 	logPackageFail($_, "Package is on the skip list.");
@@ -275,7 +284,6 @@ restoreSystem();
 # Prepare the system
 sub prepSystem {
 	$FinkConfig = FinkLib::initFink($FinkDir);
-
 	return if $dryrun;
 
 	mkdir($rundir);
@@ -824,7 +832,7 @@ sub getDependsRecursive {
 # When we have a split-off in the list, replace it with its parent and suppress
 # any further instances of members of that family.  This preserves our dependency
 # ordering.
-sub filterSplitOffs {
+sub filterSplitoffs {
 	my(@pkglist) = @_;
 	my @ret;
 	my %got_families;
