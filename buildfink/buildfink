@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#Copyright (c) 2005-2006 Apple Computer, Inc.  All Rights Reserved.
 #
 #This program is free software; you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ buildfink -- Build every package in Fink
 
 =head1 USAGE
 
-	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [FINKDIR OUTDIR
+	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [--packages PKGLIST] [--rebuild-dependents] [--dirty] [FINKDIR OUTDIR]
 	buildfink [-r CHECKPOINT]
 
 C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
@@ -71,6 +71,15 @@ C<packagename:> in front of the limit value.  For instance,
 C<--max-build-time openoffice.org:24h> would specify a 24-hour limit for 
 openoffice.org.
 
+Normally, buildfink will attempt to build every package it knows about.  To
+build only a subset of packages, give C<--packages PKGLIST>, where C<PKGLIST>
+is a comma-separated list of packages.  Packages necessary to satisfy 
+dependencies of these will be installed or built as necessary.  If operating in
+this mode, you may also want the C<--dirty> option to avoid purging all
+non-essential packages before performing each build.  The
+C<--rebuild-dependents> option will add any packages which depend on anything
+in C<PKGLIST> .
+
 =head2 CHECKPOINTS
 
 Sometimes there will be system issues partway through a build.  For instance, a recalcitrant
@@ -93,7 +102,7 @@ use FindBin qw($Bin);
 use lib "$Bin";
 use FinkLib;
 
-our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody);
+our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll);
 our $VERSION = '$Revision$';
 
 our $max_build_time = 60*60*4;
@@ -139,6 +148,16 @@ sub limit_arg {
 	}
 }
 
+# Keys will be package names.  Values will be:
+my %pkglist;
+use constant PKGSTATUS_INSTALLED => 3;
+use constant PKGSTATUS_REBUILD => 2;
+use constant PKGSTATUS_INSTALL => 1;
+use constant PKGSTATUS_PROCESSING => 0;
+use constant PKGSTATUS_FAILED => -1;
+use constant PKGSTATUS_SKIP => -2;
+
+$BuildAll = 1;
 my $opts_ok = GetOptions(
 	"n" => \$dryrun,
 	"infofilter=s" => \$infofilter,
@@ -146,6 +165,12 @@ my $opts_ok = GetOptions(
 	"skip=s" => \@skiplist,
 	"r=s" => \$checkpoint,
 	"validate" => \$DoValidate,
+	"dirty" => \$Dirty,
+	"rebuild-dependents" => \$RebuildDeps,
+	"packages=s" => sub {
+		%pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(split(/,/, $_[1]));
+		$BuildAll = 0;
+	},
 	"build-as-nobody:s" => \$BuildNobody,
 	"max-build-time=s" => \&limit_arg,
 	"max-log-size=s" => \&limit_arg
@@ -191,44 +216,56 @@ if(!$opts_ok) {
 	die "See 'perldoc $0' for more information.\n";
 }
 
-
 if($checkpoint) {
 	restoreCheckpoint($checkpoint);
 	exit();
 }
 
-
 restoreSystem();
 prepSystem();
-FinkLib::purgeNonEssential();
+FinkLib::purgeNonEssential() unless $Dirty;
 FinkLib::readPackages();
 removeBuildLocks();
-my(@pkglist) = Fink::Package->list_packages();
+%pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(Fink::Package->list_packages()) if $BuildAll;
+foreach (filterSplitoffs(@skiplist)) {
+	$pkglist{$_} = PKGSTATUS_SKIP;
+	logPackageFail($_, "Package is on the skip list.");
+}
+
+# Don't try to install uninstalled virtual packages.
+# We can't use them to satisfy dependencies and we can't build them...
+my $vpinfo = Fink::VirtPackage->list();
+while(my($pkgname, $hash) = each(%$vpinfo)) {
+	if($hash->{status} !~ / installed$/) {
+		$pkglist{$pkgname} = PKGSTATUS_SKIP;
+		logPackageFail($_, "Package is an uninstalled virtual package.");
+	} else {
+		$pkglist{$pkgname} = PKGSTATUS_INSTALLED;
+	}
+}
+
+
+if(!$BuildAll and $RebuildDeps) {
+	foreach my $pkg (keys %pkglist) {
+		my @deps = getDependsRecursive($pkg);
+		foreach my $dep (@deps) {
+			$pkglist{$dep} = PKGSTATUS_REBUILD;
+		}
+	}
+}
 
 if(!$dryrun) {
 	# Then copy the .info files to our private repository and patch them if necessary.
-	patchPackages(@pkglist);
+	patchPackages(keys %pkglist);
 
 	# Only let Fink see our modified packages
-	injectPackages();
-}
-
-# Now order the list of packages in dependency order, so that all of X's
-# dependencies come before X.  Filter out all of the split-offs, so we only
-# build root packages, and then remove everything on the skip list and anything
-# which depends on anything on the skip list.
-my(%deps) = getAllDepends(\@pkglist);
-my(@orderedPkgs) = filterSplitOffs(orderByDepends(\@pkglist, \%deps));
-
-if($dryrun) {
-	print join("\n", @orderedPkgs), "\n";
-	exit;
+	injectPackages() if $BuildAll;
 }
 
 # Now do the run
-initCheckpoint(\@orderedPkgs, \%deps, {});
-FinkLib::installEssentials();
-buildAll(\@orderedPkgs, \@skiplist, \%deps, {});
+initCheckpoint(\%pkglist) unless $dryrun;
+FinkLib::installEssentials() unless $dryrun;
+buildAll(\%pkglist);
 doLog("Done building");
 
 restoreSystem();
@@ -486,22 +523,198 @@ sub doBuild {
 	}
 }
 
-# Build all packages, skipping any with failed deps
+sub setPackageStatus {
+	my($pkglist, $pkg, $status) = @_;
+	$pkglist->{$pkg} = $status;
+	updaetCheckpoint($pkg => $status);
+}
+
+sub setPackageFail {
+	my($pkglist, $pkg, $reason) = @_;
+	logPackageFail($pkg, $reason);
+	setPackageStatus($pkglist, $pkg, PKGSTATUS_FAILED);
+}
+
+# Try to build an individual package.
+sub recurseOnDepends {
+	my($pkglist, $pkg, $install, $finkfiles) = @_;
+	$pkglist->{$pkg} = PKGSTATUS_PROCESSING;
+	doLog("Trying to satisfy $pkg");
+
+	my $obj;
+	eval {
+		$obj = Fink::PkgVersion->match_package($pkg);
+	};
+	if($@ or !$obj) {
+		setPackageFail($pkglist, $pkg, "Couldn't get package object: $@");
+		return;
+	}
+
+	if($obj->is_type('dummy')) {
+		doLog("$pkg is a dummy.");
+		setPackageStatus($pkglist, $pkg, PKGSTATUS_INSTALLED);
+		return 1;
+	}
+
+	# Build deps, and maybe run deps
+	my @deps;
+	eval {
+		@deps = $obj->resolve_depends(2, "depends");
+		push @deps, $obj->resolve_depends(0, "depends") if $install;
+	};
+	if($@) {
+		setPackageFail($pkglist, $pkg, "Couldn't get depends: $@");
+		return;
+	}
+
+	# @deps is in conjunctive normal form.  That is, it is a list like:
+	#	{{A ^ B ^ C} v {D ^ E} v {F}}
+	# In other words, a list of alternatives, and each alternative is a
+	# series of packages which must all be satisfied.
+	my $satisfied = 0;
+	my @faildep;
+	CHECKSAT: foreach my $alternative (@deps) {
+		foreach my $altdep (@$alternative) {
+			my $depstat = $pkglist->{$altdep};
+			$depstat = PKGSTATUS_INSTALL unless defined($depstat);
+			if($depstat == PKGSTATUS_FAILED or $depstat == PKGSTATUS_PROCESSING) {
+				push @faildep, $altdep;
+				next CHECKSAT;
+			}
+		}
+
+		# This alternative is satisfiable
+		foreach my $altdep (@$alternative) {
+			$pkglist->{$altdep} = PKGSTATUS_INSTALL if !defined($pkglist->{$altdep});
+			next if $pkglist->{$altdep} == PKGSTATUS_INSTALLED;
+			recurseOnDepends($pkglist, filterSplitoffs($altdep), 1, $finkfiles);
+			if($pkglist->{$altdep} == PKGSTATUS_FAILED) {
+				push @faildep, $altdep;
+				next CHECKSAT;
+			}
+		}
+
+		$satisfied = 1;
+		last;
+	}
+
+	if(!$satisfied) {
+		logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", sort @faildep));
+		return;
+	}
+
+	if($DoValidate) {
+		open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
+		my $oldfh = select(VAL);
+		Fink::Validation::validate_info_file($obj->get_info_filename());
+		select($oldfh);
+		close(VAL);
+	}
+
+	doLog("Building package $pkg...");
+	my $srcdir = $Fink::Config::buildpath; # Suppress "used only once" warning
+	$srcdir = "$Fink::Config::buildpath/" . $obj->get_fullname();
+
+	my $buildcmd = "printf '\n\n' | fink --yes ";
+	$buildcmd .= "--build-as-nobody " if $BuildNobody;
+	if($pkglist->{$pkg} == PKGSTATUS_REBUILD) {
+		$buildcmd .= "rebuild ";
+	} else {
+		$buildcmd .= "install ";
+	}
+	$buildcmd .= "$pkg 2>&1";
+	my $ret = doBuild($buildcmd, $pkg);
+
+	if($ret != 0 and defined($BuildNobody) and $BuildNobody eq "try") {
+		$buildcmd =~ s/ --build-as-nobody//;
+		move("$rundir/logs/$pkg.log", "$rundir/logs/$pkg.log.nobody");
+		doLog("Build of $pkg failed, trying as root...");
+		$ret = doBuild($buildcmd, $pkg);
+		if($ret != 0) {
+			unlink("$rundir/logs/$pkg.log.nobody");
+		} else {
+			move("$rundir/logs/$pkg.log.nobody", "$rundir/nobody/$pkg.log");
+		}
+	}
+
+	if($ret != 0) {
+		doLog("Build of $pkg failed!");
+		my @failpkgs = $pkg;
+
+		# Also, any splitoffs of this package have failed.
+		my @relatives = getRelatives($obj);
+		foreach (@relatives) {
+			my $name = $_->get_name();
+			push @failpkgs, $pkg;
+
+			system("mv", $srcdir, "$rundir/src/$pkg") or doLog("Couldn't move $srcdir to $rundir/src/$pkg: $!");
+		}
+
+		$pkglist->{$_} = PKGSTATUS_FAILED foreach @failpkgs;
+		updateCheckpoint(map { $_ => PKGSTATUS_FAILED } @failpkgs);
+		return;
+	} else {
+		doLog("Build of $pkg succeeded!");
+		system("rm", "-rf", $srcdir);
+
+		my $deb = $obj->get_debname();
+		move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
+		unlink("$FinkDir/fink/debs/$deb");
+		symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+
+		my @okpkgs = $pkg;
+		foreach my $relative(getRelatives($obj)) {
+			push @okpkgs, $relative->get_name();
+
+			my $deb = $relative->get_debname();
+			move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
+			unlink("$FinkDir/fink/debs/$deb");
+			symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+		}
+
+		$pkglist->{$_} = PKGSTATUS_INSTALLED foreach @okpkgs;
+		updateCheckpoint(map { $_ => PKGSTATUS_INSTALLED } @okpkgs);
+	}
+
+	FinkLib::purgeNonEssential() unless $Dirty;
+
+	if($DoValidate) {
+		my @killqueue;
+
+		find({no_chdir => 1, wanted => sub {
+			if(/\.deb$/ or $_ =~ /fink\.build$/  or $File::Find::name eq "$FinkDir/var/lib/fink/finkinfodb") {
+				$File::Find::prune = 1;
+			} elsif(!$finkfiles->{$File::Find::name}) {
+				doValidateWarn($pkg, "Leftover file $File::Find::name");
+				push @killqueue, $File::Find::name;
+			}
+		}}, $FinkDir);
+
+		#system("rm", "-rf", @killqueue);
+		$finkfiles->{$_} = 1 foreach @killqueue;
+
+		open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
+		my $oldfh = select(VAL);
+
+		my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $obj->get_debname();
+		Fink::Validation::validate_dpkg_file($deb) if -f $deb;
+		foreach my $relative(getRelatives($obj)) {
+			my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $relative->get_debname();
+			Fink::Validation::validate_dpkg_file($deb) if -f $deb;
+		}
+
+		select($oldfh);
+		close(VAL);
+	}
+
+	return 1;
+}
+
+# Try to build packages, adding to pkglist as we encounter deps.
 # pkglist is a list of package names to build in order.
 # skiplist is a list of package names to never build.
 sub buildAll {
-	my($pkgs, $skiplist, $deps, $failures) = @_;
-	my %skiphash = map {$_ => 1} @$skiplist;
-
-	# First, we set all uninstalled virtual packages as 'failed'.
-	# We can't use them to satisfy dependencies and we can't build them...
-	my $vpinfo = Fink::VirtPackage->list();
-	while(my($pkgname, $hash) = each(%$vpinfo)) {
-		$failures->{$pkgname} = 1 if $hash->{status} !~ / installed$/;
-	}
-
-	# Also set packages on the skiplist to failed
-	$failures->{$_} = 1 foreach keys %skiphash;
+	my($pkglist) = @_;
 
 	my %finkfiles;
 	if($DoValidate) {
@@ -515,128 +728,28 @@ sub buildAll {
 	}
 
 	my @newfails;
-	PACKAGE: foreach my $pkg(@$pkgs) {
-		doLog("Thinking about building $pkg");
-
-		my $skipcause = "";
-		if($skiphash{$pkg}) {
-			$skipcause = "$pkg is on the skip list";
-		} else {
-			my $dep = findFailedDep($pkg, $deps, $failures);
-			$skipcause = "Dependency $dep failed to build" if $dep;
+	PACKAGE: while(1) {
+		my($pkg, $pkgval);
+		foreach my $p (keys %$pkglist) {
+			my $v = $pkglist->{$p};
+			next unless $v == PKGSTATUS_REBUILD or $v == PKGSTATUS_INSTALL;
+			$pkg = $p;
+			$pkgval = $v;
+			last;
 		}
 
-		if($skipcause) {
-			logPackageFail($pkg, $skipcause);
-			next;
-		}
-
-		my $obj;
-		eval {
-			$obj = Fink::PkgVersion->match_package($pkg);
-		};
-		if($@ or !$obj) {
-			doLog("Couldn't get object for $pkg: $@");
-			next;
-		}
-
-		next if $obj->is_type('dummy');
-
-		if($DoValidate) {
-			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
-			my $oldfh = select(VAL);
-			Fink::Validation::validate_info_file($obj->get_info_filename());
-			select($oldfh);
-			close(VAL);
-		}
-
-		doLog("Building package $pkg...");
-		my $srcdir = $Fink::Config::buildpath; # Suppress "used only once" warning
-		$srcdir = "$Fink::Config::buildpath/" . $obj->get_fullname();
-
-		my $buildcmd = "printf '\n\n' | fink --yes";
-		$buildcmd .= " --build-as-nobody" if $BuildNobody;
-		$buildcmd .= " rebuild $pkg 2>&1";
-		my $ret = doBuild($buildcmd, $pkg);
-
-		if($ret != 0 and defined($BuildNobody) and $BuildNobody eq "try") {
-			$buildcmd =~ s/ --build-as-nobody//;
-			move("$rundir/logs/$pkg.log", "$rundir/logs/$pkg.log.nobody");
-			doLog("Build of $pkg failed, trying as root...");
-			$ret = doBuild($buildcmd, $pkg);
-			if($ret != 0) {
-				unlink("$rundir/logs/$pkg.log.nobody");
+		if(!$pkg) {
+			my @unsats = sort grep { $pkglist->{$_} == PKGSTATUS_PROCESSING } keys %$pkglist;
+			if(@unsats) {
+				doLog("Couldn't figure out how to build: " . join(", ", @unsats));
+				return;
 			} else {
-				move("$rundir/logs/$pkg.log.nobody", "$rundir/nobody/$pkg.log");
-			}
-		}
-		
-		if($ret != 0) {
-			doLog("Build of $pkg failed!");
-			$failures->{$pkg} = 1;
-			push @newfails, $pkg;
-
-			# Also, any splitoffs of this package have failed.
-			my @relatives = getRelatives($obj);
-			foreach (@relatives) {
-				my $name = $_->get_name();
-				$failures->{$name} = 1;
-				push @newfails, $name;
-			}
-
-			system("mv", $srcdir, "$rundir/src/$pkg") or doLog("Couldn't move $srcdir to $rundir/src/$pkg: $!");
-		} else {
-			doLog("Build of $pkg succeeded!");
-			system("rm", "-rf", $srcdir);
-
-
-			my $deb = $obj->get_debname();
-			move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
-			unlink("$FinkDir/fink/debs/$deb");
-			symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
-
-			foreach my $relative(getRelatives($obj)) {
-				my $deb = $relative->get_debname();
-				move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
-				unlink("$FinkDir/fink/debs/$deb");
-				symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+				doLog("Done!");
+				return 1;
 			}
 		}
 
-		FinkLib::purgeNonEssential();
-
-		if($DoValidate) {
-			my @killqueue;
-
-			find({no_chdir => 1, wanted => sub {
-				if(/\.deb$/ or $_ =~ /fink\.build$/  or $File::Find::name eq "$FinkDir/var/lib/fink/finkinfodb") {
-					$File::Find::prune = 1;
-				} elsif(!$finkfiles{$File::Find::name}) {
-					doValidateWarn($pkg, "Leftover file $File::Find::name");
-					push @killqueue, $File::Find::name;
-				}
-			}}, $FinkDir);
-
-			#system("rm", "-rf", @killqueue);
-			$finkfiles{$_} = 1 foreach @killqueue;
-
-
-			open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
-			my $oldfh = select(VAL);
-
-			my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $obj->get_debname();
-			Fink::Validation::validate_dpkg_file($deb) if -f $deb;
-			foreach my $relative(getRelatives($obj)) {
-				my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $relative->get_debname();
-				Fink::Validation::validate_dpkg_file($deb) if -f $deb;
-			}
-
-			select($oldfh);
-			close(VAL);
-		}
-	} continue {
-		updateCheckpoint(@newfails);
-		@newfails = ();
+		recurseOnDepends($pkglist, $pkg, 0, \%finkfiles);
 	}
 }
 
@@ -663,181 +776,10 @@ sub removeBuildLocks {
 	}
 }
 
-# Get dependency information
-sub getAllDepends {
-	my($pkglist) = @_;
-
-	doLog("Getting dependency graph.");
-
-	my %deps;
-	foreach my $pkgname (@$pkglist) {
-		$deps{$pkgname} = getDepends($pkgname);
-	}
-
-	return %deps;
-}
-
-# Order a list of packages in dependency order.
-# pkglist is a listref of package names to order.
-sub orderByDepends {
-	my($pkglist, $deps) = @_;
-
-	doLog("Getting dependency graph.");
-
-	my(@ret, %revdeps);
-
-	foreach my $pkgname (@$pkglist) {
-		$deps{$pkgname} = getDepends($pkgname);
-		$deps->{$pkgname}->{ordered} = 0;
-		my $pkg = $deps->{$pkgname};
-
-		# Build hash showing which packages are depended on by a given package
-		foreach my $dep (@{$pkg->{build}}, @{$pkg->{run}}) {
-			foreach my $deppkg (@$dep) {
-				$revdeps{$deppkg} ||= [];
-				push @{$revdeps{$deppkg}}, $pkgname;
-			}
-		}
-
-		# Keep track of which dependencies we've satisfied
-		$pkg->{unsatisfied} = {
-			build => {map {$_ => 1} map {@$_} @{$pkg->{build}} },
-			run => {map {$_ => 1} map {@$_} @{$pkg->{run}} }
-		};
-	}
-
-	doLog("Ordering packages.");
-
-	# Do a topological sort of the dependency graph.
-	my @queue;
-
-	# Force dtqa-finkenv to build first.
-	# This package dumps the environment to standard out during the compile
-	# phase and does nothing else.  We can use it to verify the build environment.
-	# (e.g. see what environment variables Fink is setting for package builds.)
-	if($deps->{'dtqa-finkenv'}) {
-		push @ret, 'dtqa-finkenv';
-		$deps->{'dtqa-finkenv'}->{ordered} = 2;
-	}
-
-	# First, bootstrap it with packages that have no dependencies.
-	# Those'll be the virtual packages.
-	my(%virtuals) = %{Fink::VirtPackage->list()};
-	push @queue, keys(%virtuals);
-
-	# Also, add in any non-virtual packages with no deps
-	foreach my $pkgname(keys %deps) {
-		next if $pkgname eq "dtqa-finkenv";
-		my $dep = $deps->{$pkgname};
-		next if keys %{$dep->{unsatisfied}->{build}} or keys %{$dep->{unsatisfied}->{run}};
-
-		push @queue, $pkgname;
-
-		# Also add split-offs of the package.
-		my $obj;
-		eval {
-			$obj = Fink::PkgVersion->match_package($pkgname);
-		};
-		if($@) {
-			doLog("Couldn't order $pkgname: $@");
-			next;
-		}
-
-		my @relatives = getRelatives($obj);
-		foreach (@relatives) {
-			my $name = $_->get_name();
-			push @queue, $name;
-		}
-	}
-
-	doLog("Processing queue");
-
-	while(@queue) {
-		my $pkgname = shift @queue;
-
-		#ordered==2 indicates that the package is installable as well as buildable
-		next if $deps->{$pkgname}->{ordered} == 2;
-
-		if(!$deps->{$pkgname}->{ordered} and not $virtuals{$pkgname}) {
-			push @ret, $pkgname;
-			$deps->{$pkgname}->{ordered} = 1;
-		}
-
-		# We will place packages on the queue if they are buildable.
-		# However, the package can only be used to satisfy dependencies
-		# if it is *installable*.
-		next if !$virtuals{$pkgname} and keys(%{$deps->{$pkgname}->{unsatisfied}->{run}});
-
-		$deps->{$pkgname}->{ordered} = 2;
-
-		my @revdeps = @{$revdeps{$pkgname} || []};
-		my @provides = ($pkgname);
-
-		my $pkgobj = Fink::Package->package_by_name($pkgname);
-
-		# is_virtual == 1 are the Provides: aliases of regular packages.
-		# This is not to be confused with is_virtual == 2, which are the
-		# regular virtual packages.
-		next if $pkgobj->is_virtual() == 1;
-
-		# We've also satisfied things which depend on somethign we provide
-		foreach my $provider ($pkgobj->get_all_providers()) {
-			my $pname = $provider->get_name();
-			push @provides, $pname;
-			push @revdeps, @{$revdeps{$pname} || []};
-		}
-
-		# For every package that is depended on by this one...
-		foreach my $revdep (@revdeps) {
-			my $dep = $deps->{$revdep};
-
-			# Remove this one from the list of unsatisfied deps...
-			foreach my $pname(@provides) {
-				delete $dep->{unsatisfied}->{run}->{$pname};
-				delete $dep->{unsatisfied}->{build}->{$pname};
-			}
-
-			# If we've satisfied all builddeps, we can build it.
-			next if keys(%{$dep->{unsatisfied}->{build}});
-			
-			push @queue, $revdep;
-
-			# And add any splitoffs
-			my $obj;
-			eval {
-				$obj = Fink::PkgVersion->match_package($revdep);
-			};
-			if($@) {
-				doLog("Couldn't order $obj: $@");
-				next;
-			}
-
-			my @relatives = getRelatives($obj);
-			foreach (@relatives) {
-				my $name = $_->get_name();
-				push @queue, $name;
-			}
-		}
-	}
-
-	foreach my $pkgname(keys %$deps) {
-		my $dep = $deps->{$pkgname};
-		next if $dep->{ordered};
-		my(%unsats) = (%{$dep->{unsatisfied}->{build}}, %{$dep->{unsatisfied}->{run}});
-		my $failmsg = "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", sort keys %unsats);
-		if($dryrun) {
-			doLog($failmsg);
-		} else {
-			logPackageFail($pkgname, $failmsg);
-		}
-	}
-
-	return @ret;
-}
-
-# Get list of dependencies for a package
-sub getDepends {
-	my($pkgname) = @_;
+# Get a flat list of buidl and run dependencies for a package and its dependencies
+sub getDependsRecursive {
+	my($pkgname, $seen) = @_;
+	$seen ||= {$pkgname => 1};
 
 	# create a variable to hold the main package's object
 	my $pkgobj;
@@ -850,11 +792,10 @@ sub getDepends {
 	}
 
 	# now get a list of references to packages
-	my(@rundeps, @builddeps);
-	# populate the @deplist with references to arrays of packages
+	my(@deplist);
 	eval {
-		@rundeps = $pkgobj->resolve_depends(0, "depends");
-		@builddeps = $pkgobj->resolve_depends(2, "depends");
+		@deplist = $pkgobj->resolve_depends(0, "depends");
+		push @deplist, $pkgobj->resolve_depends(2, "depends");
 	};
 	if($@) {
 		doLog("Couldn't get dependencies for $pkgname: $@");
@@ -867,89 +808,16 @@ sub getDepends {
 	#
 	# [[foo-dev], [xorg, xfree86, system-xfree86]]
 	#
-
-	my(%ret) = (build => [], run => []);
-	foreach my $deps ({in => \@rundeps, out => $ret{run}}, {in => \@builddeps, out => $ret{build}}) {
-		foreach my $dep (@{$deps->{in}}) {
-
-			# If you have two versions of package X, both of them
-			# will appear in the dependency list; we don't want those
-			# duplicates, so keep track of what we've seen.
-			my %alt_seen_pkgs;
-
-			my @alternatives;
-
-			foreach my $dp (@$dep) {
-				# each $dp is a package object
-
-				# get the name, so we can keep recursing
-				my $next_dep = $dp->get_name();
-				next if $alt_seen_pkgs{$next_dep}++;
-			
-				# don't bother recursing if it already has been seen or if it's the same pkg
-				if(!$next_dep or $next_dep eq $pkgname) {
-					next;
-				} else {
-					push @alternatives, $next_dep;
-				}
-			}
-
-			push @{$deps->{out}}, \@alternatives;
+	my @ret;
+	foreach my $alternative (@deplist) {
+		foreach my $dep (@$alternative) {
+			my $depname = $dep->get_name();
+			next unless $seen->{$depname};
+			push @ret, $depname;
+			push @ret, getDependsRecursive($depname, $seen);
 		}
 	}
-
-	# and we're done!
-	return \%ret;
-}
-
-# Find the first unsatisfiable dependency for a package.
-# This may be a string containing multiple alternatives, ala "foo | bar | baz".
-# If all dependencies can be satisfied, returns the empty string.
-#
-# We normally only check the build dependencies, unless the "rundeps" parameter is true.
-# We set this parameter when recursing.  That's because we only need the builddeps
-# satisfied in order to build a package, but those builddeps will need to be installed,
-# so they need their runtime depends.
-#
-# pkgstack is used to avoid circular loops; its a hash of all the packages in the
-# recursion chain for this lookup.  We'll ignore attempts to check something already
-# in the chain.  depcache is used to avoid having to do repeated computations on
-# the same package.
-sub findFailedDep {
-	my($pkg, $deps, $failures, $rundeps, $pkgstack, $depcache) = @_;
-	$rundeps ||= 0;
-
-	$pkgstack ||= {};
-	$depcache ||= {};
-
-	return $depcache->{$pkg} if exists($depcache->{$pkg});
-
-	my @altsets = @{$deps->{$pkg}->{build} || []};
-	push @altsets, @{$deps->{$pkg}->{run} || []} if $rundeps;
-
-	foreach my $altset(@altsets) {
-		my $satisfied = 0;
-
-		foreach my $alt(@$altset) {
-			next if
-			  $failures->{$alt} or
-			  $pkgstack->{$alt} or
-			  findFailedDep($alt, $deps, $failures, 1, {%$pkgstack, $alt => 1}, $depcache);
-
-			# We found a way to satisfy this set of alternatives.
-			$satisfied = 1;
-			last;
-		}
-
-		if(!$satisfied) {
-			my $ret = join(" | ", @$altset);
-			$depcache->{$pkg} = $ret;
-			return $ret;
-		}
-	}
-
-	$depcache->{$pkg} = "";
-	return "";
+	return @ret;
 }
 
 # Take a list of package names and filter out the ones which are split-offs.
@@ -993,7 +861,7 @@ sub filterSplitOffs {
 
 sub restoreCheckpoint {
 	my($checkpoint) = shift;
-	my($orderedPkgs, $skiplist, $deps, $failures);
+	my($pkglist, $skiplist);
 
 	# We use eval "STRING" so that the variables in the checkpoint are
 	# bound to this sub's lexical scope.
@@ -1005,25 +873,25 @@ sub restoreCheckpoint {
 	die "$@\n" if $@;
 
 	prepSystem();
-	injectPackages();
+	injectPackages() unless $BuildAll;
 	removeBuildLocks();
 
 	doLog("Restored from checkpoint");
 	@skiplist = @$skiplist;
 	doLog("Building packages");
-	buildAll($orderedPkgs, \@skiplist, $deps, $failures);
+	buildAll(\%$pkglist);
 	doLog("Done building");
 	restoreSystem();
 }
 
 sub initCheckpoint {
-	my($orderedPkgs, $deps, $failures) = @_;
+	my($pkglist) = @_;
 
 	open(CHECKPOINT, ">", "$rundir/checkpoint");
 
 	print CHECKPOINT Data::Dumper->Dump(
-		[$FinkDir, $rundir, $BuildNobody, $DoValidate, \@skiplist, $orderedPkgs, $deps, $failures],
-		[qw(FinkDir rundir BuildNobody DoValidate skiplist orderedPkgs deps failures)]
+		[$FinkDir, $rundir, $BuildNobody, $BuildAll, $DoValidate, $pkglist],
+		[qw(FinkDir rundir BuildNobody BuildAll DoValidate pkglist)]
 	);
 
 	close CHECKPOINT;
@@ -1031,11 +899,10 @@ sub initCheckpoint {
 
 # Updates the checkpoint after a package build.
 sub updateCheckpoint {
-	my(@failed) = @_;
+	my(%changes) = @_;
 
 	open(CHECKPOINT, ">>", "$rundir/checkpoint");
-	print CHECKPOINT "shift \@\$orderedPkgs;";
-	print CHECKPOINT " \$failures->{'$_'} = 1;" foreach @failed;
+	print CHECKPOINT "\$pkglist->{$_} = $changes{$_}; " foreach keys %changes;
 	print CHECKPOINT "\n";
 	close CHECKPOINT;
 }
