@@ -247,7 +247,7 @@ my $vpinfo = Fink::VirtPackage->list();
 while(my($pkgname, $hash) = each(%$vpinfo)) {
 	if($hash->{status} !~ / installed$/) {
 		$pkglist{$pkgname} = PKGSTATUS_SKIP;
-		logPackageFail($_, "Package is an uninstalled virtual package.");
+		logPackageFail($pkgname, "Package is an uninstalled virtual package.");
 	} else {
 		$pkglist{$pkgname} = PKGSTATUS_INSTALLED;
 	}
@@ -534,7 +534,7 @@ sub doBuild {
 sub setPackageStatus {
 	my($pkglist, $pkg, $status) = @_;
 	$pkglist->{$pkg} = $status;
-	updaetCheckpoint($pkg => $status);
+	updateCheckpoint($pkg => $status);
 }
 
 sub setPackageFail {
@@ -583,21 +583,23 @@ sub recurseOnDepends {
 	my @faildep;
 	CHECKSAT: foreach my $alternative (@deps) {
 		foreach my $altdep (@$alternative) {
-			my $depstat = $pkglist->{$altdep};
+			my $depname = $altdep->get_name();
+			my $depstat = $pkglist->{$depname};
 			$depstat = PKGSTATUS_INSTALL unless defined($depstat);
 			if($depstat == PKGSTATUS_FAILED or $depstat == PKGSTATUS_PROCESSING) {
-				push @faildep, $altdep;
+				push @faildep, $depname;
 				next CHECKSAT;
 			}
 		}
 
 		# This alternative is satisfiable
 		foreach my $altdep (@$alternative) {
-			$pkglist->{$altdep} = PKGSTATUS_INSTALL if !defined($pkglist->{$altdep});
-			next if $pkglist->{$altdep} == PKGSTATUS_INSTALLED;
-			recurseOnDepends($pkglist, filterSplitoffs($altdep), 1, $finkfiles);
-			if($pkglist->{$altdep} == PKGSTATUS_FAILED) {
-				push @faildep, $altdep;
+			my $depname = $altdep->get_name();
+			$pkglist->{$depname} = PKGSTATUS_INSTALL if !defined($pkglist->{$depname});
+			next if $pkglist->{$depname} == PKGSTATUS_INSTALLED;
+			recurseOnDepends($pkglist, filterSplitoffs($depname), 1, $finkfiles);
+			if($pkglist->{$depname} == PKGSTATUS_FAILED) {
+				push @faildep, $depname;
 				next CHECKSAT;
 			}
 		}
@@ -752,7 +754,6 @@ sub buildAll {
 				doLog("Couldn't figure out how to build: " . join(", ", @unsats));
 				return;
 			} else {
-				doLog("Done!");
 				return 1;
 			}
 		}
