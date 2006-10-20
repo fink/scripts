@@ -96,7 +96,7 @@ use File::Basename;
 use File::Copy;
 use File::Find;
 use Data::Dumper;
-use POSIX qw(dup2 setsid sys_wait_h);
+use POSIX qw(sys_wait_h dup2 setsid);
 use Getopt::Long;
 use FindBin qw($Bin);
 use lib "$Bin";
@@ -255,8 +255,38 @@ while(my($pkgname, $hash) = each(%$vpinfo)) {
 
 
 if(!$BuildAll and $RebuildDeps) {
-	foreach my $pkg (keys %pkglist) {
-		my @deps = getDependsRecursive($pkg);
+	# Build up a map showing what each package is depended on by
+	my %dependents;
+	foreach my $pkg (filterSplitoffs(Fink::Package->list_packages())) {
+		my $obj;
+		eval {
+			$obj = Fink::PkgVersion->match_package($pkg);
+		};
+		if($@) {
+			doLog("Couldn't get package object for $pkg: $@");
+			next;
+		}
+
+		next if !$obj || $obj->is_type('dummy');
+		my @deps;
+		eval {
+			@deps = $obj->resolve_depends(1, "depends");
+		};
+		if($@) {
+			doLog("Couldn't get dependencies for $pkg: $@");
+			next;
+		}
+		foreach my $altlist (@deps) {
+			foreach my $alt (map {$_->get_name()} @$altlist) {
+				$dependents{$alt} ||= {};
+				$dependents{$alt}->{$pkg} = 1;
+			}
+		}
+	}
+
+	foreach my $pkg (grep { $pkglist{$_} == PKGSTATUS_REBUILD } keys %pkglist) {
+		my @deps = filterSplitoffs(getDependentsRecursive($pkg, \%dependents));
+		doLog("Recursive inverse deps: " . join(", ", @deps));
 		foreach my $dep (@deps) {
 			$pkglist{$dep} = PKGSTATUS_REBUILD;
 		}
@@ -481,6 +511,7 @@ sub doBuild {
 		doLog("Couldn't open $rundir/logs/$pkg.log: $!");
 		die "Couldn't open $rundir/logs/$pkg.log: $!\n";
 	};
+	print BUILDLOG "$buildcmd\n";
 
 	my($rin, $win, $ein) = ('', '', '');
 	vec($rin, fileno(BUILD), 1) = 1;
@@ -546,6 +577,7 @@ sub setPackageFail {
 # Try to build an individual package.
 sub recurseOnDepends {
 	my($pkglist, $pkg, $install, $finkfiles) = @_;
+	my $orig_status = $pkglist->{$pkg};
 	$pkglist->{$pkg} = PKGSTATUS_PROCESSING;
 	doLog("Trying to satisfy $pkg");
 
@@ -581,6 +613,7 @@ sub recurseOnDepends {
 	# series of packages which must all be satisfied.
 	my $satisfied = 0;
 	my @faildep;
+	my @satisfiable_alts;
 	CHECKSAT: foreach my $alternative (@deps) {
 		foreach my $altdep (@$alternative) {
 			my $depname = $altdep->get_name();
@@ -592,6 +625,22 @@ sub recurseOnDepends {
 			}
 		}
 
+		push @satisfiable_alts, $alternative;
+	}
+
+	foreach my $alternative (sort {
+		# Count the number of uninstalled packages in this alternative.
+		# If we have an alternative that doesn't require any extra
+		# building, pick that one.
+
+		my @pkgs_a = map {$_->get_name()} @$a;
+		my $unsats_a = grep {!defined($pkglist->{$_}) or $pkglist->{$_} != PKGSTATUS_INSTALLED} @pkgs_a;
+
+		my @pkgs_b = map {$_->get_name()} @$b;
+		my $unsats_b = grep {!defined($pkglist->{$_}) or $pkglist->{$_} != PKGSTATUS_INSTALLED} @pkgs_b;
+
+		$unsats_a <=> $unsats_b;
+	} @satisfiable_alts) {
 		# This alternative is satisfiable
 		foreach my $altdep (@$alternative) {
 			my $depname = $altdep->get_name();
@@ -625,9 +674,9 @@ sub recurseOnDepends {
 	my $srcdir = $Fink::Config::buildpath; # Suppress "used only once" warning
 	$srcdir = "$Fink::Config::buildpath/" . $obj->get_fullname();
 
-	my $buildcmd = "printf '\n\n' | fink --yes ";
+	my $buildcmd = "printf '\n\n' | fink --no-use-binary-dist --yes ";
 	$buildcmd .= "--build-as-nobody " if $BuildNobody;
-	if($pkglist->{$pkg} == PKGSTATUS_REBUILD) {
+	if($orig_status == PKGSTATUS_REBUILD) {
 		$buildcmd .= "rebuild ";
 	} else {
 		$buildcmd .= "install ";
@@ -681,9 +730,13 @@ sub recurseOnDepends {
 			push @okpkgs, $relative->get_name();
 
 			my $deb = $relative->get_debname();
-			move(readlink("$FinkDir/fink/debs/$deb"), "$rundir/pkginfo/binary-darwin-powerpc/$deb");
-			unlink("$FinkDir/fink/debs/$deb");
-			symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+			my $src = readlink("$FinkDir/fink/debs/$deb");
+			my $dst = "$rundir/pkginfo/binary-darwin-powerpc/$deb";
+			if($src ne $dst) {
+				move($src, $dst);
+				unlink("$FinkDir/fink/debs/$deb");
+				symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+			}
 		}
 
 		$pkglist->{$_} = PKGSTATUS_INSTALLED foreach @okpkgs;
@@ -789,47 +842,19 @@ sub removeBuildLocks {
 	}
 }
 
-# Get a flat list of buidl and run dependencies for a package and its dependencies
-sub getDependsRecursive {
-	my($pkgname, $seen) = @_;
+# Get a flat list of things which depend on this package, and things which depend on those, &c.
+sub getDependentsRecursive {
+	my($pkgname, $depmap, $seen) = @_;
 	$seen ||= {$pkgname => 1};
 
-	# create a variable to hold the main package's object
-	my $pkgobj;
-	eval {
-		$pkgobj = Fink::PkgVersion->match_package($pkgname);
-	};
-	if($@) {
-		doLog("Couldn't get object for $pkgname: $@");
-		return;
-	}
-
-	# now get a list of references to packages
-	my(@deplist);
-	eval {
-		@deplist = $pkgobj->resolve_depends(0, "depends");
-		push @deplist, $pkgobj->resolve_depends(2, "depends");
-	};
-	if($@) {
-		doLog("Couldn't get dependencies for $pkgname: $@");
-		return;
-	}
-
-
-	# Each item in @deplist is a list of alternative ways to satisfy the dependency.
-	# So, it might looks something like:
-	#
-	# [[foo-dev], [xorg, xfree86, system-xfree86]]
-	#
 	my @ret;
-	foreach my $alternative (@deplist) {
-		foreach my $dep (@$alternative) {
-			my $depname = $dep->get_name();
-			next unless $seen->{$depname};
-			push @ret, $depname;
-			push @ret, getDependsRecursive($depname, $seen);
-		}
+	foreach my $dep (keys %{$depmap->{$pkgname}}) {
+		next if $seen->{$dep};
+		$seen->{$dep} = 1;
+		push @ret, $dep;
+		push @ret, getDependentsRecursive($dep, $depmap, $seen);
 	}
+
 	return @ret;
 }
 
