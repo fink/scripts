@@ -73,12 +73,22 @@ openoffice.org.
 
 Normally, buildfink will attempt to build every package it knows about.  To
 build only a subset of packages, give C<--packages PKGLIST>, where C<PKGLIST>
-is a comma-separated list of packages.  Packages necessary to satisfy 
-dependencies of these will be installed or built as necessary.  If operating in
-this mode, you may also want the C<--dirty> option to avoid purging all
+is a comma-separated list of packages or C<--package-file PKGFILE>, where
+C<PKGFILE> is a list containing one package name per line (blank lines and
+comments starting with # are also allowed.)  To specify packages that you don't
+want to rebuild unless they aren't up to date, use the C<--packages-no-rebuild>
+(or C<--package-file-no-rebuild>) options.  Dependencies of things you specify
+via C<--packages> are automatically added with that behaviour.
+
+If only building a fixed list of packages,
+you may also want the C<--dirty> option to avoid purging all
 non-essential packages before performing each build.  The
 C<--rebuild-deps> option will add any packages which depend on anything
-in C<PKGLIST> .
+in C<PKGLIST> .  C<--no-copy-info> makes symlinks to the .info files from the
+Fink trees into the output directory (instead of copying the files over);
+the copy behaviour is useful if you want to maintain an archive of the package
+versions in your build, but if you don't need that you can save the space
+and time.
 
 =head2 CHECKPOINTS
 
@@ -102,7 +112,7 @@ use FindBin qw($Bin);
 use lib "$Bin";
 use FinkLib;
 
-our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll);
+our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo);
 our $VERSION = '$Revision$';
 
 our $max_build_time = 60*60*4;
@@ -158,6 +168,29 @@ use constant PKGSTATUS_FAILED => -1;
 use constant PKGSTATUS_SKIP => -2;
 
 $BuildAll = 1;
+
+sub packageList {
+	my($pkglist, $arg, $val) = @_;
+	my $status = PKGSTATUS_REBUILD;
+
+	$status = PKGSTATUS_INSTALL if $arg =~ s/-no-rebuild//;
+
+	if($arg eq "packages") {
+		$pkglist->{$_} = $status foreach split(/,/, $val);
+		$BuildAll = 0;
+	} else {
+		open(INPUT, $val) or die "Couldn't open packages file $val: $!\n";
+		while(<INPUT>) {
+			chomp;
+			s/#.*//;
+			s/^\s+ //; s/\s+ $//;
+			next if /^$/;
+			$pkglist->{$_} = $status;
+		}
+		close INPUT;
+	}
+}
+
 my $opts_ok = GetOptions(
 	"n" => \$dryrun,
 	"infofilter=s" => \$infofilter,
@@ -167,10 +200,11 @@ my $opts_ok = GetOptions(
 	"validate" => \$DoValidate,
 	"dirty" => \$Dirty,
 	"rebuild-deps" => \$RebuildDeps,
-	"packages=s" => sub {
-		%pkglist = map { $_ => PKGSTATUS_REBUILD } split(/,/, $_[1]);
-		$BuildAll = 0;
-	},
+	"packages=s" => sub {packageList(\%pkglist, @_)},
+	"package-file=s" => sub {packageList(\%pkglist, @_)},
+	"packages-no-rebuild=s" => sub {packageList(\%pkglist, @_)},
+	"package-file-no-rebuild=s" => sub {packageList(\%pkglist, @_)},
+	"no-copy-info" => \$NoCopyInfo,
 	"build-as-nobody:s" => \$BuildNobody,
 	"max-build-time=s" => \&limit_arg,
 	"max-log-size=s" => \&limit_arg
@@ -432,7 +466,8 @@ sub patchPackages {
 			if($file =~ /\.(info|patch)$/) {
 				patchFile("$dir/$file", "$rundir/pkginfo/finkinfo/$newfile");
 			} else {
-				copy("$dir/$file", "$rundir/pkginfo/finkinfo/$newfile") or die "Couldn't copy $dir/$file: $!\n";
+				my $cpfn = $NoCopyInfo ? \&symlink : \&copy;
+				$cpfn->("$dir/$file", "$rundir/pkginfo/finkinfo/$newfile") or die "Couldn't copy/link $dir/$file: $!\n";
 			}
 		}
 		closedir(INFODIR);
@@ -443,7 +478,8 @@ sub patchPackages {
 		my @extrapatches = grep {$_ ne "." and $_ ne ".."} readdir(PATCHDIR);
 		closedir(PATCHDIR);
 		foreach my $patch(@extrapatches) {
-			copy("$patchdir/$patch", "$rundir/pkginfo/finkinfo/$patch");
+			my $cpfn = $NoCopyInfo ? \&symlink : \&copy;
+			$cpfn->("$patchdir/$patch", "$rundir/pkginfo/finkinfo/$patch") or die "Couldn't copy/link $patchdir/$patch: $!\n";
 		}
 	}
 }
