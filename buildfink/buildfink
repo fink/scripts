@@ -174,10 +174,10 @@ sub packageList {
 	my $status = PKGSTATUS_REBUILD;
 
 	$status = PKGSTATUS_INSTALL if $arg =~ s/-no-rebuild//;
+	$BuildAll = 0;
 
 	if($arg eq "packages") {
 		$pkglist->{$_} = $status foreach split(/,/, $val);
-		$BuildAll = 0;
 	} else {
 		open(INPUT, $val) or die "Couldn't open packages file $val: $!\n";
 		while(<INPUT>) {
