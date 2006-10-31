@@ -930,7 +930,7 @@ sub restoreCheckpoint {
 	removeBuildLocks();
 
 	doLog("Restored from checkpoint");
-	@skiplist = @$skiplist;
+	@skiplist = $skiplist ? @$skiplist : ();
 	doLog("Building packages");
 	buildAll(\%$pkglist);
 	doLog("Done building");
@@ -955,7 +955,7 @@ sub updateCheckpoint {
 	my(%changes) = @_;
 
 	open(CHECKPOINT, ">>", "$rundir/checkpoint");
-	print CHECKPOINT "\$pkglist->{'$_'} = $changes{$_}; " foreach keys %changes;
+	print CHECKPOINT "\$pkglist->{$_} = $changes{$_}; " foreach keys %changes;
 	print CHECKPOINT "\n";
 	close CHECKPOINT;
 }
