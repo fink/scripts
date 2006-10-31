@@ -669,7 +669,7 @@ sub recurseOnDepends {
 			}
 
 			$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
-			next if $pkglist->{$alt} == PKGSTATUS_INSTALLED;
+			next DEP if $pkglist->{$alt} == PKGSTATUS_INSTALLED;
 			recurseOnDepends($pkglist, $alt, 1, $finkfiles);
 			if($pkglist->{$alt} == PKGSTATUS_FAILED) {
 				next;
