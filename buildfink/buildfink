@@ -670,15 +670,11 @@ sub recurseOnDepends {
 
 			$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
 			next DEP if $pkglist->{$alt} == PKGSTATUS_INSTALLED;
-			recurseOnDepends($pkglist, $alt, 1, $finkfiles);
-			if($pkglist->{$alt} == PKGSTATUS_FAILED) {
-				next;
-			}
-
-			next DEP;
-			logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
-			return;
+			recurseOnDepends($pkglist, $alt, 1, $finkfiles) and next DEP;
 		}
+
+		logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
+		return;
 	}
 
 	if($DoValidate) {
