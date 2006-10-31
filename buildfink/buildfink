@@ -310,8 +310,8 @@ if(!$BuildAll and $RebuildDeps) {
 			doLog("Couldn't get dependencies for $pkg: $@");
 			next;
 		}
-		foreach my $altlist (@deps) {
-			foreach my $alt (map {$_->get_name()} @$altlist) {
+		foreach my $dep (@deps) {
+			foreach my $alt (map {$_->get_name()} @$dep) {
 				$dependents{$alt} ||= {};
 				$dependents{$alt}->{$pkg} = 1;
 			}
@@ -643,59 +643,42 @@ sub recurseOnDepends {
 		return;
 	}
 
-	# @deps is in conjunctive normal form.  That is, it is a list like:
-	#	{{A ^ B ^ C} v {D ^ E} v {F}}
-	# In other words, a list of alternatives, and each alternative is a
-	# series of packages which must all be satisfied.
-	my $satisfied = 0;
-	my @faildep;
-	my @satisfiable_alts;
-	CHECKSAT: foreach my $alternative (@deps) {
-		foreach my $altdep (@$alternative) {
-			my $depname = $altdep->get_name();
-			my $depstat = $pkglist->{$depname};
+	# @deps is in disjunctive normal form.  That is, it is a list like:
+	#	{{A v B v C} ^ {D v E} ^ {F}}
+	# In other words, a list of dependencies, and each dependency is a
+	# list of packages which can satisfy it.
+	DEP: foreach my $dep (@deps) {
+		my @alts = sort {
+			# Prefer already-installed deps.
+	
+			my $status_a = $pkglist->{$a};
+			my $score_a = 0;
+			$score_a = 1 if defined($status_a) and $status_a == PKGSTATUS_INSTALLED;
+			my $status_b = $pkglist->{$b};
+			my $score_b = 0;
+			$score_b = 1 if defined($status_b) and $status_b == PKGSTATUS_INSTALLED;
+
+			$score_b <=> $score_a;
+		} filterSplitoffs(map {$_->get_name()} @$dep);
+
+		foreach my $alt (@alts) {
+			my $depstat = $pkglist->{$alt};
 			$depstat = PKGSTATUS_INSTALL unless defined($depstat);
 			if($depstat == PKGSTATUS_FAILED or $depstat == PKGSTATUS_PROCESSING) {
-				push @faildep, $depname;
-				next CHECKSAT;
+				next;
 			}
-		}
 
-		push @satisfiable_alts, $alternative;
-	}
-
-	foreach my $alternative (sort {
-		# Count the number of uninstalled packages in this alternative.
-		# If we have an alternative that doesn't require any extra
-		# building, pick that one.
-
-		my @pkgs_a = map {$_->get_name()} @$a;
-		my $unsats_a = grep {!defined($pkglist->{$_}) or $pkglist->{$_} != PKGSTATUS_INSTALLED} @pkgs_a;
-
-		my @pkgs_b = map {$_->get_name()} @$b;
-		my $unsats_b = grep {!defined($pkglist->{$_}) or $pkglist->{$_} != PKGSTATUS_INSTALLED} @pkgs_b;
-
-		$unsats_a <=> $unsats_b;
-	} @satisfiable_alts) {
-		# This alternative is satisfiable
-		foreach my $altdep (@$alternative) {
-			my $depname = $altdep->get_name();
-			$pkglist->{$depname} = PKGSTATUS_INSTALL if !defined($pkglist->{$depname});
-			next if $pkglist->{$depname} == PKGSTATUS_INSTALLED;
-			recurseOnDepends($pkglist, filterSplitoffs($depname), 1, $finkfiles);
-			if($pkglist->{$depname} == PKGSTATUS_FAILED) {
-				push @faildep, $depname;
-				next CHECKSAT;
+			$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
+			next if $pkglist->{$alt} == PKGSTATUS_INSTALLED;
+			recurseOnDepends($pkglist, $alt, 1, $finkfiles);
+			if($pkglist->{$alt} == PKGSTATUS_FAILED) {
+				next;
 			}
+
+			next DEP;
+			logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
+			return;
 		}
-
-		$satisfied = 1;
-		last;
-	}
-
-	if(!$satisfied) {
-		logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", sort @faildep));
-		return;
 	}
 
 	if($DoValidate) {
