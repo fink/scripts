@@ -340,7 +340,7 @@ initCheckpoint(\%pkglist) unless $dryrun;
 FinkLib::installEssentials() unless $dryrun;
 buildAll(\%pkglist);
 doLog("Done building");
-
+doLog(Data::Dumper::Dumper(\%pkglist));
 restoreSystem();
 
 ### ==== buildfink framework functions ====
@@ -955,7 +955,7 @@ sub updateCheckpoint {
 	my(%changes) = @_;
 
 	open(CHECKPOINT, ">>", "$rundir/checkpoint");
-	print CHECKPOINT "\$pkglist->{$_} = $changes{$_}; " foreach keys %changes;
+	print CHECKPOINT "\$pkglist->{'$_'} = $changes{$_}; " foreach keys %changes;
 	print CHECKPOINT "\n";
 	close CHECKPOINT;
 }
