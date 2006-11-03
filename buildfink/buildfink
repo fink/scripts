@@ -922,8 +922,9 @@ sub restoreCheckpoint {
 	open(CHECKPOINT, $checkpoint) or die "Couldn't open checkpoint: $!\n";
 	my $cpdata = join("", <CHECKPOINT>);
 	close CHECKPOINT;
-	eval "$cpdata" or die "Checkpoint didn't return true value.\n";
+	my $ret = eval "$cpdata";
 	die "$@\n" if $@;
+ 	die "Checkpoint didn't return true value .\n" unless $ret;
 
 	prepSystem();
 	injectPackages() unless $BuildAll;
