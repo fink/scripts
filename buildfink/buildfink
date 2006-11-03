@@ -340,7 +340,6 @@ initCheckpoint(\%pkglist) unless $dryrun;
 FinkLib::installEssentials() unless $dryrun;
 buildAll(\%pkglist);
 doLog("Done building");
-doLog(Data::Dumper::Dumper(\%pkglist));
 restoreSystem();
 
 ### ==== buildfink framework functions ====
@@ -661,6 +660,7 @@ sub recurseOnDepends {
 			$score_b <=> $score_a;
 		} grep {$_ ne $pkg} filterSplitoffs(map {$_->get_name()} @$dep);
 
+		next unless @alts;
 		foreach my $alt (@alts) {
 			my $depstat = $pkglist->{$alt};
 			$depstat = PKGSTATUS_INSTALL unless defined($depstat);
