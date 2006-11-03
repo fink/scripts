@@ -659,7 +659,7 @@ sub recurseOnDepends {
 			$score_b = 1 if defined($status_b) and $status_b == PKGSTATUS_INSTALLED;
 
 			$score_b <=> $score_a;
-		} filterSplitoffs(map {$_->get_name()} @$dep);
+		} grep {$_ ne $pkg} filterSplitoffs(map {$_->get_name()} @$dep);
 
 		foreach my $alt (@alts) {
 			my $depstat = $pkglist->{$alt};
