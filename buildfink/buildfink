@@ -632,49 +632,66 @@ sub recurseOnDepends {
 	}
 
 	# Build deps, and maybe run deps
-	my @deps;
+	my(@bdeps, @rdeps);
 	eval {
-		@deps = $obj->resolve_depends(2, "depends");
-		push @deps, $obj->resolve_depends(0, "depends") if $install;
+		@bdeps = $obj->resolve_depends(2, "depends");
+		@rdeps = $obj->resolve_depends(0, "depends") if $install;
 	};
 	if($@) {
 		setPackageFail($pkglist, $pkg, "Couldn't get depends: $@");
 		return;
 	}
 
-	# @deps is in disjunctive normal form.  That is, it is a list like:
+	# @Xdeps is in disjunctive normal form.  That is, it is a list like:
 	#	{{A v B v C} ^ {D v E} ^ {F}}
 	# In other words, a list of dependencies, and each dependency is a
 	# list of packages which can satisfy it.
-	DEP: foreach my $dep (@deps) {
-		my @alts = sort {
-			# Prefer already-installed deps.
-	
-			my $status_a = $pkglist->{$a};
-			my $score_a = 0;
-			$score_a = 1 if defined($status_a) and $status_a == PKGSTATUS_INSTALLED;
-			my $status_b = $pkglist->{$b};
-			my $score_b = 0;
-			$score_b = 1 if defined($status_b) and $status_b == PKGSTATUS_INSTALLED;
+	foreach my $depinfo ([\@bdeps, "build"], [\@rdeps, "run"]) {
+		my($deps, $deptype) = @$depinfo;
 
-			$score_b <=> $score_a;
-		} grep {$_ ne $pkg} filterSplitoffs(map {$_->get_name()} @$dep);
+		# If foo depends on bar, we start processing foo and
+		# then recurse into bar.  What if bar then depends on foo?
+		# If bar builddepends on foo, that's bad, don't try to
+		# satisfy that alternative.  However, we do want to allow:
+		#
+		# foo: BuildDepends: bar-shlibs
+		# bar: Has two splitoffs, bar-shlibs and bar, bar Depends: foo
+		#
+		# So, if a dep is PKGSTATUS_PROCESSING, that counts as resolved
+		# if it's a non-build depend.
+		my @status_ok = (PKGSTATUS_INSTALLED);
+		push @status_ok, PKGSTATUS_PROCESSING if $deptype eq "run";
 
-		next unless @alts;
-		foreach my $alt (@alts) {
-			my $depstat = $pkglist->{$alt};
-			$depstat = PKGSTATUS_INSTALL unless defined($depstat);
-			if($depstat == PKGSTATUS_FAILED or $depstat == PKGSTATUS_PROCESSING) {
-				next;
+		DEP: foreach my $dep (@$deps) {
+			my @alts = sort {
+				# Prefer already-installed deps.
+
+				my $status_a = $pkglist->{$a};
+				my $score_a = 0;
+				$score_a = 1 if defined($status_a) and grep {$status_a == $_} @status_ok;
+				my $status_b = $pkglist->{$b};
+				my $score_b = 0;
+				$score_b = 1 if defined($status_b) and grep {$status_b == $_} @status_ok;
+
+				$score_b <=> $score_a;
+			} grep {$_ ne $pkg} filterSplitoffs(map {$_->get_name()} @$dep);
+
+			next unless @alts;
+			foreach my $alt (@alts) {
+				my $depstat = $pkglist->{$alt};
+				$depstat = PKGSTATUS_INSTALL unless defined($depstat);
+				if($depstat == PKGSTATUS_FAILED or ($deptype ne "run" and $depstat == PKGSTATUS_PROCESSING)) {
+					next;
+				}
+
+				$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
+				next DEP if grep {$pkglist->{$alt} == $_} @status_ok;
+				recurseOnDepends($pkglist, $alt, 1, $finkfiles) and next DEP;
 			}
 
-			$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
-			next DEP if $pkglist->{$alt} == PKGSTATUS_INSTALLED;
-			recurseOnDepends($pkglist, $alt, 1, $finkfiles) and next DEP;
+			logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
+			return;
 		}
-
-		logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
-		return;
 	}
 
 	if($DoValidate) {
