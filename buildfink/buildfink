@@ -637,7 +637,7 @@ sub recurseOnDepends {
 		@bdeps = $obj->resolve_depends(2, "depends");
 		@rdeps = $obj->resolve_depends(0, "depends") if $install;
 	};
-	if($@) {
+	if($@ and $@ =~ /[a-z]/i) {
 		setPackageFail($pkglist, $pkg, "Couldn't get depends: $@");
 		return;
 	}

@@ -90,6 +90,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/project/pc-missing">Package (.*) was not found in the pkg-config search path|can not find package (\S+)</filter>
 	<filter name="failures/project/lib-missing">can't locate file for: -l(.*)|cannot find the library `(.*)'|error: (lib.*) is missing|can't locate framework for: -framework (.*)|error: Invalid lib(.*) directory|can't find header files for (.*)</filter>
 	<filter name="failures/project/perlmod-missing">error: (.*) perl module is required</filter>
+	<filter name="failures/project/la-missing">`(.*)' is not a valid libtool archive</filter>
+	<filter name="failures/project/prog-missing">error: The important program (.*) was not found</filter>
+	<filter name="failures/project/exec-missing">error: (.*) not found or not executable</filter>
+	<filter name="failures/project/other-missing">error: Cannot find (.*)</filter>
+	<filter name="failures/project/header-missing">error: (.*\.h): No such file or directory</filter>
 
 	<filter name="failures/project/bad-compiler-option">cc1: error: invalid option|bad value .* for -mtune</filter>
 	<filter name="failures/project/desktop-file-utils">No directories in update-desktop-database search path could be processed and updated.</filter>
@@ -135,7 +140,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	<filter name="unbuilt/download" flags="m">^Failed: file download failed</filter>
 	<filter name="unbuilt/nodep" flags="m">^Failed: Can't resolve dependency</filter>
-	<filter name="unbuilt/unbuildable">Failed: Can't figure out how to build</filter>
+	<filter name="unbuilt/unbuildable">Failed: Can't figure out how to build(?:.*Unsatisfied dependencies: (.*)\.)?</filter>
 	<filter name="unbuilt/dependency_failed">Failed: Dependency (.*) failed to build</filter>
 	<filter name="unbuilt/skipped">Failed: .* is on the skip list</filter>
 
@@ -154,6 +159,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/fink/pkgdesc">Failed: no package found for specification</filter>
 	<filter name="failures/fink/patch">execution of patch failed</filter>
 	<filter name="failures/fink/depconfig">dependency problems prevent configuration</filter>
+	<filter name="failures/fink/dep">Can't resolve dependency "(.*?)"</filter>
+	<filter name="failures/fink/buildlock">problems encountered involve buildlocks</filter>
+	<filter name="failures/fink/pkgobj">Failed: Couldn't get package object</filter>
 
 	<filter name="failures/typeconflict/readlink">error: conflicting types for 'readlink'</filter>
 	<filter name="failures/typeconflict/ether_hostton">error: conflicting types for 'ether_hostton'</filter>
