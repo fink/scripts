@@ -24,7 +24,7 @@ buildfink -- Build every package in Fink
 
 =head1 USAGE
 
-	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [--packages PKGLIST] [--rebuild-deps] [--dirty] [FINKDIR OUTDIR]
+	buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--find-orphan-files] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [--packages PKGLIST] [--rebuild-deps] [--dirty] [FINKDIR OUTDIR]
 	buildfink [-r CHECKPOINT]
 
 C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
@@ -51,7 +51,10 @@ The C<--skip> option, which may be specified multiple times, allows the given pa
 Skipped packages will not be built, nor will any packages which depend on them.
 
 The C<--validate> option, if specified, causes buildfink to validate packages
-as it builds them.
+as it builds them and run any test suites specified in an InfoTest section.
+
+The C<--find-orphan-files> option, if specified, will detect files installed
+into the prefix which aren't actually part of the binary package.
 
 The C<--build-as-nobody> option, if present, causes buildfink to build
 packages as "nobody" instead of root; if C<--build-as-nobody=try> is specified,
@@ -112,7 +115,7 @@ use FindBin qw($Bin);
 use lib "$Bin";
 use FinkLib;
 
-our($Bin, $FinkConfig, $FinkDir, $rundir, $dryrun, $infofilter, $patchdir, @skiplist, $checkpoint, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo);
+our($Bin, $FinkBuildFlags, $FinkConfig, $FinkDir, $RunDir, $DryRun, $infofilter, $patchdir, @skiplist, $checkpoint, $CheckFiles, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo);
 our $VERSION = '$Revision$';
 
 our $max_build_time = 60*60*4;
@@ -168,6 +171,7 @@ use constant PKGSTATUS_FAILED => -1;
 use constant PKGSTATUS_SKIP => -2;
 
 $BuildAll = 1;
+$FinkBuildFlags = "";
 
 sub packageList {
 	my($pkglist, $arg, $val) = @_;
@@ -192,12 +196,13 @@ sub packageList {
 }
 
 my $opts_ok = GetOptions(
-	"n" => \$dryrun,
+	"n" => \$DryRun,
 	"infofilter=s" => \$infofilter,
 	"patchdir=s" => \$patchdir,
 	"skip=s" => \@skiplist,
 	"r=s" => \$checkpoint,
 	"validate" => \$DoValidate,
+	"find-orphan-files" => \$CheckFiles,
 	"dirty" => \$Dirty,
 	"rebuild-deps" => \$RebuildDeps,
 	"packages=s" => sub {packageList(\%pkglist, @_)},
@@ -209,16 +214,16 @@ my $opts_ok = GetOptions(
 	"max-build-time=s" => \&limit_arg,
 	"max-log-size=s" => \&limit_arg
 );
-if(@ARGV != 2 and not (($dryrun and @ARGV == 1) or $checkpoint)) {
+if(@ARGV != 2 and not (($DryRun and @ARGV == 1) or $checkpoint)) {
 	warn "You must specify a Fink directory and an output directory.\n";
 	$opts_ok = 0;
 } else {
-	($FinkDir, $rundir) = @ARGV;
+	($FinkDir, $RunDir) = @ARGV;
 }
 if($checkpoint and not -f $checkpoint) {
 	warn "The specified checkpoint file does not exist.\n";
 	$opts_ok = 0;
-} elsif($checkpoint and ($dryrun or $infofilter or $patchdir or @skiplist or @ARGV)) {
+} elsif($checkpoint and ($DryRun or $infofilter or $patchdir or @skiplist or @ARGV)) {
 	warn "You may not specify any other options when restoring from a checkpoint.\n";
 	$opts_ok = 0;
 }
@@ -229,7 +234,7 @@ if($FinkDir and not -d $FinkDir) {
 	warn "The specified Fink directory does not appear to contain a Fink installation.\n";
 	$opts_ok = 0;
 }
-if(!$dryrun and $rundir and -d $rundir) {
+if(!$DryRun and $RunDir and -d $RunDir) {
 	warn "The specified output directory already exists.\n";
 	$opts_ok = 0;
 }
@@ -327,7 +332,7 @@ if(!$BuildAll and $RebuildDeps) {
 	}
 }
 
-if(!$dryrun) {
+if(!$DryRun) {
 	# Then copy the .info files to our private repository and patch them if necessary.
 	patchPackages(keys %pkglist);
 
@@ -336,8 +341,8 @@ if(!$dryrun) {
 }
 
 # Now do the run
-initCheckpoint(\%pkglist) unless $dryrun;
-FinkLib::installEssentials() unless $dryrun;
+initCheckpoint(\%pkglist) unless $DryRun;
+FinkLib::installEssentials() unless $DryRun;
 buildAll(\%pkglist);
 doLog("Done building");
 restoreSystem();
@@ -347,14 +352,34 @@ restoreSystem();
 # Prepare the system
 sub prepSystem {
 	$FinkConfig = FinkLib::initFink($FinkDir);
-	return if $dryrun;
+	return if $DryRun;
 
-	mkdir($rundir);
-	mkdir("$rundir/$_") for qw(pkginfo logs src out validate nobody);
-	mkdir("$rundir/pkginfo/finkinfo");
-	mkdir("$rundir/pkginfo/binary-darwin-powerpc");
+	# Test whether fink supports --tests/--validate
+	if($DoValidate) {
+		open(FINK, "-|", "fink -V --tests on 2>&1") or die "Couldn't launch fink: $!\n";
+		my $supportsTests = 1;
+		while(<FINK>) {
+			if(/unknown option/i) {
+				$supportsTests = 0;
+				last;
+			}
+		}
+		close(FINK);
 
-	open(LOG, ">>", "$rundir/log.txt") or die "Couldn't open log: $!\n";
+		if($supportsTests) {
+			$FinkBuildFlags = " --tests warn --validate warn ";
+		} else {
+			$FinkBuildFlags = " -m ";
+		}
+	}
+		
+
+	mkdir($RunDir);
+	mkdir("$RunDir/$_") for qw(pkginfo logs src out validate nobody);
+	mkdir("$RunDir/pkginfo/finkinfo");
+	mkdir("$RunDir/pkginfo/binary-darwin-powerpc");
+
+	open(LOG, ">>", "$RunDir/log.txt") or die "Couldn't open log: $!\n";
 
 	# Make STDOUT and STDERR go to the log.
 	close(STDOUT);
@@ -387,7 +412,7 @@ sub doLog {
 sub doValidateWarn {
 	my($pkg, $fmt, @args) = @_;
 
-	open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
+	open(VAL, ">>", "$RunDir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
 	my($out) = sprintf($fmt, @args);
 	chomp($out);
 	print VAL "$out\n";
@@ -397,14 +422,14 @@ sub doValidateWarn {
 # Log a package-specific failure
 sub logPackageFail {
 	my($pkg, $reason) = @_;
-	open(LOG, ">$rundir/logs/$pkg.log");
+	open(LOG, ">$RunDir/logs/$pkg.log");
 	print LOG "Failed: $reason.\n";
 	close LOG;
 }
 
 # Allow Fink to see our modified packages and only those packages
 sub injectPackages {
-	symlink("$rundir/pkginfo", "$FinkDir/fink/dists/buildfink");
+	symlink("$RunDir/pkginfo", "$FinkDir/fink/dists/buildfink");
 	$FinkConfig->set_param("Trees" => "buildfink");
 	FinkLib::readPackages();
 }
@@ -463,10 +488,10 @@ sub patchPackages {
 			}
 
 			if($file =~ /\.(info|patch)$/) {
-				patchFile("$dir/$file", "$rundir/pkginfo/finkinfo/$newfile");
+				patchFile("$dir/$file", "$RunDir/pkginfo/finkinfo/$newfile");
 			} else {
 				my $cpfn = $NoCopyInfo ? \&symlink : \&copy;
-				$cpfn->("$dir/$file", "$rundir/pkginfo/finkinfo/$newfile") or die "Couldn't copy/link $dir/$file: $!\n";
+				$cpfn->("$dir/$file", "$RunDir/pkginfo/finkinfo/$newfile") or die "Couldn't copy/link $dir/$file: $!\n";
 			}
 		}
 		closedir(INFODIR);
@@ -478,7 +503,7 @@ sub patchPackages {
 		closedir(PATCHDIR);
 		foreach my $patch(@extrapatches) {
 			my $cpfn = $NoCopyInfo ? \&symlink : \&copy;
-			$cpfn->("$patchdir/$patch", "$rundir/pkginfo/finkinfo/$patch") or die "Couldn't copy/link $patchdir/$patch: $!\n";
+			$cpfn->("$patchdir/$patch", "$RunDir/pkginfo/finkinfo/$patch") or die "Couldn't copy/link $patchdir/$patch: $!\n";
 		}
 	}
 }
@@ -542,9 +567,9 @@ sub doBuild {
 		exec($buildcmd) or die "Couldn't exec: $!\n";
 	}
 
-	open(BUILDLOG, ">", "$rundir/logs/$pkg.log") or do {
-		doLog("Couldn't open $rundir/logs/$pkg.log: $!");
-		die "Couldn't open $rundir/logs/$pkg.log: $!\n";
+	open(BUILDLOG, ">", "$RunDir/logs/$pkg.log") or do {
+		doLog("Couldn't open $RunDir/logs/$pkg.log: $!");
+		die "Couldn't open $RunDir/logs/$pkg.log: $!\n";
 	};
 	print BUILDLOG "$buildcmd\n";
 
@@ -597,6 +622,63 @@ sub doBuild {
 	}
 }
 
+sub addPackageFiles {
+	my($pkgfiles, $pkg, @files) = @_;
+
+	$pkgfiles->{bypkg}->{$pkg} = \@files;
+	foreach my $file (@files) {
+		my $path = $file->{path};
+		my $obj = $pkgfiles->{byfile};
+		$obj->{$path} ||= [];
+		push @{$obj->{$path}}, $pkg;
+	}
+}
+sub getDebFiles {
+	my($pkgfiles, $obj) = @_;
+
+	my $pkg = $obj->get_name();
+	my $deb = $obj->get_debfile();
+
+	my @files;
+	open(DPKGDEB, "-|", "dpkg-deb", "-c", $deb) or die "Couldn't run dpkg-deb: $!\n";
+	while(<DPKGDEB>) {
+		chomp;
+		my($flags, $owners, $size, $date, $time, $path) =
+			split(/\s+/, $_, 6);
+		next if $flags =~ /^d/;
+		$path =~ s/ link to.*//;
+		$path =~ s/ -> .*//;
+		$path =~ s!^\.!!;
+		$path =~ s!^\Q$FinkDir\E!%p!;
+		push @files, {
+			flags => $flags,
+			path => $path,
+			size => $size,
+			owners => $owners,
+		};
+		$pkgfiles->{byfile}->{$path} ||= [];
+		push @{$pkgfiles->{byfile}->{$path}}, $pkg;
+
+		my $qpath = $path;
+		$qpath =~ s/'/\\'/g;
+	}
+	if(!close(DPKGDEB)) {
+		die "dpkg-deb -c $deb failed; corrupt .deb?\n";
+	}
+
+	$pkgfiles->{bypkg}->{$pkg} = \@files;
+
+	open(CHECKPOINT, ">>", "$RunDir/checkpoint") or die "Couldn't open checkpoint: $!\n";
+	printf CHECKPOINT "addPackageFiles(\$pkgfiles, '%s', %s);\n", $pkg,
+		join(", ", map {
+			my $obj = $_;
+			my $str = join(", ", map {
+				sprintf("'%s' => '%s'", $_, $obj->{$_})
+			} keys(%$obj));
+			"{$str}";
+		} @files);
+	close CHECKPOINT;
+}
 sub setPackageStatus {
 	my($pkglist, $pkg, $status) = @_;
 	$pkglist->{$pkg} = $status;
@@ -611,7 +693,7 @@ sub setPackageFail {
 
 # Try to build an individual package.
 sub recurseOnDepends {
-	my($pkglist, $pkg, $install, $finkfiles) = @_;
+	my($pkglist, $pkg, $install, $finkfiles, $pkgfiles) = @_;
 	my $orig_status = $pkglist->{$pkg};
 	$pkglist->{$pkg} = PKGSTATUS_PROCESSING;
 	doLog("Trying to satisfy $pkg");
@@ -686,7 +768,7 @@ sub recurseOnDepends {
 
 				$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
 				next DEP if grep {$pkglist->{$alt} == $_} @status_ok;
-				recurseOnDepends($pkglist, $alt, 1, $finkfiles) and next DEP;
+				recurseOnDepends($pkglist, $alt, 1, $finkfiles, $pkgfiles) and next DEP;
 			}
 
 			logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
@@ -694,19 +776,11 @@ sub recurseOnDepends {
 		}
 	}
 
-	if($DoValidate) {
-		open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
-		my $oldfh = select(VAL);
-		Fink::Validation::validate_info_file($obj->get_info_filename());
-		select($oldfh);
-		close(VAL);
-	}
-
 	doLog("Building package $pkg...");
 	my $srcdir = $Fink::Config::buildpath; # Suppress "used only once" warning
 	$srcdir = "$Fink::Config::buildpath/" . $obj->get_fullname();
 
-	my $buildcmd = "printf '\n\n' | fink --no-use-binary-dist --yes ";
+	my $buildcmd = "printf '\n\n' | fink --no-use-binary-dist --yes $FinkBuildFlags ";
 	$buildcmd .= "--build-as-nobody " if $BuildNobody;
 	if($orig_status == PKGSTATUS_REBUILD) {
 		$buildcmd .= "rebuild ";
@@ -718,13 +792,13 @@ sub recurseOnDepends {
 
 	if($ret != 0 and defined($BuildNobody) and $BuildNobody eq "try") {
 		$buildcmd =~ s/ --build-as-nobody//;
-		move("$rundir/logs/$pkg.log", "$rundir/logs/$pkg.log.nobody");
+		move("$RunDir/logs/$pkg.log", "$RunDir/logs/$pkg.log.nobody");
 		doLog("Build of $pkg failed, trying as root...");
 		$ret = doBuild($buildcmd, $pkg);
 		if($ret != 0) {
-			unlink("$rundir/logs/$pkg.log.nobody");
+			unlink("$RunDir/logs/$pkg.log.nobody");
 		} else {
-			move("$rundir/logs/$pkg.log.nobody", "$rundir/nobody/$pkg.log");
+			move("$RunDir/logs/$pkg.log.nobody", "$RunDir/nobody/$pkg.log");
 		}
 	}
 
@@ -738,7 +812,7 @@ sub recurseOnDepends {
 			my $name = $_->get_name();
 			push @failpkgs, $pkg;
 
-			system("mv", $srcdir, "$rundir/src/$pkg") or doLog("Couldn't move $srcdir to $rundir/src/$pkg: $!");
+			system("mv", $srcdir, "$RunDir/src/$pkg") or doLog("Couldn't move $srcdir to $RunDir/src/$pkg: $!");
 		}
 
 		$pkglist->{$_} = PKGSTATUS_FAILED foreach @failpkgs;
@@ -748,13 +822,18 @@ sub recurseOnDepends {
 		doLog("Build of $pkg succeeded!");
 		system("rm", "-rf", $srcdir);
 
+		my $src = $obj->get_debfile();
 		my $deb = $obj->get_debname();
-		my $src = readlink("$FinkDir/fink/debs/$deb");
-		my $dst = "$rundir/pkginfo/binary-darwin-powerpc/$deb";
+		if($orig_status == PKGSTATUS_REBUILD) {
+			getDebFiles($pkgfiles, $obj);
+			getDebFiles($pkgfiles, $_) foreach getRelatives($obj);
+		}
+
+		my $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
 		if($src ne $dst) {
 			move($src, $dst);
 			unlink("$FinkDir/fink/debs/$deb");
-			symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+			symlink("$RunDir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
 		}
 
 		my @okpkgs = $pkg;
@@ -763,11 +842,11 @@ sub recurseOnDepends {
 
 			my $deb = $relative->get_debname();
 			my $src = readlink("$FinkDir/fink/debs/$deb");
-			my $dst = "$rundir/pkginfo/binary-darwin-powerpc/$deb";
+			my $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
 			if($src ne $dst) {
 				move($src, $dst);
 				unlink("$FinkDir/fink/debs/$deb");
-				symlink("$rundir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+				symlink("$RunDir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
 			}
 		}
 
@@ -777,7 +856,7 @@ sub recurseOnDepends {
 
 	FinkLib::purgeNonEssential() unless $Dirty;
 
-	if($DoValidate) {
+	if($CheckFiles) {
 		my @killqueue;
 
 		find({no_chdir => 1, wanted => sub {
@@ -791,38 +870,24 @@ sub recurseOnDepends {
 
 		#system("rm", "-rf", @killqueue);
 		$finkfiles->{$_} = 1 foreach @killqueue;
-
-		open(VAL, ">>", "$rundir/validate/$pkg") or die "Couldn't open validation log for $pkg: $!\n";
-		my $oldfh = select(VAL);
-
-		my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $obj->get_debname();
-		Fink::Validation::validate_dpkg_file($deb) if -f $deb;
-		foreach my $relative(getRelatives($obj)) {
-			my $deb = "$rundir/pkginfo/binary-darwin-powerpc/" . $relative->get_debname();
-			Fink::Validation::validate_dpkg_file($deb) if -f $deb;
-		}
-
-		select($oldfh);
-		close(VAL);
 	}
 
 	return 1;
 }
 
 # Try to build packages, adding to pkglist as we encounter deps.
-# pkglist is a list of package names to build in order.
-# skiplist is a list of package names to never build.
 sub buildAll {
-	my($pkglist) = @_;
+	my($pkglist, $pkgfiles) = @_;
 
-	my %finkfiles;
-	if($DoValidate) {
+	my $finkfiles = {};
+	$pkgfiles ||= {bypkg => {}, byfile => {}};
+	if($CheckFiles) {
 		Fink::Config::set_options({"Pedantic" => 1});
 
 		# One of the validation steps is to identify files left in /sw
 		# by the build process.
 		find({no_chdir => 1, wanted => sub {
-			$finkfiles{$File::Find::name} = 1;
+			$finkfiles->{$File::Find::name} = 1;
 		}}, $FinkDir);
 	}
 
@@ -847,7 +912,7 @@ sub buildAll {
 			}
 		}
 
-		recurseOnDepends($pkglist, $pkg, 0, \%finkfiles);
+		recurseOnDepends($pkglist, $pkg, 0, $finkfiles, $pkgfiles);
 	}
 }
 
@@ -931,7 +996,7 @@ sub filterSplitoffs {
 
 sub restoreCheckpoint {
 	my($checkpoint) = shift;
-	my($pkglist, $skiplist);
+	my($pkglist, $pkgfiles);
 
 	# We use eval "STRING" so that the variables in the checkpoint are
 	# bound to this sub's lexical scope.
@@ -948,21 +1013,22 @@ sub restoreCheckpoint {
 	removeBuildLocks();
 
 	doLog("Restored from checkpoint");
-	@skiplist = $skiplist ? @$skiplist : ();
 	doLog("Building packages");
-	buildAll(\%$pkglist);
+	buildAll($pkglist, $pkgfiles);
 	doLog("Done building");
 	restoreSystem();
 }
 
 sub initCheckpoint {
-	my($pkglist) = @_;
+	my($pkglist, $pkgfiles) = @_;
 
-	open(CHECKPOINT, ">", "$rundir/checkpoint");
+	$pkgfiles ||= {bypkg => {}, byfile => {}};
+
+	open(CHECKPOINT, ">", "$RunDir/checkpoint");
 
 	print CHECKPOINT Data::Dumper->Dump(
-		[$FinkDir, $rundir, $BuildNobody, $BuildAll, $DoValidate, $pkglist],
-		[qw(FinkDir rundir BuildNobody BuildAll DoValidate pkglist)]
+		[$FinkDir, $RunDir, $BuildNobody, $BuildAll, $CheckFiles, $DoValidate, $pkglist, $pkgfiles],
+		[qw(FinkDir rundir BuildNobody BuildAll CheckFiles DoValidate pkglist pkgfiles)]
 	);
 
 	close CHECKPOINT;
@@ -972,7 +1038,7 @@ sub initCheckpoint {
 sub updateCheckpoint {
 	my(%changes) = @_;
 
-	open(CHECKPOINT, ">>", "$rundir/checkpoint");
+	open(CHECKPOINT, ">>", "$RunDir/checkpoint");
 	print CHECKPOINT "\$pkglist->{'$_'} = $changes{$_}; " foreach keys %changes;
 	print CHECKPOINT "\n";
 	close CHECKPOINT;
