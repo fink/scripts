@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.77 2006/09/26 18:31:50 bmaret Exp $
+Generated from $Fink: faq.en.xml,v 1.78 2006/11/17 17:56:11 dmrrsn Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -64,7 +64,8 @@ English |
         <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt>, because it conflicts
         with <tt style="white-space: nowrap;">system-xfree86</tt>.</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 How do I change from the non-threaded version of Fink's XFree86
         packages to the threaded version (or vice-versa)?</a></li><li><a href="#comp-packages.cctools">7.4 "When I try to install KDE, I get the following message: 'Can't
-        resolve dependency "cctools (&gt;= 446-1)"'"</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 i can't install <tt style="white-space: nowrap;">g77</tt> because <tt style="white-space: nowrap;">c++filt</tt> is missing.  Where do I get it?</a></li><li><a href="#comp-packages.all-others">7.7 I'm having issues with a package that isn't listed here.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
+        resolve dependency "cctools (&gt;= 446-1)"'"</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 i can't install <tt style="white-space: nowrap;">g77</tt> because <tt style="white-space: nowrap;">c++filt</tt> is missing.  Where do I get it?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink refuses to update the <tt style="white-space: nowrap;">gettext</tt> package,
+complaining that the dependencies are in an inconsistent state.</a></li><li><a href="#comp-packages.all-others">7.8 I'm having issues with a package that isn't listed here.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
         library". Is that bad?</a></li><li><a href="#usage-general.passwd">8.2 There are suddenly a number of strange users on my system, with
         names like "mysql", "pgsql", and "games". Where did they come
         from?</a></li><li><a href="#usage-general.compile-myself">8.3 How do I compile something myself using Fink-installed
@@ -1060,8 +1061,17 @@ fink install libiconv</pre></div>
 1) Flush out your old
 2) Reinstall BSD.pkg (from your main OS install)</p></div>
     </a>
+    <a name="comp-packages.gettext-tools">
+      <div class="question"><p><b>Q7.7: Fink refuses to update the <tt style="white-space: nowrap;">gettext</tt> package,
+complaining that the dependencies are in an inconsistent state.</b></p></div>
+      <div class="answer"><p><b>A:</b> After running <tt style="white-space: nowrap;">fink selfupdate</tt> to be sure you
+have the latest versions, try <tt style="white-space: nowrap;">fink update gettext-tools</tt>.
+An old version of the <tt style="white-space: nowrap;">gettext-tools</tt> package may be 
+preventing you from updating <tt style="white-space: nowrap;">gettext</tt>.</p></div>
+    </a>
+
     <a name="comp-packages.all-others">
-      <div class="question"><p><b>Q7.7: I'm having issues with a package that isn't listed here.</b></p></div>
+      <div class="question"><p><b>Q7.8: I'm having issues with a package that isn't listed here.</b></p></div>
       <div class="answer"><p><b>A:</b> Since package problems tend to be transient, we've decided to put them
       up on the Fink wiki.  Check the <a href="http://wiki.finkproject.org/index.php/Fink:Package_issues"> Package issues page</a>.</p></div>
     </a>
@@ -1496,4 +1506,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.77 2006/09/26 18:31:50 bmaret Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.78 2006/11/17 17:56:11 dmrrsn Exp $</i></p></body></html>
