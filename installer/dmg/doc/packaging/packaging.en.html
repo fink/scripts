@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.88 2006/09/18 14:34:38 msachs Exp $
+Generated from $Fink: packaging.en.xml,v 1.89 2006/11/18 18:18:55 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -303,7 +303,10 @@ in commands.
 </td></tr><tr valign="top"><td>%c</td><td>
 <p>
 the parameters for <b>c</b>onfigure: <tt style="white-space: nowrap;">--prefix=%p</tt> plus anything
-specified with ConfigureParams
+specified with ConfigureParams.  (The behavior is different when the package
+has <tt style="white-space: nowrap;">Type: perl</tt>; in that case, the default flags for
+building a perl package are used instead of <tt style="white-space: nowrap;">--prefix=%p</tt>
+in the definition of <tt style="white-space: nowrap;">%c</tt>.)
 </p>
 </td></tr><tr valign="top"><td>%m</td><td>
 <p>
@@ -2164,13 +2167,17 @@ remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
 </td></tr><tr valign="top"><td>ConfigureParams</td><td>
 <p>
 Additional parameters to pass to the configure script. (See
-CompileScript for details.)  If a build is being done
+CompileScript for details.)  
+For packages not of <tt style="white-space: nowrap;">Type: Perl</tt>, the parameter
+<tt style="white-space: nowrap;">--prefix=%p</tt> is prepended to this value.
+As of fink &gt; 0.13.7, this field will also work with perl modules
+<tt style="white-space: nowrap;">Type: Perl</tt>; the default perl Makefile.PL
+string is prepended to the value supplied for <tt style="white-space: nowrap;">ConfigureParams</tt>.
+</p><p>
+If a build is being done
 with test suites enabled, the value of the <tt style="white-space: nowrap;">TestConfigureParams</tt>
-field will be appended to this.
+field will be appended to the normal <tt style="white-space: nowrap;">ConfigureParams</tt> value.
 
-As of fink &gt; 0.13.7, this parameter will also work with perl modules
-<tt style="white-space: nowrap;">Type: Perl</tt>, and will append to the default perl Makefile.PL
-string.
 </p>
 <p>
   Starting in fink-0.22.0, this field supports conditionals. The
@@ -2786,4 +2793,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.88 2006/09/18 14:34:38 msachs Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.89 2006/11/18 18:18:55 dmrrsn Exp $</i></p></body></html>
