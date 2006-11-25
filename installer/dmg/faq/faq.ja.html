@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.ja.xml,v 1.38 2006/08/04 21:44:56 babayoshihiko Exp $
+Generated from $Fink: faq.ja.xml,v 1.39 2006/11/25 05:41:37 babayoshihiko Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -55,7 +55,7 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 </a></li><li><a href="#comp-general.missing-make">6.3 <tt style="white-space: nowrap;">make</tt> に関連したエラーがでました。</a></li><li><a href="#comp-general.head">6.4 head コマンドから変な使用方法メッセージが出ています。何がおかしいのですか?</a></li><li><a href="#comp-general.also_in">6.5 あるパッケージをインストールしようとすると、他のパッケージのファイルを上書きしようとしているというエラーメッセージが出ました。
 </a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local にインストールされているライブラリやヘッダが 
 	Fink のビルドの問題を起こすことがあると聞いたけど、本当ですか?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
-</a></li><li><a href="#comp-general.fc-atlas">6.11 atlas をインストールしようとすると、 Fink Commander がハングアップします。</a></li><li><a href="#comp-general.basic-headers">6.12 <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
+</a></li><li><a href="#comp-general.fc-atlas">6.11 atlas をインストールしようとすると、 Fink Commander がハングアップします。</a></li><li><a href="#comp-general.basic-headers">6.12 <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">stdlib.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
 あるいは、"C compiler cannot create executables" というメッセージが出ます。
 これはどこにありますか?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
 というメッセージが出て、何もインストールできません!</a></li><li><a href="#comp-general.freetype-problems">6.15 freetype に関係したエラーが出ます。</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 `Dl_info' のエラーが出ます。</a></li><li><a href="#comp-general.gcc2">6.17 Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</a></li><li><a href="#comp-general.system-java">6.18 Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
@@ -73,8 +73,8 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
 	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li><li><a href="#comp-general.gettext">6.23 
         	ソースからビルドするとき、 <tt style="white-space: nowrap;">gettext-dev</tt> と <tt style="white-space: nowrap;">libgettext3-dev</tt> の間でたらい回しです。
-        </a></li><li><a href="#comp-general.python-mods">6.24 Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
-        これはどこにありますか?</a></li><li><a href="#comp-packages.all-others">7.7 ここに載っていないパッケージで問題があります。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
+        </a></li><li><a href="#comp-general.python-mods">6.24 Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</a></li><li><a href="#comp-general.libtool-unrecognized-dynamic">6.25 I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
+        これはどこにありますか?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink が、 <tt style="white-space: nowrap;">gettext</tt> の依存性に矛盾があるとだけ表示し、更新してくれません。</a></li><li><a href="#comp-packages.all-others">7.8 ここに載っていないパッケージで問題があります。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
 ユーザー名は、 "mysql", "pgsql", "games" などです。
@@ -302,12 +302,12 @@ dselect からパッケージを選択してインストールする場合、 ro
 <li>
 <p><b>cvs-proxy</b> パッケージを、次のコマンドでインストールする:</p>
 <p>
-<tt style="white-space: nowrap;">fink install <b>cvs-proxy</b>
+<tt style="white-space: nowrap;">fink --use-binary-dist install <b>cvs-proxy</b>
 </tt>
 </p>
 </li>
 <li>
-<p>パッケージを次のコマンドでアップデートする:</p>
+<p>次のコマンドで CVS 更新に変更する:</p>
 <p>
 <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>
 </p>
@@ -878,7 +878,7 @@ rerun ranlib(1) (can't load from it)</pre><p>この問題を起こしている�
 代わりに <tt style="white-space: nowrap;">fink install atlas</tt> とする必要があります。</p></div>
 </a>
 <a name="comp-general.basic-headers">
-<div class="question"><p><b>Q6.12: <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
+<div class="question"><p><b>Q6.12: <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">stdlib.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
 あるいは、"C compiler cannot create executables" というメッセージが出ます。
 これはどこにありますか?</b></p></div>
 <div class="answer"><p><b>A:</b> これらの問題は、いずれも Developer Tools の DevSDK によって提供されるヘッダファイルがないためです。
@@ -899,7 +899,7 @@ rerun ranlib(1) (can't load from it)</pre><p>この問題を起こしている�
 </a>
 <a name="comp-general.freetype-problems"> 
 <div class="question"><p><b>Q6.15: freetype に関係したエラーが出ます。</b></p></div> 
-<div class="answer"><p><b>A:</b> freetype に関係したエラーにはいくつかありますが、もしこのようなものであれば:</p><pre>/sw/include/pango-1.0/pango/pangoft2.h:52: error: parse error before '*' token 
+<div class="answer"><p><b>A:</b> freetype に関係したエラーにはいくつかありますが、以下のものであれば:</p><pre>/usr/bin/ld: can't locate file for: -lfreetype</pre><p>外来の <tt style="white-space: nowrap;">freetype-config</tt> があるかどうか、以下のコマンドを実行して確認します。</p><pre>where freetype-config</pre><p>(<tt style="white-space: nowrap;">tcsh</tt> の場合)</p><pre>type -a freetype-config</pre><p>(<tt style="white-space: nowrap;">bash</tt> の場合)。 Mono フレームワークは、 <tt style="white-space: nowrap;">/usr/bin/freetype-config</tt> をインストールし、フレームワーク内へのシンボリックリンクを作ることが知られています。</p><p>もしこのようなものであれば:</p><pre>/sw/include/pango-1.0/pango/pangoft2.h:52: error: parse error before '*' token 
 /sw/include/pango-1.0/pango/pangoft2.h:57: error: parse error before '*' token 
 /sw/include/pango-1.0/pango/pangoft2.h:61: error: parse error before '*' token 
 /sw/include/pango-1.0/pango/pangoft2.h:86: error: parse error before "pango_ft2_font_get_face"
@@ -932,8 +932,7 @@ make: *** No targets specified and no makefile found.  Stop.
 Failed: compiling gtk+2-2.2.4-2 failed</pre><p>問題は X11 | XFree86 に含まれている、 <tt style="white-space: nowrap;">freetype</tt> | <tt style="white-space: nowrap;">freetype-hinting</tt> パッケージ間のヘッダを混同していることだと思われます。</p><pre>fink remove freetype freetype-hinting</pre><p>で、両方のインストールを削除します。
 もし問題が上記のようではなく、以下のようであれば:</p><pre>ld: Undefined symbols: 
 _FT_Access_Frame </pre><p>おそらく X11 インストールの残りファイルが原因です。
-X11 SDK を再インストールしてみて下さい。
-エラーが以下のようであれば:</p><pre>dyld: klines Undefined symbols: 
+X11 SDK を再インストールしてみて下さい。</p><p>最後に、エラーが以下のようであれば:</p><pre>dyld: klines Undefined symbols: 
 /sw/lib/libqt-mt.3.dylib undefined reference to _FT_Access_Frame </pre><p>おそらく Jaguar 上で<tt style="white-space: nowrap;">gcc3.3</tt> でコンパイルしたバイナリが  Panther 上で動作しないためです。
 この問題は既に修正されていますので、<tt style="white-space: nowrap;">sudo apt-get update ; sudo apt-get dist-upgrade</tt> と更新するだけで直ります。</p></div> 
 </a> 
@@ -1068,6 +1067,10 @@ SystemExit: error: $MACOSX_DEPLOYMENT_TARGET mismatch: now "10.4" but "10.3" dur
         	<tt style="white-space: nowrap;">python</tt> パッケージを更新すれば修正されます。
         </p></div>
     </a>
+<a name="comp-general.libtool-unrecognized-dynamic">
+  <div class="question"><p><b>Q6.25: I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</b></p></div>
+<div class="answer"><p><b>A:</b> This error:</p><pre> libtool: unrecognized option `-dynamic'</pre><p>typically means that you've replaced Apple's <tt style="white-space: nowrap;">/usr/bin/libtool</tt> with a GNU <tt style="white-space: nowrap;">libtool</tt>.  Unfortunately, the two <tt style="white-space: nowrap;">libtools</tt> <b>do not</b> do the same thing.</p><p>The only way to solve this is to get a working Apple <tt style="white-space: nowrap;">libtool</tt> from somewhere.  It is installed as part of the <tt style="white-space: nowrap;">DeveloperTools.pkg</tt> package of the XCode Tools, and you can reinstall that whole package if you first clear out its receipt in <tt style="white-space: nowrap;">/Library/Receipts</tt> (drag it to the Trash for OS 10.4 and later, or use <tt style="white-space: nowrap;">sudo rm -rf /Library/Receipts/DeveloperTools.pkg</tt> for 10.3).</p></div>
+</a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
 
 
@@ -1139,8 +1142,16 @@ fink install libiconv</pre></div>
 1) Flush out your old
 2) Reinstall BSD.pkg (from your main OS install)</p></div>
     </a>
+    <a name="comp-packages.gettext-tools">
+      <div class="question"><p><b>Q7.7: Fink が、 <tt style="white-space: nowrap;">gettext</tt> の依存性に矛盾があるとだけ表示し、更新してくれません。</b></p></div>
+      <div class="answer"><p><b>A:</b> 
+          <tt style="white-space: nowrap;">fink selfupdate</tt> を実行して最新にした後、
+          <tt style="white-space: nowrap;">fink update gettext-tools</tt> としてみてください。
+          古いバージョンの <tt style="white-space: nowrap;">gettext-tools</tt> が <tt style="white-space: nowrap;">gettext</tt> の更新を妨害していた可能性があります。
+        </p></div>
+    </a>
     <a name="comp-packages.all-others">
-      <div class="question"><p><b>Q7.7: ここに載っていないパッケージで問題があります。</b></p></div>
+      <div class="question"><p><b>Q7.8: ここに載っていないパッケージで問題があります。</b></p></div>
       <div class="answer"><p><b>A:</b> パッケージの問題は変わりやすいので、Fink wiki に情報を載せることにいたしました。
         <a href="http://wiki.finkproject.org/index.php/Fink:Package_issues">Package issues page</a> をご確認ください。</p></div>
     </a>
@@ -1197,12 +1208,14 @@ setenv LDFLAGS -L/sw/lib
 setenv CXXFLAGS $CFLAGS
 setenv CPPFLAGS $CXXFLAGS
 setenv ACLOCAL_FLAGS "-I /sw/share/aclocal"
-setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"</pre><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
+setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"
+setenv MACOSX_DEPLOYMENT_TARGET 10.4</pre><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
 export LDFLAGS=-L/sw/lib 
 export CXXFLAGS=$CFLAGS 
 export CPPFLAGS=$CXXFLAGS 
 export ACLOCAL_FLAGS="-I /sw/share/aclocal"
-export PKG_CONFIG_PATH="/sw/lib/pkgconfig"</pre><p>これを起動ファイル (.cshrc か .profile) に追加すると、自動的に設定されて便利です。
+export PKG_CONFIG_PATH="/sw/lib/pkgconfig"
+export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(ビルドシステムは OS 10.4 以降と仮定)</p><p>これを起動ファイル (.cshrc か .profile) に追加すると、自動的に設定されて便利です。
 この環境変数を使わないパッケージの場合、
 "-I/sw/include" (ヘッダ用) and "-L/sw/lib" (ライブラリ用)
 をコンパイルの行に追加する必要があるでしょう。
@@ -1617,4 +1630,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.38 2006/08/04 21:44:56 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.39 2006/11/25 05:41:37 babayoshihiko Exp $</i></p></body></html>
