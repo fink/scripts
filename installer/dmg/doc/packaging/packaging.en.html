@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.90 2006/11/29 19:45:40 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.91 2006/12/03 21:21:22 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -505,14 +505,16 @@ for existence before calling them and the like).
 <p>
 Fink has a new policy about shared libraries, effective in February 2002.
 This section of the documentation discusses version 4
-of the policy, which coincides with the release of Fink's 0.5.0 distribution.
+of the policy, which coincides with the release of Fink's 0.5.0 distribution
+(as well as some updates from December, 2006 to handle 64bit libraries).
 We begin with a quick summary, and then discuss things in more detail.
 </p><p>
 Any package which builds shared libraries and is either (1) being put into
   the stable tree, or (2) a new package in Fink, should treat its shared
   libraries according to Fink's policy.  This means:</p>
 <ul>
-<li>   verify, using <tt style="white-space: nowrap;">otool -L</tt>, that 
+<li>   verify, using <tt style="white-space: nowrap;">otool -L</tt> (or <tt style="white-space: nowrap;">otool64 -L</tt> for
+64bit libraries), that 
        the install_name of each library and
        its compatibility and current version numbers are correct </li>
 <li>   put the shared libraries in a separate package (except for the
@@ -626,7 +628,8 @@ barN-bin as well as barN-shlibs.
 When building shared libraries under major version N, it is important that
 the "install_name" of the library be <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt>.  
 (You can
-find the install_name by running <tt style="white-space: nowrap;">otool -L</tt> on your library.)  The
+find the install_name by running <tt style="white-space: nowrap;">otool -L</tt> on your library,
+or <tt style="white-space: nowrap;">otool64 -L</tt> for 64bit libraries.)  The
 actual library file should be installed at
 </p>
 <pre>
@@ -651,7 +654,7 @@ but in any event you should
 check that they have been done correctly in your case.  You should also
 check that current_version and compatibility_version were defined 
 appropriately for your shared libraries.  (These are also shown with the 
-<tt style="white-space: nowrap;">otool -L</tt> query.)
+<tt style="white-space: nowrap;">otool -L</tt> query, or <tt style="white-space: nowrap;">otool64 -L</tt> for 64bit libraries.)
 </p><p>
 Files are then divided between the two packages as follows
 </p>
@@ -758,9 +761,12 @@ In addition to putting the shared libraries in the correct package, as of
 version 4 of this policy, you must also declare all of the shared libraries
 using the <tt style="white-space: nowrap;">Shlibs</tt> field.  This field has one line for each
 shared library, which contains the <tt style="white-space: nowrap;">-install_name</tt> of the
-library, the <tt style="white-space: nowrap;">-compatibility_version</tt>, and versioned 
+library, the <tt style="white-space: nowrap;">-compatibility_version</tt>, versioned 
 dependency information specifying the Fink package which provides
-this library at this compatibility version.  The dependency should
+this library at this compatibility version, and the library
+architecture.  (The library architecture may either be "32", "64", or
+"32-64", and may be absent; the value defaults to "32" if it is absent.)
+The dependency should
 be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> where 
 <tt style="white-space: nowrap;">version-revision</tt> refers to
 the <b>first</b> version of a Fink package which made
@@ -768,14 +774,16 @@ this library (with this compatibility version) available.  For example,
 a declaration</p>
 <pre>
   Shlibs: &lt;&lt;
-    %p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2)
+    %p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2) 32
   &lt;&lt;
 </pre>
-<p>indicates that a library with <tt style="white-space: nowrap;">-install_name</tt> %p/lib/bar.1.dylib
+<p>indicates that a (32bit)
+library with <tt style="white-space: nowrap;">-install_name</tt> %p/lib/bar.1.dylib
 and <tt style="white-space: nowrap;">-compatibility_version</tt> 2.1.0 has been installed since
 version 1.1-2 of the <b>bar1</b> package.  In addition, this declaration
 amounts to  a promise
-from the maintainer that a library with this name and a compatibility-version
+from the maintainer that a 32bit
+library with this name and a compatibility-version
 of at least 2.1.0 will always be found in later versions of the <b>bar1</b> 
 package.
 </p><p>
@@ -2449,11 +2457,14 @@ commands to the InstallScript.
 <b>Introduced in fink 0.11.0.</b>
 This field declares the shared libraries which are installed in the
 package.  There is one line for each
-shared library, which contains three items separated by whitespace:
+shared library, which contains three or four items separated by whitespace:
 the <tt style="white-space: nowrap;">-install_name</tt> of the
-library, the <tt style="white-space: nowrap;">-compatibility_version</tt>, and versioned 
+library, the <tt style="white-space: nowrap;">-compatibility_version</tt>, versioned 
 dependency information specifying the Fink package which provides
-this library at this compatibility version.  The dependency should
+this library at this compatibility version, and the
+library architecture.  (The library architecture may either be "32", "64", or
+"32-64", and may be absent; the value defaults to "32" if it is absent.)  
+The dependency should
 be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> where 
 <tt style="white-space: nowrap;">version-revision</tt> refers to
 the <b>first</b> version of a Fink package which made
@@ -2802,4 +2813,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.90 2006/11/29 19:45:40 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.91 2006/12/03 21:21:22 dmrrsn Exp $</i></p></body></html>
