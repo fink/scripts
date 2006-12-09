@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.91 2006/12/03 21:21:22 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.92 2006/12/09 06:13:54 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -109,8 +109,17 @@ The "Trees" setting in <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> c
 which directories are read.
 The name of package description files must be the full package name
 plus the extension ".info".
-Starting with fink 0.13.0, the use of the simple package name plus
-".info" is also supported in order to simplify package updates.
+As of fink 0.26.0, there are several different ways to specify the
+filename: it is recommended to use the shortest version which is
+consistent with other needed package files.  The filename takes
+the form: the invariant packagename, optionally 
+followed by the architecture, optionally followed by the
+distribution, 
+optionally followed by either version or version-revision, each delimited by 
+hyphens, concluding with ".info".  
+The "architecture" and "distribution" components are only allowed
+if the corresponding field is present in the package, and if it specifies
+exactly one value.
 </p>
 <p>
 The package description tree is organized with several levels of
@@ -320,14 +329,16 @@ the percent character (one that will not be expanded according to whatever follo
 left-to-right, so %%n is not anything related to the package name, but
 rather is the string %n.  (Introduced in fink-0.18.0)
 </p>
-</td></tr><tr valign="top"><td>%type_raw[<b>type</b>], %type_pkg[<b>type</b>]</td><td>
+</td></tr><tr valign="top"><td>%type_raw[<b>type</b>], %type_pkg[<b>type</b>],
+%type_num[<b>type</b>]</td><td>
 <p>
 pseudo-hashes returning the subtype for the given <b>type</b>. See
 documentation for the <tt style="white-space: nowrap;">Type</tt> field later in this document.
 The _raw form is the exact subtype string, while the _pkg form has all
 period characters removed (as per Fink's language-version package naming
 convention and for other clever uses). (Introduced in a post-0.19.2
-CVS version of fink)
+CVS version of fink.)  The _num form was introduced in fink-0.26.0
+and removes all non-digits from the <tt style="white-space: nowrap;">Type</tt> field.
 </p>
 </td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>
@@ -350,6 +361,14 @@ package is blank. (Introduced in fink-0.20.6)
 <p>
 The full path to the file given in the <tt style="white-space: nowrap;">PatchFile</tt> field.
 (Introduced in fink-0.24.12)
+</p>
+</td></tr><tr valign="top"><td>%lib</td><td>
+<p>
+If <tt style="white-space: nowrap;">Type: -64bit</tt> is defined to be <tt style="white-space: nowrap;">-64bit</tt>,
+this expands to <b>lib/ppc64</b> on powerpc machines, and to
+<b>lib/x86_64</b> on intel machines (the proper storage locations
+for 64-bit libraries); otherwise, this expands to <b>lib</b>.
+(Introduced in fink-0.26.0)
 </p>
 </td></tr></table>
 
@@ -1589,6 +1608,31 @@ CompileScript:  &lt;&lt;
 &lt;&lt;
 &lt;&lt;
 </pre>
+<p>
+Starting in fink 0.26.0, there is a special <tt style="white-space: nowrap;">Type: -64bit</tt>
+which controls a new percent expansion <tt style="white-space: nowrap;">%lib</tt> and also
+changes the default value of <tt style="white-space: nowrap;">LDFLAGS</tt>.  When combined
+with the new construction %type_num[], this allows a single .info file
+to build both a 32-bit version of a library and a 64-bit version.
+Here's some sample code:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: foo%type_pkg[-64bit]
+Type: -64bit (boolean)
+Depends: (%type_raw[-64bit] = -64bit) 64bit-cpu
+ConfigureParams: --libdir='${prefix}/%lib'
+SplitOff: &lt;&lt;
+ Package: %N-shlibs
+ Files: %lib/libfoo.*.dylib
+ Shlibs: &lt;&lt;
+    %p/%lib/libfoo.1.dylib 1.0.0 %n (&gt;= 1.0-1) %type_num[-64bit]
+  &lt;&lt;
+&lt;&lt;
+&lt;&lt;
+</pre>
+
+
 </td></tr><tr valign="top"><td>License</td><td>
 <p>
 This field gives the nature of the license under which the package is
@@ -2157,6 +2201,11 @@ The preset variables (and their default values) are:
 CPPFLAGS: -I%p/include
 LDFLAGS: -L%p/lib
 </pre>
+<p> Starting in fink 0.26.0, there is one exception to these defaults:
+if <tt style="white-space: nowrap;">Type: -64bit</tt> is set to <tt style="white-space: nowrap;">-64bit</tt>, then the
+default value of <tt style="white-space: nowrap;">LDFLAGS</tt> is <tt style="white-space: nowrap;">-L%p/%lib -L%p/lib</tt> 
+instead.
+</p>
 <p>
 In addition, starting in fink 0.17.0, the following values are set for
 the 10.4-transitional distribution and earlier (but are not set for
@@ -2813,4 +2862,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.91 2006/12/03 21:21:22 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.92 2006/12/09 06:13:54 dmrrsn Exp $</i></p></body></html>
