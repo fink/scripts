@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.fr.xml,v 1.69 2006/12/05 09:46:01 michga Exp $
+Generated from $Fink: packaging.fr.xml,v 1.70 2006/12/10 19:15:26 michga Exp $
 -->
 <title>Fink Documentation - Création de paquets Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -34,7 +34,7 @@ L'installation d'un paquet binaire consiste simplement à le dépaqueter, puisqu
 
 
 <h3><a name="format.trees">2.1 Arborescence</a></h3>
-<p>Les descriptions de paquets sont lues à partir des répertoires <tt style="white-space: nowrap;">finkinfo</tt> situés dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists</tt>. La valeur de la variable "Trees" dans <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> contrôle quels répertoires sont lus. Le nom des fichiers de description de paquets doit être identique au nom complet du paquet suivi de l'extension ".info". À partir de fink 0.13.0, on peut aussi n'utiliser que le nom du paquet suivi de l'extension ".info", de manière à simplifier les mises à jour.</p>
+<p>Les descriptions de paquets sont lues à partir des répertoires <tt style="white-space: nowrap;">finkinfo</tt> situés dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists</tt>. La valeur de la variable "Trees" dans <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> contrôle quels répertoires sont lus. Le nom des fichiers de description de paquets doit être identique au nom complet du paquet suivi de l'extension ".info". À partir de fink 0.26.0, il existe plusieurs façons de spécifier le nom du fichier ; il est recommandé d'utiliser le nom le plus court compatible avec les autres paquets nécessaires. Le nom du fichier est de la forme : nom invariant du paquet, suivi éventuellement d'un tiret et de l'architecture, suivi éventuellement d'un tiret et de la distribution, suivi éventuellement d'un tiret et de la version ou du couple version-révision, et terminé par ".info". Les éléments "architecture" et "distributtion" ne sont autorisés que si leurs champs sont présents dans le paquet et qu'ils fournissent une seule et unique valeur.</p>
 <p>L'arborescence des descriptions de paquets comprend plusieurs niveaux de répertoires. En voici la liste de la racine au bas de l'arborescence :</p>
 <ul>
 <li><tt style="white-space: nowrap;">dists</tt> est à la racine. Le répertoire <tt style="white-space: nowrap;">dists</tt> est nécessaire pour les outils Debian.</li>
@@ -111,14 +111,16 @@ le répertoire actif lorsque les scripts sont exécutés ; vous devez utiliser d
 <p>chaîne spécifiant l'architecture de la <b>m</b>achine. Identique au résultat de la commande <tt style="white-space: nowrap;">uname -p</tt>. Les valeurs habituelles sont 'powerpc' pour les machines ppc and 'i386' pour les machines x86. Introduit dans les versions CVS de fink postérieures à la version 0.12.1.</p>
 </td></tr><tr valign="top"><td>%%</td><td>
 <p>signe pourcentage (%) (ce signe n'est pas interprété en fonction de ce qui le suit). L'interprétation se fait de gauche à droite, si bien que %%n n'a rien à voir avec le nom du paquet, mais représente la chaîne %n. (Introduit dans fink-0.18.0).</p>
-</td></tr><tr valign="top"><td>%type_raw[<b>type</b>], %type_pkg[<b>type</b>]</td><td>
-<p>fonction de pseudo-hachage retournant le sous-type du <b>type</b> donné. Voir la documentation sur le champ <tt style="white-space: nowrap;">Type</tt> plus bas. La forme _raw correspond à la chaîne précise du sous-type, tandis que la forme _pkg correspond à la même chaîne dont tous les points auraient été enlevés (suivant les conventions de nommage des paquets - language-version - de Fink et pour d'autres usages réservés aux experts). (Introduit dans une version CVS de Fink ultérieure à la version 0.19.2).</p>
+</td></tr><tr valign="top"><td>%type_raw[<b>type</b>], %type_pkg[<b>type</b>], %type_num[<b>type</b>]</td><td>
+<p>fonction de pseudo-hachage retournant le sous-type du <b>type</b> donné. Voir la documentation sur le champ <tt style="white-space: nowrap;">Type</tt> plus bas. La forme _raw correspond à la chaîne précise du sous-type, tandis que la forme _pkg correspond à la même chaîne dont tous les points auraient été enlevés (suivant les conventions de nommage des paquets - language-version - de Fink et pour d'autres usages réservés aux experts). (Introduit dans une version CVS de Fink ultérieure à la version 0.19.2). La forme _num a été introduit dans la version 0.26.0 de fink et supprime tous les caractères non numériques du champ <tt style="white-space: nowrap;">Type</tt>.</p>
 </td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>la partie <b>i</b>nvariante du <b>n</b>om du paquet. Identiques à %n et %N, à l'exception près que tous les %type_pkg[] et %type_raw[] sont occultés. (Introduit dans une version CVS de Fink ultérieure à la version 0.19.2). Vous devez utiliser %{ni} et %{Ni} pour éviter de possibles confusions avec les raccourcis %n et %N.</p>
 </td></tr><tr valign="top"><td>%{default_script}</td><td>
 <p>Uniquement valide dans les champs <tt style="white-space: nowrap;">PatchScript</tt>, <tt style="white-space: nowrap;">CompileScript</tt> et <tt style="white-space: nowrap;">InstallScript</tt>. Correspond au contenu par défaut de ce type de champ. Sa valeur dépend souvent du champ <tt style="white-space: nowrap;">Type</tt> et est toujours définie (même si elle vide). Lorsque ce raccourci est utilisé dans le champ <tt style="white-space: nowrap;">InstallScript</tt> d'un <tt style="white-space: nowrap;">SplitOff</tt> ou d'un <tt style="white-space: nowrap;">SplitOffN</tt>, son interprétation correspond à la valeur par défaut du champ <b>parent</b>, bien que la valeur par défaut de <tt style="white-space: nowrap;">InstallScript</tt> dans un <tt style="white-space: nowrap;">SplitOff</tt> soit vide. (Introduit dans fink-0.20.6)</p>
 </td></tr><tr valign="top"><td>%{PatchFile}</td><td>
 <p>Chemin complet du fichier indiqué dans le champ<tt style="white-space: nowrap;">PatchFile</tt>. Introduit dans la version 0.24.12 de fink.</p>
+</td></tr><tr valign="top"><td>%lib</td><td>
+<p>Si le champ <tt style="white-space: nowrap;">Type: -64bit</tt> a pour valeur <tt style="white-space: nowrap;">-64bit</tt>, ce raccourci permet de définir le répertoire des bibliothèques comme étant le répertoire <b>lib/ppc64</b> sur machines powerpc, ou  <b>lib/x86_64</b> sur machines intel (répertoires standards pour les bibliothèques 64-bit). Dans le cas contraire, le raccourci définit le répertoire <b>lib</b> comme répertoire pour les bibliothèques. Introduit dans la version 0.20.6 de fink.</p>
 </td></tr></table>
 
 <h2><a name="policy">3 Règles de distribution des paquets</a></h2>
@@ -521,6 +523,22 @@ CompileScript:  &lt;&lt;
 &lt;&lt;
 &lt;&lt;
 </pre>
+<p>À partir de la version 0.26.0 de fink, il existe un champ spécial <tt style="white-space: nowrap;">Type: -64bit</tt> qui contrôle un nouveau raccourci <tt style="white-space: nowrap;">%lib</tt> et modifie la valeur par défaut du drapeau <tt style="white-space: nowrap;">LDFLAGS</tt>. Quand on combine ce champ avec la construction %type_num[], ceci permet de construire à partir d'un seul fichier .info les versions 32-bit et 64-bit d'une bibliothèque. Voici un exemple :</p>
+<pre>
+Info2: &lt;&lt;
+Package: foo%type_pkg[-64bit]
+Type: -64bit (boolean)
+Depends: (%type_raw[-64bit] = -64bit) 64bit-cpu
+ConfigureParams: --libdir='${prefix}/%lib'
+SplitOff: &lt;&lt;
+ Package: %N-shlibs
+ Files: %lib/libfoo.*.dylib
+ Shlibs: &lt;&lt;
+    %p/%lib/libfoo.1.dylib 1.0.0 %n (&gt;= 1.0-1) %type_num[-64bit]
+  &lt;&lt;
+&lt;&lt;
+&lt;&lt;
+</pre>
 </td></tr><tr valign="top"><td>License</td><td>
 <p>Ce champ indique la nature de la licence sous laquelle le paquet est distribué. Sa valeur doit être l'une de celles décrites plus haut dans la section <a href="#policy.licenses">Licences de paquet</a>. De plus, ce champ ne doit être renseigné que si le paquet respecte effectivement les règles de construction des paquets, c'est-à-dire installe une copie de la licence dans le répertoire doc.</p>
 </td></tr><tr valign="top"><td>Maintainer</td><td>
@@ -660,6 +678,7 @@ Tar2FilesRename: directory/INSTALL:directory/INSTALL.txt</pre>
 CPPFLAGS: -I%p/include
 LDFLAGS: -L%p/lib
 </pre>
+<p>À partir de la version 0.26.0 de fink, il existe une exception à ces valeurs par défaut. Si le champ <tt style="white-space: nowrap;">Type: -64bit</tt> a pour valeur <tt style="white-space: nowrap;">-64bit</tt>, alors la valeur par défaut de la variable <tt style="white-space: nowrap;">LDFLAGS</tt> est <tt style="white-space: nowrap;">-L%p/%lib -L%p/lib</tt>.</p>
 <p>Puis, à partir de la version 0.17.0 de fink :</p>
 <pre>
 LD_PREBIND: 1
@@ -896,4 +915,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.69 2006/12/05 09:46:01 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.70 2006/12/10 19:15:26 michga Exp $</i></p></body></html>
