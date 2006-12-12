@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.en.xml,v 1.44 2006/09/23 23:52:44 alexkhansen Exp $
+Generated from $Fink: uguide.en.xml,v 1.45 2006/12/12 18:40:18 alexkhansen Exp $
 -->
 <title>Fink Documentation - Fink User's Guide</title></head><body>
 <table width="100%" cellspacing="0">
@@ -1250,7 +1250,7 @@ version and revision when they are not specified.  Others have different options
 There are some options, which apply to all fink commands. If you 
 type <tt style="white-space: nowrap;">fink --help</tt> you get the list of options: 
       </p>
-      <p>(as of <tt style="white-space: nowrap;">fink-0.24.6</tt>)</p>
+      <p>(as of <tt style="white-space: nowrap;">fink-0.26.0</tt>)</p>
       <p><b>-h, --help</b> - displays help text.
 </p>
       <p><b>-q, --quiet</b>  - causes <tt style="white-space: nowrap;">fink</tt> to be less verbose, opposite of <b>--verbose</b>.  Overrides the <a href="#conf.optional">Verbose</a> flag in <tt style="white-space: nowrap;">fink.conf</tt>.
@@ -1291,7 +1291,15 @@ type <tt style="white-space: nowrap;">fink --help</tt> you get the list of optio
       <p><b>-m, --maintainer</b>
             - (<tt style="white-space: nowrap;">fink-0.25</tt> and later) Perform actions useful to package maintainers: run validation on
            the <tt style="white-space: nowrap;">.info</tt> file before building and on the <tt style="white-space: nowrap;">.deb</tt> after building a
-           package; turn certain build-time warnings into fatal errors.</p>
+           package; turn certain build-time warnings into fatal errors; (<tt style="white-space: nowrap;">fink-0.26</tt> and later) run the test suites as specified in the  field.  This sets <b>--tests</b> and <b>--validate</b> to <tt style="white-space: nowrap;">on</tt>.</p>
+      <p><b>--tests[=on|off|warn]</b>         - (<tt style="white-space: nowrap;">fink-0.26.0</tt> and later) Causes <tt style="white-space: nowrap;">InfoTest</tt> fields to be activated and test suites specified
+           via <tt style="white-space: nowrap;">TestScript</tt> to be executed (see the <a href="../packaging/packaging.en.html#reference.fields">Fink Packaging Manual</a>).  If no argument is given to this
+           option or if the argument is <tt style="white-space: nowrap;">on</tt> then failures in test suites will
+           be considered fatal errors during builds.  If the argument is <tt style="white-space: nowrap;">warn</tt>
+           then failures will be treated as warnings.</p>
+      <p><b>--validate[=on|off|warn]</b> -
+           Causes packages to be validated during a build.  If no argument is
+           given to this option or if the argument is <tt style="white-space: nowrap;">on</tt> then validation failures will be considered fatal errors during builds.  If the argument is <tt style="white-space: nowrap;">warn</tt> then failures will be treated as warnings.</p>
       <p><b>-l, --log-output</b>
             - Save a copy of the terminal output during each package building
            process. By default, the file is stored in
@@ -1590,6 +1598,7 @@ Reruns the <tt style="white-space: nowrap;">fink</tt> configuration process.
 This will let you change your mirror sites and proxy settings, among
 others.
 </p>
+      <p><b>New in</b> <tt style="white-space: nowrap;">fink-0.26.0</tt>: This command will also let you turn on the unstable trees if desired.</p>
     
     <h3><a name="usage.selfupdate">6.18 selfupdate</a></h3>
       
@@ -1651,9 +1660,9 @@ the list of available packages in the binary distribution is also updated.
     <h3><a name="usage.cleanup">6.24 cleanup</a></h3>
       
       <p>
-   Removes obsolete package files (.info, .patch, .deb) if newer versions are available. 
-   This can reclaim large amounts of disk space.  One or more modes must be specified:</p>
-<pre>--debs               - Delete .deb files (compiled binary package archives)
+   Removes obsolete and temporary files. 
+   This can reclaim large amounts of disk space.  One or more modes may be specified:</p>
+      <pre>--debs               - Delete .deb files (compiled binary package archives)
                        corresponding to versions of packages that are neither
                        described by a package description (.info) file in the
                        currently-active trees nor presently installed.
@@ -1662,9 +1671,13 @@ the list of available packages in the binary distribution is also updated.
                        active trees.
 --buildlocks, --bl   - Delete stale buildlock packages.
 --dpkg-status        - Remove entries for packages that are not installed from
-                       the dpkg "status" database.</pre>
-<p>In addition, the following options may be used:</p>
-<pre>-k,--keep-src        - Move old source files to /sw/src/old/ instead of deleting them.
+                       the dpkg "status" database.
+--obsolete-packages  - Attempt to uninstall all installed packges that are
+                       obsolete. (new in fink-0.26.0)
+--all                - All of the above modes. (new in fink-0.26.0)</pre>
+      <p>If no mode is specified, <tt style="white-space: nowrap;">--debs --sources</tt> is the default action. </p>
+      <p>In addition, the following options may be used:</p>
+      <pre>-k,--keep-src        - Move old source files to /sw/src/old/ instead of deleting them.
 -d,--dry-run         - Print the names of the files that would be deleted, but
                        do not actually delete them.
 -h,--help            - Show the modes and options which are available.</pre>
@@ -1704,4 +1717,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.44 2006/09/23 23:52:44 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.45 2006/12/12 18:40:18 alexkhansen Exp $</i></p></body></html>
