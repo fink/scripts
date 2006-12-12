@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.fr.xml,v 1.37 2006/10/02 16:34:14 michga Exp $
+Generated from $Fink: uguide.fr.xml,v 1.38 2006/12/12 20:59:32 michga Exp $
 -->
 <title>Fink Documentation - Guide de l'utilisateur Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -601,7 +601,7 @@ main crypto
 
 <h3><a name="usage.options">6.2 Options globales</a></h3>
 
-<p>Ce sont des options qui s'appliquent à toutes les commandes <tt style="white-space: nowrap;">fink</tt> à partir de la <tt style="white-space: nowrap;">version 0.24.6</tt>. Pour obtenir la liste des options, exécutez <tt style="white-space: nowrap;">fink --help</tt> :</p>
+<p>Ce sont des options qui s'appliquent à toutes les commandes <tt style="white-space: nowrap;">fink</tt> à partir de la <tt style="white-space: nowrap;">version 0.26</tt>. Pour obtenir la liste des options, exécutez <tt style="white-space: nowrap;">fink --help</tt> :</p>
 <p><b>-h, --help</b> : affiche ce message d'aide.</p>
 <p><b>-q, --quiet</b> : diminue le niveau de verbosité de <tt style="white-space: nowrap;">fink</tt>, effet contraire à celui de --verbose. Prend le pas sur l'option <a href="#conf.optional">Verbose</a> du fichier <tt style="white-space: nowrap;">fink.conf</tt>.</p>
 <p><b>-V, --version</b> : affiche les informations de version.</p>
@@ -612,7 +612,9 @@ main crypto
 <p><b>-b, --use-binary-dist</b> : télécharge les paquets pré-compilés de la distribution binaire s'ils sont disponibles (pour réduire le temps de compilation ou l'encombrement du disque par exemple). Notez que, dans ce mode, <tt style="white-space: nowrap;">fink</tt> télécharge la version requise d'un paquet, si elle est disponible, mais ne force pas <tt style="white-space: nowrap;">fink</tt> à choisir la version en fonction de sa disponibilité binaire. Correspond à l'option <a href="#conf.downloading">UseBinaryDist</a> de <tt style="white-space: nowrap;">fink.conf</tt>.</p>
 <p><b>--no-use-binary-dist</b> : n'utilise pas les paquets pré-compilés de la distribution binaire (inverse de l'option --use-binary-dist). C'est l'option par défaut, à moins qu'elle ait été changée dans le fichier de configuration <tt style="white-space: nowrap;">fink.conf</tt> via une ligne <tt style="white-space: nowrap;">UseBinaryDist: true</tt>.</p>
 <p><b>--build-as-nobody</b> : utilise un utilisateur n'ayant pas de super privilèges pendant les phases de décompression, rustine, compilation et installation. Notez que les paquets avec cette option peuvent ne pas fonctionner. Vous ne devez utiliser ce mode que pour le développement ou le débogage des paquets.</p>
-<p><b>-m, --maintainer</b> : permet aux mainteneurs de paquets d'effectuer certaines opérations, telle la validation des fichiers <tt style="white-space: nowrap;">.info</tt> avant la compilation et des fichiers <tt style="white-space: nowrap;">.deb</tt> après la construction d'un paquet. Certains messages d'attention deviennent alors des messages d'erreur. Disponible à partir de la version 0.25 de <tt style="white-space: nowrap;">fink&gt;</tt>.</p>
+<p><b>-m, --maintainer</b> : permet aux mainteneurs de paquets d'effectuer certaines opérations, telle la validation des fichiers <tt style="white-space: nowrap;">.info</tt> avant la compilation et des fichiers <tt style="white-space: nowrap;">.deb</tt> après la construction d'un paquet. Certains messages d'attention deviennent alors des messages d'erreur. Disponible à partir de la version 0.25 de <tt style="white-space: nowrap;">fink</tt>. À partir de la version 0.26.0 de <tt style="white-space: nowrap;">fink</tt>, cette option active également les options <b>--tests</b> et <b>--validate</b>, ce qui entraîne l'exécution des séries de tests spécifiés dans le champ correspondant.</p>
+<p><b>--tests[=on|off|warn]</b> :  entraîne l'activation des champs <tt style="white-space: nowrap;">InfoTest</tt> et l'exécution des séries de tests spécifiés dans le script <tt style="white-space: nowrap;">TestScript</tt>. Voir <a href="../packaging/packaging.fr.html#reference.fields">Guide de création de paquets de Fink</a>). Si l'option ne comporte aucun argument ou si son argument est <tt style="white-space: nowrap;">on</tt>, alors les erreurs sur la série de tests seront considérées comme des erreurs fatales de construction du paquet. Si l'argument est <tt style="white-space: nowrap;">warn</tt>, les erreurs sur la série de tests seront traités comme des messages d'attention. Disponible à partir de la version 0.26 de <tt style="white-space: nowrap;">fink</tt>.</p>
+<p><b>--validate[=on|off|warn]</b> : permet de valider le paquet pendant sa construction. Si l'option ne comporte aucun argument ou si son argument est <tt style="white-space: nowrap;">on</tt>, alors les erreurs de validation seront considérées comme des erreurs fatales de construction du paquet. Si l'argument est <tt style="white-space: nowrap;">warn</tt>, les erreurs sur la validation seront traités comme des messages d'attention.</p>
 <p><b>-l, --log-output</b> : sauvegarde une copie de la sortie terminal lors de la compilation de paquets. Par défaut, le fichier est enregistré sous le nom de <tt style="white-space: nowrap;">/tmp/fink-build-log_[nom]-[version]-[révision]_[date]-[heure]</tt>, avec la date sous la forme année.mois.jour et l'heure sous la forme heure.minutes.secondes. Vous pouvez utiliser l'option <b>--logfile</b> pour changer le nom de la sauvegarde.</p>
 <p><b>--no-log-output</b> : ne sauvegarde pas la copie de la sortie terminal lors de la compilation de paquets. Inverse de l'option <b>--log-output</b>. C'est l'option par défaut.</p>
 <p><b>--logfile=nomdefichier</b> : sauvegarde les logs de compilation dans le fichier <tt style="white-space: nowrap;">nomdefichier</tt> au lieu de les sauvegarder dans le fichier par défaut (voir l'option <b>--log-output</b>, qui attribue implicitement une valeur par défaut à l'option <b>--logfile</b>). On peut utiliser les raccourcis pour inclure automatiquement des données spécifiques aux paquets. Voir la liste complète des raccourcis dans <a href="../packaging/packaging.fr.html">Création de paquets Fink</a>. Voici quelques raccourcis couramment utilisés :</p>
@@ -825,6 +827,7 @@ fink apropos -s=kde irc
 <h3><a name="usage.configure">6.17 configure - configurer</a></h3>
 
 <p>Réexécute le processus de configuration de <tt style="white-space: nowrap;">fink</tt>. Cela vous permet de changer les sites miroirs et les configurations proxy, entre autres.</p>
+<p>À partir de la version 0.26 de <tt style="white-space: nowrap;">fink</tt>, cette commande vous permet aussi d'activer les arborescences instables.</p>
 
 <h3><a name="usage.selfupdate">6.18 selfupdate - mise à jour automatique</a></h3>
 
@@ -868,16 +871,16 @@ fink apropos -s=kde irc
 
 <h3><a name="usage.cleanup">6.24 cleanup - épuration</a></h3>
 
-<p>Supprime les fichiers correspondants aux paquets obsolètes (.info, .patch, .deb) quand des versions plus récentes sont disponibles. Cela peut libérer une grande portion d'espace disque. On peut spécifier un ou plusieurs modes :</p>
+<p>Supprime les fichiers obsolètes et temporaires. Cela peut libérer une grande portion d'espace disque. On peut spécifier un ou plusieurs modes :</p>
 <pre>
 --debs
     Supprime les fichiers .deb
     (archives de paquets binaires compilés)
-    correspondant à la version des paquets
-    qui ne sont pas décrits dans un fichier
+    correspondant aux versions de paquets
+    qui ne sont ni décrits dans un fichier
     de description de paquets (fichier .info)
-    dans les arborescences actives ou
-    qui ne sont pas installés.
+    dans les arborescences actives ni
+    installés.
 --sources,--srcs
     Supprime les sources (archives tarballs, etc...)
     qui ne sont utilisés par aucun fichier de 
@@ -889,7 +892,16 @@ fink apropos -s=kde irc
 --dpkg-status
     Supprime dans la base de données
     "status" de dpkg les paquets qui
-    ne sont pas installés.</pre>
+    ne sont pas installés.
+--obsolete-packages 
+    Tenre de désinstaller tous les paquets
+    obsolètes installés.
+    À partir de la version 0.26.0 de fink.
+--all
+    Active tous les modes.
+    À partir de la version 0.26.0 de fink.
+</pre>
+<p>Si aucun mode n'est spécifié, les modes par défaut utilisés sont <tt style="white-space: nowrap;">--debs --sources</tt>.</p>
 <p>De plus, on peut utiliser les options suivantes :</p>
 <pre>
 -k,--keep-src
@@ -934,4 +946,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.fr.xml,v 1.37 2006/10/02 16:34:14 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.fr.xml,v 1.38 2006/12/12 20:59:32 michga Exp $</i></p></body></html>
