@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.en.xml,v 1.45 2006/12/12 18:40:18 alexkhansen Exp $
+Generated from $Fink: uguide.en.xml,v 1.46 2006/12/13 17:55:08 alexkhansen Exp $
 -->
 <title>Fink Documentation - Fink User's Guide</title></head><body>
 <table width="100%" cellspacing="0">
@@ -887,7 +887,7 @@ stable/main". This list should be kept in sync with the
 does this for you automatically.)
 </p><p>The order of the trees is meaningful, as packages from later trees in the list may
            override packages from earlier ones.</p>
-        </li>
+        -</li>
         <li>
           <p>
             <b>Distribution:</b> 10.1, 10.2-gcc3.3, 10.3, or 10.4</p>
@@ -1114,6 +1114,12 @@ MasterNever - Never use "Master" source mirrors.
 ClosestFirst - Search closest source mirrors first (combine all mirrors into one set).
 </pre>
         </li>
+        <li><p><b>Mirror-rsync:</b>
+           </p><p>(<tt style="white-space: nowrap;">fink-0.25.2</tt> and later) When doing <tt style="white-space: nowrap;">fink selfupdate</tt> with the <b>SelfupdateMethod</b> set to <tt style="white-space: nowrap;">rsync</tt>,
+           this is the rsync url to sync from.  This should be an anonymous
+           rsync url, pointing to a directory which contains all the fink Dis-
+           trubutions and Trees.
+</p></li>
       </ul>
     
     <h3><a name="conf.developer">5.7 Developer Settings</a></h3>
@@ -1717,4 +1723,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.45 2006/12/12 18:40:18 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.46 2006/12/13 17:55:08 alexkhansen Exp $</i></p></body></html>
