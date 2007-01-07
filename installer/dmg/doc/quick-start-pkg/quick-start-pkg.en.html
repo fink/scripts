@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.en.xml,v 1.8 2006/09/25 23:48:53 chris01 Exp $
+Generated from $Fink: quick-start-pkg.en.xml,v 1.9 2007/01/07 00:36:23 chris01 Exp $
 -->
 <title>Fink Documentation - Create a Fink Package - Tutorial</title></head><body>
 <table width="100%" cellspacing="0">
@@ -70,7 +70,7 @@ Read and try to understand the
 <li>
 Look at other, similar packages in your 
 <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo/</tt> directory or 
-<a href="http://fink.cvs.sourceforge.net/fink/dists/10.3/unstable/">
+<a href="http://fink.cvs.sourceforge.net/fink/dists/">
 in the online CVS repository</a> and take one (or several) info file(s) as 
 a starting point.
 </li>
@@ -146,7 +146,7 @@ about how to change the verbose level.
 Check if your package passes validation by running:
 </p>
 <pre>
-finkdev% fink validate packagename.info
+finkdev% fink validate /sw/fink/dists/local/main/finkinfo/packagename.info
 </pre>
 <p>
 If the validation passes try to build your package with:
@@ -224,8 +224,8 @@ If feasible add multiple items one at a time to the same tracker item
 (e.g. info and patch files).
 </li>
 <li>
-Add a note whether your package is intended for the <tt style="white-space: nowrap;">10.2-gcc3.3</tt> tree, 
-<tt style="white-space: nowrap;">10.3</tt> tree, or both,
+Add a note whether your package is intended for the <tt style="white-space: nowrap;">10.3</tt> tree, 
+<tt style="white-space: nowrap;">10.4</tt> tree, or both,
 </li>
 <li>
 which <tt style="white-space: nowrap;">section</tt> (graphics, sci, etc.) you feel it belongs in, and
@@ -608,4 +608,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.8 2006/09/25 23:48:53 chris01 Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.9 2007/01/07 00:36:23 chris01 Exp $</i></p></body></html>

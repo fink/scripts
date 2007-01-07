@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.fr.xml,v 1.7 2006/10/02 17:04:37 michga Exp $
+Generated from $Fink: quick-start-pkg.fr.xml,v 1.8 2007/01/07 00:36:23 chris01 Exp $
 -->
 <title>Fink Documentation - Création d'un paquet pour Fink - Tutoriel</title></head><body>
 <table width="100%" cellspacing="0">
@@ -42,7 +42,7 @@ finkdev% unecommandequelconque
 
 
 de lire et de tenter de comprendre l'<a href="#example.basics">exemple donné ici</a>.</li>
-<li>d'étudier d'autres paquets situés dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo/</tt> ou dans le <a href="http://fink.cvs.sourceforge.net/fink/dists/10.3/unstable/">répertoire central CVS en ligne</a> et de prendre un (ou plusieurs) fichier(s) info comme point de départ.</li>
+<li>d'étudier d'autres paquets situés dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo/</tt> ou dans le <a href="http://fink.cvs.sourceforge.net/fink/dists/">répertoire central CVS en ligne</a> et de prendre un (ou plusieurs) fichier(s) info comme point de départ.</li>
 <li>de rechercher dans le <a href="http://sourceforge.net/tracker/?atid=414256&amp;group_id=17203">Traqueur de soumissions de paquets</a> si quelqu'un a déjà essayé de construire le même paquet ou dans le <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Traqueur de demandes de paquets</a> s'il existe déjà une requête pour ce paquet. Vous y trouverez une mine de renseignements.</li>
 <li>de feuilleter le <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de création de paquets</a> si vous souhaitez de plus amples informations sur un sujet particulier.</li>
 </ul>
@@ -68,7 +68,7 @@ finkdev% fink index
 <p>Pendant le processus de validation de votre paquet, vous devez régler le niveau de verbosité de <tt style="white-space: nowrap;">fink</tt> à la plus haute valeur possible. Voir la section <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a> pour savoir comment le changer.</p>
 <p>Vérifiez que votre paquet est valide en exécutant :</p>
 <pre>
-finkdev% fink validate nomdupaquet.info
+finkdev% fink validate /sw/fink/dists/local/main/finkinfo/nomdupaquet.info
 </pre>
 <p>Si c'est le cas, essayez de construire le paquet en exécutant :</p>
 <pre>
@@ -99,7 +99,7 @@ finkdev% fink install nomdupaquet
 <p><b>Note :</b></p>
 <ul>
 <li>Si possible, ajoutez plusieurs éléments à la fois à la même soumission (c'est-à-dire les fichiers info et patch).</li>
-<li>Ajoutez un commentaire mentionnant que votre paquet est prévu pour l'arborescence <tt style="white-space: nowrap;">10.2-gcc3.3</tt>, <tt style="white-space: nowrap;">10.3</tt>  ou pour les deux</li>
+<li>Ajoutez un commentaire mentionnant que votre paquet est prévu pour l'arborescence <tt style="white-space: nowrap;">10.3</tt>, <tt style="white-space: nowrap;">10.4</tt> ou pour les deux</li>
 <li>Indiquez dans quelle <tt style="white-space: nowrap;">section</tt> (graphics, sci, etc...) vous pensez qu'il doit être mis</li>
 <li>Notez que vous avez exécuté <tt style="white-space: nowrap;">fink validate</tt> sur les fichiers info et .deb.</li>
 <li>Positionnez le champ <tt style="white-space: nowrap;">Group</tt> de l'élément sur <tt style="white-space: nowrap;">Undergoing Validation</tt> à la création de l'élément. Repositionnez-le sur <tt style="white-space: nowrap;">Undergoing Validation</tt> quand vous modifiez les fichiers après qu'un examinateur de soumissions de paquets vous ait demandé de corriger des problèmes dans votre paquet.</li>
@@ -357,4 +357,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.7 2006/10/02 17:04:37 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.8 2007/01/07 00:36:23 chris01 Exp $</i></p></body></html>
