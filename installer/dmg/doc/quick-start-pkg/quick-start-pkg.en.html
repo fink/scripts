@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.en.xml,v 1.9 2007/01/07 00:36:23 chris01 Exp $
+Generated from $Fink: quick-start-pkg.en.xml,v 1.10 2007/01/07 01:12:27 chris01 Exp $
 -->
 <title>Fink Documentation - Create a Fink Package - Tutorial</title></head><body>
 <table width="100%" cellspacing="0">
@@ -107,7 +107,14 @@ Make sure you are running an up-to-date <tt style="white-space: nowrap;">fink</t
 finkdev% fink selfupdate
 </pre>
 <p>
-Check if <tt style="white-space: nowrap;">fink</tt> found your package by typing:
+Now run
+</p>
+<pre>
+finkdev% fink configure
+</pre>
+<p>
+and set the verbosity level to the highest value and enable the unstable tree. 
+After that you should check if <tt style="white-space: nowrap;">fink</tt> found your package by typing:
 </p>
 <pre>
 finkdev% fink list packagename
@@ -216,7 +223,7 @@ add it to the Fink unstable tree if the package seems ready. If not you
 will be asked to bring the package into compliance with the policy.
 </p>
 <p>
-<b>Please note:</b>
+<b>Important:</b>
 </p>
 <ul>
 <li>
@@ -238,6 +245,9 @@ Set the <tt style="white-space: nowrap;">Group</tt> field of the tracker item to
 <tt style="white-space: nowrap;">Undergoing Validation</tt> when you create the new tracker. Also change it 
 back to <tt style="white-space: nowrap;">Undergoing Validation</tt> whenever you fixed problems package 
 reviewers found in your submission.
+</li>
+<li>
+Set the <tt style="white-space: nowrap;">Category</tt> field of the tracker item to the correct value.
 </li>
 </ul>
 
@@ -608,4 +618,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.9 2007/01/07 00:36:23 chris01 Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.10 2007/01/07 01:12:27 chris01 Exp $</i></p></body></html>
