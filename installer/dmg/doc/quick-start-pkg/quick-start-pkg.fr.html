@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.fr.xml,v 1.8 2007/01/07 00:36:23 chris01 Exp $
+Generated from $Fink: quick-start-pkg.fr.xml,v 1.9 2007/01/07 08:00:42 michga Exp $
 -->
 <title>Fink Documentation - Création d'un paquet pour Fink - Tutoriel</title></head><body>
 <table width="100%" cellspacing="0">
@@ -32,7 +32,7 @@ Nous commencerons par les généralités, puis nous verrons en détail la créat
 finkdev% unecommandequelconque
 </pre>
 <p>vous devrez alors saisir <tt style="white-space: nowrap;">unecommandequelconque</tt> dans Terminal.app ou dans tout autre terminal sur votre Mac.</p>
-<p>Vous devez d'abord assimiler quelques concepts de base sur la création de paquets pour Fink. Nous nous suggérons :</p>
+<p>Vous devez d'abord assimiler quelques concepts de base sur la création de paquets pour Fink. Nous vous suggérons :</p>
 <ul>
 <li>de lire <a href="http://fink.sourceforge.net/doc/UsingFink.pdf">Utilisation de Fink : un guide pour le développeur</a> (fichier pdf 2MB) - diapositives d'une présentation lors de la <a href="http://conferences.oreillynet.com/macosx2002/">Conférence O'Reilly Mac OS X</a>.
 </li>
@@ -53,7 +53,12 @@ de lire et de tenter de comprendre l'<a href="#example.basics">exemple donné ic
 <pre>
 finkdev% fink selfupdate
 </pre>
-<p>Vérifiez que <tt style="white-space: nowrap;">fink</tt> trouve votre paquet en exécutant :</p>
+<p>Exécutez ensuite :</p>
+<pre>
+finkdev% fink configure
+</pre>
+<p>pour passer le niveau de verbosité à sa plus grande valeur et activer l'arborescence instable.</p>
+<p>Vérifiez alors que <tt style="white-space: nowrap;">fink</tt> trouve votre paquet en exécutant :</p>
 <pre>
 finkdev% fink list nomdupaquet
 </pre>
@@ -96,13 +101,14 @@ finkdev% fink install nomdupaquet
 <h3><a name="howtostart.Submit">1.4 Soumission de votre paquet</a></h3>
 <p>Si toutes les étapes de vérification de votre paquet énoncées ci-dessus ont été franchies avec succès, vous pouvez soumettre le fichier info (et le fichier patch s'il existe) au <a href="http://sourceforge.net/tracker/?func=add&amp;group_id=17203&amp;atid=414256">Traqueur de soumissions de paquets</a>.</p>
 <p>Une personne se chargera d'examiner votre soumission et d'ajouter le paquet à la branche instable de Fink, si le paquet semble correct. Sinon, on vous demandera de mettre le paquet en accord avec les règles de Fink.</p>
-<p><b>Note :</b></p>
+<p><b>Note très importante :</b></p>
 <ul>
 <li>Si possible, ajoutez plusieurs éléments à la fois à la même soumission (c'est-à-dire les fichiers info et patch).</li>
-<li>Ajoutez un commentaire mentionnant que votre paquet est prévu pour l'arborescence <tt style="white-space: nowrap;">10.3</tt>, <tt style="white-space: nowrap;">10.4</tt> ou pour les deux</li>
-<li>Indiquez dans quelle <tt style="white-space: nowrap;">section</tt> (graphics, sci, etc...) vous pensez qu'il doit être mis</li>
+<li>Ajoutez un commentaire mentionnant que votre paquet est prévu soit pour l'arborescence <tt style="white-space: nowrap;">10.3</tt>, soit pour l'arborescence <tt style="white-space: nowrap;">10.4</tt>, ou bien encore pour les deux.</li>
+<li>Indiquez dans quelle <tt style="white-space: nowrap;">section</tt> (graphics, sci, etc...) vous pensez qu'il doit être mis.</li>
 <li>Notez que vous avez exécuté <tt style="white-space: nowrap;">fink validate</tt> sur les fichiers info et .deb.</li>
-<li>Positionnez le champ <tt style="white-space: nowrap;">Group</tt> de l'élément sur <tt style="white-space: nowrap;">Undergoing Validation</tt> à la création de l'élément. Repositionnez-le sur <tt style="white-space: nowrap;">Undergoing Validation</tt> quand vous modifiez les fichiers après qu'un examinateur de soumissions de paquets vous ait demandé de corriger des problèmes dans votre paquet.</li>
+<li>Lors de la création de l'élément dans le traqueur, positionnez le menu déroulant <tt style="white-space: nowrap;">Group</tt> sur <tt style="white-space: nowrap;">Undergoing Validation</tt>. Repositionnez-le sur <tt style="white-space: nowrap;">Undergoing Validation</tt> quand vous modifiez les fichiers après qu'un examinateur de soumissions de paquets vous ait demandé de corriger des problèmes dans votre paquet.</li>
+<li>Indiquez également à quelle catégorie appartient l'élément en choisissant une valeur dans le menu déroulant <tt style="white-space: nowrap;">Category</tt>.</li>
 </ul>
 
 <h2><a name="example">2 Exemple - le paquet Maxwell</a></h2>
@@ -357,4 +363,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.8 2007/01/07 00:36:23 chris01 Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.9 2007/01/07 08:00:42 michga Exp $</i></p></body></html>
