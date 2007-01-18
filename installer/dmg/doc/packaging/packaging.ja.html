@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.ja.xml,v 1.40 2006/09/19 05:54:30 babayoshihiko Exp $
+Generated from $Fink: packaging.ja.xml,v 1.41 2007/01/18 02:16:52 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Fink パッケージの作成方法</title></head><body>
 <table width="100%" cellspacing="0">
@@ -61,20 +61,20 @@ Available Languages:  |
 			
 			<p>
 				パッケージは3つの文字列で区別されます．
-				すなわち「パッケージ名」，「バージョン」と「版」です．
-				これらのいずれにも英小文字 (a から z)，数字 (0 から 9)， ダッシュ (-; 註: リビジョン中には使えません)，プラス (+)，ドット (.) のみが使えます．
+				すなわちパッケージ名，version と revision です．
+				これらのいずれにも英小文字 (a から z)，数字 (0 から 9)， ダッシュ (-; 註: revision 中には使えません)，プラス (+)，ドット (.) のみが使えます．
 				この他の字は使えません．
 				特に，大文字と下線 (_) が使えないことに注意して下さい．
 			</p>
 			<p>
 				「パッケージ名」にはソフトウェアの名前 (openssh など) をそのまま使います．
-				「バージョン」は「upstream バージョン」とも呼ばれますが，これには元となるソフトウェアパッケージのバージョンを使います．
-				「バージョン」には (2.9p1 のように) 数字以外を使っても構いません．
+				version は「upstream バージョン」とも呼ばれますが，これには元となるソフトウェアパッケージのバージョンを使います．
+				version には (2.9p1 のように) 数字以外を使っても構いません．
 				Fink も dpkg もそれらを認識してソートできます．
-				「版」はカウンタで，最初は 1 で始まり，パッケージ記述情報への変更回数に応じて 1 ずつ増加します．
+				revision はカウンタで，最初は 1 で始まり，パッケージ記述情報への変更回数に応じて 1 ずつ増加します．
 				「upstream バージョン」が変化すると再び 1 に戻ります．
-				「版」にダッシュを使ってはいけません．
-				Fink パッケージの正式名称は「パッケージ名」，「バージョン」と「版」をダッシュでつないだもので，
+				revision にダッシュを使ってはいけません．
+				Fink パッケージの正式名称はパッケージ名，version と revision をダッシュでつないだもので，
 				"openssh-2.9p1-2" などという形式になります．
 			</p>
 		
@@ -89,6 +89,11 @@ Available Languages:  |
 				パッケージ記述ファイルの名前は，Fink パッケージの正式名称に拡張子 ".info" を付けたものです．
 				Fink 0.13.0 以降では，パッケージのアップデートの手間を省くための，
 				「パッケージ名」に拡張子 ".info" を付けただけの簡略形式が便利です．
+fink 0.26.0 の時点で，ファイル名を特定するにはいくつかの方法があります:
+推奨されるのは，他の必要なパッケージファイルと整合性のとれる最も短いものです．
+ファイル名の形式は: 亜種のないパッケージ名，オプションとして architecture，オプションとして distribution，オプションとして　version または version-revision，を
+ハイフンでつなぎ，".info" で終えます．
+"architecture" と "distribution" は，対応するフィールドが定義され，値を一つだけ持つ場合に限ります．
 			</p>
 			<p>
 				パッケージ記述ツリーはいくつかの階層のディレクトリにまとめられています．
@@ -101,14 +106,14 @@ Available Languages:  |
 				</li>
 				<li>
 					ディストリビューション．
-					<tt style="white-space: nowrap;">stable</tt>,<tt style="white-space: nowrap;">unstable</tt>, <tt style="white-space: nowrap;">local</tt> に分かれる．
+					<tt style="white-space: nowrap;">stable</tt>, <tt style="white-space: nowrap;">unstable</tt>, <tt style="white-space: nowrap;">local</tt> に分かれる．
 					ディレクトリ <tt style="white-space: nowrap;">local</tt> は各システムの管理者とユーザが管理する．
 					ディレクトリ <tt style="white-space: nowrap;">stable</tt> と <tt style="white-space: nowrap;">unstable</tt> は Fink システムの一部．
 				</li>
 				<li>
 					ツリー．
 					ツリー <tt style="white-space: nowrap;">main</tt> にはパッケージの大部分が含まれる．
-					暗号を使うソフトウェアは別ツリー <tt style="white-space: nowrap;">crypto</tt> に収められ，必要とあらば簡単に取り除ける．
+					暗号を使うソフトウェアは別ツリー <tt style="white-space: nowrap;">crypto</tt> に収められ，必要であれば簡単に取り除ける．
 				</li>
 				<li>
 					<tt style="white-space: nowrap;">finkinfo</tt> または <tt style="white-space: nowrap;">binary-darwin-powerpc</tt>．
@@ -238,7 +243,7 @@ SplitOff: &lt;&lt;
 						</p>
 					</td></tr><tr valign="top"><td>%i</td><td>
 						<p>
-							the full <b>i</b>nstall-phase prefix．インストール段階での一時インストールディレクトリの完全名． %d%p と等価．
+							完全な <b>i</b>nstall-phase prefix．インストール段階での一時インストールディレクトリの完全名． %d%p と等価．
 						</p>
 					</td></tr><tr valign="top"><td>%I</td><td>
 						<p>
@@ -271,6 +276,8 @@ SplitOff: &lt;&lt;
 					</td></tr><tr valign="top"><td>%c</td><td>
 						<p>
 							configure に渡すパラメータ: <tt style="white-space: nowrap;">--prefix=%p</tt> の他，フィールド <tt style="white-space: nowrap;">ConfigureParams</tt> で指定したもの全て．
+(<tt style="white-space: nowrap;">Type: perl</tt> を持つパッケージについては，挙動が異なる;
+この場合，%c 中の <tt style="white-space: nowrap;">--prefix=%p</tt> の代わりに，perl パッケージをビルドする既定フラグが用いられる．)
 						</p>
 					</td></tr><tr valign="top"><td>%m</td><td>
 						<p>
@@ -285,13 +292,16 @@ SplitOff: &lt;&lt;
 							展開は厳密に左から右に行われるので， %%n はパッケージ名とは一切関係なく，単なる文字列 %n を表すことになる．
 							(fink-0.18.0 で導入)
 						</p>
-					</td></tr><tr valign="top"><td>%type_raw[<b>タイプ</b>], %type_pkg[<b>タイプ</b>]</td><td>
+					</td></tr><tr valign="top"><td>%type_raw[<b>タイプ</b>], %type_pkg[<b>タイプ</b>],
+					%type_num[<b>タイプ</b>]</td><td>
 						<p>
 							指定された <b>タイプ</b> のサブタイプを返す疑似ハッシュ．
 							詳細は後述のフィールド <tt style="white-space: nowrap;">Type</tt> の解説を参照．
 							_raw 形式はサブタイプの文字列をそのまま返すが， _pkg 形式はドット (.) を 全て取り除いた文字列を返す．
 							(Fink のパッケージ命名規約の「プログラミング言語-バージョン」方式に使う．他にもうまい使い方があるかも)．
 							(0.19.2 CVS 版以降の Fink で利用可能)
+_num 式 は fink-0.26.0 より導入．
+<tt style="white-space: nowrap;">Type</tt> から数字以外を全て除く．
 						</p>
 					</td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 						<p>
@@ -314,6 +324,14 @@ SplitOff: &lt;&lt;
 <p>
 <tt style="white-space: nowrap;">PatchFile</tt> フィールドで示されたファイルのフルパス．
 (fink-0.24.12 にて導入)
+</p>
+</td></tr><tr valign="top"><td>%lib</td><td>
+<p>
+<tt style="white-space: nowrap;">Type: -64bit</tt>　が <tt style="white-space: nowrap;">-64bit</tt>と定義されている場合，
+powerpc マシン上では <b>lib/ppc64</b> と拡張され，
+intel マシン上では <b>lib/x86_64</b> と拡張されます (64-bit ライブラリの正しい保存場所)．
+それ以外は， <b>lib</b> と拡張されます．
+(fink-0.26.0 で導入)
 </p>
 </td></tr></table>
 		
@@ -449,7 +467,9 @@ SplitOff: &lt;&lt;
 			
 			<p>
 				Fink は共有ライブラリに関して新しいポリシーを定め， 2002 年 2 月から施行しています．
-				以下では Fink 0.5.0 と共に公布された，共有ライブラリについてのポリシー第 4 版について説明します．
+				以下では Fink 0.5.0 と共に公布された，共有ライブラリについてのポリシー第 4 版
+				(及び 64bit ライブラリを扱うために2006年12月の変更)
+				について説明します．
 				最初に要点をかいつまんで述べ，後から詳細に移ります．
 			</p>
 			<p>
@@ -460,7 +480,7 @@ SplitOff: &lt;&lt;
 			</p>
 			<ul>
 				<li>
-					コマンド <tt style="white-space: nowrap;">otool -L</tt> を使い，各ライブラリの install_name ，互換性，バージョンが適切か確認する．
+					コマンド <tt style="white-space: nowrap;">otool -L</tt> (64bit ライブラリの場合は otool64 -L) を使い，各ライブラリの install_name ，互換性，バージョンが適切か確認する．
 				</li>
 				<li>
 					共有ライブラリを別パッケージとし (例外は libfoo.dylib から install_name へのリンク) ，
@@ -589,7 +609,7 @@ BuildDependsOnly: True
 			<p>
 				「メジャーバージョン」が N の共有ライブラリをビルドするとき，その共有ライブラリの "install_name" が
 				<tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt> になることが重要です．
-				(install_name は，ライブラリに対し <tt style="white-space: nowrap;">otool -L</tt> を実行すれば分かります．)
+				(install_name は，ライブラリに対し <tt style="white-space: nowrap;">otool -L</tt>，64bit ライブラリの場合は <tt style="white-space: nowrap;">otool64 -L</tt> を実行すれば分かります．)
 				実際のライブラリファイルのインストール先は，
 			</p>
 <pre>
@@ -612,7 +632,7 @@ BuildDependsOnly: True
 				パッケージが libtool を利用する場合，上記のことはほぼ自動的に処理されますが，
 				どの段階でも処理が適切に行われたか確認する必要があります．
 				また，共有ライブラリの current_version と compatibility_version が適切に定義されているかどうかも確認して下さい．
-				(これらも <tt style="white-space: nowrap;">otool -L</tt> で表示されます．)
+				(これらも <tt style="white-space: nowrap;">otool -L</tt> または 64bit ライブラリの場合 <tt style="white-space: nowrap;">otool64 -L</tt> で表示されます．)
 			</p>
 			<p>
 				次に，ファイルを以下のように 2 つのパッケージに分類します．
@@ -715,23 +735,30 @@ SplitOff: &lt;&lt;
 			</p>
 			<p><b>フィールド Shlibs:</b></p>
 			<p>
-				共有ライブラリを適切なパッケージに分類する他に， Fink ポリシー第 4版では，
-				共有ライブラリ全てをフィールド <tt style="white-space: nowrap;">Shlibs</tt> を使って宣言しなければいけません．
-				このフィールドでは，各共有ライブラリに対して 1 行ずつ 1) ライブラリの -install_name， 2) ライブラリの -compatibility_version，
-				3) そのライブラリを提供する Fink パッケージを指定するバージョン付き依存性情報
-				(ただし -compatibility_version が同じでなければならない) を記します．
-				依存性情報は <tt style="white-space: nowrap;">foo (&gt;= バージョン-版)</tt> という形式で示します．
-				ここで <tt style="white-space: nowrap;">バージョン-版</tt> にはこの (-compatibility_version が同じ) ライブラリを利用可能にしてくれる
-				Fink パッケージの<b>最初</b>の「バージョン」を使います．
-				例えば次の宣言は，
+共有ライブラリを適切なパッケージに分類する他にも， Fink ポリシー第 4版では，
+共有ライブラリ全てをフィールド <tt style="white-space: nowrap;">Shlibs</tt> を使って宣言することが求められています．
+
+このフィールドでは，各共有ライブラリに対して 1 行ずつ，
+1) ライブラリの <tt style="white-space: nowrap;">-install_name</tt>， 
+2) ライブラリの <tt style="white-space: nowrap;">-compatibility_version</tt>，
+3) そのライブラリを提供する Fink パッケージを指定するバージョン付き依存性情報
+(ただし -compatibility_version が同じでなければならない)，
+そしてライブラリのアーキテクチャ (値は "32", "64", または
+"32-64", あるいは空欄; 空欄時の既定値は "32" ．) 
+
+を記します．
+依存性情報は <tt style="white-space: nowrap;">foo (&gt;= バージョン-版)</tt> という形式で示します．
+ここで <tt style="white-space: nowrap;">バージョン-版</tt> にはこの (-compatibility_version が同じ) ライブラリを利用可能にしてくれる
+Fink パッケージの<b>最初</b>の「バージョン」を使います．
+例えば次の宣言は，
 			</p>
 <pre>
 Shlibs: &lt;&lt;
-%p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2)
+%p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2) 32
 &lt;&lt;
 </pre>
 			<p>
-				<tt style="white-space: nowrap;">-install_name</tt> が %p/lib/bar.1.dylib で <tt style="white-space: nowrap;">-compatibility_version</tt> が 2.1.0 のライブラリが，
+				<tt style="white-space: nowrap;">-install_name</tt> が %p/lib/bar.1.dylib で <tt style="white-space: nowrap;">-compatibility_version</tt> が 2.1.0 の (32bit) ライブラリが，
 				Fink パッケージ <b>bar1</b> の「バージョン」1.1-2 以降でインストールされることを示します．
 				それに加え，この宣言は「この名前がついていて compatibility_version が少なくとも 2.1.0 のライブラリは，
 				Fink パッケージ bar1 の今後のバージョンには必ず含まれている」というメンテナからの保証にも相当します．
@@ -1058,7 +1085,15 @@ InstallScript: &lt;&lt;
 							<tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> は，互換性の観点から問題があります．
 							<tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> または単に <tt style="white-space: nowrap;">powerpc-apple-darwin</tt> とします．
 						</p>
-					</td></tr><tr valign="top"><td>
+					</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/lib/ppc64</tt>
+<tt style="white-space: nowrap;">/sw/lib/x86_64</tt></td><td>
+<p>
+このディレクトリは 64-bit ライブラリ用で，
+powerpc アーチテクチャーでは <tt style="white-space: nowrap;">/sw/lib/ppc64</tt> が，
+i386 アーチテクチャーでは <tt style="white-space: nowrap;">/sw/lib/x86_64</tt> が用いられます．
+'fat' としてビルドされたライブラリは， <tt style="white-space: nowrap;">/sw/lib</tt> に保存されます．
+</p>
+</td></tr><tr valign="top"><td>
 						<tt style="white-space: nowrap;">/sw/share</tt>
 					</td><td>
 						<p>
@@ -1457,6 +1492,27 @@ CompileScript:  &lt;&lt;
 &lt;&lt;
 &lt;&lt;
 </pre>
+<p>
+fink 0.26.0 より， <tt style="white-space: nowrap;">Type: -64bit</tt> によって新しいパーセント展開 <tt style="white-space: nowrap;">%lib</tt> を制御することができます．
+また，<tt style="white-space: nowrap;">LDFLAGS</tt> の既定値も変更になりました．
+こちらも新しい式 %type_num[] と用いることで，ライブラリの 32-bit バージョンと 64-bit バージョンを一つの .info ファイルから作ることが可能になりました．
+以下はサンプルコードです:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: foo%type_pkg[-64bit]
+Type: -64bit (boolean)
+Depends: (%type_raw[-64bit] = -64bit) 64bit-cpu
+ConfigureParams: --libdir='${prefix}/%lib'
+SplitOff: &lt;&lt;
+ Package: %N-shlibs
+ Files: %lib/libfoo.*.dylib
+ Shlibs: &lt;&lt;
+    %p/%lib/libfoo.1.dylib 1.0.0 %n (&gt;= 1.0-1) %type_num[-64bit]
+  &lt;&lt;
+&lt;&lt;
+&lt;&lt;
+</pre>
 					</td></tr><tr valign="top"><td>License</td><td>
 						<p>
 							パッケージ配布の際にパッケージの従うライセンスの性質を表す．
@@ -1492,6 +1548,12 @@ CompileScript:  &lt;&lt;
 <tt style="white-space: nowrap;">Info2</tt> (fink&gt;=0.20.0): 
 .info ファイル中のメインの <tt style="white-space: nowrap;">Package</tt> フィールドでのパーセント展開の使用．
 <tt style="white-space: nowrap;">SplitOff</tt> (および <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>) での <tt style="white-space: nowrap;">%type_*</tt> パーセント展開の使用．
+</li>
+<li>
+<tt style="white-space: nowrap;">Info3</tt> (fink&gt;=0.25.0): 
+.info ファイル中でインデントを正しく扱うことができる．
+RFC-822 複数業のサポートは終了．
+pkglist フィールドにコメントが可能．
 </li>
 </ul>
 					</td></tr></table>
@@ -1963,10 +2025,12 @@ patch -p1 &lt; %{PatchFile}
 CPPFLAGS: -I%p/include
 LDFLAGS: -L%p/lib
 </pre>
-						<p>
-fink-0.17.0 より，10.4-transitional ディストリビューションまで，以下の値が設定されます
-(が，10.4 以降では設定されません)．
-						</p>
+<p>fink 0.26.0 より，これらの既定値に例外が一つあります．
+<tt style="white-space: nowrap;">Type: -64bit</tt> が <tt style="white-space: nowrap;">-64bit</tt> と定義されている場合，
+<tt style="white-space: nowrap;">LDFLAGS</tt> は <tt style="white-space: nowrap;">-L%p/%lib -L%p/lib</tt> となります．
+</p>
+<p>fink-0.17.0 より，10.4-transitional ディストリビューションまで，以下の値が設定されます
+(が，10.4 以降では設定されません)．</p>
 <pre>
 LD_PREBIND: 1
 LD_PREBIND_ALLOW_OVERLAP: 1
@@ -1984,16 +2048,18 @@ LD_SEG_ADDR_TABLE: $basepath/var/lib/fink/prebound/seg_addr_table
 							例えば，LDFLAGS を unset のままにしたい場合， <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> とします．
 						</p>
 					</td></tr><tr valign="top"><td>ConfigureParams</td><td>
-						<p>
-							configure スクリプトに渡す付加的なパラメータ．
-							(詳細は CompileScript を参照)
-							ビルド時にテストスイートが有効な場合，<tt style="white-space: nowrap;">TestConfigureParams</tt>
-							の値がここに追加されます．
-
-							バージョン 0.13.7 以降の Fink では，
-							このパラメータは <tt style="white-space: nowrap;">Type: Perl</tt> となっている perl モジュールにも使えます．
-							その場合，指定した値はデフォルトの文字列 perl Makefile.PL の後ろに追加されます．
-						</p>
+<p>
+configure スクリプトに渡す付加的なパラメータ．
+(詳細は CompileScript を参照)
+<tt style="white-space: nowrap;">Type: Perl</tt> となっていないパッケージに関しては，
+パラメータ <tt style="white-space: nowrap;">--prefix=%p</tt> が，この値の前に追加されます．
+fink &gt; 0.13.7　からは，このフィールドは perl モジュール <tt style="white-space: nowrap;">Type: Perl</tt> にも適用されます;
+既定の perl Makefile.PL 文字列が， <tt style="white-space: nowrap;">ConfigureParams</tt> に与えられる値の前に追加されます．
+</p>
+<p>
+テストスイートが有効でビルドする場合，<tt style="white-space: nowrap;">TestConfigureParams</tt>
+の値が 通常の <tt style="white-space: nowrap;">ConfigureParams</tt> の後に追加されます．
+</p>
 						<p>
 							fink-0.22.0 より，このフィールドは条件をサポートする．
 							文法は <tt style="white-space: nowrap;">Depends</tt> や他のパッケージ一覧フィールドと同様です．
@@ -2251,10 +2317,14 @@ INSTALLSCRIPT=%i/bin
 						<p>
 							<b>Fink 0.11.0 で導入:</b>
 							このフィールドでは，そのパッケージでインストールされる共有ライブラリを指定します．
-							各共有ライブラリ毎に1行ずつ，空白文字で区切った以下の3項目を記述します．
-							1) ライブラリの <tt style="white-space: nowrap;">-install_name</tt> 2) ライブラリの <tt style="white-space: nowrap;">-compatibility_version</tt>
+							各共有ライブラリ毎に1行ずつ，空白文字で区切った以下の 3 あるいは 4 項目を記述します．
+							1) ライブラリの <tt style="white-space: nowrap;">-install_name</tt>
+							2) ライブラリの <tt style="white-space: nowrap;">-compatibility_version</tt>
 							3) そのライブラリを提供する Fink パッケージを指定するバージョン付き依存性情報
 							(ただし -compatibility_version が同じでなければならない)．
+							4) ライブラリのアーキテクチャ
+							(値は "32", "64", または
+                             "32-64", あるいは空欄; 空欄時の既定値は "32" ．) 
 							依存情報は <tt style="white-space: nowrap;">foo (&gt;= バージョン-版)</tt> という型式で指定しなければいけません．
 							ここで <tt style="white-space: nowrap;">バージョン-版</tt> は， (互換性バージョンの同じ) そのライブラリを利用可能にしてくれる Fink パッケージの
 							<b>一番古い</b>バージョンを指します．
@@ -2339,7 +2409,7 @@ AnotherVar: foo bar
 						</ul>
 						<p>
 							補足説明: アップグレードは新バージョンの ...InstScript と，旧バージョンの ...RmScript を実行します．
-							詳細については the Debian Policy Manual,
+							詳細については Debian Policy Manual,
 							<a href="http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html">第6章</a> を参照．
 						</p>
 						<p>
@@ -2466,9 +2536,9 @@ AnotherVar: foo bar
 <pre>
 Package: mime-base64-pm%type_pkg[perl]
 Type: perl (5.8.1 5.8.6)
-SplitOff: %lt;%lt;
+SplitOff: &lt;&lt;
   Package: mime-base64-pm-bin
-%lt;%lt;
+&lt;&lt;
 </pre>
 			<p>
 				インストール段階では，まず親パッケージの <tt style="white-space: nowrap;">InstallScript</tt> と <tt style="white-space: nowrap;">DocFiles</tt> が実行されます．
@@ -2593,4 +2663,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.40 2006/09/19 05:54:30 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.41 2007/01/18 02:16:52 babayoshihiko Exp $</i></p></body></html>

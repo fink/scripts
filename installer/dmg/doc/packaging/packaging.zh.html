@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.zh.xml,v 1.28 2006/09/19 05:54:30 babayoshihiko Exp $
+Generated from $Fink: packaging.zh.xml,v 1.29 2007/01/18 02:16:52 babayoshihiko Exp $
 -->
 <title>Fink Documentation - 创建 Fink 软件包</title></head><body>
 <table width="100%" cellspacing="0">
@@ -82,6 +82,19 @@ fink 和 dpkg 都知道如何正确地给它们排序。
 <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> 中的 "Trees" 设置控制会控制应该读取那个目录。
 软件包描述文件的名字必须要软件包全名加上 ".info" 扩展名组成。
 从 fink 0.13.0 开始，为了简化软件包的升级，也可以允许简单地使用软件包加 ".info" 来组成。
+
+As of fink 0.26.0, there are several different ways to specify the
+filename: it is recommended to use the shortest version which is
+consistent with other needed package files.  The filename takes
+the form: the invariant packagename, optionally 
+followed by the architecture, optionally followed by the
+distribution, 
+optionally followed by either version or version-revision, each delimited by 
+hyphens, concluding with ".info".  
+The "architecture" and "distribution" components are only allowed
+if the corresponding field is present in the package, and if it specifies
+exactly one value.
+
 </p>
 <p>
 到软件包描述文件的目录树由几层目录组成。
@@ -235,6 +248,12 @@ the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;"
 </td></tr><tr valign="top"><td>%c</td><td>
 <p>
 <b>c</b>onfigure 命令将使用的参数：<tt style="white-space: nowrap;">--prefix=%p</tt> 加上 ConfigureParams 指定的其它参数。
+
+(The behavior is different when the package
+has <tt style="white-space: nowrap;">Type: perl</tt>; in that case, the default flags for
+building a perl package are used instead of <tt style="white-space: nowrap;">--prefix=%p</tt>
+in the definition of <tt style="white-space: nowrap;">%c</tt>.)
+
 </p>
 </td></tr><tr valign="top"><td>%m</td><td>
 <p>
@@ -245,12 +264,17 @@ the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;"
 <p>
 百分号字符（它部分展开后面跟着它的东西）。展开严格按照从左到右的顺序进行，所以 %%n 和软件包名没有关系，而只是字符串 %n。（从 fink-0.18.0 开始引入）
 </p>
-</td></tr><tr valign="top"><td>%type_raw[<b>类型</b>], %type_pkg[<b>类型</b>]</td><td>
+</td></tr><tr valign="top"><td>%type_raw[<b>类型</b>], %type_pkg[<b>类型</b>],
+%type_num[<b>类型</b>]</td><td>
 <p>
 对给定<b>类型</b>返回的代表子类型的伪哈希值。
 查阅本文档后面关于 <tt style="white-space: nowrap;">Type</tt> 字段的内容。
 _raw 形式表明使用子类型字符串的精确形式，
 _pkg 形式表明使用去除句点之后的形式(就好象 Fink 的语言版本软件包的命名约定一样)。(在 fink 的 CVS 0.19.2 后版本中引入)。
+
+The _num form was introduced in fink-0.26.0
+and removes all non-digits from the <tt style="white-space: nowrap;">Type</tt> field.
+
 </p>
 </td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>
@@ -273,6 +297,14 @@ package is blank. (Introduced in fink-0.20.6)
 <p>
 The full path to the file given in the <tt style="white-space: nowrap;">PatchFile</tt> field.
 (Introduced in fink-0.24.12)
+</p>
+</td></tr><tr valign="top"><td>%lib</td><td>
+<p>
+If <tt style="white-space: nowrap;">Type: -64bit</tt> is defined to be <tt style="white-space: nowrap;">-64bit</tt>,
+this expands to <b>lib/ppc64</b> on powerpc machines, and to
+<b>lib/x86_64</b> on intel machines (the proper storage locations
+for 64-bit libraries); otherwise, this expands to <b>lib</b>.
+(Introduced in fink-0.26.0)
 </p>
 </td></tr></table>
 
@@ -381,12 +413,13 @@ Fink 是一个安装在基本系统之外的独立目录里面的外加的软件
 <h3><a name="policy.sharedlibs">3.4 共享函数库</a></h3>
 <p>
 Fink 对于共享库有了新的规则，它从 2002 年 2 月开始生效。
-本段内容讨论的是规则的第四版，它是与 Fink's 0.5.0 一同发布的。
+本段内容讨论的是规则的第四版，它是与 Fink's 0.5.0 一同发布的
+(as well as some updates from December, 2006 to handle 64bit libraries)。
 我们首先以一个简要的概括开始，然后讨论更多的细节问题。
 </p><p>
 任何会产生共享库的软件包，无论它是⑴被放在稳定树中，或是⑵一个新的软件包，都应该使得他们的库满足 Fink 的规则。即：</p>
 <ul>
-<li>   使用 <tt style="white-space: nowrap;">otool -L</tt> 验证每个库的安装名（install_name），兼容性和当前版本号是正确的。</li>
+<li>   使用 <tt style="white-space: nowrap;">otool -L</tt> (或 otool64 -L for 64bit libraries) 验证每个库的安装名（install_name），兼容性和当前版本号是正确的。</li>
 <li>   把共享库放到一个单独的软件包（除了从 libfoo.dylib 连接 install_name 的以外），并在软件包中包括 <tt style="white-space: nowrap;">Shlibs</tt> 字段</li>
 <li>   把头文件以最终从 libfoo.dylib 的连接放到一个软件包中，并分类为： <tt style="white-space: nowrap;">BuildDependsOnly: True</tt>，应该不会有其他软件包会依赖它。</li>
 </ul>
@@ -442,7 +475,7 @@ barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，
 </p><p>
 如果你的软件包包括共享库和二进制文件，而且二进制文件需要在运行时使用（而不仅仅时编译时），那么这些二进制文件应该被分离到第三个软件包中，这个软件包命名为 barN-bin。其它软件包可以依赖于 barN-shlibs 及 barN-bin。
 </p><p>
-当编译主版本号为 N 的共享库时，很重要的是要使 <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt> 来作为 "install_name"。（你可以用 <tt style="white-space: nowrap;">otool -L</tt> 来查看你的库的 install_name）。实际的库文件应该被安装在
+当编译主版本号为 N 的共享库时，很重要的是要使 <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt> 来作为 "install_name"。（你可以用 <tt style="white-space: nowrap;">otool -L</tt> 或 otool64 -L for 64bit libraries 来查看你的库的 install_name）。实际的库文件应该被安装在
 </p>
 <pre>
   %i/lib/bar.N.x.y.dylib
@@ -463,7 +496,7 @@ barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，
 <p>
 如果软件包使用 libtool，这些事情通常会被自动处理，
 但无论任何情况下，你都应该检查结果时候正确。你还应该检查你的共享库是否已经定义了正确的 current_version 和 compatibility_version 值（
-<tt style="white-space: nowrap;">otool -L</tt> 应该也可以查询得到这些设置值）。
+<tt style="white-space: nowrap;">otool -L</tt> 或 <tt style="white-space: nowrap;">otool64 -L</tt> for 64bit libraries 应该也可以查询得到这些设置值）。
 </p><p>
 文件应该象下面一样分到两个文件包中
 </p>
@@ -560,14 +593,21 @@ a .deb with header files and a static library as well.)
 
 <p><b>Shlibs 字段：</b>
 </p><p>
-除了把共享库放到合适的软件包中外，作为规则版本 4，你还需要用 <tt style="white-space: nowrap;">Shlibs</tt> 字段声明全部共享库。这个字段每个共享库占一行，这行中包含库的 <tt style="white-space: nowrap;">-install_name</tt>，<tt style="white-space: nowrap;">-compatibility_version</tt>，以及版本依赖信息，这个信息指明在本兼容版本中提供库的 Fink 软件包。依赖关系应该用 <tt style="white-space: nowrap;">foo (&gt;= version-revision)</tt> 的形式指明。其中
+除了把共享库放到合适的软件包中外，作为规则版本 4，你还需要用 <tt style="white-space: nowrap;">Shlibs</tt> 字段声明全部共享库。
+这个字段每个共享库占一行，这行中包含库的 <tt style="white-space: nowrap;">-install_name</tt>，<tt style="white-space: nowrap;">-compatibility_version</tt>
+
+，and the library architecture.  (The library architecture may either be "32", "64", or
+"32-64", and may be absent; the value defaults to "32" if it is absent.) 
+
+以及版本依赖信息，这个信息指明在本兼容版本中提供库的 Fink 软件包。
+依赖关系应该用 <tt style="white-space: nowrap;">foo (&gt;= version-revision)</tt> 的形式指明。其中
 <tt style="white-space: nowrap;">version-revision</tt> 指提供这个与（本版本兼容）的共享库的 Fink 软件包的<b>第一个</b>版本。例如，这样</p>
 <pre>
   Shlibs: &lt;&lt;
-    %p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2)
+    %p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2) 32
   &lt;&lt;
 </pre>
-<p>一个声明表示从 <b>bar1</b> 软件包的版本 1.1-2 开始，已经开始安装一个 <tt style="white-space: nowrap;">-install_name</tt> 为 %p/lib/bar.1.dylib，<tt style="white-space: nowrap;">-compatibiliary_version</tt> 为 2.1.0 的函数库。另外，这个声明还表示维护者承诺这个名字及 compatibility-version 至少为 2.1.0 以上的函数库可以在 <b>bar1</b> 软件包的以后版本中找到。
+<p>一个声明表示从 <b>bar1</b> 软件包的版本 1.1-2 开始，已经开始安装一个 <tt style="white-space: nowrap;">-install_name</tt> 为 %p/lib/bar.1.dylib，<tt style="white-space: nowrap;">-compatibiliary_version</tt> 为 2.1.0 的函数库。另外，这个声明还表示维护者承诺这个名字及 compatibility-version 至少为 2.1.0 以上的 (32bit) 函数库可以在 <b>bar1</b> 软件包的以后版本中找到。
 </p><p>
 注意在库的名字中使用 %p，这使得无论他们选择什么安装路径前缀，Fink 的所有用户都可以找到正确的 <tt style="white-space: nowrap;">-install_name</tt> 代表的函数库。
 </p><p>
@@ -837,6 +877,17 @@ directories.
 <tt style="white-space: nowrap;">powerpc-apple-darwin1.3.3</tt> 这样的目录对兼容性是不利的，<tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> 或仅仅是
 <tt style="white-space: nowrap;">powerpc-apple-darwin</tt> 是个好些的选择。
 </p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/lib/ppc64</tt>
+<tt style="white-space: nowrap;">/sw/lib/x86_64</tt></td><td>
+
+<p>
+This directory is for 64-bit libraries, with <tt style="white-space: nowrap;">/sw/lib/ppc64</tt>
+being used under powerpc architecture, and
+<tt style="white-space: nowrap;">/sw/lib/x86_64</tt> being used under i386 architecture.
+Libraries which have been built 'fat' should be stored in
+<tt style="white-space: nowrap;">/sw/lib</tt> instead.
+</p>
+
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share</tt></td><td>
 <p>
 这个目录是存放那些系统体系架构无关的数据文件。
@@ -1206,6 +1257,31 @@ CompileScript:  &lt;&lt;
 &lt;&lt;
 &lt;&lt;
 </pre>
+
+<p>
+Starting in fink 0.26.0, there is a special <tt style="white-space: nowrap;">Type: -64bit</tt>
+which controls a new percent expansion <tt style="white-space: nowrap;">%lib</tt> and also
+changes the default value of <tt style="white-space: nowrap;">LDFLAGS</tt>.  When combined
+with the new construction %type_num[], this allows a single .info file
+to build both a 32-bit version of a library and a 64-bit version.
+Here's some sample code:
+</p>
+<pre>
+Info2: &lt;&lt;
+Package: foo%type_pkg[-64bit]
+Type: -64bit (boolean)
+Depends: (%type_raw[-64bit] = -64bit) 64bit-cpu
+ConfigureParams: --libdir='${prefix}/%lib'
+SplitOff: &lt;&lt;
+ Package: %N-shlibs
+ Files: %lib/libfoo.*.dylib
+ Shlibs: &lt;&lt;
+    %p/%lib/libfoo.1.dylib 1.0.0 %n (&gt;= 1.0-1) %type_num[-64bit]
+  &lt;&lt;
+&lt;&lt;
+&lt;&lt;
+</pre>
+
 </td></tr><tr valign="top"><td>License</td><td>
 <p>
 本字段给出软件包发布所依据的授权协议的性质。它必须是本文档前面<a href="#policy.licenses">软件包授权协议</a>中所描述的值之一。 另外，只有软件包确实满足打包规则在这方面的要求时，比如已经在软件包的 doc 目录安装了一份授权协议，才能够设置这个字段。
@@ -1233,6 +1309,11 @@ in the main <tt style="white-space: nowrap;">Package</tt> field of the .info fil
 ability to use the <tt style="white-space: nowrap;">%type_*</tt> percent-expansions in
 the <tt style="white-space: nowrap;">Package</tt> field of <tt style="white-space: nowrap;">SplitOff</tt>
 (and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>) packages.
+</li>
+<li>
+<tt style="white-space: nowrap;">Info3</tt> (fink&gt;=0.25.0): Can indent nicely in .info files,
+no more support for RFC-822 multi-lines, and can put comments in
+pkglist fields.
 </li>
 </ul>
 
@@ -1647,6 +1728,10 @@ The preset variables (and their default values) are:
 CPPFLAGS: -I%p/include
 LDFLAGS: -L%p/lib
 </pre>
+<p> Starting in fink 0.26.0, there is one exception to these defaults:
+if <tt style="white-space: nowrap;">Type: -64bit</tt> is set to <tt style="white-space: nowrap;">-64bit</tt>, then the
+default value of <tt style="white-space: nowrap;">LDFLAGS</tt> is <tt style="white-space: nowrap;">-L%p/%lib -L%p/lib</tt> 
+instead.</p>
 <p>
 In addition, starting in fink 0.17.0, the following values are set for
 the 10.4-transitional distribution and earlier (but are not set for
@@ -1674,14 +1759,18 @@ remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
 <p>
 传递给 configure 脚本的额外参数(查阅
 CompileScript 字段的说明获取详细信息)。
+
+For packages not of <tt style="white-space: nowrap;">Type: Perl</tt>, the parameter
+<tt style="white-space: nowrap;">--prefix=%p</tt> is prepended to this value.
+As of fink &gt; 0.13.7, this field will also work with perl modules
+<tt style="white-space: nowrap;">Type: Perl</tt>; the default perl Makefile.PL
+string is prepended to the value supplied for <tt style="white-space: nowrap;">ConfigureParams</tt>.
+</p>
+<p>
 If a build is being done
 with test suites enabled, the value of the <tt style="white-space: nowrap;">TestConfigureParams</tt>
-field will be appended to this.
-
-对于 &lt; 0.13.7 的 fink 版本，这个参数也对 perl 模块<tt style="white-space: nowrap;">Type: Perl</tt>有效，并会添加到默认的 perl Makefile.PL
-字符串中。
+field will be appended to the normal <tt style="white-space: nowrap;">ConfigureParams</tt> value.
 </p>
-
 <p>
   Starting in fink-0.22.0, this field supports conditionals. The
   syntax is the same as that used in the <tt style="white-space: nowrap;">Depends</tt> and
@@ -1918,8 +2007,14 @@ configure 或 ant 之类的工具能够正确地检测到已安装的 jar 文件
 <p>
 <b>从 fink 0.11.0 开始。</b>
 这个字段声明软件包中要安装的共享库。
-每个共享库占一行，每行包括以空格分开的三项：
-共享库的 <tt style="white-space: nowrap;">-install_name</tt>(安装名)，<tt style="white-space: nowrap;">-compatibility_version</tt>(兼容版本号)，和版本相关的指明提供这个兼容版本的 Fink 软件包的依赖信息
+每个共享库占一行，每行包括以空格分开的三或四项：
+共享库的 <tt style="white-space: nowrap;">-install_name</tt>(安装名)，
+<tt style="white-space: nowrap;">-compatibility_version</tt>(兼容版本号)，
+和版本相关的指明提供这个兼容版本的 Fink 软件包的依赖信息，
+
+the library architecture.  (The library architecture may either be "32", "64", or
+"32-64", and may be absent; the value defaults to "32" if it is absent.)  
+
 依赖信息应该以下面的形式描述：<tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> 其中 
 <tt style="white-space: nowrap;">version-revision</tt> 指提供(这个兼容版本)函数库的 Fink 软件包的 <b>第一个</b>版本。
 Shlibs 声明表明维护者承诺这个名字和至少
@@ -2192,4 +2287,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.28 2006/09/19 05:54:30 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.29 2007/01/18 02:16:52 babayoshihiko Exp $</i></p></body></html>
