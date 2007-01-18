@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.es.xml,v 1.8 2006/11/25 05:41:37 babayoshihiko Exp $
+Generated from $Fink: faq.es.xml,v 1.9 2007/01/18 02:16:18 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Preguntas Más Frecuentes de Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -222,36 +222,21 @@ plataformas.
     <a name="usage-fink.unstable">
       <div class="question"><p><b>Q5.8: Existe este paquete en unstable que quiero instalar, pero el comando fink dice "no encuentro el paquete" ('no package found'). ¿Cómo lo puedo instalar?</b></p></div>
       <div class="answer"><p><b>A:</b> First make sure you understand what 'unstable' means. Packages in
-        the unstable tree usually have not been tested by more than a few
-        people. For that reason, Fink doesn't search the unstable tree by
-        default. If you do enable unstable, please remember to e-mail the
+        the unstable tree are not in stable for any number of reasons.  It
+        could be because there are known issues, validation errors, or just
+        not enough people giving feedback that the package works for them.
+        For that reason, Fink doesn't search the unstable tree by
+        default.</p><p>If you do enable unstable, please remember to e-mail the
         maintainer if something works (or even if it doesn't). Feedback from
         users like you is what we use to determine if something is ready for
         stable! To find out the maintainer of a package, run <tt style="white-space: nowrap;">fink info
-        &lt;packagename&gt;</tt>.</p><p>Packages often have dependencies, and packages in unstable often
-        depend on other packages in unstable. For that reason, it is best to
-        activate all of unstable.</p><p>If you want Fink to use all of unstable, edit
+        <b>packagename</b></tt>.</p><p><b>New in </b><tt style="white-space: nowrap;">fink-0.26</tt><b>:</b> If you run <tt style="white-space: nowrap;">fink configure</tt> one of the questions will ask whether you want to turn the unstable trees on.  You will need to run <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> afterward.  <b>Note: </b>you must have either rsync or cvs updating turned on to get new package descriptions.</p><p>To configure Fink to use unstable when you have an earlier version of the <tt style="white-space: nowrap;">fink</tt> tool than <b>0.26</b>, edit
         <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, add <tt style="white-space: nowrap;">unstable/main</tt>
         and <tt style="white-space: nowrap;">unstable/crypto</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line, and
-        then run <tt style="white-space: nowrap;">fink selfupdate; fink index</tt>.</p><p>If you only want one or two specific packages, and nothing else
-        from unstable, then you need to switch over to CVS updating (i.e. use
-        <tt style="white-space: nowrap;">fink selfupdate-cvs</tt>), because rsync only updates the
-        trees that are active in your <tt style="white-space: nowrap;">fink.conf</tt>. Edit
-        <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> and add <tt style="white-space: nowrap;">local/main</tt>
-        to the <tt style="white-space: nowrap;">Trees:</tt> line, if not present. Then you'll need to
-        run <tt style="white-space: nowrap;">fink selfupdate</tt> to download the package description
-        files. Now copy the relevant <tt style="white-space: nowrap;">.info</tt> files (and their
-        associated <tt style="white-space: nowrap;">.patch</tt> files, if there are any) from
-        <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo</tt> (or
-        <tt style="white-space: nowrap;">/sw/fink/dists/unstable/crypto/finkinfo</tt>) to
-        <tt style="white-space: nowrap;">/sw/fink/dists/local/main/finkinfo</tt>. However, note
-        that your package may depend on other packages (or particular
-        versions) which are also only in unstable. You will have to move their
-        <tt style="white-space: nowrap;">.info</tt> and <tt style="white-space: nowrap;">.patch</tt> files as well. After you
-        move all of the files, make sure to run <tt style="white-space: nowrap;">fink index</tt>, so
-        that Fink's record of available packages is updated. Once you're done
-        you can switch back to rsync (<tt style="white-space: nowrap;">fink selfupdate-rsync</tt>) if
-        you want.</p></div>
+        then run <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt>.  Rsync or cvs updating is required as above.</p><p>Also note, if you don't want to install any more from unstable than
+        your specific package(s) and its (their) dependencies, don't use the
+        <tt style="white-space: nowrap;">update-all</tt> command until you turn the unstable tree
+        back off.</p></div>
     </a>
     <a name="usage-fink.unstable-onepackage">
       <div class="question"><p><b>Q5.9: Do I <b>really</b> need to enable all of unstable just to install
@@ -1393,7 +1378,7 @@ You can check your installation by running</p><pre>fink-virtual-pkgs</pre><p>and
     </a>
     <a name="usage-packages.special-x11-debug">
       <div class="question"><p><b>Q9.13: I'm still having problems with X11 and Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> entries don't help, or aren't applicable to your situation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
+      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apple-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> entries don't help, or aren't applicable to your situation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
 xorg xorg-shlibs xfree86 xfree86-shlibs \
 xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
@@ -1426,4 +1411,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.es.xml,v 1.8 2006/11/25 05:41:37 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.es.xml,v 1.9 2007/01/18 02:16:18 babayoshihiko Exp $</i></p></body></html>

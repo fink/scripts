@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.ja.xml,v 1.39 2006/11/25 05:41:37 babayoshihiko Exp $
+Generated from $Fink: faq.ja.xml,v 1.40 2007/01/18 02:16:18 babayoshihiko Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -359,9 +359,8 @@ dselect からパッケージを選択してインストールする場合、 ro
       <div class="answer"><p><b>A:</b> 
           まず、 'unstable' の意味を確認してください。
           unstable ツリーにあるパッケージは、いくつかの理由により stable にはありません。
-          理ユニは、既知の課題がある、妥当性にエラーがある、動作したというフィードバックが十分ないなどがあります。
-          このため、Fink はデフォルトでは unstable ツリーを検索しません。
-        </p><p>
+          理由としては、既知の課題がある、妥当性にエラーがある、動作したというフィードバックが十分ないなどがあります。
+          このため、Fink はデフォルトでは unstable ツリーを検索しません。</p><p>
           もし unstable を使用するのであれば、動作する（あるいはしない）ことをメンテナにメールするようにしてください。
           あなたのようなユーザーからのフィードバックこそが、stable へ移行させる決定要因なのです!
           パッケージのメンテナを知るには、<tt style="white-space: nowrap;">fink info <b>packagename</b></tt> としてください。
@@ -370,8 +369,18 @@ dselect からパッケージを選択してインストールする場合、 ro
           <tt style="white-space: nowrap;">Trees:</tt> 行に <tt style="white-space: nowrap;">unstable/main</tt> と <tt style="white-space: nowrap;">unstable/crypto</tt> を追加し、
           <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行します。
         </p><p>
-          また、特定のパッケージとその依存パッケージ以外に unstable からインストールしたくない場合、 
-          unstable ツリーをオフにする前に <tt style="white-space: nowrap;">update-all</tt> コマンドを実行しないでください。
+          <tt style="white-space: nowrap;">fink-0.26</tt><b> から:</b>
+	      <tt style="white-space: nowrap;">fink configure</tt> を実行する際、unstable を on にするか聞いてくる場合があります。
+	      この後、<tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行する必要があります。
+	      <b>注記: </b>新しいパッケージ記述を取得するには、rsync か cvs が on になっている必要があります。
+	    </p><p>
+          <tt style="white-space: nowrap;">fink</tt> が <b>0.26</b> 以前で unstable を使うように Fink を設定するには、
+          <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> を編集し、 <tt style="white-space: nowrap;">unstable/main</tt> と  <tt style="white-space: nowrap;">unstable/crypto</tt> を、
+          <tt style="white-space: nowrap;">Trees:</tt> と書かれている行に追加し、<tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行します。
+          上と同様、 rsync か cvs が使われている必要があります。
+        </p><p>
+          もう一つ注記、特定のパッケージとのそ依存パッケージ以外に unstable をインストールしたくないのであれば、
+          unstable ツリーを off にしない限り <tt style="white-space: nowrap;">update-all</tt> を実行しないでください。
         </p></div>
 </a>
     <a name="usage-fink.unstable-onepackage">
@@ -1153,7 +1162,8 @@ fink install libiconv</pre></div>
     <a name="comp-packages.all-others">
       <div class="question"><p><b>Q7.8: ここに載っていないパッケージで問題があります。</b></p></div>
       <div class="answer"><p><b>A:</b> パッケージの問題は変わりやすいので、Fink wiki に情報を載せることにいたしました。
-        <a href="http://wiki.finkproject.org/index.php/Fink:Package_issues">Package issues page</a> をご確認ください。</p></div>
+        <a href="http://wiki.finkproject.org/index.php/Fink:Package_issues">Package issues page</a> をご確認ください。
+        (訳注: wiki の性質上、wiki は英語版のみであり、翻訳の予定はありません。)</p></div>
     </a>
 <h2><a name="usage-general">8 パッケージ使用上の問題 - 一般</a></h2>
     
@@ -1567,18 +1577,17 @@ sudo apt-get install fink</pre>
 X11SDK もインストールされている場合、 <tt style="white-space: nowrap;">system-xfree86-dev</tt> も確認します。
 </p><p>
 これでも問題が解決されない場合、上の
-<a href="#usage-packages.apple-x11-wants-xfree86">Fink wants XFree86 or X.org</a>
+<a href="#usage-packages.apple-x11-wants-xfree86">Fink が XFree86 または X.org を要求する</a>
 を参照してください。
 </p></div>
 </a>
 <a name="usage-packages.special-x11-debug">
 <div class="question"><p><b>Q9.13: まだ X11 と Fink の問題が解決されません。</b></p></div>
 <div class="answer"><p><b>A:</b> 
-		<a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> や
-		<a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> 
+		<a href="#usage-packages.apple-x11-wants-xfree86">Fink が XFree86 または X.org を要求する</a> や
+		<a href="#usage-packages.wants-xfree86-on-upgrade">10.2 からの X11 とアップグレード</a> 
 		のヒントで問題が解決されないか、自分の問題と異なる場合、
 		X11 をきれいに削除し、代替パッケージと X11 関連パッケージを削除します:
-		<a href="#usage-packages.apples-x11-wants-xfree86">Fink tries to install XFree86</a>
 		</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
 xorg xorg-shlibs xfree86 xfree86-shilbs \
 xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
@@ -1630,4 +1639,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.39 2006/11/25 05:41:37 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.40 2007/01/18 02:16:18 babayoshihiko Exp $</i></p></body></html>
