@@ -100,27 +100,27 @@ foreach $file (keys %filelist) {
 			last;
 		}
 		$finalurl = $filelist{$file}{'url'}{$i};
-		`curl -L -s -o $tmpdir/$file $filelist{$file}{'url'}{$i}`;
+		`curl -L -s -o $tmpdir/$file $finalurl`;
 		#$? >>= 8 if defined $? and $? >= 256;
 		if( $? == 1792 && grep(/ftp:/,$filelist{$file}{'url'}{$i}) ) {
-			`curl -L -s --disable-epsv -o $tmpdir/$file $filelist{$file}{'url'}{$i}`;
+			`curl -L -s --disable-epsv -o $tmpdir/$file $finalurl`;
 		}
 		if( $? != 0 ) {
-			print "Error fetching $file from $filelist{$file}{'url'}{$i}: $?\n";
+			print "Error fetching $file from $finalurl: $?\n";
 			$fetcherrors++;
 			unlink("$tmpdir/$file");
 			next;
 		}
 
 		if( ! -e "$tmpdir/$file" ) {
-			print "Didn't get the $file from $filelist{$file}{'url'}{$i}\n";
+			print "Didn't get the $file from $finalurl\n";
 			next;
 		}
 
 		$curmd5 = `/sbin/md5 -q $tmpdir/$file`;
 		chomp $curmd5;
 		if( $md5 ne $curmd5 ) {
-			print "Error with the md5 for $file from $filelist{$file}{'url'}{$i}: $md5 vs. $curmd5\n";
+			print "Error with the md5 for $file from $finalurl: $md5 vs. $curmd5\n";
 			$md5errors++;
 			unlink("$tmpdir/$file");
 			next;
