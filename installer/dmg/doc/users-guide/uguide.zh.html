@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.zh.xml,v 1.16 2006/06/13 11:49:05 babayoshihiko Exp $
+Generated from $Fink: uguide.zh.xml,v 1.17 2007/02/23 22:04:56 rangerrick Exp $
 -->
 <title>Fink Documentation - Fink 用户指南</title></head><body>
 <table width="100%" cellspacing="0">
@@ -24,11 +24,11 @@ Available Languages:  |
       This document gives an overview over all features of Fink.
       
 (下面的旧文档可以给你更详尽的概念：
-<a href="http://fink.sourceforge.net/doc/bundled/install.php">安装</a>,
-<a href="http://fink.sourceforge.net/doc/bundled/usage.php">使用</a>
+<a href="http://www.finkproject.org/doc/bundled/install.php">安装</a>,
+<a href="http://www.finkproject.org/doc/bundled/usage.php">使用</a>
 以及包括在发行安装版本的磁盘映象中的 ReadMe.rtf 文件。)
 同时也可以查阅本网站的
-<a href="http://fink.sourceforge.net/doc/">文档部分</a> ，它包括一些其它的有用资讯。
+<a href="http://www.finkproject.org/doc/">文档部分</a> ，它包括一些其它的有用资讯。
 </p>
     <p>
 欢迎查看 Fink 用户指南。
@@ -161,7 +161,7 @@ Fink 可以让你自己在两种方式中间选择。
       
       <p>
 二进制发行版以 Mac OS X 安装包 (.pkg) 的形式提供，它被打包在一个磁盘映象文件(.dmg)中。
-从<a href="http://fink.sourceforge.net/download/bindist.php">下载页面</a>下载了磁盘映象文件以后（你可能需要使用你的浏览器的 "保存目标为..." 或 "下载到磁盘" 功能），双击这个磁盘文件来装载上它。
+从<a href="http://www.finkproject.org/download/bindist.php">下载页面</a>下载了磁盘映象文件以后（你可能需要使用你的浏览器的 "保存目标为..." 或 "下载到磁盘" 功能），双击这个磁盘文件来装载上它。
 在 "磁盘工具" 程序（10.3以前是 "磁盘拷贝"）校验完你下载的文件后，在你的桌面上（或你下载到的文件夹里面）会出现一个 "Fink 0.x.x Installer" 的磁盘图标，打开它。
 在里面你会看到一些文档和一个安装包。
 双击安装包并按照屏幕上的说明完成剩下的安装。
@@ -181,7 +181,7 @@ Fink 可以让你自己在两种方式中间选择。
 源代码发行版以标准的 Unix tarball (.tar.gz)　方式提供。
 它仅包含 <tt style="white-space: nowrap;">fink</tt> 软件包管理器以及它自己的软件包描述，整个软件包的其它部分会在安装的过程中才下载。
 你可以从这个
-<a href="http://fink.sourceforge.net/download/srcdist.php">下载页面</a>获得它。
+<a href="http://www.finkproject.org/download/srcdist.php">下载页面</a>获得它。
 很重要的是，你不能用 StuffIt Expander 来解压缩下载后的 tar 压缩档。
 由于某些原因，StuffIt 仍然不能处理长文件名。
 如果 StuffIt Expander 已经自动解压了你下载的压缩档，把它解压产生的文件夹删除掉。
@@ -464,7 +464,7 @@ distribution</a>.
 然后它会开始下载源代码，解包，给它打上必要的补丁，编译，然后把最终的结果安装到你的系统上。
 这可能会花费比较长的时间。
 如果你发现此过程中发生了错误，请首先查看
-<a href="http://fink.sourceforge.net/faq/">FAQ</a>。
+<a href="http://www.finkproject.org/faq/">FAQ</a>。
 </p>
       
       <p>
@@ -496,7 +496,7 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
     
     <h3><a name="packages.available-versions">3.6 可用版本</a></h3>
       
-      <p>当你希望安装一个软件包，你应该首先查看 <a href="http://fink.sourceforge.net/pdb/index.php">软件包数据库</a> 来找找是不是可以通过 Fink 获得。软件包的各个可用版本会在一个表格的多个行中出现。就象这样：</p>
+      <p>当你希望安装一个软件包，你应该首先查看 <a href="http://pdb.finkproject.org/pdb/index.php">软件包数据库</a> 来找找是不是可以通过 Fink 获得。软件包的各个可用版本会在一个表格的多个行中出现。就象这样：</p>
       
       <ul>
         <li>Binary Distribution
@@ -518,7 +518,7 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
 <ol>
             <li>
           <p>
-            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from the stable source tree for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
+            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from the stable source tree for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://www.finkproject.org/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
           <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS or rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
 </p>
         </li>
@@ -531,7 +531,7 @@ with new fink installations.  PowerPC only.</p></li>
 on intel hardware.</p></li>
 			<li>
           <p>
-            <b>10.2-gcc3.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
+            <b>10.2-gcc3.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
           <p>Note:  unstable doesn't necessarily mean unusable, but install such packages at your own risk.
 </p>
         </li>
@@ -582,7 +582,7 @@ dependency placeholders.
       </ul>
       <p>
 关于安装和运行 X11 的更多信息，请参考
-<a href="http://fink.sourceforge.net/doc/x11/">Darwin
+<a href="http://www.finkproject.org/doc/x11/">Darwin
 及 Mac OS X 上 X11 的文档</a>.
 </p>
     
@@ -610,7 +610,7 @@ dependency placeholders.
 <p>对于 Fink Commander，选择 Binary-&gt;Update descriptions 来更新软件包清单，然后选择 Binary-&gt;Dist-Upgrade packages 来升级到新的版本。</p>
       <p>
 更多的信息，尤其是关于升级 Fink 0.3.0　之前版本，参见
-<a href="http://fink.sourceforge.net/download/upgrade.php">Upgrade Matrix</a>。
+<a href="http://www.finkproject.org/download/upgrade.php">Upgrade Matrix</a>。
 </p>
     
     <h3><a name="upgrade.src">4.2 升级从源码安装版本</a></h3>
@@ -628,7 +628,7 @@ CVS 是一个具有版本控制功能的储存库，它保存和管理软件包�
 使用 CVS 的优点是它是不断更新的，缺点是对 Fink 只有一个 CVS 服务器，如果访问量太大，它会变得不稳定。因此，对通常用户，我们推荐使用 rsync。对于 rsync，我们有多个镜像站点。唯一得缺点是新得版本在 CVS 发布以后会大约需要一个小时后才会更新到 rsync 镜像站点上。
 </p>
       <p>（如果你在升级从源码安装得版本中碰到问题，请查阅　
-<a href="http://fink.sourceforge.net/download/fix-upgrade.php">一些特殊指引</a>。）</p>
+<a href="http://www.finkproject.org/download/fix-upgrade.php">一些特殊指引</a>。）</p>
       <p>
 如果你的 Fink 是 0.2.5　之前得版本，你需要手工下载软件包描述文件。
 访问 <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">下载区</a>，在 "distribution"　模块中寻找最新的 packages-0.x.x.tar.gz 压缩档。
@@ -1334,4 +1334,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.zh.xml,v 1.16 2006/06/13 11:49:05 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.zh.xml,v 1.17 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>

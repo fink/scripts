@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.fr.xml,v 1.9 2007/01/07 08:00:42 michga Exp $
+Generated from $Fink: quick-start-pkg.fr.xml,v 1.10 2007/02/23 22:04:56 rangerrick Exp $
 -->
 <title>Fink Documentation - Création d'un paquet pour Fink - Tutoriel</title></head><body>
 <table width="100%" cellspacing="0">
@@ -14,7 +14,7 @@ Fran&ccedil;ais |
 </tr>
 </table>
 <h1 style="text-align: center;">Création d'un paquet pour Fink - Tutoriel</h1>
-<p>Ce document est fait pour les personnes qui souhaitent créer un paquet pour <tt style="white-space: nowrap;">Fink</tt>. Il vient en complément du <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de construction de paquets</a>, plus détaillé.</p>
+<p>Ce document est fait pour les personnes qui souhaitent créer un paquet pour <tt style="white-space: nowrap;">Fink</tt>. Il vient en complément du <a href="http://www.finkproject.org/doc/packaging/index.php">Guide de construction de paquets</a>, plus détaillé.</p>
 <p>Nous allons vous expliquer le processus de création d'un paquet pour Fink.
 
 
@@ -34,7 +34,7 @@ finkdev% unecommandequelconque
 <p>vous devrez alors saisir <tt style="white-space: nowrap;">unecommandequelconque</tt> dans Terminal.app ou dans tout autre terminal sur votre Mac.</p>
 <p>Vous devez d'abord assimiler quelques concepts de base sur la création de paquets pour Fink. Nous vous suggérons :</p>
 <ul>
-<li>de lire <a href="http://fink.sourceforge.net/doc/UsingFink.pdf">Utilisation de Fink : un guide pour le développeur</a> (fichier pdf 2MB) - diapositives d'une présentation lors de la <a href="http://conferences.oreillynet.com/macosx2002/">Conférence O'Reilly Mac OS X</a>.
+<li>de lire <a href="http://www.finkproject.org/doc/UsingFink.pdf">Utilisation de Fink : un guide pour le développeur</a> (fichier pdf 2MB) - diapositives d'une présentation lors de la <a href="http://conferences.oreillynet.com/macosx2002/">Conférence O'Reilly Mac OS X</a>.
 </li>
 <li>
 
@@ -44,7 +44,7 @@ finkdev% unecommandequelconque
 de lire et de tenter de comprendre l'<a href="#example.basics">exemple donné ici</a>.</li>
 <li>d'étudier d'autres paquets situés dans le répertoire <tt style="white-space: nowrap;">/sw/fink/dists/unstable/main/finkinfo/</tt> ou dans le <a href="http://fink.cvs.sourceforge.net/fink/dists/">répertoire central CVS en ligne</a> et de prendre un (ou plusieurs) fichier(s) info comme point de départ.</li>
 <li>de rechercher dans le <a href="http://sourceforge.net/tracker/?atid=414256&amp;group_id=17203">Traqueur de soumissions de paquets</a> si quelqu'un a déjà essayé de construire le même paquet ou dans le <a href="http://sourceforge.net/tracker/?atid=371315&amp;group_id=17203">Traqueur de demandes de paquets</a> s'il existe déjà une requête pour ce paquet. Vous y trouverez une mine de renseignements.</li>
-<li>de feuilleter le <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de création de paquets</a> si vous souhaitez de plus amples informations sur un sujet particulier.</li>
+<li>de feuilleter le <a href="http://www.finkproject.org/doc/packaging/index.php">Guide de création de paquets</a> si vous souhaitez de plus amples informations sur un sujet particulier.</li>
 </ul>
 
 <h3><a name="howtostart.Make">1.2 Création d'un paquet</a></h3>
@@ -62,15 +62,15 @@ finkdev% fink configure
 <pre>
 finkdev% fink list nomdupaquet
 </pre>
-<p>S'il n'apparaît pas, vous devez modifier le <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a>, de sorte que l'arborescence locale soit prise en compte.</p>
+<p>S'il n'apparaît pas, vous devez modifier le <a href="http://www.finkproject.org/doc/users-guide/conf.php#optional">fichier de configuration de fink</a>, de sorte que l'arborescence locale soit prise en compte.</p>
 <p>Vous devrez peut-être réindexer les paquets en exécutant :</p>
 <pre>
 finkdev% fink index
 </pre>
-<p>Si vous souhaitez de plus amples informations, lisez le <a href="http://fink.sourceforge.net/doc/packaging/index.php">Guide de création de paquets</a> ou utilisez l'une ou l'autre des différentes <a href="http://fink.sourceforge.net/help/index.php">sources d'aide</a>. Vous devez aussi vous abonner à la liste de diffusion <a href="http://fink.sourceforge.net/lists/index.php">fink-devel</a>.</p>
+<p>Si vous souhaitez de plus amples informations, lisez le <a href="http://www.finkproject.org/doc/packaging/index.php">Guide de création de paquets</a> ou utilisez l'une ou l'autre des différentes <a href="http://www.finkproject.org/help/index.php">sources d'aide</a>. Vous devez aussi vous abonner à la liste de diffusion <a href="http://www.finkproject.org/lists/index.php">fink-devel</a>.</p>
 
 <h3><a name="howtostart.Validate">1.3 Validation d'un paquet</a></h3>
-<p>Pendant le processus de validation de votre paquet, vous devez régler le niveau de verbosité de <tt style="white-space: nowrap;">fink</tt> à la plus haute valeur possible. Voir la section <a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fichier de configuration de fink</a> pour savoir comment le changer.</p>
+<p>Pendant le processus de validation de votre paquet, vous devez régler le niveau de verbosité de <tt style="white-space: nowrap;">fink</tt> à la plus haute valeur possible. Voir la section <a href="http://www.finkproject.org/doc/users-guide/conf.php#optional">fichier de configuration de fink</a> pour savoir comment le changer.</p>
 <p>Vérifiez que votre paquet est valide en exécutant :</p>
 <pre>
 finkdev% fink validate /sw/fink/dists/local/main/finkinfo/nomdupaquet.info
@@ -147,7 +147,7 @@ Warning: Unknown license "MIT". (maxwell.info)
 Error: No MD5 checksum specified for "source". (maxwell.info)
 Error: No package description supplied. (maxwell.info)
 </pre>
-<p>Grrr ! On dirait que c'est de pire en pire, pas de panique, rabattons-nous sur le <a href="http://fink.sourceforge.net/doc/packaging/policy.php#licenses">Guide de construction de paquets</a> pour voir quelles sont les licences autorisées. On voit que l'on peut remplacer MIT par OSI-Approved, car la licence MIT a été approuvée par <a href="http://www.opensource.org/">OSI</a>. On peut aussi copier une courte description du paquet à partir de sa page d'accueil. Voici les changements que nous opérons :</p>
+<p>Grrr ! On dirait que c'est de pire en pire, pas de panique, rabattons-nous sur le <a href="http://www.finkproject.org/doc/packaging/policy.php#licenses">Guide de construction de paquets</a> pour voir quelles sont les licences autorisées. On voit que l'on peut remplacer MIT par OSI-Approved, car la licence MIT a été approuvée par <a href="http://www.opensource.org/">OSI</a>. On peut aussi copier une courte description du paquet à partir de sa page d'accueil. Voici les changements que nous opérons :</p>
 <pre>
 License: OSI-Approved
 Description: Mac OS X S.M.A.R.T. Tool
@@ -181,7 +181,7 @@ curl -f -L -O http://west.dl.sourceforge.net/sourceforge/maxwell/maxwell-0.5.1.t
                                  Dload  Upload Total    Current  Left    Speed
 100  7856  100  7856    0     0  19838      0  0:00:00  0:00:00  0:00:00 6511k
 </pre>
-<p>L'archive tar ne peut être téléchargée à partir des miroirs de Fink, car le paquet n'a pas encore été ajouté à la distribution. C'est pourquoi il faut changer de miroir et sélectionner l'option 5. Voir les <a href="http://fink.sourceforge.net/faq/comp-general.php#master-problems">Q.F.P.</a> pour de plus amples informations à ce sujet.</p>
+<p>L'archive tar ne peut être téléchargée à partir des miroirs de Fink, car le paquet n'a pas encore été ajouté à la distribution. C'est pourquoi il faut changer de miroir et sélectionner l'option 5. Voir les <a href="http://www.finkproject.org/faq/comp-general.php#master-problems">Q.F.P.</a> pour de plus amples informations à ce sujet.</p>
 <p>Maintenant nous pouvons calculer la somme de contrôle md5 en exécutant <tt style="white-space: nowrap;">md5sum /sw/src/maxwell-0.5.1.tar.gz</tt>, et l'ajouter à notre fichier .info</p>
 <pre>
 Source-MD5: ce5c354b2fed4e237524ad0bc59997a3
@@ -225,7 +225,7 @@ InstallScript: &lt;&lt;
 make install prefix=%i
 &lt;&lt;
 </pre>
-<p>Nous devons utiliser <tt style="white-space: nowrap;">prefix=%i</tt> car <tt style="white-space: nowrap;">fink</tt> construit le fichier binaire à partir des fichiers se trouvant dans <tt style="white-space: nowrap;">%i</tt>. Ces fichiers seront ensuite installés dans <tt style="white-space: nowrap;">%p</tt> (qui correspond par défaut à <tt style="white-space: nowrap;">/sw</tt>) quand on exécutera <tt style="white-space: nowrap;">fink install maxwell</tt>. Pour de plus amples informations sur <tt style="white-space: nowrap;">%p</tt> et <tt style="white-space: nowrap;">%i</tt>, consultez le <a href="http://fink.sourceforge.net/doc/packaging/format.php#percent">Guide de construction des paquets</a>.</p>
+<p>Nous devons utiliser <tt style="white-space: nowrap;">prefix=%i</tt> car <tt style="white-space: nowrap;">fink</tt> construit le fichier binaire à partir des fichiers se trouvant dans <tt style="white-space: nowrap;">%i</tt>. Ces fichiers seront ensuite installés dans <tt style="white-space: nowrap;">%p</tt> (qui correspond par défaut à <tt style="white-space: nowrap;">/sw</tt>) quand on exécutera <tt style="white-space: nowrap;">fink install maxwell</tt>. Pour de plus amples informations sur <tt style="white-space: nowrap;">%p</tt> et <tt style="white-space: nowrap;">%i</tt>, consultez le <a href="http://www.finkproject.org/doc/packaging/format.php#percent">Guide de construction des paquets</a>.</p>
 <p>Normalement, les lignes des champs Script sont passées au shell ligne après ligne. Mais la ligne  <tt style="white-space: nowrap;">#! /bin/sh -ev</tt> permet à <tt style="white-space: nowrap;">fink</tt> d'exécuter l'ensemble comme un script séparé. Le paramètre <tt style="white-space: nowrap;">-e</tt> correspond à  "die on error" et <tt style="white-space: nowrap;">-v</tt> à "verbose".</p>
 <p>Validons de nouveau le paquet et tentons de le construire :</p>
 <pre>
@@ -320,7 +320,7 @@ Warning: File installed into deprecated directory /sw/man/
 Warning: File installed into deprecated directory /sw/man/
                                         Offender is /sw/man/man8/maxwell.8
 </pre>
-<p>Heu ! Quelque chose ne va pas. Consultons encore le <a href="http://fink.sourceforge.net/doc/packaging/fslayout.php#fhs">Guide de construction des paquets</a>. On y voit que les pages man doivent être installées dans <tt style="white-space: nowrap;">/sw/share/man</tt> et les fichiers <tt style="white-space: nowrap;">README</tt> dans <tt style="white-space: nowrap;">/sw/share/doc/%n</tt>. Si nous ouvrons le <tt style="white-space: nowrap;">Makefile</tt> de maxwell, nous voyons que nous pouvons définir les répertoires mandir et datadir :</p>
+<p>Heu ! Quelque chose ne va pas. Consultons encore le <a href="http://www.finkproject.org/doc/packaging/fslayout.php#fhs">Guide de construction des paquets</a>. On y voit que les pages man doivent être installées dans <tt style="white-space: nowrap;">/sw/share/man</tt> et les fichiers <tt style="white-space: nowrap;">README</tt> dans <tt style="white-space: nowrap;">/sw/share/doc/%n</tt>. Si nous ouvrons le <tt style="white-space: nowrap;">Makefile</tt> de maxwell, nous voyons que nous pouvons définir les répertoires mandir et datadir :</p>
 <pre>
 prefix = /usr/local
 mandir = ${prefix}/man
@@ -354,7 +354,7 @@ Setting up maxwell (0.5.1-1) ...
 <pre>
 finkdev% maxwell
 </pre>
-<p>Félicitations ! Vous venez de construire votre premier paquet Fink. Maintenant, essayez de construire un autre paquet tout seul en suivant le <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Tutoriel d'empaquetage</a> à partir du début.</p>
+<p>Félicitations ! Vous venez de construire votre premier paquet Fink. Maintenant, essayez de construire un autre paquet tout seul en suivant le <a href="http://www.finkproject.org/doc/quick-start-pkg/index.php">Tutoriel d'empaquetage</a> à partir du début.</p>
 <p>Nous attendons impatiemment vos premières contributions à Fink !</p>
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
@@ -363,4 +363,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.9 2007/01/07 08:00:42 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.fr.xml,v 1.10 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.ru.xml,v 1.9 2007/01/18 02:16:18 babayoshihiko Exp $
+Generated from $Fink: faq.ru.xml,v 1.10 2007/02/23 22:04:54 rangerrick Exp $
 -->
 <title>Fink Documentation - Часто задаваемые вопросы Fink </title></head><body>
 <table width="100%" cellspacing="0">
@@ -337,7 +337,7 @@ complaining that the dependencies are in an inconsistent state.</a></li><li><a h
                     Fink. Пример:</p><pre>fink list</pre><p>Если вы используете бинарную дистрибуцию, <tt style="white-space: nowrap;">dselect</tt>
                     предоставит вам удобный просматриваемый список имеющихся пакетов.
                     Имейте в виду, что вы должны выполнить эту команду в качестве суперпользователя, если хотите выбрать
-                    и инсталлировать пакеты в dselect.</p><p>Также на веб-сайте есть <a href="http://fink.sourceforge.net/pdb/">база данных
+                    и инсталлировать пакеты в dselect.</p><p>Также на веб-сайте есть <a href="http://pdb.finkproject.org/pdb/">база данных
                     по пакетам</a>.</p></div>
         </a>
         <a name="usage-fink.proxy">
@@ -418,7 +418,7 @@ complaining that the dependencies are in an inconsistent state.</a></li><li><a h
         <a name="usage-fink.bindist">
             <div class="question"><p><b>Q5.7: База данных по пакетам на веб-сайте указывает в списке пакет xxx, но
                     apt-get и dselect ничего об этом не знают. Что неправильно?</b></p></div>
-            <div class="answer"><p><b>A:</b> И то, и другое правильно. <a href="http://fink.sourceforge.net/pdb/">База данных по пакетам
+            <div class="answer"><p><b>A:</b> И то, и другое правильно. <a href="http://pdb.finkproject.org/pdb/">База данных по пакетам
                     </a> знает о каждом пакете, включая пакеты,
                     которые все еще находятся в нестабильном разделе. Инструменты
                     <tt style="white-space: nowrap;">dselect</tt> и <tt style="white-space: nowrap;">apt-get</tt>, с другой стороны,
@@ -641,7 +641,7 @@ fink selfupdate-cvs</pre></div>
                     "install-info: unrecognized option `--infodir=/sw/share/info'"</b></p></div>
             <div class="answer"><p><b>A:</b> Обычно это происходит из-за проблемы в вашем PATH. Напечатайте в окне
                     терминала:</p><pre>printenv PATH</pre><p>Если<tt style="white-space: nowrap;">/sw/sbin</tt> не появится совсем, надо
-                    настроить свою среду согласно - <a href="http://fink.sourceforge.net/doc/users-guide/install.php#setup">инструкциям</a> в Руководстве пользователя.
+                    настроить свою среду согласно - <a href="http://www.finkproject.org/doc/users-guide/install.php#setup">инструкциям</a> в Руководстве пользователя.
                     Если <tt style="white-space: nowrap;">/sw/sbin</tt> есть,
                     но впереди находятся другие каталоги (н-р
                     <tt style="white-space: nowrap;">/usr/local/bin</tt>), то вам надо либо реорганизовать 
@@ -666,7 +666,7 @@ fink selfupdate-cvs</pre></div>
                     в компоновке.</p><p>Если вы делаете инсталляцию на основе бинарной дистрибуции или
                     точно знаете, что версия в бинарной дистрибуции
                     такая же, как инсталлированная версия (н-р
-                    проверив <a href="http://fink.sourceforge.net/pdb/index.php">package
+                    проверив <a href="http://pdb.finkproject.org/pdb/index.php">package
                     database</a>), можно получить файл .deb, применив
                         <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>packagename</b>
                     </tt>. В противном случае вы можете построить ее с помощью
@@ -878,7 +878,7 @@ page and on http://fontconfig.org.</pre><p>then you can fix it by running</p><pr
     <a name="usage-fink.wrong-arch">
       <div class="question"><p><b>Q5.34: I can't update Fink, because <q>package architecture (darwin-i386) does not match system (darwin-powerpc).</q>
 </b></p></div>
-      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://fink.sourceforge.net/download/index.php">the downloads page</a>.</p></div>
+      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://www.finkproject.org/download/index.php">the downloads page</a>.</p></div>
     </a>
     <a name="usage-fink.sf-cvs-2006">
 	      <div class="question"><p><b>Q5.35: I haven't been able to do a cvs selfupdate.</b></p></div>
@@ -1200,8 +1200,8 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
                     о варианте. Это может быть относительно легко. Если
                     вы не получите ответа от координатора, если увидите новые пакеты
                     или захотите попробовать сами другую опцию, см. 
-                        <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Пособие по
-                    пакетированию</a> и <a href="http://fink.sourceforge.net/doc/packaging/index.php">Учебник по пакетированию</a>.</p><p>
+                        <a href="http://www.finkproject.org/doc/quick-start-pkg/index.php">Пособие по
+                    пакетированию</a> и <a href="http://www.finkproject.org/doc/packaging/index.php">Учебник по пакетированию</a>.</p><p>
                     <b>Прим.: </b>Fink сознательно создан таким образом, чтобы все
                     официальные бинарные файлы были идентичными, независимо от того, на какой машине
                     они созданы, и таким образом явления типа оптимизации G5 не произойдут
@@ -1269,7 +1269,7 @@ endif</pre></div>
                     <tt style="white-space: nowrap;">xfree86</tt> с "fink install
                     xfree86"--последняя версия (XFree86-4.4.x от 25 мая
                     2004 г.) пока еще не в бинарном distro и на данный момент находится только
-                    на нестабильном дереве [см. <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable%5C">как
+                    на нестабильном дереве [см. <a href="http://www.finkproject.org/faq/usage-fink.php#unstable%5C">как
                         инсталлировать нестабильные пакеты</a>].</p></div>
         </a>
         <a name="comp-packages.change-thread-nothread">
@@ -1341,7 +1341,7 @@ preventing you from updating <tt style="white-space: nowrap;">gettext</tt>.</p><
             <div class="answer"><p><b>A:</b> Ничего страшного, просто это значит, что программа будет использовать
                     сообщения, форматы дат и т.д. по умолчанию на английском языке. Программа
                     будет работать нормально, но иным образом. См. документ "Выполнение X11" 
-                    в <a href="http://fink.sourceforge.net/doc/x11/trouble.php#locale"></a>.</p></div>
+                    в <a href="http://www.finkproject.org/doc/x11/trouble.php#locale"></a>.</p></div>
         </a>
         <a name="usage-general.passwd">
             <div class="question"><p><b>Q8.2: В моей системе вдруг появилось несколько странных пользователей
@@ -1477,7 +1477,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(assuming that the build system is 
                             поставлялась.)</p>
                     </li>
                 </ul><p>Есть также другие варианты. Более подробно
-                    см. в документе <a href="http://fink.sourceforge.net/doc/x11/index.php">Выполнение
+                    см. в документе <a href="http://www.finkproject.org/doc/x11/index.php">Выполнение
                          X11</a>.</p></div>
         </a>
         <a name="usage-general.no-display">
@@ -1612,7 +1612,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(assuming that the build system is 
         <a name="usage-packages.xdarwin-start">
             <div class="question"><p><b>Q9.3: Помогите! Когда запускаю XDarwin, она сразу завершает работу!</b></p></div>
             <div class="answer"><p><b>A:</b> Не паникуйте. Документ "Выполнение X11" сейчас имеет большой раздел
-                        <a href="http://fink.sourceforge.net/doc/x11/trouble.php#immediate-quit">Выявление и устранение проблем
+                        <a href="http://www.finkproject.org/doc/x11/trouble.php#immediate-quit">Выявление и устранение проблем
                     </a> по данному общему вопросу.</p></div>
         </a>
         <a name="usage-packages.no-server">
@@ -1833,4 +1833,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ru.xml,v 1.9 2007/01/18 02:16:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ru.xml,v 1.10 2007/02/23 22:04:54 rangerrick Exp $</i></p></body></html>

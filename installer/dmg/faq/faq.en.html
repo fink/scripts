@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.81 2007/01/18 02:16:18 babayoshihiko Exp $
+Generated from $Fink: faq.en.xml,v 1.82 2007/02/23 22:04:54 rangerrick Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -198,7 +198,7 @@ complaining that the dependencies are in an inconsistent state.</a></li><li><a h
     
     <a name="usage-fink.what-packages">
       <div class="question"><p><b>Q5.1: How can I find out what packages Fink supports?</b></p></div>
-      <div class="answer"><p><b>A:</b> Since Fink 0.2.3, there is the <tt style="white-space: nowrap;">list</tt> command. It produces a list of all packages known to your Fink installation. Example:</p><pre>fink list</pre><p>If you're using the binary distribution, <tt style="white-space: nowrap;">dselect</tt> gives you a nice browsable listing of available packages. Note that you must run it as root if you want to select and install packages from within dselect.</p><p>There's also the <a href="http://fink.sourceforge.net/pdb/">package database</a> at the
+      <div class="answer"><p><b>A:</b> Since Fink 0.2.3, there is the <tt style="white-space: nowrap;">list</tt> command. It produces a list of all packages known to your Fink installation. Example:</p><pre>fink list</pre><p>If you're using the binary distribution, <tt style="white-space: nowrap;">dselect</tt> gives you a nice browsable listing of available packages. Note that you must run it as root if you want to select and install packages from within dselect.</p><p>There's also the <a href="http://pdb.finkproject.org/pdb/">package database</a> at the
         website.</p></div>
     </a>
     <a name="usage-fink.proxy">
@@ -256,7 +256,7 @@ complaining that the dependencies are in an inconsistent state.</a></li><li><a h
     <a name="usage-fink.bindist">
       <div class="question"><p><b>Q5.7: The package database at the website lists package xxx, but apt-get
         and dselect know nothing about it. Who's lying?</b></p></div>
-      <div class="answer"><p><b>A:</b> Both are correct. The <a href="http://fink.sourceforge.net/pdb/">package database</a> knows
+      <div class="answer"><p><b>A:</b> Both are correct. The <a href="http://pdb.finkproject.org/pdb/">package database</a> knows
         about every package, including those that are still in the unstable
         section. The <tt style="white-space: nowrap;">dselect</tt> and <tt style="white-space: nowrap;">apt-get</tt> tools on
         the other hand only know about the packages available as precompiled
@@ -469,7 +469,7 @@ fink selfupdate-cvs</pre></div>
         "install-info: unrecognized option `--infodir=/sw/share/info'"</b></p></div>
       <div class="answer"><p><b>A:</b> This usually is due to a problem in your PATH. In a terminal window
         type:</p><pre>printenv PATH</pre><p>If <tt style="white-space: nowrap;">/sw/sbin</tt> doesn't appear at all, then you
-        need to set your environment up as per the <a href="http://fink.sourceforge.net/doc/users-guide/install.php#setup">instructions</a>
+        need to set your environment up as per the <a href="http://www.finkproject.org/doc/users-guide/install.php#setup">instructions</a>
         in the Users Guide. If <tt style="white-space: nowrap;">/sw/sbin</tt> is there, but
         there are other directories ahead of it (e.g.
         <tt style="white-space: nowrap;">/usr/local/bin</tt>), then you will either want to
@@ -488,7 +488,7 @@ fink selfupdate-cvs</pre></div>
         if you don't have the .deb file, you can still proceed because the
         error doesn't interfere with builds.</p><p>If you have been installing from the binary distribution or you
         know for sure that the version in the binary distribution is the same
-        as what you have installed (e.g. by checking the <a href="http://fink.sourceforge.net/pdb/index.php">package
+        as what you have installed (e.g. by checking the <a href="http://pdb.finkproject.org/pdb/index.php">package
         database</a>), then you can get a .deb file by running <tt style="white-space: nowrap;">sudo
         apt=get install --reinstall --download-only <b>packagename</b>
           </tt>. Otherwise you can build one yourself by running <tt style="white-space: nowrap;">fink
@@ -685,7 +685,7 @@ page and on http://fontconfig.org.</pre><p>then you can fix it by running</p><pr
     <a name="usage-fink.wrong-arch">
       <div class="question"><p><b>Q5.34: I can't update Fink, because <q>package architecture (darwin-i386) does not match system (darwin-powerpc).</q>
 </b></p></div>
-      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://fink.sourceforge.net/download/index.php">the downloads page</a>.</p></div>
+      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://www.finkproject.org/download/index.php">the downloads page</a>.</p></div>
     </a>
     <a name="usage-fink.sf-cvs-2006">
 	      <div class="question"><p><b>Q5.35: I haven't been able to do a cvs selfupdate.</b></p></div>
@@ -956,7 +956,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.compile-options">
       <div class="question"><p><b>Q6.22: I want Fink to use different options in building a package.</b></p></div>
-      <div class="answer"><p><b>A:</b> The first thing to do is to contact the package maintainer to request a variant.  It may be relatively easy to do it.  If you don't hear from the maintainer or see the new packages, or want to try a different option yourself, check out the <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> and <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>.</p><p>
+      <div class="answer"><p><b>A:</b> The first thing to do is to contact the package maintainer to request a variant.  It may be relatively easy to do it.  If you don't hear from the maintainer or see the new packages, or want to try a different option yourself, check out the <a href="http://www.finkproject.org/doc/quick-start-pkg/index.php">Packaging Tutorial</a> and <a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a>.</p><p>
           <b>Note:  </b>Fink is deliberately set up such that all official binaries are identical regardless of what machine they are built on, so things like G5 optimization won't happen with an official package.  If you want them, you'll have to do it yourself.</p></div>
     </a>
     <a name="comp-general.gettext">
@@ -1012,7 +1012,7 @@ endif</pre></div>
         too.</p><p>3. To get XFree86-4.2.1, Install Fink's <tt style="white-space: nowrap;">xfree86-base</tt>
         and <tt style="white-space: nowrap;">xfree86-rootless</tt> packages by the usual means:
         "<tt style="white-space: nowrap;">fink install</tt>" for source users, "<tt style="white-space: nowrap;">apt-get
-        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x and above, install Fink's <tt style="white-space: nowrap;">xfree86</tt> package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004) isn't in the binary distro yet, and is currently only in the unstable tree [see <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable%5C">how to install unstable packages</a>].</p></div>
+        install</tt>" or <tt style="white-space: nowrap;">dselect</tt> for binaries.</p><p>-or-</p><p>3a. To get XFree86-4.3.x and above, install Fink's <tt style="white-space: nowrap;">xfree86</tt> package, with "fink install xfree86"--the latest version (XFree86-4.4.x as of May 25th, 2004) isn't in the binary distro yet, and is currently only in the unstable tree [see <a href="http://www.finkproject.org/faq/usage-fink.php#unstable%5C">how to install unstable packages</a>].</p></div>
     </a>
     <a name="comp-packages.change-thread-nothread">
       <div class="question"><p><b>Q7.3: How do I change from the non-threaded version of Fink's XFree86
@@ -1083,7 +1083,7 @@ preventing you from updating <tt style="white-space: nowrap;">gettext</tt>.</p><
         library". Is that bad?</b></p></div>
       <div class="answer"><p><b>A:</b> It's not bad, it just means that the program will use the default
         English messages, date formats, etc. The program will function
-        normally otherwise. The Running X11 document has <a href="http://fink.sourceforge.net/doc/x11/trouble.php#locale">details</a>.</p></div>
+        normally otherwise. The Running X11 document has <a href="http://www.finkproject.org/doc/x11/trouble.php#locale">details</a>.</p></div>
     </a>
     <a name="usage-general.passwd">
       <div class="question"><p><b>Q8.2: There are suddenly a number of strange users on my system, with
@@ -1198,7 +1198,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(assuming that the build system is 
             <p>4.2.x from Apple (assuming you have the User + SDK packages installed): the <tt style="white-space: nowrap;">system-xfree86</tt> package is automatically generated for current versions of Fink; do NOT install it. (Note that the public beta of Apple's X11 for Jaguar is no longer available, so this is only an option for you if you already have this installed, from the time in which it was available.)</p>
           </li>
         </ul><p>There are other options, as well. There is a more extensive
-        treatment in the <a href="http://fink.sourceforge.net/doc/x11/index.php">Running X11
+        treatment in the <a href="http://www.finkproject.org/doc/x11/index.php">Running X11
         document</a>.</p></div>
     </a>
     <a name="usage-general.no-display">
@@ -1348,7 +1348,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(assuming that the build system is 
     </a>
     <a name="usage-packages.xdarwin-start">
       <div class="question"><p><b>Q9.3: Help! When I start XDarwin, it immediately quits!</b></p></div>
-      <div class="answer"><p><b>A:</b> Don't Panic. The Running X11 document now has an extensive <a href="http://fink.sourceforge.net/doc/x11/trouble.php#immediate-quit">troubleshooting
+      <div class="answer"><p><b>A:</b> Don't Panic. The Running X11 document now has an extensive <a href="http://www.finkproject.org/doc/x11/trouble.php#immediate-quit">troubleshooting
         section</a> for this common problem.</p></div>
     </a>
     <a name="usage-packages.no-server">
@@ -1505,4 +1505,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.81 2007/01/18 02:16:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.82 2007/02/23 22:04:54 rangerrick Exp $</i></p></body></html>

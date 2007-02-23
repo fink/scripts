@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: x11.fr.xml,v 1.23 2006/01/19 22:09:48 michga Exp $
+Generated from $Fink: x11.fr.xml,v 1.24 2007/02/23 22:04:56 rangerrick Exp $
 -->
 <title>Fink Documentation - Utilisation de X11 sous Darwin et Mac OS X</title></head><body>
 <table width="100%" cellspacing="0">
@@ -60,7 +60,7 @@ Fran&ccedil;ais |
 
 <p>Dans la plupart des environnements graphiques, l'aspect des cadres de fenêtres (barre de titre, bouton de fermeture, etc...) est défini par le système. Sous X11, il en va autrement. Dans cet environnement, les cadres de fenêtres (aussi nommés "ornements") sont fournis par un programme distinct, appelé le gestionnaire de fenêtres. À bien des égards, le gestionnaire de fenêtres n'est autre qu'une application client ; il est lancé de la même façon et dialogue avec le serveur X au travers des mêmes canaux.</p>
 <p>Vous avez le choix entre une multitude de gestionnaires de fenêtres. Le site <a href="http://www.xwinman.org/">xwinman.org</a> en donne la liste complète. Les plus populaires sont ceux qui permettent à l'utilisateur de personnaliser leur apparence via ce qu'on appelle des <a href="http://www.themes.org/">thèmes</a>. La plupart des gestionnaires de fenêtres fournissent d'autres fonctionnalités, comme les menus déroulants dans la fenêtre racine, les docks et les boutons de lancement.</p>
-<p>De nombreux gestionnaires de fenêtres ont été compilés pour Fink ; en voici la <a href="http://fink.sourceforge.net/pdb/section.php/x11-wm">liste actuelle</a>.</p>
+<p>De nombreux gestionnaires de fenêtres ont été compilés pour Fink ; en voici la <a href="http://pdb.finkproject.org/pdb/section.php/x11-wm">liste actuelle</a>.</p>
 
 <h3><a name="intro.desktop">1.9 Que sont Quartz/Aqua, Gnome et KDE ?</a></h3>
 
@@ -69,7 +69,7 @@ Fran&ccedil;ais |
 <p>un gestionnaire de fenêtre : <a href="http://sawmill.sourceforge.net/">sawfish</a></p>
 <p>un bureau : <a href="http://www.gnome.org/">Gnome</a></p>
 <p>La frontière entre moteur d'affichage graphique, gestionnaire de fenêtres et bureau est floue, car une même fonctionnalité (ou une fonctionnalité similaire) peut être implémentée par l'un de ces environnements ou plusieurs d'entre eux. C'est une des raisons pour laquelle un gestionnaire de fenêtres particulier peut ne pas fonctionner avec un environnement de bureau donné.</p>
-<p>De nombreuses applications sont développées pour être intégrées dans un environnement de bureau spécifique. Très souvent, il suffit d'installer les librairies de l'environnement de bureau (et les librairies sous-jacentes) avec lesquelles l'application a été développée pour qu'elle fonctionne (quasi) sans perte de fonctionnalités. Par exemple, un nombre de plus en plus grand d'<a href="http://fink.sourceforge.net/pdb/section.php/gnome">applications GNOME</a> fonctionnent hors de l'environnement GNOME. Malheureusement, <a href="http://fink.sourceforge.net/faq/usage-fink.php#kde">ce n'est pas encore le cas</a> pour les <a href="http://www.kde.org/">applications KDE</a>.</p>
+<p>De nombreuses applications sont développées pour être intégrées dans un environnement de bureau spécifique. Très souvent, il suffit d'installer les librairies de l'environnement de bureau (et les librairies sous-jacentes) avec lesquelles l'application a été développée pour qu'elle fonctionne (quasi) sans perte de fonctionnalités. Par exemple, un nombre de plus en plus grand d'<a href="http://pdb.finkproject.org/pdb/section.php/gnome">applications GNOME</a> fonctionnent hors de l'environnement GNOME. Malheureusement, <a href="http://www.finkproject.org/faq/usage-fink.php#kde">ce n'est pas encore le cas</a> pour les <a href="http://www.kde.org/">applications KDE</a>.</p>
 
 <h2><a name="history">2 Historique</a></h2>
 
@@ -127,7 +127,7 @@ Fran&ccedil;ais |
 <p>Le 7 janvier 2003, Apple a mis à disposition <a href="http://www.apple.com/macosx/x11/">une implémentation X11 personnalisée basée sur XFree86-4.2</a>, qui incluait un rendu Quartz et l'accélération OpenGL. Une nouvelle version est sortie le 10 Février 2003, qui comportait des fonctionnalités supplémentaires et des corrections de bogues. Une troisième version (la Bêta 3) est sortie le 17 mars 2003 avec de nouvelles fonctionnalités et des corrections de bogues. Cette version peut être utilisée sur Jaguar.</p>
 <p>Le 24 octobre 2003, Apple a sorti Panther (10.3), qui inclut sa propre version de X11. Cette version est basée sur XFree86-4.3.</p>
 <p>Le 29 avril 2005, Apple a sortiTiger (10.4), qui inclut sa propre version de X11. Cette version est basée sur XFree86-4.4.</p>
-<p>Pour utiliser les binaires d'Apple, vous devez d'une part vous assurer que le paquet <b>X11 User</b> est installé et, d'autre part <a href="http://fink.sourceforge.net/doc/users-guide/upgrade.php">mettre à jour</a> Fink.</p>
+<p>Pour utiliser les binaires d'Apple, vous devez d'une part vous assurer que le paquet <b>X11 User</b> est installé et, d'autre part <a href="http://www.finkproject.org/doc/users-guide/upgrade.php">mettre à jour</a> Fink.</p>
 <p>Avec <tt style="white-space: nowrap;">fink-0.16.2</tt>, vous devez aussi installer le paquet <b>X11 SDK</b>. Ensuite, Fink créera un paquet virtuel <tt style="white-space: nowrap;">system-xfree86</tt>.</p>
 <p>Avec <tt style="white-space: nowrap;">fink-0.17.0</tt> et les versions ultérieures, n'installez le paquet X11 SDK que si vous souhaitez construire des paquets à partir du source. Dans ce cas, même si vous n'avez pas installé le SDK, il y aura création des paquets virtuels <tt style="white-space: nowrap;">system-xfree86</tt> et <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, ce dernier correspondant aux librairies partagées. Si vous installez le SDK, il y aura création d'un paquet <tt style="white-space: nowrap;">system-xfree86-dev</tt>, représentant les headers.</p>
 <p>Si vous avez déjà installé une distribution XFree86, que ce soit avec Fink ou non, vous pouvez suivez les  <a href="#inst-xfree86.switching-x11">instructions de remplacement d'un paquet X11 par un autre</a>. Supprimez vos paquets existants, puis installez X11 d'Apple (et, éventuellement, X11 SDK).</p>
@@ -282,7 +282,7 @@ xfree86-rootless-shlibs xfree86-base xfree86-base-shlibs</pre>
  <h3><a name="run-xfree86.applex11tools">4.5 applex11tools</a></h3>
 
 <p>Le paquet <tt style="white-space: nowrap;">applex11tools</tt> de Fink vous permet d'utiliser <tt style="white-space: nowrap;">X11.app</tt> et <tt style="white-space: nowrap;">quartz-wm</tt> sous Mac OS X 10.3 et suivant avec XFree86 4.4 et suivant ou X.org.</p>
-<p>Pour installer ce paquet, vous devez activer la <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">branche instable</a> et avoir installé le paquet <tt style="white-space: nowrap;">X11User.pkg</tt> dans la hiérarchie <tt style="white-space: nowrap;">/Users</tt> ou <tt style="white-space: nowrap;">/Volumes</tt>. <tt style="white-space: nowrap;">X11.app</tt> sera installé dans le dossier <tt style="white-space: nowrap;">Applications</tt> de l'arborescence Fink. Vous pourrez alors utilisé soit <tt style="white-space: nowrap;">X11.app</tt> ou <tt style="white-space: nowrap;">XDarwin.app</tt>.</p>
+<p>Pour installer ce paquet, vous devez activer la <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">branche instable</a> et avoir installé le paquet <tt style="white-space: nowrap;">X11User.pkg</tt> dans la hiérarchie <tt style="white-space: nowrap;">/Users</tt> ou <tt style="white-space: nowrap;">/Volumes</tt>. <tt style="white-space: nowrap;">X11.app</tt> sera installé dans le dossier <tt style="white-space: nowrap;">Applications</tt> de l'arborescence Fink. Vous pourrez alors utilisé soit <tt style="white-space: nowrap;">X11.app</tt> ou <tt style="white-space: nowrap;">XDarwin.app</tt>.</p>
 <h3><a name="run-xfree86.xinitrc">4.6 Fichier .xinitrc</a></h3>
 
 <p>S'il existe dans votre répertoire utilisateur un fichier nommé <tt style="white-space: nowrap;">.xinitrc</tt>, il sera utilisé pour lancer quelques clients X au démarrage, tels le gestionnaire de fenêtre, quelques xterm ou un environnement de bureau comme GNOME. Le fichier <tt style="white-space: nowrap;">.xinitrc</tt> est un script shell qui contient les commandes pour ce faire. Il <b>n'est pas</b> nécessaire de mettre le traditionnel <tt style="white-space: nowrap;">#!/bin/sh</tt> dans la première ligne du fichier et de rendre exécutable le fichier ; xinit sait le lancer via un shell.</p>
@@ -516,4 +516,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: x11.fr.xml,v 1.23 2006/01/19 22:09:48 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: x11.fr.xml,v 1.24 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: quick-start-pkg.en.xml,v 1.10 2007/01/07 01:12:27 chris01 Exp $
+Generated from $Fink: quick-start-pkg.en.xml,v 1.11 2007/02/23 22:04:56 rangerrick Exp $
 -->
 <title>Fink Documentation - Create a Fink Package - Tutorial</title></head><body>
 <table width="100%" cellspacing="0">
@@ -17,7 +17,7 @@ English |
 <p>
 This document is for people who want to create a package for <tt style="white-space: nowrap;">Fink</tt>. It
 complements the 
-<a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>, 
+<a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a>, 
 which is a more detailed and comprehensive document.
 </p>
 <p>
@@ -54,7 +54,7 @@ We suggest you:
 <ul>
 <li>
 Have a look at 
-<a href="http://fink.sourceforge.net/doc/UsingFink.pdf">
+<a href="http://www.finkproject.org/doc/UsingFink.pdf">
 Using Fink: A Developer's How To</a>
 (2MB pdf file) - slides from a presentation at the 
 <a href="http://conferences.oreillynet.com/macosx2002/">O'Reilly Mac OS X Conference</a>.
@@ -83,7 +83,7 @@ if there is a matching request. You might find valuable information there.
 </li>
 <li>
 Maybe browse the 
-<a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>
+<a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a>
 if you think you need more detailed information.
 </li>
 </ul>
@@ -121,7 +121,7 @@ finkdev% fink list packagename
 </pre>
 <p>
 If it doesn't show up in the list you might need to change your
-<a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fink configuration file</a>
+<a href="http://www.finkproject.org/doc/users-guide/conf.php#optional">fink configuration file</a>
 to include your local tree.
 </p>
 <p>
@@ -132,11 +132,11 @@ finkdev% fink index
 </pre>
 <p>
 If you need more information read the 
-<a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>
+<a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a>
 or use one or more of different 
-<a href="http://fink.sourceforge.net/help/index.php">help sources</a>.
+<a href="http://www.finkproject.org/help/index.php">help sources</a>.
 You should also subscribe to the 
-<a href="http://fink.sourceforge.net/lists/index.php">fink-devel</a>
+<a href="http://www.finkproject.org/lists/index.php">fink-devel</a>
 mailing list.
 </p>
 
@@ -146,7 +146,7 @@ mailing list.
 <p>
 During validation of your package you should set the verbose level of 
 <tt style="white-space: nowrap;">fink</tt> to the highest possible value. Check the section on the
-<a href="http://fink.sourceforge.net/doc/users-guide/conf.php#optional">fink configuration file</a>
+<a href="http://www.finkproject.org/doc/users-guide/conf.php#optional">fink configuration file</a>
 about how to change the verbose level.
 </p>
 <p>
@@ -318,7 +318,7 @@ Error: No package description supplied. (maxwell.info)
 </pre>
 <p>
 Aaargh! We seem to be getting worse, not better, never mind, head off over to
-the <a href="http://fink.sourceforge.net/doc/packaging/policy.php#licenses">
+the <a href="http://www.finkproject.org/doc/packaging/policy.php#licenses">
 Packaging Manual</a> to see what is allowed for License, and we see that we
 can just change MIT to OSI-Approved, as the MIT license is, indeed, approved
 by the <a href="http://www.opensource.org/">OSI</a>. We can also grab a
@@ -364,7 +364,7 @@ curl -f -L -O http://west.dl.sourceforge.net/sourceforge/maxwell/maxwell-0.5.1.t
 The tarball couldn't be downloaded from the Fink mirrors (distfiles) since
 your package is not added to the distribution yet. That's why you need to 
 change to the next mirror set. More information about this problem is in the
-<a href="http://fink.sourceforge.net/faq/comp-general.php#master-problems">FAQ</a>.
+<a href="http://www.finkproject.org/faq/comp-general.php#master-problems">FAQ</a>.
 </p>
 <p>
 So we can now get the md5 by running <tt style="white-space: nowrap;">md5sum /sw/src/maxwell-0.5.1.tar.gz</tt>,
@@ -431,7 +431,7 @@ from the files in <tt style="white-space: nowrap;">%i</tt>. These files are late
 <tt style="white-space: nowrap;">%p</tt> (which is <tt style="white-space: nowrap;">/sw</tt> by default) when you use 
 <tt style="white-space: nowrap;">fink install maxwell</tt>. For more details about <tt style="white-space: nowrap;">%p</tt> and
 <tt style="white-space: nowrap;">%i</tt> please consult the 
-<a href="http://fink.sourceforge.net/doc/packaging/format.php#percent">
+<a href="http://www.finkproject.org/doc/packaging/format.php#percent">
 Packaging Manual</a>.
 </p>
 <p>
@@ -549,7 +549,7 @@ Warning: File installed into deprecated directory /sw/man/
 </pre>
 <p>
 Oops... something is wrong. Let's consult the 
-<a href="http://fink.sourceforge.net/doc/packaging/fslayout.php#fhs">Packaging Manual</a>
+<a href="http://www.finkproject.org/doc/packaging/fslayout.php#fhs">Packaging Manual</a>
 again. It tells us to install man pages into <tt style="white-space: nowrap;">/sw/share/man</tt> and files such
 as <tt style="white-space: nowrap;">README</tt> into <tt style="white-space: nowrap;">/sw/share/doc/%n</tt>. If we look into the 
 <tt style="white-space: nowrap;">Makefile</tt> of maxwell we see that the mandir and datadir can be set:
@@ -603,7 +603,7 @@ finkdev% maxwell
 <p>
 Congratulations, you just finished your first Fink package! Now try to
 package something yourself by following the 
-<a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">
+<a href="http://www.finkproject.org/doc/quick-start-pkg/index.php">
 Packaging tutorial</a> from the beginning.
 </p>
 <p>
@@ -618,4 +618,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.10 2007/01/07 01:12:27 chris01 Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: quick-start-pkg.en.xml,v 1.11 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>

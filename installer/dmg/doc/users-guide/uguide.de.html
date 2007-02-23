@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.de.xml,v 1.3 2004/12/09 18:17:04 dmacks Exp $
+Generated from $Fink: uguide.de.xml,v 1.4 2007/02/23 22:04:56 rangerrick Exp $
 -->
 <title>Fink Documentation - Fink Benutzerhandbuch</title></head><body>
 <table width="100%" cellspacing="0">
@@ -23,11 +23,11 @@ Deutsch |
     <p>
       <b>Dieses Dokument ist ständig im Aufbau.</b>
 Die folgenden älteren Dokumente könnten einen breiteren Überblick bieten:
-<a href="http://fink.sourceforge.net/doc/bundled/install.php">Installation</a>,
-<a href="http://fink.sourceforge.net/doc/bundled/usage.php">Nutzung</a>
+<a href="http://www.finkproject.org/doc/bundled/install.php">Installation</a>,
+<a href="http://www.finkproject.org/doc/bundled/usage.php">Nutzung</a>
 und die ReadMe.rtf, welche sich auf dem Medium der Binärdistribution befindet.
 Überprüfen Sie außerdem den
-<a href="http://fink.sourceforge.net/doc/">Dokumentationsteil</a> der Webseite, er hat auch einige nützliche Dokumente.</p>
+<a href="http://www.finkproject.org/doc/">Dokumentationsteil</a> der Webseite, er hat auch einige nützliche Dokumente.</p>
 	<h2>Contents</h2><ul><li><a href="#intro"><b>1 Einführung</b></a><ul><li><a href="#intro.what">1.1 Was ist Fink?</a></li><li><a href="#intro.req">1.2 Voraussetzungen</a></li><li><a href="#intro.supported-os">1.3 Unterstützte Systeme</a></li><li><a href="#intro.src-vs-bin">1.4 Quellcode vs. Binärpakete</a></li></ul></li><li><a href="#install"><b>2 Erste Installation</b></a><ul><li><a href="#install.bin">2.1 Installation der Binary-Distribution</a></li><li><a href="#install.src">2.2 Installation der Source-Distribution</a></li><li><a href="#install.setup">2.3 Einrichten Ihrer Umgebung</a></li></ul></li><li><a href="#packages"><b>3 Pakete Installieren</b></a><ul><li><a href="#packages.bin-dselect">3.1 Binary-Pakete mit dselect Installieren</a></li><li><a href="#packages.bin-apt">3.2 Binary-Pakete mit apt-get Installieren</a></li><li><a href="#packages.bin-exceptions">3.3 Paketabhängigkeiten ohne verfügbares Binary-Paket</a></li><li><a href="#packages.src">3.4 Pakete von Quellcode Installieren</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Verfügbare Versionen</a></li><li><a href="#packages.x11">3.7 Mit X11 Klarkommen</a></li></ul></li><li><a href="#upgrade"><b>4 Fink Aktualisieren</b></a><ul><li><a href="#upgrade.bin">4.1 Aktualisieren von Binary-Paketen</a></li><li><a href="#upgrade.src">4.2 Aktualisieren der Source-Distribution</a></li><li><a href="#upgrade.mix">4.3 Aktualisieren einer gemischten Distribution (Binary und Source)</a></li></ul></li><li><a href="#conf"><b>5 Die Fink-Konfigurationsdatei</b></a><ul><li><a href="#conf.about">5.1 Über fink.conf</a></li><li><a href="#conf.syntax">5.2 fink.conf Syntax</a></li><li><a href="#conf.required">5.3 Erforderliche Einstellungen</a></li><li><a href="#conf.optional">5.4 Optionale Nutzereinstellungen</a></li><li><a href="#conf.downloading">5.5 Download Einstellungen</a></li><li><a href="#conf.mirrors">5.6 Mirror Einstellungen</a></li><li><a href="#conf.developer">5.7 Entwicklereinstellungen</a></li><li><a href="#conf.advanced">5.8 Erweiterte Einstellungen</a></li><li><a href="#conf.sourceslist">5.9 Verwaltung von apts sources.list</a></li></ul></li><li><a href="#usage"><b>6 Das fink-Tool über die Kommandozeile benutzen</b></a><ul><li><a href="#usage.using">6.1 Das fink-Tool benutzen</a></li><li><a href="#usage.install">6.2 install</a></li><li><a href="#usage.remove">6.3 remove</a></li><li><a href="#usage.update-all">6.4 update-all</a></li><li><a href="#usage.list">6.5 list</a></li><li><a href="#usage.apropos">6.6 apropos</a></li><li><a href="#usage.describe">6.7 describe</a></li><li><a href="#usage.fetch">6.8 fetch</a></li><li><a href="#usage.fetch-all">6.9 fetch-all</a></li><li><a href="#usage.fetch-missing">6.10 fetch-missing</a></li><li><a href="#usage.build">6.11 build</a></li><li><a href="#usage.rebuild">6.12 rebuild</a></li><li><a href="#usage.reinstall">6.13 reinstall</a></li><li><a href="#usage.configure">6.14 configure</a></li><li><a href="#usage.selfupdate">6.15 selfupdate</a></li><li><a href="#usage.index">6.16 index</a></li><li><a href="#usage.validate">6.17 validate</a></li><li><a href="#usage.scanpackages">6.18 scanpackages</a></li><li><a href="#usage.cleanup">6.19 cleanup</a></li><li><a href="#usage.dumpinfo">6.20 dumpinfo</a></li></ul></li></ul><h2><a name="intro">1 Einführung</a></h2>
     
     
@@ -105,7 +105,7 @@ Sobald sie die Werkzeuge für die Paketverwaltung installiert haben, können Sie
       
       <p>
 Die Binary-Distribution kommt in Form eines Mac OS X-Installationspaketes (.pkg), eingepackt in ein Diskimage (.dmg).
-Nachdem dieses von der <a href="http://fink.sourceforge.net/download/bindist.php">Download-Seite</a> heruntergeladen ist (Sie müssen eventuell die "Verknüpfte Datei laden unter..."- oder die "Link auf Datenträger downloaden"-Funktion Ihres Browsers nutzen), müssen Sie diese Datei doppel-klicken, um sie zu mounten. Öffnen Sie dann das "Fink 0.x.x Installer"-Medium, welches entweder auf dem Desktop oder in einem Fenster des Finders auf der Sidebar erscheint, nachdem es vom Festplatten-Dienstprogramm (Disk Copy auf OS Versionen älter als 10.3) verifiziert worden ist. Dort drinnen finden Sie dann einige Dokumentationsdateien und ein Installationspaket. Doppel-klicken Sie dieses Installationspaket und folgen Sie den Anweisungen auf dem Bildschirm.</p>
+Nachdem dieses von der <a href="http://www.finkproject.org/download/bindist.php">Download-Seite</a> heruntergeladen ist (Sie müssen eventuell die "Verknüpfte Datei laden unter..."- oder die "Link auf Datenträger downloaden"-Funktion Ihres Browsers nutzen), müssen Sie diese Datei doppel-klicken, um sie zu mounten. Öffnen Sie dann das "Fink 0.x.x Installer"-Medium, welches entweder auf dem Desktop oder in einem Fenster des Finders auf der Sidebar erscheint, nachdem es vom Festplatten-Dienstprogramm (Disk Copy auf OS Versionen älter als 10.3) verifiziert worden ist. Dort drinnen finden Sie dann einige Dokumentationsdateien und ein Installationspaket. Doppel-klicken Sie dieses Installationspaket und folgen Sie den Anweisungen auf dem Bildschirm.</p>
       <p>
 Sie werden nach dem Administratorpasswort gefragt und einige Text zu lesen bekommen. Bitte lesen Sie diese - sie können aktueller als dieses Nutzerhandbuch sein. Wenn der Installer nach einem Laufwerk, auf welchem die Installation erfolgen soll, fragt, gehen Sie sicher, dass Sie Ihr Systemvolume (das, auf welchem Sie Mac OS X installiert haben) auswählen. Wenn Sie das falsche Laufwerk wählen, wird die Installation fortgesetzt, aber Fink wird anschließend nicht funktionieren. Wenn die Installation beendet ist, fahren Sie mit dem Abschnitt <a href="#install.setup">Einrichten Ihrer Umgebung</a> fort.</p>
     
@@ -113,7 +113,7 @@ Sie werden nach dem Administratorpasswort gefragt und einige Text zu lesen bekom
       
       <p>
 Die Source-Distribution kommt als ein übliches Unix-tarball (.tar.gz) daher. Es beinhaltet nur den <tt style="white-space: nowrap;">fink</tt> Paketmanager und seine Paketbeschreibungen; es lädt die Quelldateien der Pakete bei Bedarf herunter. Sie können es hier herunterladen:
-<a href="http://fink.sourceforge.net/download/srcdist.php">Download-Seite</a>.
+<a href="http://www.finkproject.org/download/srcdist.php">Download-Seite</a>.
 Es ist wichtig, daass Sie nicht den StuffIt Expander zum Entpacken des tar-Archivs verwenden. Aus irgendeinen Grund kann StuffIt noch mit keinen langen Dateinamen umgehen. Falls StuffIt Expander das Archiv schon entpackt hat, löschen sie den Ordner, welchen er erstellt hat.
 </p>
       <p>
@@ -323,7 +323,7 @@ Sobald Sie ein Paket gefunden haben, welches Sie installieren wollen, benutzen S
 </p>
       <pre>fink install wget-ssl</pre>
       <p>
-Der <tt style="white-space: nowrap;">fink</tt>-Befehl wird erst prüfen, ob alle Grundvoraussetzungen ("dependencies") vorhanden sind, und wird Sie dann fragen, ob Sie damit einverstanden sind, dass diese installiert werden, falls sie noch nicht da sind. Dann beginnt der Installationsprozess: die Quellen werden heruntergeladen, ausgepackt, gepatcht, kompiliert und schlussendlich an die richtige Stelle auf der Festplatt Ihres Computers geschoben. Dieser Vorgang kann eine lange Zeit dauern. Falls währenddessen Fehler auftreten, schauen Sie sich bitte erst die <a href="http://fink.sourceforge.net/faq/">FAQ</a> an.
+Der <tt style="white-space: nowrap;">fink</tt>-Befehl wird erst prüfen, ob alle Grundvoraussetzungen ("dependencies") vorhanden sind, und wird Sie dann fragen, ob Sie damit einverstanden sind, dass diese installiert werden, falls sie noch nicht da sind. Dann beginnt der Installationsprozess: die Quellen werden heruntergeladen, ausgepackt, gepatcht, kompiliert und schlussendlich an die richtige Stelle auf der Festplatt Ihres Computers geschoben. Dieser Vorgang kann eine lange Zeit dauern. Falls währenddessen Fehler auftreten, schauen Sie sich bitte erst die <a href="http://www.finkproject.org/faq/">FAQ</a> an.
 </p>
     
     <h3><a name="packages.fink-commander">3.5 Fink Commander</a></h3>
@@ -333,7 +333,7 @@ Der <tt style="white-space: nowrap;">fink</tt>-Befehl wird erst prüfen, ob alle
     
 <h3><a name="packages.available-versions">3.6 Verfügbare Versionen</a></h3>
       
-<p>Wenn Sie ein Paket installieren möchten, sollten Sie zuerst die <a href="http://fink.sourceforge.net/pdb/index.php">Paketdatenbank</a> überprüfen und nachsehen, ob es überhaupt via Fink verfügbar ist. Die verfügbare(n) Version(en) des Pakets werden in mehreren Zeilen einer Tabelle angezeigt. Diese sind:</p>
+<p>Wenn Sie ein Paket installieren möchten, sollten Sie zuerst die <a href="http://pdb.finkproject.org/pdb/index.php">Paketdatenbank</a> überprüfen und nachsehen, ob es überhaupt via Fink verfügbar ist. Die verfügbare(n) Version(en) des Pakets werden in mehreren Zeilen einer Tabelle angezeigt. Diese sind:</p>
       <ul>
         <li>
           <p>
@@ -344,7 +344,7 @@ Der <tt style="white-space: nowrap;">fink</tt>-Befehl wird erst prüfen, ob alle
 <b>0.8.1:</b> Das ist die Basisversion, die als Binary-Paket für OS 10.2 und 10.3 unter dem aktuellen Fink-Release installiert werden kann. Wenn Sie Fink <a href="#upgrade">aktualisieren</a> wollen, kann es eine OS-spezifische, neuere Version geben, die hier nicht gezeigt wird.</p></li>
         <li>
           <p>
-            <b>10.2-gcc3.3 stable:</b> Das ist die aktuellste, stabile stable-Version ("stabil"), die von Quellcode für 10.2 mit dem <tt style="white-space: nowrap;">gcc 3.3</tt>-Update für die Developer Tools installiert werden kann. Um diese Version zu installieren, ist es nötig, <a href="http://fink.sourceforge.net/doc/cvsaccess/index.php">CVS</a> oder den rsync-Zugang zu aktivieren. Falls Sie das <tt style="white-space: nowrap;">gcc 3.3</tt>-Update nicht angewendet haben, werden Sie womöglich diese Version (oder eventuell sogar das Paket) nicht sehen.</p>
+            <b>10.2-gcc3.3 stable:</b> Das ist die aktuellste, stabile stable-Version ("stabil"), die von Quellcode für 10.2 mit dem <tt style="white-space: nowrap;">gcc 3.3</tt>-Update für die Developer Tools installiert werden kann. Um diese Version zu installieren, ist es nötig, <a href="http://www.finkproject.org/doc/cvsaccess/index.php">CVS</a> oder den rsync-Zugang zu aktivieren. Falls Sie das <tt style="white-space: nowrap;">gcc 3.3</tt>-Update nicht angewendet haben, werden Sie womöglich diese Version (oder eventuell sogar das Paket) nicht sehen.</p>
           <p> Anmerkung: In Kontrast zu anderen Projekten, veröffentlicht Fink sowohl die aktuellsten stable-Versionen als auch die unstable-Versionen, die noch testing ("Erprobung") benötigen, via CVS. Die Aktivierung von CVS oder rsync bietet Ihnen den Zugriff auf die neuen stable-Versionen der Pakete, noch bevor diese in der Binary-Distribution aktualisiert sind.
 </p>
         </li>
@@ -352,10 +352,10 @@ Der <tt style="white-space: nowrap;">fink</tt>-Befehl wird erst prüfen, ob alle
 </li>
         <li>
           <p>
-            <b>10.2-gcc3.3 unstable:</b> Das ist die aktuellste unstable-Version, die von Quellcode unter 10.2 mit <tt style="white-space: nowrap;">gcc 3.3</tt> installiert werden kann. Um diese Version zu installieren, folgen Sie den <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">Erklärungen</a> über die Installation der unstable-Pakete.</p>
+            <b>10.2-gcc3.3 unstable:</b> Das ist die aktuellste unstable-Version, die von Quellcode unter 10.2 mit <tt style="white-space: nowrap;">gcc 3.3</tt> installiert werden kann. Um diese Version zu installieren, folgen Sie den <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">Erklärungen</a> über die Installation der unstable-Pakete.</p>
           <p>Anmerkung:  unstable heißt nicht unbedingt unbenutzbar, allerdings installieren Sie diese Pakete auf eigene Gefahr.</p>
         </li>
-        <li><b>10.3 unstable:</b>  Das ist die aktuellste unstable-Version, die von Quellcode unter 10.3 installiert werden kann. Aktivieren Sie den unstable-Baum wie <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">oben</a> erwähnt.</li>
+        <li><b>10.3 unstable:</b>  Das ist die aktuellste unstable-Version, die von Quellcode unter 10.3 installiert werden kann. Aktivieren Sie den unstable-Baum wie <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">oben</a> erwähnt.</li>
       </ul>
     
     <h3><a name="packages.x11">3.7 Mit X11 Klarkommen</a></h3>
@@ -390,7 +390,7 @@ Installieren Sie dieses Paket, wenn Sie Tenons Xtools installiert haben. Wie sys
         </li>
       </ul>
       <p>
-      Für mehr Informationen über die Installation und die Nutzung von X11, schlagen Sie weiter im <a href="http://fink.sourceforge.net/doc/x11/">X11 unter Darwin und Mac OS X</a>-Dokument nach.
+      Für mehr Informationen über die Installation und die Nutzung von X11, schlagen Sie weiter im <a href="http://www.finkproject.org/doc/x11/">X11 unter Darwin und Mac OS X</a>-Dokument nach.
 </p>
     
   <h2><a name="upgrade">4 Fink Aktualisieren</a></h2>
@@ -414,7 +414,7 @@ Bei apt führen Sie <tt style="white-space: nowrap;">apt-get update</tt> aus, um
 Im Fink Commander wählen Sie im Menü Binär Update descriptions, um die Auflistung der Pakete zu aktualisieren, und dann Dist-Upgrade packages auch im Binär-Menü, um die tatsächlichen Pakete mit neuen Versionen zu aktualisieren.
 </p>
       <p>
-Für mehr Informationen, speziell über das Aktualisieren unter Fink Versionen älter als 0.3.0, schauen Sie sich die <a href="http://fink.sourceforge.net/download/upgrade.php">Upgrade Matrix</a> an.
+Für mehr Informationen, speziell über das Aktualisieren unter Fink Versionen älter als 0.3.0, schauen Sie sich die <a href="http://www.finkproject.org/download/upgrade.php">Upgrade Matrix</a> an.
 </p>
     
     <h3><a name="upgrade.src">4.2 Aktualisieren der Source-Distribution</a></h3>
@@ -425,7 +425,7 @@ Aktualisieren ist ein wenig komplizierter, wenn Sie die Source-Distribution verw
       <p>
 Falls Sie Fink 0.2.5 oder neuer haben, kann der erste Schritt mit dem Ausführen von <tt style="white-space: nowrap;">fink selfupdate</tt> vollbracht werden. Dieser Befehl wird die Fink-Webseite überprüfen, ob ein neues Punkt-Release verfügbar ist, und gegebenenfalls die Paketbeschreibungen herunterladen. In kürzlichen Versionen des Befehls <tt style="white-space: nowrap;">fink</tt> haben Sie die Möglichkeit die Paketbeschreibungen direkt via CVS oder rsync herunterzuladen. CVS ist ein versionsgesteuertes Behältnis, wo die Paketbeschreibungen gespeichert und verwaltet werden. Der Einsatz von CVS hat den Vorteil, dass es kontinuierlich aktualisiert wird, aber der Nachteil ist, dass es nur einen einzigen CVS-Server für Fink gibt, so kann es sein, dass dieser manchmal nicht erreichbar ist, wenn es viel Traffic gibt. Deshalb empfehlen wir, dass die Benutzer im allgemeinen rsync nutzen. Für rsync gibt es zahlreiche Spiegelserver, und der einzige Nachteil ist, dass die Paketbeschreibungen mit einer Verzögerung von etwa einer Stunde auf die rsync-Server gespiegelt werden, nachdem sie zum CVS hinzugefügt worden.
 </p>
-      <p>(Falls Sie Probleme haben, die Source-Installation zu aktualisieren, werfen Sie einen Blick in <a href="http://fink.sourceforge.net/download/fix-upgrade.php">diese speziellen Anweisungen</a>.)</p>
+      <p>(Falls Sie Probleme haben, die Source-Installation zu aktualisieren, werfen Sie einen Blick in <a href="http://www.finkproject.org/download/fix-upgrade.php">diese speziellen Anweisungen</a>.)</p>
       <p>
 Wenn Sie eine Fink-Installation älter als Version 0.2.5 haben, müssen Sie die Paketbeschreibungen per Hand herunterladen. Besuchen Sie den <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">Download-Bereich</a> und suchen Sie die aktuellste Version der packages-0.x.x.tar.gz im Modul "distribution". Laden Sie es herunter, und installieren Sie es wie folgt:
 </p>
@@ -888,4 +888,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.de.xml,v 1.3 2004/12/09 18:17:04 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.de.xml,v 1.4 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>

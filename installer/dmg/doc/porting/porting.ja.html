@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: porting.ja.xml,v 1.7 2006/01/25 03:57:27 babayoshihiko Exp $
+Generated from $Fink: porting.ja.xml,v 1.8 2007/02/23 22:04:55 rangerrick Exp $
 -->
 <title>Fink Documentation - Unix ソフトウェアの Darwin と Mac OS X への移植</title></head><body>
 <table width="100%" cellspacing="0">
@@ -292,7 +292,7 @@ Fink チームのメンバーはこれからも改良を続け， libtool メン
       
       <p>
 libtool 1.3.5 を自分でビルドする場合，
-<a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">このパッチ</a> <b>[updated 2002-06-09]</b> 
+<a href="http://www.finkproject.org/files/libtool-1.3.5-darwin.patch">このパッチ</a> <b>[updated 2002-06-09]</b> 
 をソースにあて，ltconfig と ltmain.sh というファイルを削除します．
 (これらのファイルは，configure と make をすることで .in ファイルにより再生成されます．)
 Fink パッケージの libtool 1.3.5 では自動的に行われます．
@@ -302,8 +302,8 @@ Fink パッケージの libtool 1.3.5 では自動的に行われます．
 共有ライブラリとしてビルドする全てのパッケージについて，これらのファイルを置き換える必要があります．
 これは configure スクリプトを実行する前に行う必要があります．
 両ファイルは以下から取得することができます:
-<a href="http://fink.sourceforge.net/files/ltconfig">ltconfig</a> (98K) と
-<a href="http://fink.sourceforge.net/files/ltmain.sh">ltmain.sh</a> (110K)
+<a href="http://www.finkproject.org/files/ltconfig">ltconfig</a> (98K) と
+<a href="http://www.finkproject.org/files/ltmain.sh">ltmain.sh</a> (110K)
 <b>[both updated 2002-06-09]</b>.</p>
     
     <h3><a name="libtool.fixing-14x">3.3 1.4.x を修正</a></h3>
@@ -498,7 +498,7 @@ gcc2 でコンパイルされたライブラリに gcc3 でコンパイルされ
     OS X 10.2 では， <tt style="white-space: nowrap;">/usr/bin/perl</tt> は perl 5.6.0 であり， architecture 文字列は "darwin" でした．
   	OS X 10.3 では， <tt style="white-space: nowrap;">/usr/bin/perl</tt> は perl 5.8.1 にアップグレードされ， architecture 文字列が "darwin-thread-multi-2level" に変更されました．
   	この変更は， それぞれの perl 実行ファイルはモジュールを探す場所を知っているので，パッケージ作成時に perl 実行ファイルを使用する分には<b>おそらく</b>影響がないでしょう．
-  	perl モジュール ("-pm") パッケージのメンテナは，<a href="http://fink.sourceforge.net/packaging/policy.php#perlmods">Perl
+  	perl モジュール ("-pm") パッケージのメンテナは，<a href="http://www.finkproject.org/packaging/policy.php#perlmods">Perl
     モジュールのパッケージ化ポリシー</a>に従い，<tt style="white-space: nowrap;">CompileScript</tt> と <tt style="white-space: nowrap;">InstallScript</tt>
     が適切に作成されるようにしてください。
   </p>
@@ -608,4 +608,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: porting.ja.xml,v 1.7 2006/01/25 03:57:27 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: porting.ja.xml,v 1.8 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>

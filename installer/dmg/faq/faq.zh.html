@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.zh.xml,v 1.26 2007/01/18 02:16:18 babayoshihiko Exp $
+Generated from $Fink: faq.zh.xml,v 1.27 2007/02/23 22:04:54 rangerrick Exp $
 -->
 <title>Fink Documentation - Fink 常见疑问（F.A.Q.）</title></head><body>
 <table width="100%" cellspacing="0">
@@ -194,7 +194,7 @@ gcc 3.3 compiler is out of date." 我应该怎么办？</b></p></div>
 如果你使用二进制安装包方式，<tt style="white-space: nowrap;">dselect</tt> 可以提供给你一个很好的可用软件包清单。
 注意，如果你需要从 dselect 中选择和安装软件包，你需要以 root 权限运行它。
 </p><p>
-另外，在网站上也有一个<a href="http://fink.sourceforge.net/pdb/">软件包数据库</a>。
+另外，在网站上也有一个<a href="http://pdb.finkproject.org/pdb/">软件包数据库</a>。
 </p></div>
     </a>
     <a name="usage-fink.proxy">
@@ -258,7 +258,7 @@ Fink 的所有文件几乎都安装在 /sw （或你选择安装的地方）。�
       <div class="question"><p><b>Q5.7: 网站上的软件包数据库列有 xxx 软件包，但 apt-get 和 dselect 则没有任何显示。哪个有问题？</b></p></div>
       <div class="answer"><p><b>A:</b> 
 都正确。
-<a href="http://fink.sourceforge.net/pdb/">软件包数据</a>
+<a href="http://pdb.finkproject.org/pdb/">软件包数据</a>
 知道每一个软件包，包括那些仍处于不稳定阶段的。
 <tt style="white-space: nowrap;">dselect</tt> 和 <tt style="white-space: nowrap;">apt-get</tt> 工具则只知道那些可用的经过预编译的二进制软件包。
 许多软件包因为各种原因所以没有提供预编译的二进制版本。
@@ -420,12 +420,12 @@ fink selfupdate-cvs</pre></div>
     </a>
     <a name="usage-fink.install-info-bad">
       <div class="question"><p><b>Q5.18: 我不能安装任何软件，因为我碰到下面的错误信息："install-info: unrecognized option `--infodir=/sw/share/info'"。</b></p></div>
-      <div class="answer"><p><b>A:</b> 这通常是由于你的 PATH 环境变量的原因。在终端窗口输入：</p><pre>printenv PATH</pre><p>如果输出里面没有 <tt style="white-space: nowrap;">/sw/sbin</tt>，那么你需要按照用户指南中的<a href="http://fink.sourceforge.net/doc/users-guide/install.php#setup">方法</a>来设置你的环境变量。如果有 <tt style="white-space: nowrap;">/sw/sbin</tt>，但有其它目录在它前面（比如 <tt style="white-space: nowrap;">/usr/local/bin</tt>），那么你要么需要重新安排你 PATH 里面的顺序，使得 <tt style="white-space: nowrap;">/sw/sbin</tt> 排在前面。或者如果你的确需要把其它目录放在 <tt style="white-space: nowrap;">/sw/sbin</tt> 之前，而且这个放在前面的目录包括另一个 install-info 目录，这时也许你需要在使用 Fink 的时候临时重命名这个 <tt style="white-space: nowrap;">install-info</tt> 子目录。</p></div>
+      <div class="answer"><p><b>A:</b> 这通常是由于你的 PATH 环境变量的原因。在终端窗口输入：</p><pre>printenv PATH</pre><p>如果输出里面没有 <tt style="white-space: nowrap;">/sw/sbin</tt>，那么你需要按照用户指南中的<a href="http://www.finkproject.org/doc/users-guide/install.php#setup">方法</a>来设置你的环境变量。如果有 <tt style="white-space: nowrap;">/sw/sbin</tt>，但有其它目录在它前面（比如 <tt style="white-space: nowrap;">/usr/local/bin</tt>），那么你要么需要重新安排你 PATH 里面的顺序，使得 <tt style="white-space: nowrap;">/sw/sbin</tt> 排在前面。或者如果你的确需要把其它目录放在 <tt style="white-space: nowrap;">/sw/sbin</tt> 之前，而且这个放在前面的目录包括另一个 install-info 目录，这时也许你需要在使用 Fink 的时候临时重命名这个 <tt style="white-space: nowrap;">install-info</tt> 子目录。</p></div>
     </a>
     <a name="usage-fink.bad-list-file">
       <div class="question"><p><b>Q5.19: 我不能安装或删除任何东西，因为一个 "files list file" 问题。</b></p></div>
       <div class="answer"><p><b>A:</b> 通常这些错误的形式是：</p><pre>files list file for package <b>软件包名</b> contains empty filename</pre><p>或</p><pre>files list file for package <b>软件包名</b> is missing final newline</pre><p>这可以通过一点小小的工作而修复。如果你在系统里面有发生问题的这个软件包的 .deb 文件，用下面命令检查它的完整性：</p><pre>dpkg --contents <b>deb文件的完整路径</b>
-        </pre><p>例如</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>如果你获得了一列目录和文件，那么你的 .deb 是正确的。如果输出是目录和文件以外的其它东西，或者你没有 .deb 文件，你仍然可以继续操作，因为这个错误不会影响构建。</p><p>如果你是从二进制包进行安装或你肯定知道二进制包里面的版本和你已经安装的版本一致（比如，通过检查<a href="http://fink.sourceforge.net/pdb/index.php">软件包数据库</a>），你可以用下面的办法获取一个 .deb 文件： <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>软件包名</b>
+        </pre><p>例如</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>如果你获得了一列目录和文件，那么你的 .deb 是正确的。如果输出是目录和文件以外的其它东西，或者你没有 .deb 文件，你仍然可以继续操作，因为这个错误不会影响构建。</p><p>如果你是从二进制包进行安装或你肯定知道二进制包里面的版本和你已经安装的版本一致（比如，通过检查<a href="http://pdb.finkproject.org/pdb/index.php">软件包数据库</a>），你可以用下面的办法获取一个 .deb 文件： <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>软件包名</b>
           </tt>。否则你也可以用下面的办法自己从源代码重新构建一个：<tt style="white-space: nowrap;">fink rebuild <b>软件包名</b>
           </tt>，但它暂时还不能安装。</p><p>一旦你有了一个正常的 .deb 文件，你可以重新安装文件。首先用下面的命令成为 root 用户：<tt style="white-space: nowrap;">sudo -s</tt>（有需要的话，输入你的管理员密码），然后使用下面的命令（我们把它分行以方便阅读，但实际使用的时候，你应该在一行里面输入）：</p><pre>dpkg -c <b>deb文件的完整路径</b>
   | awk '{if ($6 == "./"){ print "/."; } else if (substr($6, length($6), 1) == "/")
@@ -457,7 +457,7 @@ fink selfupdate-cvs</pre></div>
     </a>
     <a name="usage-fink.cant-upgrade">
       <div class="question"><p><b>Q5.22: 我看不到要升级的 Fink 版本。</b></p></div>
-      <div class="answer"><p><b>A:</b> 在这种情况下，参考<a href="http://fink.sourceforge.net/download/fix-upgrade.php">特别指引</a>。</p><ul>
+      <div class="answer"><p><b>A:</b> 在这种情况下，参考<a href="http://www.finkproject.org/download/fix-upgrade.php">特别指引</a>。</p><ul>
           <li><b>10.3.x:</b> (0.7.1 distribution)
 		<pre>curl -O http://us.dl.sf.net/fink/direct_download/dists/fink-0.7.1-updates/main/binary-darwin-powerpc/base/fink_0.22.4-1_darwin-powerpc.deb
 sudo dpkg -i fink_0.22.4-1_darwin-powerpc.deb
@@ -590,7 +590,7 @@ page and on http://fontconfig.org.</pre><p>then you can fix it by running</p><pr
     <a name="usage-fink.wrong-arch">
       <div class="question"><p><b>Q5.34: I can't update Fink, because <q>package architecture (darwin-i386) does not match system (darwin-powerpc).</q>
 </b></p></div>
-      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://fink.sourceforge.net/download/index.php">the downloads page</a>.</p></div>
+      <div class="answer"><p><b>A:</b> This error occurs if you use a PowerPC installer package on an Intel machine.  You'll need to flush your Fink installation, e.g.:</p><pre>sudo rm -rf /sw</pre><p>and then download the disk image for Intel machines from <a href="http://www.finkproject.org/download/index.php">the downloads page</a>.</p></div>
     </a>
     <a name="usage-fink.sf-cvs-2006">
 	      <div class="question"><p><b>Q5.35: I haven't been able to do a cvs selfupdate.</b></p></div>
@@ -791,7 +791,7 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     </a>
     <a name="comp-general.compile-options">
       <div class="question"><p><b>Q6.22: I want Fink to use different options in building a package.</b></p></div>
-      <div class="answer"><p><b>A:</b> The first thing to do is to contact the package maintainer to request a variant.  It may be relatively easy to do it.  If you don't hear from the maintainer or see the new packages, or want to try a different option yourself, check out the <a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> and <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a>.</p><p>
+      <div class="answer"><p><b>A:</b> The first thing to do is to contact the package maintainer to request a variant.  It may be relatively easy to do it.  If you don't hear from the maintainer or see the new packages, or want to try a different option yourself, check out the <a href="http://www.finkproject.org/doc/quick-start-pkg/index.php">Packaging Tutorial</a> and <a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a>.</p><p>
           <b>Note:  </b>Fink is deliberately set up such that all official binaries are identical regardless of what machine they are built on, so things like G5 optimization won't happen with an official package.  If you want them, you'll have to do it yourself.</p></div>
     </a>
     <a name="comp-general.gettext">
@@ -827,7 +827,7 @@ endif</pre></div>
       <div class="question"><p><b>Q7.2: 我想改用 Fink　的 XFree86 软件包，但我不能安装 <tt style="white-space: nowrap;">xfree86-base</tt> 或 <tt style="white-space: nowrap;">xfree86</tt>，因为它和 <tt style="white-space: nowrap;">system-xfree86</tt> 冲突。</b></p></div>
       <div class="answer"><p><b>A:</b> 很不幸，各种 X11 都不可避免地要安装在 /usr/X11R6 中。因此 Fink 的 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 软件包也需要安装在那里。不过，由于 Fink 不会删除任何没有在它数据库里面的文件，它不会自动替换非 Fink 安装的 X11。</p><p></p><p>下面是应该怎么做：</p><p></p><p>
           <b>注意：安装了新版（0.16.2 或更新）Fink 的 10.2.x 用户和 10.3.x 的用户应该跳过下面的步骤 1（事实上，他们也做不了步骤 1）。</b>
-        </p><p>1. 删除 <tt style="white-space: nowrap;">system-xfree86</tt>。如果你暂时还没有依赖于 X11 的软件包，这很简单。但通常情况是，已经安装了需要依赖于 X11 的软件包。如果不想全部删除他们，你可以使用：</p><pre>sudo dpkg --remove --force-depends system-xfree86</pre><p>来进行删除，而保持其它软件包仍然存在。如果你没有安装 <tt style="white-space: nowrap;">system-xfree86</tt>，那么跳到步骤 3。</p><p>2. 手工删除所有 XFree86。可以这么做：</p><pre>sudo rm -rf /Applications/XDarwin.app /usr/X11R6 /etc/X11</pre><p>如果你正在使用的是苹果的 X11，同时也删除 X11 程序。</p><p>3. 要获取 XFree86-4.2.1，用通常的办法安装 Fink 的 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 软件包：对使用源代码安装的用户　"<tt style="white-space: nowrap;">fink install</tt>"；对二进制安装的用户 "<tt style="white-space: nowrap;">apt-get install</tt>" 或 <tt style="white-space: nowrap;">dselect</tt>。</p><p>或</p><p>3a. 要获取 XFree86-4.3.x 或更高版本，使用 "fink install xfree86" 安装 Fink 的 <tt style="white-space: nowrap;">xfree86</tt> 软件包，最新版本(2004年5月25日的 XFree86-4.4.x 版本)目前还没有二进制安装版发布，而且仅有未稳定的版本[参阅 <a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable">how to install unstable package</a>]。</p></div>
+        </p><p>1. 删除 <tt style="white-space: nowrap;">system-xfree86</tt>。如果你暂时还没有依赖于 X11 的软件包，这很简单。但通常情况是，已经安装了需要依赖于 X11 的软件包。如果不想全部删除他们，你可以使用：</p><pre>sudo dpkg --remove --force-depends system-xfree86</pre><p>来进行删除，而保持其它软件包仍然存在。如果你没有安装 <tt style="white-space: nowrap;">system-xfree86</tt>，那么跳到步骤 3。</p><p>2. 手工删除所有 XFree86。可以这么做：</p><pre>sudo rm -rf /Applications/XDarwin.app /usr/X11R6 /etc/X11</pre><p>如果你正在使用的是苹果的 X11，同时也删除 X11 程序。</p><p>3. 要获取 XFree86-4.2.1，用通常的办法安装 Fink 的 <tt style="white-space: nowrap;">xfree86-base</tt> 和 <tt style="white-space: nowrap;">xfree86-rootless</tt> 软件包：对使用源代码安装的用户　"<tt style="white-space: nowrap;">fink install</tt>"；对二进制安装的用户 "<tt style="white-space: nowrap;">apt-get install</tt>" 或 <tt style="white-space: nowrap;">dselect</tt>。</p><p>或</p><p>3a. 要获取 XFree86-4.3.x 或更高版本，使用 "fink install xfree86" 安装 Fink 的 <tt style="white-space: nowrap;">xfree86</tt> 软件包，最新版本(2004年5月25日的 XFree86-4.4.x 版本)目前还没有二进制安装版发布，而且仅有未稳定的版本[参阅 <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">how to install unstable package</a>]。</p></div>
     </a>
     <a name="comp-packages.change-thread-nothread">
       <div class="question"><p><b>Q7.3: 怎么把 Fink 的 XFree86 从非线程化的版本改为线程化的版本（或相反）？</b></p></div>
@@ -890,7 +890,7 @@ preventing you from updating <tt style="white-space: nowrap;">gettext</tt>.</p><
       <div class="answer"><p><b>A:</b> 
 没有什么问题，它只是表示程序会使用默认的英语信息提示，日期格式等。
 程序其它的功能应该是正常的。
-X11 文档有更多的<a href="http://fink.sourceforge.net/doc/x11/trouble.php#locale">细节</a>。
+X11 文档有更多的<a href="http://www.finkproject.org/doc/x11/trouble.php#locale">细节</a>。
 </p></div>
     </a>
     <a name="usage-general.passwd">
@@ -952,7 +952,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(assuming that the build system is 
           <li>
             <p>苹果的 4.2.x 版（假设你安装了用户和 SDK 软件包）： <tt style="white-space: nowrap;">system-xfree86</tt> 软件包是自动产生的，不要去安装它。(注意苹果的 X11 Jaguar 公开测试版已经不再提供，所以除非你在以前可以获得的时候已经安装了它，这才可以是一个选择。</p>
           </li>
-        </ul><p>还有另外一些选择。在 <a href="http://fink.sourceforge.net/doc/x11/index.php">运行 X11 的文档</a>里面有专门的叙述。</p></div>
+        </ul><p>还有另外一些选择。在 <a href="http://www.finkproject.org/doc/x11/index.php">运行 X11 的文档</a>里面有专门的叙述。</p></div>
     </a>
     <a name="usage-general.no-display">
       <div class="question"><p><b>Q8.6: 当我试图运行一个程序，我碰到一个错误信息说： "cannot open display:"。我应该怎么办？</b></p></div>
@@ -1058,7 +1058,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(assuming that the build system is 
       <div class="question"><p><b>Q9.3: 求救！当我启动 XDarwin，它立刻就退出了！</b></p></div>
       <div class="answer"><p><b>A:</b> 
 不要惊慌。
-现在《运行 X11》文档有专门一部分<a href="http://fink.sourceforge.net/doc/x11/trouble.php#immediate-quit">《故障排除》</a>针对这个常见问题。
+现在《运行 X11》文档有专门一部分<a href="http://www.finkproject.org/doc/x11/trouble.php#immediate-quit">《故障排除》</a>针对这个常见问题。
 </p></div>
     </a>
     <a name="usage-packages.no-server">
@@ -1181,4 +1181,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.zh.xml,v 1.26 2007/01/18 02:16:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.zh.xml,v 1.27 2007/02/23 22:04:54 rangerrick Exp $</i></p></body></html>

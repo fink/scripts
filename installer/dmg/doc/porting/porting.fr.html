@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: porting.fr.xml,v 1.12 2006/01/17 08:15:22 michga Exp $
+Generated from $Fink: porting.fr.xml,v 1.13 2007/02/23 22:04:55 rangerrick Exp $
 -->
 <title>Fink Documentation - Portage de logiciel sur Darwin et Mac OS X</title></head><body>
 <table width="100%" cellspacing="0">
@@ -108,8 +108,8 @@ cc -bundle -flat_namespace -undefined suppress \
 <p>Note subsidiaire : la librairie libltdl, incluse dans toutes les versions de libtool, ne fonctionne sur Darwin que si dlcompat est installé. Elle est incluse dans Mac OS X à partir de la version 10.3. Pour les versions antérieures, on peut installer la famille de paquets "dlcompat"</p>
 
 <h3><a name="libtool.patch-135">3.2 Rustine 1.3.5</a></h3>
-<p>Si vous construisez vous-même la version 1.3.5, vous devrez appliquer cette <a href="http://fink.sourceforge.net/files/libtool-1.3.5-darwin.patch">rustine</a> <b>[mise à jour du 09/06/2002]</b> au source de libtool 1.3.5, puis supprimer les fichiers <tt style="white-space: nowrap;">ltconfig</tt> et <tt style="white-space: nowrap;">ltmain.sh</tt>. (Ils seront recréés à partir des fichiers .in adéquats lorsque vous lancerez configure et make). Ceci est fait automatiquement, d'ailleurs, dans le paquet actuel libtool 1.3.5 de Fink.</p>
-<p>Mais ce n'est que la moitié du travail - chaque paquet utilisant libtool contient ses propres copies de <tt style="white-space: nowrap;">ltconfig</tt> et <tt style="white-space: nowrap;">ltmain.sh</tt>. Si bien que vous devez les remplacer dans chaque paquet que vous voulez construire en tant que librairie partagée. Notez que vous devez le faire avant de lancer le script configure. Vous pouvez récupérer les deux fichiers ici : <a href="http://fink.sourceforge.net/files/ltconfig">ltconfig</a> (98 ko) et <a href="http://fink.sourceforge.net/files/ltmain.sh">ltmain.sh</a> (110 ko) <b>[tous deux mis à jour au 09/06/2002]</b>.</p>
+<p>Si vous construisez vous-même la version 1.3.5, vous devrez appliquer cette <a href="http://www.finkproject.org/files/libtool-1.3.5-darwin.patch">rustine</a> <b>[mise à jour du 09/06/2002]</b> au source de libtool 1.3.5, puis supprimer les fichiers <tt style="white-space: nowrap;">ltconfig</tt> et <tt style="white-space: nowrap;">ltmain.sh</tt>. (Ils seront recréés à partir des fichiers .in adéquats lorsque vous lancerez configure et make). Ceci est fait automatiquement, d'ailleurs, dans le paquet actuel libtool 1.3.5 de Fink.</p>
+<p>Mais ce n'est que la moitié du travail - chaque paquet utilisant libtool contient ses propres copies de <tt style="white-space: nowrap;">ltconfig</tt> et <tt style="white-space: nowrap;">ltmain.sh</tt>. Si bien que vous devez les remplacer dans chaque paquet que vous voulez construire en tant que librairie partagée. Notez que vous devez le faire avant de lancer le script configure. Vous pouvez récupérer les deux fichiers ici : <a href="http://www.finkproject.org/files/ltconfig">ltconfig</a> (98 ko) et <a href="http://www.finkproject.org/files/ltmain.sh">ltmain.sh</a> (110 ko) <b>[tous deux mis à jour au 09/06/2002]</b>.</p>
 
 <h3><a name="libtool.fixing-14x">3.3 Adaptation de la version 1.4.x</a></h3>
 <p>Il y a au moins trois versions différentes de libtool 1.4.x en usage à l'heure actuelle (1.4.1, 1.4.2, ainsi que des versions de développement plus récentes). Elles posent toutes problème avec Darwin, cependant les modifications à effectuer diffèrent selon la version. Le paquet "libtool 1.4" fourni via Fink possèdent déjà toutes les rustines nécessaires. Cependant, il vous faudra encore modifier vous-même les fichiers <tt style="white-space: nowrap;">ltmain.sh</tt> et <tt style="white-space: nowrap;">configure</tt> des paquets concernés pour qu'ils fonctionnent correctement.</p>
@@ -262,7 +262,7 @@ IFS="${IFS=     }"; save_ifs="$IFS"; IFS='~'
 
 
 <h3><a name="preparing-10.3.perl">5.1 Perl</a></h3>
-<p>Sous Mac OS X 10.2, <tt style="white-space: nowrap;">/usr/bin/perl</tt> correspondait à la version 5.6.0 de perl et l'architecture était représentée par la chaîne de caractères "darwin". Sous Mac OS X 10.3, <tt style="white-space: nowrap;">/usr/bin/perl</tt> correspond à la version 5.8.1 de perl, et l'architecture est représentée par la chaîne de caractères "darwin-thread-multi-2level". Ces changements n'affectent <b>probablement</b> pas l'utilisation courante de l'exécutable perl lors de la création de paquets, car chaque exécutable perl sait où trouver ses propres modules. Les mainteneurs de paquets de module perl ("-pm") qui suivent les <a href="http://fink.sourceforge.net/packaging/policy.php#perlmods">règles d'empaquetage des modules perl</a> en vigueur et celles des scripts <tt style="white-space: nowrap;">CompileScript</tt> et <tt style="white-space: nowrap;">InstallScript</tt> n'ont pas de souci à se faire.</p>
+<p>Sous Mac OS X 10.2, <tt style="white-space: nowrap;">/usr/bin/perl</tt> correspondait à la version 5.6.0 de perl et l'architecture était représentée par la chaîne de caractères "darwin". Sous Mac OS X 10.3, <tt style="white-space: nowrap;">/usr/bin/perl</tt> correspond à la version 5.8.1 de perl, et l'architecture est représentée par la chaîne de caractères "darwin-thread-multi-2level". Ces changements n'affectent <b>probablement</b> pas l'utilisation courante de l'exécutable perl lors de la création de paquets, car chaque exécutable perl sait où trouver ses propres modules. Les mainteneurs de paquets de module perl ("-pm") qui suivent les <a href="http://www.finkproject.org/packaging/policy.php#perlmods">règles d'empaquetage des modules perl</a> en vigueur et celles des scripts <tt style="white-space: nowrap;">CompileScript</tt> et <tt style="white-space: nowrap;">InstallScript</tt> n'ont pas de souci à se faire.</p>
 
 <h3><a name="preparing-10.3.typedef">5.2 Nouvelles définitions de symboles</a></h3>
 <p>À partir de Mac OS X 10.3, il existe une définition complète du type <tt style="white-space: nowrap;">socklen_t</tt> type. Pour l'utiliser, il faut ajouter au programme :</p>
@@ -301,4 +301,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: porting.fr.xml,v 1.12 2006/01/17 08:15:22 michga Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: porting.fr.xml,v 1.13 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>

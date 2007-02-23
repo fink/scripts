@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.93 2006/12/26 21:07:43 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.94 2007/02/23 22:04:55 rangerrick Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -33,7 +33,7 @@ If you create packages for Fink, you may want to subscribe to the
 mailing list.
 If you are looking for a way to help out with Fink, and you have skills
 in this area, you might consider adopting a
-<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">package which
+<a href="http://pdb.finkproject.org/pdb/nomaintainer.php">package which
 currently has no maintainer.</a>
 </p>
 <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def1">1.1 What is a Package?</a></li><li><a href="#intro.ident">1.2 Identifying a Package</a></li></ul></li><li><a href="#format"><b>2 Package Descriptions</b></a><ul><li><a href="#format.trees">2.1 Tree Layout</a></li><li><a href="#format.format">2.2 File Format</a></li><li><a href="#format.percent">2.3 Percent Expansion</a></li></ul></li><li><a href="#policy"><b>3 Packaging Policy</b></a><ul><li><a href="#policy.licenses">3.1 Package Licenses</a></li><li><a href="#policy.openssl">3.2 The GPL and OpenSSL</a></li><li><a href="#policy.prefix">3.3 Base System Interference</a></li><li><a href="#policy.sharedlibs">3.4 Shared Libraries</a></li><li><a href="#policy.perlmods">3.5 Perl Modules</a></li><li><a href="#policy.emacs">3.6 Emacs Policy</a></li></ul></li><li><a href="#fslayout"><b>4 Filesystem Layout</b></a><ul><li><a href="#fslayout.fhs">4.1 The Filesystem Hierarchy Standard</a></li><li><a href="#fslayout.dirs">4.2 The Directories</a></li><li><a href="#fslayout.avoid">4.3 Things to Avoid</a></li></ul></li><li><a href="#compilers"><b>5 Compilers</b></a><ul><li><a href="#compilers.versions">5.1 Compiler Versions</a></li><li><a href="#compilers.abi">5.2 The g++ ABI</a></li></ul></li><li><a href="#reference"><b>6 Reference</b></a><ul><li><a href="#reference.build">6.1 The Build Process</a></li><li><a href="#reference.fields">6.2 Fields</a></li><li><a href="#reference.splitoffs">6.3 SplitOffs</a></li><li><a href="#reference.scripts">6.4 Scripts</a></li><li><a href="#reference.patches">6.5 Patches</a></li><li><a href="#reference.profile.d">6.6 Profile.d scripts</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
@@ -2091,7 +2091,7 @@ build directory will be replaced with versions that know about
 Darwin. This happens in the patch phase and before the PatchScript
 is run. <b>Only</b> use this when you know that the package needs
 it. Some packages can be broken by overwriting the libtool scripts
-with mismatching versions. See the <a href="http://fink.sourceforge.net/doc/porting/libtool.php">libtool
+with mismatching versions. See the <a href="http://www.finkproject.org/doc/porting/libtool.php">libtool
 page</a> for further information.
 </p>
 </td></tr><tr valign="top"><td>UpdateLibtoolInDirs</td><td>
@@ -2867,4 +2867,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.93 2006/12/26 21:07:43 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.94 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>

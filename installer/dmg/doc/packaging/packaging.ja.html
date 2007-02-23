@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.ja.xml,v 1.41 2007/01/18 02:16:52 babayoshihiko Exp $
+Generated from $Fink: packaging.ja.xml,v 1.42 2007/02/23 22:04:55 rangerrick Exp $
 -->
 <title>Fink Documentation - Fink パッケージの作成方法</title></head><body>
 <table width="100%" cellspacing="0">
@@ -27,7 +27,7 @@ Available Languages:  |
 			Fink 用にパッケージを作成した場合，メーリングリスト
 			<a href="http://lists.sourceforge.net/lists/listinfo/fink-devel">fink-devel</a> を購読するとよいでしょう．
 			Fink に貢献する方法を探していて，関連分野のスキルをお持ちなら，是非とも
-			<a href="http://fink.sourceforge.net/pdb/nomaintainer.php">現在メンテナのいないパッケージ</a>
+			<a href="http://pdb.finkproject.org/pdb/nomaintainer.php">現在メンテナのいないパッケージ</a>
 			のメンテナンスをお願いいたします．
 		</p>
 	<h2>Contents</h2><ul><li><a href="#intro"><b>1 始めに</b></a><ul><li><a href="#intro.def1">1.1 パッケージとは何か?</a></li><li><a href="#intro.ident">1.2 パッケージの区別</a></li></ul></li><li><a href="#format"><b>2 パッケージ記述</b></a><ul><li><a href="#format.trees">2.1 ツリーレイアウト</a></li><li><a href="#format.format">2.2 ファイル形式</a></li><li><a href="#format.percent">2.3 パーセント展開</a></li></ul></li><li><a href="#policy"><b>3 パッケージ化ポリシー</b></a><ul><li><a href="#policy.licenses">3.1 パッケージのライセンス</a></li><li><a href="#policy.openssl">3.2 GPL と OpenSSL</a></li><li><a href="#policy.prefix">3.3 基盤システムへの干渉問題</a></li><li><a href="#policy.sharedlibs">3.4 共有ライブラリ</a></li><li><a href="#policy.perlmods">3.5 Perl モジュール</a></li><li><a href="#policy.emacs">3.6 Emacs ポリシー</a></li></ul></li><li><a href="#fslayout"><b>4 ファイルシステムのレイアウト</b></a><ul><li><a href="#fslayout.fhs">4.1 ファイルシステム構造標準 (Filesystem Hierarchy Standard)</a></li><li><a href="#fslayout.dirs">4.2 ディレクトリ</a></li><li><a href="#fslayout.avoid">4.3 避けるべきこと</a></li></ul></li><li><a href="#compilers"><b>5 コンパイラ</b></a><ul><li><a href="#compilers.versions">5.1 コンパイラバージョン</a></li><li><a href="#compilers.abi">5.2 g++ ABI</a></li></ul></li><li><a href="#reference"><b>6 リファレンスマニュアル</b></a><ul><li><a href="#reference.build">6.1 ビルドプロセス</a></li><li><a href="#reference.fields">6.2 フィールド</a></li><li><a href="#reference.splitoffs">6.3 スプリットオフ (SplitOff)</a></li><li><a href="#reference.scripts">6.4 スクリプト</a></li><li><a href="#reference.patches">6.5 パッチ</a></li><li><a href="#reference.profile.d">6.6 Profile.d スクリプト</a></li></ul></li></ul><h2><a name="intro">1 始めに</a></h2>
@@ -1922,7 +1922,7 @@ Tar2FilesRename: direcory/INSTALL:directory/INSTALL.txt</pre>
 							これが必要だと分かっているとき<b>のみ</b>使うこと．
 							libtool 関連のスクリプトをバージョンの合わないものに取り換えると壊れるパッケージもあrimasu
 							．
-							詳細については<a href="http://fink.sourceforge.net/doc/porting/libtool.php">libtool のページ</a>を参照．
+							詳細については<a href="http://www.finkproject.org/doc/porting/libtool.php">libtool のページ</a>を参照．
 						</p>
 					</td></tr><tr valign="top"><td>UpdateLibtoolInDirs</td><td>
 						<p>
@@ -2663,4 +2663,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.41 2007/01/18 02:16:52 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.42 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>

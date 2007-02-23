@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.ja.xml,v 1.40 2007/01/18 02:16:18 babayoshihiko Exp $
+Generated from $Fink: faq.ja.xml,v 1.41 2007/02/23 22:04:54 rangerrick Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -279,7 +279,7 @@ XCode の入った CD が Panther に同梱されているはずです。</p></d
 このコマンドは、あなたの Fink 環境の管理している全てのパッケージのリストを作成します。
 例:
 </p><pre>fink list</pre><p>バイナリ・ディストリビューションを使っている場合、 <tt style="white-space: nowrap;">dselect</tt> でパッケージリストを閲覧することができます。
-dselect からパッケージを選択してインストールする場合、 root 権限が必要ですので注意して下さい。</p><p>または、本サイトに <a href="http://fink.sourceforge.net/pdb/">パッケージ・データベース</a> もあります。
+dselect からパッケージを選択してインストールする場合、 root 権限が必要ですので注意して下さい。</p><p>または、本サイトに <a href="http://pdb.finkproject.org/pdb/">パッケージ・データベース</a> もあります。
 </p></div>
 </a>
 <a name="usage-fink.proxy">
@@ -527,7 +527,7 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 "install-info: unrecognized option `--infodir=/sw/share/info'"
 のエラーが出るだけです。</b></p></div>
 <div class="answer"><p><b>A:</b> これは普通、 PATH の問題です。ターミナルで:</p><pre>printenv PATH</pre><p>と入力し、 <tt style="white-space: nowrap;">/sw/sbin</tt> が出てこないなら、環境変数を
-<a href="http://fink.sourceforge.net/doc/users-guide/install.php#setup">instructions</a>
+<a href="http://www.finkproject.org/doc/users-guide/install.php#setup">instructions</a>
 内の Users Guide を参照してください。
 <tt style="white-space: nowrap;">/sw/sbin</tt> があるが、他のディレクトリ (例えば /usr/local/bin) 
 がそれより前にある場合、 PATH の順序を変えて先頭近くに移動してください。
@@ -543,7 +543,7 @@ Developer Tools がない場合はサードパーティー製のアプリケー�
 /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>ディレクトリやファイルの一覧が表示されたら、 .deb ファイルは大丈夫です。
 もし出力されたのがファイルやディレクトリ以外であるか、 .deb ファイルがなくても、このエラーはビルドに影響しないので、次に進んでください。
 </p><p>バイナリインストールを試みている場合、あるいはインストールしたバージョンと現在のバイナリバージョンが一致する場合
-(例えば、 <a href="http://fink.sourceforge.net/pdb/index.php">パッケージデータベース</a> で調べたなら)、
+(例えば、 <a href="http://pdb.finkproject.org/pdb/index.php">パッケージデータベース</a> で調べたなら)、
 .deb ファイルを取得することができます:
 <tt style="white-space: nowrap;">sudo apt-get install --reinstall --download-only <b>packagename</b></tt>
 。あるいは、自分でビルドすることもできます:
@@ -588,7 +588,7 @@ fink selfupdate-cvs</pre></div>
 </a>
 <a name="usage-fink.cant-upgrade">
 <div class="question"><p><b>Q5.22: Fink のバージョンをアップデートできないようです。</b></p></div>
-<div class="answer"><p><b>A:</b> この状況専用の <a href="http://fink.sourceforge.net/download/fix-upgrade.php">special instructions</a> に従ってください。</p></div>
+<div class="answer"><p><b>A:</b> この状況専用の <a href="http://www.finkproject.org/download/fix-upgrade.php">special instructions</a> に従ってください。</p></div>
 </a>
 <a name="usage-fink.spaces-in-directory">
 <div class="question"><p><b>Q5.23: 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</b></p></div>
@@ -762,7 +762,7 @@ page and on http://fontconfig.org.</pre><p>次のように実行します:</p><p
       <div class="question"><p><b>Q5.34: Fink を更新できない。 <q>package architecture (darwin-i386) がシステム (darwin-powerpc) に合っていない。</q>
 </b></p></div>
       <div class="answer"><p><b>A:</b> このエラーは、PPC インストーラで Intel マシンにインストールした際に発生します。  
-        現在のインストールを、例えば次のように削除してください:</p><pre>sudo rm -rf /sw</pre><p>Intel マシン用のインストーラを、<a href="http://fink.sourceforge.net/download/index.php">ダウンロードページ</a>から入手してください。</p></div>
+        現在のインストールを、例えば次のように削除してください:</p><pre>sudo rm -rf /sw</pre><p>Intel マシン用のインストーラを、<a href="http://www.finkproject.org/download/index.php">ダウンロードページ</a>から入手してください。</p></div>
     </a>
     <a name="usage-fink.sf-cvs-2006">
 	      <div class="question"><p><b>Q5.35: cvs selfupdate がここのところできません。</b></p></div>
@@ -1026,8 +1026,8 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 			まず最初に、バリエーションを作成するようにパッケージメンテナに伝えてみてください。
 			これが比較的簡単な方法です。
 			メンテナから反応がなかったり、新しいバージョンが出てしまったり、自分で違うオプションを試してみたい場合、
-			<a href="http://fink.sourceforge.net/doc/quick-start-pkg/index.php">Packaging Tutorial</a> 
-			と <a href="http://fink.sourceforge.net/doc/packaging/index.php">Packaging Manual</a> をお読みください。
+			<a href="http://www.finkproject.org/doc/quick-start-pkg/index.php">Packaging Tutorial</a> 
+			と <a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a> をお読みください。
 		</p><p><b>注記:</b>Fink は、ビルドされたマシンに依存しないよう、全ての公式パッケージにはG5 最適化などのことはされません。このようなことをしたい場合、各自でする必要があります。</p></div>
 </a>
     <a name="comp-general.gettext">
@@ -1107,7 +1107,7 @@ X11 に依存するパッケージがない場合、これは単純です。
 バイナリからなら  "<tt style="white-space: nowrap;">apt-get install</tt>" または <tt style="white-space: nowrap;">dselect</tt> です。</p><p> -あるいは-</p><p>3a. XFree86-4.3.x 以降を入れるには、 Fink の <tt style="white-space: nowrap;">xfree86</tt> パッケージを、
 "fink install xfree86" でインストールします。
 最新版 (2004年5月25日時点で XFree86-4.4.x) はまだバイナリ版がなく、 unstable ツリーのみなので、 
-[<a href="http://fink.sourceforge.net/faq/usage-fink.php#unstable%5C">unstable パッケージのインストール</a> を参照]
+[<a href="http://www.finkproject.org/faq/usage-fink.php#unstable%5C">unstable パッケージのインストール</a> を参照]
 </p></div>
 </a>
 <a name="comp-packages.change-thread-nothread">
@@ -1176,7 +1176,7 @@ fink install libiconv</pre></div>
 <div class="answer"><p><b>A:</b> まずいことという訳ではありません。
 これはデフォルトの英語メッセージや日付フォーマットなどを使うという意味です。
 これ以外はプログラムは普通に動作します。
-X11 のドキュメントに、 <a href="http://fink.sourceforge.net/doc/x11/trouble.php#locale">詳細</a> があります。</p></div>
+X11 のドキュメントに、 <a href="http://www.finkproject.org/doc/x11/trouble.php#locale">詳細</a> があります。</p></div>
 </a>
 <a name="usage-general.passwd">
 <div class="question"><p><b>Q8.2: いきなり変なユーザーがシステムに現れました。
@@ -1286,7 +1286,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(ビルドシステムは OS 10.4 �
 		</p>
 		</li>
 	</ul><p>
-	これ以外の選択は、 <a href="http://fink.sourceforge.net/doc/x11/index.php">Running X11 document</a> を参照してください。
+	これ以外の選択は、 <a href="http://www.finkproject.org/doc/x11/index.php">Running X11 document</a> を参照してください。
 	</p></div>
 </a>
 <a name="usage-general.no-display">
@@ -1415,7 +1415,7 @@ File--&gt;New でウィンドウを開き、次のファイルを開くと問題
 XDarwin を起動してもすぐ終了しちゃう!</b></p></div>
 <div class="answer"><p><b>A:</b> 
 慌てない、慌てない。
-Running X11 ドキュメントには、この問題の <a href="http://fink.sourceforge.net/doc/x11/trouble.php#immediate-quit">問題対処法の節</a> (英語版) があります。</p></div>
+Running X11 ドキュメントには、この問題の <a href="http://www.finkproject.org/doc/x11/trouble.php#immediate-quit">問題対処法の節</a> (英語版) があります。</p></div>
 </a>
 <a name="usage-packages.no-server">
 <div class="question"><p><b>Q9.4: XDarwin を起動しようとすると、このメッセージがでます
@@ -1639,4 +1639,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.40 2007/01/18 02:16:18 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.41 2007/02/23 22:04:54 rangerrick Exp $</i></p></body></html>
