@@ -25,12 +25,15 @@ filter -- Filter the contents of a bunch of files into potentially-overlapping s
 =head1 USAGE
 
 	filter [-F] [-f FILTERS] [-x XML FILTERS] -o OUTDIR FILES_OR_DIRECTORIES...
+	filter [-F] [-f FILTERS] [-x XML FILTERS] -p
 
 C<FILTERS> specifies a "filter file", or a directory which will be recursively processed an all files
 in which will be processed as filter files.  The filter file defines the regular expressions
 which will be used to construct the sets, see below for syntax.
 
 C<XML FILTERS> is like C<FILTERS> but for XML-format filter files.
+
+An -f or -x spec is required.
 
 C<OUTDIR> specifies the output directory.  For each set, a file whose name is the name of the set
 will be created in this directory.  Set names may contain a /, causing subdirectories to be
@@ -43,6 +46,12 @@ The C<-F> option, if specified, will cause C<filter> to only allow one regular e
 file to match; that regular expression will be the one which matches earliest in the file.
 If multiple regular expressions match at the same position, it will use the one which
 is defined first.
+
+The C<-p> option enables pipe mode, in which the data to be matched
+against the filters is read from STDIN instead of from
+FILES_OR_DIRECTORIES and the names of the filters that match are
+printed to STDOUT instead of storing filenames into the OUTDIR
+hierarchy.
 
 =head1 FILTER FILES
 
@@ -103,10 +112,18 @@ our(%options, @filters, $filtindex);
 sub load_filter_file($$);
 sub process_input_file($);
 
-if(!getopts('Fx:f:o:', \%options)) { exit 1; }
+if(!getopts('Fpx:f:o:', \%options)) { exit 1; }
 
-my @inputs = ();
-my $outdir = $options{o} or die "Must specify an output directory!\n";
+my $outdir;  # undef if in -p mode
+if ($options{p}) {
+	die "Cannot use -o in -p mode\n" if $options{o};
+	die "Cannot pass filenames on commandline in -p mode\n" if @ARGV;
+	$outdir = undef;
+} else {
+	die "Must specify an output directory!\n" unless $options{o};
+	$outdir = $options{o};
+}
+
 die "Must specify filter source!\n" unless $options{f} or $options{x};
 $filtindex = 0;
 
@@ -154,7 +171,11 @@ load_filter_file($options{x}, 1) if $options{x};
 sub process_input_file($) {
 	my $input = shift;
 
-	if(-d $input) {
+	my $contents;  # slurp of a single datafile
+
+	if (!defined $input) {
+		$contents = join '', <STDIN>;
+	} elsif (-d $input) {
 		opendir(DIR, $input) or die "Couldn't opendir $input: $!\n";
 		my @files = map {"$input/$_"} grep {$_ ne "." and $_ ne ".."} readdir(DIR);
 		closedir(DIR);
@@ -162,8 +183,11 @@ sub process_input_file($) {
 		process_input_file($_) foreach @files;
 	} else {
 		open(FILE, $input) or die "Couldn't open $input: $!\n";
-		my $contents = join("", <FILE>);
+		$contents = join("", <FILE>);
 		close FILE;
+	}
+
+	# we've got the data now, regardless of how we were called
 
 		foreach my $filter(@filters) {
 			if($contents =~ /$filter->{regex}/) {
@@ -181,10 +205,11 @@ sub process_input_file($) {
 				# $-[0] is index in string of last successful match
 				$filter->{matchpos} = $-[0];
 
-				$filter->{outfile} = "$outdir/".$filter->{name};
+				$filter->{outfile} = ( defined $outdir ? "$outdir/".$filter->{name} : undef);
 
-				$filter->{outtext} = basename($input);
-				$filter->{outtext} .= "\t$^N" if $last_paren;
+				$filter->{outtext} = (defined $input ? basename($input)."\t" : '');  # give filename if known
+				$filter->{outtext} .= $filter->{name}."\t" if !defined $outdir;  # give filtername if it wouldn't be known from outfile
+				$filter->{outtext} .= $^N if $last_paren;
 				$filter->{outtext} .= "\n";
 			} else {
 				$filter->{matched} = 0;
@@ -206,13 +231,22 @@ sub process_input_file($) {
 		}
 
 		foreach my $filter(@matched_filters) {
-			system("mkdir", "-p", dirname($filter->{outfile}));
+			if (defined $filter->{outfile}) {
+				# have a filename, so append outtext there
+				system("mkdir", "-p", $filter->{name});
 
-			open(OUTPUT, ">>", $filter->{outfile}) or die "Couldn't open ".$filter->{outfile}." for output: $!\n";
-			print OUTPUT $filter->{outtext};
-			close OUTPUT;
+				open(my $out_fh, '>>', $filter->{name}) or die "Couldn't open ".$filter->{name}." for output: $!\n";
+				print $out_fh $filter->{outtext};
+				close $out_fh;
+			} else {
+				# no outfile, so just dump outtext to STDOUT
+				print $filter->{outtext};
+			}
 		}
-	}
 }
 
-process_input_file($_) foreach @ARGV;
+if (@ARGV) {
+	process_input_file($_) foreach @ARGV;  # process each passed logfile (or dir of logfiles)
+} else {
+	process_input_file(undef);  # sentinel for processing from STDIN
+}
