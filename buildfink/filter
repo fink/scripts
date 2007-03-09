@@ -233,9 +233,9 @@ sub process_input_file($) {
 		foreach my $filter(@matched_filters) {
 			if (defined $filter->{outfile}) {
 				# have a filename, so append outtext there
-				system("mkdir", "-p", dirname($filter->{name}));
+				system("mkdir", "-p", dirname($filter->{outfile}));
 
-				open(my $out_fh, '>>', $filter->{name}) or die "Couldn't open ".$filter->{name}." for output: $!\n";
+				open(my $out_fh, '>>', $filter->{outfile}) or die "Couldn't open ".$filter->{name}." for output: $!\n";
 				print $out_fh $filter->{outtext};
 				close $out_fh;
 			} else {
