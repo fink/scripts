@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.94 2007/02/23 22:04:55 rangerrick Exp $
+Generated from $Fink: packaging.en.xml,v 1.95 2007/03/04 22:11:38 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -252,6 +252,12 @@ the package <b>e</b>poch
 the package <b>v</b>ersion. Note that the Epoch is not part
 of <tt style="white-space: nowrap;">%v</tt>.
 </p>
+</td></tr><tr valign="top"><td>%V</td><td>
+<p>
+the full package <b>V</b>ersion, which automatically includes the Epoch
+if present.  Note that this percent expansion is only available for
+packages whose <tt style="white-space: nowrap;">InfoN</tt> level is at least 4.
+</p>
 </td></tr><tr valign="top"><td>%r</td><td>
 <p>
 the package <b>r</b>evision
@@ -369,6 +375,10 @@ this expands to <b>lib/ppc64</b> on powerpc machines, and to
 <b>lib/x86_64</b> on intel machines (the proper storage locations
 for 64-bit libraries); otherwise, this expands to <b>lib</b>.
 (Introduced in fink-0.26.0)
+</p>
+<p>Note that <tt style="white-space: nowrap;">%lib</tt> is not permitted in the
+<tt style="white-space: nowrap;">ConfigureParams</tt> field unless the <tt style="white-space: nowrap;">InfoN</tt>
+ level is at least 4.
 </p>
 </td></tr></table>
 
@@ -1677,6 +1687,10 @@ the <tt style="white-space: nowrap;">Package</tt> field of <tt style="white-spac
 no more support for RFC-822 multi-lines, and can put comments in
 pkglist fields.
 </li>
+<li>
+<tt style="white-space: nowrap;">Info4</tt> (fink&gt;=0.26.2): adds %V expansion, and permits
+<tt style="white-space: nowrap;">%lib</tt> in <tt style="white-space: nowrap;">ConfigureParams</tt> field.
+</li>
 </ul>
 </td></tr></table>
 <p><b>Dependencies:</b></p>
@@ -2867,4 +2881,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.94 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.95 2007/03/04 22:11:38 dmrrsn Exp $</i></p></body></html>
