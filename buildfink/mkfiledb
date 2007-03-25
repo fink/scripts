@@ -1,0 +1,67 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use DBI;
+use FindBin qw($Bin);
+
+my($dbtype, $dbpath) = (shift, shift) or die <<EOF;
+Usage: $0 dbtype dbstr checkpoint
+mkfiledb - Convert a buildfink checkpoint file into a database.
+dbstr is a DBI connection string, for instance:
+   foo.sqlite
+   host:user:pass:db
+EOF
+
+our(%finkfiles, %pkgfiles, @filedata);
+$finkfiles{"."} = "";
+$finkfiles{".."} = undef;
+sub addPackageFiles {
+    my(undef, $pkg, @files) = @_;
+
+    foreach my $file (@files) {
+	my $path = delete $file->{path};
+	if(not $path =~ s!^%p/!!) {
+	    warn "$pkg has path not in %p: $path\n";
+	    next;
+	}
+
+	push @filedata, $file;
+	my @pathbits = split(m!/!, $path);
+
+	my $finkroot = \%finkfiles;
+	foreach my $pathbit(@pathbits) {
+	    $finkroot->{$pathbit} ||= {".." => $finkroot, "." => $pathbit};
+	    $finkroot = $finkroot->{$pathbit};
+	}
+
+	$finkroot->{"/files/"} ||= [];
+	push @{$finkroot->{"/files/"}}, $file;
+	$file->{".."} = $finkroot;
+    }
+
+    $pkgfiles{$pkg} = \@files;
+}
+
+while(<>) {
+    next unless /^addPackageFiles/;
+    s/\$pkgfiles/undef/;
+    eval $_;
+}
+
+my($dbstr, $dbuser, $dbpass, %dbattrs);
+$dbtype = lc($dbtype);
+if($dbtype eq "sqlite") {
+    $dbstr = ":dbi:SQLite:dbname=$dbpath";
+    $dbuser = "";
+    $dbpass = "";
+    %dbattrs = {RaiseError => 1, AutoCommit => 1};
+} else {
+    die "Unknown database type.  Valid types are: sqlite\n";
+}
+
+my $dbh = DBI->connect($dbstr, $dbuser, $dbpass, \%dbattrs);
+my $schema = require("$Bin/schemas/$dbtype");
+$dbh->do("BEGIN TRANSACTION");
+$dbh->do(<<EOF);
+CREATE TABLE packages(
