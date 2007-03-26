@@ -647,7 +647,6 @@ sub getDebFiles {
 		chomp;
 		my($flags, $owners, $size, $date, $time, $path) =
 			split(/\s+/, $_, 6);
-		next if $flags =~ /^d/;
 		$path =~ s/ link to.*//;
 		$path =~ s/ -> .*//;
 		$path =~ s!^\.!!;
