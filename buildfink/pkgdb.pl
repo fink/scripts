@@ -80,7 +80,7 @@ print <<EOF;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
 <html>
 <head>
-    <title>Fink Package Database</title>
+    <title>Fink File Database</title>
     <link rel="stylesheet" type="text/css" href="pkgdb.css" />
     <script type="text/javascript" src="jquery-latest.pack.js" />
     <script type="text/javascript" src="pkgdb.js" />
