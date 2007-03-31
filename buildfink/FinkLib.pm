@@ -24,100 +24,100 @@ our($FinkDir, $FinkConfig);
 
 # Initialize the Fink API
 sub initFink($) {
-	$FinkDir = shift;
+  $FinkDir = shift;
 
-	unshift @INC, $FinkDir . "/lib/perl5";
-	require Fink::Config;
-	require Fink::Services;
-	require Fink::Package;
-	require Fink::PkgVersion;
-	require Fink::VirtPackage;
-	require Fink::Status;
-	require Fink::Validation;
+  unshift @INC, $FinkDir . "/lib/perl5";
+  require Fink::Config;
+  require Fink::Services;
+  require Fink::Package;
+  require Fink::PkgVersion;
+  require Fink::VirtPackage;
+  require Fink::Status;
+  require Fink::Validation;
 
-	$ENV{PATH} = "$FinkDir/bin:$FinkDir/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin";
-	$ENV{PERL5LIB} = "$FinkDir/lib/perl5:$FinkDir/lib/perl5/darwin";
+  $ENV{PATH} = "$FinkDir/bin:$FinkDir/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin";
+  $ENV{PERL5LIB} = "$FinkDir/lib/perl5:$FinkDir/lib/perl5/darwin";
 
-	$FinkConfig = Fink::Services::read_config("$FinkDir/etc/fink.conf");
-	Fink::Config::set_options({Verbose => 3, KeepBuildDir => 1});
-	readPackages();
+  $FinkConfig = Fink::Services::read_config("$FinkDir/etc/fink.conf");
+  Fink::Config::set_options({Verbose => 3, KeepBuildDir => 1});
+  readPackages();
 
-	return $FinkConfig;
+  return $FinkConfig;
 }
 
 # Make sure all essential packages are installed
 sub installEssentials {
-	# This actually breaks stuff because dpkg gets linked to libgettext3
-	# instead of gettext.
-	return;
+  # This actually breaks stuff because dpkg gets linked to libgettext3
+  # instead of gettext.
+  return;
 
-	my @essentials = Fink::Package->list_essential_packages();
-	my $pid = fork();
-	if($pid) {
-		wait();
-	} else {
-		close(STDIN);
-		system("fink", "-y", "rebuild", @essentials);
-		system("fink", "-y", "reinstall", @essentials);
-	}
+  my @essentials = Fink::Package->list_essential_packages();
+  my $pid = fork();
+  if ($pid) {
+    wait();
+  } else {
+    close(STDIN);
+    system("fink", "-y", "rebuild", @essentials);
+    system("fink", "-y", "reinstall", @essentials);
+  }
 }
 
 sub readPackages {
-	$Fink::Status::the_instance ||= Fink::Status->new();
-	$Fink::Status::the_instance->read();
+  $Fink::Status::the_instance ||= Fink::Status->new();
+  $Fink::Status::the_instance->read();
 
-	eval {
-		Fink::Package->forget_packages(2, 0);
-	};
-	if($@ and $@ =~ /new API for forget_packages/) {
-		Fink::Package->forget_packages({disk => 1});
-	} elsif($@) {
-		die $@;
-	}
-	Fink::Package->require_packages();
+  eval {
+    Fink::Package->forget_packages(2, 0);
+  };
+  if ($@ and $@ =~ /new API for forget_packages/) {
+    Fink::Package->forget_packages({disk => 1});
+  } elsif ($@) {
+    die $@;
+  }
+  Fink::Package->require_packages();
 }
 
 # Purge packages we may have previously built
 sub purgeNonEssential {
-	my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();
-	my $re = "^(?:" . join("|", @essentials) . ")\$";
+  my @essentials = map { quotemeta($_) } Fink::Package->list_essential_packages();
+  my $re = "^(?:" . join("|", @essentials) . ")\$";
 
-	readPackages();
+  readPackages();
 
-	my @packages = Fink::Package->list_packages();
-	my @purgelist;
-	foreach my $pkgname (@packages) {
-		next if $pkgname =~ /$re/i;
-		next if Fink::VirtPackage->query_package($pkgname);
+  my @packages = Fink::Package->list_packages();
+  my @purgelist;
+  foreach my $pkgname (@packages) {
+    next if $pkgname =~ /$re/i;
+    next if Fink::VirtPackage->query_package($pkgname);
 
-		my $obj;
-		eval {
-			$obj = Fink::Package->package_by_name($pkgname);
-		};
-		next if $@ or !$obj;
-		next unless $obj->is_any_installed();
-		my $vo = Fink::PkgVersion->match_package($pkgname);
-		next if $vo->is_type('dummy');
+    my $obj;
+    eval {
+      $obj = Fink::Package->package_by_name($pkgname);
+    };
+    next if $@ or !$obj;
+    next unless $obj->is_any_installed();
+    my $vo = Fink::PkgVersion->match_package($pkgname);
+    next if $vo->is_type('dummy');
 
-		push @purgelist, $pkgname;
-	}
+    push @purgelist, $pkgname;
+  }
 
-	system("dpkg --purge " . join(" ", @purgelist) . " 2>&1 | grep -v 'not installed'") if @purgelist;
+  system("dpkg --purge " . join(" ", @purgelist) . " 2>&1 | grep -v 'not installed'") if @purgelist;
 }
 
 
 # Get either the name or email address from the value of the maintainer field
 sub maintParse {
-	my $maint = shift;
-	my($name, $email);
+  my $maint = shift;
+  my($name, $email);
 
-	if($maint =~ m/^(.*) <(.*)>/) {
-		($name, $email) = ($1, $2);
-		$name =~ s/"//g;
-	} else {
-		($name, $email) = ("", $maint);
-	}
-	return($name, $email);
+  if ($maint =~ m/^(.*) <(.*)>/) {
+    ($name, $email) = ($1, $2);
+    $name =~ s/"//g;
+  } else {
+    ($name, $email) = ("", $maint);
+  }
+  return($name, $email);
 }
 sub maintName { return (maintParse(shift))[0]; }
 sub maintEmail { return (maintParse(shift))[1]; }
@@ -125,29 +125,101 @@ sub maintEmail { return (maintParse(shift))[1]; }
 # Take a list of packages, and return it arranged by maintainer.
 # Returns a hash of listrefs.  Hash keys are maintainers.
 sub sortPackagesByMaintainer {
-	my %maints;
-	foreach my $pkg(@_) {
-		my $obj;
-		eval {
-			$obj = Fink::PkgVersion->match_package($pkg);
-		};
-		if($@ or !$obj) {
-			warn "Couldn't get object for $pkg: $@\n";
-			next;
-		}
+  my %maints;
+  foreach my $pkg (@_) {
+    my $obj;
+    eval {
+      $obj = Fink::PkgVersion->match_package($pkg);
+    };
+    if ($@ or !$obj) {
+      warn "Couldn't get object for $pkg: $@\n";
+      next;
+    }
 
-		my $maint = "None <fink-devel\@lists.sourceforge.net>";
-		if($obj->has_param('maintainer')) {
-			$maint = $obj->param('maintainer');
-			# RangerRick has one email per package, but we want them clustered for maintindex
-			$maint =~ s/<.*\@fink.racoonfink\.com>/<rangerrick\@fink.racoonfink.com>/;
-		}
+    my $maint = "None <fink-devel\@lists.sourceforge.net>";
+    if ($obj->has_param('maintainer')) {
+      $maint = $obj->param('maintainer');
+      # RangerRick has one email per package, but we want them clustered for maintindex
+      $maint =~ s/<.*\@fink.racoonfink\.com>/<rangerrick\@fink.racoonfink.com>/;
+    }
 
-		$maints{$maint} ||= [];
-		push @{$maints{$maint}}, $pkg;
-	}
+    $maints{$maint} ||= [];
+    push @{$maints{$maint}}, $pkg;
+  }
 
-	return %maints;
+  return %maints;
+}
+
+# Get split-offs of a package
+sub getRelatives {
+  my $obj = shift or return;
+
+  # _relatives has been replaced by a real method in
+  # Fink CVS.
+  my @relatives = $obj->can("get_relatives") ? $obj->get_relatives() : @{$obj->{_relatives} || []};
+  return @relatives;
+}
+
+# Buildlocks are how Fink stops a package from being built twice
+# at the same time.  They can get left over if the system crashes
+# while building a package.
+sub removeBuildLocks {
+  foreach my $pkgname (Fink::Package->list_packages()) {
+    next unless $pkgname =~ /^fink-buildlock-.*/;
+    system("dpkg", "-r", $pkgname);
+  }
+}
+
+# Get a flat list of things which depend on this package, and things which depend on those, &c.
+sub getDependentsRecursive {
+  my($pkgname, $depmap, $seen) = @_;
+  $seen ||= {$pkgname => 1};
+
+  my @ret;
+  foreach my $dep (keys %{$depmap->{$pkgname}}) {
+    next if $seen->{$dep};
+    $seen->{$dep} = 1;
+    push @ret, $dep;
+    push @ret, getDependentsRecursive($dep, $depmap, $seen);
+  }
+
+  return @ret;
+}
+
+# Take a list of package names and filter out the ones which are split-offs.
+# When we have a split-off in the list, replace it with its parent and suppress
+# any further instances of members of that family.  This preserves our dependency
+# ordering.
+sub filterSplitoffs {
+  my(@pkglist) = @_;
+  my @ret;
+  my %got_families;
+
+  foreach my $pkgname (@pkglist) {
+    next if $got_families{$pkgname};
+
+    my $pkgobj;
+    eval {
+      $pkgobj = Fink::PkgVersion->match_package($pkgname);
+    };
+    if ($@) {
+      doLog("Couldn't get object for $pkgname: $@");
+      next;
+    }
+
+    if ($pkgobj->{parent}) {
+      my $parent = $pkgobj->can("get_parent") ? $pkgobj->get_parent()->get_name() : $pkgobj->{parent}->get_name();
+
+      next if $got_families{$parent};
+      $got_families{$parent} = 1;
+      push @ret, $parent;
+    } else {
+      $got_families{$pkgname} = 1;
+      push @ret, $pkgname;
+    }
+  }
+
+  return @ret;
 }
 
 1;

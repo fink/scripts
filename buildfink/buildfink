@@ -264,15 +264,15 @@ restoreSystem();
 prepSystem();
 FinkLib::purgeNonEssential() unless $Dirty;
 FinkLib::readPackages();
-removeBuildLocks();
+FinkLib::removeBuildLocks();
 
 if ($BuildAll) {
-  %pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(Fink::Package->list_packages()) if $BuildAll;
+  %pkglist = map { $_ => PKGSTATUS_REBUILD } FinkLib::filterSplitoffs(Fink::Package->list_packages()) if $BuildAll;
 } else {
   # filterSplitoffs isn't available until we've initialized Fink.
   # We can't initialize Fink until after option processing is done.
   # So, --packages doesn't filter splitoffs, and we do it here...
-  %pkglist = map { $_ => PKGSTATUS_REBUILD } filterSplitoffs(keys %pkglist);
+  %pkglist = map { $_ => PKGSTATUS_REBUILD } FinkLib::filterSplitoffs(keys %pkglist);
 }
 
 foreach (filterSplitoffs(@skiplist)) {
@@ -296,7 +296,7 @@ while (my($pkgname, $hash) = each(%$vpinfo)) {
 if (!$BuildAll and $RebuildDeps) {
   # Build up a map showing what each package is depended on by
   my %dependents;
-  foreach my $pkg (filterSplitoffs(Fink::Package->list_packages())) {
+  foreach my $pkg (FinkLib::filterSplitoffs(Fink::Package->list_packages())) {
     my $obj;
     eval {
       $obj = Fink::PkgVersion->match_package($pkg);
@@ -324,7 +324,7 @@ if (!$BuildAll and $RebuildDeps) {
   }
 
   foreach my $pkg (grep { $pkglist{$_} == PKGSTATUS_REBUILD } keys %pkglist) {
-    my @deps = filterSplitoffs(getDependentsRecursive($pkg, \%dependents));
+    my @deps = FinkLib::filterSplitoffs(FinkLib::getDependentsRecursive($pkg, \%dependents));
     doLog("Recursive inverse deps: " . join(", ", @deps));
     foreach my $dep (@deps) {
       $pkglist{$dep} = PKGSTATUS_REBUILD;
@@ -372,7 +372,7 @@ sub prepSystem {
       $FinkBuildFlags = " -m ";
     }
   }
-    
+
 
   mkdir($RunDir);
   mkdir("$RunDir/$_") for qw(pkginfo logs src out validate nobody);
@@ -562,7 +562,7 @@ sub doBuild {
     # We want to be able to kill this process and all its children.
     # Making them be in their own process groups accomplishes this.
     # TODO: Salt the earth so that nothing can grow in its place.
-    setsid(); 
+    setsid();
 
     exec($buildcmd) or die "Couldn't exec: $!\n";
   }
@@ -757,7 +757,7 @@ sub recurseOnDepends {
 	$score_b = 1 if defined($status_b) and grep {$status_b == $_} @status_ok;
 
 	$score_b <=> $score_a;
-      } grep {$_ ne $pkg} filterSplitoffs(map {$_->get_name()} @$dep);
+      } grep {$_ ne $pkg} FinkLib::filterSplitoffs(map {$_->get_name()} @$dep);
 
       next unless @alts;
       foreach my $alt (@alts) {
@@ -808,7 +808,7 @@ sub recurseOnDepends {
     my @failpkgs = $pkg;
 
     # Also, any splitoffs of this package have failed.
-    my @relatives = getRelatives($obj);
+    my @relatives = FinkLib::getRelatives($obj);
     foreach (@relatives) {
       my $name = $_->get_name();
       push @failpkgs, $pkg;
@@ -827,7 +827,7 @@ sub recurseOnDepends {
     my $deb = $obj->get_debname();
     if ($orig_status == PKGSTATUS_REBUILD) {
       getDebFiles($pkgfiles, $obj);
-      getDebFiles($pkgfiles, $_) foreach getRelatives($obj);
+      getDebFiles($pkgfiles, $_) foreach FinkLib::getRelatives($obj);
     }
 
     my $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
@@ -838,7 +838,7 @@ sub recurseOnDepends {
     }
 
     my @okpkgs = $pkg;
-    foreach my $relative (getRelatives($obj)) {
+    foreach my $relative (FinkLib::getRelatives($obj)) {
       push @okpkgs, $relative->get_name();
 
       my $deb = $relative->get_debname();
@@ -918,81 +918,6 @@ sub buildAll {
 }
 
 
-### ==== Generic Fink-related functions ====
-
-# Get split-offs of a package
-sub getRelatives {
-  my $obj = shift or return;
-
-  # _relatives has been replaced by a real method in
-  # Fink CVS.
-  my @relatives = $obj->can("get_relatives") ? $obj->get_relatives() : @{$obj->{_relatives} || []};
-  return @relatives;
-}
-
-# Buildlocks are how Fink stops a package from being built twice
-# at the same time.  They can get left over if the system crashes
-# while building a package.
-sub removeBuildLocks {
-  foreach my $pkgname (Fink::Package->list_packages()) {
-    next unless $pkgname =~ /^fink-buildlock-.*/;
-    system("dpkg", "-r", $pkgname);
-  }
-}
-
-# Get a flat list of things which depend on this package, and things which depend on those, &c.
-sub getDependentsRecursive {
-  my($pkgname, $depmap, $seen) = @_;
-  $seen ||= {$pkgname => 1};
-
-  my @ret;
-  foreach my $dep (keys %{$depmap->{$pkgname}}) {
-    next if $seen->{$dep};
-    $seen->{$dep} = 1;
-    push @ret, $dep;
-    push @ret, getDependentsRecursive($dep, $depmap, $seen);
-  }
-
-  return @ret;
-}
-
-# Take a list of package names and filter out the ones which are split-offs.
-# When we have a split-off in the list, replace it with its parent and suppress
-# any further instances of members of that family.  This preserves our dependency
-# ordering.
-sub filterSplitoffs {
-  my(@pkglist) = @_;
-  my @ret;
-  my %got_families;
-
-  foreach my $pkgname (@pkglist) {
-    next if $got_families{$pkgname};
-
-    my $pkgobj;
-    eval {
-      $pkgobj = Fink::PkgVersion->match_package($pkgname);
-    };
-    if ($@) {
-      doLog("Couldn't get object for $pkgname: $@");
-      next;
-    }
-
-    if ($pkgobj->{parent}) {
-      my $parent = $pkgobj->can("get_parent") ? $pkgobj->get_parent()->get_name() : $pkgobj->{parent}->get_name();
-
-      next if $got_families{$parent};
-      $got_families{$parent} = 1;
-      push @ret, $parent;
-    } else {
-      $got_families{$pkgname} = 1;
-      push @ret, $pkgname;
-    }
-  }
-
-  return @ret;
-}
-
-
 ### Checkpoint handling
 
 sub restoreCheckpoint {
@@ -1011,7 +936,7 @@ sub restoreCheckpoint {
 
   prepSystem();
   injectPackages() unless $BuildAll;
-  removeBuildLocks();
+  FinkLib::removeBuildLocks();
 
   doLog("Restored from checkpoint");
   doLog("Building packages");
