@@ -112,7 +112,7 @@ use Data::Dumper;
 use POSIX qw(sys_wait_h dup2 setsid);
 use Getopt::Long;
 use FindBin qw($Bin);
-use lib "$Bin";
+use lib "$Bin/lib";
 use FinkLib;
 
 our($Bin, $FinkBuildFlags, $FinkConfig, $FinkDir, $RunDir, $DryRun, $infofilter, $patchdir, @skiplist, $checkpoint, $CheckFiles, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo);
