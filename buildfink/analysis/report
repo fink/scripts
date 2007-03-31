@@ -68,43 +68,43 @@ use warnings;
 use List::Util qw(sum);
 use Getopt::Long;
 use FindBin qw($Bin);
-use lib "$Bin";
+use lib "$Bin/../lib";
 use FinkLib;
 
 my %opts;
 my $opts_ok = GetOptions(
-	"comments=s" => \$opts{comments},
-	"catdescs=s" => \$opts{catdescs},
-	"outdir=s" => \$opts{outdir},
-	"finkdir=s" => \$opts{finkdir},
-);
-if($opts{comments} and not -f $opts{comments}) {
-	warn "The specified comments file does not exist.\n";
-	$opts_ok = 0;
+			 "comments=s" => \$opts{comments},
+			 "catdescs=s" => \$opts{catdescs},
+			 "outdir=s" => \$opts{outdir},
+			 "finkdir=s" => \$opts{finkdir},
+			);
+if ($opts{comments} and not -f $opts{comments}) {
+  warn "The specified comments file does not exist.\n";
+  $opts_ok = 0;
 }
-if($opts{catdescs} and not -f $opts{catdescs}) {
-	warn "The specified category descriptions file does not exist.\n";
-	$opts_ok = 0;
+if ($opts{catdescs} and not -f $opts{catdescs}) {
+  warn "The specified category descriptions file does not exist.\n";
+  $opts_ok = 0;
 }
-if(!$opts{outdir}) {
-	warn "You must specify an output directory.\n";
-	$opts_ok = 0;
-} elsif(not -d $opts{outdir}) {
-	warn "The specified output directory does not exist.\n";
-	$opts_ok = 0;
-} elsif(not -f "$opts{outdir}/successes") {
-	warn "You do not appear to have run 'analyze' on this buildfink run, but proceeding anyway...\n";
+if (!$opts{outdir}) {
+  warn "You must specify an output directory.\n";
+  $opts_ok = 0;
+} elsif (not -d $opts{outdir}) {
+  warn "The specified output directory does not exist.\n";
+  $opts_ok = 0;
+} elsif (not -f "$opts{outdir}/successes") {
+  warn "You do not appear to have run 'analyze' on this buildfink run, but proceeding anyway...\n";
 }
-if(!$opts{finkdir}) {
-	warn "You must specify a Fink directory.\n";
-	$opts_ok = 0;
-} elsif(not -f "$opts{finkdir}/etc/fink.conf") {
-	warn "The specified Fink directory does not appear to be valid.\n";
-	$opts_ok = 0;
+if (!$opts{finkdir}) {
+  warn "You must specify a Fink directory.\n";
+  $opts_ok = 0;
+} elsif (not -f "$opts{finkdir}/etc/fink.conf") {
+  warn "The specified Fink directory does not appear to be valid.\n";
+  $opts_ok = 0;
 }
 
-if(!$opts_ok) {
-	die "See 'perldoc $0' for more information.\n";
+if (!$opts_ok) {
+  die "See 'perldoc $0' for more information.\n";
 }
 
 
@@ -112,16 +112,16 @@ FinkLib::initFink($opts{finkdir});
 chdir($opts{outdir}) or die "Couldn't change to output directory: $!\n";
 
 our %catdescs;
-if($opts{catdescs}) {
-	open(CATDESCS, $opts{catdescs}) or die "Couldn't open category description file: $!\n";
-	my $lineno = 1;
-	while(<CATDESCS>) {
-		chomp;
-		/^(.*?):\s*(.*)/ or die "Line $lineno in category description file is malformed.\n";
-		$catdescs{$1} = $2;
-		$lineno++;
-	} 
-	close CATDESCS;
+if ($opts{catdescs}) {
+  open(CATDESCS, $opts{catdescs}) or die "Couldn't open category description file: $!\n";
+  my $lineno = 1;
+  while (<CATDESCS>) {
+    chomp;
+    /^(.*?):\s*(.*)/ or die "Line $lineno in category description file is malformed.\n";
+    $catdescs{$1} = $2;
+    $lineno++;
+  } 
+  close CATDESCS;
 }
 
 
@@ -131,97 +131,97 @@ if($opts{catdescs}) {
 # It returns a list of packages in the filed defined by this
 # particular category.
 sub dologs {
-	my($file, $depth) = @_;
-	my @ret;
+  my($file, $depth) = @_;
+  my @ret;
 
-	open(IN, $file) or die "Couldn't open $file: $!\n";
-	open(OUT, ">", "$file.html") or die "Couldn't open $file.html: $!\n";
+  open(IN, $file) or die "Couldn't open $file: $!\n";
+  open(OUT, ">", "$file.html") or die "Couldn't open $file.html: $!\n";
 
-	my $back = "../" x $depth;
-	$back .= "logs/";
-	while(<IN>) {
-		s/^(\S*)\.log\s+(.+)/<a href="$back$1.log">$1<\/a> ($2)<br>/
-			or
-		s/^(\S*)\.log.*/<a href="$back$1.log">$1<\/a><br>/;;
-		print OUT $_;
-		push @ret, $1;
-	}
+  my $back = "../" x $depth;
+  $back .= "logs/";
+  while (<IN>) {
+    s/^(\S*)\.log\s+(.+)/<a href="$back$1.log">$1<\/a> ($2)<br>/
+      or
+	s/^(\S*)\.log.*/<a href="$back$1.log">$1<\/a><br>/;;
+    print OUT $_;
+    push @ret, $1;
+  }
 
-	close OUT;
-	close IN;
+  close OUT;
+  close IN;
 
-	return @ret;
+  return @ret;
 }
 
 
 sub countlines {
-	my $file = shift;
-	my $lines = 0;
+  my $file = shift;
+  my $lines = 0;
 
-	open(FILE, $file) or die "Couldn't open $file: $!\n";
-	$lines++ while(<FILE>);
-	close FILE;
+  open(FILE, $file) or die "Couldn't open $file: $!\n";
+  $lines++ while(<FILE>);
+  close FILE;
 
-	return $lines;
+  return $lines;
 }
 
 sub countdir {
-	my($dir, $depth, $catmap) = @_;
-	my @ret;
+  my($dir, $depth, $catmap) = @_;
+  my @ret;
 
-	opendir(DIR, $dir) or die "Couldn't opendir $dir: $!\n";
-	my @files = grep {$_ ne "." and $_ ne ".." and $_ !~ /\.(html|txt|xml)$/} readdir(DIR);
-	closedir(DIR);
+  opendir(DIR, $dir) or die "Couldn't opendir $dir: $!\n";
+  my @files = grep {$_ ne "." and $_ ne ".." and $_ !~ /\.(html|txt|xml)$/} readdir(DIR);
+  closedir(DIR);
 
-	foreach my $file(@files) {
-		if(-d "$dir/$file") {
-			my @subs = countdir("$dir/$file", $depth+1, $catmap);
-			push @ret, [$dir, $file, sum(map {$_->[2]} @subs), \@subs];
-		} else {
-			push @ret, [$dir, $file, countlines("$dir/$file")];
-			my @catpkgs = dologs("$dir/$file", $depth);			
-			$catmap->{$_} = "$dir/$file" foreach @catpkgs;
-		}
-	}
+  foreach my $file (@files) {
+    if (-d "$dir/$file") {
+      my @subs = countdir("$dir/$file", $depth+1, $catmap);
+      push @ret, [$dir, $file, sum(map {$_->[2]} @subs), \@subs];
+    } else {
+      push @ret, [$dir, $file, countlines("$dir/$file")];
+      my @catpkgs = dologs("$dir/$file", $depth);			
+      $catmap->{$_} = "$dir/$file" foreach @catpkgs;
+    }
+  }
 
-	return sort { $b->[2] <=> $a->[2] } @ret;
+  return sort { $b->[2] <=> $a->[2] } @ret;
 }
 
 
 sub printrep {
-	my($txtprefix, @items) = @_;
+  my($txtprefix, @items) = @_;
 
-	print HTML "<ul>\n";
+  print HTML "<ul>\n";
 
-	foreach my $item(@items) {
-		my $desc = "";
-		$desc = ": ".$catdescs{$item->[1]} if $catdescs{$item->[1]};
+  foreach my $item (@items) {
+    my $desc = "";
+    $desc = ": ".$catdescs{$item->[1]} if $catdescs{$item->[1]};
 
-		printf TXT "%s%4d %s%s\n", $txtprefix, $item->[2], $item->[1], $desc;
+    printf TXT "%s%4d %s%s\n", $txtprefix, $item->[2], $item->[1], $desc;
 
-		my $html_space = sprintf("%4d", $item->[2]);
-		$html_space =~ s/ /&nbsp;/g;
+    my $html_space = sprintf("%4d", $item->[2]);
+    $html_space =~ s/ /&nbsp;/g;
 
-		if($item->[3]) {
-			printf HTML "<li>%s %s%s", $html_space, $item->[1], $desc;
-			printrep("$txtprefix\t", @{$item->[3]});
-			print HTML "</li>\n";
-		} else {
-			printf HTML "<li>%s <a href=\"%s/%s.html\">%s</a>%s</li>\n", $html_space, $item->[0], $item->[1], $item->[1], $desc;
-		}
-	}
+    if ($item->[3]) {
+      printf HTML "<li>%s %s%s", $html_space, $item->[1], $desc;
+      printrep("$txtprefix\t", @{$item->[3]});
+      print HTML "</li>\n";
+    } else {
+      printf HTML "<li>%s <a href=\"%s/%s.html\">%s</a>%s</li>\n", $html_space, $item->[0], $item->[1], $item->[1], $desc;
+    }
+  }
 
-	print HTML "</ul>\n";
+  print HTML "</ul>\n";
 }
 
 
 # First, make the main report index.
 
 my $comment = "";
-if($opts{comments}) {
-	open(COMMENTS, $opts{comments}) or die "Couldn't open comment file: $!\n";
-	$comment = join("", <COMMENTS>);
-	close COMMENTS;
+if ($opts{comments}) {
+  open(COMMENTS, $opts{comments}) or die "Couldn't open comment file: $!\n";
+  $comment = join("", <COMMENTS>);
+  close COMMENTS;
 }
 
 open(TXT, ">report.txt") or die "Couldn't open report.txt: $!\n";
@@ -265,9 +265,9 @@ print PKGIDX <<HTMHEAD;
 <h1>Fink Build Report: Results By Package</h1>
 HTMHEAD
 
-foreach my $pkg(sort keys %catmap) {
-	my $result = $catmap{$pkg};
-	print PKGIDX "<a href=\"../logs/$pkg.log\">$pkg</a>: <a href=\"$result.html\">$result</a><br>\n";
+foreach my $pkg (sort keys %catmap) {
+  my $result = $catmap{$pkg};
+  print PKGIDX "<a href=\"../logs/$pkg.log\">$pkg</a>: <a href=\"$result.html\">$result</a><br>\n";
 }
 
 print PKGIDX "</body></html>\n";
@@ -287,19 +287,19 @@ print MAINTIDX <<HTMHEAD;
 <h1>Fink Build Report: Results By Maintainer</h1>
 HTMHEAD
 
-foreach my $maint(sort keys %maints) {
-	my $maintname = FinkLib::maintName($maint);
-	if(!$maintname) {
-		$maintname = FinkLib::maintEmail($maint);
-		$maintname =~ s/\@/ _at_ /;
-	}
+foreach my $maint (sort keys %maints) {
+  my $maintname = FinkLib::maintName($maint);
+  if (!$maintname) {
+    $maintname = FinkLib::maintEmail($maint);
+    $maintname =~ s/\@/ _at_ /;
+  }
 
-	print MAINTIDX "<li><b>$maintname</b><ul>\n";
-	foreach my $pkg(sort @{$maints{$maint}}) {
-		my $result = $catmap{$pkg};
-		print MAINTIDX "<li><a href=\"../logs/$pkg.log\">$pkg</a>: <a href=\"$result\">$result</a></li>\n";
-	}
-	print MAINTIDX "</ul></li>";
+  print MAINTIDX "<li><b>$maintname</b><ul>\n";
+  foreach my $pkg (sort @{$maints{$maint}}) {
+    my $result = $catmap{$pkg};
+    print MAINTIDX "<li><a href=\"../logs/$pkg.log\">$pkg</a>: <a href=\"$result\">$result</a></li>\n";
+  }
+  print MAINTIDX "</ul></li>";
 }
 print MAINTIDX "</ul></body></html>\n";
 

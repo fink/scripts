@@ -98,54 +98,54 @@ use warnings;
 use Getopt::Long;
 use Mail::Send;
 use FindBin qw($Bin);
-use lib "$Bin";
+use lib "$Bin/../lib";
 use FinkLib;
 
 our(%options);
 
 my $opts_ok = GetOptions(
-	"finkdir=s" => \$options{finkdir},
-	"pkgfile=s" => \$options{pkgfile},
-	"template=s" => \$options{template},
-	"from=s" => \$options{from},
-	"subject=s" => \$options{subject},
-	"cc=s" => \$options{cc},
-	"attachdir=s" => \$options{attachdir},
-);
-if(@ARGV) {
-	warn "Extra command-line arguments left over after option processing.\n";
-	$opts_ok = 0;
+			 "finkdir=s" => \$options{finkdir},
+			 "pkgfile=s" => \$options{pkgfile},
+			 "template=s" => \$options{template},
+			 "from=s" => \$options{from},
+			 "subject=s" => \$options{subject},
+			 "cc=s" => \$options{cc},
+			 "attachdir=s" => \$options{attachdir},
+			);
+if (@ARGV) {
+  warn "Extra command-line arguments left over after option processing.\n";
+  $opts_ok = 0;
 }
-foreach my $opt(qw(finkdir pkgfile template from subject)) {
-	if(!$options{$opt}) {
-		warn "You must specify the '$opt' option.\n";
-		$opts_ok = 0;
-	}
+foreach my $opt (qw(finkdir pkgfile template from subject)) {
+  if (!$options{$opt}) {
+    warn "You must specify the '$opt' option.\n";
+    $opts_ok = 0;
+  }
 }
-if($opts_ok) {
-	if(not -d $options{finkdir}) {
-		die "The specified Fink directory does not exist.\n";
-	} elsif(not -x $options{finkdir} . "/bin/fink") {
-		die "The specified Fink directory does not appear to contain a Fink installation.\n";
-	}
-	if(not -f $options{pkgfile}) {
-		die "The specified package file does not exist.\n";
-	}
-	if(not -f $options{template}) {
-		die "The specified template file does not exist.\n";
-	}
-	if($options{attachdir} and not -d $options{attachdir}) {
-		die "The specified attachments directory does not exist.\n";
-	}
-}
-
-if(!$opts_ok) {
-	die "See 'perldoc $0' for more information.\n";
+if ($opts_ok) {
+  if (not -d $options{finkdir}) {
+    die "The specified Fink directory does not exist.\n";
+  } elsif (not -x $options{finkdir} . "/bin/fink") {
+    die "The specified Fink directory does not appear to contain a Fink installation.\n";
+  }
+  if (not -f $options{pkgfile}) {
+    die "The specified package file does not exist.\n";
+  }
+  if (not -f $options{template}) {
+    die "The specified template file does not exist.\n";
+  }
+  if ($options{attachdir} and not -d $options{attachdir}) {
+    die "The specified attachments directory does not exist.\n";
+  }
 }
 
-if($options{attachdir}) {
-	require MIME::Lite;
-	require MIME::Types;
+if (!$opts_ok) {
+  die "See 'perldoc $0' for more information.\n";
+}
+
+if ($options{attachdir}) {
+  require MIME::Lite;
+  require MIME::Types;
 }
 
 FinkLib::initFink($options{finkdir});
@@ -160,99 +160,99 @@ my $template = join("", <TEMPLATE>);
 close TEMPLATE;
 
 my @attachfiles;
-if($options{attachdir}) {
-	opendir(ADIR, $options{attachdir}) or die "Couldn't open attachdir: $!\n";
-	@attachfiles = grep { $_ ne "." and $_ ne ".." } readdir(ADIR);
-	close(ADIR);
+if ($options{attachdir}) {
+  opendir(ADIR, $options{attachdir}) or die "Couldn't open attachdir: $!\n";
+  @attachfiles = grep { $_ ne "." and $_ ne ".." } readdir(ADIR);
+  close(ADIR);
 }
 
 my %maints = FinkLib::sortPackagesByMaintainer(@packages);
-foreach my $maint(keys %maints) {
-	my @pkgs = @{$maints{$maint}};
-	my $to = FinkLib::maintEmail($maint);
-	my $subject = applyTemplate($options{subject}, @pkgs);
-	my $body = applyTemplate($template, @pkgs);
+foreach my $maint (keys %maints) {
+  my @pkgs = @{$maints{$maint}};
+  my $to = FinkLib::maintEmail($maint);
+  my $subject = applyTemplate($options{subject}, @pkgs);
+  my $body = applyTemplate($template, @pkgs);
 
-	my @afiles;
-	foreach my $pkg(@pkgs) {
-		push @afiles,
-			map { $options{attachdir} . "/$_" }
-			grep { /^\Q$pkg\E\./ } @attachfiles;
-	}
-	if(@afiles) {
-		my(%args) = (
-			From => $options{from},
-			To => $to,
-			Subject => $subject,
-			Type => 'multipart/mixed'
+  my @afiles;
+  foreach my $pkg (@pkgs) {
+    push @afiles,
+      map { $options{attachdir} . "/$_" }
+	grep { /^\Q$pkg\E\./ } @attachfiles;
+  }
+  if (@afiles) {
+    my(%args) = (
+		 From => $options{from},
+		 To => $to,
+		 Subject => $subject,
+		 Type => 'multipart/mixed'
 		);
-		$args{Cc} = $options{cc} if $options{cc};
-		my $msg = MIME::Lite->new(%args);
+    $args{Cc} = $options{cc} if $options{cc};
+    my $msg = MIME::Lite->new(%args);
 
-		$msg->attach(Type => 'TEXT', Data => $body);
-		foreach my $afile (@afiles) {
-			$msg->attach(
-				Path => $afile,
-				Disposition => 'attachment',
-				Type => "AUTO"
-			);
-		}
+    $msg->attach(Type => 'TEXT', Data => $body);
+    foreach my $afile (@afiles) {
+      $msg->attach(
+		   Path => $afile,
+		   Disposition => 'attachment',
+		   Type => "AUTO"
+		  );
+    }
 
-		$msg->send();
-	} else {
-		my $msg = new Mail::Send or die "Couldn't instantiate Mail::Send: $!\n";
-		$msg->to($to);
-		$msg->subject($subject);
-		$msg->cc($options{cc}) if $options{cc};
-		$msg->set("From", $options{from});
+    $msg->send();
+  } else {
+    my $msg = new Mail::Send or die "Couldn't instantiate Mail::Send: $!\n";
+    $msg->to($to);
+    $msg->subject($subject);
+    $msg->cc($options{cc}) if $options{cc};
+    $msg->set("From", $options{from});
 
-		my $fh = $msg->open or die "Couldn't open Mail::Send: $!\n";
-		print $fh $body or die "Couldn't write to Mail::Send: $!\n";
-		$fh->close or die "Couldn't close Mail::Send: $!\n";
-	}
+    my $fh = $msg->open or die "Couldn't open Mail::Send: $!\n";
+    print $fh $body or die "Couldn't write to Mail::Send: $!\n";
+    $fh->close or die "Couldn't close Mail::Send: $!\n";
+  }
 }
 
 sub applyTemplate {
-	my($template, @pkgs) = @_;
+  my($template, @pkgs) = @_;
 
-	$template =~ s/%(.)(?:{(.*?)})?(?:{(.*?)})?/
-		if($1 eq "%") {
-			"%";
-		} elsif($1 eq "s") {
-			if($2 and $3) {
-				if(@pkgs == 1) {
-					$2;
-				} else {
-					$3;
-				}
-			} else {
-				if(@pkgs == 1) {
-					"";
-				} else {
-					"s";
-				}
-			}
-		} elsif($1 eq "p") {
-			my @pkgtemp = @pkgs;
+  $template =~ s/%(.)(?:{(.*?)})?(?:{(.*?)})?/
+    if ($1 eq "%") {
+      "%";
+    } elsif ($1 eq "s") {
+      if ($2 and $3) {
+	if (@pkgs == 1) {
+	  $2;
+	} else {
+	  $3;
+	}
+      } else {
+	if (@pkgs == 1) {
+	  "";
+	} else {
+	  "s";
+	}
+      }
+    } elsif ($1 eq "p") {
+      my @pkgtemp = @pkgs;
 
-			my $finalsuffix = $2;
-			$finalsuffix = "and " if !defined($2);
+      my $finalsuffix = $2;
+      $finalsuffix = "and " if !defined($2);
 
-			$pkgtemp[-1] = $finalsuffix . $pkgtemp[-1] if @pkgtemp > 1;
+      $pkgtemp[-1] = $finalsuffix . $pkgtemp[-1] if @pkgtemp > 1;
 
-			if(@pkgtemp == 2 and !$3) {
-				join(" ", @pkgtemp);
-			} else {
-				join(", ", @pkgtemp);
-			}
-		} elsif($1 eq "P") {
-			my $prefix = $2 || "";
-			my $suffix = $3 || "";
-			join("\n", map { "$prefix$_$suffix" } @pkgs);
-		} else {
-			die "Unrecognized escape '$1' in template!\n";
-		}
-	/eg;
+      if (@pkgtemp == 2 and !$3) {
+	join(" ", @pkgtemp);
+      } else {
+	join(", ", @pkgtemp);
+      }
+    } elsif ($1 eq "P") {
+      my $prefix = $2 || "";
+      my $suffix = $3 || "";
+      join("\n", map { "$prefix$_$suffix" } @pkgs);
+    } else {
+      die "Unrecognized escape '$1' in template!\n";
+    }
+  /eg;
 
 	return $template;
 }

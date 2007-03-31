@@ -24,4 +24,4 @@ if [ ! -d out -o ! -d logs -o ! -d pkginfo ]
 	exit 1
 fi
 
-rm -r out/* ; `dirname $0`/filter -F -o out -x `dirname $0`/filters.xml logs/*.log
+rm -r out/* ; `dirname $0`/filter -F -o out -x `dirname $0`/../etc/filters.xml logs/*.log

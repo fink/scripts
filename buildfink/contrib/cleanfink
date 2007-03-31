@@ -21,16 +21,16 @@
 use strict;
 use warnings;
 use FindBin qw($Bin);
-use lib "$Bin";
+use lib "$Bin/../lib";
 use FinkLib;
 
 die "Usage: $0 finkdir" unless @ARGV == 1;
 my $FinkDir = shift;
 
-if($FinkDir and not -d $FinkDir) {
-	die "The specified Fink directory does not exist.\n";
-} elsif($FinkDir and not -x "$FinkDir/bin/fink") {
-	die "The specified Fink directory does not appear to contain a Fink installation.\n";
+if ($FinkDir and not -d $FinkDir) {
+  die "The specified Fink directory does not exist.\n";
+} elsif ($FinkDir and not -x "$FinkDir/bin/fink") {
+  die "The specified Fink directory does not appear to contain a Fink installation.\n";
 }
 
 
