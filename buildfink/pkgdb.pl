@@ -86,7 +86,7 @@ print <<EOF;
     <script type="text/javascript" src="pkgdb.js" />
 </head>
 <body>
-<h1>Fink Package Database</h1>
+<h1>Fink File Database</h1>
 <h2>Filesystem</h2>
 <ul id="filesystem"><li class="directory"><a href="#" id="0">/sw</a></li></ul>
 <h2>Packages</h2>
