@@ -7,9 +7,7 @@ our @ISA = qw(FinkFDB);
 our %dbqueries = (
 		  add_package => "INSERT INTO packages(package_name) VALUES (?)",
 		  add_file_path => "INSERT INTO file_paths(parent_id, file_name, fullpath) VALUES (?, ?, ?)",
-		  get_package_id => "SELECT package_id FROM packages WHERE package_name = ?",
-		  get_file_id => "SELECT file_id FROM file_paths WHERE fullpath = ?",
-		  add_file_version => <<EOF);
+		  add_file_version => <<EOF,
 INSERT INTO file_versions(
     package_id,
     is_directory,
@@ -21,6 +19,30 @@ INSERT INTO file_versions(
     flags)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 EOF
+		  get_package_id => "SELECT package_id FROM packages WHERE package_name = ?",
+		  get_file_id => "SELECT file_id FROM file_paths WHERE fullpath = ?",
+		  get_package_files => <<EOF,
+SELECT fullpath AS 'path',
+   size, posix_user, posix_group, flags
+FROM file_versions LEFT OUTER JOIN packages
+   ON file_versions.package_id = packages.package_id
+WHERE package_name=?
+ORDER BY is_directory DESC, fullpath ASC
+EOF
+		  get_directory_files => <<EOF,
+SELECT file_name,
+   size, posix_user, posix_group, flags,
+   file_paths.file_id AS 'file_id',
+   is_directory, package_name
+FROM file_paths LEFT OUTER JOIN file_versions
+   ON file_paths.file_id = file_versions.file_id
+LEFT OUTER JOIN packages
+   ON packages.package_id = file_versions.package_id
+WHERE parent_id = ?
+ORDER BY is_directory DESC, file_name ASC
+EOF
+		  get_packages => "SELECT package_name, package_id FROM packages ORDER BY package_name ASC",
+		  );
 
 sub new {
   my($pkg, %params) = @_;
@@ -40,27 +62,14 @@ sub new {
 
   $self->{dbh} = DBI->connect($dbstr, $params{dbuser}, $params{dbpass}, \%dbattrs);
   $self->{queries} = {};
-  foreach my $key (keys %dbqueries) {
-    $self->{queries}->{$key} = $self->prepare($dbqueries{$key});
-  }
 
   return $self;
 }
 
 sub addPackage {
   my($self, $package) = @_;
-  $self->{queries}->{add_package}->execute($package);
+  $self->execQuery("add_package", $package);
   $self->{dbh}->commit();
-}
-
-sub selectOne {
-  my($self, $qname, @bindvals) = @_;
-
-  my $query = $self->{queries}->{$qname};
-  $query->execute(@bindvals) or return;
-  my($val) = $query->fetchrow_array();
-  $query->finish();
-  return $val;
 }
 
 sub addPackageFiles {
@@ -77,6 +86,60 @@ sub addPackageFiles {
   my $fileroot = $self->makeFileHierarchy($package, $files);
   $self->addFileTree($package_id, $fileroot, 0);
   $self->{dbh}->commit();
+}
+
+sub getPackageFiles {
+  my($self, $package_id) = @_;
+  return $self->selectAll("get_package_files", $package_id);
+}
+
+sub getPackages {
+  my($self) = @_;
+  return $self->selectAll("get_packages");
+}
+
+sub getPackageID {
+  my($self, $package_name) = @_;
+  return $self->selectOne("get_package_id", $package_name);
+}
+
+sub getFileID {
+  my($self, $path) = @_;
+  return $self->selectOne("get_file_id", $path);
+}
+
+sub getDirectoryFiles {
+  my($self, $file_id) = @_;
+  return $self->selectAll("get_directory_files", $file_id);
+}
+
+# ===Internal Functions===
+
+sub execQuery {
+  my($self, $qname, @bindvals) = @_;
+
+  my $queries = $self->{queries};
+  my $query = $queries->{$qname};
+  $query = $queries->{$qname} = $self->prepare($qname) if !$query;
+
+  return $query->execute(@bindvals) ? $query : undef;
+}
+
+sub selectOne {
+  my($self, $qname, @bindvals) = @_;
+
+  my $query = $self->execQuery($qname, @bindvals);
+  my($val) = $query->fetchrow_array();
+  $query->finish();
+  return $val;
+}
+
+sub selectAll {
+  my($query, @bindvals) = @_;
+  my $query = $self->execQuery($query, @bindvals);
+  my $ret = $query->fetchall_arrayref({});
+  $query->finish();
+  return @$ret;
 }
 
 sub makeFileHierarchy {
@@ -117,23 +180,23 @@ sub addFileTree {
 
   my $file_id = $self->selectOne("get_file_id", $file->{"/path/"});
   if(!$file_id) {
-    $self->{queries}->{add_file_path}->execute($parent_id, $file->{"."}, $file->{"/path/"});
+    $self->execQuery("add_file_path", $parent_id, $file->{"."}, $file->{"/path/"});
     $file_id = $self->selectOne("get_file_id", $file->{"/path/"}) or
       die "Couldn't fetch or insert file ID for ".$file->{"/path/"}."!\n";
   }
 
   if ($file->{"/versions/"}) {
     foreach my $filever (@{$file->{"/versions/"}}) {
-      $self->{queries}->{add_file_version}->execute(
-						    $pkgid,
-						    $filever->{isdir},
-						    $filever->{fullpath},
-						    $file_id,
-						    $filever->{size},
-						    $filever->{user},
-						    $filever->{group},
-						    $filever->{flags}
-						   );
+      $self->execQuery("add_file_version",
+		       $pkgid,
+		       $filever->{isdir},
+		       $filever->{fullpath},
+		       $file_id,
+		       $filever->{size},
+		       $filever->{user},
+		       $filever->{group},
+		       $filever->{flags}
+		      );
     }
   }
 
@@ -144,8 +207,8 @@ sub addFileTree {
 }
 
 sub prepare {
-  my($self, $stmt) = @_;
-  return $self->{dbh}->prepare($stmt);
+  my($self, $qname) = @_;
+  return $self->{dbh}->prepare($dbqueries{$qname});
 }
 
 1;

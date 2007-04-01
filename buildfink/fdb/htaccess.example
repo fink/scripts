@@ -1,0 +1,11 @@
+<Perl>
+	%FDBWebsite::FDBParams = (
+		store => "DBI",
+		dbtype => "sqlite",
+		db => "fdb.sqlite",
+        );
+</Perl>
+PerlSwitches -I.
+PerlModule FDBWebsite
+SetHandler modperl
+PerlResponseHandler FDBWebsite
