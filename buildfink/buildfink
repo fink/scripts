@@ -27,78 +27,89 @@ buildfink -- Build every package in Fink
     buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--find-orphan-files] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [--packages PKGLIST] [--rebuild-deps] [--dirty] [FINKDIR OUTDIR]
     buildfink [-r CHECKPOINT]
 
-    C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
-    of packages and maintaining a log for every package build.  It collects all of the logs, package
-    files, and built packages under a single output directory tree.
+C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
+of packages and maintaining a log for every package build.  It collects all of the logs, package
+files, and built packages under a single output directory tree.
 
-    C<FINKDIR> specifies the root of your Fink installation; this is usually C</sw>.
+C<FINKDIR> specifies the root of your Fink installation; this is usually C</sw>.
 
-    C<OUTDIR> specifies the path to the output directory; this directory must not already exist.
+C<OUTDIR> specifies the path to the output directory; this directory must not already exist.
 
-    If C<-n> is given, the script will do nothing but emit an ordered list of packages that it would
-    build and exit.
+If C<-n> is given, the script will do nothing but emit an ordered list of packages that it would
+build and exit.
 
-    The C<--infofilter> option, if specified, allows the package .info and .patch files to be filtered
-    prior to building packages.  The specified script will be invoked with the basename of the info
-    or patch file as an argument and will receive the contents of the file on standard output; it should
-    emit the modified file on standard output.
+The C<--infofilter> option, if specified, allows the package .info and .patch files to be filtered
+prior to building packages.  The specified script will be invoked with the basename of the info
+or patch file as an argument and will receive the contents of the file on standard output; it should
+emit the modified file on standard output.
 
-    The C<--patchdir> option, if specified, allows you to have an extra directory of .info and
-    .patch files which will be inserted into the package tree.  Any files
-    obtained via this mechanism are not subject to filtering via C<--infofilter>.
+The C<--patchdir> option, if specified, allows you to have an extra directory of .info and
+.patch files which will be inserted into the package tree.  Any files
+obtained via this mechanism are not subject to filtering via C<--infofilter>.
 
-    The C<--skip> option, which may be specified multiple times, allows the given package to be skipped.
-    Skipped packages will not be built, nor will any packages which depend on them.
+The C<--skip> option, which may be specified multiple times, allows the given package to be skipped.
+Skipped packages will not be built, nor will any packages which depend on them.
 
-    The C<--validate> option, if specified, causes buildfink to validate packages
-    as it builds them and run any test suites specified in an InfoTest section.
+The C<--validate> option, if specified, causes buildfink to validate packages
+as it builds them and run any test suites specified in an InfoTest section.
 
-    The C<--find-orphan-files> option, if specified, will detect files installed
-    into the prefix which aren't actually part of the binary package.
+The C<--find-orphan-files> option, if specified, will detect files installed
+into the prefix which aren't actually part of the binary package.
 
-    The C<--build-as-nobody> option, if present, causes buildfink to build
-    packages as "nobody" instead of root; if C<--build-as-nobody=try> is specified,
-    it will try building as root if that fails and keep track of which packages
-    only succeed when built as root.
+The C<--build-as-nobody> option, if present, causes buildfink to build
+packages as "nobody" instead of root; if C<--build-as-nobody=try> is specified,
+it will try building as root if that fails and keep track of which packages
+only succeed when built as root.
 
-    buildfink places limits on the maximum size of the log file for an individual
-    build and the build time of an individual package to prevent runaway packages
-    from breaking the build.  C<--max-log-size N> and C<--max-build-time T> can be
-    used to adjust these limits.  An C<N> or C<T> of 0 will disable the
-    corresponding limit.  C<N> is in bytes, unless it has a suffix of C<K>, C<M>,
-    or C<G> indicating kilobytes, megabytes, and gigabytes respectively.
-    C<T> is in seconds, unless it has a suffix of C<m> or C<h> indicating,
-    respectively, minutes and hours.  The defaults are 250 megabytes and 4 hours
-    respectively.  Package-specific limits can be provided by specifying
-    C<packagename:> in front of the limit value.  For instance,
-    C<--max-build-time openoffice.org:24h> would specify a 24-hour limit for 
-    openoffice.org.
+buildfink places limits on the maximum size of the log file for an individual
+build and the build time of an individual package to prevent runaway packages
+from breaking the build.  C<--max-log-size N> and C<--max-build-time T> can be
+used to adjust these limits.  An C<N> or C<T> of 0 will disable the
+corresponding limit.  C<N> is in bytes, unless it has a suffix of C<K>, C<M>,
+or C<G> indicating kilobytes, megabytes, and gigabytes respectively.
+C<T> is in seconds, unless it has a suffix of C<m> or C<h> indicating,
+respectively, minutes and hours.  The defaults are 250 megabytes and 4 hours
+respectively.  Package-specific limits can be provided by specifying
+C<packagename:> in front of the limit value.  For instance,
+C<--max-build-time openoffice.org:24h> would specify a 24-hour limit for 
+openoffice.org.
 
-    Normally, buildfink will attempt to build every package it knows about.  To
-    build only a subset of packages, give C<--packages PKGLIST>, where C<PKGLIST>
-    is a comma-separated list of packages or C<--package-file PKGFILE>, where
-    C<PKGFILE> is a list containing one package name per line (blank lines and
-    comments starting with # are also allowed.)  To specify packages that you don't
-    want to rebuild unless they aren't up to date, use the C<--packages-no-rebuild>
+Normally, buildfink will attempt to build every package it knows about.  To
+build only a subset of packages, give C<--packages PKGLIST>, where C<PKGLIST>
+is a comma-separated list of packages or C<--package-file PKGFILE>, where
+C<PKGFILE> is a list containing one package name per line (blank lines and
+comments starting with # are also allowed.)  To specify packages that you don't
+want to rebuild unless they aren't up to date, use the C<--packages-no-rebuild>
 (or C<--package-file-no-rebuild>) options.  Dependencies of things you specify
-    via C<--packages> are automatically added with that behaviour.
+via C<--packages> are automatically added with that behaviour.
 
-    If only building a fixed list of packages,
-    you may also want the C<--dirty> option to avoid purging all
-    non-essential packages before performing each build.  The
-    C<--rebuild-deps> option will add any packages which depend on anything
-    in C<PKGLIST> .  C<--no-copy-info> makes symlinks to the .info files from the
-    Fink trees into the output directory (instead of copying the files over);
+If only building a fixed list of packages,
+you may also want the C<--dirty> option to avoid purging all
+non-essential packages before performing each build.  The
+C<--rebuild-deps> option will add any packages which depend on anything
+in C<PKGLIST> .  C<--no-copy-info> makes symlinks to the .info files from the
+Fink trees into the output directory (instead of copying the files over);
 the copy behaviour is useful if you want to maintain an archive of the package
-    versions in your build, but if you don't need that you can save the space
+versions in your build, but if you don't need that you can save the space
 and time.
+
+=head3 File Database
+
+If you'd like to have C<buildfink> create a database of the files in each Fink
+package it builds (which can be viewed with the C<fdb> web interface and
+utilities which come with C<buildfink>), specify a value for the C<--fdb-store>
+option.  The value tells C<buildfink> where to store those data; the only valid
+value at the moment is C<DBI>.  Other C<fdb> options are C<--fdb-dbtype>
+(valid values: any DBD module name), C<--fdb-db> (the name of the database
+to use), C<--fdb-dbuser>, and C<--fdb-dbpass>.
 
 =head2 CHECKPOINTS
 
-Sometimes there will be system issues partway through a build.  For instance, a recalcitrant
-package can get stuck in a log-spewing loop, which will result in a build log which fills up the
-disk.  Or maybe there will be a power outage.  Thus, buildfink dumps its state to disk after
-every package build in the file C<checkpoint> inside the build directory.  The C<-r> option can be
+Sometimes there will be system issues partway through a build.  For instance, a
+recalcitrant package can get stuck in a log-spewing loop, which will result in
+a build log which fills up the disk.  Or maybe there will be a power outage.
+Thus, buildfink dumps its state to disk after every package build in the file
+C<checkpoint> inside the build directory.  The C<-r> option can be
 used to resume a run from a checkpoint file.
 
 =cut
@@ -114,8 +125,9 @@ use Getopt::Long;
 use FindBin qw($Bin);
 use lib "$Bin/lib";
 use FinkLib;
+use FinkFDB;
 
-our($Bin, $FinkBuildFlags, $FinkConfig, $FinkDir, $RunDir, $DryRun, $infofilter, $patchdir, @skiplist, $checkpoint, $CheckFiles, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo);
+our($Bin, $FinkBuildFlags, $FinkConfig, $FinkDir, $RunDir, $DryRun, $infofilter, $patchdir, @skiplist, $checkpoint, $CheckFiles, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo, $FDB);
 our $VERSION = '$Revision$';
 
 our $max_build_time = 60*60*4;
@@ -195,6 +207,7 @@ sub packageList {
   }
 }
 
+my %fdbopts = (dbuser => "", dbpass => "", db => "", dbtype => "");
 my $opts_ok = GetOptions(
 			 "n" => \$DryRun,
 			 "infofilter=s" => \$infofilter,
@@ -212,7 +225,12 @@ my $opts_ok = GetOptions(
 			 "no-copy-info" => \$NoCopyInfo,
 			 "build-as-nobody:s" => \$BuildNobody,
 			 "max-build-time=s" => \&limit_arg,
-			 "max-log-size=s" => \&limit_arg
+			 "max-log-size=s" => \&limit_arg,
+			 "fdb-store=s" => \$fdbopts{store},
+			 "fdb-dbtype=s" => \$fdbopts{dbtype},
+			 "fdb-db=s" => \$fdbopts{db},
+			 "fdb-dbuser=s" => \$fdbopts{dbuser},
+			 "fdb-dbpass=s" => \$fdbopts{dbpass},
 			);
 if (@ARGV != 2 and not (($DryRun and @ARGV == 1) or $checkpoint)) {
   warn "You must specify a Fink directory and an output directory.\n";
@@ -250,6 +268,9 @@ if ($BuildNobody and $BuildNobody ne "try") {
   warn "The only valid value for '--build-as-nobody' is 'try'.\n";
   $opts_ok = 0;
 }
+if (%fdbopts) {
+  $FDB = FinkFDB->new(%fdbopts);
+}
 
 if (!$opts_ok) {
   die "See 'perldoc $0' for more information.\n";
@@ -275,7 +296,7 @@ if ($BuildAll) {
   %pkglist = map { $_ => PKGSTATUS_REBUILD } FinkLib::filterSplitoffs(keys %pkglist);
 }
 
-foreach (filterSplitoffs(@skiplist)) {
+foreach (FinkLib::filterSplitoffs(@skiplist)) {
   $pkglist{$_} = PKGSTATUS_SKIP;
   logPackageFail($_, "Package is on the skip list.");
 }
@@ -622,19 +643,9 @@ sub doBuild {
   }
 }
 
-sub addPackageFiles {
-  my($pkgfiles, $pkg, @files) = @_;
-
-  $pkgfiles->{bypkg}->{$pkg} = \@files;
-  foreach my $file (@files) {
-    my $path = $file->{path};
-    my $obj = $pkgfiles->{byfile};
-    $obj->{$path} ||= [];
-    push @{$obj->{$path}}, $pkg;
-  }
-}
 sub getDebFiles {
-  my($pkgfiles, $obj) = @_;
+  return unless $FDB;
+  my($obj) = @_;
 
   my $pkg = $obj->get_name();
   my $deb = $obj->get_debfile();
@@ -650,35 +661,22 @@ sub getDebFiles {
     $path =~ s/ link to.*//;
     $path =~ s/ -> .*//;
     $path =~ s!^\.!!;
+    next if $FinkDir =~ m!^\Q$path\E!;
     $path =~ s!^\Q$FinkDir\E!%p!;
+    my($user, $group) = split(m!/!, $owners);
     push @files, {
 		  flags => $flags,
 		  path => $path,
 		  size => $size,
-		  owners => $owners,
+		  user => $user,
+		  group => $group,
 		 };
-    $pkgfiles->{byfile}->{$path} ||= [];
-    push @{$pkgfiles->{byfile}->{$path}}, $pkg;
-
-    my $qpath = $path;
-    $qpath =~ s/'/\\'/g;
   }
   if (!close(DPKGDEB)) {
     die "dpkg-deb -c $deb failed; corrupt .deb?\n";
   }
 
-  $pkgfiles->{bypkg}->{$pkg} = \@files;
-
-  open(CHECKPOINT, ">>", "$RunDir/checkpoint") or die "Couldn't open checkpoint: $!\n";
-  printf CHECKPOINT "addPackageFiles(\$pkgfiles, '%s', %s);\n", $pkg,
-    join(", ", map {
-      my $obj = $_;
-      my $str = join(", ", map {
-	sprintf("'%s' => '%s'", $_, $obj->{$_})
-      } keys(%$obj));
-      "{$str}";
-    } @files);
-  close CHECKPOINT;
+  $FDB->addPackageFiles($pkg, \@files);
 }
 sub setPackageStatus {
   my($pkglist, $pkg, $status) = @_;
@@ -694,7 +692,7 @@ sub setPackageFail {
 
 # Try to build an individual package.
 sub recurseOnDepends {
-  my($pkglist, $pkg, $install, $finkfiles, $pkgfiles) = @_;
+  my($pkglist, $pkg, $install, $finkfiles) = @_;
   my $orig_status = $pkglist->{$pkg};
   $pkglist->{$pkg} = PKGSTATUS_PROCESSING;
   doLog("Trying to satisfy $pkg");
@@ -769,7 +767,7 @@ sub recurseOnDepends {
 
 	$pkglist->{$alt} = PKGSTATUS_INSTALL if !defined($pkglist->{$alt});
 	next DEP if grep {$pkglist->{$alt} == $_} @status_ok;
-	recurseOnDepends($pkglist, $alt, 1, $finkfiles, $pkgfiles) and next DEP;
+	recurseOnDepends($pkglist, $alt, 1, $finkfiles) and next DEP;
       }
 
       logPackageFail($pkg, "Can't figure out how to build.  Unsatisfied dependencies: " . join(" ", @alts));
@@ -826,8 +824,8 @@ sub recurseOnDepends {
     my $src = $obj->get_debfile();
     my $deb = $obj->get_debname();
     if ($orig_status == PKGSTATUS_REBUILD) {
-      getDebFiles($pkgfiles, $obj);
-      getDebFiles($pkgfiles, $_) foreach FinkLib::getRelatives($obj);
+      getDebFiles($obj);
+      getDebFiles($_) foreach FinkLib::getRelatives($obj);
     }
 
     my $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
@@ -878,10 +876,9 @@ sub recurseOnDepends {
 
 # Try to build packages, adding to pkglist as we encounter deps.
 sub buildAll {
-  my($pkglist, $pkgfiles) = @_;
+  my($pkglist) = @_;
 
   my $finkfiles = {};
-  $pkgfiles ||= {bypkg => {}, byfile => {}};
   if ($CheckFiles) {
     Fink::Config::set_options({"Pedantic" => 1});
 
@@ -913,7 +910,7 @@ sub buildAll {
       }
     }
 
-    recurseOnDepends($pkglist, $pkg, 0, $finkfiles, $pkgfiles);
+    recurseOnDepends($pkglist, $pkg, 0, $finkfiles);
   }
 }
 
@@ -922,7 +919,7 @@ sub buildAll {
 
 sub restoreCheckpoint {
   my($checkpoint) = shift;
-  my($pkglist, $pkgfiles);
+  my($pkglist);
 
   # We use eval "STRING" so that the variables in the checkpoint are
   # bound to this sub's lexical scope.
@@ -940,21 +937,19 @@ sub restoreCheckpoint {
 
   doLog("Restored from checkpoint");
   doLog("Building packages");
-  buildAll($pkglist, $pkgfiles);
+  buildAll($pkglist);
   doLog("Done building");
   restoreSystem();
 }
 
 sub initCheckpoint {
-  my($pkglist, $pkgfiles) = @_;
-
-  $pkgfiles ||= {bypkg => {}, byfile => {}};
+  my($pkglist) = @_;
 
   open(CHECKPOINT, ">", "$RunDir/checkpoint");
 
   print CHECKPOINT Data::Dumper->Dump(
-				      [$FinkDir, $RunDir, $BuildNobody, $BuildAll, $CheckFiles, $DoValidate, $pkglist, $pkgfiles],
-				      [qw(FinkDir RunDir BuildNobody BuildAll CheckFiles DoValidate pkglist pkgfiles)]
+				      [$FinkDir, $RunDir, $BuildNobody, $BuildAll, $CheckFiles, $DoValidate, $pkglist],
+				      [qw(FinkDir RunDir BuildNobody BuildAll CheckFiles DoValidate pkglist)]
 				     );
 
   close CHECKPOINT;

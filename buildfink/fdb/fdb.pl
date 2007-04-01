@@ -2,17 +2,14 @@
 
 use strict;
 use warnings;
-use lib "/Volumes/SandBox/fink/sw/lib/perl5";
-use lib "/Volumes/SandBox/fink/sw/lib/perl5/darwin";
-use DBI;
+use FindBin qw($Bin);
+use lib "$Bin/../lib";
+use FinkFDB;
 use CGI qw(:standard param);
 use JSON;
 
 print "Status: 200 OK\n";
-our $dbh = DBI->connect("dbi:SQLite:dbname=pkgdb.db", "", "", {
-    RaiseError => 1,
-    AutoCommit => 0
-});
+
 
 if(param() and param('op')) {
     my $op = param('op');

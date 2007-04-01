@@ -1,13 +1,14 @@
-package BFData::DBI;
+package FinkFDB::DBI;
 use strict;
 use warnings;
 use DBI;
-our @ISA = qw(BFData);
+our @ISA = qw(FinkFDB);
 
 our %dbqueries = (
 		  add_package => "INSERT INTO packages(package_name) VALUES (?)",
 		  add_file_path => "INSERT INTO file_paths(parent_id, file_name, fullpath) VALUES (?, ?, ?)",
 		  get_package_id => "SELECT package_id FROM packages WHERE package_name = ?",
+		  get_file_id => "SELECT file_id FROM file_paths WHERE fullpath = ?",
 		  add_file_version => <<EOF);
 INSERT INTO file_versions(
     package_id,
@@ -30,14 +31,14 @@ sub new {
   $self->{dbtype} = $params{dbtype} or die "Must specify dbtype for DBI store.\n";
   my $dbstr;
   my %dbattrs = (RaiseError => 1, AutoCommit => 0);
-  if ($self->{dbtype} eq "sqlite") {
+  if (lc($self->{dbtype}) eq "sqlite") {
     die "Must specify db for DBI SQLite.\n" unless $params{db};
     $dbstr = sprintf("dbi:SQLite:dbname=%s", $params{db});
   } else {
-    die "Unknown dbtype; valid values: sqlite\n";
+    $dbstr = sprintf("dbi:%s:%s", $self->{dbtype}, $params{db});
   }
 
-  $self->{dbh} = DBI->connect($dbstr, $params{user}, $params{password}, \%dbattrs);
+  $self->{dbh} = DBI->connect($dbstr, $params{dbuser}, $params{dbpass}, \%dbattrs);
   $self->{queries} = {};
   foreach my $key (keys %dbqueries) {
     $self->{queries}->{$key} = $self->prepare($dbqueries{$key});
@@ -52,25 +53,35 @@ sub addPackage {
   $self->{dbh}->commit();
 }
 
-sub addPackageFiles {
-  my($self, $package, @files) = @_;
+sub selectOne {
+  my($self, $qname, @bindvals) = @_;
 
-  if (!$self->{queries}->{get_package_id}->execute($package)) {
+  my $query = $self->{queries}->{$qname};
+  $query->execute(@bindvals) or return;
+  my($val) = $query->fetchrow_array();
+  $query->finish();
+  return $val;
+}
+
+sub addPackageFiles {
+  my($self, $package, $files) = @_;
+
+  my $package_id = $self->selectOne("get_package_id", $package);
+  if(!$package_id) {
     $self->addPackage($package);
-    $self->{queries}->{get_package_id}->execute($package) or
+    $package_id = $self->selectOne("get_package_id", $package) or
       die "Couldn't find or add package '$package'!\n";
   }
-  my($package_id) = $self->{queries}->{get_package_id}->fetchrow_array();
   $self->{queries}->{get_package_id}->finish();
 
-  my $fileroot = $self->makeFileHierarchy($package, \@files);
+  my $fileroot = $self->makeFileHierarchy($package, $files);
   $self->addFileTree($package_id, $fileroot, 0);
   $self->{dbh}->commit();
 }
 
 sub makeFileHierarchy {
   my($self, $pkg, $files) = @_;
-  my %root = ("." => "", ".." => undef);
+  my %root = ("." => "", ".." => undef, "/path/" => "");
 
   foreach my $file (@$files) {
     my $path = delete $file->{path};
@@ -104,8 +115,12 @@ sub makeFileHierarchy {
 sub addFileTree {
   my($self, $pkgid, $file, $parent_id) = @_;
 
-  $self->{queries}->{add_file_path}->execute($parent_id, $file->{"."}, $file->{"/path/"});
-  my $file_id = $dbh->last_insert_id(undef, undef, undef, undef);
+  my $file_id = $self->selectOne("get_file_id", $file->{"/path/"});
+  if(!$file_id) {
+    $self->{queries}->{add_file_path}->execute($parent_id, $file->{"."}, $file->{"/path/"});
+    $file_id = $self->selectOne("get_file_id", $file->{"/path/"}) or
+      die "Couldn't fetch or insert file ID for ".$file->{"/path/"}."!\n";
+  }
 
   if ($file->{"/versions/"}) {
     foreach my $filever (@{$file->{"/versions/"}}) {
