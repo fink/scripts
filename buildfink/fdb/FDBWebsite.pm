@@ -6,6 +6,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../lib";
 use FinkFDB;
 use Apache2::RequestRec ();
+use Apache2::Const -compile => qw(OK);
 use CGI qw(:standard param);
 use JSON;
 our %FDBParams;
@@ -27,6 +28,8 @@ sub handler {
 	$_;
       } $FDB->getDirectoryFiles($param)));
     }
+
+    return Apache2::Const::OK;
   } else {
     $r->content_type('text/html');
     my $packages = $FDB->getPackages();
@@ -56,6 +59,8 @@ sub handler {
   </html>
 EOF
   }
+
+  return Apache2::Const::OK;
 }
 
 1;
