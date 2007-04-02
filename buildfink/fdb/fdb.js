@@ -2,13 +2,13 @@
 //package > a[@href] == lspkg contents of a
 
 function ls(elem) {
-    $.getJSON("pkgdb.pl", {op: "ls", dir_id: elem.attr("id")}, function(data) {
+    $.getJSON("/fdb/index.pl/ls/" + elem.attr("file_id"), function(data) {
 	    got_ls(elem, data);
 	});
 }
 
 function lspkg(elem) {
-    $.getJSON("pkgdb.pl", {op: "pkgls", pkg: elem.text()}, function(data) {
+    $.getJSON("/fdb/index.pl/package/" + elem.attr("package_id"), function(data) {
 	    got_lspkg(elem, data);
 	});
 }
@@ -30,26 +30,31 @@ function got_ls(node, data) {
     node.click(function() { do_hide(node, "ul"); });
 
     var lschildren = "<ul>";
-    $(data).each(function() {
-	    if(this["is_directory"]) {
-		lschildren += "<li class=\"directory\" " +
-		    "<a href=\"#\" id=\"" + this["file_id"] +
-		    "\">" + this["name"] + " (";
-	    } else {
-		lschildren += "<li>" + this["name"] + " (";
-	    }
+    for(var i = 0; i < data.length; i++) {
+	var file = data[i];
+	if(file.is_directory) {
+	    lschildren += "<li class=\"directory\" " +
+		"<a href=\"#\" file_id=\"" + file.file_id +
+		"\">" + file.file_name + " (";
+	} else {
+	    lschildren += "<li>" + file.file_name + " (";
+	}
 
-	    var packagestr = "";
-	    var pkgarray = this["packages"];
-	    for(var i = 0; i < pkgarray.length; i++) {
-		if(i > 0) packagestr += ", ";
-		packagestr += pkgarray[i];
+	var packagestr = "";
+	var pkgarray = file.packages;
+	if(pkgarray.length > 5) {
+	    packagestr = "<i>many packages</i>";
+	} else {
+	    for(var j = 0; j < pkgarray.length; j++) {
+		if(j > 0) packagestr += ", ";
+		packagestr += pkgarray[j];
 	    }
+	}
 
-	    lschildren += packagestr + ")";
-	    if(this["is_directory"]) lschildren += "</a>";
-	    lschildren += "</li>";
-	});
+	lschildren += packagestr + ")";
+	if(file.is_directory) lschildren += "</a>";
+	lschildren += "</li>";
+    }
     lschildren += "</ul>";
     node.parent().append(lschildren);
     $(".directory > a[@href]", node.parent()).click(function() { ls($(this)) });
@@ -60,14 +65,15 @@ function got_lspkg(node, data) {
     node.click(function() { do_hide(node, "table") });
 
     var lschildren = "<table>";
-    $(data).each(function() {
-	    lschildren += "<tr>" + 
-		"<td>" + this["flags"] + "</td>" +
-		"<td>" + this["posix_user"] + "</td>" +
-		"<td>" + this["posix_group"] + "</td>" +
-		"<td>" + this["size"] + "</td>" +
-		"<td>" + this["path"] + "</td></tr>";
-	});
+    for(var i = 0; i < data.length; i++) {
+	var file = data[i];
+	lschildren += "<tr>" + 
+	    "<td>" + file.flags + "</td>" +
+	    "<td>" + file.posix_user + "</td>" +
+	    "<td>" + file.posix_group + "</td>" +
+	    "<td>" + file.size + "</td>" +
+            "<td>" + file.path + "</td></tr>";
+    }
     lschildren += "</table>";
     node.parent().append(lschildren);
 }

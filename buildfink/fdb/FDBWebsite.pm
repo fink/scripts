@@ -2,12 +2,10 @@ package FDBWebsite;
 
 use strict;
 use warnings;
-use FindBin qw($Bin);
-use lib "$Bin/../lib";
 use FinkFDB;
 use Apache2::RequestRec ();
+use Apache2::RequestIO ();
 use Apache2::Const -compile => qw(OK);
-use CGI qw(:standard param);
 use JSON;
 our %FDBParams;
 
@@ -16,32 +14,50 @@ sub handler {
 
   die "Please configure \%FDBWebsite::FDBParams in the Apache configuration!\n" unless %FDBParams;
   my $FDB = FinkFDB->new(%FDBParams);
+  $FDB->connect();
 
-  my($op, $param) = split(m!/!, $r->path_info());
+  my(undef, $op, $param) = split(m!/!, $r->path_info());
   if ($op) {
     $r->content_type('text/plain');
     if ($op eq "package") {
-      $r->print(objToJson($FDB->getPackageFiles($param)));
+      $r->print(objToJson([$FDB->getPackageFiles($param)]));
     } elsif ($op eq "ls") {
-      $r->print(objToJson(map {
-	$_->{file_name} .= "/" if $_->{is_directory};
-	$_;
-      } $FDB->getDirectoryFiles($param)));
-    }
+      # Group by file name, but include a list of packages.
+      # This does the right thing because the SQL is already returning sorted results.
+      my @ret;
+      my $last;
+      foreach my $file ($FDB->getDirectoryFiles($param)) {
+	if(!$last or
+	   $last->{file_id} != $file->{file_id} or
+	   $last->{is_directory} != $file->{is_directory}
+	  ) {
+	  $last = {
+		   file_name => $file->{file_name},
+		   is_directory => $file->{is_directory},
+		   file_id => $file->{file_id},
+		   packages => []
+		   };
+	  $last->{file_name} .= "/" if $file->{is_directory};
+	  push @ret, $last;
+	}
 
-    return Apache2::Const::OK;
+	push @{$last->{packages}}, $file->{package_name};
+      }
+
+      $r->print(objToJson(\@ret));
+    }
   } else {
     $r->content_type('text/html');
-    my $packages = $FDB->getPackages();
+    my @packages = $FDB->getPackages();
 
     $r->print(<<EOF);
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
 <html>
 <head>
     <title>Fink File Database</title>
-    <link rel="stylesheet" type="text/css" href="pkgdb.css" />
+    <link rel="stylesheet" type="text/css" href="fdb.css" />
     <script type="text/javascript" src="jquery-latest.pack.js" />
-    <script type="text/javascript" src="pkgdb.js" />
+    <script type="text/javascript" src="fdb.js" />
 </head>
 <body>
 <h1>Fink File Database</h1>
@@ -60,6 +76,7 @@ sub handler {
 EOF
   }
 
+  $FDB->disconnect();
   return Apache2::Const::OK;
 }
 

@@ -1,0 +1,19 @@
+<Perl>
+	%FDBWebsite::FDBParams = (
+		store => "DBI",
+		dbtype => "sqlite",
+		db => "fdb.sqlite",
+        );
+
+	use lib "/path/to/buildfink/fdb";
+	use lib "/path/to/buildfink/lib";
+</Perl>
+PerlModule FDBWebsite
+Alias /fdb /path/to/buildfink/fdb
+<Location "/fdb/">
+	DirectoryIndex index.pl
+</Location>
+<Location "/fdb/index.pl">
+	SetHandler modperl
+	PerlResponseHandler FDBWebsite
+</Directory>

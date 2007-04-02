@@ -24,9 +24,8 @@ EOF
 		  get_package_files => <<EOF,
 SELECT fullpath AS 'path',
    size, posix_user, posix_group, flags
-FROM file_versions LEFT OUTER JOIN packages
-   ON file_versions.package_id = packages.package_id
-WHERE package_name=?
+FROM file_versions
+WHERE package_id=?
 ORDER BY is_directory DESC, fullpath ASC
 EOF
 		  get_directory_files => <<EOF,
@@ -39,7 +38,7 @@ FROM file_paths LEFT OUTER JOIN file_versions
 LEFT OUTER JOIN packages
    ON packages.package_id = file_versions.package_id
 WHERE parent_id = ?
-ORDER BY is_directory DESC, file_name ASC
+ORDER BY is_directory DESC, file_name ASC, package_name ASC
 EOF
 		  get_packages => "SELECT package_name, package_id FROM packages ORDER BY package_name ASC",
 		  );
@@ -60,10 +59,28 @@ sub new {
     $dbstr = sprintf("dbi:%s:%s", $self->{dbtype}, $params{db});
   }
 
-  $self->{dbh} = DBI->connect($dbstr, $params{dbuser}, $params{dbpass}, \%dbattrs);
-  $self->{queries} = {};
+  $self->{dbstr} = $dbstr;
+  $self->{dbuser} = $params{dbuser};
+  $self->{dbpass} = $params{dbpass};
+  $self->{dbattrs} = \%dbattrs;
 
   return $self;
+}
+
+sub connect {
+  my($self) = @_;
+  $self->{dbh} = DBI->connect($self->{dbstr},
+			      $self->{dbuser},
+			      $self->{dbpass},
+			      $self->{dbattrs});
+  $self->{queries} = {};
+}
+
+sub disconnect {
+  my($self) = @_;
+  delete $self->{queries};
+  $self->{dbh}->disconnect();
+  delete $self->{dbh};
 }
 
 sub addPackage {
@@ -135,8 +152,8 @@ sub selectOne {
 }
 
 sub selectAll {
-  my($query, @bindvals) = @_;
-  my $query = $self->execQuery($query, @bindvals);
+  my($self, $qname, @bindvals) = @_;
+  my $query = $self->execQuery($qname, @bindvals);
   my $ret = $query->fetchall_arrayref({});
   $query->finish();
   return @$ret;
