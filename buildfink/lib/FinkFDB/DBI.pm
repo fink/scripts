@@ -1,6 +1,7 @@
 package FinkFDB::DBI;
 use strict;
 use warnings;
+use Carp;
 use DBI;
 our @ISA = qw(FinkFDB);
 
@@ -72,7 +73,7 @@ sub connect {
   $self->{dbh} = DBI->connect($self->{dbstr},
 			      $self->{dbuser},
 			      $self->{dbpass},
-			      $self->{dbattrs});
+			      $self->{dbattrs}) or die "unable to connect to $self->{dbstr}: " . DBI->errstr;
   $self->{queries} = {};
 }
 
@@ -225,6 +226,9 @@ sub addFileTree {
 
 sub prepare {
   my($self, $qname) = @_;
+  croak "\$self was not provided" if (not defined $self);
+  $self->connect if (not exists $self->{dbh} or not defined $self->{dbh});
+  croak "\%dbqueries does not contain $qname" if (not exists $dbqueries{$qname} or not defined $dbqueries{$qname});
   return $self->{dbh}->prepare($dbqueries{$qname});
 }
 
