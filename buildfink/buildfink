@@ -135,6 +135,8 @@ our $max_log_size = 1024*1024*250;
 our %max_build_time_forpkg = ();
 our %max_log_size_forpkg = ();
 
+END { $FDB->disconnect() if $FDB; }
+
 sub limit_arg {
   my($arg, $val) = @_;
   my $pkg;
@@ -270,6 +272,7 @@ if ($BuildNobody and $BuildNobody ne "try") {
 }
 if (%fdbopts) {
   $FDB = FinkFDB->new(%fdbopts);
+  $FDB->connect();
 }
 
 if (!$opts_ok) {

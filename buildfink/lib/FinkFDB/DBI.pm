@@ -80,7 +80,7 @@ sub connect {
 sub disconnect {
   my($self) = @_;
   delete $self->{queries};
-  $self->{dbh}->disconnect();
+  $self->{dbh}->disconnect() if $self->{dbh};
   delete $self->{dbh};
 }
 
