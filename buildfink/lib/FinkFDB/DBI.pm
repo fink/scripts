@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Carp;
 use DBI;
+use FindBin qw($Bin);
 our @ISA = qw(FinkFDB);
 
 our %dbqueries = (
@@ -42,6 +43,7 @@ WHERE parent_id = ?
 ORDER BY is_directory DESC, file_name ASC, package_name ASC
 EOF
 		  get_packages => "SELECT package_name, package_id FROM packages ORDER BY package_name ASC",
+		  schemacheck => "SELECT * FROM packages WHERE 0=1",
 		  );
 
 sub new {
@@ -68,6 +70,8 @@ sub new {
   return $self;
 }
 
+sub DESTROY { shift->disconnect(); }
+
 sub connect {
   my($self) = @_;
   $self->{dbh} = DBI->connect($self->{dbstr},
@@ -75,6 +79,35 @@ sub connect {
 			      $self->{dbpass},
 			      $self->{dbattrs}) or die "unable to connect to $self->{dbstr}: " . DBI->errstr;
   $self->{queries} = {};
+
+  eval {
+    $self->{dbh}->{PrintError} = 0;
+    $self->{dbh}->do($dbqueries{schemacheck});
+  };
+  $self->{dbh}->{PrintError} = 1;
+  if($@) {
+    my $schemafile = "$Bin/schemas/".lc($self->{dbtype}).".sql";
+    if(not -f $schemafile) {
+      die <<EOF;
+'$schemafile' doesn't exist.
+Database doesn't appear to have the correct schema, and don't know how to
+populate a $self->{dbtype} schema.
+EOF
+    }
+
+    open(SCHEMA, "<", $schemafile) or die
+      "Couldn't open schema file '$schemafile': $!\n";
+    local $/ = undef;
+    my $schema = <SCHEMA>;
+    close(SCHEMA);
+
+    # Yeah, this is a pretty poor excuse for a .sql parser...
+    my @statements = split(/;/, $schema);
+    foreach my $statement(@statements) {
+      $self->{dbh}->do($statement);
+    }
+    $self->{dbh}->commit();
+  }
 }
 
 sub disconnect {
