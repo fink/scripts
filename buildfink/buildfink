@@ -664,8 +664,10 @@ sub getDebFiles {
     $path =~ s/ link to.*//;
     $path =~ s/ -> .*//;
     $path =~ s!^\.!!;
+
     next if $FinkDir =~ m!^\Q$path\E!;
     $path =~ s!^\Q$FinkDir\E!%p!;
+
     my($user, $group) = split(m!/!, $owners);
     push @files, {
 		  flags => $flags,

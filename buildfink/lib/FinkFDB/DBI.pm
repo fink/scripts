@@ -52,6 +52,7 @@ sub new {
   my $class = ref($pkg) || $pkg || __PACKAGE__;
   bless $self, $class;
 
+  $self->SUPER::new(%params);
   $self->{dbtype} = $params{dbtype} or die "Must specify dbtype for DBI store.\n";
   my $dbstr;
   my %dbattrs = (RaiseError => 1, AutoCommit => 0);
