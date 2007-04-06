@@ -239,6 +239,7 @@ if (@ARGV != 2 and not (($DryRun and @ARGV == 1) or $checkpoint)) {
   $opts_ok = 0;
 } else {
   ($FinkDir, $RunDir) = @ARGV;
+  $FinkDir =~ s!/$!!;
 }
 if ($checkpoint and not -f $checkpoint) {
   warn "The specified checkpoint file does not exist.\n";
