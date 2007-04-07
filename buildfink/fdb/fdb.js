@@ -34,7 +34,7 @@ function got_ls(node, data) {
 	var file = data[i];
 	if(file.is_directory) {
 	    lschildren += "<li class=\"directory\" " +
-		"<a href=\"#\" file_id=\"" + file.file_id +
+		"<a href=\"javascript:\" file_id=\"" + file.file_id +
 		"\">" + file.file_name + " (";
 	} else {
 	    lschildren += "<li>" + file.file_name + " (";

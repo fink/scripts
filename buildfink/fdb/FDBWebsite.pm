@@ -62,11 +62,11 @@ sub handler {
 <body>
 <h1>Fink File Database</h1>
 <h2>Filesystem</h2>
-<ul id="filesystem"><li class="directory"><a href="#" file_id="0">/sw</a></li></ul>
+<ul id="filesystem"><li class="directory"><a href="javascript:" file_id="0">/sw</a></li></ul>
 <h2>Packages</h2>
 <ul id="packages">
 @{[join("\n", map { sprintf(
-   '<li class="package"><a href="#" package_id="%s">%s</a></li>',
+   '<li class="package"><a href="javascript:" package_id="%s">%s</a></li>',
    $_->{package_id},
    $_->{package_name})
 } @packages)]}
