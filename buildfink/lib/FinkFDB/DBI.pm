@@ -13,20 +13,20 @@ our %dbqueries = (
 INSERT INTO file_versions(
     package_id,
     is_directory,
-    fullpath,
     file_id,
     size,
     posix_user,
     posix_group,
     flags)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+VALUES (?, ?, ?, ?, ?, ?, ?)
 EOF
 		  get_package_id => "SELECT package_id FROM packages WHERE package_name = ?",
 		  get_file_id => "SELECT file_id FROM file_paths WHERE fullpath = ?",
 		  get_package_files => <<EOF,
 SELECT fullpath AS 'path',
    size, posix_user, posix_group, flags
-FROM file_versions
+FROM file_versions LEFT OUTER JOIN file_paths
+   ON file_paths.file_id = file_versions.file_id
 WHERE package_id=?
 ORDER BY is_directory DESC, fullpath ASC
 EOF
@@ -245,7 +245,6 @@ sub addFileTree {
       $self->execQuery("add_file_version",
 		       $pkgid,
 		       $filever->{isdir},
-		       $filever->{fullpath},
 		       $file_id,
 		       $filever->{size},
 		       $filever->{user},
