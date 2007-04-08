@@ -13,31 +13,38 @@ function lspkg(elem) {
 	});
 }
 
-function do_show(node, child_name) {
+function do_show(node, child_name, show_class, hide_class) {
     node.unbind("click");
-    node.click(function() { do_hide(node, child_name) });
+    node.click(function() { do_hide(node, child_name, show_class, hide_class) });
+    if(show_class) {
+	node.parent().removeClass();
+	node.parent().addClass(show_class);
+    }
     $(child_name, node.parent()).show();
 }
 
-function do_hide(node, child_name) {
+function do_hide(node, child_name, show_class, hide_class) {
     node.unbind("click");
-    node.click(function() { do_show(node, child_name) });
+    node.click(function() { do_show(node, child_name, show_class, hide_class) });
+    if(hide_class) {
+	node.parent().removeClass();
+	node.parent().addClass(hide_class);
+    }
     $(child_name, node.parent()).hide();
 }
 
-function got_ls(node, data) {
-    node.unbind("click");
-    node.click(function() { do_hide(node, "ul"); });
+function got_ls(node, data, show_class, hide_class) {
+    do_show(node, "ul", "tree-open", "tree-closed");
 
     var lschildren = "<ul>";
     for(var i = 0; i < data.length; i++) {
 	var file = data[i];
 	if(file.is_directory) {
-	    lschildren += "<li class=\"directory\" " +
+	    lschildren += "<li class=\"tree-closed\" " +
 		"<a href=\"javascript:\" file_id=\"" + file.file_id +
 		"\">" + file.file_name + " (";
 	} else {
-	    lschildren += "<li>" + file.file_name + " (";
+	    lschildren += "<li class=\"leaf\" style=\"list-style-image: none\">" + file.file_name + " (";
 	}
 
 	var packagestr = "";
@@ -57,12 +64,11 @@ function got_ls(node, data) {
     }
     lschildren += "</ul>";
     node.parent().append(lschildren);
-    $(".directory > a[@href]", node.parent()).click(function() { ls($(this)) });
+    $("a[@href]", node.parent()).click(function() { ls($(this)) });
 }
 
 function got_lspkg(node, data) {
-    node.unbind("click");
-    node.click(function() { do_hide(node, "table") });
+    do_show(node, "table", "tree-open", "tree-closed");
 
     var lschildren = "<table>";
     for(var i = 0; i < data.length; i++) {
@@ -79,6 +85,7 @@ function got_lspkg(node, data) {
 }
 
 $(function() {
-	$(".directory > a[@href]").click(function() { ls($(this)) });
-	$(".package > a[@href]").click(function() { lspkg($(this)); });
+	$("#filesystem >> a[@href]").click(function() { ls($(this)) });
+	$("#packages >> a[@href]").click(function() { lspkg($(this)); });
+	$("#root").click();
     });
