@@ -136,7 +136,10 @@ sub addPackageFiles {
   $self->{queries}->{get_package_id}->finish();
 
   my $fileroot = $self->makeFileHierarchy($package, $files);
-  $self->addFileTree($package_id, $fileroot, 0);
+  foreach my $subfile (keys %$fileroot) {
+    next if $subfile eq "." or $subfile eq ".." or $subfile eq "/versions/" or $subfile eq "/path/";
+    $self->addFileTree($package_id, $fileroot->{$subfile}, $0);
+  }
   $self->{dbh}->commit();
 }
 
