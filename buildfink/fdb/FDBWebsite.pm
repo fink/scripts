@@ -14,7 +14,7 @@ sub handler {
 
   die "Please configure \%FDBWebsite::FDBParams in the Apache configuration!\n" unless %FDBParams;
   my $FDB = FinkFDB->new(%FDBParams);
-  $FDB->connect();
+  $FDB->initialize();
 
   my(undef, $op, $param) = split(m!/!, $r->path_info());
   if ($op) {
@@ -76,7 +76,7 @@ sub handler {
 EOF
   }
 
-  $FDB->disconnect();
+  $FDB->finish();
   return Apache2::Const::OK;
 }
 

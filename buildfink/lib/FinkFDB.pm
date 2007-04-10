@@ -16,4 +16,31 @@ sub new {
   }
 }
 
+sub initialize {
+  warn "initialize was not subclassed!";
+}
+
+sub finish {
+  warn "finish was not subclassed!";
+}
+
+sub addPackageFiles {
+	warn "addPackageFiles was not subclassed!";
+}
+
+sub getPackageFiles {
+  warn "getPackageFiles was not subclassed!";
+  return qw();
+}
+
+sub getDirectoryFiles {
+  warn "getDirectoryFiles was not subclassed!";
+  return qw();
+}
+
+sub getPackages {
+  warn "getPackages was not subclassed!";
+  return qw();
+}
+
 1;

@@ -4,7 +4,7 @@ use warnings;
 use Carp;
 use DBI;
 use FindBin qw($Bin);
-our @ISA = qw(FinkFDB);
+use base qw(FinkFDB);
 
 our %dbqueries = (
 		  add_package => "INSERT INTO packages(package_name) VALUES (?)",
@@ -71,9 +71,9 @@ sub new {
   return $self;
 }
 
-sub DESTROY { shift->disconnect(); }
+sub DESTROY { shift->finish(); }
 
-sub connect {
+sub initialize {
   my($self) = @_;
   $self->{dbh} = DBI->connect($self->{dbstr},
 			      $self->{dbuser},
@@ -111,7 +111,7 @@ EOF
   }
 }
 
-sub disconnect {
+sub finish {
   my($self) = @_;
   delete $self->{queries};
   $self->{dbh}->disconnect() if $self->{dbh};
