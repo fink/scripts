@@ -96,8 +96,8 @@ open(STDOUT, ">&OLDOUT");
 
 print "# delete old rows\n";
 print "BEGIN;\n";
-print "DELETE FROM package WHERE release='$release';\n";
-print "DELETE FROM splitoffs WHERE parentkey REGEXP '^$release';\n";
+print "DELETE FROM package WHERE \`release\`='$release';\n";
+print "DELETE FROM splitoffs WHERE \`parentkey\` REGEXP '^$release';\n";
 
 ### loop over packages
 
@@ -146,7 +146,7 @@ foreach $package (Fink::Package->list_packages()) {
   $q = "INSERT INTO package (";
   $v = ") VALUES (";
   foreach $key (keys %data) {
-    $q .= "$key,";
+    $q .= "\`$key\`,";
     $s = $data{$key};
     $s =~ s/'/\\'/g;
     $v .= "'$s',";

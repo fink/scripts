@@ -2,14 +2,14 @@
 set -e
 
 echo "Executing current.sql..."
-$HOME/bin/finksql <current.sql
+./finksql <current.sql
 
 echo "Calculating flags..."
 ./flag
 
 echo "Copying timestamp.inc..."
-if [ -d /Volumes/src2/fink/pdb.finkproject.org/htdocs/pdb ]; then
-  install -m 664 timestamp.inc /Volumes/src2/fink/pdb.finkproject.org/htdocs/pdb/
+if [ -d /var/www/www.finkproject.org/pdb ]; then
+  install -m 664 timestamp.inc /var/www/www.finkproject.org/pdb/
 fi
 
 exit 0

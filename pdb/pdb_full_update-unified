@@ -1,12 +1,12 @@
 #!/bin/sh
-cd /Volumes/src2/fink/pdb.finkproject.org/pdb
+cd /opt/pdb
 
 echo "Starting PDB update: `date`"
 ./refresh && ./inject
 
 echo "Fixing permissions"
-chgrp -R fink .
+chgrp -R fink_web .
 chmod -f -R g+w,a+r .
-chgrp fink /Volumes/src2/fink/pdb.finkproject.org/htdocs/pdb/timestamp.inc
+chgrp fink_web /var/www/www.finkproject.org/pdb/timestamp.inc
 
 echo "Finished PDB update: `date`"

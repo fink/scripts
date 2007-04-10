@@ -7,7 +7,7 @@ cvs -q update -dP
 cd ..
 
 echo "Fixing permissions"
-chgrp -R fink .
+chgrp -R fink_web .
 chmod -f -R g+w,a+r .
 
 echo "Creating fink itself"

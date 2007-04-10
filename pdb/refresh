@@ -8,15 +8,16 @@ else
   dists=(10.2-gcc3.3 10.3 10.4)
 fi
 
-echo "Updating from CVS..."
-if [ -d fink ]; then
-  cd fink
-  cvs -z3 -q update -Al
-  cvs -z3 -q update -Ad ${dists[@]}
-  cd ..
-else
-  cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -d fink dists
-fi
+#echo "Updating from CVS..."
+#if [ -d fink ]; then
+#  cd fink
+#  cvs -z3 -q update -Al
+#  cvs -z3 -q update -Ad ${dists[@]}
+#  cd ..
+#else
+#  cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -d fink dists
+#fi
+rsync --delete -avr /var/www/finkinfo/dists.public/ fink/
 
 # flush the previous dump
 echo -n "" > current.sql
