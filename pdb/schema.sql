@@ -1,4 +1,4 @@
-create table release (
+create table `release` (
  name varchar(50) not null,
  description text,
  primary key (name)
@@ -18,7 +18,7 @@ create table splitoffs (
 );
 
 create table package (
- release varchar(50) not null,
+ `release` varchar(50) not null,
  fullname varchar(128) not null,
  name varchar(64) not null,
  parentname varchar(64),
@@ -33,7 +33,7 @@ create table package (
  license varchar(64),
  latest tinyint not null default '0',
  needtest tinyint not null default '0',
- primary key (release,name),
+ primary key (`release`,name),
  index (name),
  index (section),
  index (latest),
