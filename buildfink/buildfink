@@ -322,16 +322,8 @@ if (!$BuildAll and $RebuildDeps) {
   # Build up a map showing what each package is depended on by
   my %dependents;
   foreach my $pkg (FinkLib::filterSplitoffs(Fink::Package->list_packages())) {
-    my $obj;
-    eval {
-      $obj = Fink::PkgVersion->match_package($pkg);
-    };
-    if ($@) {
-      doLog("Couldn't get package object for $pkg: $@");
-      next;
-    }
-
-    next if !$obj || $obj->is_type('dummy');
+    my $obj = FinkLib::objForPackageNamed($pkg);
+    next unless $obj and !$obj->is_type('dummy');
     my @deps;
     eval {
       @deps = $obj->resolve_depends(1, "depends");
@@ -469,19 +461,8 @@ sub patchPackages {
     next unless $pkgname;
     next if grep { $_ eq $pkgname } @skiplist;
 
-    my $pkg;
-    eval {
-      $pkg = Fink::PkgVersion->match_package($pkgname);
-    };
-    if ($@) {
-      doLog("Couldn't get version for $pkgname: $@");
-      next;
-    } elsif (!$pkg) {
-      doLog("Couldn't get package for $pkgname");
-      next;
-    }
-    next if $pkg->is_type('dummy');
-
+    my $pkg = FinkLib::objForPackageNamed($pkgname);
+    next unless $pkg and !$pkg->is_type('dummy');
     my $info = $pkg->get_info_filename();
     if (!$info) {
       die "Couldn't get info for $pkgname: " . Data::Dumper::Dumper($pkg) . "\n";
@@ -703,12 +684,9 @@ sub recurseOnDepends {
   $pkglist->{$pkg} = PKGSTATUS_PROCESSING;
   doLog("Trying to satisfy $pkg");
 
-  my $obj;
-  eval {
-    $obj = Fink::PkgVersion->match_package($pkg);
-  };
-  if ($@ or !$obj) {
-    setPackageFail($pkglist, $pkg, "Couldn't get package object: $@");
+  my $obj = FinkLib::objForPackageNamed($pkg);
+  if (!$obj) {
+    setPackageFail($pkglist, $pkg, "Couldn't get package object: $FinkLib::ERR");
     return;
   }
 

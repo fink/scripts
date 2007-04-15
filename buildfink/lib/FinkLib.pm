@@ -20,7 +20,7 @@ package FinkLib;
 use strict;
 use warnings;
 
-our($FinkDir, $FinkConfig);
+our($FinkDir, $FinkConfig, $ERR);
 
 # Initialize the Fink API
 sub initFink($) {
@@ -96,8 +96,8 @@ sub purgeNonEssential {
     };
     next if $@ or !$obj;
     next unless $obj->is_any_installed();
-    my $vo = Fink::PkgVersion->match_package($pkgname);
-    next if $vo->is_type('dummy');
+    my $vo = objForPackageNamed($pkgname);
+    next if !$vo or $vo->is_type('dummy');
 
     push @purgelist, $pkgname;
   }
@@ -127,15 +127,7 @@ sub maintEmail { return (maintParse(shift))[1]; }
 sub sortPackagesByMaintainer {
   my %maints;
   foreach my $pkg (@_) {
-    my $obj;
-    eval {
-      $obj = Fink::PkgVersion->match_package($pkg);
-    };
-    if ($@ or !$obj) {
-      warn "Couldn't get object for $pkg: $@\n";
-      next;
-    }
-
+    my $obj = objForPackageNamed($pkg) or next;
     my $maint = "None <fink-devel\@lists.sourceforge.net>";
     if ($obj->has_param('maintainer')) {
       $maint = $obj->param('maintainer');
@@ -198,15 +190,7 @@ sub filterSplitoffs {
   foreach my $pkgname (@pkglist) {
     next if $got_families{$pkgname};
 
-    my $pkgobj;
-    eval {
-      $pkgobj = Fink::PkgVersion->match_package($pkgname);
-    };
-    if ($@) {
-      doLog("Couldn't get object for $pkgname: $@");
-      next;
-    }
-
+    my $pkgobj = objForPackageNamed($pkgname) or next;
     if ($pkgobj->{parent}) {
       my $parent = $pkgobj->can("get_parent") ? $pkgobj->get_parent()->get_name() : $pkgobj->{parent}->get_name();
 
@@ -220,6 +204,28 @@ sub filterSplitoffs {
   }
 
   return @ret;
+}
+
+sub objForPackageNamed {
+  my $name = shift;
+  my $pkgobj;
+  eval {
+    # Exception thrown to indicate error.
+    # provides => return causes a Fink::Package object to be returned
+    # instead of a Fink::PkgVersion for virtual packages; without it,
+    # an interactive-only prompt asks for user input.
+    $pkgobj = Fink::PkgVersion->match_package($name, provides => 'return');
+  };
+  if($@) {
+    $ERR = $@;
+    warn "Couldn't get package for $name: $@\n";
+  } elsif($pkgobj->isa("Fink::PkgVersion")) {
+    $ERR = "";
+    return $pkgobj;
+  }
+
+  $ERR = "Package doesn't exist.";
+  return;
 }
 
 1;
