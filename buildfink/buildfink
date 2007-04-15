@@ -271,7 +271,7 @@ if ($BuildNobody and $BuildNobody ne "try") {
   warn "The only valid value for '--build-as-nobody' is 'try'.\n";
   $opts_ok = 0;
 }
-if (%fdbopts) {
+if ($fdbopts{store}) {
   $FDB = FinkFDB->new(%fdbopts);
   $FDB->initialize();
 }
