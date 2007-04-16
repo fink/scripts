@@ -603,7 +603,7 @@ sub doBuild {
 	sleep(10) if kill(0, $pid);
 	kill(-9, $pid);
 	FinkLib::readPackages();
-	removeBuildLocks();
+	FinkLib::removeBuildLocks();
 	last;
       }
     }
@@ -616,7 +616,7 @@ sub doBuild {
     sleep(10);
     kill(-9, $pid);
     FinkLib::readPackages();
-    removeBuildLocks();
+    FinkLib::removeBuildLocks();
   }
 
   close(BUILDLOG);
