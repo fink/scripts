@@ -219,7 +219,7 @@ sub objForPackageNamed {
   if($@) {
     $ERR = $@;
     warn "Couldn't get package for $name: $@\n";
-  } elsif($pkgobj->isa("Fink::PkgVersion")) {
+  } elsif($pkgobj and $pkgobj->isa("Fink::PkgVersion")) {
     $ERR = "";
     return $pkgobj;
   }

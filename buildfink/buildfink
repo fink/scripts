@@ -302,7 +302,7 @@ if ($BuildAll) {
 
 foreach (FinkLib::filterSplitoffs(@skiplist)) {
   $pkglist{$_} = PKGSTATUS_SKIP;
-  logPackageFail($_, "Package is on the skip list.");
+  logPackageFail($_, "Package is on the skip list");
 }
 
 # Don't try to install uninstalled virtual packages.
@@ -727,6 +727,8 @@ sub recurseOnDepends {
     my @status_ok = (PKGSTATUS_INSTALLED);
     push @status_ok, PKGSTATUS_PROCESSING if $deptype eq "run";
 
+    my @status_failed = (PKGSTATUS_FAILED, PKGSTATUS_SKIP);
+
   DEP: foreach my $dep (@$deps) {
       my @alts = sort {
 				# Prefer already-installed deps.
@@ -745,7 +747,8 @@ sub recurseOnDepends {
       foreach my $alt (@alts) {
 	my $depstat = $pkglist->{$alt};
 	$depstat = PKGSTATUS_INSTALL unless defined($depstat);
-	if ($depstat == PKGSTATUS_FAILED or ($deptype ne "run" and $depstat == PKGSTATUS_PROCESSING)) {
+	if (grep { $depstat == $_ } @status_failed or
+	    ($deptype ne "run" and $depstat == PKGSTATUS_PROCESSING)) {
 	  next;
 	}
 
