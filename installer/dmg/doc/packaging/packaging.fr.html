@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.fr.xml,v 1.72 2007/02/23 22:04:55 rangerrick Exp $
+Generated from $Fink: packaging.fr.xml,v 1.73 2007/05/23 05:14:06 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Création de paquets Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -85,6 +85,12 @@ SplitOff: &lt;&lt;
 <p>ère du paqu<b>e</b>t</p>
 </td></tr><tr valign="top"><td>%v</td><td>
 <p><b>v</b>ersion du paquet. Notez que l'ère ne fait partie de <tt style="white-space: nowrap;">%v</tt>.</p>
+</td></tr><tr valign="top"><td>%V</td><td>
+<p>
+the full package <b>V</b>ersion, which automatically includes the Epoch
+if present.  Note that this percent expansion is only available for
+packages whose <tt style="white-space: nowrap;">InfoN</tt> level is at least 4.
+</p>
 </td></tr><tr valign="top"><td>%r</td><td>
 <p><b>r</b>évision du paquet</p>
 </td></tr><tr valign="top"><td>%f</td><td>
@@ -121,6 +127,12 @@ le répertoire actif lorsque les scripts sont exécutés ; vous devez utiliser d
 <p>Chemin complet du fichier indiqué dans le champ<tt style="white-space: nowrap;">PatchFile</tt>. Introduit dans la version 0.24.12 de fink.</p>
 </td></tr><tr valign="top"><td>%lib</td><td>
 <p>Si le champ <tt style="white-space: nowrap;">Type: -64bit</tt> a pour valeur <tt style="white-space: nowrap;">-64bit</tt>, ce raccourci permet de définir le répertoire des bibliothèques comme étant le répertoire <b>lib/ppc64</b> sur machines powerpc, ou  <b>lib/x86_64</b> sur machines intel (répertoires standards pour les bibliothèques 64-bit). Dans le cas contraire, le raccourci définit le répertoire <b>lib</b> comme répertoire pour les bibliothèques. Introduit dans la version 0.20.6 de fink.</p>
+
+<p>Note that <tt style="white-space: nowrap;">%lib</tt> is not permitted in the
+<tt style="white-space: nowrap;">ConfigureParams</tt> field unless the <tt style="white-space: nowrap;">InfoN</tt>
+ level is at least 4.
+</p>
+
 </td></tr></table>
 
 <h2><a name="policy">3 Règles de distribution des paquets</a></h2>
@@ -553,6 +565,12 @@ SplitOff: &lt;&lt;
 <li>
 <tt style="white-space: nowrap;">Info3</tt> (fink&gt;=0.25.0) : possibilité d'utiliser des retraits significatifs dans les fichiers .info, arrêt de la gestion des lignes multiples de la norme RFC-822, possibilité de mettre des commentaires dans les champs de listes de paquets.
 </li>
+
+<li>
+<tt style="white-space: nowrap;">Info4</tt> (fink&gt;=0.26.2): adds %V expansion, and permits
+<tt style="white-space: nowrap;">%lib</tt> in <tt style="white-space: nowrap;">ConfigureParams</tt> field.
+</li>
+
 </ul>
 </td></tr></table>
 <p><b>Dépendances :</b></p>
@@ -918,4 +936,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.72 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.73 2007/05/23 05:14:06 babayoshihiko Exp $</i></p></body></html>

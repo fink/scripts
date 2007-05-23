@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.ja.xml,v 1.42 2007/02/23 22:04:55 rangerrick Exp $
+Generated from $Fink: packaging.ja.xml,v 1.43 2007/05/23 05:14:07 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Fink パッケージの作成方法</title></head><body>
 <table width="100%" cellspacing="0">
@@ -212,7 +212,12 @@ SplitOff: &lt;&lt;
 						<p>
 							<b>v</b>ersion．「バージョン」．
 						</p>
-					</td></tr><tr valign="top"><td>%r</td><td>
+					</td></tr><tr valign="top"><td>%V</td><td>
+<p>
+パッケージの完全な <b>V</b>ersion で， Epoch がある場合にはこれも自動的に追加されます．
+<tt style="white-space: nowrap;">InfoN</tt> レベルが 4 以上の場合のみパーセント展開されるので，注意してください．
+</p>
+</td></tr><tr valign="top"><td>%r</td><td>
 						<p>
 							<b>r</b>evision．パッケージの「版」．
 						</p>
@@ -332,6 +337,10 @@ powerpc マシン上では <b>lib/ppc64</b> と拡張され，
 intel マシン上では <b>lib/x86_64</b> と拡張されます (64-bit ライブラリの正しい保存場所)．
 それ以外は， <b>lib</b> と拡張されます．
 (fink-0.26.0 で導入)
+</p>
+<p>
+<tt style="white-space: nowrap;">InfoN</tt> レベルが 4 以上でないと，
+<tt style="white-space: nowrap;">ConfigureParams</tt> フィールド内での使用はできませんので，注意してください．
 </p>
 </td></tr></table>
 		
@@ -1555,6 +1564,10 @@ SplitOff: &lt;&lt;
 RFC-822 複数業のサポートは終了．
 pkglist フィールドにコメントが可能．
 </li>
+<li>
+<tt style="white-space: nowrap;">Info4</tt> (fink&gt;=0.26.2): %V 展開を追加，
+<tt style="white-space: nowrap;">ConfigureParams</tt> フィールド内で <tt style="white-space: nowrap;">%lib</tt> の使用が可能．
+</li>
 </ul>
 					</td></tr></table>
 			<p>
@@ -2663,4 +2676,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.ja.xml,v 1.42 2007/02/23 22:04:55 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.ja.xml,v 1.43 2007/05/23 05:14:07 babayoshihiko Exp $</i></p></body></html>
