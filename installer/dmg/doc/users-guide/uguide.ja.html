@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.ja.xml,v 1.25 2007/02/23 22:04:56 rangerrick Exp $
+Generated from $Fink: uguide.ja.xml,v 1.26 2007/05/29 03:58:51 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Fink ユーザーガイド</title></head><body>
 <table width="100%" cellspacing="0">
@@ -33,7 +33,7 @@ Fink ユーザーズガイドへようこそ。
 このガイドでは、ソースからとバイナリからの両方について、初めてのインストールとアップグレードの仕方について書かれています。
 パッケージインストールとメンテナンスのことも書かれています。
 </p>
-<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 グローバルオプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.fetch">6.10 fetch</a></li><li><a href="#usage.fetch-all">6.11 fetch-all</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing</a></li><li><a href="#usage.build">6.13 build</a></li><li><a href="#usage.rebuild">6.14 rebuild</a></li><li><a href="#usage.reinstall">6.15 reinstall</a></li><li><a href="#usage.configure">6.16 configure</a></li><li><a href="#usage.selfupdate">6.17 selfupdate</a></li><li><a href="#usage.selfupdate-rsync">6.18 selfupdate-rsync</a></li><li><a href="#usage.index">6.19 index</a></li><li><a href="#usage.validate">6.20 validate</a></li><li><a href="#usage.scanpackages">6.21 scanpackages</a></li><li><a href="#usage.cleanup">6.22 cleanup</a></li><li><a href="#usage.dumpinfo">6.23 dumpinfo</a></li><li><a href="#usage.show-deps">6.24 show-deps</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
+<h2>Contents</h2><ul><li><a href="#intro"><b>1 はじめに</b></a><ul><li><a href="#intro.what">1.1 Fink とは何ですか?</a></li><li><a href="#intro.req">1.2 必要条件</a></li><li><a href="#intro.supported-os">1.3 サポートされているシステム</a></li><li><a href="#intro.src-vs-bin">1.4 ソース vs. バイナリ</a></li></ul></li><li><a href="#install"><b>2 初めてのインストール</b></a><ul><li><a href="#install.bin">2.1 バイナリディストリビューションのインストール</a></li><li><a href="#install.src">2.2 ソースディストリビューションのインストール</a></li><li><a href="#install.setup">2.3 環境の設定</a></li></ul></li><li><a href="#packages"><b>3 パッケージのインストール</b></a><ul><li><a href="#packages.bin-dselect">3.1 dselect によるバイナリパッケージのインストール</a></li><li><a href="#packages.bin-apt">3.2 apt-get を使ったバイナリインストール</a></li><li><a href="#packages.bin-exceptions">3.3 バイナリディストリビューションにない依存パッケージのインストール</a></li><li><a href="#packages.src">3.4 ソースからのパッケージインストール</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 用意されているバージョン</a></li><li><a href="#packages.x11">3.7 X11 を使う</a></li></ul></li><li><a href="#upgrade"><b>4 Fink のアップグレード</b></a><ul><li><a href="#upgrade.bin">4.1 バイナリパッケージでのアップグレード</a></li><li><a href="#upgrade.src">4.2 ソースディストリビューションのアップグレード</a></li><li><a href="#upgrade.mix">4.3 バイナリとソースの混在</a></li></ul></li><li><a href="#conf"><b>5 Fink 設定ファイル</b></a><ul><li><a href="#conf.about">5.1 fink.conf について</a></li><li><a href="#conf.syntax">5.2 fink.conf 文法</a></li><li><a href="#conf.required">5.3 必須設定</a></li><li><a href="#conf.optional">5.4 ユーザー設定</a></li><li><a href="#conf.downloading">5.5 ダウンロード設定</a></li><li><a href="#conf.mirrors">5.6 ミラー設定</a></li><li><a href="#conf.developer">5.7 開発者用設定</a></li><li><a href="#conf.advanced">5.8 高度な設定</a></li><li><a href="#conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></li></ul></li><li><a href="#usage"><b>6 コマンドライン fink ツールの使用方法</b></a><ul><li><a href="#usage.using">6.1 fink ツールの使用</a></li><li><a href="#usage.options">6.2 グローバルオプション</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.plugins">6.10 plugins</a></li><li><a href="#usage.fetch">6.11 fetch</a></li><li><a href="#usage.fetch-all">6.12 fetch-all</a></li><li><a href="#usage.fetch-missing">6.13 fetch-missing</a></li><li><a href="#usage.build">6.14 build</a></li><li><a href="#usage.rebuild">6.15 rebuild</a></li><li><a href="#usage.reinstall">6.16 reinstall</a></li><li><a href="#usage.configure">6.17 configure</a></li><li><a href="#usage.selfupdate">6.18 selfupdate</a></li><li><a href="#usage.selfupdate-rsync">6.19 selfupdate-rsync</a></li><li><a href="#usage.index">6.20 index</a></li><li><a href="#usage.validate">6.21 validate</a></li><li><a href="#usage.scanpackages">6.22 scanpackages</a></li><li><a href="#usage.cleanup">6.23 cleanup</a></li><li><a href="#usage.dumpinfo">6.24 dumpinfo</a></li><li><a href="#usage.show-deps">6.25 show-deps</a></li></ul></li></ul><h2><a name="intro">1 はじめに</a></h2>
 
 
 <h3><a name="intro.what">1.1 Fink とは何ですか?</a></h3>
@@ -579,12 +579,6 @@ Fink をソースからインストールした場合など、別にダウンロ
             これは、OS 10.3 用に stable ソースツリーからインストールされる最新の安定バージョンです。
           </p>
             </li>
-            <li>
-          <p>
-            <b>10.4-transitional stable:</b>
-            これは、OS 10.3 から 10.4 用へアップグレードしたユーザ用の、stable ソースツリーからインストールされる最新の安定バージョンです。
-          </p>
-            </li>
             <li><p><b>10.4/powerpc stable:</b>  
             これは、新規にインストールされた OS 10.4 ユーザ用に stable ソースツリーからインストールされる最新の安定バージョンです。PowerPC のみ。
 		  </p>
@@ -608,12 +602,6 @@ Fink をソースからインストールした場合など、別にダウンロ
             <li>
           <p><b>10.3 unstable:</b>  
             これは、OS 10.3 用に unstable ソースツリーからインストールされる最新の unstable バージョンです。
-          </p>
-            </li>
-            <li>
-          <p>
-            <b>10.4-transitional stable:</b>
-            これは、OS 10.3 から 10.4 用へアップグレードしたユーザ用の、unstable ソースツリーからインストールされる最新の安定バージョンです。
           </p>
             </li>
             <li><p><b>10.4/powerpc stable:</b>  
@@ -823,7 +811,7 @@ ListOption: Option1 Option2 Option3
 Fink がインストールされている場所を知らせます。
 Fink の最初のインストール時に変更していない限り、デフォルトでは <b>/sw</b> です。
 この値を変更しては<b>いけません</b>。
-Fink が混乱します。
+<b>fink</b> が混乱します。
 </p>
 </li>
 </ul>
@@ -859,12 +847,15 @@ unstable/main   - 他の非安定版パッケージ
 デフォルトのツリーは "local/main local/bootstrap
 stable/main" です。
 この一覧は <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> ファイルと同期を保つようにして下さい。
-(fink 0.21.0 より、 fink が自動的に行うようになりました)
+(fink 0.21.0 より、 <tt style="white-space: nowrap;">fink</tt> が自動的に行うようになりました)
 </p>
+
+<p>ツリーの順序には意味があります。後のツリーにあるパッケージが前のツリーのパッケージを書き換えます。</p>
+
 </li>
 <li>
 <p>
-<b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, 10.3</p>
+<b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, 10.3, 10.4</p>
 <p>Fink はどのバージョンの Mac OS X を使っているか知る必要があります。
 10.0 以前はサポートされていません。
 10.1 は現バージョンからサポート対象外となりました。
@@ -876,7 +867,7 @@ stable/main" です。
 <li>
 <p>
 <b>FetchAltDir:</b> path</p>
-<p>Fink は通常、ソースを <tt style="white-space: nowrap;">/sw/src</tt> に保存します。
+<p><tt style="white-space: nowrap;">fink</tt> は通常、ソースを <tt style="white-space: nowrap;">/sw/src</tt> に保存します。
 この値を変えることで、他の場所にダウンロードしたソースコードを探させることもできます。
 例えば:
 </p>
@@ -899,6 +890,15 @@ High (全て報告する)
 デフォルト値は 1 です。
 </p>
 </li>
+        <li><p><b>SkipPrompts:</b> コンマで区切られた一覧</p>
+        <p>(<tt style="white-space: nowrap;">fink-0.25</tt> 以降) 
+        このオプションに設定された項目に関し、<tt style="white-space: nowrap;">fink</tt> は利用者に聞かなくなります。
+        各プロンプトはいずれかのカテゴリに属し、そのカテゴリが SkipPrompts 一覧に指定されている場合、
+        直ちに既定値が洗濯されます。</p>
+        <p>現在、以下のプロンプトカテゴリがあります。:</p>
+        <p><b>fetch</b> - Downloads と mirrors</p>
+        <p><b>virtualdep</b> - 代替パッケージの選択</p>
+        <p>既定値としてスキップされるプロンプトはありません。</p></li>
 <li>
 <p>
 <b>NoAutoIndex:</b> ブール値</p>
@@ -923,10 +923,11 @@ High (全て報告する)
 Fink はソースからコンパイルする場合、パッケージごとに仮ディレクトリを作成します。
 デフォルトでは Panther 以前では <tt style="white-space: nowrap;">/sw/src</tt> 内に、Tiger からは <tt style="white-space: nowrap;">/sw/src/fink.build</tt> 内に、
 置かれていますが、別の場所を使いたい場合はここでパスを指定します。
-仮ディレクトリについては、後述の <tt style="white-space: nowrap;">KeepRootDir</tt> と <tt style="white-space: nowrap;">KeepBuildDir</tt> のフィールドの解説をご覧下さい。
+仮ディレクトリについては、本文書中<a href="#conf.developer">Developer Settings</a> 節の
+の <tt style="white-space: nowrap;">KeepRootDir</tt> と <tt style="white-space: nowrap;">KeepBuildDir</tt> のフィールドの解説をご覧下さい。
 </p>
 	    <p>
-          Tiger では、BuildPath は .noindex または .build とつけることをお勧めします。
+          Tiger では、BuildPath は <tt style="white-space: nowrap;">.noindex</tt> または <tt style="white-space: nowrap;">.build</tt> とつけることをお勧めします。
           こうしなければ、Spotlight が BuildPath 内にある仮ファイルをすべてインデックスしようとし、ビルドを遅くします。
     	</p>
 </li>
@@ -969,15 +970,18 @@ FTP サーバーやネットワークによっては、このオプションが 
 <b>axelmirror</b> の使用は現時点では勧められません。
 デフォルト値は <b>curl</b> です。
 <b>DownloadMethod に選択したアプリケーションはインストールされている必要があります!</b>
+          
+          (i.e. もし存在しないダウンロードアプリケーションを指定しても、<tt style="white-space: nowrap;">fink</tt> は <b>curl</b> を使うことはありません。)
+          
 </p>
 </li>
 <li>
 <p>
 <b>SelfUpdateMethod:</b> point, rsync または cvs</p>
 <p>
-Fink は、数種類の手段でパッケージ情報ファイルを更新することができます。
+<tt style="white-space: nowrap;">fink</tt> は、数種類の手段でパッケージ情報ファイルを更新することができます。
 <b>rsync</b> が推奨される設定で、 rsync を用いて、ユーザーにより指定されたツリー中の、変更されたファイルだけをダウンロードします。
-stable や unstable 中のファイルを編集したり、新たに追加していた場合、削除されることに注意してください。
+<tt style="white-space: nowrap;">stable</tt> や <tt style="white-space: nowrap;">unstable</tt> <a href="#conf.optional">trees</a> 中のファイルを編集したり、新たに追加していた場合、削除されることに注意してください。
 これらのファイルを必ず事前にバックアップしてください。
 <b>cvs</b> では、 anonymous か :ext: cvs アクセスを使用して fink レポジトリから ダウンロードします。
 cvs はミラーを使えないという欠点があるため、 CVS サーバーに接続することができない時は更新できません。
@@ -985,15 +989,25 @@ cvs はミラーを使えないという欠点があるため、 CVS サーバ�
 ユーザのパッケージがかなり古い場合は更新されないので、おすすめはできません。
 </p>
 </li>
+        <li><p><b>SelfUpdateCVSTrees:</b> ツリーの一覧</p>
+        <p>(<tt style="white-space: nowrap;">fink-0.25</tt> 以降) 
+		既定では、 <b>cvs</b> selfupdate は現在の distribution ツリーのみ更新します。
+		このオプションは、selfupdate 時に後進する distribution の一覧を書き換えます。
+		
+		もし CVS/ ディレクトリの存在しないディレクトリも更新したい場合は、最近の "cvs" バイナリが、
+		完全パス中 (例 dists/local/main など) に必要ですので、
+		ご注意ください。</p></li>
 <li>
 <p>
 <b>UseBinaryDist:</b> ブール値</p>
 <p>
-fink に、バイナリ版があり、まだシステム上にバイナリない場合はバイナリをダウンロードするように指示します。
+<tt style="white-space: nowrap;">fink</tt> に、バイナリ版があり、まだシステム上にバイナリない場合はバイナリをダウンロードするように指示します。
 これによりインストール時間を短縮できるので、このオプションを設定することをおすすめします。
 <a href="#usage">--use-binary-dist オプション</a>を使用しても同じですが、これは一度だけ有効です。 
-<b>fink バージョン 0.23.0 から有効</b>.
+<b>fink バージョン 0.23.0 から有効</b>。
 </p>
+<p>注記：このモードは、選択されたパッケージのバイナリバージョンが最新バージョンに一致する場合にのみ適用されます。
+入手可能な最新バージョンを <tt style="white-space: nowrap;">fink</tt> が選択するようにはなっていません。</p>
 </li>
 </ul>
 
@@ -1045,6 +1059,12 @@ MasterNever - "Master"  ソースミラーは使用しない。
 ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラーを一緒にする)。
 </pre>
 </li>
+        <li><p><b>Mirror-rsync:</b></p>
+        <p>(<tt style="white-space: nowrap;">fink-0.25.2</tt> 以降)
+           <tt style="white-space: nowrap;">fink selfupdate</tt> 時に <b>SelfupdateMethod</b> を 
+           <tt style="white-space: nowrap;">rsync</tt> 賭した場合、
+           ここで指定された URL から rsync します。
+           ここで指定する URL は、fink の全ての Distribution と Tree を含んだ anonymous rsync 用でなければなりません。</p></li>
 </ul>
 
 <h3><a name="conf.developer">5.7 開発者用設定</a></h3>
@@ -1056,7 +1076,7 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
 <li>
 <p>
 <b>KeepRootDir:</b> ブール値</p>
-<p>パッケージのビルド後に <b>BuildPath</b> 内の root-[name]-[version]-[revision] ディレクトリを削除しません。
+<p>パッケージのビルド後に <b>BuildPath</b> 内の <tt style="white-space: nowrap;">root-[name]-[version]-[revision]</tt> ディレクトリを削除しません。
 デフォルトは false です。
 <b>注意、このオプションはハードディスクをいっぱいにします!</b>
 一度だけ使いたい場合、 <b>fink</b> に <b>-K</b> フラグを渡して同じ効果が得られます。
@@ -1065,7 +1085,7 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
 <li>
 <p>
 <b>KeepBuildDir:</b> ブール値</p>
-<p>パッケージのビルド後に <b>BuildPath</b> 内の [name]-[version]-[revision] ディレクトリを削除しません。
+<p>パッケージのビルド後に <b>BuildPath</b> 内の <tt style="white-space: nowrap;">[name]-[version]-[revision]</tt> ディレクトリを削除しません。
 デフォルトは false です。
 <b>注意、このオプションはハードディスクをいっぱいにします!</b>
 一度だけ使いたい場合、 <b>fink</b> に <b>-K</b> フラグを渡して同じ効果が得られます。
@@ -1090,7 +1110,7 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
 			<li>
 				<p><b>CCacheDir:</b> パス</p>
 				<p>
-					Fink パッケージ ccache-default がインストールされている場合、
+					Fink パッケージ <tt style="white-space: nowrap;">ccache-default</tt> がインストールされている場合、
 					Fink パッケージを作成中にこれがつくるキャッシュがここに保存される。
 					規定値は <tt style="white-space: nowrap;">/sw/var/ccache</tt> 。
 					<tt style="white-space: nowrap;">none</tt> と設定された場合、 fink は CCACHE_DIR 環境変数を設定せず、
@@ -1105,7 +1125,22 @@ ClosestFirst - 最も近いソースミラーを最初に探す (全てのミラ
            			他のプラグインは、 <tt style="white-space: nowrap;">/sw/lib/perl5/Fink/Notify</tt> にある。
 				</p>
 			</li>
-		</ul>
+        
+        <li><p><b>AutoScanpackages:</b> boolean
+           </p><p>When <tt style="white-space: nowrap;">fink</tt> builds new packages, <tt style="white-space: nowrap;">apt-get</tt> does not immediately know about
+           them.  Historically, the command <tt style="white-space: nowrap;">fink scanpackages</tt> had to be run
+           for <tt style="white-space: nowrap;">apt-get</tt> to notice the new packages, but now this happens auto
+           matically. If this option is present and <b>false</b>, then <tt style="white-space: nowrap;">fink
+           scanpackages</tt> will no longer be run automatically after packages are
+           built.  Defaults to <b>true</b>.
+</p></li>
+        <li><p><b>ScanRestrictivePackages:</b> boolean
+           </p><p>When scanning the packages for <tt style="white-space: nowrap;">apt-get</tt>, <tt style="white-space: nowrap;">fink</tt> normally scans all
+           packages in the current trees. However, if the resuting apt repository will be made publically available, the administrator may be
+           legally obligated not to include packages with <tt style="white-space: nowrap;">Restrictive</tt> or
+           <tt style="white-space: nowrap;">Commercial</tt> licenses. If this option is present and <b>false</b>, then Fink
+           will omit those packages when scanning.</p></li>
+				</ul>
 	
 	<h3><a name="conf.sourceslist">5.9 apt の sources.list ファイルを管理</a></h3>
 		
@@ -1169,35 +1204,144 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 全ての fink コマンドに共通のオプションがあります。
 これは、 <tt style="white-space: nowrap;">fink --help</tt> を実行することで一覧が出ます:
 </p>
-        <p>(<tt style="white-space: nowrap;">fink-0.24.1</tt> 時点で)</p>
-<pre> -h, --help            - このヘルプテキストを表示
- -q, --quiet           - fink をやかましくなくさせます --verboseの反対
- -V, --version         - バージョン情報を表示
- -v, --verbose         - fink をやかましくなくさせます --quietの反対
- -y, --yes             - 全ての質問にデフォルト値を自動的に回答
- -b, --use-binary-dist - コンパイル済みバイナリがあれば、それを使用 (コンパイル時間やディスク節約のため)
-                         このモードは、パッケージが要求するバージョンがある場合に限りダウンロード
-                         するよう Fink に指示します。バイナリ版があるバージョンを無理にダウン
-                         ロードすることはありません。
- --no-use-binary-dist  - コンパイル済みバイナリパッケージを使用しない (--use-binary-dist の逆)
- -K, --keep-root-dir   - BuildPath 中の root-[name]-[version]-[revision] ディレクトリをパッケー
-                         ジビルド後に削除しないように Fink に指示をする
- -k, --keep-build-dir  - BuildPath 中の [name]-[version]-[revision] ディレクトリをパッケー
-                         ジビルド後に削除しないように Fink に指示をする
- --build-as-nobody     - 解凍、パッチ、コンパイル、インストール時に root 以外のユーザーになる。
-                         このオプションで作成されたパッケージは機能しない可能性があることに注意。
-                         このモードはパッケージの開発とデバッグ目的にのみ使用。</pre>
-<p>(訳注: 利便性のためここでは訳しましたが、実際は英語で出力されます)</p>
+        <p>(<tt style="white-space: nowrap;">fink-0.26.0</tt> 時点で)</p>
+
+
+      <p><b>-h, --help</b> - displays help text.
+</p>
+      <p><b>-q, --quiet</b>  - causes <tt style="white-space: nowrap;">fink</tt> to be less verbose, opposite of <b>--verbose</b>.  Overrides the <a href="#conf.optional">Verbose</a> flag in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p>
+      <p><b>-V, --version</b> - display version information.
+</p>
+      <p><b>-v, --verbose</b> - causes  <tt style="white-space: nowrap;">fink</tt> to be more verbose, opposite of <b>--quiet</b>.  Overrides the <a href="#conf.optional">Verbose</a> field in <tt style="white-space: nowrap;">fink.conf.</tt>
+</p>
+      <p><b>-y, --yes</b> - assume default answer for all interactive 
+                        questions.
+</p>
+      <p><b>-K, --keep-root-dir</b>   - Causes <tt style="white-space: nowrap;">fink</tt> not to delete the
+                        <tt style="white-space: nowrap;">root-[name]-[version]-[revision]</tt>
+		        directory in the <a href="#conf.optional">Buildpath</a> after building a package.  Corresponds to the <a href="#conf.developer">KeepRootDir</a> field in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p>
+      <p><b>-k, --keep-build-dir</b>  - Causes <tt style="white-space: nowrap;">fink</tt> not to delete the
+                        <tt style="white-space: nowrap;">[name]-[version]-[revision]</tt>
+                        directory in the <a href="#conf.optional">Buildpath</a> after building a package.  Corresponds to the <a href="#conf.developer">KeepBuildDir</a> field in <tt style="white-space: nowrap;">fink.conf</tt>.</p>
+      <p><b>-b, --use-binary-dist</b> - download pre-compiled packages from the binary 
+                        distribution if available (e.g. to reduce compile
+		        time or disk usage).
+		        Note that this mode instructs fink to download the
+                        version it wants if that version is available for
+		        download; it does not cause fink to choose a version
+    		        based on its binary availability.  Corresponds to the <a href="#conf.downloading">UseBinaryDist</a> flag in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p>
+      <p><b>--no-use-binary-dist</b>  - Don't use pre-compiled binary packages from the binary 
+		        distribution, opposite of the --use-binary-dist flag. 
+                        This is the default unless overridden by setting <tt style="white-space: nowrap;">UseBinaryDist: true </tt>in 
+                        the <tt style="white-space: nowrap;">fink.conf</tt> configuration file. 
+</p>
+      <p><b>--build-as-nobody</b>     - Drop to a non-root user when performing the unpack,
+                        patch, compile, and install phases. Note that packages
+                        built with this option may be non-functional. You
+                        should use this mode for package development and 
+                        debugging only.
+</p>
+      <p><b>-m, --maintainer</b>
+            - (<tt style="white-space: nowrap;">fink-0.25</tt> and later) Perform actions useful to package maintainers: run validation on
+           the <tt style="white-space: nowrap;">.info</tt> file before building and on the <tt style="white-space: nowrap;">.deb</tt> after building a
+           package; turn certain build-time warnings into fatal errors; (<tt style="white-space: nowrap;">fink-0.26</tt> and later) run the test suites as specified in the  field.  This sets <b>--tests</b> and <b>--validate</b> to <tt style="white-space: nowrap;">on</tt>.</p>
+      <p><b>--tests[=on|off|warn]</b>         - (<tt style="white-space: nowrap;">fink-0.26.0</tt> and later) Causes <tt style="white-space: nowrap;">InfoTest</tt> fields to be activated and test suites specified
+           via <tt style="white-space: nowrap;">TestScript</tt> to be executed (see the <a href="../packaging/packaging.en.html#reference.fields">Fink Packaging Manual</a>).  If no argument is given to this
+           option or if the argument is <tt style="white-space: nowrap;">on</tt> then failures in test suites will
+           be considered fatal errors during builds.  If the argument is <tt style="white-space: nowrap;">warn</tt>
+           then failures will be treated as warnings.</p>
+      <p><b>--validate[=on|off|warn]</b> -
+           Causes packages to be validated during a build.  If no argument is
+           given to this option or if the argument is <tt style="white-space: nowrap;">on</tt> then validation failures will be considered fatal errors during builds.  If the argument is <tt style="white-space: nowrap;">warn</tt> then failures will be treated as warnings.</p>
+      <p><b>-l, --log-output</b>
+            - Save a copy of the terminal output during each package building
+           process. By default, the file is stored in
+           <tt style="white-space: nowrap;">/tmp/fink-build-log_[name]-[version]-[revision]_[date]-[time]</tt> but
+           one can use the <b>--logfile</b> flag to specify an alternate filename.</p>
+      <p><b>--no-log-output</b>
+            - Don't save a copy of the output during package-building, opposite
+           of the <b>--log-output</b> flag. This is the default.</p>
+      <p><b>--logfile=filename</b>
+            - Save package build logs to the file <tt style="white-space: nowrap;">filename</tt> instead of the default
+           file (see the <b>--log-output</b> flag, which is implicitly set by the
+           <b>--logfile</b> flag). You can use percent-expansion codes to include
+           specific package information automatically. A complete list of percent-expanions is available in the <a href="../packaging/packaging.en.html">Fink Packaging Manual</a>; some common percent-expansions are:</p>
+      <ul>
+        <li>                 <b>%n</b>    - package name
+                 </li>
+        <li><b>%v</b>    - package version
+                 </li>
+        <li><b>%r</b>    - package revision</li>
+      </ul>
+      <p><b>-t, --trees=expr</b>
+           - Consider only packages in trees matching <b>expr</b>.
+
+           The format of expr is a comma-delimited list of tree specifica-
+           tions. Trees listed in <tt style="white-space: nowrap;">fink.conf</tt> are compared against <b>expr</b>.  Only
+           those which match at least one tree specification are considered by
+           <tt style="white-space: nowrap;">fink</tt>, in the order of the first specifications which they match. If
+           no <b>--trees</b> option is used, all trees listed in <tt style="white-space: nowrap;">fink.conf</tt> are
+           included in order.
+
+           A tree specification may contain a slash (/) character, in which
+           case it requires an exact match with a tree. Otherwise, it matches
+           against the first path-element of a tree. For example,
+           <b>--trees=unstable/main</b> would match only the <b>unstable/main</b> tree,
+           while <b>--trees=unstable</b> would match both unstable/main and
+           <b>unstable/crypto</b>.
+
+           There exist magic tree specifications which can be included in
+           <b>expr</b>:</p>
+      <ul>
+        <li><b>status</b>
+                       - Includes packages in the dpkg status database.
+
+                 </li>
+        <li><b>virtual</b>
+                       - Includes virtual packages which reflect the capabili-
+                       ties of the system.
+</li>
+      </ul>
+      <p>Exclusion of (or failure to include) these magic trees is currently
+           only supported for operations which do not install or remove packages.</p>
+      <p><b>-T, --exclude-trees=expr</b>
+           Consider only packages in trees not matching expr.
+
+           The syntax of expr is the same as for <b>--trees</b>, including the magic
+           tree specifications. However, matching trees are here excluded
+           rather than included. Note that trees matching both <b>--trees</b> and
+           <b>--exclude-trees</b> are excluded.
+</p>
+      <p> Examples of <b>--trees</b> and --exclude-trees:
+
+                 </p>
+      <ul>
+        <li><tt style="white-space: nowrap;">fink --trees=stable,virtual,status install <b>foo</b></tt> 
+                       <p>Install <b>foo</b> as if <tt style="white-space: nowrap;">fink</tt> was using the stable tree, even
+                       if unstable is enabled in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p></li>
+        <li><tt style="white-space: nowrap;">fink --exclude-trees=local install <b>foo</b></tt> 
+                       <p>Install the version of <b>foo</b> in Fink, not the locally
+                       modified version.
+
+</p></li>
+        <li><tt style="white-space: nowrap;">fink --trees=local/main list -i</tt>
+                       <p>List the locally modified packages which are installed.</p></li>
+      </ul>
+
 <p>
 ほとんどのオプションは名前から内容が推測できると思います(<a href="#conf.optional">ここ</a>に Buildpath の定義があります)。
 一回限りではなく、常に使用したいオプションは
-<a href="#conf">Fink 設定ファイル</a> (fink.conf)
+<a href="#conf">Fink 設定ファイル</a> (<tt style="white-space: nowrap;">fink.conf</tt>)
 で設定することができます。
 </p>
 
 <h3><a name="usage.install">6.3 install</a></h3>
 
-<p>install コマンドは、パッケージをインストールするのに使用します。
+<p><b>install</b> コマンドは、パッケージをインストールするのに使用します。
 指定したパッケージをダウンロード、 configure 、ビルド、インストールを行ないます。
 また、依存しているパッケージを確認をとった後で自動的にインストールします。
 例:</p>
@@ -1211,7 +1355,7 @@ Do you want to continue? [Y/n]</pre>
 <p>
 <a href="#usage.options">--use-binary-dist</a> を使用することで時間を節約することができます。
 </p>
-<p>install コマンドのエイリアス: update, enable, activate, use (ほとんどは歴史的な理由による).
+<p>install コマンドのエイリアス: <b>update, enable, activate, use</b> (ほとんどは歴史的な理由による).
 </p>
 
 <h3><a name="usage.remove">6.4 remove</a></h3>
@@ -1221,21 +1365,21 @@ remove コマンドは、 'dpkg --remove' を呼び出してシステムから�
 現在はまだ問題が残っていて、依存性は dpkg ツールに完全に任せています (通常は問題になりませんが)。
 </p>
 <p>
-remove コマンドは実際のパッケージファイル (設定ファイルは除く) を削除するだけですが、 .deb 圧縮パッケージファイルはそのままにします。
+<b>remove</b> コマンドは実際のパッケージファイル (設定ファイルは除く) を削除するだけですが、 <tt style="white-space: nowrap;">.deb</tt> 圧縮パッケージファイルはそのままにします。
 これは、後で再インストールする際にコンパイルしなくても良いことを意味します。
-ディスク容量が必要であれば、 <tt style="white-space: nowrap;">/sw/fink/dists</tt> ツリーから .deb ファイルを取り除いてもかまいません。
+ディスク容量が必要であれば、 <tt style="white-space: nowrap;">/sw/fink/dists</tt> ツリーから <tt style="white-space: nowrap;">.deb</tt> ファイルを取り除いてもかまいません。
 </p>
-<p>fink remove 時に、以下のフラグを使用することができます。</p>
+<p><b>fink remove</b> 時に、以下のフラグを使用することができます。</p>
 <pre>-h,--help             使用できるオプションを表示
 -r,--recursive        当該パッケージに依存するパッケージを削除
                          (上述の問題を解決します)</pre>
-<p>エイリアス: disable, deactivate, unuse, delete.</p>
+<p>エイリアス: <b>disable, deactivate, unuse, delete</b>.</p>
 
 <h3><a name="usage.purge">6.5 purge</a></h3>
 
 <p>
-purge コマンドは、システムからパッケージを削除します。
-remove コマンドとの違いは、こちらは設定ファイルも削除します。
+<b>purge</b> コマンドは、システムからパッケージを削除します。
+<b>remove</b> コマンドとの違いは、こちらは設定ファイルも削除します。
 </p>
 
 <h3><a name="usage.update-all">6.6 update-all</a></h3>
@@ -1259,12 +1403,10 @@ remove コマンドとの違いは、こちらは設定ファイルも削除し�
 <p>
 最初の列はインストール状況を表し、その意味は以下の通り:
 </p>
-<pre>
-     未インストール
+<pre>    未インストール
  i   最新バージョンがインストール済
 (i)  インストール済だが最新バージョンではない
-p   インストールされたパッケージにより提供されたバーチャルパッケージ
-</pre>
+ p   インストールされたパッケージにより提供されたバーチャルパッケージ</pre>
       <p>
         バージョン列は、常にパッケージで知られている最新 (最高) のバージョンを表示します。
         これは、インストールされているバージョンとは関係ありません。
@@ -1316,7 +1458,7 @@ fink list "gnome*"         - 'gnome' から始まるパッケージのみ表示�
 <h3><a name="usage.apropos">6.8 apropos</a></h3>
 
 <p>
-このコマンドはほとんど <tt style="white-space: nowrap;">fink list</tt> と同じです。
+このコマンドはほとんど <a href="#usage.list">fink list</a>&gt; と同じです。
 一番顕著な違いは、 <tt style="white-space: nowrap;">fink apropos</tt> がパッケージの検索にパッケージ記述を使うことです。
 次に顕著なのは、検索文字列が必須で、オプションではないことです。
 </p>
@@ -1332,10 +1474,17 @@ fink apropos -s=kde irc   - 上と同様。ただし、 kde セクションに�
 現時点では詳細があるパッケージはまだ少ないので注意して下さい。
 </p>
 <p>
-エイリアス: desc, description, info
+エイリアス: <b>desc, description, info</b>
 </p>
 
-<h3><a name="usage.fetch">6.10 fetch</a></h3>
+	
+    <h3><a name="usage.plugins">6.10 plugins</a></h3>
+      
+      <p> List the (optional) plugins available to the <tt style="white-space: nowrap;">fink</tt> program.  Currently lists the notification mechanisms and the source-tarball
+           checksum algorithms.</p>
+    
+	
+<h3><a name="usage.fetch">6.11 fetch</a></h3>
 
 <p>指定したパッケージをダウンロードしますが、インストールはしません。
 このコマンドは、以前ダウンロードしたかどうかに関わらず tarball をダウンロードします。</p>
@@ -1348,18 +1497,18 @@ fink apropos -s=kde irc   - 上と同様。ただし、 kde セクションに�
 			実際にはダウンロードしません。
 -r,--recursive		fetch するパッケージの依存するパッケージも fetch します。</pre>
 
-<h3><a name="usage.fetch-all">6.11 fetch-all</a></h3>
+<h3><a name="usage.fetch-all">6.12 fetch-all</a></h3>
 
 <p>
 <b>全ての</b>パッケージソースファイルをダウンロードします。
-<tt style="white-space: nowrap;">fetch</tt> と同様、以前ダウンロードしたかどうかに関わらず tarball をダウンロードします。
+<a href="#usage.fetch">fetch</a> と同様、以前ダウンロードしたかどうかに関わらず tarball をダウンロードします。
 </p>
 <p><tt style="white-space: nowrap;">fink fetch-all</tt> コマンドには以下のフラグが使用できます:</p>
 <pre>-h,--help
 -i,--ignore-restrictive
 -d,--dry-run</pre>
 
-<h3><a name="usage.fetch-missing">6.12 fetch-missing</a></h3>
+<h3><a name="usage.fetch-missing">6.13 fetch-missing</a></h3>
 
 <p>
 ローカルに存在しない<b>全ての</b>パッケージソースファイルをダウンロードします。
@@ -1368,7 +1517,7 @@ fink apropos -s=kde irc   - 上と同様。ただし、 kde セクションに�
 <pre>-h,--help
 -i,--ignore-restrictive</pre>
 
-<h3><a name="usage.build">6.13 build</a></h3>
+<h3><a name="usage.build">6.14 build</a></h3>
 
 <p>
 パッケージをビルドしますが、インストールはしません。
@@ -1381,28 +1530,31 @@ fink apropos -s=kde irc   - 上と同様。ただし、 kde セクションに�
 <a href="#usage.options">--use-binary-dist option</a> はここでも使用することができます。
 </p>
 
-<h3><a name="usage.rebuild">6.14 rebuild</a></h3>
+<h3><a name="usage.rebuild">6.15 rebuild</a></h3>
 
 <p>パッケージをビルドします (build コマンドと同様に) が、すでにある .deb ファイルは無視し、上書きします。
 パッケージがインストールされたら、新しい .deb ファイルは <tt style="white-space: nowrap;">dpkg</tt> を用いてインストールされます。
 パッケージの開発中にはとても役に立ちます。
 </p>
 
-<h3><a name="usage.reinstall">6.15 reinstall</a></h3>
+<h3><a name="usage.reinstall">6.16 reinstall</a></h3>
 
 <p>
 インストールと同様ですが、インストールされていても <tt style="white-space: nowrap;">dpkg </tt>を通してインストールします。
 これは、誤ってパッケージファイルを消したり、設定ファイルを変えてデフォルトに戻したい場合などにも使えます。
 </p>
 
-<h3><a name="usage.configure">6.16 configure</a></h3>
+<h3><a name="usage.configure">6.17 configure</a></h3>
 
 <p>
-Fink を再設定します。
+<tt style="white-space: nowrap;">fink</tt> を再設定します。
 ミラーサイトの設定やプロキシの設定も行なうことができます。
 </p>
+	  
+      <p><b>New in</b> <tt style="white-space: nowrap;">fink-0.26.0</tt>: This command will also let you turn on the unstable trees if desired.</p>
+      
 
-<h3><a name="usage.selfupdate">6.17 selfupdate</a></h3>
+<h3><a name="usage.selfupdate">6.18 selfupdate</a></h3>
 
 <p>
 このコマンドは、自動的に Fink の新リリースにアップグレードします。
@@ -1414,27 +1566,27 @@ Fink のウェブサイトへ新しいバージョンがあるか確認し、 <t
 <a href="#usage.options">--use-binary-dist option</a> を使用すると、バイナリディストリビューション中の一覧も更新されます。
 </p>
 
-    <h3><a name="usage.selfupdate-rsync">6.18 selfupdate-rsync</a></h3>
+    <h3><a name="usage.selfupdate-rsync">6.19 selfupdate-rsync</a></h3>
       
       <p>
         このコマンドを使うことで、<tt style="white-space: nowrap;">fink selfupdate</tt> 時にパッケージ一覧の更新に rsync を使用します。
       </p>
       <p>
-        Fink でソースからビルドする際に、こちらの方法を推奨します。
+        Fink をソースからのビルドで更新する場合、こちらの方法を推奨します。
       </p>
       <p>
         <b>注記:</b> rsync 更新は、使用中の<a href="#conf.optional">ツリー</a>を更新するだけです
         (例えば、 unstable が <tt style="white-space: nowrap;">fink.conf</tt> で設定されていない場合、unstable パッケージは更新されません)
       </p>
     
-<h3><a name="usage.index">6.19 index</a></h3>
+<h3><a name="usage.index">6.20 index</a></h3>
 
 <p>
 パッケージキャッシュを再構築します。
 通常は <tt style="white-space: nowrap;">fink</tt> が更新の必要に応じて自動検出するので、手動で行なう必要はありません。
 </p>
 
-<h3><a name="usage.validate">6.20 validate</a></h3>
+<h3><a name="usage.validate">6.21 validate</a></h3>
 
 <p>
 このコマンドは、 .info と .deb ファイルについていくつかの評価を行ないます。
@@ -1447,33 +1599,49 @@ Fink のウェブサイトへ新しいバージョンがあるか確認し、 <t
                      - 形式に関する警告の表示を制御します
                       --pedantic が規定値</pre>
 <p>
-エイリアス: check
+エイリアス: <b>check</b>
 </p>
 
-<h3><a name="usage.scanpackages">6.21 scanpackages</a></h3>
+<h3><a name="usage.scanpackages">6.22 scanpackages</a></h3>
 
-<p>
-指定したツリーに対し、 dpkg-scanpackages(8) を呼び出します。
-</p>
+      
+      <p>Updates the <tt style="white-space: nowrap;">apt-get</tt> database of debs; defaults to updating all of the trees, but may be restricted to a set of one or more trees given as arguments.</p>
+      
 
-<h3><a name="usage.cleanup">6.22 cleanup</a></h3>
+<h3><a name="usage.cleanup">6.23 cleanup</a></h3>
 
-<p>
-新しいバージョンがある場合、古いパッケージファイル (.info, .patch, .deb) を削除します。
-かなりのディスク容量が利用できるようになります。
-</p>
-<p>
-<a href="#usage.options">--use-binary-dist option</a> を使用すると，古いバイナリパッケージも削除され、
-<tt style="white-space: nowrap;">fink scanpackages</tt> が実行されます。
-</p>
+      
+      <p>
+   Removes obsolete and temporary files. 
+   This can reclaim large amounts of disk space.  One or more modes may be specified:</p>
+      <pre>--debs               - Delete .deb files (compiled binary package archives)
+                       corresponding to versions of packages that are neither
+                       described by a package description (.info) file in the
+                       currently-active trees nor presently installed.
+--sources,--srcs     - Delete sources (tarballs, etc.) that are not used by
+                       any package description (.info) file in the currently-
+                       active trees.
+--buildlocks, --bl   - Delete stale buildlock packages.
+--dpkg-status        - Remove entries for packages that are not installed from
+                       the dpkg "status" database.
+--obsolete-packages  - Attempt to uninstall all installed packges that are
+                       obsolete. (new in fink-0.26.0)
+--all                - All of the above modes. (new in fink-0.26.0)</pre>
+      <p>If no mode is specified, <tt style="white-space: nowrap;">--debs --sources</tt> is the default action. </p>
+      <p>In addition, the following options may be used:</p>
+      <pre>-k,--keep-src        - Move old source files to /sw/src/old/ instead of deleting them.
+-d,--dry-run         - Print the names of the files that would be deleted, but
+                       do not actually delete them.
+-h,--help            - Show the modes and options which are available.</pre>
+    
 
-    <h3><a name="usage.dumpinfo">6.23 dumpinfo</a></h3>
+    <h3><a name="usage.dumpinfo">6.24 dumpinfo</a></h3>
       
       <p>
 	  注記: 0.21.0 以降の <tt style="white-space: nowrap;">fink</tt> で有効。
 	  </p>
 	  <p>
-	Fink がどのようにパッケージの .info ファイルを構文解析するかを表示します。
+	<tt style="white-space: nowrap;">fink</tt> がどのようにパッケージの <tt style="white-space: nowrap;">.info</tt> ファイルを構文解析するかを表示します。
 	以下の<b>オプション引数</b>に応じて、各種フィールドとパーセント展開も表示されます。
       </p>
       <pre>
@@ -1487,7 +1655,7 @@ Fink のウェブサイトへ新しいバージョンがあるか確認し、 <t
    --percent=key       in the order listed.
       </pre>
     
-    <h3><a name="usage.show-deps">6.24 show-deps</a></h3>
+    <h3><a name="usage.show-deps">6.25 show-deps</a></h3>
       
       <p>fink-0.23-6 および以降。</p>
       <p>
@@ -1500,4 +1668,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.ja.xml,v 1.25 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.ja.xml,v 1.26 2007/05/29 03:58:51 babayoshihiko Exp $</i></p></body></html>

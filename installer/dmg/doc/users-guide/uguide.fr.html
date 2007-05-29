@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.fr.xml,v 1.40 2007/02/23 22:04:56 rangerrick Exp $
+Generated from $Fink: uguide.fr.xml,v 1.41 2007/05/29 03:58:51 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Guide de l'utilisateur Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -351,7 +351,7 @@ OptionListe: Option1 Option2 Option3
 <ul>
 <li>
 <p><b>Basepath:</b> chemin</p>
-<p>Indique à <tt style="white-space: nowrap;">fink</tt> où il est installé. Le chemin d'installation par défaut est <tt style="white-space: nowrap;">/sw</tt>, mais vous pouvez l'avoir changé lors de la première installation de Fink. Vous <b>ne devez pas</b> changer cette valeur après installation, Fink ne s'y retrouverait plus.</p>
+<p>Indique à <tt style="white-space: nowrap;">fink</tt> où il est installé. Le chemin d'installation par défaut est <tt style="white-space: nowrap;">/sw</tt>, mais vous pouvez l'avoir changé lors de la première installation de Fink. Vous <b>ne devez pas</b> changer cette valeur après installation, <b>fink</b> ne s'y retrouverait plus.</p>
 </li>
 </ul>
 
@@ -390,8 +390,8 @@ stable/main". Cette liste doit toujours être identique à celle figurant dans l
 </li>
 <li>
 <p><b>Verbose:</b> un nombre entre 0 et 3</p>
-<p>Cette option permet de faire varier la quantité d'information que Fink donne sur ce qu'il est en train de faire. Les valeurs sont : <b>0</b> Silencieux (aucune indication sur les statistiques de téléchargement) <b>1</b> Faible (aucune indication pendant la décompression des archives tar)
-<b>2</b> Moyen (affiche presque tout) <b>3</b> Fort (affiche tout). La valeur par défaut est 1.</p>
+<p>Cette option permet de faire varier la quantité d'information que Fink donne sur ce qu'il est en train de faire. Les valeurs sont : <b>0</b> Quiet (Silencieux) (aucune indication sur les statistiques de téléchargement) <b>1</b> Low (Faible) (aucune indication pendant la décompression des archives tar)
+<b>2</b> Medium (Moyen) (affiche presque tout) <b>3</b> High (Fort) (affiche tout). La valeur par défaut est 1.</p>
 </li>
 <li>
 <p><b>SkipPrompts:</b> liste délimitée par des virgules</p>
@@ -498,12 +498,12 @@ ClosestFirst - Cherche d'abord dans les miroirs les plus proches
 <ul>
 <li>
 <p><b>KeepRootDir:</b> booléen</p>
-<p>Empêche Fink de supprimer le sous-répertoire root-[nom]-[version]-[révision] du répertoire ChemindeConstruction (Buildpath) après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
+<p>Empêche Fink de supprimer le sous-répertoire <tt style="white-space: nowrap;">root-[nom]-[version]-[révision]</tt> du répertoire ChemindeConstruction (Buildpath) après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
 La commande <tt style="white-space: nowrap;">fink -K</tt> a le même effet, restreint à cette invocation de <tt style="white-space: nowrap;">fink</tt>.</p>
 </li>
 <li>
 <p><b>KeepBuildDir:</b> booléen</p>
-<p>Empêche <tt style="white-space: nowrap;">fink</tt> de supprimer le sous-répertoire [nom]-[version]-[révision] du répertoire ChemindeConstruction (Buildpath) après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
+<p>Empêche <tt style="white-space: nowrap;">fink</tt> de supprimer le sous-répertoire <tt style="white-space: nowrap;">[nom]-[version]-[révision]</tt> du répertoire ChemindeConstruction (Buildpath) après construction d'un paquet. La valeur par défaut est False (faux). <b>Attention, si la valeur de cette option est True (vrai), cela peut très vite saturer votre disque dur !</b>
 La commande <tt style="white-space: nowrap;">fink -k</tt> a le même effet, restreint à cette invocation de <tt style="white-space: nowrap;">fink</tt>.</p>
 </li>
 </ul>
@@ -663,8 +663,8 @@ Do you want to continue? [Y/n]</pre>
 
 <h3><a name="usage.remove">6.4 remove - suppression</a></h3>
 
-<p>La commande <b>remove</b> supprime les paquets du système en appelant la commande '<tt style="white-space: nowrap;">dpkg --remove</tt>'. L'implantation actuelle de cette commande a un défaut : elle ne vérifie pas elle-même les dépendances, mais délègue ce travail à l'outil dpkg (en général, cela ne pose pas de problèmes).</p>
-<p>La commande remove ne supprime que le paquet lui-même (à l'exclusion des fichiers de configuration). Le paquet compressé <tt style="white-space: nowrap;">.deb</tt> reste sur le système. Ceci signifie que vous pouvez réinstaller le paquet plus tard, sans avoir à le recompiler. Si vous avez besoin de libérer de l'espace disque, vous pouvez supprimer les fichiers <tt style="white-space: nowrap;">.deb</tt> de l'arborescence <tt style="white-space: nowrap;">/sw/fink/dists</tt>.</p>
+<p>La commande remove supprime les paquets du système en appelant la commande '<tt style="white-space: nowrap;">dpkg --remove</tt>'. L'implantation actuelle de cette commande a un défaut : elle ne vérifie pas elle-même les dépendances, mais délègue ce travail à l'outil dpkg (en général, cela ne pose pas de problèmes).</p>
+<p>La commande <b>remove</b> ne supprime que le paquet lui-même (à l'exclusion des fichiers de configuration). Le paquet compressé <tt style="white-space: nowrap;">.deb</tt> reste sur le système. Ceci signifie que vous pouvez réinstaller le paquet plus tard, sans avoir à le recompiler. Si vous avez besoin de libérer de l'espace disque, vous pouvez supprimer les fichiers <tt style="white-space: nowrap;">.deb</tt> de l'arborescence <tt style="white-space: nowrap;">/sw/fink/dists</tt>.</p>
 <p>Les options suivantes peuvent être utilisées avec la command <tt style="white-space: nowrap;">fink remove</tt> :</p>
 <pre>
 -h, --help
@@ -697,12 +697,10 @@ Do you want to continue? [Y/n]</pre>
 
 <p>Cette commande donne la liste des paquets disponibles, leur statut d'installation, la dernière version disponible et une courte description. Appelée sans paramètres, elle affiche tous les paquets disponibles. Vous pouvez aussi l'utiliser avec un nom ou une expression régulière acceptée par le shell, Fink donnera alors la liste de tous les paquets correspondants.</p>
 <p>La première colonne affiche le statut d'installation qui s'interprète de la façon suivante :</p>
-<pre>
-      non installé
+<pre>    non installé
  i    dernière version installée
 (i)   installé, mais une version plus récente est disponible
- p    paquet virtuel fourni par un paquet installé
-</pre>
+ p    paquet virtuel fourni par un paquet installé</pre>
 <p>La colonne version affiche toujours la dernière version connue du paquet, quelque soit la version installée éventuellement. Pour connaître toutes les versions d'un paquet disponible sur votre système, utilisez la commande <a href="#usage.dumpinfo">dumpinfo</a>.</p>
 <p>Voici quelques-unes des options de la commande <tt style="white-space: nowrap;">fink list</tt> :</p>
 <pre>
@@ -876,8 +874,7 @@ fink apropos -s=kde irc
 <h3><a name="usage.cleanup">6.24 cleanup - épuration</a></h3>
 
 <p>Supprime les fichiers obsolètes et temporaires. Cela peut libérer une grande portion d'espace disque. On peut spécifier un ou plusieurs modes :</p>
-<pre>
---debs
+<pre>--debs
     Supprime les fichiers .deb
     (archives de paquets binaires compilés)
     correspondant aux versions de paquets
@@ -903,8 +900,7 @@ fink apropos -s=kde irc
     À partir de la version 0.26.0 de fink.
 --all
     Active tous les modes.
-    À partir de la version 0.26.0 de fink.
-</pre>
+    À partir de la version 0.26.0 de fink.</pre>
 <p>Si aucun mode n'est spécifié, les modes par défaut utilisés sont <tt style="white-space: nowrap;">--debs --sources</tt>.</p>
 <p>De plus, on peut utiliser les options suivantes :</p>
 <pre>
@@ -950,4 +946,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.fr.xml,v 1.40 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.fr.xml,v 1.41 2007/05/29 03:58:51 babayoshihiko Exp $</i></p></body></html>

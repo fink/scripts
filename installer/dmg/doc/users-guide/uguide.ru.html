@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.ru.xml,v 1.3 2007/02/23 22:04:56 rangerrick Exp $
+Generated from $Fink: uguide.ru.xml,v 1.4 2007/05/29 03:58:51 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Руководство пользователя Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -29,7 +29,7 @@ Available Languages:  |
             а также отражает вопросы инсталляции и
             обслуживания пакетов.</p>
     <h2>Contents</h2><ul><li><a href="#intro"><b>1 Введение</b></a><ul><li><a href="#intro.what">1.1 Что такое Fink?</a></li><li><a href="#intro.req">1.2 Требования</a></li><li><a href="#intro.supported-os">1.3 Поддерживаемые системы</a></li><li><a href="#intro.src-vs-bin">1.4 Дистрибутив исходного кода и бинарный дистрибутив</a></li></ul></li><li><a href="#install"><b>2 Первоначальная инсталляция</b></a><ul><li><a href="#install.bin">2.1 Инсталляция бинарного дистрибутива</a></li><li><a href="#install.src">2.2 Инсталляция дистрибутива исходного кода</a></li><li><a href="#install.setup">2.3 Настройка среды</a></li></ul></li><li><a href="#packages"><b>3 Инсталляция пакетов</b></a><ul><li><a href="#packages.bin-dselect">3.1 Инсталляция бинарных пакетов при помощи dselect</a></li><li><a href="#packages.bin-apt">3.2 Инсталляция бинарных пакетов при помощи apt-get</a></li><li><a href="#packages.bin-exceptions">3.3 Инсталляция зависимых пакетов, недоступных при использовании бинарного
-                дистрибутива</a></li><li><a href="#packages.src">3.4 Инсталляция бинарных пакетов и пакетов исходного кода при помощи инструмента fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Имеющиеся версии</a></li><li><a href="#packages.x11">3.7 Выбор вида реализации X11</a></li></ul></li><li><a href="#upgrade"><b>4 Обновление Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Обновление на основе бинарных пакетов</a></li><li><a href="#upgrade.src">4.2 Обновление дистрибутива исходного кода</a></li><li><a href="#upgrade.mix">4.3 Комбинирование бинарных пакетов и пакетов исходного кода</a></li></ul></li><li><a href="#conf"><b>5 Конфигурационный файл Fink</b></a><ul><li><a href="#conf.about">5.1 Информация о fink.conf</a></li><li><a href="#conf.syntax">5.2 Синтаксис fink.conf</a></li><li><a href="#conf.required">5.3 Необходимые настройки</a></li><li><a href="#conf.optional">5.4 Опциональные настройки пользователя</a></li><li><a href="#conf.downloading">5.5 Настройки скачивания</a></li><li><a href="#conf.mirrors">5.6 Настройки зеркал</a></li><li><a href="#conf.developer">5.7 Настройки разработчика</a></li><li><a href="#conf.advanced">5.8 Настройки для использования продвинутыми пользователями</a></li><li><a href="#conf.sourceslist">5.9 Управление файлом sources.list в apt</a></li></ul></li><li><a href="#usage"><b>6 Использование инструмента fink в командной строке</b></a><ul><li><a href="#usage.using">6.1 Использование инструмента fink</a></li><li><a href="#usage.options">6.2 Глобальные опции</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.fetch">6.10 fetch</a></li><li><a href="#usage.fetch-all">6.11 fetch-all</a></li><li><a href="#usage.fetch-missing">6.12 fetch-missing</a></li><li><a href="#usage.build">6.13 build</a></li><li><a href="#usage.rebuild">6.14 rebuild</a></li><li><a href="#usage.reinstall">6.15 reinstall</a></li><li><a href="#usage.configure">6.16 configure</a></li><li><a href="#usage.selfupdate">6.17 selfupdate</a></li><li><a href="#usage.index">6.18 index</a></li><li><a href="#usage.validate">6.19 validate</a></li><li><a href="#usage.scanpackages">6.20 scanpackages</a></li><li><a href="#usage.cleanup">6.21 cleanup</a></li><li><a href="#usage.dumpinfo">6.22 dumpinfo</a></li><li><a href="#usage.show-deps">6.23 show-deps</a></li></ul></li></ul><h2><a name="intro">1 Введение</a></h2>
+                дистрибутива</a></li><li><a href="#packages.src">3.4 Инсталляция бинарных пакетов и пакетов исходного кода при помощи инструмента fink</a></li><li><a href="#packages.fink-commander">3.5 Fink Commander</a></li><li><a href="#packages.available-versions">3.6 Имеющиеся версии</a></li><li><a href="#packages.x11">3.7 Выбор вида реализации X11</a></li></ul></li><li><a href="#upgrade"><b>4 Обновление Fink</b></a><ul><li><a href="#upgrade.bin">4.1 Обновление на основе бинарных пакетов</a></li><li><a href="#upgrade.src">4.2 Обновление дистрибутива исходного кода</a></li><li><a href="#upgrade.mix">4.3 Комбинирование бинарных пакетов и пакетов исходного кода</a></li></ul></li><li><a href="#conf"><b>5 Конфигурационный файл Fink</b></a><ul><li><a href="#conf.about">5.1 Информация о fink.conf</a></li><li><a href="#conf.syntax">5.2 Синтаксис fink.conf</a></li><li><a href="#conf.required">5.3 Необходимые настройки</a></li><li><a href="#conf.optional">5.4 Опциональные настройки пользователя</a></li><li><a href="#conf.downloading">5.5 Настройки скачивания</a></li><li><a href="#conf.mirrors">5.6 Настройки зеркал</a></li><li><a href="#conf.developer">5.7 Настройки разработчика</a></li><li><a href="#conf.advanced">5.8 Настройки для использования продвинутыми пользователями</a></li><li><a href="#conf.sourceslist">5.9 Управление файлом sources.list в apt</a></li></ul></li><li><a href="#usage"><b>6 Использование инструмента fink в командной строке</b></a><ul><li><a href="#usage.using">6.1 Использование инструмента fink</a></li><li><a href="#usage.options">6.2 Глобальные опции</a></li><li><a href="#usage.install">6.3 install</a></li><li><a href="#usage.remove">6.4 remove</a></li><li><a href="#usage.purge">6.5 purge</a></li><li><a href="#usage.update-all">6.6 update-all</a></li><li><a href="#usage.list">6.7 list</a></li><li><a href="#usage.apropos">6.8 apropos</a></li><li><a href="#usage.describe">6.9 describe</a></li><li><a href="#usage.plugins">6.10 plugins</a></li><li><a href="#usage.fetch">6.11 fetch</a></li><li><a href="#usage.fetch-all">6.12 fetch-all</a></li><li><a href="#usage.fetch-missing">6.13 fetch-missing</a></li><li><a href="#usage.build">6.14 build</a></li><li><a href="#usage.rebuild">6.15 rebuild</a></li><li><a href="#usage.reinstall">6.16 reinstall</a></li><li><a href="#usage.configure">6.17 configure</a></li><li><a href="#usage.selfupdate">6.18 selfupdate</a></li><li><a href="#usage.selfupdate-rsync">6.19 selfupdate-rsync</a></li><li><a href="#usage.selfupdate-cvs">6.20 selfupdate-cvs</a></li><li><a href="#usage.index">6.21 index</a></li><li><a href="#usage.validate">6.22 validate</a></li><li><a href="#usage.scanpackages">6.23 scanpackages</a></li><li><a href="#usage.cleanup">6.24 cleanup</a></li><li><a href="#usage.dumpinfo">6.25 dumpinfo</a></li><li><a href="#usage.show-deps">6.26 show-deps</a></li></ul></li></ul><h2><a name="intro">1 Введение</a></h2>
         
         
         <h3><a name="intro.what">1.1 Что такое Fink?</a></h3>
@@ -76,19 +76,21 @@ Available Languages:  |
         
         <h3><a name="intro.supported-os">1.3 Поддерживаемые системы</a></h3>
             
-            <p>
-                <b>Mac OS X 10.3</b> - операционная система, выбранная
-                для работы Fink. Ее используют все разработчики и в ней проверяются все пакеты.
-                Она считается "полностью поддерживаемой и проверенной",
-                хотя все еще могут быть некоторые проблемы с компиляцией отдельных пакетов. </p>
-            <p>
-                <b>Mac OS X 10.2</b> все еще поддерживается, хотя некоторые
-                более новые пакеты могут не иметь версий 10.2.</p>
+      
+      <p><b>Mac OS X 10.4</b> is the leading-edge platform, and is considered to be <q>fully supported and tested</q>, though as a newer operating system there are still some issues.  Most of the developers run it, and those who are running 10.3 have 10.4 users test their work.  Note, however, that
+fink on intel hardware is still considered to be of <b>beta</b> quality.</p>
+      <p>
+        <b>Mac OS X 10.3</b> is considered to be <q>fully supported and tested</q>, although there may still be stray compile problems with single packages. Many of the developers run it, and those who don't have 10.3 users test their work.
+</p>
+      <p><b>Mac OS X 10.2</b> is still supported to some extent.  Fink 0.6.4 is the last distribution to suppport this OS.</p>
+      
             <p>
                 <b>Mac OS X 10.1</b> все еще поддерживается до некоторой степени. В этом случае надо
                 использовать Fink 0.4.1, но не более поздние версии.</p>
-            <p> Darwin 7.0.1 - версия Darwin, соответствующая Mac OS X
-                10.3, а <b>Darwin 6.0.2</b> - версия Darwin,
+            <p>
+            <b>Darwin 8.x</b> - версия Darwin, соответствующая Mac OS X 10.4,
+            <b>Darwin 7.x</b> - версия Darwin, соответствующая Mac OS X 10.3, а 
+            <b>Darwin 6.x</b> - версия Darwin,
                 соответствующая Mac OS X 10.2. Вообще они должны работать, но
                 не столь хорошо проверены, т.к. вместо них большинство пользователей просто применяет саму Mac OS X.
                 Могут возникнуть проблемы с пакетами, использующими
@@ -171,8 +173,13 @@ Available Languages:  |
                 надо удалить созданную им папку.</p>
             <p> Версия исходного кода должна инсталлироваться с командной строки,
                 т.е. надо открыть Terminal.app и перейти к каталогу, в котором вы поместили архив
-                fink-0.x.x-full.tar.gz. Следующая команда извлекает
-                архив:</p>
+                fink-0.x.x-full.tar.gz. 
+
+(Note: If you have OS X 10.4 and XCode 2.1, you should use
+<tt style="white-space: nowrap;">fink-0.8.0-full-XCode-2.1.tar.gz</tt> instead, and make
+the appropriate changes below.)
+
+                Следующая команда извлекает архив:</p>
             <pre>tar -xzf fink-0.x.x-full.tar.gz</pre>
             <p> Создается каталог с таким же именем, как архив.
                 Здесь мы будем называть его
@@ -245,7 +252,7 @@ Available Languages:  |
                         Если вы не знаете, как добавить строку, примените
                     </p>
                     <pre>cd
-                        pico .profile</pre>
+pico .profile</pre>
                     <p>
                         Теперь вы в полноэкранном текстовом редакторе (с полным терминальным
                         окном) и можете просто напечатать строку
@@ -268,7 +275,7 @@ Available Languages:  |
                         следующие команды:
                     </p>
                     <pre>cd
-                        pico .cshrc</pre>
+pico .cshrc</pre>
                     <p>
                         Теперь вы в полноэкранном текстовом редакторе (с полным терминальным
                         окном) и можете просто напечатать строку
@@ -323,7 +330,7 @@ Available Languages:  |
                         кэширует список имеющихся команд внутренним образом. </p>
                 </li>
             </ul>
-            <p> Имейте в виду, что скрипты также добавляют
+            <p> Имейте в виду, что скрипты (<tt style="white-space: nowrap;">init.sh</tt> а <tt style="white-space: nowrap;">init.csh</tt> ) также добавляют
                 <tt style="white-space: nowrap;">/usr/X11R6/bin</tt>
                 и <tt style="white-space: nowrap;">/usr/X11R6/man</tt> к вашему PATH, чтобы
                 вы могли использовать X11 после инсталляции. Пакеты Fink обладают способностью
@@ -454,8 +461,10 @@ Available Languages:  |
             <p>Иногда во время бинарной инсталляции вы можете получить сообщение о том, что
                 зависимость не может быть инсталлирована. Пример:</p>
             <pre>Sorry, but the following packages have unmet
-                dependencies: foo: Depends: bar (&gt;= version) but it is
-                not installable E: Sorry, broken packages</pre>
+dependencies:
+foo: Depends: bar (&gt;= version) but it is
+not installable
+E: Sorry, broken packages</pre>
             <p>Дело в том, что пакет, который вы пытаетесь инсталлировать,
                 зависит от другого пакета, который не входит в бинарный дистрибутив из-за
                 лицензионных требований. Вам надо инсталлировать зависимость от исходного кода
@@ -523,25 +532,26 @@ Available Languages:  |
                 Имеющиеся версии пакета отражены в нескольких
                 строках таблицы. А именно:</p>
             <ul>
-                <li>
-                    <p>
-                        <b>0.4.1:</b> версия, которую можно инсталлировать
-                        на основе бинарных пакетов для OS 10.1.</p>
+              <li>Binary Distribution
+		  
+		  <ol>
+            <li><p>
+            <b>0.4.1:</b> версия, которую можно инсталлировать
+                        на основе бинарных пакетов для OS 10.1.</p></li>
+            <li><p><b>0.6.4:</b> версия, которую можно инсталлировать
+                    на основе бинарных пакетов для OS 10.2.</p></li>
+            <li><p><b>0.7.2</b>
+  This is the base version that can be installed from binaries for OS 10.3.  If you <a href="#install.bin">update</a> Fink, later versions of some packages may be available.</p> 
+        </li>
+            <li><p><b>0.8.1:</b>  This is the base version that can be installed from binaries for OS 10.4.  If you <a href="#install.bin">update</a> Fink, later versions of some packages may be available.</p></li>
+          </ol>
+          
                 </li>
-                <li>
-                    <b>0.6.3:</b> версия, которую можно инсталлировать
-                    на основе бинарных пакетов для OS 10.2.</li>
-                <li>
+                <li>CVS/rsync Distributions
+<ol>
+            <li>
                     <p>
-                        <b>0.8.1:</b> базовая версия,
-                        инсталлируемая на основе бинарных пакетов для OS 10.3
-                        в рамках текущего выпуска Fink. Если вы <a href="#upgrade">обновите</a> Fink, то можете обнаружить
-                        более позднюю версию (здесь не отраженную), предназначенную
-                        для данной операционной системы.</p>
-                </li>
-                <li>
-                    <p>
-                        <b>current-10.2-gcc3.3 stable:</b> последняя
+                        <b>10.2-gcc3.3 stable:</b> последняя
                         стабильная версия, инсталлируемая от
                         исходного кода для OS 10.2 с обновлением <tt style="white-space: nowrap;">gcc 3.3</tt> для
                         Developer Tools. Для инсталляции этой версии вам
@@ -558,24 +568,36 @@ Available Languages:  |
                 </li>
                 <li>
                     <p>
-                        <b>current-10.3 stable:</b> последняя версия,
-                        инсталлируемая от исходного кода в OS 10.3.
-                        Опять же, может потребоваться доступ к данной версии через CVS или rsync.</p>
+                        <b>10.3 stable:</b> последняя версия,
+                        инсталлируемая от исходного кода в OS 10.3.</p>
                 </li>
+
+            <li><p><b>10.4/powerpc stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users 
+on PowerPC hardware.</p></li>
+            <li><p><b>10.4/intel stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users
+on intel hardware.</p></li>
+
                 <li>
                     <p>
-                        <b>current-10.2-gcc3.3 unstable:</b> последняя
+                        <b>10.2-gcc3.3 unstable:</b> последняя
                         нестабильная версия, которую можно инсталлировать от
                         исходного кода в OS 10.2 с <tt style="white-space: nowrap;">gcc 3.3</tt>. Для ее инсталляции
                         следуйте <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">инструкциям</a>
                         по инсталляции нестабильных пакетов.</p>
-                    <p>Прим.: нестабильность не обязательно значит, что их нельзя использовать, просто
+                    <p>Прим.: <b>unstable</b> не обязательно <b>значит</b>, что их нельзя использовать, просто
                         инсталляция таких пакетов будет на ваш риск.</p>
                 </li>
                 <li>
-                    <b>current-10.3 unstable:</b> последняя нестабильная версия,
+                    <b>10.3 unstable:</b> последняя нестабильная версия,
                     которую можно инсталлировать от исходного кода в OS 10.3.
                     Надо активировать нестабильное дерево вышеуказанным образом.</li>
+
+            <li><p><b>10.4/powerpc unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
+on PowerPC hardware.</p></li>
+            <li><p><b>10.4/intel unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
+on intel hardware.</p></li>
+
+          </ol></li>
             </ul>
         
         <h3><a name="packages.x11">3.7 Выбор вида реализации X11</a></h3>
@@ -584,41 +606,37 @@ Available Languages:  |
                 определенного вида X11. По этой причине одно из первых действий,
                 которое обычно выполняется - это выбор вида реализации X11.</p>
             <p> Для нескольких видов реализации X11 в Mac OS
-                X (XFree86, Tenon Xtools, eXodus) и способов их инсталляции
+                X (Apple X11, XFree86, Tenon Xtools, eXodus) и способов их инсталляции
                 (вручную или через Fink) имеется несколько альтернативных пакетов -
-                по одному для каждого вида. Fink не может угадывать, что у вас есть,
-                значит, важно сделать правильный выбор пакета и инсталлировать его
-                до инсталляции приложений X11. Далее приведен список
+                по одному для каждого вида.
+                Далее приведен список
                 имеющихся пакетов и способов инсталляции X11:</p>
-            <ul>
-                <li>
-                    <p>
-                        <b>xfree86-base:</b> (только для 10.1 и 10.2) Это фактический пакет.
-                        Он инсталлирует всю XFree86
-                        4.2.1.1 как пакет Fink. Для максимальной гибкости в нем нет
-                        фактического сервера XDarwin. Для получения данного пакета
-                        надо инсталлировать пакет xfree86-rootless.</p>
-                </li>
-                <li>
-                    <p>
-                        <b>xfree86:</b> Это единый пакет (включая
-                        сервер отображения) для инсталляции XFree86 4.3.0 (только для 10.2)
-                        и 4.3.99 (только для 10.3). Данная версия более эффективна, чем
-                        4.2.1.1, но не проверена в такой же степени.</p>
-                </li>
-                <li>
-                    <p> system-xfree86: Данный пакет появляется автоматически
-                        (в Fink 0.6.2 и более поздних версиях), если вы инсталлируете XFree86
-                        вручную от исходного кода или через официальный (или неофициальный) бинарный
-                        дистрибутив, либо если вы инсталлируете
-                        X11 Apple. После этого он действует как заполнитель зависимостей.</p>
-                </li>
-                <li>
-                    <p> system-xtools: Инсталлируйте этот пакет, если у вас инсталлирован продукт
-                        Xtools Tenon. Как и system-xfree86, он просто проверяет
-                        правильность инсталляции и не трогает фактические файлы.</p>
-                </li>
-            </ul>
+      
+      <ul>
+        <li>
+          <p>
+            <b>xfree86, xfree86-shlibs:</b>
+Install both of these packages for XFree86 4.3.0 (OS 10.2 only), 4.4.0 (10.2 or 10.3), or 4.5.0 (10.3 or 10.4).  
+</p>
+        </li>
+        <li><p><b>xorg, xorg-shlibs</b>(10.3 or 10.4)  Install these packages to get the 6.8.2 release of the X.org X11 distribution.</p></li>
+        <li>
+          <p>
+<b>system-xfree86 + -shlibs, -dev:</b>
+These packages are automatically generated (for Fink 0.6.2 or later) if you install Apple's X11, or manually installed XFree86 or X.org.  
+They will then act as
+dependency placeholders.
+</p>
+        </li>
+        <li>
+          <p>
+            <b>xfree86-base, xfree86-rootless [-threaded] + -shlibs, -dev</b>
+(10.1 or 10.2 only) These packages install all of XFree86 4.2.1.1 (4.2.0 on 10.1).  The <tt style="white-space: nowrap;">-threaded</tt> variant was provided for applications that required it, and this functionality is standard in later XFree86 versions.  The <tt style="white-space: nowrap;">-rootless</tt> packages include the XDarwin display server--the name is historical.
+</p><p>You must install all six packages to build X11-based packages from source.
+</p>
+        </li>
+      </ul>
+      
             <p> Для получения более подробной информации об инсталляции и использовании X11 см.
                     документ <a href="http://www.finkproject.org/doc/x11/">X11 в
                     Darwin и Mac OS X</a>.</p>
@@ -745,10 +763,10 @@ Available Languages:  |
                 ("Правда" или "Ложь"), строковая цепочка или список строковых цепочек, отделенных
                 пробелом. Н-р:</p>
             <pre>
-                BooleanOption: True
-                StringOption: Something
-                ListOption: Option1 Option2 Option3
-            </pre>            
+BooleanOption: True
+StringOption: Something
+ListOption: Option1 Option2 Option3
+</pre>            
         
         <h3><a name="conf.required">5.3 Необходимые настройки</a></h3>
             
@@ -762,7 +780,7 @@ Available Languages:  |
                     <p> Сообщите Fink, где маршрут инсталлирован.  По умолчанию это
                         <b>/sw</b>, если вы не сделали изменений в процессе первоначальной
                         инсталляции Fink. Вы <b>не</b> должны менять эту настройку
-                        после инсталляции, иначе Fink запутается.</p>
+                        после инсталляции, иначе <b>fink</b> запутается.</p>
                 </li>
             </ul>
         
@@ -785,36 +803,42 @@ Available Languages:  |
                         <b>Trees:</b> список деревьев</p>
                     <p>Имеющиеся деревья:</p>
                     <pre>
-                        local/main      - любые локальные пакеты, которые вы хотите инсталлировать
-                        local/bootstrap - пакеты, использованные при инсталляции Fink
-                        stable/crypto   - стабильные криптографические пакеты
-                        stable/main     - другие стабильные пакеты
-                        unstable/crypto - нестабильные криптографические пакеты
-                        unstable/main   - другие нестабильные пакеты
-                    </pre>                    
+local/main      - любые локальные пакеты, которые вы хотите инсталлировать
+local/bootstrap - пакеты, использованные при инсталляции Fink
+stable/crypto   - стабильные криптографические пакеты
+stable/main     - другие стабильные пакеты
+unstable/crypto - нестабильные криптографические пакеты
+unstable/main   - другие нестабильные пакеты
+</pre>                    
                     <p> Также вы можете добавить собственные деревья в каталог
                         <tt style="white-space: nowrap;">/sw/fink/dists</tt> для личных целей, но
                         в большинстве случаев это не
                         требуется. Деревьями по умолчанию являются "local/main
                         local/bootstrap stable/main". Данный список всегда должен быть идентичен
                         списку в файле <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>.
-                        (Начиная со своей версии 0.21.0, fink делает это за вас автоматически.)</p>
+                        (Начиная со своей версии 0.21.0, <tt style="white-space: nowrap;">fink</tt> делает это за вас автоматически.)</p>
+
+<p>The order of the trees is meaningful, as packages from later trees in the list may
+override packages from earlier ones.</p>
+
                 </li>
                 <li>
                     <p>
-                        <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3 или 10.3</p>
+                        <b>Distribution:</b> 10.1, 10.2, 10.2-gcc3.3, 10.3 или 10.4</p>
                     <p>Fink нужно знать, какую версию Mac OS X вы
                         используете. Не поддерживаются Mac OS X 10.0 и более ранние версии,
-                        а текущая версия fink больше не поддерживает 10.1.
-                        Все еще поддерживается только Mac OS X 10.2, если инсталлировано обновление
-                        Developer Tools за август 2003 г. Данная опция настраивается
+                        а текущая версия fink больше не поддерживает 10.1 и 10.2.
+          
+          Mac OS X 10.2 users are restricted to fink-0.24.7, released in June 2005.
+          
+                        Данная опция настраивается
                         при помощи скрипта <tt style="white-space: nowrap;">/sw/lib/fink/postinstall.pl</tt>.
                         Вам не надо изменять эту настройку вручную.</p>
                 </li>
                 <li>
                     <p>
                         <b>FetchAltDir:</b> маршрут</p>
-                    <p>Обычно Fink хранит исходные коды, которые он распаковывает, в
+                    <p>Обычно <tt style="white-space: nowrap;">fink</tt> хранит исходные коды, которые он распаковывает, в
                         <tt style="white-space: nowrap;">/sw/src</tt>. При помощи этой опции вы можете указать альтернативный каталог
                         для скачанного исходного кода. 
                         Н-р:</p>
@@ -826,16 +850,23 @@ Available Languages:  |
                     <p> Данная опция устанавливает объем информации, которую Fink вам предоставляет
                         о своих действиях. Значения настройки:
                         <b>0</b>
-                        Нулевое (не отражает статистику скачивания)
+                        Quiet (Нулевое) (не отражает статистику скачивания)
                         <b>1</b>
-                        Низкое (не отражает информацию о тарболах в процессе распаковки)
+                        Low (Низкое) (не отражает информацию о тарболах в процессе распаковки)
                         <b>2</b>
-                        Среднее (отражает почти все)
+                        Medium (Среднее) (отражает почти все)
                         <b>3</b>
-                        Высокое (отражает все)
+                        High (Высокое) (отражает все)
                         Настройка по умолчанию: 1.
                         </p>
                 </li>
+        
+        <li><p><b>SkipPrompts:</b> a comma-delimited list</p><p>(<tt style="white-space: nowrap;">fink-0.25</tt> and later) This option instructs <tt style="white-space: nowrap;">fink</tt> to refrain from asking for input when
+           the user does not want to be prompted. Each prompt belongs to a
+           category. If a prompt's category is in the SkipPrompts list then
+           the default option will be chosen within a very short period of
+           time.</p><p>Currently, the following categories of prompts exist:</p><p><b>fetch</b> - Downloads and mirrors</p><p><b>virtualdep</b> - Choosing between alternative packages</p><p> By default, no prompts are skipped.</p></li>
+        
                 <li>
                     <p>
                         <b>NoAutoIndex:</b> булево выражение</p>
@@ -863,12 +894,28 @@ Available Languages:  |
                         <b>Buildpath:</b> маршрут</p>
                     <p>Fink необходимо создать несколько временных каталогов для
                         каждого пакета, который он компилирует от исходного кода. По умолчанию
-                        они размещаются в <tt style="white-space: nowrap;">/sw/src</tt>, но если вы
+                        они размещаются в <tt style="white-space: nowrap;">/sw/src</tt> on Panther and earlier, а 
+<tt style="white-space: nowrap;">/sw/src/fink.build</tt> on Tiger, но если вы
                         хотите, чтобы они были в другом месте, укажите маршрут.
                         См. описание областей <tt style="white-space: nowrap;">KeepRootDir</tt> и
                         <tt style="white-space: nowrap;">KeepBuildDir</tt> далее в данном документе для
-                        получения более подробной информации об этих временных каталогах. </p>
+                        получения более подробной информации об этих временных каталогах 
+                        (<a href="#conf.developer">Developer Settings</a>). </p>
+	    
+	    <p>On Tiger, it is recommended that the Buildpath end with <tt style="white-space: nowrap;">.noindex</tt>
+or <tt style="white-space: nowrap;">.build</tt>. Otherwise, Spotlight will attempt to index the temporary files in
+the Buildpath, slowing down builds.
+    	</p>
+    	
                 </li>
+
+        <li><p><b>Bzip2Path:</b> the path to your <tt style="white-space: nowrap;">bzip2</tt> (or compatible) binary
+          </p><p>(<tt style="white-space: nowrap;">fink-0.25</tt> and later) The Bzip2Path option lets you override the default path for the
+           <tt style="white-space: nowrap;">bzip2</tt> command-line tool.  This allows you to specify an alternate
+           location to your <tt style="white-space: nowrap;">bzip2</tt> executable, pass optional command-line
+           options, or use a drop-in replacement like <tt style="white-space: nowrap;">pbzip2</tt> for decompressing
+           <tt style="white-space: nowrap;">.bz2</tt> archives.</p></li>
+
             </ul>
         
         <h3><a name="conf.downloading">5.5 Настройки скачивания</a></h3>
@@ -913,16 +960,19 @@ Available Languages:  |
                         <b>axelautomirror</b> не рекомендуется.
                         Настройка по умолчанию: <b>curl</b>. <b>Приложение,
                         выбранное вами в качестве DownloadMethod, ОБЯЗАТЕЛЬНО должно быть инсталлировано!</b>
+                        
+          				(i.e. <tt style="white-space: nowrap;">fink</tt> won't fall back to <b>curl</b> if you try to use a download application that isn't present.
+          				
                     </p>
                 </li>
                 <li>
                     <p>
                         <b>SelfUpdateMethod:</b> point, rsync или cvs</p>
-                    <p> Fink может использовать разные способы  для обновления
+                    <p> <tt style="white-space: nowrap;">fink</tt> может использовать разные способы  для обновления
                         информационных файлов пакетов.<b>rsync</b> - рекомендуемая настройка,
                         используемая для скачивания только модифицированных файлов
                         в активированных вами деревьях. Имейте в виду, что если вы
-                        изменили или добавили файлы в стабильных или нестабильных деревьях,
+                        изменили или добавили файлы в stable (стабильных) или unstable (нестабильных) <a href="#conf.optional">trees</a> (деревьях),
                         использование rsync приведет к их удалению. Сначала сделайте резервную копию.
                          <b>cvs</b> произведет скачивание с использованием анонимного доступа или доступа
                         :ext: cvs из хранилища fink. Недостатком при этом является то,
@@ -932,6 +982,16 @@ Available Languages:  |
                         пакетов. Мы не рекомендуем это делать, т.к. ваши пакеты могут
                         быть устаревшими. </p>
                 </li>
+        
+        <li><p><b>SelfUpdateCVSTrees:</b> list of trees
+           </p><p>(<tt style="white-space: nowrap;">fink-0.25</tt> and later) By default, the <b>cvs</b> selfupdate method will update only the current
+           distribution's tree.  This option overrides the list of distribu-
+           tion versions that will be updated during a selfupdate.
+
+           Please note that you will need a recent "cvs" binary installed if
+           you wish to include directories that do not have CVS/ directories
+           in their entire path (e.g., dists/local/main or similar).</p></li>
+           
                 <li>
                     <p>
                         <b>UseBinaryDist:</b> булево выражение</p>
@@ -946,7 +1006,7 @@ Available Languages:  |
                             <b> Это возможно только для версий начиная с
                                 0.23.0</b>. </p>
                     <p>Надо иметь в виду, что в данном режиме <tt style="white-space: nowrap;">fink</tt> получает указание скачать желаемую версию,
-                        если она доступна для скачивания; <tt style="white-space: nowrap;">fink</tt> не получает указание
+                        если она доступна для скачивания; <tt style="white-space: nowrap;">fink</tt> <b>не</b> получает указание
                         выбрать версию на основе ее наличия в бинарном виде.
                     </p>
                 </li>
@@ -1006,12 +1066,20 @@ Available Languages:  |
                         к комплекту Master (или другому комплекту), если скачивание не
                         получилось. Опции:</p>
                     <pre>
-                        MasterFirst - для поиска зеркал "Master" в первую очередь.
-                        MasterLast - для поиска зеркал "Master" в последнюю очередь.
-                        MasterNever - для запрета использования зеркал "Master".
-                        ClosestFirst - для поиска ближайших зеркал в первую очередь (совмещение всех зеркал в одном комплекте).
-                    </pre>                   
+MasterFirst - для поиска зеркал "Master" в первую очередь.
+MasterLast - для поиска зеркал "Master" в последнюю очередь.
+MasterNever - для запрета использования зеркал "Master".
+ClosestFirst - для поиска ближайших зеркал в первую очередь (совмещение всех зеркал в одном комплекте).
+</pre>                   
                 </li>
+        
+        <li><p><b>Mirror-rsync:</b>
+           </p><p>(<tt style="white-space: nowrap;">fink-0.25.2</tt> and later) When doing <tt style="white-space: nowrap;">fink selfupdate</tt> with the <b>SelfupdateMethod</b> set to <tt style="white-space: nowrap;">rsync</tt>,
+           this is the rsync url to sync from.  This should be an anonymous
+           rsync url, pointing to a directory which contains all the fink Dis-
+           trubutions and Trees.
+</p></li>
+		
             </ul>
         
         <h3><a name="conf.developer">5.7 Настройки разработчика</a></h3>
@@ -1024,22 +1092,22 @@ Available Languages:  |
                     <p>
                         <b>KeepRootDir:</b> булево выражение</p>
                     <p>Благодаря этой опции Fink не удаляет каталог
-                        /sw/src/root-[имя]-[версия]-[модификация] после
+                        <tt style="white-space: nowrap;">root-[имя]-[версия]-[модификация]</tt> после
                         построения пакета. Настройка по умолчанию: False. <b>Будьте осторожны,
                             эта опция может  быстро заполнить ваш жесткий диск!</b>
-                        Применение в <b>fink</b> флага <b>-K</b> дает такой же результат,
-                        но действует только при одной активации <b>fink</b>.
+                        Применение в <tt style="white-space: nowrap;">fink</tt> флага <b>-K</b> дает такой же результат,
+                        но действует только при одной активации <tt style="white-space: nowrap;">fink</tt>.
                         </p>
                 </li>
                 <li>
                     <p>
                         <b>KeepBuildDir:</b> булево выражение</p>
                     <p>Благодаря этой опции Fink не удаляет каталог
-                        /sw/src/[имя]-[версия]-[модификация] после
+                        <tt style="white-space: nowrap;">[имя]-[версия]-[модификация]</tt> после
                         построения пакета. Настройка по умолчанию: False. <b>Будьте осторожны,
                             эта опция может  быстро заполнить ваш жесткий диск!</b>
-                         Применение в <b>fink</b> флага <b>-k</b> дает такой же результат,
-                        но действует только при одной активации <b>fink</b>.
+                         Применение в <tt style="white-space: nowrap;">fink</tt> флага <b>-k</b> дает такой же результат,
+                        но действует только при одной активации <tt style="white-space: nowrap;">fink</tt>.
                          </p>
                 </li>
             </ul>
@@ -1063,7 +1131,7 @@ Available Languages:  |
                 <li>
                     <p>
                         <b>CCacheDir:</b> маршрут</p>
-                    <p>Если инсталлирован пакет Fink ccache-default, кэш-файлы,
+                    <p>Если инсталлирован пакет Fink <tt style="white-space: nowrap;">ccache-default</tt>, кэш-файлы,
                         создаваемые им при построении пакетов Fink, будут размещены здесь.
                         Настройка по умолчанию:
                         <tt style="white-space: nowrap;">/sw/var/ccache</tt>. При настройке
@@ -1079,8 +1147,22 @@ Available Languages:  |
                     Другие плагины можно найти в каталоге
                     <tt style="white-space: nowrap;">/sw/lib/perl5/Fink/Notify</tt>.
                 </p></li>
-                
-            </ul>
+        
+        <li><p><b>AutoScanpackages:</b> boolean
+           </p><p>When <tt style="white-space: nowrap;">fink</tt> builds new packages, <tt style="white-space: nowrap;">apt-get</tt> does not immediately know about
+           them.  Historically, the command <tt style="white-space: nowrap;">fink scanpackages</tt> had to be run
+           for <tt style="white-space: nowrap;">apt-get</tt> to notice the new packages, but now this happens auto
+           matically. If this option is present and <b>false</b>, then <tt style="white-space: nowrap;">fink
+           scanpackages</tt> will no longer be run automatically after packages are
+           built.  Defaults to <b>true</b>.
+</p></li>
+        <li><p><b>ScanRestrictivePackages:</b> boolean
+           </p><p>When scanning the packages for <tt style="white-space: nowrap;">apt-get</tt>, <tt style="white-space: nowrap;">fink</tt> normally scans all
+           packages in the current trees. However, if the resuting apt repository will be made publically available, the administrator may be
+           legally obligated not to include packages with <tt style="white-space: nowrap;">Restrictive</tt> or
+           <tt style="white-space: nowrap;">Commercial</tt> licenses. If this option is present and <b>false</b>, then Fink
+           will omit those packages when scanning.</p></li>
+		            </ul>
         
         <h3><a name="conf.sourceslist">5.9 Управление файлом sources.list в apt</a></h3>
             
@@ -1108,7 +1190,7 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/release main crypto
 deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
 
 # Put local modifications to this file below this line, or at the top.
-             </pre>
+</pre>
             <p>С этим файлом по умолчанию apt-get сначала находит уже скомпилированные бинарные пакеты
                 в имеющейся у вас инсталляции, а затем ищет остальные пакеты в официальном бинарном дистрибутиве.
                 Можно изменить этот порядок путем ввода данных
@@ -1144,44 +1226,150 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
             
             <p> Некоторые опции относятся ко всем командам fink. Если вы напечатаете
                  <tt style="white-space: nowrap;">fink --help</tt>, то получите список опций: </p>
-            <p>(для <tt style="white-space: nowrap;">fink-0.24.1</tt>)</p>
+            <p>(для <tt style="white-space: nowrap;">fink-0.26.0</tt>)</p>
+
             
-            <pre>-h, --help            - отражает данный справочный текст
-                -q, --quiet           - делает fink менее многословным, в противоположность --verbose
-                -V, --version         - отражает информацию о версии
-                -v, --verbose         - делает fink более многословным, в противоположность --quiet
-                -y, --yes             - допускает ответ по умолчанию на все интерактивные
-                вопросы.
-                -b, --use-binary-dist - дает указание скачать предварительно скомпилированные пакеты 
-                бинарного дистрибутива, если они имеются (н-р, для сокращения времени компиляции
-                или использования диска).
-                Имейте в виду, что в данном режиме Fink получает указание скачать
-                желаемую версию, если она доступна для
-                скачивания; в этом случае Fink не выбирает версию
-                на основе ее наличия в бинарном виде.
-                --no-use-binary-dist  - не допускает использование предварительно скомпилированных
-                пакетов бинарного дистрибутива (в противоположность --use-binary-dist)
-                -K, --keep-root-dir   - дает указание Fink не удалять каталог
-                /sw/src/root-[имя]-[версия]-[модификация]
-                после построения пакета.
-                -k, --keep-build-dir  - дает указание Fink не удалять каталог
-                /sw/src/[имя]-[версия]-[модификация]
-                после построения пакета.
-                --build-as-nobody     - допускает работу пользователя без прав суперпользователя
-                на этапах распаковки, выполнения патчей, компиляции и инсталляции. Имейте в виду, что
-                построенные при помощи этой опции пакеты могут не работать. Этот режим
-                следует использовать только для разработки и 
-                отладки пакетов.</pre>
-                                                          
+
+
+      <p><b>-h, --help</b> - displays help text.
+</p>
+      <p><b>-q, --quiet</b>  - causes <tt style="white-space: nowrap;">fink</tt> to be less verbose, opposite of <b>--verbose</b>.  Overrides the <a href="#conf.optional">Verbose</a> flag in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p>
+      <p><b>-V, --version</b> - display version information.
+</p>
+      <p><b>-v, --verbose</b> - causes  <tt style="white-space: nowrap;">fink</tt> to be more verbose, opposite of <b>--quiet</b>.  Overrides the <a href="#conf.optional">Verbose</a> field in <tt style="white-space: nowrap;">fink.conf.</tt>
+</p>
+      <p><b>-y, --yes</b> - assume default answer for all interactive 
+                        questions.
+</p>
+      <p><b>-K, --keep-root-dir</b>   - Causes <tt style="white-space: nowrap;">fink</tt> not to delete the
+                        <tt style="white-space: nowrap;">root-[name]-[version]-[revision]</tt>
+		        directory in the <a href="#conf.optional">Buildpath</a> after building a package.  Corresponds to the <a href="#conf.developer">KeepRootDir</a> field in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p>
+      <p><b>-k, --keep-build-dir</b>  - Causes <tt style="white-space: nowrap;">fink</tt> not to delete the
+                        <tt style="white-space: nowrap;">[name]-[version]-[revision]</tt>
+                        directory in the <a href="#conf.optional">Buildpath</a> after building a package.  Corresponds to the <a href="#conf.developer">KeepBuildDir</a> field in <tt style="white-space: nowrap;">fink.conf</tt>.</p>
+      <p><b>-b, --use-binary-dist</b> - download pre-compiled packages from the binary 
+                        distribution if available (e.g. to reduce compile
+		        time or disk usage).
+		        Note that this mode instructs fink to download the
+                        version it wants if that version is available for
+		        download; it does not cause fink to choose a version
+    		        based on its binary availability.  Corresponds to the <a href="#conf.downloading">UseBinaryDist</a> flag in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p>
+      <p><b>--no-use-binary-dist</b>  - Don't use pre-compiled binary packages from the binary 
+		        distribution, opposite of the --use-binary-dist flag. 
+                        This is the default unless overridden by setting <tt style="white-space: nowrap;">UseBinaryDist: true </tt>in 
+                        the <tt style="white-space: nowrap;">fink.conf</tt> configuration file. 
+</p>
+      <p><b>--build-as-nobody</b>     - Drop to a non-root user when performing the unpack,
+                        patch, compile, and install phases. Note that packages
+                        built with this option may be non-functional. You
+                        should use this mode for package development and 
+                        debugging only.
+</p>
+      <p><b>-m, --maintainer</b>
+            - (<tt style="white-space: nowrap;">fink-0.25</tt> and later) Perform actions useful to package maintainers: run validation on
+           the <tt style="white-space: nowrap;">.info</tt> file before building and on the <tt style="white-space: nowrap;">.deb</tt> after building a
+           package; turn certain build-time warnings into fatal errors; (<tt style="white-space: nowrap;">fink-0.26</tt> and later) run the test suites as specified in the  field.  This sets <b>--tests</b> and <b>--validate</b> to <tt style="white-space: nowrap;">on</tt>.</p>
+      <p><b>--tests[=on|off|warn]</b>         - (<tt style="white-space: nowrap;">fink-0.26.0</tt> and later) Causes <tt style="white-space: nowrap;">InfoTest</tt> fields to be activated and test suites specified
+           via <tt style="white-space: nowrap;">TestScript</tt> to be executed (see the <a href="../packaging/packaging.en.html#reference.fields">Fink Packaging Manual</a>).  If no argument is given to this
+           option or if the argument is <tt style="white-space: nowrap;">on</tt> then failures in test suites will
+           be considered fatal errors during builds.  If the argument is <tt style="white-space: nowrap;">warn</tt>
+           then failures will be treated as warnings.</p>
+      <p><b>--validate[=on|off|warn]</b> -
+           Causes packages to be validated during a build.  If no argument is
+           given to this option or if the argument is <tt style="white-space: nowrap;">on</tt> then validation failures will be considered fatal errors during builds.  If the argument is <tt style="white-space: nowrap;">warn</tt> then failures will be treated as warnings.</p>
+      <p><b>-l, --log-output</b>
+            - Save a copy of the terminal output during each package building
+           process. By default, the file is stored in
+           <tt style="white-space: nowrap;">/tmp/fink-build-log_[name]-[version]-[revision]_[date]-[time]</tt> but
+           one can use the <b>--logfile</b> flag to specify an alternate filename.</p>
+      <p><b>--no-log-output</b>
+            - Don't save a copy of the output during package-building, opposite
+           of the <b>--log-output</b> flag. This is the default.</p>
+      <p><b>--logfile=filename</b>
+            - Save package build logs to the file <tt style="white-space: nowrap;">filename</tt> instead of the default
+           file (see the <b>--log-output</b> flag, which is implicitly set by the
+           <b>--logfile</b> flag). You can use percent-expansion codes to include
+           specific package information automatically. A complete list of percent-expanions is available in the <a href="../packaging/packaging.en.html">Fink Packaging Manual</a>; some common percent-expansions are:</p>
+      <ul>
+        <li>                 <b>%n</b>    - package name
+                 </li>
+        <li><b>%v</b>    - package version
+                 </li>
+        <li><b>%r</b>    - package revision</li>
+      </ul>
+      <p><b>-t, --trees=expr</b>
+           - Consider only packages in trees matching <b>expr</b>.
+
+           The format of expr is a comma-delimited list of tree specifica-
+           tions. Trees listed in <tt style="white-space: nowrap;">fink.conf</tt> are compared against <b>expr</b>.  Only
+           those which match at least one tree specification are considered by
+           <tt style="white-space: nowrap;">fink</tt>, in the order of the first specifications which they match. If
+           no <b>--trees</b> option is used, all trees listed in <tt style="white-space: nowrap;">fink.conf</tt> are
+           included in order.
+
+           A tree specification may contain a slash (/) character, in which
+           case it requires an exact match with a tree. Otherwise, it matches
+           against the first path-element of a tree. For example,
+           <b>--trees=unstable/main</b> would match only the <b>unstable/main</b> tree,
+           while <b>--trees=unstable</b> would match both unstable/main and
+           <b>unstable/crypto</b>.
+
+           There exist magic tree specifications which can be included in
+           <b>expr</b>:</p>
+      <ul>
+        <li><b>status</b>
+                       - Includes packages in the dpkg status database.
+
+                 </li>
+        <li><b>virtual</b>
+                       - Includes virtual packages which reflect the capabili-
+                       ties of the system.
+</li>
+      </ul>
+      <p>Exclusion of (or failure to include) these magic trees is currently
+           only supported for operations which do not install or remove packages.</p>
+      <p><b>-T, --exclude-trees=expr</b>
+           Consider only packages in trees not matching expr.
+
+           The syntax of expr is the same as for <b>--trees</b>, including the magic
+           tree specifications. However, matching trees are here excluded
+           rather than included. Note that trees matching both <b>--trees</b> and
+           <b>--exclude-trees</b> are excluded.
+</p>
+      <p> Examples of <b>--trees</b> and --exclude-trees:
+
+                 </p>
+      <ul>
+        <li><tt style="white-space: nowrap;">fink --trees=stable,virtual,status install <b>foo</b></tt> 
+                       <p>Install <b>foo</b> as if <tt style="white-space: nowrap;">fink</tt> was using the stable tree, even
+                       if unstable is enabled in <tt style="white-space: nowrap;">fink.conf</tt>.
+</p></li>
+        <li><tt style="white-space: nowrap;">fink --exclude-trees=local install <b>foo</b></tt> 
+                       <p>Install the version of <b>foo</b> in Fink, not the locally
+                       modified version.
+
+</p></li>
+        <li><tt style="white-space: nowrap;">fink --trees=local/main list -i</tt>
+                       <p>List the locally modified packages which are installed.</p></li>
+      </ul>
+
+
+
+
+
+
             <p> Большинство названий данных опций говорят сами за себя. Их также можно настроить
                 в <a href="#conf">конфигурационном файле Fink</a>
-                (fink.conf), если вы хотите иметь их постоянно, а не только при активации
+                (<tt style="white-space: nowrap;">fink.conf</tt>), если вы хотите иметь их постоянно, а не только при активации
                 <tt style="white-space: nowrap;">fink</tt>. </p>
             
              
         <h3><a name="usage.install">6.3 install</a></h3>
             
-            <p>Команда install используется для инсталляции пакетов. Она запускает скачивание,
+            <p>Команда <b>install</b> используется для инсталляции пакетов. Она запускает скачивание,
                 конфигурирование, построение и инсталляцию указанных вами пакетов. Она также
                 автоматически инсталлирует необходимые зависимости, но перед этим запрашивает
                 ваше подтверждение. Пример:</p>
@@ -1191,12 +1379,12 @@ Reading package info...
 Information about 131 packages read.
 The following additional package will be installed:
  lesstif
-                Do you want to continue? [Y/n]</pre>
+Do you want to continue? [Y/n]</pre>
             <p> Использование опции <a href="#usage.options">--use-binary-dist </a>
                 в сочетании с <tt style="white-space: nowrap;">fink install</tt> может значительно ускорить процесс
                 построения сложных пакетов.
                  </p>
-            <p>Алиасы для команды install: update, enable, activate, use
+            <p>Алиасы для команды install: <b>update, enable, activate, use</b>
                 (в основном по историческим причинам).</p>
         
         <h3><a name="usage.remove">6.4 remove</a></h3>
@@ -1206,28 +1394,28 @@ The following additional package will be installed:
                 имеет недостаток: она не проверяет зависимости сама, а полностью полагается на
                 инструмент dpkg (хотя обычно
                 это не вызывает проблем).</p>
-            <p>Команда remove удаляет только файлы фактических пакетов
-                (кроме конфигурационных файлов), но оставляет нетронутым файл сжатого пакета .deb.
+            <p>Команда <b>remove</b> удаляет только файлы фактических пакетов
+                (кроме конфигурационных файлов), но оставляет нетронутым файл сжатого пакета <tt style="white-space: nowrap;">.deb</tt>.
                 Это значит, что вы можете реинсталлировать пакет впоследствии
                 без повторного прохождения всего процесса компиляции.
-                Если вам нужно место на диске, можно удалить .deb в дереве
+                Если вам нужно место на диске, можно удалить <tt style="white-space: nowrap;">.deb</tt> в дереве
                 <tt style="white-space: nowrap;">/sw/fink/dists</tt>.</p>
             <p>Вместе с командой fink remove можно использовать следующие опции:
             </p>
             <pre>-h,--help             - показывает существующие опции.
-                -r,--recursive        - удаляет также пакеты, зависящие от удаляемого
-                пакета (т.е. исправляет вышеуказанный недостаток).</pre>
-            <p>Алиасы: disable, deactivate, unuse, delete.</p>
+-r,--recursive        - удаляет также пакеты, зависящие от удаляемого
+                        пакета (т.е. исправляет вышеуказанный недостаток).</pre>
+            <p>Алиасы: <b>disable, deactivate, unuse, delete</b>.</p>
         
         <h3><a name="usage.purge">6.5 purge</a></h3>
             
-            <p>Команда purge предназначена для очистки системы от пакетов. Она действует так же, как
-                команда remove, но еще и удаляет конфигурационные файлы.
+            <p>Команда <b>purge</b> предназначена для очистки системы от пакетов. Она действует так же, как
+                команда <b>remove</b>, но еще и удаляет конфигурационные файлы.
             </p>
             <p>Вместе с данной командой можно использовать следующие опции:
             </p>
             <pre>-h,--help            
-                -r,--recursive        </pre>
+                -r,--recursive</pre>
         
         <h3><a name="usage.update-all">6.6 update-all</a></h3>
             
@@ -1246,99 +1434,123 @@ The following additional package will be installed:
                 предоставит список соответствующих наименований.</p>
             <p> Первая колонка отражает статус инсталляции со следующими
                 значениями:</p>
-            <pre>
-     пакет не инсталлирован
+            <pre>    пакет не инсталлирован
  i   инсталлирована последняя версия
 (i)  пакет инсталлирован, но имеется более поздняя версия
-                p   виртуальный пакет, предоставленный инсталлированным пакетом</pre>
+ p   виртуальный пакет, предоставленный инсталлированным пакетом</pre>
             <p> Для команды <tt style="white-space: nowrap;">fink list</tt> существуют следующие опции:</p>
             <pre>
-                -h,--help
-                Отражает имеющиеся опции.
-                -t,--tab
-                Выводит список в формате ограничения табуляцией, полезном для
-                выполнения вывода через скрипт.
-                -i,--installed
-                Отражает только текущие инсталлированные пакеты.
-                -o,--outdated
-                Отражает только устаревшие пакеты.
-                -u,--uptodate
-                Отражает только последние пакеты.
-                -n,--notinstalled
-                Отражает пакеты, не инсталлированные на данный момент.
-                -s=expr,--section=expr
-                Отражает только пакеты в разделах, которые соответствуют
-                регулярному выражению expr.
-                -m expr,--maintainer=expr
-                Отражает только пакеты, координаторы которых соответствуют
-                регулярному выражению expr.
-                -r expr,--tree=expr
-                Отражает только пакеты в деревьях, которые соответствуют
-                регулярному выражению expr.
-                -w=xyz,--width=xyz
-                Устанавливает ширину дисплея, которая вам нужна для формата
-                вывода. xyz является либо числовым, либо автоматическим значением (auto).
-                Настройка auto устанавливает ширину на основании ширины терминала.
-                Настройка по умолчанию: auto.
-            </pre>                       
+-h,--help
+	  Отражает имеющиеся опции.
+-t,--tab
+	  Выводит список в формате ограничения табуляцией, полезном для
+	  выполнения вывода через скрипт.
+-i,--installed
+	  Отражает только текущие инсталлированные пакеты.
+-o,--outdated
+	  Отражает только устаревшие пакеты.
+-u,--uptodate
+	  Отражает только последние пакеты.
+-n,--notinstalled
+	  Отражает пакеты, не инсталлированные на данный момент.
+-s expr,--section=expr
+	  Отражает только пакеты в разделах, которые соответствуют
+	  регулярному выражению expr.
+-m expr,--maintainer=expr
+	  Отражает только пакеты, координаторы которых соответствуют
+	  регулярному выражению expr.
+-r expr,--tree=expr
+	  Отражает только пакеты в деревьях, которые соответствуют
+	  регулярному выражению expr.
+-w=xyz,--width=xyz
+	  Устанавливает ширину дисплея, которая вам нужна для формата
+	  вывода. xyz является либо числовым, либо автоматическим значением (auto).
+	  Настройка auto устанавливает ширину на основании ширины терминала.
+	  Настройка по умолчанию: auto.
+</pre>                       
             <p> 
                 Несколько примеров использования:</p>
             <pre>
-                fink list                 - список всех пакетов
-                fink list bash            - проверка наличия bash и его версии
-                fink list --outdated      - список устаревших пакетов
-                fink list --section=kde   - список пакетов в разделе kde
-                fink list "gnome*"        - список пакетов, начинающихся с 'gnome'
-            </pre>
+fink list                 - список всех пакетов
+fink list bash            - проверка наличия bash и его версии
+fink list --tab --outdated | cut -f 2     
+                          - just list the names of the out of date packages.
+fink list --section=kde   - список пакетов в разделе kde
+fink list --maintainer=fink-devel
+                          - list the packages with no maintainer
+fink --trees=unstable list --maintainer=fink-devel
+                          - list the packages with no maintainer, but only in the
+                            unstable tree.
+fink list "gnome*"        - список пакетов, начинающихся с 'gnome'
+</pre>
             <p> 
             Кавычки в последнем примере необходимы для того, чтобы оболочка
                 сама не начала интерпретировать образец. </p>
         
         <h3><a name="usage.apropos">6.8 apropos</a></h3>
             
-            <p> Данная команда ведет себя почти так же, как <tt style="white-space: nowrap;">fink list</tt>.
+            <p> Данная команда ведет себя почти так же, как <a href="#usage.list">fink list</a>.
                 Основное отличие в том, что <tt style="white-space: nowrap;">fink apropos</tt>
                 также находит описание пакетов с целью их выявления. Другое отличие в том, что
                 искомая строковая цепочка должна предоставляться и является обязательной. 
             </p>
             <pre>
-                fink apropos irc          - список всех пакетов, имеющих 'irc' 
-                в имени или описании.
-                fink apropos -s=kde irc   - то же, что и выше, но с ограничением до 
-                пакетов из раздела kde.
-            </pre>            
+fink apropos irc          - список всех пакетов, имеющих 'irc' 
+                			в имени или описании.
+fink apropos -s=kde irc   - то же, что и выше, но с ограничением до 
+                			пакетов из раздела kde.
+</pre>            
         
         <h3><a name="usage.describe">6.9 describe</a></h3>
             
             <p> Данная команда вызывает описание пакета, имя которого вы указываете в командной строке.
                 Надо учитывать, что только некоторые пакеты на данный момент
                 имеют описание.</p>
-            <p>Алиасы: desc, description, info.</p>
+            <p>Алиасы: <b>desc, description, info</b>.</p>
         
-        <h3><a name="usage.fetch">6.10 fetch</a></h3>
+	
+    <h3><a name="usage.plugins">6.10 plugins</a></h3>
+      
+      <p> List the (optional) plugins available to the <tt style="white-space: nowrap;">fink</tt> program.  Currently lists the notification mechanisms and the source-tarball
+           checksum algorithms.</p>
+    
+	
+        <h3><a name="usage.fetch">6.11 fetch</a></h3>
             
             <p>Скачивает поименно указанные пакеты, но не инсталлирует их. Эта команда
                 скачивает тарболы, даже если они уже были скачаны прежде.</p>
+
+      <p>The following flags can be used with the <tt style="white-space: nowrap;">fetch</tt> command:</p>
+      <pre>-h,--help		Show the options which are available.
+-i,--ignore-restrictive	Do not fetch packages that are &amp;quot;License: Restrictive&amp;quot;.
+                      	Useful for mirrors, because some restrictive packages
+                      	do not allow source mirroring.
+-d,--dry-run		Just display information about the file(s) that would
+			be downloaded for the package(s) to be fetched; do not
+			actually download anything.
+-r,--recursive		Also fetch packages that are dependencies of the
+			package(s) to be fetched.</pre>
+
         
-        <h3><a name="usage.fetch-all">6.11 fetch-all</a></h3>
+        <h3><a name="usage.fetch-all">6.12 fetch-all</a></h3>
             
-            <p>Скачивает <b>все</b> файлы исходного кода пакета. Подобно fetch, она
+            <p>Скачивает <b>все</b> файлы исходного кода пакета. Подобно <a href="#usage.fetch">fetch</a>, она
                 скачивает тарболы, даже если они уже были скачаны прежде.</p>
             <p>С командой <tt style="white-space: nowrap;">fink fetch-all</tt> можно использовать следующие опции:</p>
             <pre>-h,--help
-                -i,--ignore-restrictive
-                -d,--dry-run</pre>
+-i,--ignore-restrictive
+-d,--dry-run</pre>
         
-        <h3><a name="usage.fetch-missing">6.12 fetch-missing</a></h3>
+        <h3><a name="usage.fetch-missing">6.13 fetch-missing</a></h3>
             
             <p>Скачивает <b>все</b> недостающие исходные файлы пакета. Данная команда
                 скачивает только те файлы, которые не представлены в системе.</p>
             <p>С командой <tt style="white-space: nowrap;">fink fetch-missing</tt> можно использовать следующие опции:</p>
             <pre>-h,--help
-                -i,--ignore-restrictive
-                -d,--dry-run</pre>
+-i,--ignore-restrictive
+-d,--dry-run</pre>
         
-        <h3><a name="usage.build">6.13 build</a></h3>
+        <h3><a name="usage.build">6.14 build</a></h3>
             
             <p>Строит пакет, но не инсталлирует его. Как правило, тарболы исходного кода
                 скачиваются, если их нельзя найти. Результат этой команды -
@@ -1349,26 +1561,32 @@ The following additional package will be installed:
             <p> Здесь применима опция <a href="#usage.options">--use-binary-dist</a>.
                  </p>
         
-        <h3><a name="usage.rebuild">6.14 rebuild</a></h3>
+        <h3><a name="usage.rebuild">6.15 rebuild</a></h3>
             
             <p>Выполняет построение пакета (lподобно команде build), но игнорирует и перезаписывает
                 существующий файл .deb. Если пакет инсталлирован,
                 вновь созданный файл .deb также будет инсталлирован в системе
                 через <tt style="white-space: nowrap;">dpkg</tt>. Это весьма полезно в процессе разработки пакета.</p>            
+      
+      <p>The <a href="#usage.options">--use-binary-dist option</a> is applicable here.</p>
+      
         
-        <h3><a name="usage.reinstall">6.15 reinstall</a></h3>
+        <h3><a name="usage.reinstall">6.16 reinstall</a></h3>
             
             <p>Действует так же, как install, но инсталлирует пакет через
                 <tt style="white-space: nowrap;">dpkg</tt>, даже если он уже инсталлирован. Можно использовать
                 эту команду, если вы случайно удалили файлы пакета или изменили
                 конфигурационные файлы и хотите опять иметь настройки по умолчанию.</p>
         
-        <h3><a name="usage.configure">6.16 configure</a></h3>
+        <h3><a name="usage.configure">6.17 configure</a></h3>
             
-            <p> Запускает повторное выполнение конфигурации Fink. Это позволяет, в числе прочего, изменять
+            <p> Запускает повторное выполнение конфигурации <tt style="white-space: nowrap;">fink</tt>. Это позволяет, в числе прочего, изменять
                 ваши настройки сайтов зеркал и прокси.</p>
+	  
+      <p><b>New in</b> <tt style="white-space: nowrap;">fink-0.26.0</tt>: This command will also let you turn on the unstable trees if desired.</p>
+      
         
-        <h3><a name="usage.selfupdate">6.17 selfupdate</a></h3>
+        <h3><a name="usage.selfupdate">6.18 selfupdate</a></h3>
             
             <p> Данная команда автоматизирует процесс обновления до новых версий Fink.
                 Она проверяет веб-сайт Fink на наличие новой версии,
@@ -1382,53 +1600,86 @@ The following additional package will be installed:
                 список пакетов, имеющихся в бинарном дистрибутиве, также
                 обновляется. </p>
         
-        <h3><a name="usage.index">6.18 index</a></h3>
+
+    <h3><a name="usage.selfupdate-rsync">6.19 selfupdate-rsync</a></h3>
+      
+      <p>Use this command to make <tt style="white-space: nowrap;">fink selfupdate</tt> use rsync to update its package list.</p>
+      <p>This is the recommended way to update Fink when building from source.</p>
+      <p><b>Note:</b>  rsync updates only update the active <a href="#conf.optional">trees</a> (e.g. if unstable isn't turned on in <tt style="white-space: nowrap;">fink.conf</tt> the list of unstable packages won't be updated.</p>
+    
+    <h3><a name="usage.selfupdate-cvs">6.20 selfupdate-cvs</a></h3>
+      
+      <p>Use this command to make <tt style="white-space: nowrap;">fink selfupdate</tt> use CVS access to update its package list.</p>
+      <p>CVS updating is deprecated, except for developers and those people who are behind firewalls that disallow rsync.</p>
+    
+
+        <h3><a name="usage.index">6.21 index</a></h3>
             
             <p> Перестраивает кэш пакета. Обычно вам не надо выполнять это вручную,
                 так как <tt style="white-space: nowrap;">fink</tt> автоматически определяет,
                 когда он нуждается в обновлении.</p>
         
-        <h3><a name="usage.validate">6.19 validate</a></h3>
+        <h3><a name="usage.validate">6.22 validate</a></h3>
             
-            <p> Данная команда выполняет различные проверки в файлах .info и .deb.
+            <p> Данная команда выполняет различные проверки в файлах <tt style="white-space: nowrap;">.info</tt> и <tt style="white-space: nowrap;">.deb</tt>.
                 Координаторы пакетов должны это делать в описании своих пакетов
                 и соответствующих построенных пакетах перед их предоставлением.</p>
             <p>Можно использовать следующие дополнительные опции:</p>
             <pre>-h,--help            - Отражает имеющиеся опции.
-                -p,--prefix          - Имитирует альтернативный префикс базового маршрута Fink (%p) для
+-p,--prefix     - Имитирует альтернативный префикс базового маршрута Fink (%p) для
                 проверяемых файлов.
-                --pedantic, --no-pedantic
-                - Контролирует отражение предупреждений о форматировании.
-                --pedantic  - настройка по умолчанию.</pre>
-            <p>Алиас: check.</p>
+--pedantic, --no-pedantic
+				- Контролирует отражение предупреждений о форматировании.
+				--pedantic  - настройка по умолчанию.</pre>
+            <p>Алиас: <b>check</b>.</p>
         
-        <h3><a name="usage.scanpackages">6.20 scanpackages</a></h3>
+        <h3><a name="usage.scanpackages">6.23 scanpackages</a></h3>
             
-            <p> Данная команда активирует dpkg-scanpackages(8) в определенных деревьях.</p>
-        
-        <h3><a name="usage.cleanup">6.21 cleanup</a></h3>
+      
+      <p>Updates the <tt style="white-space: nowrap;">apt-get</tt> database of debs; defaults to updating all of the trees, but may be restricted to a set of one or more trees given as arguments.</p>
+              
+        <h3><a name="usage.cleanup">6.24 cleanup</a></h3>
             
-            <p> Удаляет файлы устаревших пакетов (.info, .patch, .deb), если есть более свежие
-                версии. Это может потребовать много места на диске.</p>
-            <p> Если активирована опция <a href="#usage.options">--use-binary-dist</a>, то при этом также
-                удаляются устаревшие скачанные бинарные пакеты и выполняется команда <tt style="white-space: nowrap;">fink scanpackages</tt>. </p>
-        
-        <h3><a name="usage.dumpinfo">6.22 dumpinfo</a></h3>
+      
+      <p>
+   Removes obsolete and temporary files. 
+   This can reclaim large amounts of disk space.  One or more modes may be specified:</p>
+      <pre>--debs               - Delete .deb files (compiled binary package archives)
+                       corresponding to versions of packages that are neither
+                       described by a package description (.info) file in the
+                       currently-active trees nor presently installed.
+--sources,--srcs     - Delete sources (tarballs, etc.) that are not used by
+                       any package description (.info) file in the currently-
+                       active trees.
+--buildlocks, --bl   - Delete stale buildlock packages.
+--dpkg-status        - Remove entries for packages that are not installed from
+                       the dpkg "status" database.
+--obsolete-packages  - Attempt to uninstall all installed packges that are
+                       obsolete. (new in fink-0.26.0)
+--all                - All of the above modes. (new in fink-0.26.0)</pre>
+      <p>If no mode is specified, <tt style="white-space: nowrap;">--debs --sources</tt> is the default action. </p>
+      <p>In addition, the following options may be used:</p>
+      <pre>-k,--keep-src        - Move old source files to /sw/src/old/ instead of deleting them.
+-d,--dry-run         - Print the names of the files that would be deleted, but
+                       do not actually delete them.
+-h,--help            - Show the modes and options which are available.</pre>
+            
+        <h3><a name="usage.dumpinfo">6.25 dumpinfo</a></h3>
             
             <p> Действует только в версиях после <tt style="white-space: nowrap;">fink</tt> 0.21.0. </p>
-            <p> Отражает, как Fink синтаксически анализирует части файла .info пакета. Разные области
+            <p> Отражает, как <tt style="white-space: nowrap;">fink</tt> синтаксически анализирует части файла <tt style="white-space: nowrap;">.info</tt> пакета. Разные области
                 и процентные расширения отражаются в соответствии со следующими
                 <b>опциями</b>: </p>
             <pre>
-                -h, --help           - Отражает имеющиеся опции.
-                -a, --all            - Отражает все области на основании описания пакетов.
-                Это режим по умолчанию, в котором нет флагов --field и --percent .               
-                -f fieldname, --field=fieldname       - Отражает имена областей в списочном порядке.                    
-                -p key, --percent=key             - Отражает клавиши данного процентного расширения
-                в списочном порядке.            
-            </pre>
+-h, --help            - Отражает имеющиеся опции.
+-a, --all             - Отражает все области на основании описания пакетов.
+                        Это режим по умолчанию, в котором нет флагов --field и --percent .               
+-f fieldname, --field=fieldname - Отражает имена областей в списочном порядке.                    
+-p key, --percent=key - Отражает клавиши данного процентного расширения
+						в списочном порядке.
+</pre>
         
-        <h3><a name="usage.show-deps">6.23 show-deps</a></h3>
+        <h3><a name="usage.show-deps">6.26 show-deps</a></h3>
             
             <p> Действует только для fink-0.23-6 и последующих версий. </p>
             <p> Отражает воспринимаемый человеком список зависимостей времени компиляции (построения)
@@ -1441,4 +1692,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.ru.xml,v 1.3 2007/02/23 22:04:56 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.ru.xml,v 1.4 2007/05/29 03:58:51 babayoshihiko Exp $</i></p></body></html>
