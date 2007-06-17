@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.95 2007/03/04 22:11:38 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.96 2007/06/17 22:44:10 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -1490,13 +1490,80 @@ example:
 <pre>
   Package: foo-pm%type_pkg[perl]
   Type: perl (5.8.1 5.8.4 5.8.6)
-  Architecture: (%type_pkg[perl] = 581) powerpc
+  Architecture: (%type_pkg[perl] = 581) powerpc, (%type_pkg[perl] = 584) powerpc
+</pre>
+<p>
+will result in the field for the foo-pm581 and foo-pm584 variants
+being <tt style="white-space: nowrap;">powerpc</tt> and the field being blank for the foo-pm586
+variant. Remember that when the field is blank, all architectures
+are permitted.
+</p>
+<p>The example above gives a very common use of this field: since
+perl 5.8.1 and perl 5.8.4 are only available on powerpc hardware,
+this field is necessary for any multiple-type perl package under the
+10.4 distribution and later.
+</p>
+</td></tr><tr valign="top"><td>Distribution</td><td>
+<p>
+A comma-separated list of distribution(s) for which the package
+(and any splitoff packages) are intended.
+At present, the only valid values for distribution are <tt style="white-space: nowrap;">10.3</tt>,
+<tt style="white-space: nowrap;">10.4</tt>,
+and <tt style="white-space: nowrap;">10.5</tt>. If this field is present and not blank after
+conditional handling, fink will ignore the package description(s) if
+the local machine distribution is not listed. If the field is omitted
+or the value is blank, all distributions are assumed.
+(Introduced in fink 0.26.0.)
+</p>
+<p>
+Since Fink's <tt style="white-space: nowrap;">10.4</tt> and <tt style="white-space: nowrap;">10.5</tt> distributions share
+a common set of finkinfo files, the most common use of this field will be for 
+packages which are suitable for one of those distributions but not the
+other.  Since package maintainers may wish to use identical files for
+the 10.3 and 10.4/10.5 trees, the value <tt style="white-space: nowrap;">10.3</tt> is often
+included in the distribution field.
+</p>
+<p>
+This field supports the standard conditional syntax for any value in
+the value list and percent-expansions can be used (see
+the <tt style="white-space: nowrap;">Depends</tt> field for more information). In this manner,
+certain variants can be restricted to certain architectures. For
+example:
+</p>
+<pre>
+  Package: foo-pm%type_pkg[perl]
+  Type: perl (5.8.1 5.8.6)
+  Distribution: (%type_pkg[perl] = 581) 10.3, (%type_pkg[perl] = 581) 10.4
 </pre>
 <p>
 will result in the field for the foo-pm581 variant
-being <tt style="white-space: nowrap;">powerpc</tt> and the field being blank for all other
-variants. Remember that omitting a certain architecture value does not
-mean that the package is not for that architecture.
+being <tt style="white-space: nowrap;">10.3, 10.4</tt> and the field being blank for the 
+foo-pm586 variant.
+</p>
+<p>Since python 2.3 is not availble in the 10.5 distribution, and the
+available perl packages vary by distribution, these package types provide
+a common use of this field.  For reference, we note the availabilty of
+various perl versions in the 10.3, 10.4 and 10.5 distributions:
+</p>
+<pre>
+    perl 5.6.0:  10.3
+    perl 5.8.0:  10.3
+    perl 5.8.1:  10.3, 10.4
+    perl 5.8.4:  10.3, 10.4
+    perl 5.8.6:  10.3, 10.4, 10.5
+    perl 5.8.8:        10.4, 10.5
+</pre>
+<p>A way to include all variants in a single finkinfo file is as follows.
+</p>
+<pre>
+  Package: foo-pm%type_pkg[perl]
+  Type: perl (5.6.0 5.8.0 5.8.1 5.8.4 5.8.6 5.8.8)
+  Distribution: (%type_pkg[perl] = 560) 10.3, (%type_pkg[perl] = 580) 10.3, (%type_pkg[perl] = 581) 10.3, (%type_pkg[perl] = 581) 10.4, (%type_pkg[perl] = 584) 10.3, (%type_pkg[perl] = 584) 10.4, (%type_pkg[perl] = 588) 10.4, (%type_pkg[perl] = 588) 10.5
+</pre>
+<p>Note that there is no restriction placed on foo-pm586 since perl 5.8.6 is 
+available in all distributions.  Also note that we do not include old
+distributions, such as 10.2 or 10.4-transitional, since the versions of
+fink which are relevant for them do not recognize this field.
 </p>
 </td></tr><tr valign="top"><td>Epoch</td><td>
 <p>
@@ -2881,4 +2948,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.95 2007/03/04 22:11:38 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.96 2007/06/17 22:44:10 dmrrsn Exp $</i></p></body></html>
