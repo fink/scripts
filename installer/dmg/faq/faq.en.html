@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.82 2007/02/23 22:04:54 rangerrick Exp $
+Generated from $Fink: faq.en.xml,v 1.84 2007/06/30 19:25:46 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -1477,7 +1477,8 @@ xorg xorg-shlibs xfree86 xfree86-shlibs \
 xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
 xfree86-rootless-threaded xfree86-rootless-threaded-shlibs
-rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg
+rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg \
+ /Library/Receipts/X11Update*.pkg
 fink selfupdate; fink index</pre><p>(the first line may give you warnings about trying to remove nonexistent packages).  Then, reinstall Apple's X11 (and the X11SDK, if needed), or an alternative X11 implementation, like XFree86 or X.org.</p><p>If you are still having problems and you are running
         <tt style="white-space: nowrap;">fink-0.19.0</tt> or later then you can run</p><pre>fink-virtual-pkgs --debug</pre><p>to get information about what's missing.</p><p>If you are running an earlier version of <tt style="white-space: nowrap;">fink</tt>, then
         there is a Perl script (courtesy of Martin Costabel) that you can
@@ -1505,4 +1506,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.82 2007/02/23 22:04:54 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.84 2007/06/30 19:25:46 alexkhansen Exp $</i></p></body></html>
