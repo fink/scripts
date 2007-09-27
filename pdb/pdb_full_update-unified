@@ -1,12 +1,19 @@
 #!/bin/sh
-cd /opt/pdb
+set -e
 
 echo "Starting PDB update: `date`"
+
 ./refresh && ./inject
 
-echo "Fixing permissions"
-chgrp -R fink_web .
-chmod -f -R g+w,a+r .
-chgrp fink_web /var/www/www.finkproject.org/pdb/timestamp.inc
+./fix_permissions.sh
+
+echo "Refreshing section list"
+if [ -f finksql ]; then
+  ./finksql < sections.sql
+else
+  $HOME/bin/finksql < sections.sql
+fi
 
 echo "Finished PDB update: `date`"
+
+exit 0

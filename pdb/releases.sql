@@ -1,20 +1,42 @@
+delete from `distribution`;
 delete from `release`;
 
-insert into `release` values ('current-10.2-gcc3.3-stable', 'Packages that are in 10.2-gcc3.3/stable in CVS, updated daily.');
-insert into `release` values ('current-10.2-gcc3.3-unstable', 'Packages that are in 10.2-gcc3.3/unstable in CVS, updated daily.');
-insert into `release` values ('current-10.3-stable', 'Packages that are in 10.3/stable in CVS, updated daily.');
-insert into `release` values ('current-10.3-unstable', 'Packages that are in 10.3/unstable in CVS, updated daily.');
-insert into `release` values ('current-10.4-powerpc-stable', 'Packages that are in 10.4/stable in CVS for arch=powerpc, updated daily.');
-insert into `release` values ('current-10.4-powerpc-unstable-powerpc', 'Packages that are in 10.4/unstable in CVS for arch=powerpc, updated daily.');
-insert into `release` values ('current-10.4-i386-stable', 'Packages that are in 10.4/stable in CVS for arch=i386, updated daily.');
-insert into `release` values ('current-10.4-i386-unstable', 'Packages that are in 10.4/unstable in CVS for arch=i386, updated daily.');
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.1', '10.1', 'powerpc', 1, 0, 0, 1);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.4.1', 1, 0);
 
-insert into `release` values ('0.4.1-stable', 'Packages shipped with Fink 0.4.1 (For Mac OS X 10.1)');
-insert into `release` values ('0.5.2-stable', 'Packages shipped with Fink 0.5.3 (For Mac OS X 10.2)');
-insert into `release` values ('0.6.3-stable', 'Packages shipped with Fink 0.6.3 (For Mac OS X 10.2)');
-insert into `release` values ('0.6.4-stable', 'Packages shipped with Fink 0.6.4 (For Mac OS X 10.2)');
-insert into `release` values ('0.7.1-stable', 'Packages shipped with Fink 0.7.1 (For Mac OS X 10.3)');
-insert into `release` values ('0.7.2-stable', 'Packages shipped with Fink 0.7.2 (For Mac OS X 10.3)');
-insert into `release` values ('0.8.0-stable', 'Packages shipped with Fink 0.8.0 (For Mac OS X 10.4)');
-insert into `release` values ('0.8.1-powerpc-stable', 'Packages shipped with Fink 0.8.1 (For Mac OS X 10.4/powerpc)');
-insert into `release` values ('0.8.1-i386-stable', 'Packages shipped with Fink 0.8.1 (For Mac OS X 10.4/intel)');
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.2-gcc3.3', '10.2\n(gcc3.3 only)', 'powerpc', 2, 1, 1, 1);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'unstable', 'current', 3, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'stable',   'current', 2, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.6.4', 1, 1);
+
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.3', '10.3', 'powerpc', 3, 1, 1, 0);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'unstable', 'current', 3, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'stable',   'current', 2, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.7.2', 1, 1);
+
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.4', '10.4/powerpc', 'powerpc', 4, 1, 1, 0);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'unstable', 'current', 3, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'stable',   'current', 2, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.8.1', 1, 1);
+
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.4', '10.4/intel', 'i386', 5, 1, 1, 0);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'unstable', 'current', 3, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'stable',   'current', 2, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.8.1', 1, 1);
+
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.5', '10.5/powerpc', 'powerpc', 6, 1, 0, 0);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'unstable', 'current', 3, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'stable',   'current', 2, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.9.0', 1, 0);
+
+insert into `distribution` (dist_id, identifier, description, architecture, priority, active, visible, unsupported) values (null, '10.5', '10.5/intel', 'i386', 7, 1, 0, 0);
+select @last_dist_id := last_insert_id();
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'unstable', 'current', 3, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'stable',   'current', 2, 1);
+insert into `release` (rel_id, dist_id, type, version, priority, active) values (null, @last_dist_id, 'bindist',  '0.9.0', 1, 0);

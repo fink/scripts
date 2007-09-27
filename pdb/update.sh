@@ -1,16 +1,16 @@
 #!/bin/sh
+set -e
 
 echo "Updating CVS..."
 cvs -q update -dPl
+echo "Updating CVS (basepath)..."
 cd basepath
 cvs -q update -dP
 cd ..
 
-echo "Fixing permissions"
-chgrp -R fink_web .
-chmod -f -R g+w,a+r .
+./fix_permissions.sh
 
-echo "Creating fink itself"
+echo "Creating fink itself..."
 cd basepath
 ./setup.sh $PWD/basepath
 cd ..

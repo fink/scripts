@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+# -*- mode: Perl; tab-width: 4; -*-
 #
 # dump - generate SQL for Fink's online package database
 # Copyright (c) 2001 Christoph Pfisterer
@@ -30,61 +31,151 @@ use Fink::Services qw(&read_config &latest_version);
 use Fink::Config qw(&set_options);
 use Fink::Package;
 use Fink::Command qw(rm_f);
+use File::stat;
+use POSIX qw(strftime);
 
 use Getopt::Long;
-
-### get parameters
-my ($distribution, $tree, $release, $architecture, $wanthelp);
-
-# process command-line
-GetOptions(
-    'distribution=s' => \$distribution,
-    'tree=s'         => \$tree,
-    'release=s'      => \$release,
-    'architecture=s' => \$architecture,
-    'help'           => \$wanthelp,
-    ) or &die_with_usage;
-&die_with_usage if $wanthelp;
-&die_with_usage unless defined $distribution && defined $tree && defined $release;
-$architecture = 'powerpc' unless defined $architecture;
-
-### read config
-my $config = &read_config("fink.conf");
-
-### read package info
 
 # temporarily send stdout to stderr
 open(OLDOUT, ">&STDOUT");
 open(STDOUT, ">&STDERR") or die "Can't dup stderr";
 select(OLDOUT); select(STDOUT);  # keep 'use strict' happy
 
+### get parameters
+my ($distribution, $release, $architecture, $rel_id, $tree, $wanthelp, $q);
+
+# process command-line
+GetOptions(
+    'distribution:s' => \$distribution,
+    'release:s'      => \$release,
+    'architecture:s' => \$architecture,
+    'rel_id:s'       => \$rel_id,
+    'help'           => \$wanthelp,
+    ) or &die_with_usage;
+&die_with_usage if $wanthelp;
+&die_with_usage if (defined $distribution && not ($distribution =~ /^[0-9a-z.\-]{2,}$/));
+&die_with_usage if (defined $release && not ($release =~ m/^[0-9.]{3,}$|^unstable$|^stable$/));
+&die_with_usage if (defined $architecture && not ($architecture =~ m/^powerpc$|^i386$/));
+#$architecture = 'powerpc' unless defined $architecture;
+
+### connect to database
+
+if (not eval { require DBI }) {
+  print "\nWARNING: Unable to connect to DB (DBI Perl module not found!)\n\n";
+  if ((not defined $rel_id) || (not $rel_id =~ m/^[0-9]+$/)) {
+    die("Call with '--rel_id=...' to specify the corresponing release id. Stopped");
+  }
+  $tree = $release if (defined $release);
+  $tree = 'stable' if (defined $tree && $release =~ m/^[0-9.]{3,}$/);
+} else {
+
+### Try to connect to DB
+
+my ($dbh, $sth, $rel, $mysql_datafile, $mysql_data);
+$mysql_datafile = "./.finkdbi";
+if (not -f $mysql_datafile) {
+  $mysql_datafile = $ENV{HOME}."/.finkdbi";
+}
+chomp($mysql_data = `cat $mysql_datafile`);
+$dbh = DBI->connect(split(/\|/, $mysql_data));
+
+### get distributions/releases
+
+$q = "SELECT r.*,d.* FROM `distribution` d ";
+$q .= "INNER JOIN `release` r ON r.dist_id = d.dist_id ";
+$q .= "WHERE d.active AND r.active ";
+if (defined $distribution) {
+  $q .= "AND d.identifier='$distribution' ";
+}
+if (defined $release) {
+  if ($release =~ m/^unstable$|^stable$/) {
+    $q .= "AND r.type='$release' ";
+  } else {
+    $q .= "AND r.version='$release' ";
+  }
+}
+if (defined $architecture) {
+  $q .= "AND d.architecture='$architecture' ";
+}
+$q .= "ORDER BY d.priority DESC,r.priority DESC;";
+
+$dbh->do($q);
+$sth = $dbh->prepare($q);
+$sth->execute();
+my $numRows = $sth->rows;
+if ($numRows < 1) {
+  print "No matching releases found!\n";
+} else {
+  if ($numRows > 1) {
+    print "Found more than one release (sorted by priority):\n";
+  } else {
+    print "# Dumping packages for release:\n";
+  }
+  printf "# %3s %12s %8s %8s %8s\n", 'id', 'identifier', 'arch', 'type', 'version';
+  while ($rel = $sth->fetchrow_hashref()) {
+    printf "# %3s %12s %8s %8s %8s\n", "$rel->{'rel_id'}", "$rel->{'identifier'}", "$rel->{'architecture'}", "$rel->{'type'}", "$rel->{'version'}";
+    # Set all values, even if not given on command line
+    $rel_id = $rel->{'rel_id'};
+    $distribution = $rel->{'identifier'};
+    $architecture = $rel->{'architecture'};
+    if ($rel->{'type'} eq 'bindist') {
+      $tree = 'stable';
+    } else {
+      $tree = $rel->{'type'};
+    }
+  }
+  printf "\n";
+}
+
+$sth->finish();
+
+$dbh->disconnect();
+
+&die_with_usage if ($numRows != 1); # nothing to do
+
+} # if (eval { require DBI })
+
+
+&die_with_usage if (not defined $distribution);
+&die_with_usage if (not defined $release);
+&die_with_usage if (not defined $architecture);
+
+
+### set up our fink
+
+open (BASEPATH, "basepath_fink.inc") || die "couldn't open 'basepath_fink.inc'!";
+my $basepath = <BASEPATH>;
+close(BASEPATH);
+chomp $basepath;
+
 # if possible, use a symlink $distribution-$tree -> $tree
 # so that each .info pathname is unique across all distributions
 # (since we may use the dists/ symlink not the actual $distribution dir)
-my $treelink = $config->{'basepath'} . "/fink/dists/$distribution-$tree";
+my $treelink = "$basepath/fink/dists/$distribution-$tree";
 rm_f $treelink;
+my $disttree = $tree;
 if (-e $treelink) {
     print "Could not remove old $treelink\n";
     undef $treelink;
 } else {
     if (symlink $tree, $treelink) {
-	$tree = "$distribution-$tree";
+       $disttree = "$distribution-$tree";
     } else {
 	print "Could not create symlink $treelink: $!\n";
 	undef $treelink;
     }
 }
 
-$config->set_param("Trees", "$tree/main $tree/crypto");
-if (defined $architecture) {
-    $config->set_param("Architecture", $architecture);
-    $config->set_param("Debarch", "darwin-$architecture");
-}
-# "Trees" and "Architecture"/"Debarch" are volatile changes vs fink.conf:
-# we don't (and mustn't) call save()
+# simulate a fink.conf; there's no actual file, so don't save() it
+my $config = Fink::Config->new_from_properties({
+	'basepath'     => $basepath,
+	'trees'        => "$disttree/main $disttree/crypto",
+	'distribution' => $distribution,
+	'architecture' => $architecture,
+});
 
 # omit actual locally-installed fink if it is present
-set_options({exclude_trees=>[qw/status/]});
+set_options({exclude_trees=>[qw/status virtual/]});
 
 # load the package database
 Fink::Package->require_packages();
@@ -92,18 +183,19 @@ Fink::Package->require_packages();
 # restore stdout
 open(STDOUT, ">&OLDOUT");
 
-### drop the previous data
+### first drop the previous data, then add packages again, doing one 
+### release at a time, in one transaction
 
+print "# Begin dump release id = $rel_id\n";
+print "START TRANSACTION;\n";
 print "# delete old rows\n";
-print "BEGIN;\n";
-print "DELETE FROM package WHERE \`release\`='$release';\n";
-print "DELETE FROM splitoffs WHERE \`parentkey\` REGEXP '^$release';\n";
+print "DELETE FROM `package` WHERE rel_id='$rel_id';\n";
 
 ### loop over packages
 
 my ($package, $po, $version, $vo);
-my ($maintainer, $email, $desc, $parent);
-my ($q, $v, $s, $key, $parentkey, %data, %splitoffdata);
+my ($maintainer, $email, $desc, $usage, $parent, $infofile, $infofilechanged);
+my ($v, $s, $key, %data, $expand_override);
 
 foreach $package (Fink::Package->list_packages()) {
   $po = Fink::Package->package_by_name($package);
@@ -114,27 +206,55 @@ foreach $package (Fink::Package->list_packages()) {
   # Skip splitoffs
   #next if $vo->has_parent();
 
+  # get info file
+  $infofile = $vo->get_info_filename();
+  if ($infofile) {
+    my $sb = stat($infofile);
+    $infofile =~ s/$treelink\///s if defined $treelink;
+    my $dist_dir = readlink($config->{'basepath'} . "/fink/dists");
+    $infofile = "fink/dists/$dist_dir/$tree/$infofile";
+    $infofilechanged = strftime "%Y-%m-%d %H:%M:%S", gmtime $sb->mtime;
+  }
+  
   # gather fields
+
   $maintainer = $vo->param_default("Maintainer", "(not set)");
 
-  $desc = "<p>".$vo->get_description(1,1);
+  # Always show %p as '/sw'
+  $expand_override->{'p'} = '/sw';
+
+  $desc = $vo->param_default_expanded('DescDetail', '',
+    expand_override => $expand_override,
+    err_action => 'ignore'
+  );
+  chomp $desc;
   $desc =~ s/\s+$//s;
-  $desc =~ s/\n/<\/p><p>/s;
-  $desc =~ s/\n\s*\.\n/<\/p><p>/sg;
-  $desc .= "</p>";
+  $desc =~ s/\n/\\n/g;
  
-  %data = ( 'release' => $release,
-	    'fullname' => $vo->get_fullname(),
+  $usage = $vo->param_default_expanded('DescUsage', '',
+    expand_override => $expand_override,
+    err_action => 'ignore'
+  );
+  chomp $usage;
+  $usage =~ s/\s+$//s;
+  $usage =~ s/\n/\\n/g;
+ 
+  %data = ( 
+	    'pkg_id' => 'null', # autoincrement
+	    'rel_id' => $rel_id,
 	    'name' => $vo->get_name(),
 	    'version' => $vo->get_version(),
 	    'revision' => $vo->get_revision(),
 	    'epoch' => $vo->get_epoch(),
 	    'descshort' => $vo->get_shortdescription(),
 	    'desclong' => $desc,
+	    'descusage' => $usage,
 	    'maintainer' => $maintainer,
 	    'license' => $vo->get_license(),
 	    'homepage' => $vo->param_default("Homepage", ""),
-	    'section' => $vo->get_section()
+	    'section' => $vo->get_section(),
+	    'infofile' => $infofile,
+	    'infofilechanged' => $infofilechanged,
 	  );
 	    
   # Determine the splitoff parent of this package
@@ -143,7 +263,7 @@ foreach $package (Fink::Package->list_packages()) {
   } 
 
   # generate SQL query
-  $q = "INSERT INTO package (";
+  $q = "INSERT INTO `package` (";
   $v = ") VALUES (";
   foreach $key (keys %data) {
     $q .= "\`$key\`,";
@@ -155,39 +275,18 @@ foreach $package (Fink::Package->list_packages()) {
   # write it
   print "# $package-$version\n";
   print "$q\n";
-
-  if ($vo->has_parent()) {  
-	  %splitoffdata = ('name' => $vo->get_name(),
-					   'parentkey' => $release . $data{"parentname"},
-					   'descshort' => $vo->get_shortdescription()
-					   );
-	  
-	  # generate SQL query
-	  $q = "INSERT INTO splitoffs (";
-	  $v = ") VALUES (";
-	  foreach $key (keys %splitoffdata) {
-		$q .= "$key,";
-		$s = $splitoffdata{$key};
-		$s =~ s/'/\\'/g;
-		$v .= "'$s',";
-	  }
-	  $q = substr($q,0,-1).substr($v,0,-1).");";
-  	  print "$q\n";
-  }
 }
-
 print "COMMIT;\n";
-print "OPTIMIZE TABLE package;\n";
-
-### make timestamp
-
-open(OUT,">timestamp.inc") or die "can't write timestamp.inc: $!\n";
-print OUT "<?\n\$dyndate = ".time().";\n?>";
-close(OUT) or die "can't write timestamp.inc: $!\n";
+print "OPTIMIZE TABLE `package`;\n";
+print "# End dump release id = $rel_id\n";
 
 if (defined $treelink) {
     rm_f $treelink or print "Could not remove $treelink\n";
 }
+
+
+
+
 
 sub die_with_usage {
     die <<EOMSG;
@@ -195,10 +294,14 @@ Usage: $0 [options]
 
 Options:
   --distribution
-  --tree
   --release
   --architecture
   --help
+
+'distribution' is the distribution identifier (e.g. '10.4' or '10.2-gcc3.3')
+'release' is either a release version (e.g. 0.6.4) for bindists or the strings
+  'unstable' or 'stable'
+'architecture' is either 'powerpc' or 'i386'
 EOMSG
 }
 
@@ -206,3 +309,4 @@ EOMSG
 exit 0;
 
 
+# vim: ts=4 sw=4 noet

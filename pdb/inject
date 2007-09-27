@@ -1,15 +1,12 @@
 #!/bin/sh
 set -e
 
-echo "Executing current.sql..."
-./finksql <current.sql
+echo "Executing current_pdb_dump.sql..."
 
-echo "Calculating flags..."
-./flag
-
-echo "Copying timestamp.inc..."
-if [ -d /var/www/www.finkproject.org/pdb ]; then
-  install -m 664 timestamp.inc /var/www/www.finkproject.org/pdb/
+if [ -f finksql ]; then
+  ./finksql < current_pdb_dump.sql
+else
+  $HOME/bin/finksql < current_pdb_dump.sql
 fi
 
 exit 0

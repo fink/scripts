@@ -1,28 +1,21 @@
 #!/bin/sh
-cd /opt/pdb
+set -e
 
 echo "Starting PDB update: `date`"
 
-for dist in 10.2-gcc3.3 10.3 10.4; do
-	./refresh $dist
-	./finksql <current.sql
+for dist in 10.2-gcc3.3 10.3 10.4 10.5; do
+	./refresh $dist && ./inject
 done
 
-echo "" > current.sql && ./inject
-
-echo "Fixing permissions"
-chgrp -R fink_web .
-chmod -f -R g+w,a+r .
-chgrp fink_web /var/www/www.finkproject.org/pdb/timestamp.inc
-
-echo "Exporting maintainer data"
-maintfile="maintlist.txt"
-echo "select name,maintainer from package where latest=1;" | ./finksql > $maintfile-$$.tmp
-mv $maintfile-$$.tmp $maintfile
-chgrp fink_web $maintfile
-chmod 664 $maintfile
+./fix_permissions.sh
 
 echo "Refreshing section list"
-./finksql <sections.sql
+if [ -f finksql ]; then
+  ./finksql < sections.sql
+else
+  $HOME/bin/finksql < sections.sql
+fi
 
 echo "Finished PDB update: `date`"
+
+exit 0

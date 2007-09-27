@@ -1,25 +1,100 @@
+This HOWTO first explains the files in the scripts/pdb directory and then
+describes common tasks involving pdb updating.
+
+---------------------------------------------------------------------------------
+
+Files and directories in scripts/pdb:
+
+HOWTO:
+  This howto document
+basepath:
+  Directory containing the Fink package description files. This is a cvs
+  checkout of the 'fink' module but might be overwritten by rsync on the pdb
+  server when refreshing the pdb (see below for details)
+basepath_fink.inc:
+  Config file with the path to the pdb script files (the current dir)
+current_pdb_dump.sql:
+  SQL statements produced by the dump script containing the current contents of
+  the pdb.
+drop.sql:
+  SQL statements to drop all pdb tables in the db. Only needed to restart from
+  scratch.
+dump:
+  Shell script to dump the package descriptions. Used by the dumprelease and refresh
+  scripts.
+dumprelease:
+  Shell script to dump the package description of a Fink released (defined by 
+  a CVS tag). See below for a description on how to use it.
+fink:
+  A directory containing the Fink tree with the package description files. This
+  will be updated by the refresh and dumprelease scripts
+.finkdbi:
+  Config file with the information on how to connect to the database via perl
+  (Could alternatively be located in ~/.finkdbi)
+finksql:
+  Shell script to connect to the database via the shell
+fix_permissions.sh:
+  Shell script to set the file permissions
+inject:
+  Shell script to inject the sql statements in current_pdb_dump.sql into the db
+pdb_full_update-piecewise:
+  Shell script to update the pdb (calling the refresh and inject scripts) 
+  distribution after distribution (10.2-gcc3.3 10.3 10.4 10.5)
+  This script is called every 8 hours on finch using the follwoing cron line:
+    20 1,9,17 * * * root nice /opt/pdb/pdb_full_update-piecewise 2>&1 | \
+    mail -s "Web-PDB Update `date`" fink-auto-logs@lists.sourceforge.net
+pdb_full_update-unified:
+  Shell script to update the pdb (calling the refresh and inject scripts) 
+  all in one step
+refresh:
+  Shell script to refresh the package descriptions und dump them into 
+  current_pdb_dump.sql. refresh is called by the pdb_full_update-* scripts
+releases.sql:
+  SQL statements containing the information about current supported releases.
+  Needs to be updated whenever a release is added or no longer supported. See
+  below on how to use it.
+*-stable.sql:
+  SQL statements containing the package information about Fink releases. Created
+  by the dumprelease script.
+schema.sql:
+  SQL statements containing the database schema of the pdb. See below on how to 
+  use it.
+sections.sql:
+  SQL statements containing the information about the package sections. Needs to
+  be udpated whenever a new section is added. Called by the pdb_full_update-*
+  scripts.
+update.sh:
+  Shell script to update the cvs directories and configure the local fink. See 
+  below for more information.
+
+
+---------------------------------------------------------------------------------
+
 Q: How do I update the package database?
 
 A: You normally should never have to do this since we have a cron script in 
 place that performs that job every 8 hours for us. But if for some reasons it
 is necessary to perform such an update right on the spot, proceed as follows.
 
-First log into the opendarwin.org server:
-  ssh MYODUSERNAME@sampson.opendarwin.org
+First log into the finkproject.org server:
+  ssh MYUSERNAME@finkproject.org
 
 The first time you are doing this, you have to create two auxiliary files:
-~/bin/finksql:
+~/bin/finksql (or ./finksql if there is no home folder):
 #!/bin/sh
 exec mysql -h localhost -u fink --password=DBPASSWORD fink
+(or, on shell.sf.net: exec mysql -h mysql4-f.sourceforge.net -u f17203rw --password=DBPASSWORD f17203_pdb )
 
-~/.finkdbi:
+~/.finkdbi (or ./.finkdbi if there is no home folder):
 DBI:mysql:database=fink;host=localhost|fink|DBPASSWORD
+(or, on shell.sf.net: DBI:mysql:database=f17203_pdb;host=mysql4-f.sourceforge.net|f17203rw|DBPASSWORD )
 
 You probably should chmod go-rw the two files, and also chmod u+x the finksql
 script. If you don't know the value for "DBPASSWORD", ask the project admin.
 
 Now change into the PDB directory:
-  cd /Volumes/src2/fink/pdb.finkproject.org/pdb/
+  cd /opt/pdb/
+(or, on shell.sf.net: cd /home/groups/f/fi/fink/pdb )
 
 Refresh the list of packages (essentially this runs a 'cvs up'):
   ./refresh
@@ -36,13 +111,13 @@ Q: How do I update the PDB for a full fink release?
 A: Assuming you just released fink 0.4.5, you'll want to adjust the package
 database accordingly. 
 
-First log into the opendarwin.org server:
-  ssh MYODUSERNAME@sampson.opendarwin.org
+First log into the finkproject.org server:
+  ssh MYUSERNAME@finkproject.org
 
 We assume that you setup the necessary auxiliary files already, if not read
 the above Q&A for information on how to do it.
 Now change into the PDB directory:
-  cd /Volumes/src2/fink/pdb.finkproject.org/pdb/
+  cd /opt/pdb/
 
 Next dump the list of packages in the release. Replace 0.8.1 as appropriate, 
 replace '10.4' with the Fink tree you want to count as stable, and replace
@@ -50,9 +125,15 @@ replace '10.4' with the Fink tree you want to count as stable, and replace
 
  ./dumprelease 0.8.1 10.4 i386
  
+(Or:
+ ./dumprelease 0.8.1 10.4 powerpc
+ ./dumprelease 0.7.2 10.3 powerpc
+ ./dumprelease 0.6.4 10.2-gcc3.3 powerpc
+)
+ 
 This will produce a file called 0.8.1-i386-stable.sql. Next, you must update the
-releases.sql file for 0.8.1 (just replace the current version with the new
-one). You best do that in CVS using a developer checkout on your local machine,
+releases.sql file for 0.8.1.
+You best do that in CVS using a developer checkout on your local machine,
 then check the change in, and run "cvs up" on the shell server.
 Once you did this, run these commands (order is important):
   ~/bin/finksql < releases.sql
@@ -61,22 +142,40 @@ Once you did this, run these commands (order is important):
 (If you have released 0.8.1 for multiple architectures, you can add a 
 command to this list such as ~/bin/finksql < 0.8.1-powerpc-stable.sql .)
 
-Now run the "flag" script:
-  ./flag
-
-Finally, you have to tell the PHP script which renders the package description
-pages to display the information from 0.8.1 along with the current data. To do
-so, edit "pdb/releases.inc" in the "web" CVS module.
-
-(NOTE: prior to 0.8.1, the architecture was not included in the .sql file
-name or the release string.  The current pdb/releases.inc file accounts
-for this correctly, but if the .sql files for earlier releases are ever
-rebuilt, either it will have to be modified or an earlier version of the
-dumprelease script should be used.)
-
 That's it.
 
 ---------------------------------------------------------------------------------
 
-This HOWTO was written by Max Horn, largely based on some instructions given
-by Christoph Pfisterer. Use at your own risk.
+Q: How to set-up the pdb directory for the first time?
+
+A: Do the following steps:
+1)
+Check out the 'scripts/pdb' module.
+  cvs -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink login
+  cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -P scripts/pdb
+2)
+Check out the module 'fink' as the folder 'basepath' [sic] inside the just 
+checked out dir 'pdb'
+  cd scripts/pdb
+  cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -P -d basepath fink
+3)
+Create the following file:
+- basepath_fink.inc: Add a line with the full path to the pdb script directory
+  E.g. '/opt/pdb'
+  (or, on shell.sf.net: '/home/groups/f/fi/fink/pdb' )
+4)
+Update the cvs directories and configure your local fink by doing:
+  ./update.sh
+5)
+Set up the database by doing:
+  ~/bin/finksql < schema.sql
+(Use '~/bin/finksql < dump.sql' to clean out the db first)
+6) 
+Initialize tables with:
+  ~/bin/finksql < sections.sql
+  ~/bin/finksql < releases.sql
+
+---------------------------------------------------------------------------------
+
+The original content of this HOWTO was written by Max Horn, largely based on 
+some instructions given by Christoph Pfisterer. Use at your own risk.
