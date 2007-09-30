@@ -16,6 +16,10 @@ else
   $HOME/bin/finksql < sections.sql
 fi
 
+echo "Restarting memcached"
+
+sudo /etc/init.d/memcached restart || :
+
 echo "Finished PDB update: `date`"
 
 exit 0
