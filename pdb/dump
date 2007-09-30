@@ -238,7 +238,18 @@ foreach $package (Fink::Package->list_packages()) {
   chomp $usage;
   $usage =~ s/\s+$//s;
   $usage =~ s/\n/\\n/g;
- 
+
+
+  # create a summary index field that contains the distinct words in all of the name and desc* fields
+  my $word_index = {};
+  my $summary_index = join(" ", $vo->get_name(), $vo->get_shortdescription(), $desc, $usage);
+  $summary_index =~ s/\\[rn]/ /gs;
+  $summary_index =~ s/[^\s\r\n[:alnum:]\:\-\_]+/ /gs;
+  for my $word (split(/\s+/s, $summary_index)) {
+    $word_index->{lc($word)}++;
+  }
+  $summary_index = join(" ", sort keys %$word_index);
+
   %data = ( 
 	    'pkg_id' => 'null', # autoincrement
 	    'rel_id' => $rel_id,
@@ -255,6 +266,7 @@ foreach $package (Fink::Package->list_packages()) {
 	    'section' => $vo->get_section(),
 	    'infofile' => $infofile,
 	    'infofilechanged' => $infofilechanged,
+		'summary_index' => $summary_index,
 	  );
 	    
   # Determine the splitoff parent of this package

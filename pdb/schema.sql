@@ -46,6 +46,7 @@ create table if not exists `package` (
  section varchar(32) not null,
  infofile varchar(255) not null default '',
  infofilechanged datetime,
+ summary_index text,
  primary key (pkg_id),
  index (name),
  index (section),
