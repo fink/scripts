@@ -34,6 +34,7 @@ use Fink::Command qw(rm_f);
 use File::Path;
 use File::stat;
 use POSIX qw(strftime);
+use Time::HiRes qw(usleep);
 
 use Getopt::Long;
 
@@ -307,6 +308,7 @@ foreach $package (Fink::Package->list_packages()) {
   print "# $package-$version\n";
   #print "$q\n";
 
+  usleep(100);
 }
 
 $dbh->commit() or warn "failed to end transaction: " . $dbh->errstr;
@@ -323,8 +325,10 @@ sub write_lucene_package_file {
   my %data = @_;
   return unless $lucene;
 
-  mkpath($indexpath);
-  my $filename = $indexpath . '/' . join('_', $distribution, $architecture, $data{'name'}, $data{'epoch'}, $data{'version'}, $data{'revision'}) . '.index';
+  my $path = $indexpath . '/' . $distribution . '/' . $architecture . '/' . $tree;
+  mkpath($path);
+
+  my $filename = $path . '/' . join('_', $data{'name'}, $data{'epoch'}, $data{'version'}, $data{'revision'}) . '.index';
 
   if (open(FILEOUT, '>' . $filename)) {
     for my $key (sort keys %data) {
