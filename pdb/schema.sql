@@ -26,7 +26,7 @@ create table if not exists `release` (
   primary key (rel_id),
   index (dist_id),
   index (rel_id, dist_id),
-  index (priority),
+  index (priority)
 ) engine = innodb collate ascii_general_ci;
 
 create table if not exists `package` (
@@ -50,6 +50,6 @@ create table if not exists `package` (
  primary key (pkg_id),
  index (name),
  index (section),
- index (rel_id)
- index (name, rel_id),
+ index (rel_id),
+ index (name, rel_id)
 ) engine = innodb collate ascii_general_ci;

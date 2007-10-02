@@ -50,12 +50,12 @@ for dist in ${dists[@]}; do
 	    for arch in powerpc i386; do
 	    echo ""
 	    echo "Dumping $dist/$release $arch..."
-	    ./dump --distribution=$dist --release=$release --architecture=$arch >> current_pdb_dump.sql
+	    ./dump --distribution=$dist --release=$release --architecture=$arch --lucene --indexpath=`pwd`/lucene-index >> current_pdb_dump.sql
 	    done
 	else
 	    echo ""
 	    echo "Dumping $dist/$release..."
-	    ./dump --distribution=$dist --release=$release --architecture=powerpc >> current_pdb_dump.sql
+	    ./dump --distribution=$dist --release=$release --architecture=powerpc --lucene --indexpath=`pwd`/lucene-index >> current_pdb_dump.sql
 	fi
     done
     dist_no=`expr $dist_no + 1`

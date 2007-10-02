@@ -31,18 +31,38 @@ use Fink::Services qw(&read_config &latest_version);
 use Fink::Config qw(&set_options);
 use Fink::Package;
 use Fink::Command qw(rm_f);
+use File::Path;
 use File::stat;
 use POSIX qw(strftime);
 
 use Getopt::Long;
 
+use vars qw(
+	$dbh
+	$get_release
+	$insert_package
+	$delete_packages
+
+	$distribution
+	$release
+	$architecture
+	$rel_id
+	$lucene
+	$indexpath
+	$wanthelp
+
+	$tree
+	$rel
+
+	$q
+	$mysql_datafile
+	$mysql_data
+);
+
 # temporarily send stdout to stderr
 open(OLDOUT, ">&STDOUT");
 open(STDOUT, ">&STDERR") or die "Can't dup stderr";
 select(OLDOUT); select(STDOUT);  # keep 'use strict' happy
-
-### get parameters
-my ($distribution, $release, $architecture, $rel_id, $tree, $wanthelp, $q);
 
 # process command-line
 GetOptions(
@@ -50,6 +70,8 @@ GetOptions(
     'release:s'      => \$release,
     'architecture:s' => \$architecture,
     'rel_id:s'       => \$rel_id,
+    'lucene'         => \$lucene,
+	'indexpath:s'    => \$indexpath,
     'help'           => \$wanthelp,
     ) or &die_with_usage;
 &die_with_usage if $wanthelp;
@@ -71,13 +93,17 @@ if (not eval { require DBI }) {
 
 ### Try to connect to DB
 
-my ($dbh, $sth, $rel, $mysql_datafile, $mysql_data);
 $mysql_datafile = "./.finkdbi";
 if (not -f $mysql_datafile) {
   $mysql_datafile = $ENV{HOME}."/.finkdbi";
 }
 chomp($mysql_data = `cat $mysql_datafile`);
 $dbh = DBI->connect(split(/\|/, $mysql_data));
+
+### query to insert a package
+my @package_keys = ('rel_id', 'name', 'version', 'revision', 'epoch', 'descshort', 'desclong', 'descusage', 'maintainer', 'license', 'homepage', 'section', 'infofile', 'infofilechanged');
+$delete_packages = $dbh->prepare("DELETE FROM \`package\` WHERE rel_id=?");
+$insert_package = $dbh->prepare("INSERT INTO \`package\` (\`" . join("\`, \`", @package_keys) . "\`) VALUES (" . join (", ", map { $_ = "?" } @package_keys) . ")");
 
 ### get distributions/releases
 
@@ -100,9 +126,9 @@ if (defined $architecture) {
 $q .= "ORDER BY d.priority DESC,r.priority DESC;";
 
 $dbh->do($q);
-$sth = $dbh->prepare($q);
-$sth->execute();
-my $numRows = $sth->rows;
+$get_release = $dbh->prepare($q);
+$get_release->execute();
+my $numRows = $get_release->rows;
 if ($numRows < 1) {
   print "No matching releases found!\n";
 } else {
@@ -112,7 +138,7 @@ if ($numRows < 1) {
     print "# Dumping packages for release:\n";
   }
   printf "# %3s %12s %8s %8s %8s\n", 'id', 'identifier', 'arch', 'type', 'version';
-  while ($rel = $sth->fetchrow_hashref()) {
+  while ($rel = $get_release->fetchrow_hashref()) {
     printf "# %3s %12s %8s %8s %8s\n", "$rel->{'rel_id'}", "$rel->{'identifier'}", "$rel->{'architecture'}", "$rel->{'type'}", "$rel->{'version'}";
     # Set all values, even if not given on command line
     $rel_id = $rel->{'rel_id'};
@@ -127,19 +153,16 @@ if ($numRows < 1) {
   printf "\n";
 }
 
-$sth->finish();
-
-$dbh->disconnect();
+$get_release->finish();
 
 &die_with_usage if ($numRows != 1); # nothing to do
 
 } # if (eval { require DBI })
 
-
 &die_with_usage if (not defined $distribution);
 &die_with_usage if (not defined $release);
 &die_with_usage if (not defined $architecture);
-
+&die_with_usage if ($lucene and not defined $indexpath);
 
 ### set up our fink
 
@@ -187,9 +210,10 @@ open(STDOUT, ">&OLDOUT");
 ### release at a time, in one transaction
 
 print "# Begin dump release id = $rel_id\n";
-print "START TRANSACTION;\n";
-print "# delete old rows\n";
-print "DELETE FROM `package` WHERE rel_id='$rel_id';\n";
+$dbh->begin_work();
+print "# deleting old packages\n";
+$delete_packages->execute($rel_id);
+print "# dumping new packages\n";
 
 ### loop over packages
 
@@ -236,20 +260,10 @@ foreach $package (Fink::Package->list_packages()) {
     err_action => 'ignore'
   );
   chomp $usage;
-  $usage =~ s/\s+$//s;
-  $usage =~ s/\n/\\n/g;
+  $usage =~ s/[\r\n\s]+$//s;
+  #$usage =~ s/\n/\\n/g;
 
-
-  # create a summary index field that contains the distinct words in all of the name and desc* fields
-  my $word_index = {};
-  my $summary_index = join(" ", $vo->get_name(), $vo->get_shortdescription(), $desc, $usage);
-  $summary_index =~ s/\\[rn]/ /gs;
-  $summary_index =~ s/[^\s\r\n[:alnum:]\:\-\_]+/ /gs;
-  for my $word (split(/\s+/s, $summary_index)) {
-    $word_index->{lc($word)}++;
-  }
-  $summary_index = join(" ", sort keys %$word_index);
-
+  # sync with $dbh->prepare up above
   %data = ( 
 	    'pkg_id' => 'null', # autoincrement
 	    'rel_id' => $rel_id,
@@ -266,9 +280,12 @@ foreach $package (Fink::Package->list_packages()) {
 	    'section' => $vo->get_section(),
 	    'infofile' => $infofile,
 	    'infofilechanged' => $infofilechanged,
-		'summary_index' => $summary_index,
 	  );
-	    
+  
+  $insert_package->execute($rel_id, $vo->get_name(), $vo->get_version(), $vo->get_revision(), $vo->get_epoch(),
+    $vo->get_shortdescription(), $desc, $usage, $maintainer, $vo->get_license(), $vo->param_default("Homepage", ""),
+    $vo->get_section(), $infofile, $infofilechanged) or warn "failed to add package: " . $dbh->errstr;
+
   # Determine the splitoff parent of this package
   if ($vo->has_parent()) {
 		$data{"parentname"} = $vo->get_parent()->get_name();  # package is a splitoff
@@ -282,23 +299,43 @@ foreach $package (Fink::Package->list_packages()) {
     $s = $data{$key};
     $s =~ s/'/\\'/g;
     $v .= "'$s',";
+
+    write_lucene_package_file(%data);
   }
   $q = substr($q,0,-1).substr($v,0,-1).");";
   # write it
   print "# $package-$version\n";
-  print "$q\n";
+  #print "$q\n";
+
 }
-print "COMMIT;\n";
-print "OPTIMIZE TABLE `package`;\n";
+
+$dbh->commit() or warn "failed to end transaction: " . $dbh->errstr;
+$dbh->do("OPTIMIZE TABLE \`package\`");
 print "# End dump release id = $rel_id\n";
 
 if (defined $treelink) {
     rm_f $treelink or print "Could not remove $treelink\n";
 }
 
+$dbh->disconnect();
 
+sub write_lucene_package_file {
+  my %data = @_;
+  return unless $lucene;
 
+  mkpath($indexpath);
+  my $filename = $indexpath . '/' . join('_', $distribution, $architecture, $data{'name'}, $data{'epoch'}, $data{'version'}, $data{'revision'}) . '.index';
 
+  if (open(FILEOUT, '>' . $filename)) {
+    for my $key (sort keys %data) {
+      $data{$key} =~ s/[\r\n]+$//gs;
+      $data{$key} =~ s/\r/\\r/gs;
+      $data{$key} =~ s/\n/\\n/gs;
+      print FILEOUT $key, ' ', $data{$key}, "\n";
+    }
+    close(FILEOUT);
+  }
+}
 
 sub die_with_usage {
     die <<EOMSG;
@@ -308,12 +345,17 @@ Options:
   --distribution
   --release
   --architecture
+  --lucene
+  --indexpath
   --help
 
 'distribution' is the distribution identifier (e.g. '10.4' or '10.2-gcc3.3')
 'release' is either a release version (e.g. 0.6.4) for bindists or the strings
   'unstable' or 'stable'
 'architecture' is either 'powerpc' or 'i386'
+
+If 'lucene' is set, and an index path is provided, dump will create an
+index for a lucene search engine indexer.
 EOMSG
 }
 

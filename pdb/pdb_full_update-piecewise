@@ -4,7 +4,7 @@ set -e
 echo "Starting PDB update: `date`"
 
 for dist in 10.2-gcc3.3 10.3 10.4 10.5; do
-	./refresh $dist && ./inject
+	./refresh $dist
 done
 
 ./fix_permissions.sh
