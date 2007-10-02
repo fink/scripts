@@ -102,7 +102,7 @@ chomp($mysql_data = `cat $mysql_datafile`);
 $dbh = DBI->connect(split(/\|/, $mysql_data));
 
 ### query to insert a package
-my @package_keys = ('rel_id', 'name', 'version', 'revision', 'epoch', 'descshort', 'desclong', 'descusage', 'maintainer', 'license', 'homepage', 'section', 'infofile', 'infofilechanged');
+my @package_keys = ('rel_id', 'name', 'version', 'revision', 'epoch', 'descshort', 'desclong', 'descusage', 'maintainer', 'license', 'homepage', 'section', 'parentname', 'infofile', 'infofilechanged', 'summary_index');
 $delete_packages = $dbh->prepare("DELETE FROM \`package\` WHERE rel_id=?");
 $insert_package = $dbh->prepare("INSERT INTO \`package\` (\`" . join("\`, \`", @package_keys) . "\`) VALUES (" . join (", ", map { $_ = "?" } @package_keys) . ")");
 
@@ -264,55 +264,25 @@ foreach $package (Fink::Package->list_packages()) {
   $usage =~ s/[\r\n\s]+$//s;
   #$usage =~ s/\n/\\n/g;
 
-  # sync with $dbh->prepare up above
-  %data = ( 
-	    'pkg_id' => 'null', # autoincrement
-	    'rel_id' => $rel_id,
-	    'name' => $vo->get_name(),
-	    'version' => $vo->get_version(),
-	    'revision' => $vo->get_revision(),
-	    'epoch' => $vo->get_epoch(),
-	    'descshort' => $vo->get_shortdescription(),
-	    'desclong' => $desc,
-	    'descusage' => $usage,
-	    'maintainer' => $maintainer,
-	    'license' => $vo->get_license(),
-	    'homepage' => $vo->param_default("Homepage", ""),
-	    'section' => $vo->get_section(),
-	    'infofile' => $infofile,
-	    'infofilechanged' => $infofilechanged,
-	  );
-  
+  my $summary_index = join(" ", $vo->get_name(), $vo->get_shortdescription(), $desc, $usage);
+  $summary_index =~ s/\\[rn]/ /gs;
+  $summary_index =~ s/[^\s\r\n[:alnum:]\:\-\_]+/ /gs;
+  for my $word (split(/\s+/s, $summary_index)) {
+    $word_index->{lc($word)}++;
+  }
+  $summary_index = join(" ", sort keys %$word_index);
+
   $insert_package->execute($rel_id, $vo->get_name(), $vo->get_version(), $vo->get_revision(), $vo->get_epoch(),
     $vo->get_shortdescription(), $desc, $usage, $maintainer, $vo->get_license(), $vo->param_default("Homepage", ""),
-    $vo->get_section(), $infofile, $infofilechanged) or warn "failed to add package: " . $dbh->errstr;
+    $vo->get_section(), $vo->has_parent()? $vo->get_parent()->get_name():undef, $infofile, $infofilechanged, $summary_index) or warn "failed to add package: " . $dbh->errstr;
 
-  # Determine the splitoff parent of this package
-  if ($vo->has_parent()) {
-		$data{"parentname"} = $vo->get_parent()->get_name();  # package is a splitoff
-  } 
-
-  # generate SQL query
-  $q = "INSERT INTO `package` (";
-  $v = ") VALUES (";
-  foreach $key (keys %data) {
-    $q .= "\`$key\`,";
-    $s = $data{$key};
-    $s =~ s/'/\\'/g;
-    $v .= "'$s',";
-
-    write_lucene_package_file(%data);
-  }
-  $q = substr($q,0,-1).substr($v,0,-1).");";
-  # write it
   print "# $package-$version\n";
-  #print "$q\n";
 
   usleep(100);
 }
 
 $dbh->commit() or warn "failed to end transaction: " . $dbh->errstr;
-$dbh->do("OPTIMIZE TABLE \`package\`");
+#$dbh->do("OPTIMIZE TABLE \`package\`");
 print "# End dump release id = $rel_id\n";
 
 if (defined $treelink) {
@@ -320,26 +290,6 @@ if (defined $treelink) {
 }
 
 $dbh->disconnect();
-
-sub write_lucene_package_file {
-  my %data = @_;
-  return unless $lucene;
-
-  my $path = $indexpath . '/' . $distribution . '/' . $architecture . '/' . $tree;
-  mkpath($path);
-
-  my $filename = $path . '/' . join('_', $data{'name'}, $data{'epoch'}, $data{'version'}, $data{'revision'}) . '.index';
-
-  if (open(FILEOUT, '>' . $filename)) {
-    for my $key (sort keys %data) {
-      $data{$key} =~ s/[\r\n]+$//gs;
-      $data{$key} =~ s/\r/\\r/gs;
-      $data{$key} =~ s/\n/\\n/gs;
-      print FILEOUT $key, ' ', $data{$key}, "\n";
-    }
-    close(FILEOUT);
-  }
-}
 
 sub die_with_usage {
     die <<EOMSG;
