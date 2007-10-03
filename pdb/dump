@@ -23,6 +23,7 @@
 $| = 1;
 use 5.008_001;  # perl 5.8.1 or newer required
 use strict;
+use warnings;
 
 ### now load the useful modules
 
@@ -35,15 +36,23 @@ use File::Path;
 use File::stat;
 use POSIX qw(strftime);
 use Time::HiRes qw(usleep);
+use Data::Dumper;
+use IO::Handle;
 
 use Getopt::Long;
 
 use vars qw(
 	$dbh
 	$get_release
+
 	$insert_package
 	$delete_packages
+	$update_package
+	$update_timestamp
+	$get_package
+	$get_deleted
 
+	@package_keys
 	$distribution
 	$release
 	$architecture
@@ -58,7 +67,11 @@ use vars qw(
 	$q
 	$mysql_datafile
 	$mysql_data
+
+	$last_updated
 );
+
+$last_updated = time;
 
 # temporarily send stdout to stderr
 open(OLDOUT, ">&STDOUT");
@@ -99,12 +112,17 @@ if (not -f $mysql_datafile) {
   $mysql_datafile = $ENV{HOME}."/.finkdbi";
 }
 chomp($mysql_data = `cat $mysql_datafile`);
-$dbh = DBI->connect(split(/\|/, $mysql_data));
+$dbh = DBI->connect(split(/\|/, $mysql_data, { AutoCommit => 0 }));
 
 ### query to insert a package
-my @package_keys = ('rel_id', 'name', 'version', 'revision', 'epoch', 'descshort', 'desclong', 'descusage', 'maintainer', 'license', 'homepage', 'section', 'parentname', 'infofile', 'infofilechanged', 'summary_index');
-$delete_packages = $dbh->prepare("DELETE FROM \`package\` WHERE rel_id=?");
-$insert_package = $dbh->prepare("INSERT INTO \`package\` (\`" . join("\`, \`", @package_keys) . "\`) VALUES (" . join (", ", map { $_ = "?" } @package_keys) . ")");
+@package_keys = ('rel_id', 'name', 'version', 'revision', 'epoch', 'descshort', 'desclong', 'descusage', 'maintainer', 'license', 'homepage', 'section', 'parentname', 'infofile', 'infofilechanged', 'summary_index', 'last_updated');
+
+$delete_packages  = $dbh->prepare("DELETE FROM \`package\` WHERE rel_id=? AND last_updated < ?");
+$insert_package   = $dbh->prepare("INSERT INTO \`package\` (\`" . join("\`, \`", @package_keys) . "\`) VALUES (" . join (", ", map { "?" } @package_keys) . ")");
+$update_package   = $dbh->prepare("UPDATE \`package\` SET " . join(", ", map { "\`$_\`=?" } @package_keys) . " WHERE pkg_id=?");
+$update_timestamp = $dbh->prepare("UPDATE \`package\` SET last_updated=? WHERE pkg_id=?");
+$get_package      = $dbh->prepare("SELECT \`pkg_id\`, \`" . join("\`, \`", @package_keys) . "\` FROM \`package\` WHERE rel_id=? AND name=? AND version=? AND revision=? AND epoch=?");
+$get_deleted      = $dbh->prepare("SELECT \`pkg_id\`, \`" . join("\`, \`", @package_keys) . "\` FROM \`package\` WHERE rel_id=? AND last_updated < ?");
 
 ### get distributions/releases
 
@@ -179,14 +197,14 @@ my $treelink = "$basepath/fink/dists/$distribution-$tree";
 rm_f $treelink;
 my $disttree = $tree;
 if (-e $treelink) {
-    print "Could not remove old $treelink\n";
-    undef $treelink;
+  print "Could not remove old $treelink\n";
+  undef $treelink;
 } else {
     if (symlink $tree, $treelink) {
        $disttree = "$distribution-$tree";
     } else {
-	print "Could not create symlink $treelink: $!\n";
-	undef $treelink;
+      print "Could not create symlink $treelink: $!\n";
+      undef $treelink;
     }
 }
 
@@ -212,8 +230,6 @@ open(STDOUT, ">&OLDOUT");
 
 print "# Begin dump release id = $rel_id\n";
 $dbh->begin_work();
-print "# deleting old packages\n";
-$delete_packages->execute($rel_id);
 print "# dumping new packages\n";
 
 ### loop over packages
@@ -221,6 +237,14 @@ print "# dumping new packages\n";
 my ($package, $po, $version, $vo);
 my ($maintainer, $email, $desc, $usage, $parent, $infofile, $infofilechanged);
 my ($v, $s, $key, %data, $expand_override);
+
+my $added_file   = IO::Handle->new();
+my $changed_file = IO::Handle->new();
+my $deleted_file = IO::Handle->new();
+
+open($added_file,   '>>lucene_added.txt')   or die "can't write to lucene_added.txt: $!";
+open($changed_file, '>>lucene_changed.txt') or die "can't write to lucene_changed.txt: $!";
+open($deleted_file, '>>lucene_deleted.txt') or die "can't write to lucene_deleted.txt: $!";
 
 foreach $package (Fink::Package->list_packages()) {
   $po = Fink::Package->package_by_name($package);
@@ -238,7 +262,7 @@ foreach $package (Fink::Package->list_packages()) {
     $infofile =~ s/$treelink\///s if defined $treelink;
     my $dist_dir = readlink($config->{'basepath'} . "/fink/dists");
     $infofile = "fink/dists/$dist_dir/$tree/$infofile";
-    $infofilechanged = strftime "%Y-%m-%d %H:%M:%S", gmtime $sb->mtime;
+    $infofilechanged = strftime "%Y-%m-%d %H:%M:%S", localtime $sb->mtime;
   }
   
   # gather fields
@@ -264,25 +288,104 @@ foreach $package (Fink::Package->list_packages()) {
   $usage =~ s/[\r\n\s]+$//s;
   #$usage =~ s/\n/\\n/g;
 
+  my $word_index = {};
   my $summary_index = join(" ", $vo->get_name(), $vo->get_shortdescription(), $desc, $usage);
   $summary_index =~ s/\\[rn]/ /gs;
   $summary_index =~ s/[^\s\r\n[:alnum:]\:\-\_]+/ /gs;
   for my $word (split(/\s+/s, $summary_index)) {
-    $word_index->{lc($word)}++;
+    $word_index->{lc($word)}++ if (length($word) >= 3);
   }
   $summary_index = join(" ", sort keys %$word_index);
 
-  $insert_package->execute($rel_id, $vo->get_name(), $vo->get_version(), $vo->get_revision(), $vo->get_epoch(),
-    $vo->get_shortdescription(), $desc, $usage, $maintainer, $vo->get_license(), $vo->param_default("Homepage", ""),
-    $vo->get_section(), $vo->has_parent()? $vo->get_parent()->get_name():undef, $infofile, $infofilechanged, $summary_index) or warn "failed to add package: " . $dbh->errstr;
+  my $package_info = {
+    rel_id          => $rel_id,
+    name            => $vo->get_name(),
+    version         => $vo->get_version(),
+    revision        => $vo->get_revision(),
+    epoch           => $vo->get_epoch(),
+    descshort       => $vo->get_shortdescription(),
+    desclong        => $desc,
+    descusage       => $usage,
+    maintainer      => $maintainer,
+    license         => $vo->get_license(),
+    homepage        => $vo->param_default("Homepage", ""),
+    section         => $vo->get_section(),
+    parentname      => $vo->has_parent()? $vo->get_parent()->get_name():undef,
+    infofile        => $infofile,
+    infofilechanged => $infofilechanged,
+    summary_index   => $summary_index,
+    last_updated    => $last_updated,
+  };
 
-  print "# $package-$version\n";
+  $get_package->execute($rel_id, $vo->get_name(), $vo->get_version(), $vo->get_revision(), $vo->get_epoch()) or die "unable to execute \$get_package\n";
+  if ($get_package->rows == 1) {
+    my $p = $get_package->fetchrow_hashref();
+
+    my $changed = {};
+
+    for my $key (grep(!/^(pkg_id|infofile|infofilechanged|summary_index|last_updated)$/, @package_keys)) {
+      if (
+        (exists $package_info->{$key} and not exists $p->{$key}) or
+        (exists $p->{$key} and not exists $package_info->{$key}) or
+        (defined $package_info->{$key} and not defined $p->{$key}) or
+        (defined $p->{$key} and not defined $package_info->{$key}) or
+        (defined $package_info->{$key} and defined $p->{$key} and $package_info->{$key} ne $p->{$key})
+      ) {
+        print "# changed($key): $package-$version\n";
+        $changed->{$key} = $package_info->{$key};
+      }
+    }
+
+    if (keys %$changed) {
+      print "# changed: $package-$version\n";
+      $package_info->{'pkg_id'} = $p->{'pkg_id'};
+      $update_package->execute(map({ $package_info->{$_} } @package_keys), $p->{'pkg_id'}) or warn "failed to update package: " . $update_package->errstr;
+      $update_package->finish();
+      print_lucene_journal($changed_file, $package_info);
+    } else {
+      print "# unchanged: $package-$version\n";
+      $update_timestamp->execute($last_updated, $p->{'pkg_id'});
+      $update_timestamp->finish();
+    }
+  } elsif ($get_package->rows > 1) {
+    die "whoa, got back more than one matching package for " . $vo->get_name() . "\n";
+  } else {
+    print "# new: $package-$version\n";
+    $insert_package->execute( map { $package_info->{$_} } @package_keys) or warn "failed to add package: " . $insert_package->errstr;
+    $insert_package->finish();
+    $get_package->finish(); # finish off the old one, we start a new
+
+    $get_package->execute($rel_id, $vo->get_name(), $vo->get_version(), $vo->get_revision(), $vo->get_epoch()) or warn "failed to get package: " . $get_package->errstr;
+    if ($get_package->rows != 1) {
+      die "a package was added to the database, but could not be found!"
+    }
+    my $pkg = $get_package->fetchrow_hashref();
+    print_lucene_journal($added_file, $pkg);
+  }
+  $get_package->finish();
 
   usleep(100);
 }
 
-$dbh->commit() or warn "failed to end transaction: " . $dbh->errstr;
-#$dbh->do("OPTIMIZE TABLE \`package\`");
+$dbh->commit() or die "failed to commit info file updates: " . $dbh->errstr;
+
+$dbh->begin_work();
+$get_deleted->execute($rel_id, $last_updated) or die "unable to get deleted pkg IDs: " . $get_deleted->errstr;
+if ($get_deleted->rows) {
+  while (my $pkg = $get_deleted->fetchrow_hashref()) {
+    print_lucene_journal($deleted_file, $pkg);
+  }
+}
+$get_deleted->finish();
+$delete_packages->execute($rel_id, $last_updated);
+$delete_packages->finish();
+$dbh->commit() or die "unable to commit package deletion: " . $dbh->errstr;
+
+close ($added_file);
+close ($changed_file);
+close ($deleted_file);
+
+$dbh->do("OPTIMIZE TABLE \`package\`");
 print "# End dump release id = $rel_id\n";
 
 if (defined $treelink) {
@@ -290,6 +393,14 @@ if (defined $treelink) {
 }
 
 $dbh->disconnect();
+
+sub print_lucene_journal {
+	my $handle  = shift;
+	my $package = shift;
+
+	print $handle "# ", join('-', $package->{'rel_id'}, $package->{'epoch'}, $package->{'name'}, $package->{'version'}, $package->{'revision'}), "\n";
+	print $handle $package->{'pkg_id'}, "\n";
+}
 
 sub die_with_usage {
     die <<EOMSG;

@@ -17,20 +17,22 @@ for dist in ${dists[@]}; do
   fi
 done
 
-echo ""
-if [ -d fink ] && [ -d /var/www/finkinfo/dists.public ]; then
-  echo "Updating fink/ via local rsync..."
-  rsync --delete -avr /var/www/finkinfo/dists.public/ fink/
-else
-  if [ -d fink/CVS ]; then
-    echo "Updating ${dists_dir[@]} from CVS..."
-    cd fink
-    cvs -z3 -q update -Al
-    cvs -z3 -q update -Ad ${dists_dir[@]}
-    cd ..
+if [ -z "$SKIP_UPDATE" ]; then
+  echo ""
+  if [ -d fink ] && [ -d /var/www/finkinfo/dists.public ]; then
+    echo "Updating fink/ via local rsync..."
+    rsync --delete -avr /var/www/finkinfo/dists.public/ fink/
   else
-    echo "Checking out ${dists_dir[@]} from CVS..."
-    cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -d fink dists
+    if [ -d fink/CVS ]; then
+      echo "Updating ${dists_dir[@]} from CVS..."
+      cd fink
+      cvs -z3 -q update -Al
+      cvs -z3 -q update -Ad ${dists_dir[@]}
+      cd ..
+    else
+      echo "Checking out ${dists_dir[@]} from CVS..."
+      cvs -z3 -d:pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink co -d fink dists
+    fi
   fi
 fi
 

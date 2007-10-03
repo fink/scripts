@@ -47,9 +47,11 @@ create table if not exists `package` (
  infofile varchar(255) not null default '',
  infofilechanged datetime,
  summary_index text,
+ last_updated bigint,
  primary key (pkg_id),
  index (name),
  index (section),
  index (rel_id),
- index (name, rel_id)
+ index (name, rel_id),
+ index (last_updated)
 ) engine = innodb collate ascii_general_ci;
