@@ -135,10 +135,10 @@ if (-f "$tmpdir/$fullname/$modulename.info.in") {
 	    $distribution = $distro;
 	}
 	print "\n";
-	print "Creating package description file $modulename.info$suffix:\n";
+	print "Creating package description file $modulename$suffix.info:\n";
 	$revision = ${$revisions}{$distro};
 
-    &modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename.info$suffix","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
+    &modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename$suffix.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
 
 }
 }
