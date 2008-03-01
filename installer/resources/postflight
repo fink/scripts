@@ -16,7 +16,7 @@ system "/sw/bin/fink -y index";
 # get ps data for a given PID
 sub process_info {
         my($pid) = shift;
-        my $command = "ps axww -p$pid -o user,ppid,tty,command | tail -n 1";
+        my $command = "ps -xww -p$pid -o user,ppid,tty,command | tail -n 1";
         my @info = split(/\s+/, `$command`, 4);
         return (
                 user => $info[0],
@@ -40,7 +40,7 @@ if(!$ENV{COMMAND_LINE_INSTALL}) {
 	# Running from Installer.app: have Aqua session, so run pathsetup
 	# as user who ran Installer.app.
 	my $real_user = $info{user};
-	system "sudo -u $real_user /sw/bin/pathsetup.sh";
+	system "sudo -H -u $real_user /sw/bin/pathsetup.sh";
 	system "osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'";
 } else {
 	# Running from commandline: not certain to have Aqua session, so
