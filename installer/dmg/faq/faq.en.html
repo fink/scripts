@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.84 2007/06/30 19:25:46 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.85 2008/04/14 00:51:15 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -65,7 +65,7 @@ English |
         with <tt style="white-space: nowrap;">system-xfree86</tt>.</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 How do I change from the non-threaded version of Fink's XFree86
         packages to the threaded version (or vice-versa)?</a></li><li><a href="#comp-packages.cctools">7.4 "When I try to install KDE, I get the following message: 'Can't
         resolve dependency "cctools (&gt;= 446-1)"'"</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 I can't update <tt style="white-space: nowrap;">libiconv</tt>.</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 i can't install <tt style="white-space: nowrap;">g77</tt> because <tt style="white-space: nowrap;">c++filt</tt> is missing.  Where do I get it?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink refuses to update the <tt style="white-space: nowrap;">gettext</tt> package,
-complaining that the dependencies are in an inconsistent state.</a></li><li><a href="#comp-packages.all-others">7.8 I'm having issues with a package that isn't listed here.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
+complaining that the dependencies are in an inconsistent state.</a></li><li><a href="#comp-packages.Leopard-libXrandr">7.8 I can't install <b>gtk+2</b> on OS 10.5.2 because <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> is missing.</a></li><li><a href="#comp-packages.all-others">7.9 I'm having issues with a package that isn't listed here.</a></li></ul></li><li><a href="#usage-general"><b>8 Package Usage Problems - General</b></a><ul><li><a href="#usage-general.xlocale">8.1 I'm getting lots of messages like "locale not supported by C
         library". Is that bad?</a></li><li><a href="#usage-general.passwd">8.2 There are suddenly a number of strange users on my system, with
         names like "mysql", "pgsql", and "games". Where did they come
         from?</a></li><li><a href="#usage-general.compile-myself">8.3 How do I compile something myself using Fink-installed
@@ -1068,9 +1068,15 @@ have the latest versions, try <tt style="white-space: nowrap;">fink update gette
 An old version of the <tt style="white-space: nowrap;">gettext-tools</tt> package may be 
 preventing you from updating <tt style="white-space: nowrap;">gettext</tt>.</p></div>
     </a>
-
+  <a name="comp-packages.Leopard-libXrandr">
+    <div class="question"><p><b>Q7.8: I can't install <b>gtk+2</b> on OS 10.5.2 because <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> is missing.</b></p></div>
+    <div class="answer"><p><b>A:</b> This problem affects machines with OS 10.5.2 pre-installed.
+      There is currently a bug in Apple's X11 in that a file in it that is used
+    for building references <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt>,
+    while it actually has <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.1.0.dylib</tt>.</p><p>The workaround is to run the following command to fix the file:</p><pre>sudo perl -pi.bak -e 's|2.0.0|2.1.0|' /usr/X11/lib/libXrandr.la</pre></div>
+  </a>
     <a name="comp-packages.all-others">
-      <div class="question"><p><b>Q7.8: I'm having issues with a package that isn't listed here.</b></p></div>
+      <div class="question"><p><b>Q7.9: I'm having issues with a package that isn't listed here.</b></p></div>
       <div class="answer"><p><b>A:</b> Since package problems tend to be transient, we've decided to put them
       up on the Fink wiki.  Check the <a href="http://wiki.finkproject.org/index.php/Fink:Package_issues"> Package issues page</a>.</p></div>
     </a>
@@ -1506,4 +1512,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.84 2007/06/30 19:25:46 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.85 2008/04/14 00:51:15 alexkhansen Exp $</i></p></body></html>
