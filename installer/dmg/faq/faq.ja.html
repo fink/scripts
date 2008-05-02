@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.ja.xml,v 1.41 2007/02/23 22:04:54 rangerrick Exp $
+Generated from $Fink: faq.ja.xml,v 1.42 2008/05/02 04:41:49 babayoshihiko Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -74,7 +74,8 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li><li><a href="#comp-general.gettext">6.23 
         	ソースからビルドするとき、 <tt style="white-space: nowrap;">gettext-dev</tt> と <tt style="white-space: nowrap;">libgettext3-dev</tt> の間でたらい回しです。
         </a></li><li><a href="#comp-general.python-mods">6.24 Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</a></li><li><a href="#comp-general.libtool-unrecognized-dynamic">6.25 I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
-        これはどこにありますか?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink が、 <tt style="white-space: nowrap;">gettext</tt> の依存性に矛盾があるとだけ表示し、更新してくれません。</a></li><li><a href="#comp-packages.all-others">7.8 ここに載っていないパッケージで問題があります。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
+        これはどこにありますか?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink が、 <tt style="white-space: nowrap;">gettext</tt> の依存性に矛盾があるとだけ表示し、更新してくれません。</a></li><li><a href="#comp-packages.Leopard-libXrandr">7.8 
+      <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> がないため <b>gtk+2</b> がインストールできません。</a></li><li><a href="#comp-packages.all-others">7.9 ここに載っていないパッケージで問題があります。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
 ユーザー名は、 "mysql", "pgsql", "games" などです。
@@ -1159,11 +1160,22 @@ fink install libiconv</pre></div>
           古いバージョンの <tt style="white-space: nowrap;">gettext-tools</tt> が <tt style="white-space: nowrap;">gettext</tt> の更新を妨害していた可能性があります。
         </p></div>
     </a>
+  <a name="comp-packages.Leopard-libXrandr">
+    <div class="question"><p><b>Q7.8: 
+      <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> がないため <b>gtk+2</b> がインストールできません。</b></p></div>
+    <div class="answer"><p><b>A:</b> 
+    この問題は、10.5.2.がプリインストールされているマシンに影響します。
+    現在のところ、 Apple X11 に、
+    <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> を参照しているのに、
+    実体が <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.1.0.dylib</tt> であるという
+    バグがあります。
+    </p><p>解決するには、以下のコマンドを実行してファイルを修正してください:</p><pre>sudo perl -pi.bak -e 's|2.0.0|2.1.0|' /usr/X11/lib/libXrandr.la</pre></div>
+  </a>
     <a name="comp-packages.all-others">
-      <div class="question"><p><b>Q7.8: ここに載っていないパッケージで問題があります。</b></p></div>
+      <div class="question"><p><b>Q7.9: ここに載っていないパッケージで問題があります。</b></p></div>
       <div class="answer"><p><b>A:</b> パッケージの問題は変わりやすいので、Fink wiki に情報を載せることにいたしました。
         <a href="http://wiki.finkproject.org/index.php/Fink:Package_issues">Package issues page</a> をご確認ください。
-        (訳注: wiki の性質上、wiki は英語版のみであり、翻訳の予定はありません。)</p></div>
+        (訳注: wiki の性質上、wiki は英語版のみであり、翻訳の予定はありません。なお、一部日本語での情報もあります)</p></div>
     </a>
 <h2><a name="usage-general">8 パッケージ使用上の問題 - 一般</a></h2>
     
@@ -1639,4 +1651,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.41 2007/02/23 22:04:54 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.42 2008/05/02 04:41:49 babayoshihiko Exp $</i></p></body></html>
