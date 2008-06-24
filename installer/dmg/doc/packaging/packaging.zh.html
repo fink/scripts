@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.zh.xml,v 1.32 2008/05/26 01:47:14 babayoshihiko Exp $
+Generated from $Fink: packaging.zh.xml,v 1.33 2008/06/15 05:49:51 babayoshihiko Exp $
 -->
 <title>Fink Documentation - 创建 Fink 软件包</title></head><body>
 <table width="100%" cellspacing="0">
@@ -426,15 +426,31 @@ Fink 是一个安装在基本系统之外的独立目录里面的外加的软件
 <p>
 Fink 对于共享库有了新的规则，它从 2002 年 2 月开始生效。
 本段内容讨论的是规则的第四版，它是与 Fink's 0.5.0 一同发布的
-(as well as some updates from December, 2006 to handle 64bit libraries)。
+
+as modified in December, 2006 to handle 64bit libraries
+and from January, 2008 to handle private shared libraries. (In addition,
+the discussion was updated in June, 2008 to eliminate obsolete references to a
+transitional period for implementing the shared libraries policy.)
+We begin with a quick summary, and then discuss things in more detail.
+
 我们首先以一个简要的概括开始，然后讨论更多的细节问题。
 </p><p>
-任何会产生共享库的软件包，无论它是⑴被放在稳定树中，或是⑵一个新的软件包，都应该使得他们的库满足 Fink 的规则。即：</p>
+任何会产生共享库的软件包，都应该使得他们的库满足 Fink 的规则。即：</p>
 <ul>
 <li>   使用 <tt style="white-space: nowrap;">otool -L</tt> (或 otool64 -L for 64bit libraries) 验证每个库的安装名（install_name），兼容性和当前版本号是正确的。</li>
 <li>   把共享库放到一个单独的软件包（除了从 libfoo.dylib 连接 install_name 的以外），并在软件包中包括 <tt style="white-space: nowrap;">Shlibs</tt> 字段</li>
 <li>   把头文件以最终从 libfoo.dylib 的连接放到一个软件包中，并分类为： <tt style="white-space: nowrap;">BuildDependsOnly: True</tt>，应该不会有其他软件包会依赖它。</li>
 </ul>
+
+<p>Note that a package may also install private shared libraries, which
+are not intended to be linked from any other package.  In this case, the
+libraries need not go into a separate package, but a <tt style="white-space: nowrap;">Shlibs</tt>
+field must still be part of the package containing shared libraries.  Also,
+maintainers should try to avoid storing a final link from libfoo.dylib
+in the main library directory <tt style="white-space: nowrap;">%i/lib</tt> 
+(or its 64-bit equivalent), to prevent
+other programs from accidentally linking to this library.
+</p>
 <p>
   如果某个维护者因为某个原因而不能遵循这个规则，没有分离软件包的话，应该在 DescPackaging 字段中说明原因。
 </p><p>
@@ -448,20 +464,22 @@ Fink 对于共享库有了新的规则，它从 2002 年 2 月开始生效。
 <p>对于第二种情况，使用下面的命名模式：</p>
 <table border="0" cellpadding="0" cellspacing="10"><tr valign="bottom"><th align="left">Package</th><th align="left">Contents</th></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-shlibs</tt></td><td><p>共享库</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo-dev</tt></td><td><p>头文件</p></td></tr><tr valign="top"><td><tt style="white-space: nowrap;">foo</tt></td><td><p>二进制执行文件，等等</p></td></tr></table>
 
-<p>
-对于方法 2，升级一个现存软件包会比较困难：在升级的同时，你需要添加 <tt style="white-space: nowrap;">BuildDepends: foo-dev</tt> 到每一个包含 <tt style="white-space: nowrap;">Depends: foo</tt> 的软件包中。
-另外一个需要记住的升级问题是：为了保证一个成功的升级，间接依赖于（依赖于另外一个软件包，而那个软件软件需要依赖于你）你这个软件包的软件也需要添加 <tt style="white-space: nowrap;">BuildDepends: foo</tt> or <tt style="white-space: nowrap;">BuildDepends: foo-dev</tt>。
-添加 <tt style="white-space: nowrap;">BuildDepends</tt> 字段的责任在于你。
-</p>
 <p><b>规则细节</b></p>
 <p>
-我们现在讨论更多的细节，我们首先讨论关于一个新移植的软件包的规则，然后转到讨论升级一个现存的软件的问题。我们使用 libpng，libjpeg 和 libtiff 软件包作为规则的实际例子。
+我们现在讨论更多的细节。我们使用 libpng，libjpeg 和 libtiff 软件包作为规则的实际例子。
 </p><p>
 已经移植到 Darwin 的软件应该尽可能编译共享库（当然，根据软件包的实际需要，维护者也可以选择编译静态库；如果他们愿意的话，也可以只提交包含静态库的版本）。
-当编译共享库的时候，应该创建<b>两个</b>密切相关的 fink 软件包，分别名为 foo 
+当编译共享库的时候
+，应该创建<b>两个</b>密切相关的 fink 软件包，分别名为 foo 
 和 foo-shlibs。共享库放到 foo-shlibs 中，而头文件在放到 foo 中。这两个软件包可以用同一个 .info 文件产生，象下面描述的那样，使用 <tt style="white-space: nowrap;">SplitOff</tt> 字段（事实上，通常需要从源程序中编译出不止两个软件包，这时可以使用 <tt style="white-space: nowrap;">SplitOff2</tt>，<tt style="white-space: nowrap;">SplitOff3</tt>…，等等）
 </p><p>
-每个有共享库的软件包都有一个<b>主版本号</b> N。当共享库的 API 不再后向兼容以后，才会去改变主版本号。Fink 使用下面的命名约定：如果上游的软件包叫做 bar，那么 fink 软件称为 barN 和 
+
+
+Each software package for which public shared libraries are built must have
+a <b>major version number</b> N, which is included in the shared
+library's filename (for example, <tt style="white-space: nowrap;">libbar.N.dylib</tt>).
+
+当共享库的 API 不再后向兼容以后，才会去改变主版本号。Fink 使用下面的命名约定：如果上游的软件包叫做 bar，那么 fink 软件称为 barN 和 
 barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，才会严格应用这个规则）。例如，现存的 libpng 软件包的主版本号是 3，但当前版本的库的主版本号是 3。所以现在有四个软件包：libpng, libpng-shlibs, libpng3, libpng3-shlibs。
 在 libpng 和 libpng3 之间只能同时安装一个，但 libpng-shlibs 和 libpng3-shlibs 则可以同时安装。
 （注意创建这四个软件包只需要两个 .info 文件）
@@ -477,7 +495,11 @@ barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，
   BuildDepends: barN
 </pre>
 <p>
-当本依赖规则系统完全使用以后，将不允许其它软件包依赖于 barN 它自己（为了后向兼容，这种依赖关系允许存在于现存的软件包）。这通过在 barN 的软件包描述中的一个布尔字段：
+It is not be permitted for 
+another package to depend on barN itself.  (Although there may still be
+a few such dependencies involving packages which were in place prior to 
+February, 2002.)  This is
+signaled to other developers by a boolean field
 </p>
 <pre>
   BuildDependsOnly: True
@@ -487,7 +509,7 @@ barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，
 </p><p>
 如果你的软件包包括共享库和二进制文件，而且二进制文件需要在运行时使用（而不仅仅时编译时），那么这些二进制文件应该被分离到第三个软件包中，这个软件包命名为 barN-bin。其它软件包可以依赖于 barN-shlibs 及 barN-bin。
 </p><p>
-当编译主版本号为 N 的共享库时，很重要的是要使 <tt style="white-space: nowrap;">%p/lib/bar.N.dylib</tt> 来作为 "install_name"。（你可以用 <tt style="white-space: nowrap;">otool -L</tt> 或 otool64 -L for 64bit libraries 来查看你的库的 install_name）。实际的库文件应该被安装在
+当编译主版本号为 N 的共享库时，很重要的是要使 <tt style="white-space: nowrap;">%p/lib/libbar.N.dylib</tt> 来作为 "install_name"。（你可以用 <tt style="white-space: nowrap;">otool -L</tt> 或 otool64 -L for 64bit libraries 来查看你的库的 install_name）。实际的库文件应该被安装在
 </p>
 <pre>
   %i/lib/bar.N.x.y.dylib
@@ -496,14 +518,18 @@ barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，
 而你的软件包应该创建符号链接
 </p>
 <pre>
-  %i/lib/bar.N.dylib -&gt; %p/lib/bar.N.x.y.dylib
-  %i/lib/bar.dylib -&gt; %p/lib/bar.N.x.y.dylib
+  %i/lib/libbar.N.dylib -&gt; %p/lib/libbar.N.x.y.dylib
+  %i/lib/libbar.dylib -&gt; %p/lib/libbar.N.x.y.dylib
 </pre>
+<p>from the install_name path and from the linking path to the actual
+library.  (The first will not be needed if the library is in fact
+installed at the install_name path, which is becoming more common.)
+</p>
 <p>
 如果还构建了静态库，那么它应该被安装在
 </p>
 <pre>
-  %i/lib/bar.a
+  %i/lib/libbar.a
 </pre>
 <p>
 如果软件包使用 libtool，这些事情通常会被自动处理，
@@ -515,17 +541,17 @@ barN-shlibs（只有在新软件包或主版本号发生改变的软件包上，
 <ul>
 <li>  在 barN-shlibs 软件包中：
 <pre>
-  %i/lib/bar.N.x.y.dylib
-  %i/lib/bar.N.dylib -&gt; %p/lib/bar.N.x.y.dylib
-  %i/lib/bar/N/*
+  %i/lib/libbar.N.x.y.dylib
+  %i/lib/libbar.N.dylib -&gt; %p/lib/libbar.N.x.y.dylib
+  %i/lib/libbar/N/*
   %i/share/bar/N/*
   %i/share/doc/barN-shlibs/*
 </pre></li>
 <li>  在 barN 软件包中：
 <pre>
   %i/include/*
-  %i/lib/bar.dylib -&gt; %p/lib/bar.N.x.y.dylib
-  %i/lib/bar.a
+  %i/lib/libbar.dylib -&gt; %p/lib/libbar.N.x.y.dylib
+  %i/lib/libbar.a
   %i/share/doc/barN/*
   如果需要的话，包括其它文件
 </pre></li></ul>
@@ -545,7 +571,7 @@ BuildDependsOnly: True
 DocFiles: COPYING
 SplitOff: &lt;&lt;
   Package: barN-shlibs
-  Files: lib/bar.N.x.y.dylib lib/bar.N.dylib lib/bar/N
+  Files: lib/libbar.N.x.y.dylib lib/libbar.N.dylib lib/bar/N
   DocFiles: COPYING
 &lt;&lt;
 </pre>
@@ -602,30 +628,66 @@ BuildDependsOnly to be either true or false.  (It is possible that in
 future versions of fink, this warning will be expanded to cover the case of
 a .deb with header files and a static library as well.)
 </p>
-
+<p>
+  The goal of the Shared Library Policy is to allow assure
+  compatibility between libraries supplied by one package and
+  libraries or programs that use them in a different package. Some
+  packages may have shared libraries that are not designed to be used
+  by other packages. Common situations include a suite of programs
+  that come with a back-end library of utility functions or a program
+  that comes with plugins to handle various features. Because these
+  libraries are "private" to the package that has them, they do not
+  require being packaged with separate -shlibs
+  or <tt style="white-space: nowrap;">BuildDependsOnly</tt> SplitOffs.
+</p>
 <p><b>Shlibs 字段：</b>
 </p><p>
 除了把共享库放到合适的软件包中外，作为规则版本 4，你还需要用 <tt style="white-space: nowrap;">Shlibs</tt> 字段声明全部共享库。
-这个字段每个共享库占一行，这行中包含库的 <tt style="white-space: nowrap;">-install_name</tt>，<tt style="white-space: nowrap;">-compatibility_version</tt>
 
-，and the library architecture.  (The library architecture may either be "32", "64", or
-"32-64", and may be absent; the value defaults to "32" if it is absent.) 
+This field has one line for each
+shared library, which contains the <tt style="white-space: nowrap;">-install_name</tt> of the
+library. If the library is public, its <tt style="white-space: nowrap;">Shlibs</tt> entry also
+lists the <tt style="white-space: nowrap;">-compatibility_version</tt>, versioned
+dependency information specifying the Fink package which provides
+this library at this compatibility version, and the library
+architecture.  (The library architecture may either be "32", "64", or
+"32-64", and may be absent; the value defaults to "32" if it is absent.)
 
-以及版本依赖信息，这个信息指明在本兼容版本中提供库的 Fink 软件包。
 依赖关系应该用 <tt style="white-space: nowrap;">foo (&gt;= version-revision)</tt> 的形式指明。其中
 <tt style="white-space: nowrap;">version-revision</tt> 指提供这个与（本版本兼容）的共享库的 Fink 软件包的<b>第一个</b>版本。例如，这样</p>
 <pre>
   Shlibs: &lt;&lt;
-    %p/lib/bar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2) 32
+    %p/lib/libbar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2) 32
   &lt;&lt;
 </pre>
-<p>一个声明表示从 <b>bar1</b> 软件包的版本 1.1-2 开始，已经开始安装一个 <tt style="white-space: nowrap;">-install_name</tt> 为 %p/lib/bar.1.dylib，<tt style="white-space: nowrap;">-compatibiliary_version</tt> 为 2.1.0 的函数库。另外，这个声明还表示维护者承诺这个名字及 compatibility-version 至少为 2.1.0 以上的 (32bit) 函数库可以在 <b>bar1</b> 软件包的以后版本中找到。
+<p>一个声明表示从 <b>bar1</b> 软件包的版本 1.1-2 开始，已经开始安装一个 <tt style="white-space: nowrap;">-install_name</tt> 为 %p/lib/libbar.1.dylib，<tt style="white-space: nowrap;">-compatibiliary_version</tt> 为 2.1.0 的函数库。另外，这个声明还表示维护者承诺这个名字及 compatibility-version 至少为 2.1.0 以上的 (32bit) 函数库可以在 <b>bar1</b> 软件包的以后版本中找到。
 </p><p>
 注意在库的名字中使用 %p，这使得无论他们选择什么安装路径前缀，Fink 的所有用户都可以找到正确的 <tt style="white-space: nowrap;">-install_name</tt> 代表的函数库。
 </p><p>
 当一个软件包被更新的时候，通常 <tt style="white-space: nowrap;">Shlibs</tt> 字段会被简单地拷贝到软件包的下一个版本／修订版中。例外的情况是如果 <tt style="white-space: nowrap;">-compatibility_version</tt> 增加了：那种情况下，依赖信息的版本号应该改变到当前的版本号／修订版号（这是使用新兼容版本号的第一个函数库）。
-</p><p>
-<b>当主版本号发生变化的时候应该做什么：</b>
+</p>
+
+<p>
+The <tt style="white-space: nowrap;">Shlibs</tt>
+entry for a private library uses a different syntax:
+</p>
+<pre>
+  Shlibs: &lt;&lt;
+    !%p/lib/%N/libbar.1.dylib
+  &lt;&lt;
+</pre>
+<p>The leading exclamation point indicates that this is a private library,
+and since the other information is not relevant in this case, it is 
+not included.</p>
+<p>Note that in this example, the private shared library has been placed
+in its own subdirectory <tt style="white-space: nowrap;">%N</tt> of the 
+<tt style="white-space: nowrap;">%i/lib</tt> directory (which was named after the
+package).  This is a recommended procedure for private libraries,
+as an additional safety measure, to prevent other packages from accidentally
+linking to this library.
+</p>
+
+<p><b>当主版本号发生变化的时候应该做什么：</b>
 </p><p>
 如果主版本号从 N 改到了 M，你需要创建两个新的软件包 barM 和 barM-shlibs。 软件包 barM-shlibs 可以不覆盖 barN-shlibs，因为许多用户会同时安装这两个版本。在软件包 barM 中，你应该使用依赖关系
 </p>
@@ -642,21 +704,9 @@ a .deb with header files and a static library as well.)
 </pre>
 <p>
 用户会看到在构建其它软件包的时候，根据不同的软件的设置，会选择连接 barN 或 barM 作为共享库。这样，我们实现 barN-shlibs 和 barM-shlibs 在系统里面的共存。
-</p><p>
-<b>How to upgrade an existing fink package:</b>
-</p><p>
-对于一个现用的 Fink 软件包，无论它是静态库还是共享库，升级的最好版本是为你的软件包创建一个新的版本 foo，以及一个新的软件包 foo-shlibs，来满足上述的规则要求。如果共享库以前已经安装(或者有些文件现在放到 foo-shlibs 中了)，那么这些软件包应该声明
 </p>
-<pre>
-  Replaces: foo (&lt;&lt; earliest.compliant.version)
-</pre>
+<p><b>Packages containing both binary files and libraries:</b></p>
 <p>
-这样可以使得升级对用户是透明的。(你<b>不</b>应该说"Conflicts: foo"，因为这样会使得升级无法进行)。
-</p><p>
-在你升级以后，那些声明 "Depends: foo" 的软件包仍然可以正常工作。不过，你应该连接这些软件包的维护者，要求他们尽快修改他们的软件包描述为  "Depends: foo-shlibs, BuildDepends: foo"。在他们修改完毕以前，你不能够创建使用新的主版本号的 fooM，fooM-shlibs 软件包。</p><p>
-那些没有使用正确的 install_name 的现存软件包或者那些没有使用正确的名字或符号连接到共享库的软件包在升级的时候必须很小心，这需要逐个情况进行分析。如果你在使你的软件包在符合新规则上碰到困难，请在 fink-devel 邮件列表中进行讨论。</p><p>
-<b>Packages containing both binary files and libraries:</b>
-</p><p>
 如果上游软件包包含二进制文件和库，那么在构建 fink 软件包的时候有些事情需要特别注意。有些情况下，那些二进制文件仅仅是一些类似 <tt style="white-space: nowrap;">foo-config</tt> 的程序 ，它们只需要在构建的时候使用，而不需要在运行时使用。这种情况下，二进制文件可以和头文件一样包括在 <tt style="white-space: nowrap;">foo</tt>
 软件包中。
 </p><p>
@@ -677,6 +727,26 @@ a .deb with header files and a static library as well.)
 <p>
 这可以强制安装 foo-bin 在多数用户的系统里面，只要有一天其它软件包维护者也升级了依赖于 <tt style="white-space: nowrap;">foo</tt> 的软件包。
 </p>
+
+<p>
+  As of fink-0.28.0 (released in January 2008), the format of
+  the <tt style="white-space: nowrap;">Shlibs</tt> entry for a "private" shared library has
+  changed (see earlier discussion of the difference between a public
+  and a private shared library). Note that the Shared Library Policy
+  has always required all shared libraries to be listed; the change
+  here is only in the syntax of the <tt style="white-space: nowrap;">Shlibs</tt> field. Because
+  this type of shared library is not designed to be used by external
+  packages, there is no need to document its compatilibity or other
+  versioning. Instead, an exclamation-mark is used.  For example,
+  if <tt style="white-space: nowrap;">libquux.3.dylib</tt> is
+  the <tt style="white-space: nowrap;">install_name</tt> of a private shared library, it would
+  be listed as follows:
+</p>
+<pre>
+  Shlibs: &lt;&lt;
+    !%p/lib/libquux.3.dylib
+  &lt;&lt;
+</pre>
 
 
 
@@ -2027,18 +2097,19 @@ configure 或 ant 之类的工具能够正确地检测到已安装的 jar 文件
 <p>
 <b>从 fink 0.11.0 开始。</b>
 这个字段声明软件包中要安装的共享库。
-每个共享库占一行，每行包括以空格分开的三或四项：
-共享库的 <tt style="white-space: nowrap;">-install_name</tt>(安装名)，
-<tt style="white-space: nowrap;">-compatibility_version</tt>(兼容版本号)，
-和版本相关的指明提供这个兼容版本的 Fink 软件包的依赖信息，
 
-the library architecture.  (The library architecture may either be "32", "64", or
+There is one line for each shared library, which contains the <tt style="white-space: nowrap;">-install_name</tt> of the library and information about its binary compatibility. 
+Shared libraries that are "public" (i.e., provided for use by other packages) have, separated by whitespace after the filename, the <tt style="white-space: nowrap;">-compatibility_version</tt>, versioned package dependency information specifying the Fink package which provides this library at this compatibility version, and the library architecture.
+(The library architecture may either be "32", "64", or
 "32-64", and may be absent; the value defaults to "32" if it is absent.)  
 
 依赖信息应该以下面的形式描述：<tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> 其中 
 <tt style="white-space: nowrap;">version-revision</tt> 指提供(这个兼容版本)函数库的 Fink 软件包的 <b>第一个</b>版本。
 Shlibs 声明表明维护者承诺这个名字和至少
 <tt style="white-space: nowrap;">-compatibility_version</tt>的兼容版本号的函数库会在这个 Fink 软件包的新版本中找到。
+
+Shared libraries that are "private" are denoted by an exclamation mark preceeding the filename, and no compatilibity or versioning information is given. See the <a href="#policy.sharedlibs">Shared Library Policy</a> for more information.
+
 </p></td></tr><tr valign="top"><td>RuntimeVars</td><td>
 <p>
 <b>从 fink 0.10.0 开始。</b>
@@ -2307,4 +2378,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.zh.xml,v 1.32 2008/05/26 01:47:14 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.zh.xml,v 1.33 2008/06/15 05:49:51 babayoshihiko Exp $</i></p></body></html>
