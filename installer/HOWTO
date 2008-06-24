@@ -27,6 +27,11 @@ Step 2:
  you generated when building the srcdist), unpack it and run "./bootstrap.sh",
  installing into /sw.  Accept all default choices during configuration.
 
+Step 2A:
+ Make sure that the file CURRENT-FINK-$OSX_VERSION is present on the fink
+ website, and run "/sw/bin/fink selfupdate", selecting option 3 (stick to
+ point releases).
+
 Step 3:
  Run "/sw/bin/fink update-all" in case there were updates to base-packages 
  since the last package manager release.
