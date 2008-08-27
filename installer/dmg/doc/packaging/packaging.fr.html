@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.fr.xml,v 1.75 2008/06/15 05:49:48 babayoshihiko Exp $
+Generated from $Fink: packaging.fr.xml,v 1.76 2008/08/27 05:20:52 dmacks Exp $
 -->
 <title>Fink Documentation - Création de paquets Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -993,9 +993,9 @@ Shared libraries that are "private" are denoted by an exclamation mark preceedin
 <pre>
 Package: mime-base64-pm%type_pkg[perl]
 Type: perl (5.8.1 5.8.6)
-SplitOff: %lt;%lt;
+SplitOff: &lt;&lt;
   Package: mime-base64-pm-bin
-%lt;%lt;
+&lt;&lt;
 </pre>
 <p>Lors de la phase d'installation, les champs <tt style="white-space: nowrap;">InstallScript</tt> et <tt style="white-space: nowrap;">DocFiles</tt> du paquet parent sont exécutés en premier. Puis vient l'exécution des champs <tt style="white-space: nowrap;">SplitOff</tt> et <tt style="white-space: nowrap;">SplitOff<b>N</b></tt>. Pour chacun de ces champs à tour de rôle, la commande <tt style="white-space: nowrap;">Files</tt> déplace les fichiers et répertoires spécifiés, du répertoire d'installation %I du paquet parent dans le répertoire de l'installation en cours %i. Puis les scripts <tt style="white-space: nowrap;">InstallScript</tt> et <tt style="white-space: nowrap;">DocFiles</tt> des paquets <tt style="white-space: nowrap;">SplitOff</tt> et <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> sont exécutés.</p>
 <p>À l'heure actuelle, le champ <tt style="white-space: nowrap;">SplitOff</tt>, s'il existe, est exécuté en premier, suivi des champs <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> par ordre numérique. Néanmoins, cela pourrait changer dans le futur. Il est donc conseillé de ne pas utiliser :</p>
@@ -1040,4 +1040,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.fr.xml,v 1.75 2008/06/15 05:49:48 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.fr.xml,v 1.76 2008/08/27 05:20:52 dmacks Exp $</i></p></body></html>
