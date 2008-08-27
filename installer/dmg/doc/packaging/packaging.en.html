@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.102 2008/08/27 05:20:51 dmacks Exp $
+Generated from $Fink: packaging.en.xml,v 1.103 2008/08/27 05:44:07 dmacks Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -2878,10 +2878,14 @@ SplitOff: &lt;&lt;
 <p>
 During the install phase, the <tt style="white-space: nowrap;">InstallScript</tt> and 
 <tt style="white-space: nowrap;">DocFiles</tt> of the parent package are executed first.
-Next comes processing of the <tt style="white-space: nowrap;">SplitOff</tt> and <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> fields. For each such field in turn, the <tt style="white-space: nowrap;">Files</tt> command causes the listed files and directories
+Next comes processing of the <tt style="white-space: nowrap;">SplitOff</tt> and
+<tt style="white-space: nowrap;">SplitOff<b>N</b></tt> fields. For each such field in turn,
+the <tt style="white-space: nowrap;">InstallScript</tt> of that field is run, and then the
+<tt style="white-space: nowrap;">Files</tt> command causes the listed files and directories
 to be moved from the parent's installation directory %I to the
-current installation directory %i.  Then the <tt style="white-space: nowrap;">InstallScript</tt>
-and <tt style="white-space: nowrap;">DocFiles</tt> of the given <tt style="white-space: nowrap;">SplitOff</tt> or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> package are
+current installation directory %i.  Then the <tt style="white-space: nowrap;">DocFiles</tt>
+and other Installation Phase fields of the given <tt style="white-space: nowrap;">SplitOff</tt>
+or <tt style="white-space: nowrap;">SplitOff<b>N</b></tt> package are
 executed.  
 </p><p>
 At this time, the <tt style="white-space: nowrap;">SplitOff</tt> is processed first (if
@@ -3000,4 +3004,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.102 2008/08/27 05:20:51 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.103 2008/08/27 05:44:07 dmacks Exp $</i></p></body></html>
