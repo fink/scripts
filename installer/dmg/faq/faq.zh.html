@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.zh.xml,v 1.29 2008/05/02 04:41:49 babayoshihiko Exp $
+Generated from $Fink: faq.zh.xml,v 1.30 2008/10/29 00:15:08 alexkhansen Exp $
 -->
 <title>Fink Documentation - Fink 常见疑问（F.A.Q.）</title></head><body>
 <table width="100%" cellspacing="0">
@@ -425,7 +425,7 @@ fink selfupdate-cvs</pre></div>
     <a name="usage-fink.bad-list-file">
       <div class="question"><p><b>Q5.19: 我不能安装或删除任何东西，因为一个 "files list file" 问题。</b></p></div>
       <div class="answer"><p><b>A:</b> 通常这些错误的形式是：</p><pre>files list file for package <b>软件包名</b> contains empty filename</pre><p>或</p><pre>files list file for package <b>软件包名</b> is missing final newline</pre><p>这可以通过一点小小的工作而修复。如果你在系统里面有发生问题的这个软件包的 .deb 文件，用下面命令检查它的完整性：</p><pre>dpkg --contents <b>deb文件的完整路径</b>
-        </pre><p>例如</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>如果你获得了一列目录和文件，那么你的 .deb 是正确的。如果输出是目录和文件以外的其它东西，或者你没有 .deb 文件，你仍然可以继续操作，因为这个错误不会影响构建。</p><p>如果你是从二进制包进行安装或你肯定知道二进制包里面的版本和你已经安装的版本一致（比如，通过检查<a href="http://pdb.finkproject.org/pdb/index.php">软件包数据库</a>），你可以用下面的办法获取一个 .deb 文件： <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>软件包名</b>
+        </pre><p>例如</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin-powerpc.deb</pre><p>如果你获得了一列目录和文件，那么你的 .deb 是正确的。如果输出是目录和文件以外的其它东西，或者你没有 .deb 文件，你仍然可以继续操作，因为这个错误不会影响构建。</p><p>如果你是从二进制包进行安装或你肯定知道二进制包里面的版本和你已经安装的版本一致（比如，通过检查<a href="http://pdb.finkproject.org/pdb/index.php">软件包数据库</a>），你可以用下面的办法获取一个 .deb 文件： <tt style="white-space: nowrap;">sudo apt-get install --reinstall --download-only <b>软件包名</b>
           </tt>。否则你也可以用下面的办法自己从源代码重新构建一个：<tt style="white-space: nowrap;">fink rebuild <b>软件包名</b>
           </tt>，但它暂时还不能安装。</p><p>一旦你有了一个正常的 .deb 文件，你可以重新安装文件。首先用下面的命令成为 root 用户：<tt style="white-space: nowrap;">sudo -s</tt>（有需要的话，输入你的管理员密码），然后使用下面的命令（我们把它分行以方便阅读，但实际使用的时候，你应该在一行里面输入）：</p><pre>dpkg -c <b>deb文件的完整路径</b>
   | awk '{if ($6 == "./"){ print "/."; } else if (substr($6, length($6), 1) == "/")
@@ -1188,4 +1188,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.zh.xml,v 1.29 2008/05/02 04:41:49 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.zh.xml,v 1.30 2008/10/29 00:15:08 alexkhansen Exp $</i></p></body></html>

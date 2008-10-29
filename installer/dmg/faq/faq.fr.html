@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.fr.xml,v 1.78 2008/05/02 04:41:49 babayoshihiko Exp $
+Generated from $Fink: faq.fr.xml,v 1.79 2008/10/29 00:15:08 alexkhansen Exp $
 -->
 <title>Fink Documentation - Fink - Q.F.P.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -236,7 +236,7 @@ fink selfupdate-cvs</pre></div>
 <a name="usage-fink.bad-list-file">
 <div class="question"><p><b>Q5.19: Il est impossible d'installer ou de supprimer quoi que ce soit à cause d'un problème de listes de fichiers de paquets (messages en anglais contenant "files list file"). Que faire ?</b></p></div>
 <div class="answer"><p><b>A:</b> En général, ces erreurs sont de la forme :</p><pre>files list file for package <b>nom_du_paquet</b> contains empty filename</pre><p>ou</p><pre>files list file for package <b>nom_du_paquet</b> is missing final newline</pre><p>Cela peut être corrigé relativement facilement. Si vous avez sur votre système le fichier .deb du paquet posant problème, vérifiez son intégrité en tapant la commande suivante :</p><pre>dpkg --contents <b>chemin_complet_du_fichier_deb</b></pre><p>par exemple :</p><pre>dpkg --contents /sw/fink/debs/libgnomeui2-dev_2.0.6-2_darwin\
--powerpc.deb</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>Si vous obtenez une liste de répertoires et de fichiers, votre fichier .deb est valide. Si, par contre, le résultat est différent ou si vous n'avez pas le fichier .deb, vous pouvez continuer car cette erreur n'interfère pas avec les éléments compilés.</p><p>Si vous avez fait l'installation à partir de la distribution binaire, ou bien si vous êtes certain que la version que vous avez installée est identique à celle de la distribution (vous l'avez vérifié dans la <a href="http://pdb.finkproject.org/pdb/index.php"> base de données des paquets</a>), alors vous pouvez télécharger un fichier .deb en lançant <tt style="white-space: nowrap;">sudo apt=get install --reinstall --download-only <b>nom_du_paquet</b></tt>. Vous pouvez aussi le compiler vous-même avec la commande <tt style="white-space: nowrap;">fink rebuild <b>nom_du_paquet</b></tt>, mais cela ne l'installera pas.</p><p>Quand vous aurez un fichier .deb valide, vous pouvez reconstituer le fichier. Tout d'abord, mettez-vous en mode super-utilisateur en utilisant la commande <tt style="white-space: nowrap;">sudo -s</tt> (saisissez votre mot de passe administrateur si nécessaire), puis utilisez la commande suivante :</p><pre>dpkg -c <b>chemin_complet_du_fichier_deb</b> | awk '{if ($6 == "./")\
+-powerpc.deb</pre><p><b>Note</b> : les barres obliques inversées ont été rajoutées uniquement pour des raisons de formatage.</p><p>Si vous obtenez une liste de répertoires et de fichiers, votre fichier .deb est valide. Si, par contre, le résultat est différent ou si vous n'avez pas le fichier .deb, vous pouvez continuer car cette erreur n'interfère pas avec les éléments compilés.</p><p>Si vous avez fait l'installation à partir de la distribution binaire, ou bien si vous êtes certain que la version que vous avez installée est identique à celle de la distribution (vous l'avez vérifié dans la <a href="http://pdb.finkproject.org/pdb/index.php"> base de données des paquets</a>), alors vous pouvez télécharger un fichier .deb en lançant <tt style="white-space: nowrap;">sudo apt-get install --reinstall --download-only <b>nom_du_paquet</b></tt>. Vous pouvez aussi le compiler vous-même avec la commande <tt style="white-space: nowrap;">fink rebuild <b>nom_du_paquet</b></tt>, mais cela ne l'installera pas.</p><p>Quand vous aurez un fichier .deb valide, vous pouvez reconstituer le fichier. Tout d'abord, mettez-vous en mode super-utilisateur en utilisant la commande <tt style="white-space: nowrap;">sudo -s</tt> (saisissez votre mot de passe administrateur si nécessaire), puis utilisez la commande suivante :</p><pre>dpkg -c <b>chemin_complet_du_fichier_deb</b> | awk '{if ($6 == "./")\
 { print "/."; } \
 else if (substr($6, length($6), 1) == "/")\
 {print substr($6, 2, length($6) - 2); } \
@@ -861,4 +861,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.fr.xml,v 1.78 2008/05/02 04:41:49 babayoshihiko Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.fr.xml,v 1.79 2008/10/29 00:15:08 alexkhansen Exp $</i></p></body></html>
