@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.103 2008/08/27 05:44:07 dmacks Exp $
+Generated from $Fink: packaging.en.xml,v 1.104 2009/02/24 20:58:12 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -345,6 +345,12 @@ period characters removed (as per Fink's language-version package naming
 convention and for other clever uses). (Introduced in a post-0.19.2
 CVS version of fink.)  The _num form was introduced in fink-0.26.0
 and removes all non-digits from the <tt style="white-space: nowrap;">Type</tt> field.
+</p>
+<p>
+Note that when the <tt style="white-space: nowrap;">Type</tt> field defines <b>type</b> to
+be "Boolean", then <tt style="white-space: nowrap;">(%type_pkg[type])</tt> can be used directly
+in conditional expressions.  (Its boolean value is true or false,
+corresponding to the subtype is being evaluated.)
 </p>
 </td></tr><tr valign="top"><td>%{ni}, %{Ni}</td><td>
 <p>
@@ -3004,4 +3010,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.103 2008/08/27 05:44:07 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.104 2009/02/24 20:58:12 dmrrsn Exp $</i></p></body></html>
