@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: advanced.en.xml,v 1.4 2007/02/23 22:04:53 rangerrick Exp $
+Generated from $Fink: advanced.en.xml,v 1.5 2009/03/01 02:53:48 alexkhansen Exp $
 -->
 <title>Fink Documentation - Advanced Fink Topics</title></head><body>
 <table width="100%" cellspacing="0">
@@ -28,12 +28,6 @@ This document describes advanced topics not found in the
 This section describes a method for workgroups of more than one Fink
 installation to use a central build server ("master") that distributes binary
 packages to all clients in the group.
-      </p>
-      <p>
-(<b>Note:</b> These instructions assume that you have a fink version &gt;= 0.24.0
-on your client machines. Read the 
-<a href="#bindist.remarks">remarks below</a> if you are using older fink
-versions.)
       </p>
       <p>
 The method involves the following steps on the 
@@ -142,14 +136,9 @@ binaries from the "master" server if available.
         <li>
 Your "master" server needs to use the lowest version of X11 that you're using
 on all of the clients, i.e. if any of the client machines uses Apple's X11, the
-"master" server must use it too.      </li>
+"master" server must use it too.</li>
         <li>In order to save space on your build machine, you can remove packages that are only build-dependencies (i.e. not needed to run anything).  The <tt style="white-space: nowrap;">debfoster</tt> package provides a nice way to do this. Be careful not to remove essential packages, such as <tt style="white-space: nowrap;">apt</tt>. </li>
-        <li>
-If you are using a fink version &lt; 0.24.0 on a client machine you need to run
-<tt style="white-space: nowrap;">sudo apt-get update</tt> instead of <tt style="white-space: nowrap;">fink selfupdate</tt>. You then need to install binary packages with <tt style="white-space: nowrap;">sudo apt-get install
-&lt;package&gt;</tt>.  
-      </li>
-      </ul>
+       </ul>
       <p>
 This documentation is adapted in part from
 <a href="http://ranger.befunk.com/blog/archives/000258.html">"Sharing the Fink"</a>
@@ -157,9 +146,9 @@ by RangerRick. Thanks!
       </p>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2008 The Fink Project.
+Copyright (c) 2001-2009 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: advanced.en.xml,v 1.4 2007/02/23 22:04:53 rangerrick Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: advanced.en.xml,v 1.5 2009/03/01 02:53:48 alexkhansen Exp $</i></p></body></html>
