@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.en.xml,v 1.50 2007/11/17 18:07:46 alexkhansen Exp $
+Generated from $Fink: uguide.en.xml,v 1.52 2009/03/01 01:50:36 alexkhansen Exp $
 -->
 <title>Fink Documentation - Fink User's Guide</title></head><body>
 <table width="100%" cellspacing="0">
@@ -13,6 +13,7 @@ English |
 <a href="uguide.es.html">Espa&ntilde;ol</a> | 
 <a href="uguide.fr.html">Fran&ccedil;ais</a> | 
 <a href="uguide.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
+<a href="uguide.pt.html">Portugu&ecirc;s</a> | 
 <a href="uguide.ru.html">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russkiy)</a> | 
 <a href="uguide.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
@@ -58,7 +59,7 @@ In any case you will need:
       <ul>
         <li>
           <p>
-An installed Mac OS X system, version 10.2 or later, or equivalent
+An installed Mac OS X system, version 10.4 or later, or equivalent
 Darwin releases.
 Earlier versions of both will <b>not</b> work.
 See below for more information about supported systems.
@@ -80,13 +81,12 @@ also need:
         <li>
           <p>
 Developer tools.  
-On Mac OS X, install the Developer.pkg package from the Developer
-Tools (known as XCode for 10.3 and 10.4) CD (they're on the main DVD for OS 10.4), or <a href="http://connect.apple.com">download</a> the latest version--this is often desirable, as later versions frequently fix issues (though admittedly sometimes they break things).    
+On Mac OS X, install the XcodeTools.mpkg package from the installation DVD,
+or <a href="http://connect.apple.com">download</a> the latest version--this is often desirable, as later versions frequently fix issues (though admittedly sometimes they break things).    
 Note that the tools must match your Mac OS X version.
-On Darwin, the tools should be present in the default install.
 </p>
           <p>
-It's a good idea to have the Developer Tools installed even if you
+It's a good idea to have XCode installed even if you
 don't intend to build packages from source.
 Some of the programs installed by the package are actually general
 purpose command line tools.
@@ -104,23 +104,9 @@ I'm talking hours or even days here.
     
     <h3><a name="intro.supported-os">1.3 Supported Systems</a></h3>
       
-      <p><b>Mac OS X 10.4</b> is the leading-edge platform, and is considered to be <q>fully supported and tested</q>, though as a newer operating system there are still some issues.  Most of the developers run it, and those who are running 10.3 have 10.4 users test their work.  Note, however, that
-fink on intel hardware is still considered to be of <b>beta</b> quality.</p>
+      <p><b>Mac OS X 10.5</b> is the leading-edge platform, and is considered to be <q>fully supported and tested</q>, though as a newer operating system there are still some issues.  Most of the developers run it, and those who are running 10.4 have 10.5 users test their work.</p>
       <p>
-        <b>Mac OS X 10.3</b> is considered to be <q>fully supported and tested</q>, although there may still be stray compile problems with single packages. Many of the developers run it, and those who don't have 10.3 users test their work.
-</p>
-      <p><b>Mac OS X 10.2</b> is still supported to some extent.  Fink 0.6.4 is the last distribution to suppport this OS.</p>
-      <p>
-        <b>Mac OS X 10.1</b> is still supported to some extent.
-You must run Fink 0.4.1 and no later versions.
-</p>
-      <p>
-<b>Darwin 8.x</b> is the Darwin version corresponding to Mac OS X 10.4, <b>Darwin 7.x</b> is the Darwin version corresponding to Mac OS X 10.3, and <b>Darwin 6.x</b> is the Darwin version corresponding to Mac OS X
-10.2.
-They should work in general, but are not as well tested as most people
-just run Mac OS X proper instead.
-You may run into problems with packages that use features specific to
-Mac OS X - affected packages include XFree86 and possibly esound.
+        <b>Mac OS X 10.4</b> is considered to be <q>fully supported and tested</q>, although there may still be stray compile problems with single packages. Many of the developers run it, and those who don't have 10.4 users test their work.
 </p>
     
     <h3><a name="intro.src-vs-bin">1.4 Source vs. Binary</a></h3>
@@ -173,7 +159,7 @@ management tools is installed on your machine.
 After that you must set up your shell environment to use the software
 installed by Fink.
 You only need to do this once; you can upgrade any Fink installation
-(starting with release 0.2.0) in place, without reinstalling.
+in place, without reinstalling.
 This is covered in the <a href="#upgrade">Upgrading
 chapter</a>.
 </p>
@@ -193,7 +179,7 @@ After downloading the disk image from the
 <a href="http://www.finkproject.org/download/bindist.php">download page</a>
 (you may have to use your browser's "Save Target as..." or "Download
 to Disk" function), double-click it to mount it.
-Open the "Fink 0.x.x Installer" disk icon that appears on your desktop (or wherever you downloaded it) after Disk Utility (Disk Copy for OS versions prior to 10.3) has verified the file.
+Open the "Fink 0.x.x Installer" disk icon that appears on your desktop (or wherever you downloaded it) after Disk Utility has verified the file.
 Inside you'll find some documentation and an installer package.
 Double-click the installer package and follow the instructions on
 screen.
@@ -415,10 +401,10 @@ root privileges, so you should use sudo (from an account with administrator priv
       <p>
         <b>Note:</b>
         <tt style="white-space: nowrap;">dselect</tt> has known difficulties with the Mac OS X Terminal application.  You should run the following commands before using it, or put them in the appropriate startup file (e.g. <tt style="white-space: nowrap;">.cshrc</tt> / <tt style="white-space: nowrap;">.profile</tt>):</p>
-      <p>tcsh users:</p>
-      <pre>setenv TERM xterm-color</pre>
       <p>bash users:</p>
       <pre>export TERM=xterm-color</pre>
+      <p>tcsh users:</p>
+      <pre>setenv TERM xterm-color</pre>
       <p>
 The main menu has several choices:
 </p>
@@ -572,7 +558,7 @@ If you run into errors during that process, please first check the
 <a href="http://www.finkproject.org/faq/">FAQ</a>.
       </p>
       <p>
-For <tt style="white-space: nowrap;">fink</tt> versions since 0.23.0 you can tell it to try to download
+You can tell <tt style="white-space: nowrap;">fink</tt> to try to download
 pre-compiled binary packages, if available, instead of building them. Just pass
 the <a href="#usage.options">--use-binary-dist (or -b)
 option</a> to <tt style="white-space: nowrap;">fink</tt>. This can save you a lot of time. E.g.
@@ -602,43 +588,29 @@ More details about the <tt style="white-space: nowrap;">fink</tt> tool are avail
       <p>When you want to install a package, you should first check the <a href="http://pdb.finkproject.org/pdb/index.php">package database</a> and see if it is available at all through Fink.  The available version(s) of the package will be shown in several rows of a table.  These are:</p>
       <ul>
         <li>Binary Distribution
-<ol>
-            <li><p>
-            <b>0.4.1:</b>  this is the version that can be installed from binaries for OS 10.1.</p></li>
-            <li><p><b>0.6.4:</b>  this is the version that can be installed from binaries for OS 10.2.</p></li>
-            <li><p><b>0.7.2</b>
-  This is the base version that can be installed from binaries for OS 10.3.  If you <a href="#install.bin">update</a> Fink, later versions of some packages may be available.</p> 
-        </li>
-            <li><p><b>0.8.1:</b>  This is the base version that can be installed from binaries for OS 10.4.  If you <a href="#install.bin">update</a> Fink, later versions of some packages may be available.
-</p></li>
-          </ol>
-          
-        </li>
-      </ul>
-      <ul>
+          <ol>
+            <li><p><b>0.8.1:</b>  This is the base version that can be installed from binaries for OS 10.4.  If you <a href="#install.bin">update</a> Fink, later versions of some packages may be available.</p></li>
+            <li><p><b>0.9.0:</b>  This is the base version that can be installed from binaries for OS 10.5.  If you <a href="#install.bin">update</a> Fink, later versions of some packages may be available.</p></li>
+          </ol></li>
         <li>CVS/rsync Distributions
-<ol>
-            <li>
-          <p>
-            <b>10.2-gcc3.3 stable:</b>  This is the most recent stable version that can be installed from the stable source tree for OS 10.2 with the <tt style="white-space: nowrap;">gcc 3.3</tt> update to the Developer Tools.  To be able to install this version, you may need to enable <a href="http://www.finkproject.org/doc/cvsaccess/index.php">CVS</a> or rsync access.  If you have not applied the <tt style="white-space: nowrap;">gcc 3.3</tt> update you may not see this version (or possibly even the package).</p>
-          <p>Note:  Unlike the case for some other projects, Fink distributes the most recent stable versions of packages via CVS, as well as versions in need of testing (see the section on unstable below).  Enabling CVS or rsync updating  gives you access to new stable versions of packages before the binary distribution is updated. 
-</p>
-        </li>
-            <li><p><b>10.3 stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.3.</p></li>
+          <ol>
             <li><p><b>10.4/powerpc stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users 
 on PowerPC hardware.</p></li>
             <li><p><b>10.4/intel stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users
 on intel hardware.</p></li>
-            <li>
-          <p>
-            <b>10.2-gcc3.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.2 with <tt style="white-space: nowrap;">gcc 3.3</tt>.  To install this version, follow the <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">instructions</a> on how to install unstable packages.</p>
-          <p>Note:  <b>unstable</b> doesn't necessarily mean <b>unusable</b>, but install such packages at your own risk.
-</p>
-        </li>
-            <li><p><b>10.3 unstable:</b>  This is the latest version that can be installed from the unstable source tree for OS 10.3.</p></li>
             <li><p><b>10.4/powerpc unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
 on PowerPC hardware.</p></li>
             <li><p><b>10.4/intel unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
+on intel hardware.</p>
+                <p>Note:  <b>unstable</b> doesn't necessarily mean <b>unusable</b>, but install such packages at your own risk.</p>
+</li>
+            <li><p><b>10.5/powerpc stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users 
+on PowerPC hardware.</p></li>
+            <li><p><b>10.5/intel stable:</b>  This is the most recent version that can be installed from the stable source tree for OS 10.4 users
+on intel hardware.</p></li>
+            <li><p><b>10.5/powerpc unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
+on PowerPC hardware.</p></li>
+            <li><p><b>10.5/intel unstable:</b>  This is the most recent version that can be installed from the unstable source tree for OS 10.4 users
 on intel hardware.</p></li>
           </ol></li>
       </ul>
@@ -657,26 +629,18 @@ Here is a list of the available X11 packages and installation methods:
         <li>
           <p>
             <b>xfree86, xfree86-shlibs:</b>
-Install both of these packages for XFree86 4.3.0 (OS 10.2 only), 4.4.0 (10.2 or 10.3), or 4.5.0 (10.3 or 10.4).  
+Install both of these packages for XFree86-4.5.0 (OS 10.4 only).  
 </p>
         </li>
-        <li><p><b>xorg, xorg-shlibs</b>(10.3 or 10.4)  Install these packages to get the 6.8.2 release of the X.org X11 distribution.</p></li>
+        <li><p><b>xorg, xorg-shlibs</b> (OS 10.4 only )  Install these packages to get the 6.8.2 release of the X.org X11 distribution.</p></li>
         <li>
           <p>
 <b>system-xfree86 + -shlibs, -dev:</b>
-These packages are automatically generated (for Fink 0.6.2 or later) if you install Apple's X11, or manually installed XFree86 or X.org.  
+These packages are automatically generated if you install Apple's X11, or manually installed XFree86 or X.org.  
 They will then act as
 dependency placeholders.
 </p>
         </li>
-        <li>
-          <p>
-            <b>xfree86-base, xfree86-rootless [-threaded] + -shlibs, -dev</b>
-(10.1 or 10.2 only) These packages install all of XFree86 4.2.1.1 (4.2.0 on 10.1).  The <tt style="white-space: nowrap;">-threaded</tt> variant was provided for applications that required it, and this functionality is standard in later XFree86 versions.  The <tt style="white-space: nowrap;">-rootless</tt> packages include the XDarwin display server--the name is historical.
-</p><p>You must install all six packages to build X11-based packages from source.
-</p>
-        </li>
-        
       </ul>
       <p>
 For more information on installing and running X11, refer to the
@@ -713,8 +677,7 @@ have new versions available.
 </p>
       <p>For Fink Commander, select Binary-&gt;Update descriptions to update the package list, and then Binary-&gt;Dist-Upgrade packages to update to new versions.</p>
       <p>
-For more information, especially about upgrading from Fink versions
-older than 0.3.0, see the
+For more information, see the
 <a href="http://www.finkproject.org/download/upgrade.php">Upgrade Matrix</a>.
 </p>
     
@@ -728,12 +691,12 @@ In the second step, these package descriptions are used to compile new
 packages; the actual source code is downloaded as needed.
 </p>
       <p>
-If you have Fink 0.2.5 or later, the first step can be accomplished by
+The first step can be accomplished by
 running <tt style="white-space: nowrap;">fink selfupdate</tt>.
 That command will check with the Fink website to see if a new point
 release is available, and will automatically download and install the
 package descriptions in that case.
-In recent versions of the <tt style="white-space: nowrap;">fink</tt> command, you get the
+You also have the
 option to pull package descriptions directly from CVS or via rsync.
 CVS is a version-controlled repository where the package descriptions
 are stored and managed.
@@ -742,17 +705,6 @@ Using CVS has the advantage that it is updated continuously, but the disadvantag
       <p>(If you are having trouble upgrading a source installation, consult
 <a href="http://www.finkproject.org/download/fix-upgrade.php">these
 special instructions</a>.)</p>
-      <p>
-If you have a version of Fink older than 0.2.5, you must download the
-package descriptions manually.
-Visit the <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">download
-area</a> and look for the latest packages-0.x.x.tar.gz tarball in
-the "distribution" module.
-Download it, then install it as follows:
-</p>
-      <pre>tar -xzf packages-0.x.x.tar.gz
-cd packages-0.x.x
-./inject.pl</pre>
       <p>
 Once you have updated your package descriptions (no matter which way),
 you should update all packages at once with the command <tt style="white-space: nowrap;">fink
@@ -773,7 +725,7 @@ to get the current package descriptions and to update the remaining
 packages.
 		</p>
       <p>
-Starting with fink 0.23.0 using the UseBinaryDist option (settable via the
+You may use the UseBinaryDist option (settable via the
 <a href="#usage.options">--use-binary-dist (or -b) option</a>
 or in the <a href="#conf">Fink configuration file</a>) both source and
 binary descriptions will be updated if you call <tt style="white-space: nowrap;">fink selfupdate</tt>.
@@ -879,15 +831,13 @@ unstable/main   - other unstable packages
           <p>
 You may also add your own trees in <tt style="white-space: nowrap;">/sw/fink/dists</tt> for your own purposes, but this is not necessary in most
 circumstances. The default trees are "local/main local/bootstrap
-stable/main". This list should be kept in sync with the
-<tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> file.  (As of fink 0.21.0, <tt style="white-space: nowrap;">fink</tt>
-does this for you automatically.)
-</p><p>The order of the trees is meaningful, as packages from later trees in the list may
+stable/main". This list is automatically kept in sync with the
+<tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> file.</p><p>The order of the trees is meaningful, as packages from later trees in the list may
            override packages from earlier ones.</p>
         -</li>
         <li>
           <p>
-            <b>Distribution:</b> 10.1, 10.2-gcc3.3, 10.3, or 10.4</p>
+            <b>Distribution:</b> 10.4</p>
           <p>Fink needs to know which version of Mac OS X you are
 running. Mac OS X 10.0 and earlier are not supported, and 10.1 and 10.2 are no
 longer supported by current versions of <tt style="white-space: nowrap;">fink</tt>. Mac OS X 10.2 users are 
@@ -1048,7 +998,6 @@ recommended to set this option. Passing fink the
 but only operates on that single <tt style="white-space: nowrap;">fink</tt> invocation.  Passing <tt style="white-space: nowrap;">fink</tt> the
            <tt style="white-space: nowrap;">--no-use-binary-dist</tt> flag overrides this, and compiles from source
            for that single <tt style="white-space: nowrap;">fink</tt> invocation.
-<b>Only available as of  fink version 0.23.0</b>.
           </p><p>Note that this mode instructs <tt style="white-space: nowrap;">fink</tt> to download an available binary  
            if that version is the latest available version of the package; it does <b>not</b> cause <tt style="white-space: nowrap;">fink</tt>
            to choose a version based on its binary availability.
@@ -1191,7 +1140,7 @@ while building Fink packages will be placed here. Defaults to <tt style="white-s
     
     <h3><a name="conf.sourceslist">5.9 Managing apt's sources.list file</a></h3>
       
-      <p>Starting with fink 0.21.0, fink actively manages the file
+      <p>Fink actively manages the file
 <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> which is used by apt to locate
 binary files for installation.  The default sources.list file looks 
 something like this, adjusted to match your Distribution and Trees:
@@ -1228,10 +1177,6 @@ correspond to the new values.  Fink will, however, preserve any local
 modifications you have made to the file, provided that you confine your
 modifications to the top of the file (above the first default line) and
 the bottom of the file (below the last default line).
-</p>
-      <p>
-Note: If you had modified <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> prior to upgrading
-to fink 0.21.0, you will find your former file stored at <tt style="white-space: nowrap;">/sw/etc/apt/sources.list.finkbak</tt> .
 </p>
     
   <h2><a name="usage">6 Using the fink Tool from the Command Line</a></h2>
@@ -1687,9 +1632,6 @@ the list of available packages in the binary distribution is also updated.
     <h3><a name="usage.dumpinfo">6.25 dumpinfo</a></h3>
       
       <p>
-Only available in <tt style="white-space: nowrap;">fink</tt> newer than version 0.21.0
-      </p>
-      <p>
 	Shows how <tt style="white-space: nowrap;">fink</tt> parses parts of a package's <tt style="white-space: nowrap;">.info</tt> file. Various
 	fields and percent expansions will be displayed according
 	to <b>options</b> as follows:
@@ -1707,15 +1649,13 @@ Only available in <tt style="white-space: nowrap;">fink</tt> newer than version 
     
     <h3><a name="usage.show-deps">6.26 show-deps</a></h3>
       
-      <p>Only available in fink-0.23-6 and later.</p>
       <p>Displays a human-readable list of the compile-time (build) and run-
            time (installation) dependencies of the listed package(s).</p>
     
-    
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2008 The Fink Project.
+Copyright (c) 2001-2009 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.en.xml,v 1.50 2007/11/17 18:07:46 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.en.xml,v 1.52 2009/03/01 01:50:36 alexkhansen Exp $</i></p></body></html>
