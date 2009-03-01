@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: uguide.pt.xml,v 1.1 2009/02/28 21:54:09 alexkhansen Exp $
+Generated from $Fink: uguide.pt.xml,v 1.2 2009/03/01 14:09:07 alexkhansen Exp $
 -->
 <title>Fink Documentation - Guia do usuário do Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -53,7 +53,7 @@ Portugu&ecirc;s |
 
       <ul>
         <li>
-          <p>Um sistema Mac OS X instalado, versão 10.2 ou mais recente, ou
+          <p>Um sistema Mac OS X instalado, versão 10.4 ou mais recente, ou
           versões do Darwin equivalentes. Versões anteriores <b>não</b> irão
           funcionar. Veja abaixo mais informações sobre os sistemas
           suportados.</p>
@@ -71,19 +71,17 @@ Portugu&ecirc;s |
       <ul>
         <li>
           <p>Ferramentas de desenvolvimento. No Mac OS X, instale o pacote
-          Developer.pkg do CD Developer Tools (conhecido como XCode nas versões
-          10.3 e 10.4) (eles estão no DVD principal do OS 10.4) ou faça o <a href="http://connect.apple.com">download</a> da versão mais
+          XcodeTools.mpkg do DVD de instalação ou faça o <a href="http://connect.apple.com">download</a> da versão mais
           recente--o que é mais recomendável, já que versões mais recentes
           geralmente corrigem erros (ainda que algumas vezes elas provoquem
           erros).  Note que as ferramentas precisam estar de acordo com a sua
-          versão do Mac OS X. No caso do Darwin, as ferramentas estão presentes
-          na instalação padrão.</p>
+          versão do Mac OS X.</p>
 
-          <p>É uma boa idéia ter as ferramentas de desenvolvimento instaladas
-          mesmo que você não pretenda montar pacotes a partir do código fonte.
-          Alguns dos programas instalados pelo pacote são, na verdade,
-          ferramentas de linha de comando com propósito geral. Alguns pacotes
-          podem precisar delas para que possam ser executados.</p>
+          <p>É uma boa idéia ter o XCode instalado mesmo que você não pretenda
+          montar pacotes a partir do código fonte.  Alguns dos programas
+          instalados pelo pacote são, na verdade, ferramentas de linha de
+          comando com propósito geral. Alguns pacotes podem precisar delas para
+          que possam ser executados.</p>
         </li>
 
         <li>
@@ -96,33 +94,19 @@ Portugu&ecirc;s |
     <h3><a name="intro.supported-os">1.3 Sistemas suportados</a></h3>
       
 
-      <p><b>Mac OS X 10.4</b> é a plataforma de vanguarda e é considerada
+      <p><b>Mac OS X 10.5</b> é a plataforma de vanguarda e é considerada
       como sendo <q>completamente suportada e testada</q> ainda que,
       por ser um sistema operacional mais recente, ainda haja algumas questões
       a resolver. A maior parte dos desenvolvedores usa esta versão e aqueles
-      que estão usando a 10.3 possuem usuários na 10.4 para testar seu
-      trabalho. Entretanto, observe que o Fink em hardware Intel ainda é
-      considerado como estando em qualidade <b>beta</b>.</p>
-      
-      <p><b>Mac OS X 10.3</b> é considerando como sendo <q>completamente
+      que estão usando a 10.4 possuem usuários na 10.5 para testar seu
+      trabalho.</p>
+
+      <p><b>Mac OS X 10.4</b> é considerado como sendo <q>completamente
       suportado e testado</q> apesar de ainda haver alguns problemas de
-      compilação espúrios em alguns pacotes. A maior parte dos desenvolvedores
-      usa esta versão e aqueles que não a rodam possuem usuários na 10.3 para
-      testar seu trabalho.</p>
-
-      <p><b>Mac OS X 10.2</b> ainda é parcialmente suportado. O Fink 0.6.4 é
-      a última distribuição que suporta este SO.</p>
-
-      <p><b>Mac OS X 10.1</b> ainda é parcialmente suportado. Você precisa
-      rodar o Fink 0.4.1 e não versões mais recentes.</p>
-
-      <p><b>Darwin 8.x</b> é a versão correspondente ao Mac OS X 10.4,
-      <b>Darwin 7.x</b> é a versão correspondente ao Mac OS X 10.3 e
-      <b>Darwin 6.x</b> é a versão correspondente ao Mac OS X 10.2. Em geral
-      o Fink deve funcionar nessas versões mas elas não são tão bem testadas já
-      que a maior parte das pessoas usa o Mac OS X. Você pode encontrar
-      problemas nos pacotes que usam características específicas do Mac OS X -
-      pacotes afetados incluem o XFree86 e possivelmente esound.</p>
+      compilação espúrios em alguns pacotes. Muitos dos desenvolvedores usa
+      esta versão e aqueles que não a usam possuem usuários 10.4 para testar
+      seu trabalho.</p>
+      
     
 
     <h3><a name="intro.src-vs-bin">1.4 Código fonte vs. binário</a></h3>
@@ -166,9 +150,8 @@ Portugu&ecirc;s |
       ferramentas de gerenciamento de pacotes é instalado em sua máquina.
       Depois disso você precisa configurar seu ambiente do shell para usar o
       software instalado pelo Fink. Você só precisa fazer isso uma única vez;
-      você pode atualizar qualquer instalação do Fink (a partir da versão
-      0.2.0) sem que seja necessário reinstalá-lo. Este procedimento é coberto
-      no <a href="#upgrade">capítulo Atualizando o Fink</a>.</p>
+      você pode atualizar qualquer instalação do Fink in loco, sem que seja
+      necessário reinstalá-lo. Este procedimento é coberto no <a href="#upgrade">capítulo Atualizando o Fink</a>.</p>
 
       <p>Uma vez que você possua as ferramentas de gerenciamento de pacotes
       instaladas, você pode usá-las para instalar mais softwares. Este
@@ -186,9 +169,9 @@ Portugu&ecirc;s |
       ou "Salvar no disco" no navegador), dê um duplo clique para montá-la.
       Abra o ícone do disco "Fink 0.x.x Installer" que aparece na sua área de
       trabalho (ou onde quer que você o haja baixado) depois que o Disk Utility
-      (Disk Copy nas versões anteriores à 10.3) tenha verificado o arquivo.
-      Dentro você encontrará alguma documentação e o pacote de instalação. Dê
-      um duplo clique no pacote de instalação e siga as instruções na tela.</p>
+      tenha verificado o arquivo.  Dentro você encontrará alguma documentação e
+      o pacote de instalação. Dê um duplo clique no pacote de instalação e siga
+      as instruções na tela.</p>
 
       <p>Uma senha de administrador será solicitada e alguns textos serão
       exibidos. Por favor, leia-os - eles podem estar mais atualizados do que
@@ -217,8 +200,8 @@ Portugu&ecirc;s |
       colocou o arquivo  <tt style="white-space: nowrap;">fink-0.27.x.tar.gz</tt>. Talvez seu
       navegador Web tenha extraído parcialmente o arquivo; neste caso você terá
       o arquivo <tt style="white-space: nowrap;">fink-0.27.x.tar</tt> no seu diretório de
-      download e deverá pular o primeiro comando abaixo.   Os comandos abaixo fazem a extração do
-      arquivo:</p>
+      download e deverá pular o primeiro comando abaixo. Os comandos abaixo
+      fazem a extração do arquivo:</p>
 
       
 
@@ -444,13 +427,13 @@ pico ~/Library/init/tcsh/path</pre>
       colocá-los no arquivo de inicialização apropriado (e.g.
       <tt style="white-space: nowrap;">.cshrc</tt> / <tt style="white-space: nowrap;">.profile</tt>):</p>
 
-      <p>usuários do tcsh:</p>
-
       <pre>setenv TERM xterm-color</pre>
 
       <p>usuários do bash:</p>
 
       <pre>export TERM=xterm-color</pre>
+
+      <p>usuários do tcsh:</p>
 
       <p>O menu principal possui várias opções:</p>
 
@@ -603,11 +586,11 @@ E: Pacotes quebrados</pre>
       as <a href="http://www.finkproject.org/faq/">Perguntas
       frequentes</a>.</p>
 
-      <p>Para as versões do <tt style="white-space: nowrap;">fink</tt> desde a 0.23.0, você pode
-      informar-lhe que tente baixar pacotes de binários pré-compilados, caso
-      disponíveis, no lugar de compilá-los. Para tal, use a <a href="#usage.options">opção --use-binary-dist (ou -b)</a>
-      ao chamar o <tt style="white-space: nowrap;">fink</tt>. Isto pode resultar uma grande economia de
-      tempo. Por exemplo, ao executar</p>
+      <p>Você pode solicitar ao <tt style="white-space: nowrap;">fink</tt> que tente baixar pacotes de
+      binários pré-compilados, caso disponíveis, no lugar de compilá-los. Para
+      tal, use a <a href="#usage.options">opção
+      --use-binary-dist (ou -b)</a> ao chamar o <tt style="white-space: nowrap;">fink</tt>. Isto pode
+      resultar uma grande economia de tempo. Por exemplo, ao executar</p>
 
       <pre>fink --use-binary-dist install wget-ssl</pre>
 
@@ -652,20 +635,11 @@ E: Pacotes quebrados</pre>
       <ul>
         <li>
           Distribuição de binários
+
           <ol>
             <li>
-              <p><b>0.4.1:</b> esta é a versão que pode ser instalada a
-              partir de binários para o OS 10.1</p>
-            </li>
-
-            <li>
-              <p><b>0.6.4:</b>  esta é a versão que pode ser instalada a
-              partir de binários para o OS 10.2.</p>
-            </li>
-
-            <li>
-              <p><b>0.7.2</b> esta é a versão base que pode ser instalada a
-              partir de binários para o OS 10.3. Se você <a href="#install.bin">atualizar</a> o Fink, versões
+              <p><b>0.8.1:</b> Esta é a versão base que pode ser instalada a
+              partir de binários para o OS 10.4. Se você <a href="#install.bin">atualizar</a> o Fink, versões
               mais recentes de alguns pacotes poderão estar disponíveis.</p>
             </li>
 
@@ -681,32 +655,8 @@ E: Pacotes quebrados</pre>
       <ul>
         <li>
           Distribuições via CVS/rsync 
+
           <ol>
-            <li>
-              <p><b>10.2-gcc3.3 stable:</b> Esta é a versão estável mais
-              recente que pode ser instalada a partir da árvore de código fonte
-              stable para o OS 10.2 com a atualização do <tt style="white-space: nowrap;">gcc 3.3</tt>
-              no Developer Tools. Para instalar esta versão, você precisa
-              habilitar o acesso <a href="http://www.finkproject.org/doc/cvsaccess/index.php">CVS</a>
-              ou rsync. Se você não instalou a atualização do <tt style="white-space: nowrap;">gcc
-              3.3</tt> é possível que você não veja esta versão (ou mesmo o
-              pacote).</p>
-
-              <p>Observação: ao contrário de alguns outros projetos, o Fink
-              distribui as versões estáveis mais recentes dos pacotes via CVS,
-              assim como as versões que precisam ser testadas (veja a seção
-              abaixo sobre a árvore unstable). Habilitar a atualização via CVS
-              ou rsync permite que você tenha acesso a novas versões estáveis
-              de pacotes antes de que a distribuição de binários seja
-              atualizada.</p>
-            </li>
-
-            <li>
-              <p><b>10.3 stable:</b> Esta é a versão mais recente que pode
-              ser instalada da árvore de códigos fontes stable para o OS
-              10.3.</p>
-            </li>
-
             <li>
               <p><b>10.4/powerpc stable:</b> Esta é a versão mais recente que
               pode ser instalada da árvore de códigos fontes stable para
@@ -719,22 +669,6 @@ E: Pacotes quebrados</pre>
               usuários do OS 10.4 em hardware Intel.</p>
             </li>
 
-            <li>
-              <p><b>10.2-gcc3.3 unstable:</b> Esta é a versão mais recente
-              que pode ser instalada da árvore de códigos fontes unstable para
-              o OS 10.2 com o <tt style="white-space: nowrap;">gcc 3.3</tt>. Para instalar esta versão,
-              siga as <a href="http://www.finkproject.org/faq/usage-fink.php#unstable">instruções</a>
-              de como instalar pacotes instáveis.</p>
-
-              <p>Observação: um pacote <b>instável</b> não significa
-              necessariamente que não possa ser usado, porém instale tais
-              pacotes sob sua própria conta e risco.</p>
-            </li>
-
-            <li>
-              <p><b>10.3 unstable:</b> Esta é a versão mais recente que pode
-              ser instalada da árvore de códigos fontes para o OS 10.3.</p>
-            </li>
 
             <li>
               <p><b>10.4/powerpc unstable:</b> Esta é a versão mais recente
@@ -746,6 +680,34 @@ E: Pacotes quebrados</pre>
               <p><b>10.4/intel unstable:</b> Esta é a versão mais recente que
               pode ser instalada da árvore de códigos fontes unstable para
               usuários do OS 10.4 em hardware Intel.</p>
+
+              <p>Observação: um pacote <b>instável</b> não significa
+              necessariamente que não possa ser usado, porém instale tais
+              pacotes sob sua própria conta e risco.</p>
+            </li>
+
+            <li>
+              <p><b>10.5/powerpc stable:</b> Esta é a versão mais recente que
+              pode ser instalada da árvore de códigos fontes stable para
+              usuários do OS 10.5 em hardware PowerPC.</p>
+            </li>
+
+            <li>
+              <p><b>10.5/intel stable:</b> Esta é a versão mais recente que
+              pode ser instalada da árvore de códigos fontes stable para
+              usuários do OS 10.5 em hardware Intel.</p>
+            </li>
+
+            <li>
+              <p><b>10.5/powerpc unstable:</b> Esta é a versão mais recente
+              que pode ser instalada da árvore de códigos fontes unstable para
+              usuários do OS 10.5 em hardware PowerPC.</p>
+            </li>
+
+            <li>
+              <p><b>10.5/intel unstable:</b> Esta é a versão mais recente que
+              pode ser instalada da árvore de códigos fontes unstable para
+              usuários do OS 10.5 em hardware Intel.</p>
             </li>
           </ol>
         </li>
@@ -769,36 +731,20 @@ E: Pacotes quebrados</pre>
       <ul>
         <li>
           <p><b>xfree86, xfree86-shlibs:</b> Instale ambos os pacotes para o
-          XFree86 4.3.0 (somente para o OS 10.2), 4.4.0 (10.2 or 10.3) ou 4.5.0
-          (10.3 or 10.4).</p>
+          XFree86 4.5.0 (somente para o OS 10.4).</p>
         </li>
 
         <li>
-          <p><b>xorg, xorg-shlibs</b>(10.3 ou 10.4) Instale estes pacotes
+          <p><b>xorg, xorg-shlibs</b>(somente para o OS 10.4) Instale estes pacotes
           para obter a versão 6.8.2 da distribuição do X11 da X.org.</p>
         </li>
 
         <li>
           <p><b>system-xfree86 + -shlibs, -dev:</b> Estes pacotes são gerados
-          automaticamente (para o Fink 0.6.2 ou mais recente) caso você instale
-          o X11 da Apple ou instale manualmente o XFree86 ou X.org. Eles servem
-          como sinalizadores de dependência.</p>
+          automaticamente caso você instale o X11 da Apple ou instale
+          manualmente o XFree86 ou X.org. Eles servem como sinalizadores de
+          dependência.</p>
         </li>
-
-        <li>
-          <p><b>xfree86-base, xfree86-rootless [-threaded] + -shlibs,
-          -dev</b> (somente para 10.1 ou 10.2) Estes pacotes instalam o
-          XFree86 4.2.1.1 (4.2.0 no 10.1) completo. A variante
-          <tt style="white-space: nowrap;">-threaded</tt> foi fornecida para aplicações que a requeriam
-          e esta funcionalidade tornou-se padrão em versões mais recentes do
-          XFree86. Os pacotes <tt style="white-space: nowrap;">-rootless</tt> contêm o servidor de
-          display XDarwin--o nome é devido a razões históricas.</p>
-
-          <p>Você deve instalar todos os seis pacotes para poder compilar
-          pacotes baseados no X11 a partir do código fonte.</p>
-        </li>
-
-        
       </ul>
 
       <p>Para mais informações sobre a instalação e execução do X11, consulte o
@@ -836,8 +782,7 @@ E: Pacotes quebrados</pre>
       atualizar a listagem de pacotes e em seguida Binary-&gt;Dist-Upgrade
       packages para proceder à atualização para versões novas.</p>
 
-      <p>Para mais informações, em particular sobre atualização de versões do
-      Fink mais antigas do que a 0.3.0, consulte a <a href="http://www.finkproject.org/download/upgrade.php">Matriz de
+      <p>Para mais informações, consulte a <a href="http://www.finkproject.org/download/upgrade.php">Matriz de
       atualização</a>.</p>
     
 
@@ -850,33 +795,23 @@ E: Pacotes quebrados</pre>
       descrições de pacotes são usadas para compilar novos pacotes; o código
       fonte é baixado quando necessário.</p>
 
-      <p>Se você possui o Fink 0.2.5 ou mais recente, o primeiro passo pode ser
-      feito através da execução do comando <tt style="white-space: nowrap;">fink selfupdate</tt>. Este
-      comando verificará no site do Fink se há uma nova versão pontual
-      disponível e irá automaticamente baixar e instalar as descrições de
-      pacotes associadas. Em versões recentes do comando <tt style="white-space: nowrap;">fink</tt>, há
-      a opção de obter as descrições de pacotes diretamente do CVS ou através
-      do rsync. O CVS é um repositório com versionamento onde as descrições de
-      pacotes são armazenadas e gerenciadas. A vantagem do CVS é que ele é
-      atualizado continuamente. A desvantagem é que há um único servidor CVS
-      para o Fink e ele pode não ser muito confiável quando há tráfego intenso.
-      Por esta razão, recomenda-se que usuários em geral usem o rsync. Existem
-      vários espelhos disponíveis para o rsync e a única desvantagem é que as
+      <p>O primeiro passo pode ser feito através da execução do comando
+      <tt style="white-space: nowrap;">fink selfupdate</tt>. Este comando verificará no site do Fink se
+      há uma nova versão pontual disponível e irá automaticamente baixar e
+      instalar as descrições de pacotes associadas. Você também tem a opção de
+      obter as descrições de pacotes diretamente do CVS ou através do rsync. O
+      CVS é um repositório com versionamento onde as descrições de pacotes são
+      armazenadas e gerenciadas. A vantagem do CVS é que ele é atualizado
+      continuamente. A desvantagem é que há um único servidor CVS para o Fink e
+      ele pode não ser muito confiável quando há tráfego intenso.  Por esta
+      razão, recomenda-se que usuários em geral usem o rsync. Existem vários
+      espelhos disponíveis para o rsync e a única desvantagem é que as
       descrições de pacotes levam por volta de uma hora para migrar aos
       espelhos rsync depois de terem sido adicionadas ao CVS.</p>
 
       <p>Caso você encontre problemas na atualização de uma instalação a partir
       de códigos fontes, consulte <a href="http://www.finkproject.org/download/fix-upgrade.php">estas
       instruções especiais</a>).</p>
-
-      <p>Se você possui uma versão do Fink anterior à 0.2.5, você precisa
-      baixar as descrições de pacotes manualmente. Consulte a <a href="http://sourceforge.net/project/showfiles.php?group_id=17203">área de
-      download</a> e procure pelo tarball packages-0.x.x.tar.gz mais recente
-      no módulo "distribution". Baixe-o e instale-o como segue:</p>
-
-      <pre>tar -xzf packages-0.x.x.tar.gz
-cd packages-0.x.x
-./inject.pl</pre>
 
       <p>Uma vez que você tenha atualizado suas descrições de pacotes (não
       importa como), você pode atualizar todos os pacotes de uma vez só através
@@ -900,12 +835,11 @@ cd packages-0.x.x
       update-all</tt> para obter as descrições de pacotes mais recentes e
       atualizá-los.</p>
 
-      <p>A partir do fink 0.23.0, se você usar a opção UseBinaryDist,
-      configurável através da <a href="#usage.options">opção
-      --use-binary-dist (ou -b)</a> ou no <a href="#conf">arquivo de
-      configuração do Fink</a>, as descrições de pacotes (tanto os binários
-      quanto os de códigos fontes) serão atualizadas se você executar o comando
-      <tt style="white-space: nowrap;">fink selfupdate</tt>. Neste caso você não precisa mais executar
+      <p>Se você usar a opção UseBinaryDist, configurável através da <a href="#usage.options">opção --use-binary-dist (ou -b)</a>
+      ou no <a href="#conf">arquivo de configuração do Fink</a>, as
+      descrições de pacotes (tanto os binários quanto os de códigos fontes)
+      serão atualizadas se você executar o comando <tt style="white-space: nowrap;">fink
+      selfupdate</tt>. Neste caso você não precisa mais executar
       separadamente o comando <tt style="white-space: nowrap;">apt-get</tt>.</p>
 
       <p>Se você estiver usando o Fink Commander, escolha Binary-&gt;Update
@@ -1029,8 +963,8 @@ unstable/main   - outros pacotes instáveis
           <tt style="white-space: nowrap;">/sw/fink/dists</tt> caso queira mas isto em geral não é
           necessário. As árvores padrão são "local/main local/bootstrap
           stable/main". Esta lista deve ser mantida sincronizada com o arquivo
-          <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> (a partir do fink 0.21.0, o
-          <tt style="white-space: nowrap;">fink</tt> sincroniza automaticamente).</p>
+          <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> - <tt style="white-space: nowrap;">fink</tt> sincroniza
+          automaticamente.</p>
 
           <p>A ordem das árvores tem importância uma vez que pacotes de árvores
           mais ao fim da lista podem sobrescrever pacotes de árvores listadas
@@ -1247,9 +1181,8 @@ unstable/main   - outros pacotes instáveis
           <tt style="white-space: nowrap;">fink</tt> em particular. Caso você passe ao <tt style="white-space: nowrap;">fink</tt>
           a opção <tt style="white-space: nowrap;">--no-use-binary-dist</tt> faz com que esta
           configuração seja ignorada, acarretando a compilação a partir de
-          código fonte para essa execução do <tt style="white-space: nowrap;">fink</tt> em particular.
-          <b>Esta configuração só está disponível a partir do fink
-          0.23.0.</b></p>
+          código fonte para essa execução do <tt style="white-space: nowrap;">fink</tt> em
+          particular.</p>
 
           <p>Note que este modo instrui o <tt style="white-space: nowrap;">fink</tt> a baixar um binário
           disponível caso a versão seja a última versão disponível do pacote;
@@ -1400,8 +1333,7 @@ ClosestFirst - Procure primeiro por espelhos mais próximos
           seja definido como <tt style="white-space: nowrap;">none</tt>, o fink não irá definir a
           variável de ambiente CCACHE_DIR e o ccache usará o diretório
           <tt style="white-space: nowrap;">$HOME/.ccache</tt>, potencialmente colocando arquivos
-          com proprietário root no seu diretório home. <b>Somente disponível a
-          partir do fink 0.21.0</b>.</p>
+          com proprietário root no seu diretório home.</p>
         </li>
 
         <li>
@@ -1447,11 +1379,10 @@ ClosestFirst - Procure primeiro por espelhos mais próximos
     <h3><a name="conf.sourceslist">5.9 Gerenciando o arquivo sources.list do apt</a></h3>
       
 
-      <p>A partir do fink 0.21.0, o arquivo
-      <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>, que é usado pelo apt para
-      localizar arquivos binários para instalação, é automaticamente gerenciado
-      pelo fink. O arquivo sources.list padrão, conforme suas próprias
-      distribuições e árvores, se parece com:</p>
+      <p>O arquivo <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt>, que é usado pelo apt
+      para localizar arquivos binários para instalação, é automaticamente
+      gerenciado pelo fink. O arquivo sources.list padrão, conforme suas
+      próprias distribuições e árvores, se parece com:</p>
 
       <pre># Local modifications should either go above this line, or at the end.
 #
@@ -1487,11 +1418,6 @@ deb http://us.dl.sourceforge.net/fink/direct_download 10.3/current main crypto
       no arquivo desde que você as limite ao começo do arquivo (antes da
       primeira linha padrão) e ao fim do arquivo (abaixo da última linha
       padrão).</p>
-
-      <p>Observação: caso você tenha modificado o arquivo
-      <tt style="white-space: nowrap;">/sw/etc/apt/sources.list</tt> antes de atualizar para o fink
-      0.21.0, você encontrará seu arquivo anterior armazenado em
-      <tt style="white-space: nowrap;">/sw/etc/apt/sources.list.finkbak</tt>.</p>
     
   <h2><a name="usage">6 Usando a ferramenta fink a partir da linha de comando</a></h2>
     
@@ -2072,9 +1998,6 @@ fink apropos -s=kde irc   - o mesmo que acima, mas restrito a pacotes que
     <h3><a name="usage.dumpinfo">6.25 dumpinfo</a></h3>
       
 
-      <p>Somente disponíveis em versões do <tt style="white-space: nowrap;">fink</tt> mais recentes do
-      que a 0.21.0.</p>
-
       <p>Exibe como o <tt style="white-space: nowrap;">fink</tt> analisa as partes de um arquivo de
       pacote <tt style="white-space: nowrap;">.info</tt>. Vários campos e expansões de códigos
       serão exibidos conforme as <b>opções</b> abaixo:</p>
@@ -2091,17 +2014,13 @@ fink apropos -s=kde irc   - o mesmo que acima, mas restrito a pacotes que
     <h3><a name="usage.show-deps">6.26 show-deps</a></h3>
       
 
-      <p>Somente disponível no fink-0.23-6 e posteriores.</p>
-
       <p>Exibe uma lista legível das dependências, tanto de compilação quanto
       de execução (instalação), dos pacotes listados.</p>
     
-
-    
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2008 The Fink Project.
+Copyright (c) 2001-2009 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: uguide.pt.xml,v 1.1 2009/02/28 21:54:09 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: uguide.pt.xml,v 1.2 2009/03/01 14:09:07 alexkhansen Exp $</i></p></body></html>
