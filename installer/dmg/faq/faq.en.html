@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.94 2009/03/08 16:24:26 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.95 2009/03/14 15:08:33 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -12,6 +12,7 @@ English |
 <a href="faq.es.html">Espa&ntilde;ol</a> | 
 <a href="faq.fr.html">Fran&ccedil;ais</a> | 
 <a href="faq.ja.html">&#26085;&#26412;&#35486; (Nihongo)</a> | 
+<a href="faq.pt.html">Portugu&ecirc;s</a> | 
 <a href="faq.ru.html">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russkiy)</a> | 
 <a href="faq.zh.html">&#20013;&#25991; (&#31616;) (Simplified Chinese)</a> | 
 </td>
@@ -300,11 +301,30 @@ fink selfupdate</pre>
         maintainer if something works (or even if it doesn't). Feedback from
         users like you is what we use to determine if something is ready for
         stable! To find out the maintainer of a package, run <tt style="white-space: nowrap;">fink info
-        <b>packagename</b></tt>.</p><p><b>New in </b><tt style="white-space: nowrap;">fink-0.26</tt><b>:</b>  If you run <tt style="white-space: nowrap;">fink configure</tt> one of the questions will ask whether you want to turn the unstable trees on.  You will need to run <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> afterward.  <b>Note: </b>you must have either rsync or cvs updating turned on to get new package descriptions.</p><p>To configure Fink to use unstable when you have an earlier version of the <tt style="white-space: nowrap;">fink</tt> tool than <b>0.26</b>, edit
-        <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, add <tt style="white-space: nowrap;">unstable/main</tt>
-        and <tt style="white-space: nowrap;">unstable/crypto</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line, and
-        then run <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt>.  Rsync or cvs updating is required as above.</p><p>Also note, if you don't want to install any more from unstable than
-        your specific package(s) and its (their) dependencies, don't use the
+        <b>packagename</b></tt>.</p><p>For <tt style="white-space: nowrap;">fink-0.26</tt> and later:  If you run
+	<tt style="white-space: nowrap;">fink configure</tt> one of the questions will ask whether you
+	want to turn the unstable trees on.  </p><p>To configure Fink to use unstable
+	when you have an earlier version of the <tt style="white-space: nowrap;">fink</tt> tool than
+	<b>0.26</b>, edit
+        <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, and add <tt style="white-space: nowrap;">unstable/main</tt>
+        and <tt style="white-space: nowrap;">unstable/crypto</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line.</p><p>If you use Fink Commander, then there is a Preference to use unstable
+	packages.</p><p>None of these options actually download the unstable tree's package
+	descriptions.You'll need to turn on <tt style="white-space: nowrap;">rsync</tt> or
+	<tt style="white-space: nowrap;">cvs</tt> updating to do this, which is not set up by default on a new
+	Fink installation.  The following command sequence will set you up on
+	a new Fink installation:</p><pre>fink selfupdate</pre><p>followed by</p><pre>fink selfupdate-rsync</pre><p>or</p><pre>fink selfupdate-cvs</pre><p>and then</p><pre>fink index -f
+fink scanpackages</pre><p><b>Note:</b>  There are Fink Commander analogs for everything except
+	<tt style="white-space: nowrap;">fink index -f</tt>.  You will have to use the command line for that.</p><p>If you're already set up with <tt style="white-space: nowrap;">rsync</tt> or <tt style="white-space: nowrap;">cvs</tt>
+	updating, then the following
+	command sequence (or the Fink Commander analogs) will suffice:</p><pre>
+fink selfupdate
+fink index
+fink scanpackages
+	</pre><p>If you're not sure what your update method is, check
+	<tt style="white-space: nowrap;">fink --version</tt> in at a command line
+	and see if that mentions <tt style="white-space: nowrap;">cvs</tt> or <tt style="white-space: nowrap;">rsync</tt>.</p><p>If you don't want to install any more from unstable than
+        your specific package(s) and its (their) dependencies, (and any base packages
+	that got updated) don't use the
         <tt style="white-space: nowrap;">update-all</tt> command until you turn the unstable tree
         back off.</p></div>
     </a>
@@ -1477,4 +1497,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.94 2009/03/08 16:24:26 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.95 2009/03/14 15:08:33 alexkhansen Exp $</i></p></body></html>
