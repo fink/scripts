@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.107 2009/04/09 05:41:50 dmacks Exp $
+Generated from $Fink: packaging.en.xml,v 1.108 2009/04/09 18:45:43 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -820,7 +820,11 @@ lists the <tt style="white-space: nowrap;">-compatibility_version</tt>, versione
 dependency information specifying the Fink package which provides
 this library at this compatibility version, and the library
 architecture.  (The library architecture may either be "32", "64", or
-"32-64", and may be absent; the value defaults to "32" if it is absent.)
+"32-64", and may be absent. If the library architecture is not
+explicitly listed, it defaults to the standard value for the current
+architecture of Fink; these standard values are "32" for the powerpc 
+architecture and "32" for the i386 architecture, and will be "64"
+for any future x86_64 architecture.)
 The dependency should
 be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> where 
 <tt style="white-space: nowrap;">version-revision</tt> refers to
@@ -3018,4 +3022,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.107 2009/04/09 05:41:50 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.108 2009/04/09 18:45:43 dmrrsn Exp $</i></p></body></html>

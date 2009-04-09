@@ -54,7 +54,7 @@ sub shellExpandFileName( $ )
 
 # Create disk images
 my @createImage = qw{hdiutil create};
-my @createImageOptions = qw{-megabytes 40 -type SPARSE -imagekey di-sparse-puma-compatible=TRUE -fs HFS+ -quiet -volname};
+my @createImageOptions = qw{-megabytes 300 -type SPARSE -imagekey di-sparse-puma-compatible=TRUE -fs HFS+ -quiet -volname};
 
 # Mounting disk images
 my $mountImage = "hdid";
