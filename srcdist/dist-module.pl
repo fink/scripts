@@ -140,8 +140,15 @@ if (-f "$tmpdir/$fullname/$modulename.info.in") {
 
     &modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename$suffix.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
 
+    }
 }
+
+if (-f "$tmpdir/$fullname/$modulename-x86_64.info.in") {
+    print "\n";
+    print "Creating package description file $modulename-x86_64.info:\n";
+    &modify_description("$tmpdir/$fullname/$modulename-x86_64.info.in","$tmpdir/$modulename-x86_64.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz","10.5",$coda,$version,"46");
 }
+
 
 print "Done:\n";
 print `ls -l $tmpdir/*.info*` . "\n";
