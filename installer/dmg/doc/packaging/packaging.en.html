@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.108 2009/04/09 18:45:43 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.111 2009/05/14 03:57:09 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -269,7 +269,7 @@ part of <tt style="white-space: nowrap;">%f</tt>.
 </p>
 </td></tr><tr valign="top"><td>%p, %P</td><td>
 <p>
-the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;">/sw</tt>. You must not assume all users have Fink installed in <tt style="white-space: nowrap;">/sw</tt>; use <tt style="white-space: nowrap;">%p</tt> to ge the correct path.
+the <b>p</b>refix where Fink is installed, e.g. <tt style="white-space: nowrap;">/sw</tt>. You must not assume all users have Fink installed in <tt style="white-space: nowrap;">/sw</tt>; use <tt style="white-space: nowrap;">%p</tt> to get the correct path.
 </p>
 </td></tr><tr valign="top"><td>%d</td><td>
 <p>
@@ -325,9 +325,15 @@ in the definition of <tt style="white-space: nowrap;">%c</tt>.)
 </p>
 </td></tr><tr valign="top"><td>%m</td><td>
 <p>
-the <b>m</b>achine architecture string.  This is the same as 
-<tt style="white-space: nowrap;">uname -p</tt> output.  Current values are 'powerpc' for ppc machines
-and 'i386' for x86 machines. (Introduced in a post-0.12.1 CVS version of fink.)
+the <b>m</b>achine architecture string.  This is no longer strictly
+dictated by the type of machine, but is rather a choice made by the
+user upon fink installation among those architectures which will run
+on the user's hardware.  Current possible values are
+'powerpc' for ppc machines
+and either 'i386' or 'x86_64' for x86 machines. The choice 'x86_64'
+is only available if the machine is capable of running 64bit libraries
+and executables.  (This item was introduced in the fink-0.12 era; the
+current description is valid for fink-0.29.5 and later.)
 </p>
 </td></tr><tr valign="top"><td>%%</td><td>
 <p>
@@ -1516,17 +1522,17 @@ Required field.
 </p>
 </td></tr><tr valign="top"><td>Architecture</td><td>
 <p>
-A comma-separated list of CPU architecture(s) for which the package
+A comma-separated list of fink architecture(s) for which the package
 (and any splitoff packages) are intended.
-At present, the only valid values for architecture are <tt style="white-space: nowrap;">powerpc</tt>
-and <tt style="white-space: nowrap;">i386</tt>. If this field is present and not blank after
+As of fink-0.29.5, the valid values for architecture are <tt style="white-space: nowrap;">powerpc</tt>,
+<tt style="white-space: nowrap;">i386</tt>, and <tt style="white-space: nowrap;">x86_64</tt>. 
+If this field is present and not blank after
 conditional handling, fink will ignore the package description(s) if
-the local machine architecture is not listed. If the field is omitted
+the local fink architecture is not listed. If the field is omitted
 or the value is blank, all architectures are assumed.
-(Introduced in a post-0.24.11 CVS version of fink.)
 </p>
 <p>
-At present, the most common use of this field will be for packages which
+One common use of this field will be for packages which
 require a compiler earlier than gcc-4.0 (or packages which depend on such
 packages), which should be declared to have architecture 
 <tt style="white-space: nowrap;">powerpc</tt>.
@@ -1591,7 +1597,7 @@ will result in the field for the foo-pm581 variant
 being <tt style="white-space: nowrap;">10.3, 10.4</tt> and the field being blank for the 
 foo-pm586 variant.
 </p>
-<p>Since python 2.3 is not availble in the 10.5 distribution, and the
+<p>Since python 2.3 is not available in the 10.5 distribution, and the
 available perl packages vary by distribution, these package types provide
 a common use of this field.  For reference, we note the availabilty of
 various perl versions in the 10.3, 10.4 and 10.5 distributions:
@@ -3022,4 +3028,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.108 2009/04/09 18:45:43 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.111 2009/05/14 03:57:09 dmrrsn Exp $</i></p></body></html>
