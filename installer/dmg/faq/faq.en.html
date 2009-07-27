@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.97 2009/07/06 18:39:40 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.99 2009/07/27 18:44:40 dmacks Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -76,7 +76,7 @@ complaining that the dependencies are in an inconsistent state.</a></li><li><a h
 	  seem to install or remove myself?</a></li></ul></li><li><a href="#usage-packages"><b>9 Package Usage Problems - Specific Packages</b></a><ul><li><a href="#usage-packages.xmms-quiet">9.1 I get no sound from XMMS</a></li><li><a href="#usage-packages.nedit-window-locks">9.2 If I am editing a file in nedit, when I open another file its
         window pops up but is unresponsive.</a></li><li><a href="#usage-packages.xdarwin-start">9.3 Help! When I start XDarwin, it immediately quits!</a></li><li><a href="#usage-packages.no-server">9.4 When I try to start XDarwin I get the message "xinit: No such file
         or directory (errno 2): no server "/usr/X11R6/bin/X" in PATH".</a></li><li><a href="#usage-packages.apple-x-delete">9.5 I want the delete key in Apple's X11.app to behave like that in
-        XDarwin.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.6 I'm having problems with X11 and Fink</a></li><li><a href="#usage-packages.special-x11-debug">9.7 I'm still having problems with X11 and Fink.</a></li><li><a href="#usage-packages.tiger-gtk">9.8 After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</a></li><li><a href="#usage-packages.yelp">9.9 I can't get the help to work for any GNOME application.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
+        XDarwin.</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.6 I'm having problems with X11 and Fink.</a></li><li><a href="#usage-packages.special-x11-debug">9.7 I'm still having problems with X11 and Fink.</a></li><li><a href="#usage-packages.tiger-gtk">9.8 After updating to Tiger (OS 10.4), whenever I use a GTK app, I get errors involving <tt style="white-space: nowrap;">_EVP_idea_cbc</tt>.</a></li><li><a href="#usage-packages.yelp">9.9 I can't get the help to work for any GNOME application.</a></li></ul></li></ul><h2><a name="general">1 General Questions</a></h2>
     
     
     <a name="general.what">
@@ -347,7 +347,7 @@ fink scanpackages
       <div class="question"><p><b>Q5.10: I'm tired of typing my password into sudo again and again. Is there
         a way around this?</b></p></div>
       <div class="answer"><p><b>A:</b> If you're not paranoid, you can configure sudo to not ask you for a
-        password. To do this, run <tt style="white-space: nowrap;">visudo</tt> as root and add a line like this:</p><pre>username ALL = NOPASSWD: ALL</pre><p>Replace <tt style="white-space: nowrap;">username</tt> with your actual username, of course.
+        password. To do this, run <tt style="white-space: nowrap;">visudo</tt> as root and add a line like this:</p><pre>username ALL =(ALL) NOPASSWD: ALL</pre><p>Replace <tt style="white-space: nowrap;">username</tt> with your actual username, of course.
         This line allows you to run any command via sudo without typing your
         password.</p></div>
     </a>
@@ -1351,7 +1351,7 @@ xmodmap $HOME/.Xmodmap</pre><p></p></div>
     </a>
     <a name="usage-packages.apple-x11-wants-xfree86">
       
-      <div class="question"><p><b>Q9.6: I'm having problems with X11 and Fink</b></p></div>
+      <div class="question"><p><b>Q9.6: I'm having problems with X11 and Fink.</b></p></div>
       <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
           <li>
             <b>You are installing from binaries:</b>
@@ -1372,8 +1372,9 @@ xmodmap $HOME/.Xmodmap</pre><p></p></div>
             <b>You are installing from source:</b>
 	    <p>Typically this error means that you need to (re)install the X11SDK,
 	    which is <b>mandatory</b> if you want to build packages from source.
-	    It is in the Xcode Tools folder of a Tiger DVD, or Xcode Tools/Packages
-	    on the second install DVD of Leopard.  If you run</p>
+            It is in the Xcode Tools folder of a Tiger DVD, or (Optional
+            Installs/)Xcode Tools/Packages on your Leopard DVD(s). If you
+            run</p>
             <pre>fink list -i system-xfree86  </pre>
             <p>it should show the <tt style="white-space: nowrap;">system-xfree86</tt>,
 	    <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt>
@@ -1393,7 +1394,7 @@ xmodmap $HOME/.Xmodmap</pre><p></p></div>
     </a>
     <a name="usage-packages.special-x11-debug">
       <div class="question"><p><b>Q9.7: I'm still having problems with X11 and Fink.</b></p></div>
-      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apple-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> or <a href="#usage-packages.wants-xfree86-on-upgrade">X11 and upgrade from 10.2</a> entries don't help, or aren't applicable to your situation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><p>On Leopard, use</p><pre>
+      <div class="answer"><p><b>A:</b> If the hints in the  <a href="#usage-packages.apple-x11-wants-xfree86">Fink tries to install XFree86 or X.org</a> entry don't help, or aren't applicable to your situation, you may need to flush out your X11 installation and remove any old placeholders and partially/fully installed X11-related packages:</p><p>On Leopard, use</p><pre>
 sudo pkgutil --forget com.apple.pkg.X11User
 sudo pkgutil --forget com.apple.pkg.X11SDKLeo
 </pre><p>Then, on either 10.4 or 10.5, run</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
@@ -1432,4 +1433,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.97 2009/07/06 18:39:40 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.99 2009/07/27 18:44:40 dmacks Exp $</i></p></body></html>

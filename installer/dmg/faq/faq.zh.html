@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.zh.xml,v 1.30 2008/10/29 00:15:08 alexkhansen Exp $
+Generated from $Fink: faq.zh.xml,v 1.31 2009/07/27 18:44:40 dmacks Exp $
 -->
 <title>Fink Documentation - Fink 常见疑问（F.A.Q.）</title></head><body>
 <table width="100%" cellspacing="0">
@@ -320,7 +320,7 @@ Fink 的所有文件几乎都安装在 /sw （或你选择安装的地方）。�
     
     <a name="usage-fink.sudo">
       <div class="question"><p><b>Q5.10: 每次运行 sudo 都要输入密码，这很麻烦。有办法解决吗？</b></p></div>
-      <div class="answer"><p><b>A:</b> 你可以配制 sudo 不需要询问你密码。用 root 权限运行 <tt style="white-space: nowrap;">visudo</tt> 命令，并添加一行：</p><pre>username ALL = NOPASSWD: ALL</pre><p>把 <tt style="white-space: nowrap;">username</tt> 替换为实际的用户名。这一行使得你可以运行 sudo 命令而不需要输入密码。</p></div>
+      <div class="answer"><p><b>A:</b> 你可以配制 sudo 不需要询问你密码。用 root 权限运行 <tt style="white-space: nowrap;">visudo</tt> 命令，并添加一行：</p><pre>username ALL =(ALL) NOPASSWD: ALL</pre><p>把 <tt style="white-space: nowrap;">username</tt> 替换为实际的用户名。这一行使得你可以运行 sudo 命令而不需要输入密码。</p></div>
     </a>
     <a name="usage-fink.exec-init-csh">
       <div class="question"><p><b>Q5.11: 当我尝试运行 init.csh 或 init.sh 时，我碰到一个 "Permission denied" 错误。我做错了什么？</b></p></div>
@@ -1189,4 +1189,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.zh.xml,v 1.30 2008/10/29 00:15:08 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.zh.xml,v 1.31 2009/07/27 18:44:40 dmacks Exp $</i></p></body></html>
