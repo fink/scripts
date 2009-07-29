@@ -11,7 +11,6 @@ dpkg --get-selections | \
 	grep -v '^cctools-extra[[:space:]]' | \
 	grep -v '^debianutils[[:space:]]' | \
 	grep -v '^dpkg[[:space:]]' | \
-	grep -v '^expat-shlibs[[:space:]]' | \
 	grep -v '^fink[[:space:]]' | \
 	grep -v '^fink-mirrors[[:space:]]' | \
 	grep -v '^fink-prebinding[[:space:]]' | \
