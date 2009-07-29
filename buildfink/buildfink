@@ -24,7 +24,7 @@ buildfink -- Build every package in Fink
 
 =head1 USAGE
 
-    buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--find-orphan-files] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [--packages PKGLIST] [--rebuild-deps] [--dirty] [FINKDIR OUTDIR]
+    buildfink [-n] [--infofilter SCRIPT] [--patchdir DIR] [--skip PACKAGE] [--skip PACKAGE] [--copy-debs] [--find-orphan-files] [--validate] [--build-as-nobody] [--max-log-size [P:]N] [--max-build-time [P:]T] [--packages PKGLIST] [--rebuild-deps] [--dirty] [FINKDIR OUTDIR]
     buildfink [-r CHECKPOINT]
 
 C<buildfink> builds every package in Fink, taking care of things like avoiding repeated building
@@ -52,6 +52,9 @@ Skipped packages will not be built, nor will any packages which depend on them.
 
 The C<--validate> option, if specified, causes buildfink to validate packages
 as it builds them and run any test suites specified in an InfoTest section.
+
+The C<--copy-debs> option, if specified, will cause buildfink to copy debfiles
+into it's package directory, instead of moving them.
 
 The C<--find-orphan-files> option, if specified, will detect files installed
 into the prefix which aren't actually part of the binary package.
@@ -127,7 +130,7 @@ use lib "$Bin/lib";
 use FinkLib;
 use FinkFDB;
 
-our($Bin, $FinkBuildFlags, $FinkConfig, $FinkDir, $RunDir, $DryRun, $infofilter, $patchdir, @skiplist, $checkpoint, $CheckFiles, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo, $FDB);
+our($Bin, $FinkBuildFlags, $FinkConfig, $FinkDir, $RunDir, $DryRun, $infofilter, $patchdir, @skiplist, $checkpoint, $CheckFiles, $CopyDebs, $DoValidate, $BuildNobody, $Dirty, $RebuildDeps, $BuildAll, $NoCopyInfo, $FDB);
 our $VERSION = '$Revision$';
 
 our $max_build_time = 60*60*4;
@@ -217,6 +220,7 @@ my $opts_ok = GetOptions(
 			 "skip=s" => \@skiplist,
 			 "r=s" => \$checkpoint,
 			 "validate" => \$DoValidate,
+			 "copy-debs" => \$CopyDebs,
 			 "find-orphan-files" => \$CheckFiles,
 			 "dirty" => \$Dirty,
 			 "rebuild-deps" => \$RebuildDeps,
@@ -815,11 +819,20 @@ sub recurseOnDepends {
       getDebFiles($_) foreach FinkLib::getRelatives($obj);
     }
 
-    my $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
+    my $dst;
+    if ($obj->get_debpath() =~ /powerpc/) {
+      $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
+    } else {
+      $dst = "$RunDir/pkginfo/binary-darwin-i386/$deb";
+    }
     if ($src ne $dst) {
-      move($src, $dst);
-      unlink("$FinkDir/fink/debs/$deb");
-      symlink("$RunDir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+      if ($CopyDebs) {
+        copy($src, $dst);
+      } else {
+        move($src, $dst);
+        unlink("$FinkDir/fink/debs/$deb");
+        symlink($dst, "$FinkDir/fink/debs/$deb");
+      }
     }
 
     my @okpkgs = $pkg;
@@ -828,11 +841,20 @@ sub recurseOnDepends {
 
       my $deb = $relative->get_debname();
       my $src = readlink("$FinkDir/fink/debs/$deb");
-      my $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
+      if ($obj->get_debpath() =~ /powerpc/) {
+        $dst = "$RunDir/pkginfo/binary-darwin-powerpc/$deb";
+      } else {
+        $dst = "$RunDir/pkginfo/binary-darwin-i386/$deb";
+      }
+
       if ($src ne $dst) {
-	move($src, $dst);
-	unlink("$FinkDir/fink/debs/$deb");
-	symlink("$RunDir/pkginfo/binary-darwin-powerpc/$deb", "$FinkDir/fink/debs/$deb");
+        if ($CopyDebs) {
+	  copy($src, $dst);
+        } else {
+	  move($src, $dst);
+	  unlink("$FinkDir/fink/debs/$deb");
+	  symlink($dst, "$FinkDir/fink/debs/$deb");
+        }
       }
     }
 
