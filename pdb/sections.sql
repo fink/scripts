@@ -15,7 +15,7 @@ insert into sections values ('libs/pythonmods', 'Python libraries');
 insert into sections values ('libs/rubymods', 'Ruby libraries');
 insert into sections values ('net', 'Network-related applications and libraries');
 insert into sections values ('sci', 'Scientific applications');
-insert into sections values ('shells', 'Shells a.k.a. command line interpreters');
+insert into sections values ('shells', 'Shells (command line interpreters)');
 insert into sections values ('sound', 'Audio software');
 insert into sections values ('text', 'Text-processing software');
 insert into sections values ('utils', 'Utilities that do not fit elsewhere');
