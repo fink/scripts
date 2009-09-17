@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.pt.xml,v 1.4 2009/07/27 18:44:40 dmacks Exp $
+Generated from $Fink: faq.pt.xml,v 1.5 2009/08/28 12:02:43 monipol Exp $
 -->
 <title>Fink Documentation - Perguntas frequentes sobre o Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -31,7 +31,7 @@ Portugu&ecirc;s |
         (incluindo OpenPackages e GNU-Darwin)?</a></li><li><a href="#general.usr-local">1.4 Por que o Fink não instala no /usr/local?</a></li><li><a href="#general.why-sw">1.5 Por que vocês escolheram /sw?</a></li></ul></li><li><a href="#relations"><b>2 Relacionamentos com outros projetos</b></a><ul><li><a href="#relations.upstream">2.1 Vocês repassam suas correções e ajustes para os mantenedores
         oficiais?</a></li><li><a href="#relations.debian">2.2 Qual o seu relacionamento com o projeto Debian? Vocês estão portando
         o Debian Linux para rodar no Mac OS X?</a></li><li><a href="#relations.apple">2.3 Qual o seu relacionamento com a Apple</a></li><li><a href="#relations.darwinports">2.4 Qual o seu relacionamento com o Darwinports?</a></li></ul></li><li><a href="#mirrors"><b>3 Espelhos do Fink</b></a><ul><li><a href="#mirrors.when-use">3.1 O que são os espelhos do Fink?</a></li><li><a href="#mirrors.why">3.2 Por que eu deveria usar espelhos rsync?</a></li><li><a href="#mirrors.where">3.3 Onde posso encontrar mais informações sobre espelhos do Fink?</a></li><li><a href="#mirrors.when-not">3.4 Não consigo conectar-me a um servidor rsync, o que devo fazer?</a></li><li><a href="#mirrors.otherinfogone">3.5 Eu mudei para o método rsync e agora todos os arquivos das árvores
-        que não eram usadas foram eliminados</a></li><li><a href="#mirrors.howswitch">3.6 Como posso ficar alternando entre os métodos?</a></li><li><a href="#mirrors.status">3.7 Posso verificar o estado atual dos espelhos rsync?</a></li><li><a href="#mirrors.Master">3.8 O que é um espelho de distfiles (arquivos de distribuição)?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Atualizando o Fink (resolução de problemas específicos a uma
+        que não eram usadas foram eliminados</a></li><li><a href="#mirrors.howswitch">3.6 Como posso alternar entre os métodos?</a></li><li><a href="#mirrors.Master">3.7 O que é um espelho de distfiles (arquivos de distribuição)?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Atualizando o Fink (resolução de problemas específicos a uma
     versão)</b></a><ul><li><a href="#upgrade-fink.leopard-bindist1">4.1 O Fink não enxerga pacotes novos mesmo depois de eu rodar uma
         autoatualização via rsync ou CVS.</a></li><li><a href="#upgrade-fink.leopard-bindist2">4.2 Quando eu tento instalar um pacote eu recebo a mensagem de erro
         'Can't resolve dependency "fink (&gt;= 0.28.0)"' (Não é possível resolver
@@ -313,15 +313,11 @@ Portugu&ecirc;s |
         subdiretórios CVS.</p></div>
     </a>
     <a name="mirrors.howswitch">
-      <div class="question"><p><b>Q3.6: Como posso ficar alternando entre os métodos?</b></p></div>
+      <div class="question"><p><b>Q3.6: Como posso alternar entre os métodos?</b></p></div>
       <div class="answer"><p><b>A:</b> Use os comandos fink selfupdate-rsync ou fink selfupdate-cvs.</p></div>
     </a>
-    <a name="mirrors.status">
-      <div class="question"><p><b>Q3.7: Posso verificar o estado atual dos espelhos rsync?</b></p></div>
-      <div class="answer"><p><b>A:</b> Claro, veja <a href="http://finkmirrors.net/status.html">http://finkmirrors.net/status.html</a>.</p></div>
-    </a>
     <a name="mirrors.Master">
-      <div class="question"><p><b>Q3.8: O que é um espelho de distfiles (arquivos de distribuição)?</b></p></div>
+      <div class="question"><p><b>Q3.7: O que é um espelho de distfiles (arquivos de distribuição)?</b></p></div>
       <div class="answer"><p><b>A:</b> Às vezes é difícil obter da Internet certas versões de códigos
         fontes. Espelhos de distfiles mantêm e espelham pacotes de código
         fonte que são necessários para que o fink construa seus pacotes de
@@ -1347,10 +1343,11 @@ fink install libiconv</pre></div>
     </a>
   <a name="comp-packages.Leopard-libXrandr">
     <div class="question"><p><b>Q7.7: Não consigo instalar o <b>gtk+2</b> no OS 10.5.</b></p></div>
-    <div class="answer"><p><b>A:</b> Há algumas variantes deste erro. Uma delas envolve bibliotecas
-      ausentes: <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> ou
-      <tt style="white-space: nowrap;">/usr/X11/lib/libXdamage.1.1.0.dylib</tt>. O melhor
-      entendimento para corrigir este erro é instalar o Xcode 3.1.3.</p></div>
+    <div class="answer"><p><b>A:</b> Esse erro está normalmente relacionado a bibliotecas ausentes, tais
+	  como <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> ou
+	  <tt style="white-space: nowrap;">/usr/X11/lib/libXdamage.1.1.0.dylib</tt> (ou outras
+	  versões de bibliotecas em <tt style="white-space: nowrap;">/usr/X11/lib/</tt>).</p><p>Até onde podemos perceber, a melhor forma de corrigir esse problema é
+	  instalar o Xcode 3.1.3.</p></div>
   </a>
     <a name="comp-packages.all-others">
       <div class="question"><p><b>Q7.8: Estou tendo problemas com um pacote que não está listado aqui.</b></p></div>
@@ -1759,4 +1756,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.pt.xml,v 1.4 2009/07/27 18:44:40 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.pt.xml,v 1.5 2009/08/28 12:02:43 monipol Exp $</i></p></body></html>
