@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.pt.xml,v 1.7 2009/09/17 02:28:55 monipol Exp $
+Generated from $Fink: faq.pt.xml,v 1.8 2009/10/17 23:42:51 monipol Exp $
 -->
 <title>Fink Documentation - Perguntas frequentes sobre o Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -1412,21 +1412,24 @@ fink install libiconv</pre></div>
         Fink?</b></p></div>
       <div class="answer"><p><b>A:</b> Quando você for compilar algo fora do Fink, o compilador e o
         linkeditor precisam saber onde estão as bibliotecas e arquivos de
-        cabeçalho instalados pelo Fink. Para um pacote que use o processo
-        configure/make padrão, você precisa definir algumas variáveis de
+		cabeçalho instalados pelo Fink. Também é necessário informar ao
+		compilador qual a arquitetura alvo. Para um pacote que use o processo
+		configure/make padrão, você precisa definir algumas variáveis de
         ambiente:</p><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
 export LDFLAGS=-L/sw/lib 
 export CXXFLAGS=$CFLAGS 
 export CPPFLAGS=$CXXFLAGS 
 export ACLOCAL_FLAGS="-I /sw/share/aclocal"
 export PKG_CONFIG_PATH="/sw/lib/pkgconfig"
-export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>-tcsh-</p><pre>setenv CFLAGS -I/sw/include 
+export PATH=/sw/var/lib/fink/path-prefix-10.6:$PATH
+export MACOSX_DEPLOYMENT_TARGET=10.5</pre><p>-tcsh-</p><pre>setenv CFLAGS -I/sw/include 
 setenv LDFLAGS -L/sw/lib 
 setenv CXXFLAGS $CFLAGS 
 setenv CPPFLAGS $CXXFLAGS 
 setenv ACLOCAL_FLAGS "-I /sw/share/aclocal"
 setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"
-setenv MACOSX_DEPLOYMENT_TARGET 10.4</pre><p>Normalmente é mais fácil adicionar essas definições ao seu arquivo
+setenv PATH /sw/var/lib/fink/path-prefix-10.6:$PATH
+setenv MACOSX_DEPLOYMENT_TARGET 10.5</pre><p>Normalmente é mais fácil adicionar essas definições ao seu arquivo
         de inicialização do shell (<tt style="white-space: nowrap;">.profile</tt> |
         <tt style="white-space: nowrap;">.cshrc</tt>) para que as variáveis sejam definidas
         automaticamente. Se um pacote não usa essas variáveis, você precisará
@@ -1756,4 +1759,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.pt.xml,v 1.7 2009/09/17 02:28:55 monipol Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.pt.xml,v 1.8 2009/10/17 23:42:51 monipol Exp $</i></p></body></html>
