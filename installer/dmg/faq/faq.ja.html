@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.ja.xml,v 1.43 2009/07/27 18:44:40 dmacks Exp $
+Generated from $Fink: faq.ja.xml,v 1.44 2009/10/25 05:21:38 babayoshihiko Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -27,8 +27,7 @@ Available Languages:  |
 それぞれリンクされていますので、辿っていってください。</p>
 <h2>Contents</h2><ul><li><a href="#general"><b>1 一般的な質問</b></a><ul><li><a href="#general.what">1.1 Fink とは何ですか?</a></li><li><a href="#general.naming">1.2 Fink とはどういう意味ですか?</a></li><li><a href="#general.bsd-ports">1.3 
 Fink と BSD の port メカニズムはどう違うのですか (OpenPackages や GNU-Darwin も含めて)?
-</a></li><li><a href="#general.usr-local">1.4 なぜ Fink は /usr/local にインストールしないのですか?</a></li><li><a href="#general.why-sw">1.5 ではなぜ /sw を選んだのですか?</a></li></ul></li><li><a href="#relations"><b>2 他のプロジェクトとの関係</b></a><ul><li><a href="#relations.upstream">2.1 パッチを送るなど、本家のメンテナに貢献していますか?</a></li><li><a href="#relations.debian">2.2 Debian プロジェクトとは関係がありますか。 Debian Linux を Mac OS X に移植しようとしているのですか?</a></li><li><a href="#relations.apple">2.3 Apple とは関係がありますか?</a></li><li><a href="#relations.darwinports">2.4 Darwinports とは関係がありますか?</a></li></ul></li><li><a href="#mirrors"><b>3 Fink ミラー</b></a><ul><li><a href="#mirrors.when-use">3.1 Fink ミラーとは何ですか?</a></li><li><a href="#mirrors.why">3.2 なぜ rsync ミラーを使わないといけないのですか?</a></li><li><a href="#mirrors.where">3.3 Fink ミラーの情報はどこにありますか?</a></li><li><a href="#mirrors.when-not">3.4 rsync サーバーに接続できません。どうしたら良いですか?</a></li><li><a href="#mirrors.otherinfogone">3.5 rsync 方式に変えたら、unused ツリーの info ファイルが全て消えてしまいました。</a></li><li><a href="#mirrors.howswitch">3.6 どのように方式を切り替えるのですか?</a></li><li><a href="#mirrors.status">3.7 rsync ミラーの現在の状態は見ることが出来ますか?</a></li><li><a href="#mirrors.Master">3.8 Distfiles ミラーとは何ですか?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Fink のアップグレード (バージョン固有の問題対処法)</b></a><ul><li><a href="#upgrade-fink.gcc-0.16.0">4.1 バージョン0.16.0にアップグレードして "Your version of the
-gcc 3.3 compiler is out of date." と言われました。どうしたらいいですか?</a></li><li><a href="#upgrade-fink.fink-0220">4.2 長いこと Fink からのパッケージ更新がありませんでしたが</a></li></ul></li><li><a href="#usage-fink"><b>5 Fink のインストール、使用、メンテナンス</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Fink がサポートしているパッケージはどのように探せますか?</a></li><li><a href="#usage-fink.proxy">5.2 ファイヤーウォールの内側にいます。どう設定したら Fink で HTTP プロキシが使えますか?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 ファイヤーウォールの内側から CVS でパッケージをアップデートするにはどうしたらいいですか?</a></li><li><a href="#usage-fink.moving">5.4 インストール後に Fink を他の場所に移動できますか?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Fink をインストール後、他の場所に移動してシンボリックリンクを張ったら、動きますか?</a></li><li><a href="#usage-fink.removing">5.6 Fink を全てアンインストールするには?</a></li><li><a href="#usage-fink.bindist">5.7 ウェブのパッケージデータベースは、パッケージ xxx を表示しているのに、 apt-get と dselect は何もしない。どっちが嘘をついてるのですか?
+</a></li><li><a href="#general.usr-local">1.4 なぜ Fink は /usr/local にインストールしないのですか?</a></li><li><a href="#general.why-sw">1.5 ではなぜ /sw を選んだのですか?</a></li></ul></li><li><a href="#relations"><b>2 他のプロジェクトとの関係</b></a><ul><li><a href="#relations.upstream">2.1 パッチを送るなど、本家のメンテナに貢献していますか?</a></li><li><a href="#relations.debian">2.2 Debian プロジェクトとは関係がありますか。 Debian Linux を Mac OS X に移植しようとしているのですか?</a></li><li><a href="#relations.apple">2.3 Apple とは関係がありますか?</a></li><li><a href="#relations.darwinports">2.4 Darwinports とは関係がありますか?</a></li></ul></li><li><a href="#mirrors"><b>3 Fink ミラー</b></a><ul><li><a href="#mirrors.when-use">3.1 Fink ミラーとは何ですか?</a></li><li><a href="#mirrors.why">3.2 なぜ rsync ミラーを使わないといけないのですか?</a></li><li><a href="#mirrors.where">3.3 Fink ミラーの情報はどこにありますか?</a></li><li><a href="#mirrors.when-not">3.4 rsync サーバーに接続できません。どうしたら良いですか?</a></li><li><a href="#mirrors.otherinfogone">3.5 rsync 方式に変えたら、unused ツリーの info ファイルが全て消えてしまいました。</a></li><li><a href="#mirrors.howswitch">3.6 どのように方式を切り替えるのですか?</a></li><li><a href="#mirrors.Master">3.7 Distfiles ミラーとは何ですか?</a></li></ul></li><li><a href="#upgrade-fink"><b>4 Fink のアップグレード (バージョン固有の問題対処法)</b></a><ul><li><a href="#upgrade-fink.leopard-bindist1">4.1 Fink doesn't see new packages even after I've run an rsync or cvs selfupdate.</a></li><li><a href="#upgrade-fink.leopard-bindist2">4.2 When I try to install stuff I get 'Can't resolve dependency "fink (&gt;= 0.28.0)"'</a></li><li><a href="#upgrade-fink.fink-0220">4.3 長いこと Fink からのパッケージ更新がありませんでしたが</a></li></ul></li><li><a href="#usage-fink"><b>5 Fink のインストール、使用、メンテナンス</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Fink がサポートしているパッケージはどのように探せますか?</a></li><li><a href="#usage-fink.proxy">5.2 ファイヤーウォールの内側にいます。どう設定したら Fink で HTTP プロキシが使えますか?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 ファイヤーウォールの内側から CVS でパッケージをアップデートするにはどうしたらいいですか?</a></li><li><a href="#usage-fink.moving">5.4 インストール後に Fink を他の場所に移動できますか?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Fink をインストール後、他の場所に移動してシンボリックリンクを張ったら、動きますか?</a></li><li><a href="#usage-fink.removing">5.6 Fink を全てアンインストールするには?</a></li><li><a href="#usage-fink.bindist">5.7 ウェブのパッケージデータベースは、パッケージ xxx を表示しているのに、 apt-get と dselect は何もしない。どっちが嘘をついてるのですか?
 </a></li><li><a href="#usage-fink.unstable">5.8 unstable にあるパッケージをインストールしようとすると、 fink が 'no package found' といいます。どうしたらインストールできるのですか?</a></li><li><a href="#usage-fink.unstable-onepackage">5.9 
           unstable にあるパッケージをひとつだけインストールするにも、 unstable 全体を有効にしなければなりませんか?
         </a></li><li><a href="#usage-fink.sudo">5.10 sudo でパスワードを何度も何度も入力するのは疲れます。何か良い方法はありませんか?</a></li><li><a href="#usage-fink.exec-init-csh">5.11 init.csh or init.sh を実行しようとすると、 "Permission denied" エラーが出ます。
@@ -38,45 +37,42 @@ gcc 3.3 compiler is out of date." と言われました。どうしたらいい�
 "command not found" エラーが出ます。</a></li><li><a href="#usage-fink.invisible-sw">5.17 Finder で /sw を隠して、ユーザーが Fink の構成を壊すのを防ぎたい。</a></li><li><a href="#usage-fink.install-info-bad">5.18 何もインストールできません。
 "install-info: unrecognized option `--infodir=/sw/share/info'"
 のエラーが出るだけです。</a></li><li><a href="#usage-fink.bad-list-file">5.19 何もインストールできないし、削除もできません。 "files list file" と出るだけです。</a></li><li><a href="#usage-fink.dselect-garbage">5.20 <tt style="white-space: nowrap;">dselect</tt> でパッケージを選択すると、大量のゴミがでてきます。
-これはどうやったら使えますか?</a></li><li><a href="#usage-fink.perl-undefined-symbol">5.21 なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</a></li><li><a href="#usage-fink.cant-upgrade">5.22 Fink のバージョンをアップデートできないようです。</a></li><li><a href="#usage-fink.spaces-in-directory">5.23 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</a></li><li><a href="#usage-fink.packages-gz">5.24 バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</a></li><li><a href="#usage-fink.wrong-tree">5.25 OS | Developer Tools を変えたら、 Fink が認識してくれません。</a></li><li><a href="#usage-fink.seg-fault">5.26 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.27 ターミナルウィンドウを開くと、
+これはどうやったら使えますか?</a></li><li><a href="#usage-fink.cant-upgrade">5.21 Fink のバージョンをアップデートできないようです。</a></li><li><a href="#usage-fink.spaces-in-directory">5.22 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</a></li><li><a href="#usage-fink.packages-gz">5.23 バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</a></li><li><a href="#usage-fink.wrong-tree">5.24 OS | Developer Tools を変えたら、 Fink が認識してくれません。</a></li><li><a href="#usage-fink.seg-fault">5.25 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</a></li><li><a href="#usage-fink.pathsetup-keeps-running">5.26 ターミナルウィンドウを開くと、
 "Your environment seems to be correctly set up for Fink already."
-というメッセージが出てログアウトします。</a></li><li><a href="#usage-fink.ext-drive">5.28 
+というメッセージが出てログアウトします。</a></li><li><a href="#usage-fink.ext-drive">5.27 
 	メインパーティション以外に Fink をインストールしていますが、
 	ソースからの更新ができません。
 	<q>chowname</q> を含んだエラーが出ます。
-	</a></li><li><a href="#usage-fink.mirror-gnu">5.29 
+	</a></li><li><a href="#usage-fink.mirror-gnu">5.28 
 	Fink がパッケージを更新しません。
 	'gnu' ミラーが見つからないと言っています。
-	</a></li><li><a href="#usage-fink.cant-move-fink">5.30 
+	</a></li><li><a href="#usage-fink.cant-move-fink">5.29 
 	Fink を更新できません。
 	/sw/fink を移動できないからです。
-	</a></li><li><a href="#usage-fink.four-oh-three">5.31 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</a></li><li><a href="#usage-fink.fc-cache">5.32 "No fonts found" というメッセージが出ます。</a></li><li><a href="#usage-fink.non-admin-installer">5.33 インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</a></li><li><a href="#usage-fink.wrong-arch">5.34 Fink を更新できない。 <q>package architecture (darwin-i386) がシステム (darwin-powerpc) に合っていない。</q>
-</a></li><li><a href="#usage-fink.sf-cvs-2006">5.35 cvs selfupdate がここのところできません。</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
+	</a></li><li><a href="#usage-fink.fc-cache">5.30 "No fonts found" というメッセージが出ます。</a></li><li><a href="#usage-fink.non-admin-installer">5.31 インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</a></li><li><a href="#usage-fink.wrong-arch">5.32 Fink を更新できない。 <q>package architecture (darwin-i386) がシステム (darwin-powerpc) に合っていない。</q>
+</a></li></ul></li><li><a href="#comp-general"><b>6 コンパイルの問題 - 一般</b></a><ul><li><a href="#comp-general.compiler">6.1 configure スクリプトが "acceptable cc" が見つからないといってきます。
 これは何ですか?</a></li><li><a href="#comp-general.cvs">6.2 "fink selfupdate-cvs" をしようとしたら、このメッセージが出てきました: "cvs: Command not found."
 </a></li><li><a href="#comp-general.missing-make">6.3 <tt style="white-space: nowrap;">make</tt> に関連したエラーがでました。</a></li><li><a href="#comp-general.head">6.4 head コマンドから変な使用方法メッセージが出ています。何がおかしいのですか?</a></li><li><a href="#comp-general.also_in">6.5 あるパッケージをインストールしようとすると、他のパッケージのファイルを上書きしようとしているというエラーメッセージが出ました。
-</a></li><li><a href="#comp-general.weak_lib">6.6 December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</a></li><li><a href="#comp-general.mv-failed">6.7 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.8 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.9 /usr/local にインストールされているライブラリやヘッダが 
-	Fink のビルドの問題を起こすことがあると聞いたけど、本当ですか?</a></li><li><a href="#comp-general.toc-out-of-date">6.10 パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
-</a></li><li><a href="#comp-general.fc-atlas">6.11 atlas をインストールしようとすると、 Fink Commander がハングアップします。</a></li><li><a href="#comp-general.basic-headers">6.12 <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">stdlib.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
+</a></li><li><a href="#comp-general.mv-failed">6.6 パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</a></li><li><a href="#comp-general.node-exists">6.7 '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</a></li><li><a href="#comp-general.usr-local-libs">6.8 /usr/local にインストールされているライブラリやヘッダが 
+	Fink のビルドの問題を起こすことがあると聞いたけど、本当ですか?</a></li><li><a href="#comp-general.toc-out-of-date">6.9 パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
+</a></li><li><a href="#comp-general.fc-atlas">6.10 atlas をインストールしようとすると、 Fink Commander がハングアップします。</a></li><li><a href="#comp-general.basic-headers">6.11 <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">stdlib.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
 あるいは、"C compiler cannot create executables" というメッセージが出ます。
-これはどこにありますか?</a></li><li><a href="#comp-general.multiple-dependencies">6.13 Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</a></li><li><a href="#comp-general.dpkg-parse-error">6.14 "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
-というメッセージが出て、何もインストールできません!</a></li><li><a href="#comp-general.freetype-problems">6.15 freetype に関係したエラーが出ます。</a></li><li><a href="#comp-general.dlfcn-from-oo">6.16 `Dl_info' のエラーが出ます。</a></li><li><a href="#comp-general.gcc2">6.17 Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</a></li><li><a href="#comp-general.system-java">6.18 Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
+これはどこにありますか?</a></li><li><a href="#comp-general.multiple-dependencies">6.12 Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</a></li><li><a href="#comp-general.dpkg-parse-error">6.13 "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
+というメッセージが出て、何もインストールできません!</a></li><li><a href="#comp-general.freetype-problems">6.14 freetype に関係したエラーが出ます。</a></li><li><a href="#comp-general.dlfcn-from-oo">6.15 `Dl_info' のエラーが出ます。</a></li><li><a href="#comp-general.gcc2">6.16 Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</a></li><li><a href="#comp-general.system-java">6.17 Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
 と言っていますが、そのようなパッケージはありません。
-</a></li><li><a href="#comp-general.dpkg-split">6.19 
+</a></li><li><a href="#comp-general.dpkg-split">6.18 
 何をインストールしようとしても、
 <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
 というエラーが出ます。
 どうしたらいいですか?
-</a></li><li><a href="#comp-general.xml-parser">6.20 
+</a></li><li><a href="#comp-general.xml-parser">6.19 
 	次のメッセージが出ます:<q>configure: error: XML::Parser perl module is required for intltool</q>。
 	どうしたら良いでしょうか?
-	</a></li><li><a href="#comp-general.master-problems">6.21 
+	</a></li><li><a href="#comp-general.master-problems">6.20 
 		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
-	</a></li><li><a href="#comp-general.compile-options">6.22 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li><li><a href="#comp-general.gettext">6.23 
-        	ソースからビルドするとき、 <tt style="white-space: nowrap;">gettext-dev</tt> と <tt style="white-space: nowrap;">libgettext3-dev</tt> の間でたらい回しです。
-        </a></li><li><a href="#comp-general.python-mods">6.24 Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</a></li><li><a href="#comp-general.libtool-unrecognized-dynamic">6.25 I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
-        これはどこにありますか?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink が、 <tt style="white-space: nowrap;">gettext</tt> の依存性に矛盾があるとだけ表示し、更新してくれません。</a></li><li><a href="#comp-packages.Leopard-libXrandr">7.8 
-      <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> がないため <b>gtk+2</b> がインストールできません。</a></li><li><a href="#comp-packages.all-others">7.9 ここに載っていないパッケージで問題があります。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
+	</a></li><li><a href="#comp-general.compile-options">6.21 パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</a></li><li><a href="#comp-general.alternates">6.22 Whenever I try to build from source, Fink keeps waffling between alternate versions of the same library.</a></li><li><a href="#comp-general.python-mods">6.23 Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</a></li><li><a href="#comp-general.libtool-unrecognized-dynamic">6.24 I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</a></li></ul></li><li><a href="#comp-packages"><b>7 コンパイルの問題 - 特定のバージョン</b></a><ul><li><a href="#comp-packages.libgtop">7.1 <tt style="white-space: nowrap;">sed</tt> を使うパッケージビルドが失敗します。</a></li><li><a href="#comp-packages.cant-install-xfree">7.2 Fink の XFree86 パッケージに切替えたいけれど、 <tt style="white-space: nowrap;">system-xfree86</tt>  とコンフリクトしているため <tt style="white-space: nowrap;">xfree86-base</tt> | <tt style="white-space: nowrap;">xfree86</tt> がインストールできません。</a></li><li><a href="#comp-packages.change-thread-nothread">7.3 non-threaded 版の Fink XFree86 パッケージから threaded 版 (またはその逆) にはどうしたら切替えることができますか?</a></li><li><a href="#comp-packages.cctools">7.4 KDE をインストール使用とすると、次のメッセージが出ます: 'Can't resolve dependency "cctools (&gt;= 446-1)"'</a></li><li><a href="#comp-packages.libiconv-gettext">7.5 <tt style="white-space: nowrap;">libiconv</tt> が更新できません。</a></li><li><a href="#comp-packages.cplusplus-filt">7.6 パッケージがインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
+        これはどこにありますか?</a></li><li><a href="#comp-packages.gettext-tools">7.7 Fink が、 <tt style="white-space: nowrap;">gettext</tt> の依存性に矛盾があるとだけ表示し、更新してくれません。</a></li><li><a href="#comp-packages.Leopard-libXrandr">7.8 OS 10.5 で <b>gtk+2</b> がインストールできません。</a></li><li><a href="#comp-packages.all-others">7.9 ここに載っていないパッケージで問題があります。</a></li></ul></li><li><a href="#usage-general"><b>8 パッケージ使用上の問題 - 一般</b></a><ul><li><a href="#usage-general.xlocale">8.1 このようなメッセージが大量に出ます。
 "locale not supported by C library"
 これはまずいことですか?</a></li><li><a href="#usage-general.passwd">8.2 いきなり変なユーザーがシステムに現れました。
 ユーザー名は、 "mysql", "pgsql", "games" などです。
@@ -92,14 +88,10 @@ Fink に推薦したいのですが、どうしたら良いですか?</a></li><l
 	</a></li></ul></li><li><a href="#usage-packages"><b>9 パッケージ使用上の問題 - 特定のパッケージ</b></a><ul><li><a href="#usage-packages.xmms-quiet">9.1 XMMS から音がでません。</a></li><li><a href="#usage-packages.nedit-window-locks">9.2 nedit でファイルを編集していると、他のファイルを開く時にウィンドウが出ますが、反応がありません。</a></li><li><a href="#usage-packages.xdarwin-start">9.3 助けて!
 XDarwin を起動してもすぐ終了しちゃう!</a></li><li><a href="#usage-packages.no-server">9.4 XDarwin を起動しようとすると、このメッセージがでます
 "xinit: No such file or directory (errno 2): no server "/usr/X11R6/bin/X" in PATH"。
-</a></li><li><a href="#usage-packages.xterm-error">9.5 xterm が "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib" といって終了します。</a></li><li><a href="#usage-packages.libXmuu">9.6 XFree86 を起動しようとすると、下記のエラーのひとつがでます。
-"dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib"
-または "dyld: xinit can't open library: /usr/X11R6/lib/libXext.6.dylib"</a></li><li><a href="#usage-packages.apple-x-bugs">9.7 Fink の XFree86 を Apple X11 に置き換えたのですが、なんでもかんでもクラッシュするようになりました!</a></li><li><a href="#usage-packages.apple-x-delete">9.8 Apple X11 の delete キーを、 XDarwin のように使いたいのです。</a></li><li><a href="#usage-packages.gnome-two">9.9 GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.10 Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.11 Apple X11 をインストールしたけれども、 Fink が XFree86 か X.org をインストールしろといい続けます。</a></li><li><a href="#usage-packages.wants-xfree86-on-upgrade">9.12 
-10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
-</a></li><li><a href="#usage-packages.special-x11-debug">9.13 まだ X11 と Fink の問題が解決されません。</a></li><li><a href="#usage-packages.tiger-gtk">9.14 
+</a></li><li><a href="#usage-packages.apple-x-delete">9.5 Apple X11 の delete キーを、 XDarwin のように使いたいのです。</a></li><li><a href="#usage-packages.gnome-two">9.6 GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</a></li><li><a href="#usage-packages.apple-x11-no-windowbar">9.7 Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</a></li><li><a href="#usage-packages.apple-x11-wants-xfree86">9.8 X11 と Fink に問題があります。</a></li><li><a href="#usage-packages.special-x11-debug">9.9 まだ X11 と Fink の問題が解決されません。</a></li><li><a href="#usage-packages.tiger-gtk">9.10 
         	Tiger (OS 10.4) にアップデート後、GTK アプリを使うと必ず
         	<tt style="white-space: nowrap;">_EVP_idea_cbc</tt> に関連したエラーが出ます。
-        </a></li><li><a href="#usage-packages.yelp">9.15 どの GNOME アプリケーションでも、ヘルプ機能が使えません。</a></li></ul></li></ul><h2><a name="general">1 一般的な質問</a></h2>
+        </a></li><li><a href="#usage-packages.yelp">9.11 どの GNOME アプリケーションでも、ヘルプ機能が使えません。</a></li></ul></li></ul><h2><a name="general">1 一般的な質問</a></h2>
 
 
 <a name="general.what">
@@ -239,12 +231,9 @@ rsync アップデート方式はアクティブなツリーだけ更新しま�
 <div class="question"><p><b>Q3.6: どのように方式を切り替えるのですか?</b></p></div>
 <div class="answer"><p><b>A:</b>  fink selfupdate-rsync または fink selfupdate-cvs コマンドで、 rsync と CVS を切り替えます。</p></div>
 </a>
-<a name="mirrors.status">
-<div class="question"><p><b>Q3.7: rsync ミラーの現在の状態は見ることが出来ますか?</b></p></div>
-<div class="answer"><p><b>A:</b> http://finkmirrors.net/status.html から見ることが出来ます。</p></div>
-</a>
+
 <a name="mirrors.Master">
-<div class="question"><p><b>Q3.8: Distfiles ミラーとは何ですか?</b></p></div>
+<div class="question"><p><b>Q3.7: Distfiles ミラーとは何ですか?</b></p></div>
 <div class="answer"><p><b>A:</b> 
 時としてインターネットから特定バージョンのソースを取得することが困難な場合があります。
 Distfiles ミラーはソースパッケージをビルドする際に必要なソースパッケージを保存し、ミラーしています。</p></div>
@@ -252,18 +241,33 @@ Distfiles ミラーはソースパッケージをビルドする際に必要な�
 <h2><a name="upgrade-fink">4 Fink のアップグレード (バージョン固有の問題対処法)</a></h2>
 
 
-<a name="upgrade-fink.gcc-0.16.0">
-<div class="question"><p><b>Q4.1: バージョン0.16.0にアップグレードして "Your version of the
-gcc 3.3 compiler is out of date." と言われました。どうしたらいいですか?</b></p></div>
-<div class="answer"><p><b>A:</b> Panther のリリースにともない、 Fink は新しい gcc 3.3 コンパイラに対応するようアップデートされました。
-10.2 (Jaguar) と 10.3 (Panther) の両方をサポートするため、すべてのユーザーは最新の gcc 3.3 update (August 2003 Updater または
-Panther XCode tools) をインストールする必要があります。
-Mac OS X 10.2 の December 2002 developer tools 用 XCode ベータ・アップデータをインストールした場合、この警告が出ます。もし 10.2 であれば、コマンド:</p><pre>gcc --version</pre><p>で現在のバージョンがわかります。
-2003年10月24日時点で build 1493 かそれ以上が必要です。</p><p>10.2 ユーザーは、 August 2003 Updater を <a href="http://developer.apple.com/">Apple Developer Connection</a> からダウンロードできます (無料登録が必要)。</p><p>10.3 ユーザーは、 Panther 互換のディベロッパーツール (Xcode など) にアップグレードする必要があります。
-XCode の入った CD が Panther に同梱されているはずです。</p></div>
-</a>
+    <a name="upgrade-fink.leopard-bindist1">
+      <div class="question"><p><b>Q4.1: Fink doesn't see new packages even after I've run an rsync or cvs selfupdate.</b></p></div>
+      <div class="answer"><p><b>A:</b> This is a current issue for people on OS 10.5 using the binary installer. Check your version:</p><pre>fink --version</pre><p>If you currently have <tt style="white-space: nowrap;">fink-0.27.13-41</tt>, which is the version that comes
+	with the installer, or <tt style="white-space: nowrap;">fink-0.27.16-41</tt>, then there are a couple of options.</p><ul>
+	  <li>
+	    <b>rsync (preferred):</b>  Run the sequence below
+	    <pre>fink selfupdate
+fink selfupdate-rsync
+fink index -f
+fink selfupdate</pre>
+	  </li>
+	  <li>
+	    <b>cvs (alternate):</b>  Run
+	    <pre>fink selfupdate-cvs
+fink index -f
+fink selfupdate</pre>
+	  </li>
+	</ul><p>Either will bring you the newest <tt style="white-space: nowrap;">fink</tt> version.</p></div>
+    </a>
+    
+    <a name="upgrade-fink.leopard-bindist2">
+      <div class="question"><p><b>Q4.2: When I try to install stuff I get 'Can't resolve dependency "fink (&gt;= 0.28.0)"'</b></p></div>
+      <div class="answer"><p><b>A:</b> Apply the fix from <a href="#upgrade-fink.leopard-bindist1">the prior entry.</a></p></div>
+    </a>
+
 <a name="upgrade-fink.fink-0220">
-	<div class="question"><p><b>Q4.2: 長いこと Fink からのパッケージ更新がありませんでしたが</b></p></div>
+	<div class="question"><p><b>Q4.3: 長いこと Fink からのパッケージ更新がありませんでしたが</b></p></div>
 	<div class="answer"><p><b>A:</b> バージョンを確認してください:</p><pre>fink --version</pre><p>
 			rsync selfupdate が動作しないという既知の問題が <tt style="white-space: nowrap;">fink-0.22.0</tt> にあります。
 			これを直すために、 CVS selfupdate を行います
@@ -358,33 +362,43 @@ dselect からパッケージを選択してインストールする場合、 ro
 </a>
 <a name="usage-fink.unstable">
 <div class="question"><p><b>Q5.8: unstable にあるパッケージをインストールしようとすると、 fink が 'no package found' といいます。どうしたらインストールできるのですか?</b></p></div>
-      <div class="answer"><p><b>A:</b> 
-          まず、 'unstable' の意味を確認してください。
-          unstable ツリーにあるパッケージは、いくつかの理由により stable にはありません。
-          理由としては、既知の課題がある、妥当性にエラーがある、動作したというフィードバックが十分ないなどがあります。
-          このため、Fink はデフォルトでは unstable ツリーを検索しません。</p><p>
-          もし unstable を使用するのであれば、動作する（あるいはしない）ことをメンテナにメールするようにしてください。
-          あなたのようなユーザーからのフィードバックこそが、stable へ移行させる決定要因なのです!
-          パッケージのメンテナを知るには、<tt style="white-space: nowrap;">fink info <b>packagename</b></tt> としてください。
-        </p><p>
-          Fink で unstable を使うには、<tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> を編集し、
-          <tt style="white-space: nowrap;">Trees:</tt> 行に <tt style="white-space: nowrap;">unstable/main</tt> と <tt style="white-space: nowrap;">unstable/crypto</tt> を追加し、
-          <tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行します。
-        </p><p>
-          <tt style="white-space: nowrap;">fink-0.26</tt><b> から:</b>
-	      <tt style="white-space: nowrap;">fink configure</tt> を実行する際、unstable を on にするか聞いてくる場合があります。
-	      この後、<tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行する必要があります。
-	      <b>注記: </b>新しいパッケージ記述を取得するには、rsync か cvs が on になっている必要があります。
-	    </p><p>
-          <tt style="white-space: nowrap;">fink</tt> が <b>0.26</b> 以前で unstable を使うように Fink を設定するには、
-          <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt> を編集し、 <tt style="white-space: nowrap;">unstable/main</tt> と  <tt style="white-space: nowrap;">unstable/crypto</tt> を、
-          <tt style="white-space: nowrap;">Trees:</tt> と書かれている行に追加し、<tt style="white-space: nowrap;">fink selfupdate; fink index; fink scanpackages</tt> を実行します。
-          上と同様、 rsync か cvs が使われている必要があります。
-        </p><p>
-          もう一つ注記、特定のパッケージとのそ依存パッケージ以外に unstable をインストールしたくないのであれば、
-          unstable ツリーを off にしない限り <tt style="white-space: nowrap;">update-all</tt> を実行しないでください。
-        </p></div>
+      <div class="answer"><p><b>A:</b> First make sure you understand what 'unstable' means. Packages in
+        the unstable tree are not in stable for any number of reasons.  It
+        could be because there are known issues, validation errors, or just
+        not enough people giving feedback that the package works for them.
+        For that reason, Fink doesn't search the unstable tree by
+        default.</p><p>If you do enable unstable, please remember to e-mail the
+        maintainer if something works (or even if it doesn't). Feedback from
+        users like you is what we use to determine if something is ready for
+        stable! To find out the maintainer of a package, run <tt style="white-space: nowrap;">fink info
+        <b>packagename</b></tt>.</p><p>For <tt style="white-space: nowrap;">fink-0.26</tt> and later:  If you run
+	<tt style="white-space: nowrap;">fink configure</tt> one of the questions will ask whether you
+	want to turn the unstable trees on.  </p><p>To configure Fink to use unstable
+	when you have an earlier version of the <tt style="white-space: nowrap;">fink</tt> tool than
+	<b>0.26</b>, edit
+        <tt style="white-space: nowrap;">/sw/etc/fink.conf</tt>, and add <tt style="white-space: nowrap;">unstable/main</tt>
+        and <tt style="white-space: nowrap;">unstable/crypto</tt> to the <tt style="white-space: nowrap;">Trees:</tt> line.</p><p>If you use Fink Commander, then there is a Preference to use unstable
+	packages.</p><p>None of these options actually download the unstable tree's package
+	descriptions.You'll need to turn on <tt style="white-space: nowrap;">rsync</tt> or
+	<tt style="white-space: nowrap;">cvs</tt> updating to do this, which is not set up by default on a new
+	Fink installation.  The following command sequence will set you up on
+	a new Fink installation:</p><pre>fink selfupdate</pre><p>followed by</p><pre>fink selfupdate-rsync</pre><p>or</p><pre>fink selfupdate-cvs</pre><p>and then</p><pre>fink index -f
+fink scanpackages</pre><p><b>Note:</b>  There are Fink Commander analogs for everything except
+	<tt style="white-space: nowrap;">fink index -f</tt>.  You will have to use the command line for that.</p><p>If you're already set up with <tt style="white-space: nowrap;">rsync</tt> or <tt style="white-space: nowrap;">cvs</tt>
+	updating, then the following
+	command sequence (or the Fink Commander analogs) will suffice:</p><pre>
+fink selfupdate
+fink index
+fink scanpackages
+	</pre><p>If you're not sure what your update method is, check
+	<tt style="white-space: nowrap;">fink --version</tt> in at a command line
+	and see if that mentions <tt style="white-space: nowrap;">cvs</tt> or <tt style="white-space: nowrap;">rsync</tt>.</p><p>If you don't want to install any more from unstable than
+        your specific package(s) and its (their) dependencies, (and any base packages
+	that got updated) don't use the
+        <tt style="white-space: nowrap;">update-all</tt> command until you turn the unstable tree
+        back off.</p></div>
 </a>
+
     <a name="usage-fink.unstable-onepackage">
       <div class="question"><p><b>Q5.9: 
           unstable にあるパッケージをひとつだけインストールするにも、 unstable 全体を有効にしなければなりませんか?
@@ -469,7 +483,10 @@ selfupdate-cvs の出力で、 "C" から始まる行で:</p><pre>C 10.2/unstabl
 ### execution of su failed, exit code 1
 Failed: Updating using CVS failed. Check the error messages above.</pre><p>のようになっている箇所を探して下さい。
 "C" というのは CVS で最新版へ更新時にコンフリクトがあったことを意味しています。</p><p>これを修正するには、 selfupdate-cvs の出力にでてきたファイルを一つずつ削除して、コマンドを再実行します。</p><pre>sudo rm /sw/fink/10.2/unstable/main/finkinfo/libs/db31-3.1.17-6.info
-fink selfupdate-cvs</pre></div>
+fink selfupdate-cvs</pre><p>If you get errors that mention <b>cvs.sourceforge.net</b>:</p><pre>
+cvs [update aborted]: connect to cvs.sourceforge.net(66.35.250.207):
+2401 failed: Operation timed out
+</pre><p>this is because of a restructuring of the CVS servers at sourceforge.net in 2006.  Fink files are now at <b>fink.cvs.sourceforge.net</b>.</p><p>Check your Distribution version, e.g. via</p><pre>fink --version</pre><p>If that shows <tt style="white-space: nowrap;">10.4-transitional</tt>, then you need to update to the regular 10.4 distribution.  An <a href="http://prdownloads.sourceforge.net/fink/scripts-10.4-update-0.4.tar.gz?download">update script</a> has been created to assist with that.</p></div>
 </a>
 <a name="usage-fink.kernel-panics">
 <div class="question"><p><b>Q5.14: Fink を使うと、マシンがフリーズする/カーネルパニックする/固まる。助けて!</b></p></div>
@@ -571,33 +588,17 @@ else { print substr($6, 2, length($6) - 1);}}' \
 どうにかするには、 <tt style="white-space: nowrap;">dselect</tt> を実行する前に次のコマンドを入力してください:
 </p><p>tcsh の場合:</p><pre>setenv TERM xterm-color</pre><p>before you run <tt style="white-space: nowrap;">dselect</tt>.</p><p>bash の場合:</p><pre>export TERM=xterm-color</pre><p>このコマンドをログイン時に自動的に実行するには、起動ファイル (例 <tt style="white-space: nowrap;">.cshrc</tt> | <tt style="white-space: nowrap;">.profile</tt>) に記述して下さい。</p></div>
 </a>
-<a name="usage-fink.perl-undefined-symbol">
-<div class="question"><p><b>Q5.21: なぜ Fink コマンドを実行すると "dyld: perl undefined symbols" エラーが大量にでるのですか?</b></p></div>
-<div class="answer"><p><b>A:</b> 古すぎる情報</p><p>このようなエラー:</p><pre>dyld: perl Undefined symbols: 
-_Perl_safefree
-_Perl_safemalloc
-_Perl_saferealloc
-_Perl_sv_2pv
-_perl_call_sv
-_perl_eval_sv
-_perl_get_sv</pre><p>がでる場合、 Perl を アップデートしていて、 <tt style="white-space: nowrap;">storable-pm</tt> をアップグレードする必要があります。
-Fink をアップグレードしてください。
-インストール時に、 <tt style="white-space: nowrap;">perl-core</tt> と <tt style="white-space: nowrap;">system-perl</tt> のどちらをインストールするか聞かれるので、後者を選択してください。
-さらに、 <tt style="white-space: nowrap;">storable-pm</tt> もアップデートしてください。</p><p>OS 10.1.x では、次のコマンドを実行します (Developer Tools が必要です):</p><pre>sudo mv /sw/lib/perl5/darwin/Storable.pm /tmp
-sudo mv /sw/lib/perl5/darwin/auto/Storable /tmp
-fink rebuild storable-pm
-fink selfupdate-cvs</pre></div>
-</a>
+
 <a name="usage-fink.cant-upgrade">
-<div class="question"><p><b>Q5.22: Fink のバージョンをアップデートできないようです。</b></p></div>
+<div class="question"><p><b>Q5.21: Fink のバージョンをアップデートできないようです。</b></p></div>
 <div class="answer"><p><b>A:</b> この状況専用の <a href="http://www.finkproject.org/download/fix-upgrade.php">special instructions</a> に従ってください。</p></div>
 </a>
 <a name="usage-fink.spaces-in-directory">
-<div class="question"><p><b>Q5.23: 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</b></p></div>
+<div class="question"><p><b>Q5.22: 名前に空白が入っているボリュームやディレクトリに Fink を入れることはできますか?</b></p></div>
 <div class="answer"><p><b>A:</b> 名前に空白が入っているディレクトリに Fink を入れるないよう薦めます。</p></div>
 </a>
 <a name="usage-fink.packages-gz">
-<div class="question"><p><b>Q5.24: バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</b></p></div>
+<div class="question"><p><b>Q5.23: バイナリアップデートをしようとすると、 "File not found" または "Couldn't stat package source list file" というメッセージが大量に出ます。</b></p></div>
 <div class="answer"><p><b>A:</b> もし次のようであれば:</p><pre>
 Err file: local/main Packages
 File not found
@@ -630,13 +631,13 @@ powerpc_Packages) - stat (2 No such file or directory)</pre><p><tt style="white-
 これによって見つからなかったファイルを作成します。</p></div>
 </a>
 <a name="usage-fink.wrong-tree"> 
-<div class="question"><p><b>Q5.25: OS | Developer Tools を変えたら、 Fink が認識してくれません。</b></p></div> 
+<div class="question"><p><b>Q5.24: OS | Developer Tools を変えたら、 Fink が認識してくれません。</b></p></div> 
 <div class="answer"><p><b>A:</b> Fink ディストリビューション（ソースとバイナリはそのサブセットです）を変更するには、 Fink に指示する必要があります。
 これは Fink の新規インストール時に実行するスクリプトを実行します:
 </p><pre>/sw/lib/fink/postinstall.pl</pre><p>これにより、 Fink は正しく場所を指示されます。</p></div> 
 </a> 
 <a name="usage-fink.seg-fault"> 
-<div class="question"><p><b>Q5.26: 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</b></p></div> 
+<div class="question"><p><b>Q5.25: 何かをインストールしようとしたら <tt style="white-space: nowrap;">gzip</tt> | <tt style="white-space: nowrap;">dpkg-deb</tt> のエラーが出る! 助けて!</b></p></div> 
 <div class="answer"><p><b>A:</b> 以下の形式のエラー:</p><pre>gzip -dc /sw/src/dpkg-1.10.9.tar.gz | /sw/bin/tar -xf - 
 ### execution of gzip failed, exit code 139</pre><p>あるいは</p><pre>gzip -dc /sw/src/aquaterm-0.3.0a.tar.gz | /sw/bin/tar -xf - 
 gzip: stdout: Broken pipe 
@@ -646,7 +647,7 @@ gzip: stdout: Broken pipe
 Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>であれば、バイナリにおけるプリバインドのエラーです。修正するには:</p><pre>sudo /sw/var/lib/fink/prebound/update-package-prebinding.pl -f</pre><p>と実行します。</p></div> 
 </a> 
 <a name="usage-fink.pathsetup-keeps-running"> 
-<div class="question"><p><b>Q5.27: ターミナルウィンドウを開くと、
+<div class="question"><p><b>Q5.26: ターミナルウィンドウを開くと、
 "Your environment seems to be correctly set up for Fink already."
 というメッセージが出てログアウトします。</b></p></div> 
 <div class="answer"><p><b>A:</b> 
@@ -658,7 +659,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 と書かれている部分を削除します。</p></div> 
 </a>
 <a name="usage-fink.ext-drive">
-<div class="question"><p><b>Q5.28: 
+<div class="question"><p><b>Q5.27: 
 	メインパーティション以外に Fink をインストールしていますが、
 	ソースからの更新ができません。
 	<q>chowname</q> を含んだエラーが出ます。
@@ -680,7 +681,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 </p></div>
 </a>
 <a name="usage-fink.mirror-gnu">
-<div class="question"><p><b>Q5.29: 
+<div class="question"><p><b>Q5.28: 
 	Fink がパッケージを更新しません。
 	'gnu' ミラーが見つからないと言っています。
 	</b></p></div>
@@ -691,7 +692,7 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 	</p><pre>fink install fink-mirrors</pre></div>
 </a>
 <a name="usage-fink.cant-move-fink">
-<div class="question"><p><b>Q5.30: 
+<div class="question"><p><b>Q5.29: 
 	Fink を更新できません。
 	/sw/fink を移動できないからです。
 	</b></p></div>
@@ -701,47 +702,9 @@ Failed: can't create package base-files_1.9.0-1_darwin-powerpc.deb</pre><p>で�
 	これを削除するには:
 	</p><pre>sudo rm -rf /sw/fink.tmp /sw/fink.old</pre></div>
 </a>
-    <a name="usage-fink.four-oh-three">
-      <div class="question"><p><b>Q5.31: 403 errors when I use <tt style="white-space: nowrap;">apt-get</tt> または <tt style="white-space: nowrap;">dselect</tt> または Fink Commander Binary メニューを使うと、403 エラーが出ます。</b></p></div>
-      <div class="answer"><p><b>A:</b> 
-          SourceForge のダウンロードサーバに問題があるようです。
-          このため、バイナリディストリビューション用のレポジトリに移行しました。
-        </p><ul>
-          <li>
-            Developer Tools がインストールされている場合、最新の
-            <tt style="white-space: nowrap;">fink-mirrors</tt> package (&gt;= 0.24.4.1) をインストールし、
-            <tt style="white-space: nowrap;">fink</tt> を次のように再インストールします:
-<pre>fink reinstall fink</pre>
-            <p>あるいは</p>
-<pre>sudo apt-get install --reinstall fink</pre>
-            <p>ソースディストリビューションを使用したくない場合).</p>
-          </li>
-          <li>
-            Developer Tools をインストールしていない場合は、手動で行う必要があります。
-            <tt style="white-space: nowrap;">sources.list</tt> ファイルを root で編集してください。
-            例えば、
-<pre>sudo pico /sw/etc/apt/sources.list</pre>
-            <p>
-              (お好きな Unix-line-ending-compatible テキストエディタを使用)。
-              "Official binary distribution:" から始まる行を
-            </p>
-<pre># Official binary distribution: download location for packages
-# from the latest release
-deb http://bindist.finkmirrors.net/bindist 10.3/release main crypto
 
-# Official binary distribution: download location for updated
-# packages built between releases
-deb http://bindist.finkmirrors.net/bindist 10.3/current main crypto</pre>
-<p>(上記は 10.3 を想定しています。 <tt style="white-space: nowrap;">10.3</tt> を、現在しよう中有のディストリビューションに変えて使用してください。</p>
-            <p>
-              とし、保存してエディタを終了します。
-              この後、バイナリパッケージリストを更新してください。
-            </p>
-          </li>
-        </ul></div>
-    </a>
     <a name="usage-fink.fc-cache">
-      <div class="question"><p><b>Q5.32: "No fonts found" というメッセージが出ます。</b></p></div>
+      <div class="question"><p><b>Q5.30: "No fonts found" というメッセージが出ます。</b></p></div>
       <div class="answer"><p><b>A:</b> 次のようであれば (OS 10.4 のみ):</p><pre>No fonts found; this probably means that the fontconfig
 library is not correctly configured. You may need to
 edit the fonts.conf configuration file. More information
@@ -749,7 +712,7 @@ about fontconfig can be found in the fontconfig(3) manual
 page and on http://fontconfig.org.</pre><p>次のように実行します:</p><pre>sudo fc-cache</pre></div>
     </a>
     <a name="usage-fink.non-admin-installer">
-      <div class="question"><p><b>Q5.33: インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</b></p></div>
+      <div class="question"><p><b>Q5.31: インストーラから Fink をインストールできません。"volume doesn't support symlinks" エラーが出ます。</b></p></div>
       <div class="answer"><p><b>A:</b> 
         	このメッセージは、 Fink インストーラを管理者権限のないユーザーで実行すると発生します。
         	ログイン時に権限のあるユーザーにログインするか、Finder でユーザーを切り替えてください。
@@ -758,27 +721,17 @@ page and on http://fontconfig.org.</pre><p>次のように実行します:</p><p
         	パーミッションに問題があるかもしれません。 Apple の ディスクユーティリティを使い、問題の
         	ボリュームを選択し、 <b>First Aid</b> タブから <b>ディスクのアクセス権を修復</b>
         	を選択してください。
-        </p></div>
+        	If that doesn't work, then you may need to set your permissions manually via:</p><pre>
+sudo chmod 1775 /	  
+	</pre></div>
     </a>
     <a name="usage-fink.wrong-arch">
-      <div class="question"><p><b>Q5.34: Fink を更新できない。 <q>package architecture (darwin-i386) がシステム (darwin-powerpc) に合っていない。</q>
+      <div class="question"><p><b>Q5.32: Fink を更新できない。 <q>package architecture (darwin-i386) がシステム (darwin-powerpc) に合っていない。</q>
 </b></p></div>
       <div class="answer"><p><b>A:</b> このエラーは、PPC インストーラで Intel マシンにインストールした際に発生します。  
         現在のインストールを、例えば次のように削除してください:</p><pre>sudo rm -rf /sw</pre><p>Intel マシン用のインストーラを、<a href="http://www.finkproject.org/download/index.php">ダウンロードページ</a>から入手してください。</p></div>
     </a>
-    <a name="usage-fink.sf-cvs-2006">
-	      <div class="question"><p><b>Q5.35: cvs selfupdate がここのところできません。</b></p></div>
-	      <div class="answer"><p><b>A:</b> 次のようなメッセージがある場合:</p><pre>
-cvs [update aborted]: connect to cvs.sourceforge.net(66.35.250.207):
-2401 failed: Operation timed out
-</pre><p>
-		これは最近あった sourceforge.net の CVS サーバ再構成によるものです。
-		現在、Fink のファイルは、 <tt style="white-space: nowrap;">fink.cvs.sourceforge.net</tt> にあります。
-		次のバイナリツールで <tt style="white-space: nowrap;">fink-mirrors package</tt> を更新する必要があります:
-		</p><pre>
-sudo apt-get update ; sudo apt-get install fink-mirrors
-</pre></div>
-	      </a>
+
 <h2><a name="comp-general">6 コンパイルの問題 - 一般</a></h2>
     
 
@@ -825,17 +778,9 @@ Fink を使うには、オリジナルの方の <tt style="white-space: nowrap;"
 </p><pre>sudo dpkg -i --force-overwrite <b>filename</b>
 </pre><p>ここで <b>filename</b> はインストールしようとしているパッケージ用の .deb ファイルです。</p></div>
 </a>
-<a name="comp-general.weak_lib">
-<div class="question"><p><b>Q6.6: December 2002 Development Tools をインストールしてから、このメッセージが出るようになった: "weak libraries"</b></p></div>
-<div class="answer"><p><b>A:</b> これは December 2002 Tools のものです。
-次のようなメッセージが出ることがあります (libgdk-pixbuf を例に選んでいます):</p><p>
-<tt style="white-space: nowrap;">ld: warning dynamic shared library: /sw/lib/libgdk-pixbuf.dylib not made a weak library in output with MACOSX_DEPLOYMENT_TARGET environment variable set to: 10.1</tt>
-</p><p>これは実害はないといえます。
-興味があれば、開発用ドキュメンテーションディレクトリの、特に GCC とリンカの、リリースノートをお読みください。
-本質的には、弱い参照を使用するアプリケーションが、起動時に実行時の存在しないシンボルを致命的エラーとみなすかどうかに関わってきます。</p></div>
-</a>
+
 <a name="comp-general.mv-failed">
-<div class="question"><p><b>Q6.7: パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</b></p></div>
+<div class="question"><p><b>Q6.6: パッケージをインストールしようとした時の "execution of mv failed, exit code 1" とはどういう意味ですか?</b></p></div>
 <div class="answer"><p><b>A:</b> StuffIt Pro がインストールされている場合、 "Archive Via Real Name" モードが設定されていると思われます。
 システム環境設定の StuffIt 設定で "ArchiveViaRealName" を無効化してください。
 これはいくつかの重要なシステムコールのバ再実装のバグで、この件のような不思議なエラーをたくさん出します。</p><p>この問題でない場合、 <tt style="white-space: nowrap;">mv</tt> のエラーは通常、ビルドの前の方で発生した別のエラーを意味しています。
@@ -849,7 +794,7 @@ No such file or directory
 Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-space: nowrap;">libbar</tt> ファイルをビルド出力の前の方で探します。</p></div>
 </a>
 <a name="comp-general.node-exists">
-<div class="question"><p><b>Q6.8: '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</b></p></div>
+<div class="question"><p><b>Q6.7: '"node" already exists' というエラーメッセージが出て、インストール | アップデートができません。</b></p></div>
 <div class="answer"><p><b>A:</b> このようなエラーが出ます:</p><pre>Failed: Internal error: node for system-xfree86 already exists</pre><p>パッケージ info ファイルが変更されて依存性エンジンが混乱しているために出た問題です。
 修正するには:</p><ul>
 <li>
@@ -864,7 +809,7 @@ Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-s
 </ul></div>
 </a>
 <a name="comp-general.usr-local-libs">
-<div class="question"><p><b>Q6.9: /usr/local にインストールされているライブラリやヘッダが 
+<div class="question"><p><b>Q6.8: /usr/local にインストールされているライブラリやヘッダが 
 	Fink のビルドの問題を起こすことがあると聞いたけど、本当ですか?</b></p></div>
 <div class="answer"><p><b>A:</b> そういう場合もよくあります。
 これは、パッケージの configure スクリプトは Fink のパスより先に <tt style="white-space: nowrap;">/usr/local</tt> 
@@ -876,7 +821,7 @@ Failed: installing foo-0.1.2-3 failed</pre><p>この場合、 <tt style="white-s
 例えば:</p><pre>sudo mv /usr/local /usr/local.moved</pre><p>ビルド後、 <tt style="white-space: nowrap;">/usr/local</tt> を元に戻しください:</p><pre>sudo mv /usr/local.moved /usr/local</pre></div>
 </a>
 <a name="comp-general.toc-out-of-date">
-<div class="question"><p><b>Q6.10: パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
+<div class="question"><p><b>Q6.9: パッケージをビルドしようとしたら、 "table of contents" が古いというメッセージが出ました。何をしたらいいですか?
 </b></p></div>
 <div class="answer"><p><b>A:</b> このメッセージは重要なヒントです。
 メッセージはこのようなものだと思われます:</p><pre>ld: table of contents for archive: /sw/lib/libintl.a is out of date; 
@@ -884,32 +829,32 @@ rerun ranlib(1) (can't load from it)</pre><p>この問題を起こしている�
 例えば、この例では:</p><pre>sudo ranlib /sw/lib/libintl.a</pre></div>
 </a>
 <a name="comp-general.fc-atlas">
-<div class="question"><p><b>Q6.11: atlas をインストールしようとすると、 Fink Commander がハングアップします。</b></p></div>
+<div class="question"><p><b>Q6.10: atlas をインストールしようとすると、 Fink Commander がハングアップします。</b></p></div>
 <div class="answer"><p><b>A:</b> <tt style="white-space: nowrap;">atlas</tt> のビルド中にユーザーにプロンプトを送るステップがあり Fink Commander がこれを表示しないからです。
 代わりに <tt style="white-space: nowrap;">fink install atlas</tt> とする必要があります。</p></div>
 </a>
 <a name="comp-general.basic-headers">
-<div class="question"><p><b>Q6.12: <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">stdlib.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
+<div class="question"><p><b>Q6.11: <tt style="white-space: nowrap;">stddef.h</tt> | <tt style="white-space: nowrap;">wchar.h</tt> | <tt style="white-space: nowrap;">stdlib.h</tt> | <tt style="white-space: nowrap;">crt1.o</tt> が見つからない、
 あるいは、"C compiler cannot create executables" というメッセージが出ます。
 これはどこにありますか?</b></p></div>
 <div class="answer"><p><b>A:</b> これらの問題は、いずれも Developer Tools の DevSDK によって提供されるヘッダファイルがないためです。
 <tt style="white-space: nowrap;">/Library/Receipts/DevSDK.pkg</tt> がシステムにあるか確認し、なければ  Dev Tools インストーラを起動してカスタムインストールを選択、 DevSDK パッケージをインストールして下さい。</p><p>"cannot create executables" エラーは、Developer Tools のバージョンが 以前のバージョンの OS 用である場合にも発生します。</p></div>
 </a>
 <a name="comp-general.multiple-dependencies">
-<div class="question"><p><b>Q6.13: Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</b></p></div>
+<div class="question"><p><b>Q6.12: Fink が "unable to resolve version conflict on multiple dependencies" と言って、アップデートできません。</b></p></div>
 <div class="answer"><p><b>A:</b> この問題を解決するには、パッケージを一つだけアップデートしてみてください。
 次に、再度 "fink update-all" を試してみてください。
 まだ問題が出るようなら、これを繰り返してください。
 </p></div>
 </a>
 <a name="comp-general.dpkg-parse-error">
-<div class="question"><p><b>Q6.14: "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
+<div class="question"><p><b>Q6.13: "dpkg: parse error, in file `/sw/var/lib/dpkg/status'"
 というメッセージが出て、何もインストールできません!</b></p></div>
 <div class="answer"><p><b>A:</b> これは dpkg データベースが壊れてしまったか、クラッシュか他のリカバーできないエラーが原因です。
 以前のバージョンのデータベースをコピーして直すことができます:</p><pre>sudo cp /sw/var/lib/dpkg/status-old /sw/var/lib/dpkg/status</pre><p>この問題が起きた最後の二つのパッケージを再インストールしたほうがよいでしょう。</p></div>
 </a>
 <a name="comp-general.freetype-problems"> 
-<div class="question"><p><b>Q6.15: freetype に関係したエラーが出ます。</b></p></div> 
+<div class="question"><p><b>Q6.14: freetype に関係したエラーが出ます。</b></p></div> 
 <div class="answer"><p><b>A:</b> freetype に関係したエラーにはいくつかありますが、以下のものであれば:</p><pre>/usr/bin/ld: can't locate file for: -lfreetype</pre><p>外来の <tt style="white-space: nowrap;">freetype-config</tt> があるかどうか、以下のコマンドを実行して確認します。</p><pre>where freetype-config</pre><p>(<tt style="white-space: nowrap;">tcsh</tt> の場合)</p><pre>type -a freetype-config</pre><p>(<tt style="white-space: nowrap;">bash</tt> の場合)。 Mono フレームワークは、 <tt style="white-space: nowrap;">/usr/bin/freetype-config</tt> をインストールし、フレームワーク内へのシンボリックリンクを作ることが知られています。</p><p>もしこのようなものであれば:</p><pre>/sw/include/pango-1.0/pango/pangoft2.h:52: error: parse error before '*' token 
 /sw/include/pango-1.0/pango/pangoft2.h:57: error: parse error before '*' token 
 /sw/include/pango-1.0/pango/pangoft2.h:61: error: parse error before '*' token 
@@ -943,12 +888,10 @@ make: *** No targets specified and no makefile found.  Stop.
 Failed: compiling gtk+2-2.2.4-2 failed</pre><p>問題は X11 | XFree86 に含まれている、 <tt style="white-space: nowrap;">freetype</tt> | <tt style="white-space: nowrap;">freetype-hinting</tt> パッケージ間のヘッダを混同していることだと思われます。</p><pre>fink remove freetype freetype-hinting</pre><p>で、両方のインストールを削除します。
 もし問題が上記のようではなく、以下のようであれば:</p><pre>ld: Undefined symbols: 
 _FT_Access_Frame </pre><p>おそらく X11 インストールの残りファイルが原因です。
-X11 SDK を再インストールしてみて下さい。</p><p>最後に、エラーが以下のようであれば:</p><pre>dyld: klines Undefined symbols: 
-/sw/lib/libqt-mt.3.dylib undefined reference to _FT_Access_Frame </pre><p>おそらく Jaguar 上で<tt style="white-space: nowrap;">gcc3.3</tt> でコンパイルしたバイナリが  Panther 上で動作しないためです。
-この問題は既に修正されていますので、<tt style="white-space: nowrap;">sudo apt-get update ; sudo apt-get dist-upgrade</tt> と更新するだけで直ります。</p></div> 
+X11 SDK を再インストールしてみて下さい。</p></div> 
 </a> 
 <a name="comp-general.dlfcn-from-oo"> 
-<div class="question"><p><b>Q6.16: `Dl_info' のエラーが出ます。</b></p></div> 
+<div class="question"><p><b>Q6.15: `Dl_info' のエラーが出ます。</b></p></div> 
 <div class="answer"><p><b>A:</b> エラーが下記のようであれば:</p><pre>unix_dl.c: In function `rep_open_dl_library': 
 unix_dl.c:328: warning: assignment discards qualifiers from pointer target type 
 unix_dl.c: In function `rep_find_c_symbol': 
@@ -965,13 +908,13 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
 </a>
 <a name="comp-general.gcc2"> 
     
-<div class="question"><p><b>Q6.17: Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</b></p></div> 
+<div class="question"><p><b>Q6.16: Fink が <tt style="white-space: nowrap;">gcc2</tt> がないと言っていますが、インストールも出来ないようです。</b></p></div> 
 <div class="answer"><p><b>A:</b> 
 <tt style="white-space: nowrap;">gcc2</tt> は gcc-2.95 のバーチャルパッケージです。
 gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.95 が含まれていました) からインストールして下さい。</p><p><b>注記:</b> gcc2.95 and/or gcc3.1 は gcc3.3 とコンフリクトしません。両方インストールすることもできます。</p></div>
 </a>
 <a name="comp-general.system-java">
-<div class="question"><p><b>Q6.18: Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
+<div class="question"><p><b>Q6.17: Fink が <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java14-dev"</tt>
 と言っていますが、そのようなパッケージはありません。
 </b></p></div>
 <div class="answer"><p><b>A:</b> 
@@ -984,7 +927,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 </p></div>
 </a>
 <a name="comp-general.dpkg-split">
-<div class="question"><p><b>Q6.19: 
+<div class="question"><p><b>Q6.18: 
 何をインストールしようとしても、
 <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>
 というエラーが出ます。
@@ -996,7 +939,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 </p></div>
 </a>
 <a name="comp-general.xml-parser">
-<div class="question"><p><b>Q6.20: 
+<div class="question"><p><b>Q6.19: 
 	次のメッセージが出ます:<q>configure: error: XML::Parser perl module is required for intltool</q>。
 	どうしたら良いでしょうか?
 	</b></p></div>
@@ -1011,7 +954,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 	</p></div>
 </a>
 <a name="comp-general.master-problems">
-<div class="question"><p><b>Q6.21: 
+<div class="question"><p><b>Q6.20: 
 		パッケージをダウンロードしようとすると、 Fink が変なサイトに行こうとするけれど、 <q>distfiles</q>
 		と書いてあるだけで、しかもそのファイルはそこに存在しません。
 	</b></p></div>
@@ -1023,7 +966,7 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 	</p><p>これを直すには、 <tt style="white-space: nowrap;">fink configure</tt> を実行し、マスターミラーを最後に検索するように設定を変更します。</p></div>
 </a>
 <a name="comp-general.compile-options">
-	<div class="question"><p><b>Q6.22: パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</b></p></div>
+	<div class="question"><p><b>Q6.21: パッケージをビルドするときに、 Fink に違うオプションを使わせたい。</b></p></div>
 	<div class="answer"><p><b>A:</b> 
 			まず最初に、バリエーションを作成するようにパッケージメンテナに伝えてみてください。
 			これが比較的簡単な方法です。
@@ -1032,30 +975,26 @@ gcc2.95 を XCode Tools (古い OS バージョンは Developer Tools に gcc-2.
 			と <a href="http://www.finkproject.org/doc/packaging/index.php">Packaging Manual</a> をお読みください。
 		</p><p><b>注記:</b>Fink は、ビルドされたマシンに依存しないよう、全ての公式パッケージにはG5 最適化などのことはされません。このようなことをしたい場合、各自でする必要があります。</p></div>
 </a>
-    <a name="comp-general.gettext">
-      <div class="question"><p><b>Q6.23: 
-        	ソースからビルドするとき、 <tt style="white-space: nowrap;">gettext-dev</tt> と <tt style="white-space: nowrap;">libgettext3-dev</tt> の間でたらい回しです。
-        </b></p></div>
-      <div class="answer"><p><b>A:</b> 
-        	パッケージによっては、 <tt style="white-space: nowrap;">gettext</tt> ヘッダから <tt style="white-space: nowrap;">libgettext3-dev</tt>
-        	へと依存性が更新されました。
-        	この結果、Fink はビルド依存性を満たすためにインストールされていない方に変更しようとします。
-        	さらに、 <tt style="white-space: nowrap;">fink</tt> ツールが <tt style="white-space: nowrap;">gettext-dev</tt> を必須としているため、
-        	selfupdate 時には必ずインストールします。
-        </p><p>
-        	同様の問題は、他のパッケージペアでも発生しえます。
-        </p><p>
-        	ビルド依存性エンジンの制限のため、このようなパッケージが交互にインストールされ、
-        	不幸にもビルドが不完全で終わるかもしれません。この場合、<tt style="white-space: nowrap;">update</tt> コマンドを
-        	繰り返すことで先に進めるでしょう。
-        </p><p>
-			極端な状況では、<tt style="white-space: nowrap;">libgettext3-dev</tt> に依存するものと別に、<tt style="white-space: nowrap;">gettext-dev</tt> 
-			(など、問題を起こしているペア) にビルド依存するパッケージをインストールする必要があります。
-			パッケージを一つずつインストールする必要があるかもしれません。
-		</p><p>この問題の解決は <tt style="white-space: nowrap;">fink-0.2.5</tt> で予定されています。</p></div>
+
+    <a name="comp-general.alternates">
+      <div class="question"><p><b>Q6.22: Whenever I try to build from source, Fink keeps waffling between alternate versions of the same library.</b></p></div>
+      <div class="answer"><p><b>A:</b> Often, in a complicated build tree, you may find that some of the packages
+	depend on a particular version of a library, and other depend on a different one
+	(e.g. <tt style="white-space: nowrap;">db47</tt> vs. <tt style="white-space: nowrap;">db44</tt>).  Consequently, Fink may try to
+	switch to whichever one isn't currently installed in order to satisfy the
+	build dependency for the current package that you're trying to update.</p><p>Unfortunately, due to limitations in the build-dependency engine, you
+      may wind up with the dreaded</p><pre>Fink::SysState: Could not resolve inconsistent dependencies</pre><p>message when trying a sufficiently complicated <tt style="white-space: nowrap;">update-all</tt>. This generally gives you a
+      command to try to resolve the issue:</p><pre>
+fink scanpackages
+sudo apt-get update
+sudo apt-get install foo=1.23-4	
+      </pre><p>but this may not work for sufficiently complicated updates.  You might need
+      to update packages one-by-one, at least for a while.
+      </p></div>
     </a>
+
     <a name="comp-general.python-mods">
-      <div class="question"><p><b>Q6.24: Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</b></p></div>
+      <div class="question"><p><b>Q6.23: Python モジュールをビルドする際に、<tt style="white-space: nowrap;">MACOSX_DEPLOYMENT_TARGET </tt> の問題が出ます。</b></p></div>
       <div class="answer"><p><b>A:</b> 以下のようであれば:</p><pre>running build
 running build_ext
 Traceback (most recent call last):
@@ -1079,7 +1018,7 @@ SystemExit: error: $MACOSX_DEPLOYMENT_TARGET mismatch: now "10.4" but "10.3" dur
         </p></div>
     </a>
 <a name="comp-general.libtool-unrecognized-dynamic">
-  <div class="question"><p><b>Q6.25: I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</b></p></div>
+  <div class="question"><p><b>Q6.24: I get <q>unrecognized option `-dynamic'</q> errors from <tt style="white-space: nowrap;">libtool</tt>.</b></p></div>
 <div class="answer"><p><b>A:</b> This error:</p><pre> libtool: unrecognized option `-dynamic'</pre><p>typically means that you've replaced Apple's <tt style="white-space: nowrap;">/usr/bin/libtool</tt> with a GNU <tt style="white-space: nowrap;">libtool</tt>.  Unfortunately, the two <tt style="white-space: nowrap;">libtools</tt> <b>do not</b> do the same thing.</p><p>The only way to solve this is to get a working Apple <tt style="white-space: nowrap;">libtool</tt> from somewhere.  It is installed as part of the <tt style="white-space: nowrap;">DeveloperTools.pkg</tt> package of the XCode Tools, and you can reinstall that whole package if you first clear out its receipt in <tt style="white-space: nowrap;">/Library/Receipts</tt> (drag it to the Trash for OS 10.4 and later, or use <tt style="white-space: nowrap;">sudo rm -rf /Library/Receipts/DeveloperTools.pkg</tt> for 10.3).</p></div>
 </a>
 <h2><a name="comp-packages">7 コンパイルの問題 - 特定のバージョン</a></h2>
@@ -1139,16 +1078,22 @@ sudo dpkg -r --force-depends xfree86-rootless-threaded-shlibs</pre><p>FinkComman
 fink install libiconv</pre></div>
 </a>
     <a name="comp-packages.cplusplus-filt">
-      <div class="question"><p><b>Q7.6: <tt style="white-space: nowrap;">g77</tt> がインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
+      <div class="question"><p><b>Q7.6: パッケージがインストールできません。<tt style="white-space: nowrap;">c++filt</tt> がないからです。 
         これはどこにありますか?</b></p></div>
       <div class="answer"><p><b>A:</b> もし、Tiger にアップデート後にエラーが</p><pre>xgcc: installation problem, cannot exec `c++filt': No such file or directory</pre><p>とでたら、以下のようにします:</p><ul>
-          <li>ターミナルで、
-          <pre>/Developer/Tools/uninstall-devtools.pl</pre>
-          	と実行し、古い Developer Tools を削除します。
-          	次に、 XCode (2.0 以降) をインストールします。
-          </li>
           <li>(Tiger のインストーラから)  <tt style="white-space: nowrap;">BSD.pkg</tt> をインストールします。
          	<tt style="white-space: nowrap;">/usr/bin/c++filt</tt> が現れるまで何度もインストールしてみてください。</li>
+        </ul><ul>
+          <li>10.4: ターミナルで、
+          <pre>/Developer/Tools/uninstall-devtools.pl</pre>
+          	と実行し、古い Developer Tools を削除します。
+          	次に、 XCode (2.4.1 以降) をインストールします。
+          </li>
+          <li>10.5: ターミナルで、
+          <pre>/Developer/Tools/uninstall-devtools.pl</pre>
+          	と実行し、古い Developer Tools を削除します。
+          	次に、 XCode (2.3 以降) をインストールします。
+          </li>
         </ul><p>
 1) Flush out your old
 2) Reinstall BSD.pkg (from your main OS install)</p></div>
@@ -1162,15 +1107,11 @@ fink install libiconv</pre></div>
         </p></div>
     </a>
   <a name="comp-packages.Leopard-libXrandr">
-    <div class="question"><p><b>Q7.8: 
-      <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> がないため <b>gtk+2</b> がインストールできません。</b></p></div>
-    <div class="answer"><p><b>A:</b> 
-    この問題は、10.5.2.がプリインストールされているマシンに影響します。
-    現在のところ、 Apple X11 に、
-    <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> を参照しているのに、
-    実体が <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.1.0.dylib</tt> であるという
-    バグがあります。
-    </p><p>解決するには、以下のコマンドを実行してファイルを修正してください:</p><pre>sudo perl -pi.bak -e 's|2.0.0|2.1.0|' /usr/X11/lib/libXrandr.la</pre></div>
+    <div class="question"><p><b>Q7.8: OS 10.5 で <b>gtk+2</b> がインストールできません。</b></p></div>
+    <div class="answer"><p><b>A:</b> Typically this involves missing libraries, such as:   <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> or 
+    <tt style="white-space: nowrap;">/usr/X11/lib/libXdamage.1.1.0.dylib</tt> (or other versions of libraries in
+    <tt style="white-space: nowrap;">/usr/X11/lib/</tt>).</p><p>The current wisdom on the best
+    fix for such an issue is to install Xcode 3.1.3.</p></div>
   </a>
     <a name="comp-packages.all-others">
       <div class="question"><p><b>Q7.9: ここに載っていないパッケージで問題があります。</b></p></div>
@@ -1225,20 +1166,25 @@ NetInfo の詳細については、 <tt style="white-space: nowrap;">niutil</tt>
 </a>
 <a name="usage-general.compile-myself">
 <div class="question"><p><b>Q8.3: Fink でインストールしたソフトウェアを使って、自分で何かをコンパイルするにはどうしたらいいのですか?</b></p></div>
-<div class="answer"><p><b>A:</b> 外でコンパイルする時は、コンパイラとリンカに Fink がインストールしたライブラリとヘッダの場所を教える必要があります。
-普通の configure/make を使うパッケージの場合、環境変数を設定する必要があります:</p><p>-tcsh-</p><pre>setenv CFLAGS -I/sw/include 
-setenv LDFLAGS -L/sw/lib
-setenv CXXFLAGS $CFLAGS
-setenv CPPFLAGS $CXXFLAGS
-setenv ACLOCAL_FLAGS "-I /sw/share/aclocal"
-setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"
-setenv MACOSX_DEPLOYMENT_TARGET 10.4</pre><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
+<div class="answer"><p><b>A:</b> When compiling something yourself outside of Fink, the compiler and
+        linker need to be told where to find the Fink-installed libraries and
+		headers.  It is also necessary to tell the compiler to use the
+		appropriate target architecture.  For a package that uses standard
+		configure/make process, you need to set some environment variables:</p><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
 export LDFLAGS=-L/sw/lib 
 export CXXFLAGS=$CFLAGS 
 export CPPFLAGS=$CXXFLAGS 
 export ACLOCAL_FLAGS="-I /sw/share/aclocal"
 export PKG_CONFIG_PATH="/sw/lib/pkgconfig"
-export MACOSX_DEPLOYMENT_TARGET=10.4</pre><p>(ビルドシステムは OS 10.4 以降と仮定)</p><p>これを起動ファイル (.cshrc か .profile) に追加すると、自動的に設定されて便利です。
+export PATH=/sw/var/lib/fink/path-prefix-10.6:$PATH
+export MACOSX_DEPLOYMENT_TARGET=10.5</pre><p>-tcsh-</p><pre>setenv CFLAGS -I/sw/include 
+setenv LDFLAGS -L/sw/lib 
+setenv CXXFLAGS $CFLAGS 
+setenv CPPFLAGS $CXXFLAGS 
+setenv ACLOCAL_FLAGS "-I /sw/share/aclocal"
+setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"
+setenv PATH /sw/var/lib/fink/path-prefix-10.6:$PATH
+setenv MACOSX_DEPLOYMENT_TARGET 10.5</pre><p>(assuming that the build system is running OS 10.5 or later)</p><p>これを起動ファイル (.cshrc か .profile) に追加すると、自動的に設定されて便利です。
 この環境変数を使わないパッケージの場合、
 "-I/sw/include" (ヘッダ用) and "-L/sw/lib" (ライブラリ用)
 をコンパイルの行に追加する必要があるでしょう。
@@ -1438,36 +1384,9 @@ Running X11 ドキュメントには、この問題の <a href="http://www.finkp
 <tt style="white-space: nowrap;">xfree86-rootless</tt> と <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt> がインストールされているかを確認し、なければ <tt style="white-space: nowrap;">fink install xfree86-rootless</tt> で解決です。</p><p>もしインストールされているなら、 <tt style="white-space: nowrap;">fink rebuild xfree86-rootless</tt> を試してください。
 これがうまくいかない場合、 <tt style="white-space: nowrap;">/usr/bin/X11R6</tt> が PATH に含まれているか確認してください。</p></div>
 </a>
-<a name="usage-packages.xterm-error">
-<div class="question"><p><b>Q9.5: xterm が "dyld: xterm Undefined symbols: xterm undefined reference to _tgetent expected to be defined in /usr/lib/libSystem.B.dylib" といって終了します。</b></p></div>
-<div class="answer"><p><b>A:</b> 10.1 版の XFree86 を 10.2 で使用するとこの問題が発生します。
-10.2 版にアップグレードしてください。</p><p>Fink <tt style="white-space: nowrap;">xfree86</tt> パッケージを使っている場合、通常の方法でアップグレードできます
-(ソースからの場合、
-"<tt style="white-space: nowrap;">fink selfupdate-cvs ; fink update-all</tt>"、バイナリからの場合、
-"<tt style="white-space: nowrap;">fink selfupdate ; ; sudo apt-get update; sudo apt-get dist-upgrade</tt>")。</p><p>XFree86 を他の手段でインストールした場合、最新版パッチが
-<a href="http://mrcla.com/XonX">XonX web site</a>
-から入手できます。</p></div>
-</a>
-<a name="usage-packages.libXmuu">
-<div class="question"><p><b>Q9.6: XFree86 を起動しようとすると、下記のエラーのひとつがでます。
-"dyld: xinit can't open library: /usr/X11R6/lib/libXmuu.1.dylib"
-または "dyld: xinit can't open library: /usr/X11R6/lib/libXext.6.dylib"</b></p></div>
-<div class="answer"><p><b>A:</b> これは、 <tt style="white-space: nowrap;">xfree86-base-(threaded)-shlibs</tt> からインストールされたはずのファイルが見つからないことが原因です。
-ソースの場合、<tt style="white-space: nowrap;">fink reinstall xfree86-base-shlibs</tt> (threaded 版の XFree86 パッケージ場合、<tt style="white-space: nowrap;">fink reinstall xfree86-base-threaded-shlibs</tt>)、
-バイナリの場合、 <tt style="white-space: nowrap;">sudo apt-get install --reinstall xfree86-base-shlibs</tt> を再インストールする必要があります。</p></div>
-</a>
-<a name="usage-packages.apple-x-bugs">
-<div class="question"><p><b>Q9.7: Fink の XFree86 を Apple X11 に置き換えたのですが、なんでもかんでもクラッシュするようになりました!</b></p></div>
-<div class="answer"><p><b>A:</b> まず、以前 threaded 版の Fink XFree86 があったのなら、クラッシュしたアプリケーションを再ビルドする必要があります。
-プログラムによっては、ビルド時に thread の対応を確認し、以降は thread があるものと仮定されます。</p><p>これが原因でなければ、次の可能性としては Apple X11 のバグに当たったのかも知れません。
-これを書いている時点でも Apple チームはバグを認識していて作業中です。
-</p><p>Apple X11 に関する一般的な質問で Fink に直接関係が無いものは、
-<a href="http://www.lists.apple.com/x11-users">Apple 公式 X11 ディスカッションリスト</a>
-を確認してみてはいかがでしょうか。
-このサイトで<a href="http://developer.apple.com/bugreporter">Apple へバグレポートを送る</a>よう薦めています。</p></div>
-</a>
+
 <a name="usage-packages.apple-x-delete">
-<div class="question"><p><b>Q9.8: Apple X11 の delete キーを、 XDarwin のように使いたいのです。</b></p></div>
+<div class="question"><p><b>Q9.5: Apple X11 の delete キーを、 XDarwin のように使いたいのです。</b></p></div>
 <div class="answer"><p><b>A:</b> XDarwin と Apple X11 で <tt style="white-space: nowrap;">delete</tt> キーの挙動が違うという報告がありますが、これは X の起動ファイルに以下を追加することで調整できます:</p><p>
 <b>.Xmodmap:</b>
 </p><pre>keycode 59 = Delete</pre><p>
@@ -1482,7 +1401,7 @@ xterm*.ttyModes: erase ^?
 xmodmap $HOME/.Xmodmap</pre><p></p></div>
 </a>
 <a name="usage-packages.gnome-two">
-<div class="question"><p><b>Q9.9: GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</b></p></div>
+<div class="question"><p><b>Q9.6: GNOME 1.x から GNOME 2.x にアップグレードしたら、 <tt style="white-space: nowrap;">gnome-session</tt> がウィンドウマネージャーを開かなくなりました。</b></p></div>
 <div class="answer"><p><b>A:</b> GNOME 1.x <tt style="white-space: nowrap;">gnome-session</tt> は自動的に <tt style="white-space: nowrap;">sawfish</tt> ウィンドウマネージャーを呼出していましたが、 GNOEM 2.x では <tt style="white-space: nowrap;">~/.xinitrc</tt>  で <tt style="white-space: nowrap;">gnome-session</tt> の前に呼び出さなくてはなりません。</p><pre>...
 exec metacity &amp;
 exec gnome-session</pre><p>
@@ -1491,128 +1410,73 @@ exec gnome-session</pre><p>
 </p></div>
 </a>
 <a name="usage-packages.apple-x11-no-windowbar">
-<div class="question"><p><b>Q9.10: Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</b></p></div>
+<div class="question"><p><b>Q9.7: Panther で Apple X11 にアップグレードしたら、ウィンドウのタイトルバーが消えました。</b></p></div>
 <div class="answer"><p><b>A:</b> あなたは X11 を Panther に付属する "X11 1.0 - XFree86 4.3.0" にアップグレードしなかったようです。
 Disk 3 の X11.pkg から X11 をインストールできます。</p></div>
 </a>
 <a name="usage-packages.apple-x11-wants-xfree86">
+<div class="question"><p><b>Q9.8: X11 と Fink に問題があります。</b></p></div>
+      <div class="answer"><p><b>A:</b> There are two possibilities to consider.</p><ul>
+          <li>
+            <b>You are installing from binaries:</b>
+            <p>Typically what you need to do is reinstall the X11User package,
+	    since the installer application occasionally misses installing a file.
+	    You may need to repeat this multiple times. Running</p>
+	    <pre>fink list -i system-xfree86</pre>
+	    <p>should show that the <tt style="white-space: nowrap;">system-xfree86</tt> and
+	    <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> packages are installed, and</p>
+	    <pre>fink list x11</pre>
+	    <p>should indicate that the <tt style="white-space: nowrap;">x11-shlibs</tt> and <tt style="white-space: nowrap;">x11</tt> virtual
+	    packages are present.</p>
+	    <p>If reinstalling the X11User package doesn't work, then consult the
+	    <a href="#usage-packages.special-x11-debug">special debug</a> instructions,
+	    below.</p>
+          </li>
+          <li>
+            <b>You are installing from source:</b>
+	    <p>Typically this error means that you need to (re)install the X11SDK,
+	    which is <b>mandatory</b> if you want to build packages from source.
+            It is in the Xcode Tools folder of a Tiger DVD, or (Optional
+            Installs/)Xcode Tools/Packages on your Leopard DVD(s). If you
+            run</p>
+            <pre>fink list -i system-xfree86  </pre>
+            <p>it should show the <tt style="white-space: nowrap;">system-xfree86</tt>,
+	    <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">system-xfree86-dev</tt>
+	    packages as installed.  If the <tt style="white-space: nowrap;">-dev</tt> package is missing,
+	    reinstall the X11SDK, since sometimes the Apple Installer misses a
+	    file.  You may need to keep doing this.  If either of the other two
+	    are missing, then reinstall the X11User package (same reason).  At
+	    this point</p>
+	    <pre>fink list x11</pre>
+	    <p>should indicate that the <tt style="white-space: nowrap;">x11-dev</tt>, <tt style="white-space: nowrap;">x11-shlibs</tt>,
+	    and <tt style="white-space: nowrap;">x11</tt> virtual packages are present.</p>
+	    <p>If reinstalling the X11SDK or X11User package doesn't work, then consult the
+	    <a href="#usage-packages.special-x11-debug">special debug</a> instructions,
+	    below.</p>
+           </li>
+        </ul></div>
+    </a>
     
-<div class="question"><p><b>Q9.11: Apple X11 をインストールしたけれども、 Fink が XFree86 か X.org をインストールしろといい続けます。</b></p></div>
-<div class="answer"><p><b>A:</b> 二つの可能性があります。</p><ul>
-		<li><b>バイナリからのインストール:</b> 
-		<p>
-		<tt style="white-space: nowrap;">fink</tt> が最新 (&gt;=0.18.3-1) であれば、通常は X11User 
-		パッケージを再インストールする必要があります。
-		</p>
-		<p>
-		これは、インストーラがしばしばファイルをインストールをし忘れることがあるためです。
-		インストールは何回かする必要があるかもしれません。
-		</p>
-		<pre>fink list -i system-xfree86</pre> 
-		<p>を実行することで、
-		<tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> 
-		がインストールされたかが分かります。
-		</p>
-		<p>
-		X11User パッケージを再インストールしても問題がある場合、下記の
-		<a href="#usage-packages.special-x11-debug">特殊なデバグ</a> の手順を試してみてください。
-		</p>
-		<p>
-		古い<tt style="white-space: nowrap;">fink</tt> を使っている場合、 <tt style="white-space: nowrap;">fink</tt> を更新することで直ります。
-		</p>
-<pre>sudo apt-get update
-sudo apt-get install fink</pre>
-		</li>
-		<li><b>ソースからのインストール: </b>
-		<p>
-		<tt style="white-space: nowrap;">fink</tt> が最新であれば、 X11SDK を(再)インストールする必要があります。
-		これは、パッケージをソースからビルドする際に必須です。
-		X11SDK は Xcode CD にありますが、XCode をインストールしても、デフォルトではインストール<b>されません</b>。
-		インストール時にカスタムを選択してパッケージを選択するか、
-		Panther の XCode CD または Tiger DVD の XCode Tools フォルダ内にあります。
-		Panther では、デフォルトではインストールされませんので、カスタムインストールを選択するか、
-		<tt style="white-space: nowrap;">Packages</tt> フォルダ内の <tt style="white-space: nowrap;">X11SDK pkg</tt> アイコンをダブルクリックします。
-		Tiger では、 (たとえ X11User がなくても) デフォルトでインストール<b>されます</b>が、一部のファイルがインストールされないことがあります。
-		</p>
-		<p>
-		XCode ディスクが付随されていないコンピュータの場合、<tt style="white-space: nowrap;">X11SDK.pkg</tt> を含むディスクイメージがある場合があります。
-		<tt style="white-space: nowrap;"> /Applications/Installers </tt> などのディレクトリを探してください。
-		<tt style="white-space: nowrap;">X11User.pkg</tt> も同じディレクトリにある場合があります。
-		</p>
-		<p>
-		これでも問題がある場合、
-		</p>
-		<pre>fink list -i system-xfree86</pre> 
-		<p>を実行をし、
-		<tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt> と <tt style="white-space: nowrap;">system-xfree86-dev</tt>
-		がインストールされているか確認します。
-		<tt style="white-space: nowrap;">-dev</tt> が無い場合は X11SDK を再インストールします。
-		Apple のインストーラはファイルをインストールし忘れることがあるようです。
-		他の二つのうちどちらかが無い場合、 X11User パッケージをインストールします (理由は同じ)。
-		</p>
-		<p><b>Jaguar (X11 beta 3) の利用者への注記</b>:
-		Jaguar では XCode は使用していないため、ダウンロード済みの X11SDK が必要になります。
-		X11 beta 3 は既に期限が切れているため、X11SDK パッケージ (および X11User パッケージ)
-		はダウンロードできません。
-		X11 アプリケーションをインストールするには、バイナリ配布を利用するか、 XFree86  または X.org
-		をインストールするか、 Panther にアップグレードするしかありません。
-		</p>
-		<p>
-		<tt style="white-space: nowrap;">fink</tt> 0.17 以前を使っている場合、更新します。
-		</p>
-		<pre>fink selfupdate</pre>
-		<p>
-		(ポイントリリースではなく、CVS または rsync 更新ができる場合)
-		</p>
-		<p>
-		これでも問題が発生する場合、下記の
-		<a href="#usage-packages.special-x11-debug">特殊なデバグ</a> の手順を試してみてください。
-		</p>
-		</li>
-	</ul></div>
-</a>
-<a name="usage-packages.wants-xfree86-on-upgrade">
-<div class="question"><p><b>Q9.12: 
-10.2 Fink バージョンから 10.2-gcc3.3 あるいは 10.3 に切り替えたら、 Apple X11 があるのに XFree86 または X.org をインストールしろと言われます。
-</b></p></div>
-<div class="answer"><p><b>A:</b> 
-以下の古い代替パッケージのうちいずれかを削除する必要があります:
-<tt style="white-space: nowrap;">system-xfree86</tt>, <tt style="white-space: nowrap;">system-xfree86-42</tt>, 
-<tt style="white-space: nowrap;">system-xfree86-43</tt> 。
-自分でインストールした X11 の設定を Fink が行ない、バーチャルパッケージを作成します。
-他のパッケージが <tt style="white-space: nowrap;">system-xfree86</tt> に依存しているため、以下のコマンドを使い
-</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43</pre><p>
-古いバージョンを削除します。
-インストールの確認は、
-</p><pre>fink list -i system-xfree86</pre><p>
-とし、 <tt style="white-space: nowrap;">system-xfree86</tt> と <tt style="white-space: nowrap;">system-xfree86-shlibs</tt>
-があるか確認します。
-X11SDK もインストールされている場合、 <tt style="white-space: nowrap;">system-xfree86-dev</tt> も確認します。
-</p><p>
-これでも問題が解決されない場合、上の
-<a href="#usage-packages.apple-x11-wants-xfree86">Fink が XFree86 または X.org を要求する</a>
-を参照してください。
-</p></div>
-</a>
 <a name="usage-packages.special-x11-debug">
-<div class="question"><p><b>Q9.13: まだ X11 と Fink の問題が解決されません。</b></p></div>
+<div class="question"><p><b>Q9.9: まだ X11 と Fink の問題が解決されません。</b></p></div>
 <div class="answer"><p><b>A:</b> 
 		<a href="#usage-packages.apple-x11-wants-xfree86">Fink が XFree86 または X.org を要求する</a> や
 		<a href="#usage-packages.wants-xfree86-on-upgrade">10.2 からの X11 とアップグレード</a> 
 		のヒントで問題が解決されないか、自分の問題と異なる場合、
 		X11 をきれいに削除し、代替パッケージと X11 関連パッケージを削除します:
-		</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
+		</p><p>On Leopard, use</p><pre>
+sudo pkgutil --forget com.apple.pkg.X11User
+sudo pkgutil --forget com.apple.pkg.X11SDKLeo
+</pre><p>Then, on either 10.4 or 10.5, run</p><pre>sudo dpkg -r --force-all system-xfree86 system-xfree86-42 system-xfree86-43 \
 xorg xorg-shlibs xfree86 xfree86-shilbs \
 xfree86-base xfree86-base-shlibs xfree86-rootless xfree86-rootless-shlibs \
 xfree86-base-threaded xfree86-base-threaded-shlibs \
 xfree86-rootless-threaded xfree86-rootless-threaded-shlibs
 rm -rf /Library/Receipts/X11SDK.pkg /Library/Receipts/X11User.pkg
-fink selfupdate; fink index</pre><p>
-		(最初の行で存在しないパッケージを削除しようとしているという警告が出ます)
-		次に、Apple X11 (および必要に応じて X11SDK) または XFree86 や X.org のようなX互換パッケージを再インストールします。
-		</p><p>
-		これでも問題があり、 <tt style="white-space: nowrap;">fink-0.19.0</tt> 以降を使っている場合、
-		</p><pre>fink-virtual-pkgs --debug</pre><p>で何が不足しているかの情報が得られます。</p><p>
+fink selfupdate; fink index</pre><p>(the first line may give you warnings about trying to remove
+	nonexistent packages).  Then, reinstall Apple's X11 (and the X11SDK, if
+	needed), or,
+	if you're on 10.4, an alternative X11 implementation, like XFree86 or X.org.</p><p>If you are still having problems then you can run</p><pre>fink-virtual-pkgs --debug</pre><p>で何が不足しているかの情報が得られます。</p><p>
 		古いバージョンの  <tt style="white-space: nowrap;">fink</tt> を使っている場合、Perl スクリプト
 		(Martin Costabel 作成)　で同様の情報が得られます。
 		</p><ul>
@@ -1624,7 +1488,7 @@ fink selfupdate; fink index</pre><p>
 </ul></div>
 </a>
     <a name="usage-packages.tiger-gtk">
-      <div class="question"><p><b>Q9.14: 
+      <div class="question"><p><b>Q9.10: 
         	Tiger (OS 10.4) にアップデート後、GTK アプリを使うと必ず
         	<tt style="white-space: nowrap;">_EVP_idea_cbc</tt> に関連したエラーが出ます。
         </b></p></div>
@@ -1639,7 +1503,7 @@ fink selfupdate; fink index</pre><p>
         </p><pre>export DYLD_FALLBACK_LIBRARY_PATH=:</pre><p>と記述し、<b>tcsh</b> ユーザーは、同様に <tt style="white-space: nowrap;">.cshrc</tt> (または他のスタートアップスクリプト) に、</p><pre>setenv DYLD_FALLBACK_LIBRARY_PATH :</pre><p>と記述します。</p><p>これは <tt style="white-space: nowrap;">base-files-1.9.7-1</tt> 以降では自動的に追加されます。</p></div>
     </a>
   <a name="usage-packages.yelp">
-    <div class="question"><p><b>Q9.15: どの GNOME アプリケーションでも、ヘルプ機能が使えません。</b></p></div>
+    <div class="question"><p><b>Q9.11: どの GNOME アプリケーションでも、ヘルプ機能が使えません。</b></p></div>
 	<div class="answer"><p><b>A:</b> 
 		  <tt style="white-space: nowrap;">yelp</tt> というパッケージをインストーする必要があります。
 		  このパッケージは、暗号化を使用するため GNOME バンドルに含まれていません。
@@ -1652,4 +1516,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.ja.xml,v 1.43 2009/07/27 18:44:40 dmacks Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.ja.xml,v 1.44 2009/10/25 05:21:38 babayoshihiko Exp $</i></p></body></html>
