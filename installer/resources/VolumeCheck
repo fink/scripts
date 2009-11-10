@@ -7,6 +7,7 @@ my $basedir = "/sw";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 my $TARGET_VOLUME = $ARGV[0];
 my $targetdir = "$TARGET_VOLUME$basedir";
+my $cmd = "/usr/sbin/diskutil info \"$TARGET_VOLUME\" 2>&1";
 
 # set to index (16-31) of msg in *.lproj/InstallationCheck.strings if error
 my $errmsg = 0;
@@ -38,6 +39,20 @@ DO_CHECKS:
 	} else {
 		print "Fink Installer: ${TARGET_VOLUME} does not support symlinks ($!)!\n";
 		$errmsg = 21;
+		last;
+	}
+
+	my @cmd_out = `$cmd`;
+	if (! @cmd_out || !$?) {
+		@cmd_out = map { /(?:Permissions|Owners):\s*(Enabled|Disabled)/ } @cmd_out;
+		if (! $cmd_out[0]) {
+			print "Permissions and ownership are not enabled on ${TARGET_VOLUME}!\n";
+			$errmsg = 19;
+			last;
+		}
+	} else {
+		print "Could not find the diskutil program which is necessary to check permissions and ownership on ${TARGET_VOLUME}!\n";
+		$errmsg = 20;
 		last;
 	}
 }
