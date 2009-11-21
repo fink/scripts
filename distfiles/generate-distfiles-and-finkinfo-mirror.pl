@@ -174,7 +174,7 @@ sub find_fetch_infofile
 		print LOG "- fetching files for $shortname ($dist/$tree)\n";
 		for my $package ( Fink::PkgVersion->pkgversions_from_info_file( $File::Find::name ) )
 		{
-			next if ( $package->get_license() =~ /Restrictive$/ );
+			next if ( $package->get_license() =~ /^(Commercial|Restrictive)$/i );
 			for my $suffix ($package->get_source_suffices)
 			{
 				my $tarball = $package->get_tarball($suffix);
