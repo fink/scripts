@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.111 2009/05/14 03:57:09 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.113 2009/06/19 18:43:28 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -331,7 +331,7 @@ user upon fink installation among those architectures which will run
 on the user's hardware.  Current possible values are
 'powerpc' for ppc machines
 and either 'i386' or 'x86_64' for x86 machines. The choice 'x86_64'
-is only available if the machine is capable of running 64bit libraries
+is only available if the machine is capable of running 64-bit libraries
 and executables.  (This item was introduced in the fink-0.12 era; the
 current description is valid for fink-0.29.5 and later.)
 </p>
@@ -383,9 +383,10 @@ The full path to the file given in the <tt style="white-space: nowrap;">PatchFil
 </td></tr><tr valign="top"><td>%lib</td><td>
 <p>
 If <tt style="white-space: nowrap;">Type: -64bit</tt> is defined to be <tt style="white-space: nowrap;">-64bit</tt>,
-this expands to <b>lib/ppc64</b> on powerpc machines, and to
-<b>lib/x86_64</b> on intel machines (the proper storage locations
-for 64-bit libraries); otherwise, this expands to <b>lib</b>.
+this expands to <b>lib/ppc64</b> under the powerpc architecture, and to
+<b>lib/x86_64</b> under the i386 architecture (the proper storage locations
+for 64-bit libraries on 32-bit systems); 
+otherwise, this expands to <b>lib</b>.
 (Introduced in fink-0.26.0)
 </p>
 <p>Note that <tt style="white-space: nowrap;">%lib</tt> is not permitted in the
@@ -547,7 +548,7 @@ for existence before calling them and the like).
 Fink's policy about shared libraries became effective in February 2002.
 This section of the documentation discusses version 4
 of the policy (which coincides with the release of Fink's 0.5.0 distribution),
-as modified in December, 2006 to handle 64bit libraries
+as modified in December, 2006 to handle 64-bit libraries
 and from January, 2008 to handle private shared libraries. (In addition,
 the discussion was updated in June, 2008 to eliminate obsolete references to a
 transitional period for implementing the shared libraries policy.)
@@ -557,7 +558,7 @@ Any package which builds shared libraries should treat its shared
   libraries according to Fink's policy.  This means:</p>
 <ul>
 <li>   verify, using <tt style="white-space: nowrap;">otool -L</tt> (or <tt style="white-space: nowrap;">otool64 -L</tt> for
-64bit libraries), that 
+64-bit libraries on 10.4), that 
        the install_name of each library and
        its compatibility and current version numbers are correct </li>
 <li>   put the public shared libraries in a separate package (except for the
@@ -671,7 +672,7 @@ When building shared libraries under major version N, it is important that
 the "install_name" of the library be <tt style="white-space: nowrap;">%p/lib/libbar.N.dylib</tt>.  
 (You can
 find the install_name by running <tt style="white-space: nowrap;">otool -L</tt> on your library,
-or <tt style="white-space: nowrap;">otool64 -L</tt> for 64bit libraries.)  The
+or <tt style="white-space: nowrap;">otool64 -L</tt> for 64-bit libraries on 10.4.)  The
 actual library file may be installed at another location, such as
 </p>
 <pre>
@@ -700,7 +701,7 @@ but in any event you should
 check that they have been done correctly in your case.  You should also
 check that current_version and compatibility_version were defined 
 appropriately for your shared libraries.  (These are also shown with the 
-<tt style="white-space: nowrap;">otool -L</tt> query, or <tt style="white-space: nowrap;">otool64 -L</tt> for 64bit libraries.)
+<tt style="white-space: nowrap;">otool -L</tt> query, or <tt style="white-space: nowrap;">otool64 -L</tt> for 64-bit libraries.)
 </p><p>
 Files are then divided between the two packages as follows
 </p>
@@ -829,8 +830,8 @@ architecture.  (The library architecture may either be "32", "64", or
 "32-64", and may be absent. If the library architecture is not
 explicitly listed, it defaults to the standard value for the current
 architecture of Fink; these standard values are "32" for the powerpc 
-architecture and "32" for the i386 architecture, and will be "64"
-for any future x86_64 architecture.)
+and i386 architectures, and "64"
+for the x86_64 architecture.)
 The dependency should
 be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> where 
 <tt style="white-space: nowrap;">version-revision</tt> refers to
@@ -842,12 +843,12 @@ a declaration</p>
     %p/lib/libbar.1.dylib 2.1.0 bar1 (&gt;= 1.1-2) 32
   &lt;&lt;
 </pre>
-<p>indicates that a (32bit)
+<p>indicates that a (32-bit)
 library with <tt style="white-space: nowrap;">-install_name</tt> %p/lib/libbar.1.dylib
 and <tt style="white-space: nowrap;">-compatibility_version</tt> 2.1.0 has been installed since
 version 1.1-2 of the <b>bar1</b> package.  In addition, this declaration
 amounts to  a promise
-from the maintainer that a 32bit
+from the maintainer that a 32-bit
 library with this name and a compatibility-version
 of at least 2.1.0 will always be found in later versions of the <b>bar1</b> 
 package.
@@ -1221,11 +1222,15 @@ compatibility, <tt style="white-space: nowrap;">powerpc-apple-darwin1.3</tt> or 
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/lib/ppc64</tt>
 <tt style="white-space: nowrap;">/sw/lib/x86_64</tt></td><td>
 <p>
-This directory is for 64-bit libraries, with <tt style="white-space: nowrap;">/sw/lib/ppc64</tt>
+This directory is for 64-bit libraries on 32-bit systems, 
+with <tt style="white-space: nowrap;">/sw/lib/ppc64</tt>
 being used under powerpc architecture, and
 <tt style="white-space: nowrap;">/sw/lib/x86_64</tt> being used under i386 architecture.
 Libraries which have been built 'fat' should be stored in
-<tt style="white-space: nowrap;">/sw/lib</tt> instead.
+<tt style="white-space: nowrap;">/sw/lib</tt> instead, and should be so indicated by
+using '32-64' in the corresponding Shlibs entry.  Note that under
+the x86_64 architecture, 64-bit
+libraries are to be stored in <tt style="white-space: nowrap;">/sw/lib</tt>.
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share</tt></td><td>
 <p>
@@ -1268,6 +1273,19 @@ Hint: Just use <tt style="white-space: nowrap;">%n</tt>.
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/share/locale</tt></td><td>
 <p>
 This directory contains message catalogs for internationalization.
+</p>
+</td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/opt</tt></td><td>
+<p>
+The <tt style="white-space: nowrap;">opt</tt> directory stores "add-on" software packages,
+which for some reason cannot use the standard <tt style="white-space: nowrap;">/sw/bin</tt>,
+<tt style="white-space: nowrap;">/sw/lib</tt>, <tt style="white-space: nowrap;">/sw/include</tt>, etc. 
+directories.
+A package to be installed in <tt style="white-space: nowrap;">/sw/opt</tt>
+ must locate its static files in a separate 
+<tt style="white-space: nowrap;">/sw/opt/&lt;package&gt;</tt>
+ directory tree, where <tt style="white-space: nowrap;">&lt;package&gt;</tt> 
+is a name that describes the software package.
+(Available in fink 0.29.7 or later.)
 </p>
 </td></tr><tr valign="top"><td><tt style="white-space: nowrap;">/sw/var</tt></td><td>
 <p>
@@ -1770,7 +1788,11 @@ SplitOff: &lt;&lt;
 &lt;&lt;
 &lt;&lt;
 </pre>
-
+<p>Note that <tt style="white-space: nowrap;">Type: -64bit</tt> is generally not appropriate for
+the x86_64 architecture, since in that case
+libraries are being built 64-bit by default
+and stored in <tt style="white-space: nowrap;">%i/lib</tt>.
+</p>
 
 </td></tr><tr valign="top"><td>License</td><td>
 <p>
@@ -2669,7 +2691,9 @@ the <tt style="white-space: nowrap;">-compatibility_version</tt>, versioned pack
 dependency information specifying the Fink package which provides
 this library at this compatibility version, and the
 library architecture.  (The library architecture may either be "32", "64", or
-"32-64", and may be absent; the value defaults to "32" if it is absent.)  
+"32-64", and may be absent; if absent, 
+the value defaults to "32" under the powerpc and i386 machine architectures,
+and to "64" under the x86_64 machine architecture.)  
 The dependency should
 be stated in the form <tt style="white-space: nowrap;"> foo (&gt;= version-revision)</tt> where 
 <tt style="white-space: nowrap;">version-revision</tt> refers to
@@ -3023,9 +3047,9 @@ If you just need to set some environment variables (for example, QTDIR to '/sw')
 
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2009 The Fink Project.
+Copyright (c) 2001-2010 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.111 2009/05/14 03:57:09 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.113 2009/06/19 18:43:28 dmrrsn Exp $</i></p></body></html>
