@@ -151,6 +151,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/fink/virtpkg">Failed: Package is an uninstalled virtual package</filter>
 	<filter name="failures/fink/nolib/sdl" flags="s">error: \*\*\* SDL .*not found!|/usr/bin/ld: Undefined symbols:.*_SDL_Init</filter>
 	<filter name="failures/fink/nolib/other">libtool: link: `.*/sw/lib/(.*)\.la' is not a valid libtool archive</filter>
+	<filter name="failures/fink/nolib/missingsymbol">ld: symbol\(s\) not found</filter>
+	
 	<filter name="failures/fink/perl581" flags="m">^Failed: Can't resolve dependency .*perl581</filter>
 	<filter name="failures/fink/nofink" flags="m">^Failed: no matching version found for fink</filter>
 	<filter name="failures/fink/conflict">conflicting packages</filter>
