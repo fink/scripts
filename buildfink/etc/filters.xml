@@ -16,6 +16,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
 <filters>
+	<filter name="unbuilt/download" flags="m">^Failed: file download failed</filter>
+	<filter name="unbuilt/nodep" flags="m">^Failed: Can't resolve dependency</filter>
+	<filter name="unbuilt/unbuildable">Failed: Can't figure out how to build(?:.*Unsatisfied dependencies: (.*)\.)?</filter>
+	<filter name="unbuilt/dependency_failed">Failed: Dependency (.*) failed to build</filter>
+	<filter name="unbuilt/skipped">Failed: .* is on the skip list</filter>
+
 	<filter name="failures/oneproj/adns">error: conflicting types for 'adns__parse_domain'</filter>
 	<filter name="failures/oneproj/applex11tools">You must have X11User.pkg somewhere in /Volumes or /Users</filter>
 	<filter name="failures/oneproj/bundle-webmin">\*\*\* config (Y/I/N/O/D/Z) [default=N] ? .*/sw/bin/dpkg: error processing webmin-burner (--install):</filter>
@@ -89,9 +95,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	<filter name="failures/project/nolib/ldap">error: could not find an LDAP library</filter>
 	<filter name="failures/project/nolib/sdl" flags="s">error: \*\*\* SDL .*not found!|/usr/bin/ld: Undefined symbols:.*_SDL_Init</filter>
-	<filter name="failures/project/nolib/lib-missing">can't locate file for: -l(.*)|ld: library not found for -l(.*)|cannot find the library `(.*)'|error: (lib.*) is missing|can't locate framework for: -framework (.*)|error: Invalid lib(.*) directory|can't find header files for (.*)</filter>
+	<filter name="failures/project/nolib/lib-missing" flags="m">can't locate file for: -l(.*)|ld: library not found for -l(.*)|cannot find the library `(.*)'|error: (lib.*) is missing|can't locate framework for: -framework (.*)|error: Invalid lib(.*) directory|can't find header files for (.*)</filter>
 	<filter name="failures/project/nolib/other">libtool: link: `.*/sw/lib/(.*)\.la' is not a valid libtool archive</filter>
-	<filter name="failures/project/nolib/missingsymbol">ld: symbol\(s\) not found</filter>
+	<filter name="failures/project/nolib/missingsymbol" flags="m">ld: symbol\(s\) not found</filter>
 
 	<filter name="failures/project/pc-missing">Package (.*) was not found in the pkg-config search path|can not find package (\S+)</filter>
 	<filter name="failures/project/perlmod-missing">error: (.*) perl module is required</filter>
@@ -153,7 +159,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/fink/conflict">conflicting packages</filter>
 	<filter name="failures/fink/nopackage">Failed: compile phase: can't build.* because no package description is available</filter>
 	<filter name="failures/fink/pkgdesc">Failed: no package found for specification</filter>
-	<filter name="failures/fink/patch">execution of patch failed</filter>
+	<filter name="failures/fink/patch" flags="m">(execution of patch failed)|(Failed: Cannot read PatchFile)</filter>
 	<filter name="failures/fink/depconfig">dependency problems prevent configuration</filter>
 	<filter name="failures/fink/dep">Can't resolve dependency "(.*?)"</filter>
 	<filter name="failures/fink/buildlock">problems encountered involve buildlocks</filter>
@@ -171,12 +177,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/unanalyzed/log_size_limit" flags="m">^Failed: Log size limit exceeded</filter>
 	<filter name="failures/unanalyzed/build_time_limit" flags="m">^Failed: Build process timed out</filter>
 	<filter name="failures/unanalyzed/other" flags="m">^Failed:</filter>
-
-	<filter name="unbuilt/download" flags="m">^Failed: file download failed</filter>
-	<filter name="unbuilt/nodep" flags="m">^Failed: Can't resolve dependency</filter>
-	<filter name="unbuilt/unbuildable">Failed: Can't figure out how to build(?:.*Unsatisfied dependencies: (.*)\.)?</filter>
-	<filter name="unbuilt/dependency_failed">Failed: Dependency (.*) failed to build</filter>
-	<filter name="unbuilt/skipped">Failed: .* is on the skip list</filter>
 
 	<filter name="warnings/obsolete_headtail">(head|tail)\s+-[0-9]</filter>
 	<filter name="warnings/missing_include">implicit declaration of function</filter>
