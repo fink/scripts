@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.113 2009/06/19 18:43:28 dmrrsn Exp $
+Generated from $Fink: packaging.en.xml,v 1.114 2010/06/30 16:01:15 dmrrsn Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -128,24 +128,26 @@ The directories in top-down order:
 </p>
 <ul>
 <li><tt style="white-space: nowrap;">dists</tt> is where it starts. The <tt style="white-space: nowrap;">dists</tt>
-directory is necessary for the Debian tools.</li>
+directory is necessary for the Debian tools.  In recent versions
+of fink, this is a symlink to a directory with a distribution-inspired
+name.</li>
 <li>The distribution. There is <tt style="white-space: nowrap;">stable</tt>,
 <tt style="white-space: nowrap;">unstable</tt> and <tt style="white-space: nowrap;">local</tt>. The <tt style="white-space: nowrap;">local</tt>
 directory is under the control of the local administrator/user. The
 <tt style="white-space: nowrap;">stable</tt> and <tt style="white-space: nowrap;">unstable</tt> directories are part of
 Fink.</li>
 <li>The tree. The <tt style="white-space: nowrap;">main</tt> tree contains the bulk of the
-packages. Cryptographic software is kept in a separate tree,
-<tt style="white-space: nowrap;">crypto</tt>, to make removal easy should it become
-necessary.</li>
+packages. Prior to July 1, 2010, the
+Cryptographic software was kept in a separate tree,
+<tt style="white-space: nowrap;">crypto</tt>, but this is now a section of the <tt style="white-space: nowrap;">main</tt>
+tree.</li>
 <li><tt style="white-space: nowrap;">finkinfo</tt>
 vs. <tt style="white-space: nowrap;">binary-darwin-powerpc</tt>. <tt style="white-space: nowrap;">finkinfo</tt> contains
 the Fink package descriptions and patches, while
 <tt style="white-space: nowrap;">binary-darwin-powerpc</tt> contains the <tt style="white-space: nowrap;">.deb</tt>
 binary packages.</li>
 <li>Sections. The <tt style="white-space: nowrap;">main</tt> tree is subdivided into thematic
-sections to make it manageable. The <tt style="white-space: nowrap;">crypto</tt> tree is not
-divided into sections at the moment.</li>
+sections to make it manageable. </li>
 </ul>
 
 
@@ -3052,4 +3054,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.113 2009/06/19 18:43:28 dmrrsn Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.114 2010/06/30 16:01:15 dmrrsn Exp $</i></p></body></html>
