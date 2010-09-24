@@ -17,10 +17,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
 <filters>
 	<filter name="unbuilt/download" flags="m">^Failed: file download failed</filter>
-	<filter name="unbuilt/nodep" flags="m">^Failed: Can't resolve dependency</filter>
 	<filter name="unbuilt/unbuildable">Failed: Can't figure out how to build(?:.*Unsatisfied dependencies: (.*)\.)?</filter>
 	<filter name="unbuilt/dependency_failed">Failed: Dependency (.*) failed to build</filter>
 	<filter name="unbuilt/skipped">Failed: .* is on the skip list</filter>
+	<filter name="unbuilt/inconsistent_dependencies">Could not resolve inconsistent dependencies</filter>
+	<filter name="unbuilt/nodep-pm5100">Can't resolve dependency "(.*?-pm5100.*?)" for package</filter>
+	<filter name="unbuilt/nodep-pm588">Can't resolve dependency "(.*?-pm588.*?)" for package</filter>
+	<filter name="unbuilt/nodep-pm586">Can't resolve dependency "(.*?-pm586.*?)" for package</filter>
+	<filter name="unbuilt/nodep">Can't resolve dependency "(.*?)"</filter>
 
 	<filter name="failures/oneproj/adns">error: conflicting types for 'adns__parse_domain'</filter>
 	<filter name="failures/oneproj/applex11tools">You must have X11User.pkg somewhere in /Volumes or /Users</filter>
@@ -35,7 +39,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/oneproj/exact">chown: smmsp: Invalid argument</filter>
 	<filter name="failures/oneproj/absoft">Absoft Fortran not installed.</filter>
 	<filter name="failures/oneproj/finch-pm">Can't locate object method "file_name_is_absolute" via package "ExtUtils::Liblist"</filter>
-	<filter name="failures/oneproj/fontconfig-path">error processing .*/sw/fink/dists/buildfink/binary-darwin-powerpc/fontconfig-path</filter>
+	<filter name="failures/oneproj/fontconfig-path">error processing .*/sw/fink/dists/buildfink/binary-darwin-i386/fontconfig-path</filter>
 	<filter name="failures/oneproj/fte">o_messages.cpp:23: error: non-local variable '&lt;anonymous struct&gt; CRegexp [32]' uses anonymous type</filter>
 	<filter name="failures/oneproj/gri">convert: Command not found</filter>
 	<filter name="failures/oneproj/hfstar">Please specify the source encoding through --from-code.</filter>
@@ -76,6 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	<filter name="failures/compiler/ice">internal compiler error</filter>
 	<filter name="failures/compiler/c++_flat">/usr/lib/gcc/powerpc-apple-darwin8/4.0.1/crt3.o private external definition of _atexit</filter>
+	<filter name="failures/compiler/architecture">ld warning: .*, file is not of required architecture</filter>
 
 	<filter name="failures/frontend/parse">error: parse error</filter>
 	<filter name="failures/frontend/implicit">error: incompatible implicit declaration</filter>
@@ -97,7 +102,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/project/nolib/sdl" flags="s">error: \*\*\* SDL .*not found!|/usr/bin/ld: Undefined symbols:.*_SDL_Init</filter>
 	<filter name="failures/project/nolib/lib-missing" flags="m">can't locate file for: -l(.*)|ld: library not found for -l(.*)|cannot find the library `(.*)'|error: (lib.*) is missing|can't locate framework for: -framework (.*)|error: Invalid lib(.*) directory|can't find header files for (.*)</filter>
 	<filter name="failures/project/nolib/other">libtool: link: `.*/sw/lib/(.*)\.la' is not a valid libtool archive</filter>
-	<filter name="failures/project/nolib/missingsymbol" flags="m">ld: symbol\(s\) not found</filter>
+	<filter name="failures/project/nolib/missing_symbol" flags="m">ld: symbol\(s\) not found</filter>
 
 	<filter name="failures/project/pc-missing">Package (.*) was not found in the pkg-config search path|can not find package (\S+)</filter>
 	<filter name="failures/project/perlmod-missing">error: (.*) perl module is required</filter>
@@ -105,7 +110,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/project/prog-missing">error: The important program (.*) was not found</filter>
 	<filter name="failures/project/exec-missing">error: (.*) not found or not executable</filter>
 	<filter name="failures/project/other-missing">error: Cannot find (.*)</filter>
-	<filter name="failures/project/header-missing">error: (.*\.h): No such file or directory</filter>
+	<filter name="failures/project/header-missing">error: (.*\.h).*: No such file or directory</filter>
 
 	<filter name="failures/project/bad-compiler-option">cc1: error: invalid option|bad value .* for -mtune</filter>
 	<filter name="failures/project/desktop-file-utils">No directories in update-desktop-database search path could be processed and updated.</filter>
@@ -135,6 +140,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/project/export">Can't exec "export"</filter>
 	<filter name="failures/project/setjmp">sorry, unimplemented: function '.*' can never be inlined</filter>
 	<filter name="failures/project/nostatic">error: '(.*)' may not be declared as static</filter>
+	<filter name="failures/project/empty_compiler_flag">  *\-[I]  *\-</filter>
 
 	<filter name="failures/project/stricter/static">error: static declaration of '.*' follows non-static declaration</filter>
 	<filter name="failures/project/stricter/newinit">ISO C\+\+ forbids initialization in array new</filter>
@@ -161,7 +167,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/fink/pkgdesc">Failed: no package found for specification</filter>
 	<filter name="failures/fink/patch" flags="m">(execution of patch failed)|(Failed: Cannot read PatchFile)</filter>
 	<filter name="failures/fink/depconfig">dependency problems prevent configuration</filter>
-	<filter name="failures/fink/dep">Can't resolve dependency "(.*?)"</filter>
 	<filter name="failures/fink/buildlock">problems encountered involve buildlocks</filter>
 	<filter name="failures/fink/pkgobj">Failed: Couldn't get package object</filter>
 
@@ -179,7 +184,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/unanalyzed/other" flags="m">^Failed:</filter>
 
 	<filter name="warnings/obsolete_headtail">(head|tail)\s+-[0-9]</filter>
-	<filter name="warnings/missing_include">implicit declaration of function</filter>
+	<filter name="warnings/missing_include" flags="m">implicit declaration of function</filter>
 
 	<filter name="successes">.$</filter>
 </filters>
