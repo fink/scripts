@@ -1,0 +1,176 @@
+#!/bin/sh -e
+
+#Script msachs uses to kick off his builds.  Included here more as
+#documentation and an example than anything else, not necessarily
+#directly useful for other people.
+#
+#Copyright (c) 2005 Apple Computer, Inc.  All Rights Reserved.
+#
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+FINKDIR=/sw
+OUTDIR=/src/buildworld
+BFDIR=/src/fink/scripts/buildfink
+BUILDNAME=`date "+%Y-%m-%d"`
+
+if [[ $# != 2 ]]
+	then echo "Usage: $0 [ new | continue | analysis ] buildname" >&2
+	exit 1
+fi
+
+[[ "x$1" != "x" ]] && BUILDTYPE=$1
+[[ "x$2" != "x" ]] && BUILDNAME=$2
+
+if [ -d /usr/local ]
+	then echo "/usr/local exists, refusing to build" >&2
+	exit 1
+fi
+
+analyze()
+{
+	echo "OS:" `sw_vers -productVersion` > $OUTDIR/$BUILDNAME/rundata.txt
+	$FINKDIR/bin/fink -V | head -2 >> $OUTDIR/$BUILDNAME/rundata.txt
+	grep "^Trees" $FINKDIR/etc/fink.conf >> $OUTDIR/$BUILDNAME/rundata.txt
+
+	# Start the analysis
+	echo "Running analysis scripts"
+	$BFDIR/analysis/analyze $OUTDIR/$BUILDNAME
+
+	# create the fancy log outputs
+	$BFDIR/analysis/report --comments $OUTDIR/$BUILDNAME/rundata.txt --outdir $OUTDIR/$BUILDNAME/out --finkdir $FINKDIR
+
+	echo "Done analyzing"
+	exit 0
+}
+
+. $FINKDIR/bin/init.sh
+perl <<EOF
+	open(FVP, "-|", "fink-virtual-pkgs");
+	while(<FVP>) {
+		next unless /^Package: (system-xfree86.*)/;
+		my \$pkg = \$1;
+		while(<FVP>) {
+			next unless /^Status: (.*)/ or /^$/;
+			my \$status = \$1;
+			\$installed{\$pkg} = 1 if \$status =~ /\binstalled\b/;
+			last;
+		}
+	}
+	die "Missing system-xfree86\n" unless \$installed{"system-xfree86"};
+	die "Missing system-xfree86-dev\n" unless \$installed{"system-xfree86-dev"};
+EOF
+if [ $? -ne 0 ]; then exit 1 ; fi
+
+
+# Don't make core files, autoconf makes lots of these and they fill
+# up the disk
+ulimit -c 0
+
+if [[ `grep ^Trees: ${FINKDIR}/etc/fink.conf | grep unstable` ]]; then
+	UNSTABLE_ON=true
+else
+	UNSTABLE_ON=false
+fi
+
+# Reasons for skipping packages:
+#	hangs:
+#		driftnet
+#	demands interactivity:
+#		jacorb (hangs with either --b-a-n or no Console)
+#	purge demands interactivity:
+#	doesn't build and gets in inconsistent state:
+#	breaks lots of other packages:
+#	has external deps:
+#	broken and many other packages depend on it:
+#		commons-logging
+#	other:
+#		clamav (tarball triggers expected antivirus warning)
+#		nepenthes (tarball triggers expected antivirus warning)
+
+# Assumes that packages in stable may not work.
+# Unstable is more up to date, and so may have a 'stable' package fixed.
+STABLE_PACKAGES="\
+	--skip commons-logging \
+	"
+
+UNSTABLE_PACKAGES="\
+	--skip clamav \
+	--skip driftnet \
+	--skip jacorb \
+	--skip nepenthes \
+	"
+
+if [[ $UNSTABLE_ON = "true" ]]; then
+	DISABLED_PACKAGES="${UNSTABLE_PACKAGES}"
+else
+	DISABLED_PACKAGES="${STABLE_PACKAGES} ${UNSTABLE_PACKAGES}"
+fi
+
+
+case $BUILDTYPE in
+
+new)
+	if [ -r $OUTDIR/$BUILDNAME/checkpoint ]; then
+		echo "A checkpoint file already exists at $OUTDIR/$BUILDNAME/checkpoint"
+		echo "If you meant to continue an interrupted buildworld, run"
+		echo "the buildworld script with \"continue buildname\" as the parameters."
+		exit 1
+	fi
+
+
+	# Clean-up
+	echo "Cleaning up"
+	#find $FINKDIR/src/fink.build -type d -mindepth 1 -maxdepth 1 -exec rm -rf \{\} \;
+	#find $FINKDIR -name \*.deb -exec rm \{\} \;
+	$FINKDIR/bin/fink scanpackages
+
+	echo "Begin buildfink run"
+	#--no-copy-info \
+	$BFDIR/buildfink  \
+		--build-as-nobody=try \
+		--max-build-time 12h \
+	${DISABLED_PACKAGES} \
+	$FINKDIR $OUTDIR/$BUILDNAME
+	analyze
+	;;
+		#--fdb-store=DBI \
+		#--fdb-db=buildworld_${BUILDNAME}_database \
+		#--fdb-dbtype=DBD \
+continue)
+	if [[ ! -d $OUTDIR/$BUILDNAME ]]; then
+		echo "An existing buildworld directory was not specified."
+		echo "Either specify an absolute path to an existing buildworld,"
+		echo "or run 'buildfink' with the \"new\" parameter."
+		exit 1
+	fi
+	if [ -r $OUTDIR/$BUILDNAME/checkpoint ]; then
+		$BFDIR/buildfink -r $OUTDIR/$BUILDNAME/checkpoint
+	else
+		echo "Checkpoint file not found: $OUTDIR/$BUILDNAME/checkpoint"
+		exit 1
+	fi
+	analyze
+	;;
+analysis)
+	analyze
+	;;
+*)
+	echo "Usage: $0 [ new | continue | analysis ] buildname"
+	exit 1
+	;;
+esac
+
+exit 0
+
