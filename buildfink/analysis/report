@@ -240,6 +240,7 @@ print HTML <<HTMHEAD;
 <p>You can view the <a href="filters.xml">failure category definitions</a>, the
 <a href="../log.txt">build log</a>, or the list of results sorted by
 <a href="pkgindex.html">package</a> or <a href="maintindex.html">maintainer</a>.</p>
+<p><a href="../search.html">File listings (dpkg-deb -c output) for successful packages can also be searched</a>.</p>
 <p>$comment</p>
 HTMHEAD
 
@@ -263,6 +264,11 @@ print PKGIDX <<HTMHEAD;
 <head><title>Fink Build Report: Results By Package</title></head>
 <body>
 <h1>Fink Build Report: Results By Package</h1>
+<p>You can view the <a href="filters.xml">failure category definitions</a>, the
+<a href="../log.txt">build log</a>, or the list of results sorted by
+<a href="maintindex.html">maintainer</a>.</p>
+<p><a href="../search.html">File listings (dpkg-deb -c output) for successful packages can also be searched</a>.</p>
+<p>$comment</p>
 HTMHEAD
 
 foreach my $pkg (sort keys %catmap) {
@@ -285,6 +291,11 @@ print MAINTIDX <<HTMHEAD;
 <head><title>Fink Build Report: Results By Maintainer</title></head>
 <body>
 <h1>Fink Build Report: Results By Maintainer</h1>
+<p>You can view the <a href="filters.xml">failure category definitions</a>, the
+<a href="../log.txt">build log</a>, or the list of results sorted by
+<a href="pkgindex.html">package</a>.</p>
+<p><a href="../search.html">File listings (dpkg-deb -c output) for successful packages can also be searched</a>.</p>
+<p>$comment</p>
 HTMHEAD
 
 foreach my $maint (sort keys %maints) {
