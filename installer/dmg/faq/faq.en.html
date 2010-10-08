@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.107 2010/07/20 22:30:59 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.108 2010/10/08 00:42:00 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -816,8 +816,11 @@ rerun ranlib(1) (can't load from it)</pre><p>What you need to do is run ranlib (
     <a name="comp-general.dpkg-parse-error">
       <div class="question"><p><b>Q6.13: I can't install anything because I get "dpkg: parse error, in file
         `/sw/var/lib/dpkg/status'"!</b></p></div>
-      <div class="answer"><p><b>A:</b> This means that somehow your dpkg database got corrupted, usually
-        from a crash or some other unrecoverable error. You can fix it by
+      <div class="answer"><p><b>A:</b> This means that somehow your dpkg database got damaged, usually
+        from a crash or some other unrecoverable error.  This most often occurs with a buildlock, e.g:</p><pre>package `fink-buildlock-foo-1.2.3-4':  missing version</pre><p>(of course, replace <tt style="white-space: nowrap;">foo-1.2.3-4</tt> with the package name you are seeing).</p><p>When this happens, you should edit <tt style="white-space: nowrap;">/sw/var/lib/dpkg/status</tt> as a superuser.
+	Then go near the line number which shows up in the error message.
+	You should see a <tt style="white-space: nowrap;">fink-buildlock-foo-1.2.3-4</tt>
+        package whose <tt style="white-space: nowrap;">Status</tt> field is marked</p><pre>install ok installed</pre><p>Change that to</p><pre>purge ok not-installed</pre><p>Under other circumstances, there may be garbage in the file.  You can fix this situation by
         copying the previous version of the database, like so:</p><pre>sudo cp /sw/var/lib/dpkg/status-old /sw/var/lib/dpkg/status</pre><p>You may need to re-install the last couple of packages you
         installed before the problem started occurring.</p></div>
     </a>
@@ -1441,4 +1444,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.107 2010/07/20 22:30:59 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.108 2010/10/08 00:42:00 alexkhansen Exp $</i></p></body></html>
