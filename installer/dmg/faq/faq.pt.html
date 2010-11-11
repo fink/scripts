@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.pt.xml,v 1.8 2009/10/17 23:42:51 monipol Exp $
+Generated from $Fink: faq.pt.xml,v 1.9 2010/11/10 02:23:58 babayoshihiko Exp $
 -->
 <title>Fink Documentation - Perguntas frequentes sobre o Fink</title></head><body>
 <table width="100%" cellspacing="0">
@@ -35,7 +35,7 @@ Portugu&ecirc;s |
     versão)</b></a><ul><li><a href="#upgrade-fink.leopard-bindist1">4.1 O Fink não enxerga pacotes novos mesmo depois de eu rodar uma
         autoatualização via rsync ou CVS.</a></li><li><a href="#upgrade-fink.leopard-bindist2">4.2 Quando eu tento instalar um pacote eu recebo a mensagem de erro
         'Can't resolve dependency "fink (&gt;= 0.28.0)"' (Não é possível resolver
-        a dependência "fink (&gt;= 0.28.0)"</a></li></ul></li><li><a href="#usage-fink"><b>5 Instalação, uso e manutenção do Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Como posso saber quais os pacotes que o Fink suporta?</a></li><li><a href="#usage-fink.proxy">5.2 Estou atrás de um firewall. Como configuro o Fink para usar um proxy
+        a dependência "fink (&gt;= 0.28.0)"</a></li><li><a href="#upgrade-fink.stuck-gettext">4.3 Fink tells me to run 'sudo apt-get install libgettext3-dev=0.14.5-2' to clear up inconsistent dependencies but I'm still stuck.</a></li><li><a href="#upgrade-fink.stuck-dpkg">4.4 Fink tells me 'Can't resolve dependency "dpkg (&gt;= 1.10.21-1229)" for package "dpkg-base-files-0.3-1"'.  How do I solve this?</a></li></ul></li><li><a href="#usage-fink"><b>5 Instalação, uso e manutenção do Fink</b></a><ul><li><a href="#usage-fink.what-packages">5.1 Como posso saber quais os pacotes que o Fink suporta?</a></li><li><a href="#usage-fink.proxy">5.2 Estou atrás de um firewall. Como configuro o Fink para usar um proxy
         HTTP?</a></li><li><a href="#usage-fink.firewalled-cvs">5.3 Como faço para atualizar os pacotes disponíveis via CVS se eu
         estiver atrás de um firewall?</a></li><li><a href="#usage-fink.moving">5.4 Posso mover o Fink para outro diretório após a instalação?</a></li><li><a href="#usage-fink.moving-symlink">5.5 Se eu mover o Fink após instalá-lo e criar um link simbólico do
         diretório antigo, isso vai funcionar?</a></li><li><a href="#usage-fink.removing">5.6 Como faço para desinstalar o Fink completamente?</a></li><li><a href="#usage-fink.bindist">5.7 O banco de dados de pacote no site lista o pacote xxx mas nem o
@@ -355,6 +355,18 @@ fink selfupdate</pre>
         'Can't resolve dependency "fink (&gt;= 0.28.0)"' (Não é possível resolver
         a dependência "fink (&gt;= 0.28.0)"</b></p></div>
       <div class="answer"><p><b>A:</b> Aplique a correção sugerida na <a href="#upgrade-fink.leopard-bindist1">pergunta anterior</a>.</p></div>
+    </a>
+    <a name="upgrade-fink.stuck-gettext">
+      <div class="question"><p><b>Q4.3: Fink tells me to run 'sudo apt-get install libgettext3-dev=0.14.5-2' to clear up inconsistent dependencies but I'm still stuck.</b></p></div>
+      <div class="answer"><p><b>A:</b> There is a timestamp issue with the <b>libgettext3</b> package description:  0.14.5-2 is an outdated version.  Run</p><pre>fink index -f
+fink update libgettext3-dev	
+	</pre><p>to update the package description cache and then the package.</p></div>
+    </a>
+    <a name="upgrade-fink.stuck-dpkg">
+      <div class="question"><p><b>Q4.4: Fink tells me 'Can't resolve dependency "dpkg (&gt;= 1.10.21-1229)" for package "dpkg-base-files-0.3-1"'.  How do I solve this?</b></p></div>
+      <div class="answer"><p><b>A:</b> There is a timestamp issue with the updated <b>dpkg</b> package description.  Run</p><pre>fink index -f
+fink selfupdate
+	</pre><p>to update the package description cache and then to install <tt style="white-space: nowrap;">dpkg</tt> and <tt style="white-space: nowrap;">dpkg-base-files</tt>.</p></div>
     </a>
   <h2><a name="usage-fink">5 Instalação, uso e manutenção do Fink</a></h2>
     
@@ -1043,11 +1055,13 @@ rerun ranlib(1) (can't load from it)</pre><p>O que você precisa fazer é execut
     <a name="comp-general.dpkg-parse-error">
       <div class="question"><p><b>Q6.13: Não consigo instalar nada porque recebo a mensagem "dpkg: parse
         error, in file `/sw/var/lib/dpkg/status'"!</b></p></div>
-      <div class="answer"><p><b>A:</b> Isto significa que de alguma forma o seu banco de dados dpkg foi
-        corrompido, geralmente por um travamento ou algum erro irrecuperável.
-        Você pode corrigir esta situação copiando uma versão anterior do banco
-        de dados, como:</p><pre>sudo cp /sw/var/lib/dpkg/status-old /sw/var/lib/dpkg/status</pre><p>É possível que você precise reinstalar alguns dos últimos pacotes
-        que você instalou antes de o problema começar a ocorrer.</p></div>
+      <div class="answer"><p><b>A:</b> This means that somehow your dpkg database got damaged, usually
+        from a crash or some other unrecoverable error.  This most often occurs with a buildlock, e.g:</p><pre>package `fink-buildlock-foo-1.2.3-4':  missing version</pre><p>(of course, replace <tt style="white-space: nowrap;">foo-1.2.3-4</tt> with the package name you are seeing).</p><p>When this happens, you should edit <tt style="white-space: nowrap;">/sw/var/lib/dpkg/status</tt> as a superuser.
+	Then go near the line number which shows up in the error message.
+	You should see a <tt style="white-space: nowrap;">fink-buildlock-foo-1.2.3-4</tt>
+        package whose <tt style="white-space: nowrap;">Status</tt> field is marked</p><pre>install ok installed</pre><p>Change that to</p><pre>purge ok not-installed</pre><p>Under other circumstances, there may be garbage in the file.  You can fix this situation by
+        copying the previous version of the database, like so:</p><pre>sudo cp /sw/var/lib/dpkg/status-old /sw/var/lib/dpkg/status</pre><p>You may need to re-install the last couple of packages you
+        installed before the problem started occurring.</p></div>
     </a>
     <a name="comp-general.freetype-problems">
       <div class="question"><p><b>Q6.14: Estou recebendo erros envolvendo o freetype.</b></p></div>
@@ -1347,7 +1361,7 @@ fink install libiconv</pre></div>
 	  como <tt style="white-space: nowrap;">/usr/X11/lib/libXrandr.2.0.0.dylib</tt> ou
 	  <tt style="white-space: nowrap;">/usr/X11/lib/libXdamage.1.1.0.dylib</tt> (ou outras
 	  versões de bibliotecas em <tt style="white-space: nowrap;">/usr/X11/lib/</tt>).</p><p>Até onde podemos perceber, a melhor forma de corrigir esse problema é
-	  instalar o Xcode 3.1.3.</p></div>
+	  instalar o Xcode 3.1.3 ou mais recentes.</p></div>
   </a>
     <a name="comp-packages.all-others">
       <div class="question"><p><b>Q7.8: Estou tendo problemas com um pacote que não está listado aqui.</b></p></div>
@@ -1410,12 +1424,11 @@ fink install libiconv</pre></div>
     <a name="usage-general.compile-myself">
       <div class="question"><p><b>Q8.3: Como faço para compilar algo usando softwares instalados pelo
         Fink?</b></p></div>
-      <div class="answer"><p><b>A:</b> Quando você for compilar algo fora do Fink, o compilador e o
-        linkeditor precisam saber onde estão as bibliotecas e arquivos de
-		cabeçalho instalados pelo Fink. Também é necessário informar ao
-		compilador qual a arquitetura alvo. Para um pacote que use o processo
-		configure/make padrão, você precisa definir algumas variáveis de
-        ambiente:</p><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
+      <div class="answer"><p><b>A:</b> When compiling something yourself outside of Fink, the compiler and
+        linker need to be told where to find the Fink-installed libraries and
+		headers.  It is also necessary to tell the compiler to use the
+		appropriate target architecture.  For a package that uses standard
+		configure/make process, you need to set some environment variables:</p><p>-bash-</p><pre>export CFLAGS=-I/sw/include 
 export LDFLAGS=-L/sw/lib 
 export CXXFLAGS=$CFLAGS 
 export CPPFLAGS=$CXXFLAGS 
@@ -1429,18 +1442,16 @@ setenv CPPFLAGS $CXXFLAGS
 setenv ACLOCAL_FLAGS "-I /sw/share/aclocal"
 setenv PKG_CONFIG_PATH "/sw/lib/pkgconfig"
 setenv PATH /sw/var/lib/fink/path-prefix-10.6:$PATH
-setenv MACOSX_DEPLOYMENT_TARGET 10.5</pre><p>Normalmente é mais fácil adicionar essas definições ao seu arquivo
-        de inicialização do shell (<tt style="white-space: nowrap;">.profile</tt> |
-        <tt style="white-space: nowrap;">.cshrc</tt>) para que as variáveis sejam definidas
-        automaticamente. Se um pacote não usa essas variáveis, você precisará
-        adicionar "-I/sw/include" (para arquivos de cabeçalho) e "-L/sw/lib"
-        (para bibliotecas) aos comandos de compilação. Alguns pacotes podem
-        usar algumas variáveis similares mas que não são padrão como
-        EXTRA_FLAGS ou opções extras para o configure como --with-qt-dir=.
-        "./configure --help" normalmente exibe uma lista das opções extras.</p><p>Além disso, você pode precisar instalar os arquivos de cabeçalho
-        para desenvolvimento (por exemplo, <b>foo-1.0-1-dev</b>) para os
-        pacotes de bibliotecas que você esteja usando caso ainda não tenham
-        sido instalados.</p></div>
+setenv MACOSX_DEPLOYMENT_TARGET 10.5</pre><p>(assuming that the build system is running OS 10.5 or later)</p><p>It is often easiest just to add these to your startup files (e.g.
+        <tt style="white-space: nowrap;">.cshrc</tt> | <tt style="white-space: nowrap;">.profile</tt>) so they
+        are set automatically. If a package does not use these variables, you
+        may need to add the "-I/sw/include" (for headers) and "-L/sw/lib" (for
+        libraries) to the compile lines yourself. Some packages may use
+        similar non-standard variables such as EXTRA_CFLAGS or --with-qt-dir=
+        configure options. "./configure --help" will usually give you a list
+        of the extra configure options.</p><p>In addition, you may need to install the development headers (e.g.
+        <b>foo-1.0-1-dev</b>) for the library packages that you are using,
+        if they aren't already installed.</p></div>
     </a>
     <a name="usage-general.apple-x11-applications-menu">
       <div class="question"><p><b>Q8.4: Não consigo rodar nenhuma dos meus aplicativos instalados via Fink
@@ -1759,4 +1770,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.pt.xml,v 1.8 2009/10/17 23:42:51 monipol Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.pt.xml,v 1.9 2010/11/10 02:23:58 babayoshihiko Exp $</i></p></body></html>
