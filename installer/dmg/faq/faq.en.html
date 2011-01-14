@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.112 2011/01/14 01:28:07 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.113 2011/01/14 01:35:40 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -905,7 +905,8 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     <a name="comp-general.system-java">
       <div class="question"><p><b>Q6.17: Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java-dev"</tt>, but there's no such package.</b></p></div>
       <div class="answer"><p><b>A:</b> That's because it's a virtual package.  At the time of this writing (Jan. 2011), this issue 
-        commonly shows up on Leopard and Snow Leopard due to changes in Apple's Java packaging.</p><p>Make sure that your package manager version is <b>0.29.15</b> or later, e.g. via</p><pre>fink -V</pre><p>If your <tt style="white-space: nowrap;">fink</tt> version is older, use</p><pre>fink selfupdate</pre><p>If your Distribution version shows <b>point</b>, switch to rsync or cvs updating via</p><pre>fink selfupdate-rsync</pre><p>or</p><pre>fink selfupdate-cvs</pre><p>You will also need to download the <tt style="white-space: nowrap;">Java Developer Package</tt> from <a href="http://connect.apple.com">Apple</a>.</p></div>
+        commonly shows up on Leopard and Snow Leopard due to changes in Apple's Java packaging.</p><p>Make sure that your package manager version is <b>0.29.15</b> or later, e.g. via</p><pre>fink -V</pre><p>If your <tt style="white-space: nowrap;">fink</tt> version is older, use</p><pre>fink selfupdate</pre><p>If your <tt style="white-space: nowrap;">Distribution version</tt> shows <b>point</b>, switch to <b>rsync</b> 
+        or <b>cvs</b> updating via</p><pre>fink selfupdate-rsync</pre><p>or</p><pre>fink selfupdate-cvs</pre><p>You will also need to download the <tt style="white-space: nowrap;">Java Developer Package</tt> from <a href="http://connect.apple.com">Apple</a>.</p></div>
     </a>
     <a name="comp-general.dpkg-split">
       <div class="question"><p><b>Q6.18: When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</b></p></div>
@@ -1443,4 +1444,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.112 2011/01/14 01:28:07 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.113 2011/01/14 01:35:40 alexkhansen Exp $</i></p></body></html>
