@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.117 2011/04/08 20:37:49 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.118 2011/04/08 20:42:10 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -915,6 +915,7 @@ allversions:
    	0.29.21-51
  bi	0.29.99.cvs-20110408.1821</pre><p>Then choose the latest release version-revision (one without a <b>.cvs</b>, e.g. <b>0.29.21-51</b> above), and use</p><pre>fink install fink-version-revision</pre><p>e.g. use</p><pre>fink install fink-0.29.21-51</pre><p>for the example above, to install <tt style="white-space: nowrap;">fink-0.29.51</tt>.</p><p>To get rid of any memory of CVS checkouts of <tt style="white-space: nowrap;">fink</tt> use:</p><pre>sudo rm /sw/fink/10.4/local/injected/binary-darwin-&lt;architecture&gt;/*;
 sudo rm /sw/fink/10.4/local/injected/finkinfo/*;
+fink index -f
 fink scanpackages
 sudo apt-get update
 fink cleanup</pre><p>replacing &lt;architecture&gt; with your architecture, i.e. <b>powerpc</b>,
@@ -1456,4 +1457,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.117 2011/04/08 20:37:49 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.118 2011/04/08 20:42:10 alexkhansen Exp $</i></p></body></html>
