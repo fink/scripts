@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: faq.en.xml,v 1.113 2011/01/14 01:35:40 alexkhansen Exp $
+Generated from $Fink: faq.en.xml,v 1.114 2011/04/08 19:02:52 alexkhansen Exp $
 -->
 <title>Fink Documentation - The Fink F.A.Q.</title></head><body>
 <table width="100%" cellspacing="0">
@@ -905,8 +905,21 @@ sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.dylib</pre></div>
     <a name="comp-general.system-java">
       <div class="question"><p><b>Q6.17: Fink says <tt style="white-space: nowrap;">Failed: Can't resolve dependency "system-java-dev"</tt>, but there's no such package.</b></p></div>
       <div class="answer"><p><b>A:</b> That's because it's a virtual package.  At the time of this writing (Jan. 2011), this issue 
-        commonly shows up on Leopard and Snow Leopard due to changes in Apple's Java packaging.</p><p>Make sure that your package manager version is <b>0.29.15</b> or later, e.g. via</p><pre>fink -V</pre><p>If your <tt style="white-space: nowrap;">fink</tt> version is older, use</p><pre>fink selfupdate</pre><p>If your <tt style="white-space: nowrap;">Distribution version</tt> shows <b>point</b>, switch to <b>rsync</b> 
-        or <b>cvs</b> updating via</p><pre>fink selfupdate-rsync</pre><p>or</p><pre>fink selfupdate-cvs</pre><p>You will also need to download the <tt style="white-space: nowrap;">Java Developer Package</tt> from <a href="http://connect.apple.com">Apple</a>.</p></div>
+        commonly shows up on Leopard and Snow Leopard due to changes in Apple's Java packaging.</p><p>You need to download the <tt style="white-space: nowrap;">Java Developer Package</tt> from <a href="http://connect.apple.com">Apple</a>.</p><p>Then make sure that your package manager version is <b>0.29.15</b> or later, e.g. via</p><pre>fink -V</pre><p>If your <tt style="white-space: nowrap;">fink</tt> version is older, use</p><pre>fink selfupdate</pre><p>If your <tt style="white-space: nowrap;">Distribution version</tt> shows <b>point</b>, switch to <b>rsync</b> 
+        or <b>cvs</b> updating via</p><pre>fink selfupdate-rsync</pre><p>or</p><pre>fink selfupdate-cvs</pre><p>If your <tt style="white-space: nowrap;">fink</tt> version is <b>0.29.99.cvs</b>, then you're using a CVS
+	checkout of <tt style="white-space: nowrap;">fink</tt>, which doesn't update itself like release versions do,
+	and which therefore may be well behind the current releases.  We recommend that you use</p><pre>fink selfupdate ; fink dumpinfo -fallversions fink</pre><p>which will return something like:</p><pre>$ fink dumpinfo -fallversions fink
+Scanning package description files..........
+Information about 10146 packages read in 2 seconds.
+allversions:
+   	0.29.21-51
+ bi	0.29.99.cvs-20110408.1821</pre><p>Then choose the latest release version-revision (one without a <b>.cvs</b>, e.g. <b>0.29.21-51</b> above), and use</p><pre>fink install fink-version-revision</pre><p>e.g. use</p><pre>fink install fink-0.29.21-51</pre><p>for the example above, to install <tt style="white-space: nowrap;">fink-0.29.51</tt>.</p><p>To get rid of any memory of the CVS checkout use:</p><pre>sudo rm /sw/fink/10.4/local/injected/&lt;architecture&gt;/fink-0.29.99.cvs-&lt;revision&gt;_darwin-&lt;architecture&gt;.deb;
+fink scanpackages
+sudo apt-get update
+fink cleanup
+	</pre><p>replacing &lt;architecture&gt; with your architecture, and replacing &lt;revision&gt;
+	with the revision number for your CVS <b>fink</b> (e.g. 20110408.1821
+	for the example above).</p></div>
     </a>
     <a name="comp-general.dpkg-split">
       <div class="question"><p><b>Q6.18: When I try to install anything, I get <q>dpkg (subprocess): failed to exec dpkg-split to see if it's part of a multiparter: No such file or directory</q>.  How do I fix this?</b></p></div>
@@ -1439,9 +1452,9 @@ fink selfupdate; fink index</pre><p>(the first line may give you warnings about 
       <div class="answer"><p><b>A:</b> You need to install the <tt style="white-space: nowrap;">yelp</tt> package.  This package was not placed within the GNOME bundle because it uses cryptography, and it was decided not to place all of GNOME in the crypto tree just to use the help system.</p></div>
     </a>
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2010 The Fink Project.
+Copyright (c) 2001-2011 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: faq.en.xml,v 1.113 2011/01/14 01:35:40 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: faq.en.xml,v 1.114 2011/04/08 19:02:52 alexkhansen Exp $</i></p></body></html>
