@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.116 2010/07/16 18:41:16 alexkhansen Exp $
+Generated from $Fink: packaging.en.xml,v 1.117 2011/04/21 16:28:49 alexkhansen Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -1140,8 +1140,8 @@ regarding emacs, with a few small differences.
 <a href="http://www.debian.org/doc/packaging-manuals/debian-emacs-policy">
 http://www.debian.org/doc/packaging-manuals/debian-emacs-policy</a>.)
 There are two differences in the Fink policy.  First, 
-this policy only applies to the emacs20 and
-emacs21 packages in fink at the moment, not to the xemacs package.  (This
+this policy only applies to the <tt style="white-space: nowrap;">emacs21</tt>, <tt style="white-space: nowrap;">emacs22</tt>, and
+<tt style="white-space: nowrap;">emacs23</tt> packages in fink at the moment, not to the xemacs package.  (This
 may change some day in the future.)    And second, unlike the Debian policy,
  Fink packages are allowed to install things directly into 
 /sw/share/emacs/site-lisp.
@@ -1584,21 +1584,21 @@ this field is necessary for any multiple-type perl package under the
 <p>
 A comma-separated list of distribution(s) for which the package
 (and any splitoff packages) are intended.
-At present, the only valid values for distribution are <tt style="white-space: nowrap;">10.3</tt>,
+At present, the only valid values for distribution are
 <tt style="white-space: nowrap;">10.4</tt>,
-and <tt style="white-space: nowrap;">10.5</tt>. If this field is present and not blank after
+<tt style="white-space: nowrap;">10.5</tt>,
+and <tt style="white-space: nowrap;">10.6</tt>
+. If this field is present and not blank after
 conditional handling, fink will ignore the package description(s) if
 the local machine distribution is not listed. If the field is omitted
 or the value is blank, all distributions are assumed.
 (Introduced in fink 0.26.0.)
 </p>
 <p>
-Since Fink's <tt style="white-space: nowrap;">10.4</tt> and <tt style="white-space: nowrap;">10.5</tt> distributions share
+Since Fink's <tt style="white-space: nowrap;">10.4</tt>, <tt style="white-space: nowrap;">10.5</tt>, and 10.6 distributions share
 a common set of finkinfo files, the most common use of this field will be for 
 packages which are suitable for one of those distributions but not the
-other.  Since package maintainers may wish to use identical files for
-the 10.3 and 10.4/10.5 trees, the value <tt style="white-space: nowrap;">10.3</tt> is often
-included in the distribution field.
+other.
 </p>
 <p>
 This field supports the standard conditional syntax for any value in
@@ -3051,9 +3051,9 @@ If you just need to set some environment variables (for example, QTDIR to '/sw')
 
 
 <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2010 The Fink Project.
+Copyright (c) 2001-2011 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.116 2010/07/16 18:41:16 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.117 2011/04/21 16:28:49 alexkhansen Exp $</i></p></body></html>
