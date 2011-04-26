@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.118 2011/04/21 19:31:58 alexkhansen Exp $
+Generated from $Fink: packaging.en.xml,v 1.119 2011/04/26 19:00:13 alexkhansen Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -2865,8 +2865,19 @@ Only a "purge" also removes the configuration files.
 Lists the names of Info documents that the package installs in
 %p/share/info.
 This will add appropriate code to the postinst and prerm scripts to
-maintain the Info directory file, <tt style="white-space: nowrap;">dir</tt>.
-This feature is still in flux, more fields for finer control may be
+maintain the Info directory file, <tt style="white-space: nowrap;">dir</tt>.</p>
+<p><b>Note:</b>  Only use the un-numbered file in the case of split Info
+documents. E.g. if a package has:</p>
+<pre>
+foo.info
+foo.info-1
+foo.info-2
+</pre>
+<p>you should only use:</p>
+<pre>
+InfoDocs:  foo.info
+</pre>
+<p>This feature is still in flux, more fields for finer control may be
 added in the future.
 </p>
 </td></tr><tr valign="top"><td>DaemonicFile</td><td>
@@ -3102,4 +3113,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.118 2011/04/21 19:31:58 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.119 2011/04/26 19:00:13 alexkhansen Exp $</i></p></body></html>
