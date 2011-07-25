@@ -26,7 +26,7 @@ It gives an introduction and a history of development, then goes on to
 describe the current situation and the many options you have to use
 X11 with or without Fink.
 </p>
-  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 What is X11?</a></li><li><a href="#intro.def-macosx">1.2 What is Mac OS X?</a></li><li><a href="#intro.def-darwin">1.3 What is Darwin?</a></li><li><a href="#intro.def-xfree86">1.4 What is XFree86?</a></li><li><a href="#intro.def-xtools">1.5 What is Xtools?</a></li><li><a href="#intro.client-server">1.6 Client and Server</a></li><li><a href="#intro.rootless">1.7 What does rootless mean?</a></li><li><a href="#intro.wm">1.8 What is a window manager?</a></li><li><a href="#intro.desktop">1.9 What are Quartz/Aqua, Gnome, and KDE?</a></li></ul></li><li><a href="#history"><b>2 History</b></a><ul><li><a href="#history.early">2.1 The early days</a></li><li><a href="#history.xonx-forms">2.2 XonX forms</a></li><li><a href="#history.root-or-not">2.3 To root or not to root</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Getting and Installing X11</b></a><ul><li><a href="#inst-xfree86.fink">3.1 Installing X11 via Fink</a></li><li><a href="#inst-xfree86.apple-binary">3.2 Apple's Binaries</a></li><li><a href="#inst-xfree86.official-binary">3.3 The Official Binaries</a></li><li><a href="#inst-xfree86.official-source">3.4 The Official Source</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 The Latest Development Source</a></li><li><a href="#inst-xfree86.switching-x11">3.6 Replacing X11</a></li><li><a href="#inst-xfree86.fink-summary">3.7 Fink package summary</a></li></ul></li><li><a href="#run-xfree86"><b>4 Starting X11</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.starting-xorg">4.3 Starting X.org</a></li><li><a href="#run-xfree86.starting-apples-x11">4.4 Starting Apple's X11</a></li><li><a href="#run-xfree86.applex11tools">4.5 The applex11tools package</a></li><li><a href="#run-xfree86.xinitrc">4.6 The .xinitrc File</a></li><li><a href="#run-xfree86.oroborosx">4.7 OroborOSX</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installing Xtools</a></li><li><a href="#xtools.run">5.2 Running Xtools</a></li><li><a href="#xtools.opengl">5.3 OpenGL Notes</a></li></ul></li><li><a href="#other"><b>6 Other X11 Possibilities</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Troubleshooting XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 When I launch XDarwin, it quits
+  <h2>Contents</h2><ul><li><a href="#intro"><b>1 Introduction</b></a><ul><li><a href="#intro.def-x11">1.1 What is X11?</a></li><li><a href="#intro.def-macosx">1.2 What is Mac OS X?</a></li><li><a href="#intro.def-darwin">1.3 What is Darwin?</a></li><li><a href="#intro.def-xfree86">1.4 What is XFree86?</a></li><li><a href="#intro.def-xorg">1.5 What is X.org?</a></li><li><a href="#intro.def-xquartx">1.6 What is XQuartz?</a></li><li><a href="#intro.client-server">1.7 Client and Server</a></li><li><a href="#intro.rootless">1.8 What does rootless mean?</a></li><li><a href="#intro.wm">1.9 What is a window manager?</a></li><li><a href="#intro.desktop">1.10 What are Quartz/Aqua, Gnome, and KDE?</a></li></ul></li><li><a href="#history"><b>2 History</b></a><ul><li><a href="#history.early">2.1 The early days</a></li><li><a href="#history.xonx-forms">2.2 XonX forms</a></li><li><a href="#history.root-or-not">2.3 To root or not to root</a></li><li><a href="#history.apple-x11-distros">2.4 Apple's X11 distributions</a></li></ul></li><li><a href="#inst-xfree86"><b>3 Getting and Installing X11</b></a><ul><li><a href="#inst-xfree86.apple-binary">3.1 Apple's Distribution</a></li><li><a href="#inst-xfree86.fink">3.2 Using X11 via Fink</a></li><li><a href="#inst-xfree86.official-binary">3.3 The Official Binaries</a></li><li><a href="#inst-xfree86.official-source">3.4 The Official Source</a></li><li><a href="#inst-xfree86.latest-cvs">3.5 The Latest Development Source</a></li><li><a href="#inst-xfree86.switching-x11">3.6 Replacing X11</a></li><li><a href="#inst-xfree86.fink-summary">3.7 Fink package summary</a></li></ul></li><li><a href="#run-xfree86"><b>4 Starting X11</b></a><ul><li><a href="#run-xfree86.darwin">4.1 Darwin</a></li><li><a href="#run-xfree86.macosx-41">4.2 Mac OS X + XFree86 4.x.y</a></li><li><a href="#run-xfree86.starting-xorg">4.3 Starting X.org</a></li><li><a href="#run-xfree86.starting-apples-x11">4.4 Starting Apple's X11</a></li><li><a href="#run-xfree86.applex11tools">4.5 The applex11tools package</a></li><li><a href="#run-xfree86.xinitrc">4.6 The .xinitrc File</a></li><li><a href="#run-xfree86.oroborosx">4.7 OroborOSX</a></li></ul></li><li><a href="#xtools"><b>5 Xtools</b></a><ul><li><a href="#xtools.install">5.1 Installing Xtools</a></li><li><a href="#xtools.run">5.2 Running Xtools</a></li><li><a href="#xtools.opengl">5.3 OpenGL Notes</a></li></ul></li><li><a href="#other"><b>6 Other X11 Possibilities</b></a><ul><li><a href="#other.vnc">6.1 VNC</a></li><li><a href="#other.wiredx">6.2 WiredX</a></li><li><a href="#other.exodus">6.3 eXodus</a></li></ul></li><li><a href="#trouble"><b>7 Troubleshooting XFree86</b></a><ul><li><a href="#trouble.immedate-quit">7.1 When I launch XDarwin, it quits
 or crashes almost immediately</a></li><li><a href="#trouble.black">7.2 Black icons in the GNOME panel or in the
 menu of a GNOME application</a></li><li><a href="#trouble.keyboard">7.3 The keyboard doesn't work in XFree86</a></li><li><a href="#trouble.delete-key">7.4 The Backspace key doesn't work</a></li><li><a href="#trouble.locale">7.5 "Warning: locale not supported by C library"</a></li></ul></li><li><a href="#tips"><b>8 Usage Tips</b></a><ul><li><a href="#tips.terminal-app">8.1 Launching X11 apps from Terminal.app</a></li><li><a href="#tips.open">8.2 Launching Aqua apps from an xterm</a></li><li><a href="#tips.copy-n-paste">8.3 Copy and Paste</a></li></ul></li></ul><h2><a name="intro">1 Introduction</a></h2>
     
@@ -78,18 +78,32 @@ implementation of X11.
 It was initially developed to run on Intel x86 PCs, hence the name.
 Nowadays, it runs on many architectures and operating systems,
 including OS/2, Darwin, Mac OS X and Windows.
-</p>
-    
-    <h3><a name="intro.def-xtools">1.5 What is Xtools?</a></h3>
-      
-      <p>
-Xtools is a product of <a href="http://www.tenon.com/">Tenon
-Intersystems</a>.
-It is a version of X11 for Mac OS X, based on XFree86.  
-</p>
-<p>Note:  Development apparently stopped sometime before OS 10.3 was released.</p>
-    
-    <h3><a name="intro.client-server">1.6 Client and Server</a></h3>
+      </p>
+       <p>
+Apple's X11 distributions on 10.2, 10.3 and 10.4 are derived from XFree86.
+      </p>
+
+<h3><a name="intro.def-xorg">1.5 What is X.org?</a></h3>
+  
+  <p>
+<a href="http://www.x.org/wiki/">X.org</a> is an open source implementation
+of X11, and a successor to XFree86.  It has supplanted XFree86 in most places.
+  </p>
+  <p>
+Apple's X11 distributions on 10.5 and 10.6 are derived from X.org, as is <a href="http://xquartz.macosforge.org/trac/wiki">
+XQuartz</a>.
+  </p>
+
+<h3><a name="intro.def-xquartx">1.6 What is XQuartz?</a></h3>
+  
+  <p>
+<a href="http://xquartz.macosforge.org/trac/wiki">
+XQuartz</a> is an X11 distribution for 10.5 and 10.6 which contains newer features
+than does the stock X11.  On 10.5, XQuartz replaces the system's X11 distribution,
+whereas on 10.6 Xquartz and the system's X11 distribution coexist.
+  </p>
+
+     <h3><a name="intro.client-server">1.7 Client and Server</a></h3>
       
       <p>
 X11 has a client-server architecture.
@@ -109,7 +123,7 @@ So when talking about the "server", that means the X11 display server
 program, not the machine hidden in your wardrobe.
 </p>
     
-    <h3><a name="intro.rootless">1.7 What does rootless mean?</a></h3>
+    <h3><a name="intro.rootless">1.8 What does rootless mean?</a></h3>
       
       <p>
 A little background:
@@ -144,7 +158,7 @@ Because there is no (visible) root window, this mode is called
 "rootless".  It is the most comfortable way to use X11 on Mac OS X.
 </p>
     
-    <h3><a name="intro.wm">1.8 What is a window manager?</a></h3>
+    <h3><a name="intro.wm">1.9 What is a window manager?</a></h3>
       
       <p>
 In most graphical environments the look of window frames (title bar,
@@ -172,7 +186,7 @@ current list.
 </a>
       </p>
     
-    <h3><a name="intro.desktop">1.9 What are Quartz/Aqua, Gnome, and KDE?</a></h3>
+    <h3><a name="intro.desktop">1.10 What are Quartz/Aqua, Gnome, and KDE?</a></h3>
       
       <p>
 They are desktop environments, and there are many others.  Their purpose 
@@ -288,57 +302,43 @@ so that by the time XFree86 4.2.0 shipped in January 2002, the Darwin/Mac OS X
 version had been completely integrated into the main XFree86 distribution.
 </p>
     
+    <h3><a name="history.apple-x11-distros">2.4 Apple's X11 distributions</a></h3>
+         
+      <p>
+On January 7, 2003, Apple released a beta version of its own custom X11
+implementation for OS 10.2.
+It was based on XFree86-4.2 and included Quartz rendering and accelerated
+OpenGL.
+A new version was released on February 10, 2003 with additional features
+and bugfixes.
+A third release (i.e. Beta 3) was made on March 17, 2003 with
+further additional features and bugfixes.
+      </p>
+      <p>
+On October 24, 2003, Apple released Panther (10.3), which included the first
+release version of their X11 distribution, based on XFree86-4.3.
+      </p>
+      <p>
+On April 29, 2005, Apple released Tiger (10.4), which included a release version
+of Apple's X11 distribution based on XFree86-4.4.
+      </p>
+      <p>
+On October 26, 2007, Apple released Leopard (10.5), which included a release version
+of Apple's X11 distribution based on X.org-7.2.  
+      </p>  
+      <p>
+On August 28, 2009, Apple released Snow Leopard (10.6), which included a release version
+of Apple's X11 distribution based on X.org-7.2.  
+      </p>
+      
+    
   <h2><a name="inst-xfree86">3 Getting and Installing X11</a></h2>
     
     
-    <h3><a name="inst-xfree86.fink">3.1 Installing X11 via Fink</a></h3>
+    <h3><a name="inst-xfree86.apple-binary">3.1 Apple's Distribution</a></h3>
       
-      <p>
-Fink will let you install X11 in a variety of ways,
-among these it provides XFree86 packages of its own. If you
-use <tt style="white-space: nowrap;">fink install ...</tt>, it will download
-the source code and compile it on your computer. If
-you use <tt style="white-space: nowrap;">apt-get install ...</tt> or the
-<tt style="white-space: nowrap;">dselect</tt> frontend, it will download
-precompiled binary packages, similar to the official
-XFree86 distribution.
-</p>
-<p><b>General notes:</b></p>
-<ul><li>All of the X11 packages currently available via Fink support both full-screen and rootless
-operation, and have OpenGL support.</li>
-<li><b>Important note:</b>  Files get moved around between X11 releases.  This frequently means that if you try to downgrade your X11 installation, you will find that binaries (executable programs, etc.) won't work anymore.  You'd have to rebuild any such packages.
-<p>You can go the other way though:  packages built vs an older X11 generally work on a later one.</p>
-<p>For 10.3 or 10.4, the X11 hierarchy (newer -&gt; older codebases) is as follows:</p>
-<pre>xorg &gt; xfree86 &gt; Apple's X11 </pre>
-</li></ul>
-<p><b>10.4 users:</b></p>
-<p>You can install XFree86 version 4.5.0-23 from source.   You will need both the <tt style="white-space: nowrap;">xfree86</tt> and <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages to have a fully functional installation.</p>
-<p>You can also install the X.org X11 release (currently version 6.8.2-35) via the <tt style="white-space: nowrap;">xorg</tt> and <tt style="white-space: nowrap;">xorg-shlibs</tt> packages in the unstable tree.  This X11 flavor is similar to XFree86-4.5, but includes some bugfixes and new features, and removes some code with a disputed license.</p>
-<p><b>10.3 users:</b></p>
-<p>You can install XFree86 version 4.4.0-13 (that which is in the current binary distribution) or 4.5.0-13 (which is available from source).  You will need both the <tt style="white-space: nowrap;">xfree86</tt> and <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages to have a fully functional installation.</p>
-<p>You can also install X.org-6.8.2 via the <tt style="white-space: nowrap;">xorg</tt> and <tt style="white-space: nowrap;">xorg-shlibs</tt> packages as above.</p>
-
-<p><b>10.2 users:</b></p>
-<p>10.2 users may install version 4.3 via source or binary, and 4.4 from the unstable tree.  As above, you'll install <tt style="white-space: nowrap;">xfree86</tt> and <tt style="white-space: nowrap;">xfree86-shlibs</tt>.
-</p>
-
-      <p>XFree86 4.2.1.1 is also available for 10.2, in <tt style="white-space: nowrap;">normal</tt> and <tt style="white-space: nowrap;">-threaded</tt> flavors (later X11s all have threading support), though it is considered to be obsolete. The <tt style="white-space: nowrap;">xfree86-base</tt>, <tt style="white-space: nowrap;">xfree86-base-shlibs</tt>, <tt style="white-space: nowrap;">xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt> packages (or their <tt style="white-space: nowrap;">-threaded</tt> counterparts must all be installed for you to have a working XFree86 setup.  In addition, you may need to install the <tt style="white-space: nowrap;">xfree86-base-dev</tt> and <tt style="white-space: nowrap;">xfree86-rootless-dev</tt> packages (or their <tt style="white-space: nowrap;">-threaded</tt> equivalents) to keep Fink from trying to install a newer version.</p>
-      
-<p><b>10.1 users:</b></p>
-<p>You can install version 4.2.0 from the binary distribution (only).  You will install <tt style="white-space: nowrap;">xfree86-base</tt> and <tt style="white-space: nowrap;">xfree86-rootless</tt>.</p>
-    
-    <h3><a name="inst-xfree86.apple-binary">3.2 Apple's Binaries</a></h3>
-      
-      <p>
-On January 7, 2003, Apple released <a href="http://www.apple.com/macosx/x11/">a custom
-X11 implementation based on XFree86-4.2</a> which includes Quartz rendering and accelerated
-OpenGL.  A new version was released on February 10, 2003 with additional features and bugfixes.  A third release (i.e. Beta 3) was made on March 17, 2003 with further additional features and bugfixes.  This version is usable on Jaguar.
-</p>
-      <p>On October 24, 2003, Apple released Panther (10.3), which includes a release version of their X11 distribution.  This version is based on XFree86-4.3.</p>
-<p>On April 29, 2005, Apple released Tiger (10.4), which includes a release version of Apple's X11 based on XFree86-4.4.</p>
-      <p>
-To use the Apple binaries, you need to make sure the <b>X11 User</b> package is installed, and you should also 
-<a href="http://www.finkproject.org/doc/users-guide/upgrade.php">update</a> Fink.</p>
+<p>All of the OS X versions currently supported by Fink include Apple's X11 distribution.
+To use it, you need to make sure the <b>X11 User</b> package is installed.</p>
       <p>Under <tt style="white-space: nowrap;">fink-0.16.2</tt>, you will need to install the <b>X11 SDK</b> package, as well.  After you do this, Fink will
 create a <tt style="white-space: nowrap;">system-xfree86</tt> virtual package.</p>
       <p>Under <tt style="white-space: nowrap;">fink-0.17.0</tt> and later installing the X11 SDK is only necessary if 
@@ -408,6 +408,40 @@ packages you have built against <tt style="white-space: nowrap;">xfree86</tt> wi
 <li><p><b>10.3 and 10.4 users only:</b>  It is possible to use Apple's display server and window manager on top of XFree86 or X.org.  If you install the <tt style="white-space: nowrap;">applex11tools</tt> package, Fink will install what you need, as long as you have a copy of X11User.pkg.</p></li>
       </ul>
       <p>For more information on using Apple's X11, check out this <a href="http://developer.apple.com/darwin/runningx11.html">article</a> at the Apple Developer Connection.</p>
+    
+    <h3><a name="inst-xfree86.fink">3.2 Using X11 via Fink</a></h3>
+      
+      <p>
+How one uses X11 with Fink depends on the version of OS X.
+</p>
+<p><b>General notes:</b></p>
+<ul><li>All of the X11 packages currently available via Fink support both full-screen and rootless
+operation, and have OpenGL support.</li>
+<li><b>Important note:</b>  Files get moved around between X11 releases.  This frequently means that if you try to downgrade your X11 installation, you will find that binaries (executable programs, etc.) won't work anymore.  You'd have to rebuild any such packages.
+<p>You can go the other way though:  packages built vs an older X11 generally work on a later one.</p>
+<p>For 10.3 or 10.4, the X11 hierarchy (newer -&gt; older codebases) is as follows:</p>
+<pre>xorg &gt; xfree86 &gt; Apple's X11 </pre>
+</li></ul>
+<p><b>10.6 users:</b></p>
+<p>Use Apple's X11.</p>
+<p>We <b>do not</b> support XQuartz for 10.6.  Our packages only build against
+the stock X11, so if you really want to use XQuartz and Fink, make sure to keep
+the stock X11 installed, too.</p>
+<p><b>10.4 users:</b></p>
+<p>You can install XFree86 version 4.5.0-23 from source.   You will need both the <tt style="white-space: nowrap;">xfree86</tt> and <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages to have a fully functional installation.</p>
+<p>You can also install the X.org X11 release (currently version 6.8.2-35) via the <tt style="white-space: nowrap;">xorg</tt> and <tt style="white-space: nowrap;">xorg-shlibs</tt> packages in the unstable tree.  This X11 flavor is similar to XFree86-4.5, but includes some bugfixes and new features, and removes some code with a disputed license.</p>
+<p><b>10.3 users:</b></p>
+<p>You can install XFree86 version 4.4.0-13 (that which is in the current binary distribution) or 4.5.0-13 (which is available from source).  You will need both the <tt style="white-space: nowrap;">xfree86</tt> and <tt style="white-space: nowrap;">xfree86-shlibs</tt> packages to have a fully functional installation.</p>
+<p>You can also install X.org-6.8.2 via the <tt style="white-space: nowrap;">xorg</tt> and <tt style="white-space: nowrap;">xorg-shlibs</tt> packages as above.</p>
+
+<p><b>10.2 users:</b></p>
+<p>10.2 users may install version 4.3 via source or binary, and 4.4 from the unstable tree.  As above, you'll install <tt style="white-space: nowrap;">xfree86</tt> and <tt style="white-space: nowrap;">xfree86-shlibs</tt>.
+</p>
+
+      <p>XFree86 4.2.1.1 is also available for 10.2, in <tt style="white-space: nowrap;">normal</tt> and <tt style="white-space: nowrap;">-threaded</tt> flavors (later X11s all have threading support), though it is considered to be obsolete. The <tt style="white-space: nowrap;">xfree86-base</tt>, <tt style="white-space: nowrap;">xfree86-base-shlibs</tt>, <tt style="white-space: nowrap;">xfree86-shlibs</tt>, and <tt style="white-space: nowrap;">xfree86-rootless-shlibs</tt> packages (or their <tt style="white-space: nowrap;">-threaded</tt> counterparts must all be installed for you to have a working XFree86 setup.  In addition, you may need to install the <tt style="white-space: nowrap;">xfree86-base-dev</tt> and <tt style="white-space: nowrap;">xfree86-rootless-dev</tt> packages (or their <tt style="white-space: nowrap;">-threaded</tt> equivalents) to keep Fink from trying to install a newer version.</p>
+      
+<p><b>10.1 users:</b></p>
+<p>You can install version 4.2.0 from the binary distribution (only).  You will install <tt style="white-space: nowrap;">xfree86-base</tt> and <tt style="white-space: nowrap;">xfree86-rootless</tt>.</p>
     
     <h3><a name="inst-xfree86.official-binary">3.3 The Official Binaries</a></h3>
       
@@ -1260,7 +1294,7 @@ be executed.) And remember that it is no more necessary for Apple's X11 (see <a 
       <p>In any case, if you encounter problems copying or pasting from Aqua to X11 and vice-versa, you may first try to do the pasting part twice (it may happen that the copy does not occur at once), then use intermediate applications, e.g. TextEdit or Terminal.app on the Aqua side, nedit or an xterm on the X11 side. In my experience, there is always a solution.</p>
     
   <hr><h2>Copyright Notice</h2><p>Copyright (c) 2001 Christoph Pfisterer,
-Copyright (c) 2001-2010 The Fink Project.
+Copyright (c) 2001-2011 The Fink Project.
 You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication

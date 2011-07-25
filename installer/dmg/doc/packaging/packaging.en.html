@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--
-Generated from $Fink: packaging.en.xml,v 1.119 2011/04/26 19:00:13 alexkhansen Exp $
+Generated from $Fink: packaging.en.xml,v 1.120 2011/07/25 13:14:16 alexkhansen Exp $
 -->
 <title>Fink Documentation - Creating Fink Packages</title></head><body>
 <table width="100%" cellspacing="0">
@@ -381,6 +381,11 @@ package is blank. (Introduced in fink-0.20.6)
 <p>
 The full path to the file given in the <tt style="white-space: nowrap;">PatchFile</tt> field.
 (Introduced in fink-0.24.12)
+</p>
+</td></tr><tr valign="top"><td>%{PatchFile<b>N</b>}</td><td>
+<p>
+The full path to the file given in the <tt style="white-space: nowrap;">PatchFile<b>N</b></tt> field.
+(Introduced in fink-0.30.0)
 </p>
 </td></tr><tr valign="top"><td>%lib</td><td>
 <p>
@@ -2379,11 +2384,27 @@ uses <tt style="white-space: nowrap;">PatchFile</tt> must declare at least
 <tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.24.12)</tt>. Giving a higher version
 requirement is allowed if it is necessary for other reasons.
 </p>
+</td></tr><tr valign="top"><td>PatchFile<b>N</b></td><td>
+<p>
+If a package has several patch files, name them with these additional 
+fields, starting with N = 2. So, the first patch file goes into 
+<tt style="white-space: nowrap;">PatchFile</tt>, the second patch file in <tt style="white-space: nowrap;">PatchFile2</tt> 
+and so on.  Any package that uses <tt style="white-space: nowrap;">PatchFile<b>N</b></tt> must 
+declare at least <tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.30.0)</tt>. Giving 
+a higher version requirement is allowed if it is necessary for other 
+reasons.
+</p>
 </td></tr><tr valign="top"><td>PatchFile-MD5</td><td>
 <p>
 The MD5 checksum of the file given in the <tt style="white-space: nowrap;">PatchFile</tt>
 field. This field is required if <tt style="white-space: nowrap;">PatchFile</tt> is used.
 (Introduced in fink-0.24.12)
+</p>
+</td></tr><tr valign="top"><td>PatchFile<b>N</b>-MD5</td><td>
+<p>
+The MD5 checksum of the file given in the <tt style="white-space: nowrap;">PatchFile<b>N</b></tt>
+field. This field is required if <tt style="white-space: nowrap;">PatchFile<b>N</b></tt> is used.
+(Introduced in fink-0.30.0)
 </p>
 </td></tr><tr valign="top"><td>PatchScript</td><td>
 <p>
@@ -2398,9 +2419,16 @@ default <tt style="white-space: nowrap;">PatchScript</tt> is:
 patch -p1 &lt; %{PatchFile}
 </pre>
 <p>
+If one or more <tt style="white-space: nowrap;">PatchFile<b>N</b></tt> fields are used, the 
+following is appended as needed to the default script:
+</p>
+<pre>
+patch -p1 &lt; %{PatchFile<b>N</b>}
+</pre>
+<p>
 If there is no <tt style="white-space: nowrap;">PatchFile</tt>, the default is blank. If you
 have an explicit <tt style="white-space: nowrap;">PatchScript</tt>, you must apply
-the <tt style="white-space: nowrap;">PatchFile</tt> explicitly.
+the <tt style="white-space: nowrap;">PatchFile(s)</tt> explicitly.
 </p>
 </td></tr></table>
 <p><b>Compile Phase:</b></p>
@@ -2456,6 +2484,14 @@ variables (such as
 CPPFLAGS, LDFLAGS, CXXFLAGS  mentioned above). For 
 example, if you want LDFLAGS to
 remain unset, specify <tt style="white-space: nowrap;">NoSetLDFLAGS: true</tt> .
+</p>
+</td></tr><tr valign="top"><td>UseMaxBuildJobs</td><td>
+<p>
+When set to a true value, appends <tt style="white-space: nowrap;">-j<b>N</b></tt>, where <b>N</b> 
+is the value from the <tt style="white-space: nowrap;">fink.conf</tt> field MaxBuildJobs, 
+to the environment variable MAKEFLAGS. This value is added to MAKEFLAGS even 
+if the field <tt style="white-space: nowrap;">NoSetMAKEFLAGS: true</tt> is used. If the field is not 
+present or blank, the default is <tt style="white-space: nowrap;">False</tt>.
 </p>
 </td></tr><tr valign="top"><td>ConfigureParams</td><td>
 <p>
@@ -3071,9 +3107,20 @@ You must also give the MD5 sum of the patchfile in the
 <tt style="white-space: nowrap;">PatchFile-MD5</tt> field, and specify 
 <tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.24.12)</tt> (or a later version of fink).
 </p>
+
+<p>When a <tt style="white-space: nowrap;">PatchFile<b>N</b></tt> field is used, general custom 
+is to name the file <tt style="white-space: nowrap;">%n-purpose-of-patch.patch</tt> to make it easy to keep 
+track of. You must also use the field <tt style="white-space: nowrap;">PatchFile<b>N</b>-MD5</tt> 
+and specify <tt style="white-space: nowrap;">BuildDepends: fink (&gt;= 0.30.0)</tt> (or a later 
+version of fink).
+</p>
+
 <p>When a <tt style="white-space: nowrap;">PatchFile</tt> declaration is present, there is a
 default <tt style="white-space: nowrap;">PatchScript</tt> equivalent to:</p>
 <pre>PatchScript: patch -p1 &lt; %{PatchFile}</pre>
+<p>Using <tt style="white-space: nowrap;">PatchFile<b>N</b></tt> appends the following to the 
+default <tt style="white-space: nowrap;">PatchScript</tt> above:</p>
+<pre>patch -p1 &lt; %{PatchFile<b>N</b>}</pre>
 <p>This will be overridden if you supply a <tt style="white-space: nowrap;">PatchScript</tt>
 of your own (for example, to perform a substitution on the patch file
 before applying it).</p>
@@ -3113,4 +3160,4 @@ You may distribute this document in print for private purposes,
 provided the document and this copyright notice remain complete and
 unmodified. Any commercial reproduction and any online publication
 requires the explicit consent of the author.</p><hr>
-<p>Generated from <i>$Fink: packaging.en.xml,v 1.119 2011/04/26 19:00:13 alexkhansen Exp $</i></p></body></html>
+<p>Generated from <i>$Fink: packaging.en.xml,v 1.120 2011/07/25 13:14:16 alexkhansen Exp $</i></p></body></html>
