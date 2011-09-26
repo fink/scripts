@@ -4,30 +4,31 @@ so that it shows your sourceforge userid in place of
 
 Q: How do I make a new source release of the Fink package manager?
 
-A: Assume you want to release fink 0.31.2, you first need to get the "xml"
+A: Assume you want to release fink 0.31.3, you first need to get the "xml"
 module from the fink cvs. It will contain subdirectories called "fink" and 
 "scripts".  In the following I assume you are in the "xml" directory.
 
 You need to ensure that your checkout of the "fink" directory is using
 the current release branch, which would be branch_0_31 in the example.
 
- cd fink
-   ->  edit VERSION so that it contains "0.31.1.cvs"
+ cvs up -rbranch_0_31 -C fink
+ cd fink 
+   ->  edit VERSION so that it contains "0.31.3.cvs"
    -> now edit the ChangeLog as well
  cvs commit
- cvs tag release_0_31_1
+ cvs tag release_0_31_3
  cd ../scripts/srcdist
- ./dist-module.pl fink 0.31.1
+ ./dist-module.pl fink 0.31.3
 
-This will create the file /tmp/fink-0.31.1.tar.gz, and also various files
+This will create the file /tmp/fink-0.31.3.tar.gz, and also various files
 such as /tmp/fink-10.7.info .
 
-The file fink-0.31.1.tar.gz now needs to be uploaded to the Sourceforge
+The file fink-0.31.3.tar.gz now needs to be uploaded to the Sourceforge
 File Release System.  (The instructions for that change rather frequently
 so they are not given here.  Ask on the #fink IRC channel or the
 fink-core mailing list.)
 
-Once fink-0.31.1.tar.gz has propagated to the Sourceforge FRS mirrors,
+Once fink-0.31.3.tar.gz has propagated to the Sourceforge FRS mirrors,
 test things using fink-10.7.info (or whatever the appropriate file is for
 your OS X version) on your local system.  Assuming all is OK, you can commit
 the various fink-NN.info files to their appropriate locations.
