@@ -43,13 +43,17 @@ DO_CHECKS:
 			$errmsg = 21;
 		} elsif ($target_OSX eq '10.5') {
 			$errmsg = 22;
+		} elsif ($target_OSX eq '10.6') {
+			$errmsg = 23;
+		} elsif ($target_OSX eq '10.7') {
+			$errmsg = 24;
 		} else {
 			$errmsg = 4;
 		}
 		last;
 	}
 
-	# human-readable string ("Power Macintosh" or "i386")
+	# human-readable string ("Power Macintosh", "i386" or "x86_64")
 	# not a config.guess platform value
 	my $CPUArch = (uname())[4];
 
@@ -61,6 +65,8 @@ DO_CHECKS:
 			$errmsg = 25;
 		} elsif ($target_CPU eq 'i386') {
 			$errmsg = 26;
+		} elsif ($target_CPU eq 'x86_64') {
+			$errmsg = 27;
 		} else {
 			$errmsg = 4;
 		}
