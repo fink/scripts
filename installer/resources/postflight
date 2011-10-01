@@ -68,4 +68,40 @@ so that all users will get it.
 END_MESSAGE
 }
 
-system "/sw/var/lib/fink/prebound/update-package-prebinding.pl -f";
+# pathsetup has been run (or user has been notified to run it manually)
+# so now provide message about running configure/selfupdate
+# In theory, this is what Conclusion.rtf does, but the 10.7 installer
+# doesn't seem to understand it anymore.
+if(!$ENV{COMMAND_LINE_INSTALL}) {
+	my $real_user = $info{user};
+	
+	system "osascript -e 'tell app \"Finder\" to activate' -e 'tell app \"Finder\" to display dialog \"To receive the latest package information files from the Fink distribution, open /Applications/Utilities/Terminal.app and run the following two commands in a terminal window:
+
+fink configure
+fink selfupdate
+
+Upon completion, your Fink install will be up to date and ready to use.\" buttons \"OK\" default button 1 with title \"Fink installation successful\"' -e 'tell app \"Installer\" to activate'"
+
+	
+} else {
+	# Running from commandline: not certain to have Aqua session, so
+	# just print message to terminal about what to do.
+
+	# For a command-line install, installer is already run as root, so
+	# get its parent.
+	%info = process_info($info{parent});
+
+	open(TTY, ">", "/dev/$info{tty}") or *TTY = *STDOUT;;
+	print TTY <<END_MESSAGE;
+
+Once you have successfully initialized your Fink install, 
+run the following two commands to receive the latest package 
+information files from the Fink distribution:
+
+fink configure
+fink selfupdate
+
+Upon completion, your Fink install will be up to date and ready to use.
+
+END_MESSAGE
+}
