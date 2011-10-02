@@ -42,8 +42,12 @@ Intel)
  echo "ARCH=Intel"
  CPU_NAME="i386"
  ;;
+x86_64)
+ echo "ARCH=x86_64"
+ CPU_NAME="x86_64"
+ ;;
 *)
- echo "Error: you must set the environment variable ARCH to either PowerPC or Intel."
+ echo "Error: you must set the environment variable ARCH to either PowerPC,  Intel or x86_64."
  exit 1
  ;;
 esac
@@ -53,6 +57,12 @@ IN_VERSION=$BINDIST_VERSION-$ARCH;
 RESDIR=$IN_BASEDIR/resources-$IN_VERSION;
 DMGDIR=$IN_BASEDIR/dmg-$IN_VERSION;
 CONDIR=$IN_BASEDIR/contents-$IN_VERSION;
+
+if [[ -e $IN_BASEDIR/Fink-$IN_VERSION-Installer.dmg ]]; then
+	echo ""
+	echo "\"Fink-$IN_VERSION-Installer.dmg\" already exists in the installer directory! Quitting so you can move/delete it."
+	exit 1
+fi
 
 echo "basedir: $IN_BASEDIR version: $IN_VERSION";
 rm -rf $RESDIR
@@ -68,8 +78,10 @@ cp -R $IN_BASEDIR/resources $RESDIR
 /Developer/Tools/CpMac -r $IN_BASEDIR/dmg $DMGDIR
 cp $IN_BASEDIR/resources/ReadMe.rtf $DMGDIR/Fink\ ReadMe.rtf
 cp $IN_BASEDIR/resources/License.rtf $DMGDIR
-cp -R $IN_BASEDIR/contents $CONDIR
-chown -R root:admin $CONDIR
+cp -Rp $IN_BASEDIR/contents $CONDIR
+# Don't chown -R $CONDIR because we need to keep ownerships intact
+# for some files (primarily in var) throughout the hierarchy.
+#chown -R root:admin $CONDIR
 chmod 1755 $CONDIR
 rm -Rf $CONDIR/CVS
 rm -f $CONDIR/.cvsignore
@@ -111,8 +123,34 @@ for lang in Dutch French German Italian Japanese Spanish da fi ko no pt sv zh_CN
 done
 
 echo "running PackageMaker...";
-/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/Info.plist -d $RESDIR/English.lproj/Description.plist -v
-`find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
+#/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -build -p "$DMGDIR/Fink $IN_VERSION Installer for $OSX_VERSION.pkg" -f $CONDIR -r $RESDIR -i $IN_BASEDIR/Info.plist -d $RESDIR/English.lproj/Description.plist -v
 
+`find $DMGDIR -name 'CVS' -type d -exec rm -rf {} \; 2>> /dev/null`
+`find $DMGDIR -name '.DS_Store' -type d -exec rm -rf {} \; 2>> /dev/null`
+
+# Make the .pkg after clearing out unwanted files.
+/Developer/usr/bin/packagemaker \
+--root $CONDIR \
+--info Info.plist \
+--out "$DMGDIR/Fink $IN_VERSION Installer for $OSX_VERSION.pkg" \
+--title "Fink for OS X $OSX_VERSION" \
+--resources $RESDIR \
+--target 10.4 \
+--no-recommend \
+--no-relocate \
+--root-volume-only \
+-v
+
+## Why change the permissions for all dirs inside the dmg-to-be?
 chmod -R a+rX $DMGDIR
-$IN_BASEDIR/mkdmg.pl -v "Fink-$IN_VERSION-Installer.dmg" $DMGDIR/*
+#$IN_BASEDIR/mkdmg.pl -v "Fink-$IN_VERSION-Installer.dmg" $DMGDIR/*
+
+echo "Creating disk image..."
+hdiutil create \
+-srcfolder $DMGDIR \
+-fs HFS+ \
+-volname "Fink-$IN_VERSION-Installer" \
+-format UDBZ "Fink-$IN_VERSION-Installer.dmg"
+
+echo ""
+echo "The disk image has been created and is ready for distribution."
