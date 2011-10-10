@@ -31,15 +31,39 @@ import Fink::Bootstrap qw(&modify_description &read_version_revision);
 
 ### configuration
 
-my $cvsroot=':ext:dmrrsn@fink.cvs.sourceforge.net:/cvsroot/fink';
+#my $gitroot='git@github.com:fink/';
+my $github_url='https://github.com/fink/fink/tarball';
+my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
 my $distribution = "10.4";  #default value
+my $vcstype='CVS';
+
 
 ### init
 
-if ($#ARGV < 1) {
-	print "Usage: $0 <module> <version-number> [<temporary-directory> [<tag>]]\n";
+sub print_usage_and_exit {
+	print "Usage: $0 [--cvs | --github] <module> <version-number> [<temporary-directory> [<tag>]]\n";
 	exit 1;
 }
+
+&print_usage_and_exit() if ($#ARGV < 1);
+
+# The first (optional) parameter can be used to specify the VCS (version control system)
+# to be used. We currently support two choices:
+# 1) --cvs gets the code from the Fink SF.net CVS repository
+# 2) --github gets the code from the Fink GitHub git repository
+# TODO: Consider adding a third option "--git=URI" which grabs everything from
+# a (local or remote) git repository using "git archive --remote=URI"
+if ($ARGV[0] eq '--cvs') {
+	shift;
+	$vcstype = 'CVS';
+} elsif ($ARGV[0] eq '--github') {
+	shift;
+	$vcstype = 'github';
+}
+
+&print_usage_and_exit() if ($#ARGV < 1);
+
+#print "Running in $vcstype mode\n";
 
 my $module = shift;
 my $version = shift;
@@ -49,6 +73,13 @@ my $tag = shift;
 if (not defined($tag)) {
 	$tag = "release_" . $version;
 	$tag =~ s/\./_/g ;
+	# TODO: For old releases, it makes sense to turn "." into "_", but for new stuff,
+	# I would recommend going with releases-1.2.3 or even just v1.2.3.
+	# It is in fact quite easy to convert all tags to the "new" scheme when
+	# switching the repository.
+	#if ($vcstype eq 'git') {
+	#	$tag = "v" . $version;
+	#}
 }
 
 my $modulename = $module;
@@ -71,16 +102,66 @@ if (-d "$tmpdir/$fullname") {
 
 ### grab code from version control
 
-print "Exporting module $module, tag $tag from CVS:\n";
-`umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module`;
-if (not -d "$tmpdir/$fullname") {
-	print "CVS export failed, directory $fullname doesn't exist!\n";
+print "Exporting module $module, tag $tag from $vcstype:\n";
+
+if ($vcstype eq 'CVS') {
+	# Original command using CVS:
+	`umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module`;
+
+	if (not -d "$tmpdir/$fullname") {
+		print "CVS export failed, directory $fullname doesn't exist!\n";
+		exit 1;
+	}
+
+	### remove any .cvsignore files
+	`find $tmpdir/$fullname -name .cvsignore -exec rm {} \\;`;
+
+} elsif ($vcstype eq 'github') {
+
+	`umask 022; wget $github_url/$tag -O $tmpdir/$tag.tar.gz`;
+
+	if ($? or not -f "$tmpdir/$tag.tar.gz") {
+		print "github download failed, could not retrieve remote data!\n";
+		exit 1;
+	}
+
+	# We need to treat "submodules" like "fink/mirror" in a special way.
+	# The first component ("fink" in the example) as a repository name,
+	# while the remaining components specify a subdirectory.
+	my @module_components = split /\//, $module;
+	my $taropts='--strip-components '.  ($#module_components + 1);
+	$taropts .= ' fink-' . (shift @module_components) . '-*/';
+	$taropts .= join('/', @module_components);
+
+	`mkdir -p $tmpdir/$fullname && /usr/bin/tar -xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname $taropts`;
+
+	if (not -d "$tmpdir/$fullname") {
+		print "git export failed, directory $fullname doesn't exist!\n";
+		exit 1;
+	}
+
+	### remove any .gitignore files
+	# TODO: Really? There is only one, and it is harmless
+	`find $tmpdir/$fullname -name .gitignore -exec rm {} \\;`;
+	
+#} elsif ($vcstype eq 'git') {
+	# TODO: Add a mode which assumes that you have a checkout/clone of the fink
+	# git repository, with all tags in it:
+	#`umask 022; git archive --format=tar --prefix=$fullname/ -o $tmpdir/$fullname.tar $tag; cd $tmpdir; tar xf  $fullname.tar`;
+	# It could also (optionally?) allow specifying a "remote" repository
+	# via the git archive --remote option
+
+	# TODO: Make this more robust, e.g. first check that we are in a proper checkout/clone of the fink repository,
+	# and if not, generate a more meaningful error.
+	# TODO: verify that the "git" is available in the first place
+
+} else {
+	# TODO: SVN mode?
+	# For unknown/unsupported modes, just die here
+	print "unknown version control system '$vcstype'!\n";
 	exit 1;
 }
 
-### remove any .cvsignore files
-
-`find $tmpdir/$fullname -name .cvsignore -exec rm {} \\;`;
 
 ### versioning
 
