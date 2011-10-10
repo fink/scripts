@@ -1,10 +1,10 @@
 #!/usr/bin/perl -w
 #
-# dist-module.pl - make release tarballs and info files for one CVS module
+# dist-module.pl - make release tarballs and info files for one code module
 #
 # Fink - a package manager that downloads source and installs it
 # Copyright (c) 2001 Christoph Pfisterer
-# Copyright (c) 2001-2006 The Fink Package Manager Team
+# Copyright (c) 2001-2011 The Fink Package Manager Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -55,7 +55,7 @@ my $modulename = $module;
 $modulename =~ s/\//-/g ;
 my $fullname = "$modulename-$version";
 
-print "packaging $module release $version, CVS tag $tag\n";
+print "packaging $module release $version, tag $tag\n";
 
 ### setup temp directory
 
@@ -69,7 +69,7 @@ if (-d "$tmpdir/$fullname") {
 	exit 1;
 }
 
-### check code out from CVS
+### grab code from version control
 
 print "Exporting module $module, tag $tag from CVS:\n";
 `umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module`;
@@ -88,6 +88,9 @@ if (-f "$tmpdir/$fullname/VERSION") {
 	open(OUT,">$tmpdir/$fullname/VERSION") or die "can't open $tmpdir/$fullname/VERSION";
 	print OUT "$version\n";
 	close(OUT);
+
+	# Replace "stamp-cvs-live" file by a "stamp-rel-$version" file for those
+	# modules that contain it (e.g "dists").
 	if (-f "$tmpdir/$fullname/stamp-cvs-live") {
 		`rm -f $tmpdir/$fullname/stamp-cvs-live`;
 		`touch $tmpdir/$fullname/stamp-rel-$version`;
