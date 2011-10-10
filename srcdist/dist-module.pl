@@ -117,12 +117,37 @@ print `ls -l $tmpdir/*.tar.gz` . "\n";
 
 ### create package description files
 
-my $coda = "CustomMirror: <<\n";
-$coda .= " Primary: http://superb-west.dl.sourceforge.net/sourceforge/\n";
-$coda .= " Secondary: http://easynews.dl.sourceforge.net/sourceforge/\n";
-$coda .= " nam-US: http://superb-west.dl.sourceforge.net/sourceforge/\n";
-$coda .= " eur: http://eu.dl.sourceforge.net/sourceforge/\n";
-$coda .= "<<\n";
+my $coda = <<CODA;
+CustomMirror: <<
+Primary: http://downloads.sourceforge.net/project/
+nam-US: http://easynews.dl.sourceforge.net/sourceforge/
+nam-US: http://superb-west.dl.sourceforge.net/sourceforge/
+nam-US: http://superb-east.dl.sourceforge.net/sourceforge/
+nam-US: http://voxel.dl.sourceforge.net/sourceforge/
+asi-JP: http://jaist.dl.sourceforge.net/sourceforge/
+asi-TW: http://nchc.dl.sourceforge.net/sourceforge/
+aus-AU: http://internode.dl.sourceforge.net/sourceforge/
+aus-AU: http://transact.dl.sourceforge.net/sourceforge/
+aus-AU: http://waix.dl.sourceforge.net/sourceforge/
+eur-CH: http://puzzle.dl.sourceforge.net/sourceforge/
+eur-CH: http://switch.dl.sourceforge.net/sourceforge/
+eur-DE: http://dfn.dl.sourceforge.net/sourceforge/
+eur-DE: http://mesh.dl.sourceforge.net/sourceforge/
+eur-FR: http://ovh.dl.sourceforge.net/sourceforge/
+eur-IE: http://heanet.dl.sourceforge.net/sourceforge/
+eur-IT: http://garr.dl.sourceforge.net/sourceforge/
+eur-NL: http://surfnet.dl.sourceforge.net/sourceforge/
+eur-UK: http://kent.dl.sourceforge.net/sourceforge/
+sam-BR: http://ufpr.dl.sourceforge.net/sourceforge/
+<<
+CODA
+
+# my $coda = "CustomMirror: <<\n";
+# $coda .= " Primary: http://superb-west.dl.sourceforge.net/sourceforge/\n";
+# $coda .= " Secondary: http://easynews.dl.sourceforge.net/sourceforge/\n";
+# $coda .= " nam-US: http://superb-west.dl.sourceforge.net/sourceforge/\n";
+# $coda .= " eur: http://eu.dl.sourceforge.net/sourceforge/\n";
+# $coda .= "<<\n";
 
 my ($packageversion, $revisions) = read_version_revision("$tmpdir/$fullname");
 
