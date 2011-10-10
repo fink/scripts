@@ -37,8 +37,8 @@ my $distribution = "10.4";  #default value
 ### init
 
 if ($#ARGV < 1) {
-    print "Usage: $0 <module> <version-number> [<temporary-directory> [<tag>]]\n";
-    exit 1;
+	print "Usage: $0 <module> <version-number> [<temporary-directory> [<tag>]]\n";
+	exit 1;
 }
 
 my $module = shift;
@@ -47,8 +47,8 @@ my $tmpdir = shift || "/tmp";
 my $tag = shift;
 
 if (not defined($tag)) {
-    $tag = "release_" . $version;
-    $tag =~ s/\./_/g ;
+	$tag = "release_" . $version;
+	$tag =~ s/\./_/g ;
 }
 
 my $modulename = $module;
@@ -64,9 +64,9 @@ print "packaging $module release $version, CVS tag $tag\n";
 umask 022;
 
 if (-d "$tmpdir/$fullname") {
-    print "There is a left-over directory in $tmpdir.\n";
-    print "Remove $fullname, then try again.\n";
-    exit 1;
+	print "There is a left-over directory in $tmpdir.\n";
+	print "Remove $fullname, then try again.\n";
+	exit 1;
 }
 
 ### check code out from CVS
@@ -74,8 +74,8 @@ if (-d "$tmpdir/$fullname") {
 print "Exporting module $module, tag $tag from CVS:\n";
 `umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module`;
 if (not -d "$tmpdir/$fullname") {
-    print "CVS export failed, directory $fullname doesn't exist!\n";
-    exit 1;
+	print "CVS export failed, directory $fullname doesn't exist!\n";
+	exit 1;
 }
 
 ### remove any .cvsignore files
@@ -85,13 +85,13 @@ if (not -d "$tmpdir/$fullname") {
 ### versioning
 
 if (-f "$tmpdir/$fullname/VERSION") {
-    open(OUT,">$tmpdir/$fullname/VERSION") or die "can't open $tmpdir/$fullname/VERSION";
-    print OUT "$version\n";
-    close(OUT);
-if (-f "$tmpdir/$fullname/stamp-cvs-live") {
-    `rm -f $tmpdir/$fullname/stamp-cvs-live`;
-    `touch $tmpdir/$fullname/stamp-rel-$version`;
-}
+	open(OUT,">$tmpdir/$fullname/VERSION") or die "can't open $tmpdir/$fullname/VERSION";
+	print OUT "$version\n";
+	close(OUT);
+	if (-f "$tmpdir/$fullname/stamp-cvs-live") {
+		`rm -f $tmpdir/$fullname/stamp-cvs-live`;
+		`touch $tmpdir/$fullname/stamp-rel-$version`;
+	}
 }
 
 ### roll the tarball
@@ -103,8 +103,8 @@ print "Compressing tarball $fullname.tar.gz...\n";
 `gzip -9 $tmpdir/$fullname.tar`;
 
 if (not -f "$tmpdir/$fullname.tar.gz") {
-    print "Packaging failed, $fullname.tar.gz doesn't exist!\n";
-    exit 1;
+	print "Packaging failed, $fullname.tar.gz doesn't exist!\n";
+	exit 1;
 }
 
 ### finish up
@@ -126,27 +126,26 @@ my ($packageversion, $revisions) = read_version_revision("$tmpdir/$fullname");
 my ($distro, $suffix, $revision);
 
 if (-f "$tmpdir/$fullname/$modulename.info.in") {
-    foreach $distro (keys %{$revisions}) {
-	if ($distro eq "all") {
-	    $suffix = "";
-	# leave distribution at its default value
-	} else {
-	    $suffix = "-$distro";
-	    $distribution = $distro;
+	foreach $distro (keys %{$revisions}) {
+		if ($distro eq "all") {
+			$suffix = "";
+		# leave distribution at its default value
+		} else {
+			$suffix = "-$distro";
+			$distribution = $distro;
+		}
+		print "\n";
+		print "Creating package description file $modulename$suffix.info:\n";
+		$revision = ${$revisions}{$distro};
+
+		&modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename$suffix.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
 	}
-	print "\n";
-	print "Creating package description file $modulename$suffix.info:\n";
-	$revision = ${$revisions}{$distro};
-
-    &modify_description("$tmpdir/$fullname/$modulename.info.in","$tmpdir/$modulename$suffix.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz",$distribution,$coda,$version,$revision);
-
-    }
 }
 
 if (-f "$tmpdir/$fullname/$modulename-x86_64.info.in") {
-    print "\n";
-    print "Creating package description file $modulename-x86_64.info:\n";
-    &modify_description("$tmpdir/$fullname/$modulename-x86_64.info.in","$tmpdir/$modulename-x86_64.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz","10.5",$coda,$version,"46");
+	print "\n";
+	print "Creating package description file $modulename-x86_64.info:\n";
+	&modify_description("$tmpdir/$fullname/$modulename-x86_64.info.in","$tmpdir/$modulename-x86_64.info","$tmpdir/$fullname.tar.gz","$tmpdir/$fullname","mirror:custom:fink/%n-%v.tar.gz","10.5",$coda,$version,"46");
 }
 
 
