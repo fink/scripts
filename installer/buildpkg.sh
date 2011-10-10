@@ -149,7 +149,7 @@ echo "Creating disk image..."
 hdiutil create \
 -srcfolder $DMGDIR \
 -fs HFS+ \
--volname "Fink-$IN_VERSION-Installer" \
+-volname "Fink $IN_VERSION Installer" \
 -format UDBZ "Fink-$IN_VERSION-Installer.dmg"
 
 echo ""
