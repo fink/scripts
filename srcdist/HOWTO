@@ -1,6 +1,15 @@
-Before using the tools in this directory, make sure to edit dist-module.pl
-so that it shows your sourceforge userid in place of 
-"dmrrsn@fink.cvs.sourceforge.net".
+#Before using the tools in this directory, make sure to edit dist-module.pl
+#so that it shows your sourceforge userid in place of 
+#"dmrrsn@fink.cvs.sourceforge.net".
+
+dist-module.pl now uses pserver mode for an anonymous checkout.  You 
+may need to open port 2401 to use it, or edit it, replacing
+
+  my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
+
+by
+
+  my $cvsroot=':ext:YOURUSERNAME@fink.cvs.sourceforge.net:/cvsroot/fink'
 
 Q: How do I make a new source release of the Fink package manager?
 
@@ -13,22 +22,22 @@ the current release branch, which would be branch_0_31 in the example.
 
  cvs up -rbranch_0_31 -C fink
  cd fink 
-   ->  edit VERSION so that it contains "0.31.3.cvs"
+   ->  edit VERSION so that it contains "0.31.4.cvs"
    -> now edit the ChangeLog as well
  cvs commit
- cvs tag release_0_31_3
+ cvs tag release_0_31_4
  cd ../scripts/srcdist
- ./dist-module.pl fink 0.31.3
+ ./dist-module.pl fink 0.31.4
 
-This will create the file /tmp/fink-0.31.3.tar.gz, and also various files
+This will create the file /tmp/fink-0.31.4.tar.gz, and also various files
 such as /tmp/fink-10.7.info .
 
-The file fink-0.31.3.tar.gz now needs to be uploaded to the Sourceforge
+The file fink-0.31.4.tar.gz now needs to be uploaded to the Sourceforge
 File Release System.  (The instructions for that change rather frequently
 so they are not given here.  Ask on the #fink IRC channel or the
 fink-core mailing list.)
 
-Once fink-0.31.3.tar.gz has propagated to the Sourceforge FRS mirrors,
+Once fink-0.31.4.tar.gz has propagated to the Sourceforge FRS mirrors,
 test things using fink-10.7.info (or whatever the appropriate file is for
 your OS X version) on your local system.  Assuming all is OK, you can commit
 the various fink-NN.info files to their appropriate locations.
