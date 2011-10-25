@@ -4,7 +4,7 @@
 use File::Find;
 use POSIX qw(uname);
 
-my $basedir = "/sw";
+my $basedir = "FINK_ROOT";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 
 # For what OS X major-version are we configured?
@@ -22,7 +22,7 @@ DO_CHECKS:
 
 	# we're only for virgin systems, not upgrading/overwriting existing fink
 	if ((-e "$basedir") || (-l "$basedir")) {
-		print "Fink Installer: ROOT /sw exists!\n";
+		print "Fink Installer: ROOT FINK_ROOT exists!\n";
 		$errmsg = 16;
 		last;
 	}

@@ -2,16 +2,16 @@
 # -*- mode: Perl; tab-width: 4; -*-
 
 
-#Make the a root-volume /sw symlink to the /sw on the target volume if
+#Make the a root-volume FINK_ROOT symlink to the FINK_ROOT on the target volume if
 #user selected non-root volume (InstallationCheck verified that there
-#was no existing /sw on root volume)
-if(! -e "/sw") {
-	`/bin/ln -s \"$ARGV[1]/sw\" /sw`;
+#was no existing FINK_ROOT on root volume)
+if(! -e "FINK_ROOT") {
+	`/bin/ln -s \"$ARGV[1]FINK_ROOT\" FINK_ROOT`;
 }
 
 # final preparations to create a viable fink installation
-system "/usr/bin/yes '' | /sw/lib/fink/postinstall.pl";
-system "/sw/bin/fink -y index";
+system "/usr/bin/yes '' | FINK_ROOT/lib/fink/postinstall.pl";
+system "FINK_ROOT/bin/fink -y index";
 
 # get ps data for a given PID
 sub process_info {
@@ -40,7 +40,7 @@ if(!$ENV{COMMAND_LINE_INSTALL}) {
 	# Running from Installer.app: have Aqua session, so run pathsetup
 	# as user who ran Installer.app.
 	my $real_user = $info{user};
-	system "sudo -H -u $real_user /sw/bin/pathsetup.sh";
+	system "sudo -H -u $real_user FINK_ROOT/bin/pathsetup.sh";
 	system "osascript -e 'tell application \"Installer\"' -e 'activate' -e 'end tell'";
 } else {
 	# Running from commandline: not certain to have Aqua session, so
@@ -55,12 +55,12 @@ if(!$ENV{COMMAND_LINE_INSTALL}) {
 	print TTY <<END_MESSAGE;
 
 In order for a user to use fink, either:
-	test -r /sw/bin/init.sh && . /sw/bin/init.sh
+	test -r FINK_ROOT/bin/init.sh && . FINK_ROOT/bin/init.sh
 or
-	test -r /sw/bin/init.csh && source /sw/bin/init.csh
+	test -r FINK_ROOT/bin/init.csh && source FINK_ROOT/bin/init.csh
 will need to be placed in that user's shell startup script(s).
 
-A user can run /sw/bin/pathsetup.sh to make this change for his/her
+A user can run FINK_ROOT/bin/pathsetup.sh to make this change for his/her
 default shell, or you can place the command to load the appropriate
 init file in /etc/profile or other global shell configuration files
 so that all users will get it.
