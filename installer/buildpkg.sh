@@ -111,6 +111,7 @@ ln -s doc/doc.en.html $DMGDIR/Documentation.html
 ln -s faq/faq.en.html $DMGDIR/FAQ.html
 
 # Put the correct pathsetup script into pathsetup.app
+mkdir -p $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 cp $IN_BASEDIR/contents${FINK_ROOT}/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 chmod a+x $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 
@@ -120,7 +121,7 @@ chmod 555 $DMGDIR/pathsetup.app/Contents/MacOS
 chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
 
 # Subsitute the Fink root for FINK_ROOT where appropriate
-perl -pi -e "s/FINK_ROOT/$FINK_ROOT/g" resources/InstallationCheck resources/VolumeCheck resources/postflight
+perl -pi -e "s|FINK_ROOT|$FINK_ROOT|g" $RESDIR/InstallationCheck $RESDIR/VolumeCheck $RESDIR/postflight
 
 # prepare InstallationCheck for OS X version and hardware
 perl -pi -e "s/OSX_VERSION/$OSX_VERSION/g; s/CPU_NAME/$CPU_NAME/g" $RESDIR/InstallationCheck
