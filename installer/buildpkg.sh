@@ -10,6 +10,7 @@ fi
 if [[ ! $FINK_ROOT ]]; then
 	FINK_ROOT=/sw
 fi
+echo "FINK_ROOT=$FINK_ROOT"
 
 # sanity check: presence of contents directory with Fink tree
 if [[ ! -d $IN_BASEDIR/contents$FINK_ROOT ]]; then
@@ -76,7 +77,8 @@ if [[ -e $IN_BASEDIR/Fink-$IN_VERSION-Installer.dmg ]]; then
 	exit 1
 fi
 
-echo "basedir: $IN_BASEDIR version: $IN_VERSION";
+echo "basedir: $IN_BASEDIR";
+echo "version: $IN_VERSION";
 rm -rf $RESDIR
 rm -rf $DMGDIR
 rm -rf $CONDIR
@@ -92,7 +94,7 @@ cp $IN_BASEDIR/resources/ReadMe.rtf $DMGDIR/Fink\ ReadMe.rtf
 cp $IN_BASEDIR/resources/License.rtf $DMGDIR
 cp -Rp $IN_BASEDIR/contents $CONDIR
 # Don't chown -R $CONDIR because we need to keep ownerships intact
-# for some files (primarily in var) throughout the hierarchy.
+# for some files (primarily in FINK_ROOT/var) throughout the hierarchy.
 #chown -R root:admin $CONDIR
 chmod 1755 $CONDIR
 rm -Rf $CONDIR/CVS
