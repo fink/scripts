@@ -111,7 +111,7 @@ ln -s doc/doc.en.html $DMGDIR/Documentation.html
 ln -s faq/faq.en.html $DMGDIR/FAQ.html
 
 # Put the correct pathsetup script into pathsetup.app
-mkdir -p $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
+mkdir -p $DMGDIR/pathsetup.app/Contents/MacOS
 cp $IN_BASEDIR/contents${FINK_ROOT}/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 chmod a+x $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 
