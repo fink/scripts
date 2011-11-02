@@ -14,9 +14,10 @@ echo "FINK_ROOT=$FINK_ROOT"
 
 # sanity check: presence of contents directory with Fink tree
 if [[ ! -d $IN_BASEDIR/contents$FINK_ROOT ]]; then
-	echo "'$IN_BASEDIR/contents' does not exist!"
+	echo "'$IN_BASEDIR/contents$FINK_ROOT' does not exist!"
 	echo "Your Fink tree should have been copied here before"
 	echo "running this script."
+	exit 1
 fi
 
 # sanity check: bindist version number format is #.#.#
