@@ -125,15 +125,19 @@ if ($vcstype eq 'CVS') {
 		exit 1;
 	}
 
-	# We need to treat "submodules" like "fink/mirror" in a special way.
+	# We need to treat "fink-mirrors" in a special way, because it currently is not
+	# in a repository of its own
 	# The first component ("fink" in the example) as a repository name,
 	# while the remaining components specify a subdirectory.
-	my @module_components = split /\//, $module;
-	my $taropts='--strip-components '.  ($#module_components + 1);
-	$taropts .= ' fink-' . (shift @module_components) . '-*/';
-	$taropts .= join('/', @module_components);
+	my $taropts;
+	$taropts = "-xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname";
+	if ($module eq 'fink-mirrors') {
+		$taropts .= " --strip-components 2 fink-fink-*/mirror";
+	} else {
+		$taropts .= " --strip-components 1";
+	}
 
-	`mkdir -p $tmpdir/$fullname && /usr/bin/tar -xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname $taropts`;
+	`mkdir -p $tmpdir/$fullname && /usr/bin/tar $taropts`;
 
 	if (not -d "$tmpdir/$fullname") {
 		print "git export failed, directory $fullname doesn't exist!\n";
@@ -156,8 +160,6 @@ if ($vcstype eq 'CVS') {
 	# TODO: verify that the "git" is available in the first place
 
 } else {
-	# TODO: SVN mode?
-	# For unknown/unsupported modes, just die here
 	print "unknown version control system '$vcstype'!\n";
 	exit 1;
 }
