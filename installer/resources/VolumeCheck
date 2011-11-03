@@ -1,6 +1,12 @@
 #!/usr/bin/perl
 # -*- mode: Perl; tab-width: 4; -*-
 
+# Checks performed:
+# No previous Fink installation
+# User has write permission to target volume
+# Symlinks are possible
+# Permissions are enabled on volume (via diskutil)
+
 use File::Find;
 
 my $basedir = "FINK_ROOT";
