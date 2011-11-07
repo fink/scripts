@@ -6,6 +6,20 @@ if [[ ! -d $IN_BASEDIR ]]; then
     exit 1
 fi
 
+# sanity check: if FINK_ROOT not set, give it a default value
+if [[ ! $FINK_ROOT ]]; then
+	FINK_ROOT=/sw
+fi
+echo "FINK_ROOT=$FINK_ROOT"
+
+# sanity check: presence of contents directory with Fink tree
+if [[ ! -d $IN_BASEDIR/contents$FINK_ROOT ]]; then
+	echo "'$IN_BASEDIR/contents$FINK_ROOT' does not exist!"
+	echo "Your Fink tree should have been copied here before"
+	echo "running this script."
+	exit 1
+fi
+
 # sanity check: bindist version number format is #.#.#
 shopt -q extglob
 save_shopt=$?
@@ -64,7 +78,8 @@ if [[ -e $IN_BASEDIR/Fink-$IN_VERSION-Installer.dmg ]]; then
 	exit 1
 fi
 
-echo "basedir: $IN_BASEDIR version: $IN_VERSION";
+echo "basedir: $IN_BASEDIR";
+echo "version: $IN_VERSION";
 rm -rf $RESDIR
 rm -rf $DMGDIR
 rm -rf $CONDIR
@@ -80,7 +95,7 @@ cp $IN_BASEDIR/resources/ReadMe.rtf $DMGDIR/Fink\ ReadMe.rtf
 cp $IN_BASEDIR/resources/License.rtf $DMGDIR
 cp -Rp $IN_BASEDIR/contents $CONDIR
 # Don't chown -R $CONDIR because we need to keep ownerships intact
-# for some files (primarily in var) throughout the hierarchy.
+# for some files (primarily in FINK_ROOT/var) throughout the hierarchy.
 #chown -R root:admin $CONDIR
 chmod 1755 $CONDIR
 rm -Rf $CONDIR/CVS
@@ -97,13 +112,17 @@ ln -s doc/doc.en.html $DMGDIR/Documentation.html
 ln -s faq/faq.en.html $DMGDIR/FAQ.html
 
 # Put the correct pathsetup script into pathsetup.app
-cp $IN_BASEDIR/contents/sw/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
+mkdir -p $DMGDIR/pathsetup.app/Contents/MacOS
+cp $IN_BASEDIR/contents${FINK_ROOT}/bin/pathsetup.sh $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 chmod a+x $DMGDIR/pathsetup.app/Contents/MacOS/pathsetup
 
 # permissions for pathsetup.app
 chmod 555 $DMGDIR/pathsetup.app
 chmod 555 $DMGDIR/pathsetup.app/Contents/MacOS
 chmod 555 $DMGDIR/pathsetup.app/Contents/Resources
+
+# Subsitute the Fink root for FINK_ROOT where appropriate
+perl -pi -e "s|FINK_ROOT|$FINK_ROOT|g" $RESDIR/InstallationCheck $RESDIR/VolumeCheck $RESDIR/postflight
 
 # prepare InstallationCheck for OS X version and hardware
 perl -pi -e "s/OSX_VERSION/$OSX_VERSION/g; s/CPU_NAME/$CPU_NAME/g" $RESDIR/InstallationCheck

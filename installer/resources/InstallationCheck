@@ -1,10 +1,16 @@
 #!/usr/bin/perl
 # -*- mode: Perl; tab-width: 4; -*-
 
+# Checks performed:
+# No previous Fink installation
+# Installer is for current OS X version
+# Installer is for current OS X architecture
+# Xcode is present
+
 use File::Find;
 use POSIX qw(uname);
 
-my $basedir = "/sw";
+my $basedir = "FINK_ROOT";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 
 # For what OS X major-version are we configured?
@@ -22,7 +28,7 @@ DO_CHECKS:
 
 	# we're only for virgin systems, not upgrading/overwriting existing fink
 	if ((-e "$basedir") || (-l "$basedir")) {
-		print "Fink Installer: ROOT /sw exists!\n";
+		print "Fink Installer: ROOT FINK_ROOT exists!\n";
 		$errmsg = 16;
 		last;
 	}
@@ -51,7 +57,7 @@ DO_CHECKS:
 			$errmsg = 4;
 		}
 		last;
-	}
+	} # version check
 
 	# human-readable string ("Power Macintosh", "i386" or "x86_64")
 	# not a config.guess platform value
@@ -71,7 +77,16 @@ DO_CHECKS:
 			$errmsg = 4;
 		}
 		last;
-	}
+	} # CPU arch check
+
+	# since this is a source installer, make sure we have Xcode.
+	# This only works for 10.7+
+	# $target_OSX already shown to be correct for system
+	if ($target_OSX eq '10.7') {
+		if (! -e "/usr/bin/xcodebuild") {
+			$errmsg = 17;
+		}
+	} # Xcode check
 }
 
 # see http://developer.apple.com/documentation/DeveloperTools/Conceptual/SoftwareDistribution/Concepts/sd_install_check_ref.html

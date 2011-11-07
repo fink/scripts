@@ -1,6 +1,6 @@
-NOTE: as of 1 June 2005, the buildpkg.sh script is not likely to work with
-versions of OS X prior to 10.3.  If necessary, older versions of buildpkg.sh
-can be obtained from CVS.
+NOTE: as of 25 October 2011, the buildpkg.sh script is not likely to work with
+versions of OS X prior to 10.5 (maybe even 10.7).  If necessary, older versions
+of buildpkg.sh can be obtained from the old read-only CVS repository.
 
 Setup environment variables: 
  BINDIST_VERSION is the version of fink you want to install, as a numerical
@@ -15,6 +15,11 @@ Setup environment variables:
  installation, so if you move /sw to another location such as /sw.orig, 
  be sure to reset IN_BASEDIR to the correct value. IN_BASEDIR should
  not contain any spaces, quotes, or metachars.
+
+ FINK_ROOT is the path for the Fink install location.  This will almost
+ always be /sw, but can be set to another value, which is useful really
+ only for testing.
+ If FINK_ROOT is not set, then it defaults to /sw.
 
 TODO: figure out how to patch destined $target_OSX and $target_CPU
 into InstallationCheck and *.lproj/InstallationCheck.strings
@@ -37,9 +42,8 @@ Step 3:
  since the last package manager release.
 
 Step 4:
- Remove all .deb's in  /sw/fink/dists/crypto/binary-darwin-powerpc/ and
- /sw/fink/dists/main/binary-darwin-powerpc/* , and then remove all symlinks
- from /sw/fink/debs - you can do this by doing:
+ Remove all .deb's in /sw/fink/dists/stable/main/binary-darwin-x86_64/* , 
+ and then remove all symlinks from /sw/fink/debs - you can do this by doing:
  "sudo find /sw/fink -name '*.deb' -exec rm -rf {} \;"
 
 Step 5:
@@ -65,6 +69,8 @@ Step 7:
  Move the entire /sw directory into a subdirectory of IN_BASEDIR/contents 
  (that is, you should have a directory IN_BASEDIR/contents/sw/ when you are 
  finished).
+ Run "sudo cp -Rp /sw $IN_BASEDIR/contents" to copy.  This preserves internal
+ file permissions.
 
 Step 7a:
  Update the copy of FinkCommander in IN_BASEDIR/dmg to the latest version.

@@ -1,9 +1,15 @@
 #!/usr/bin/perl
 # -*- mode: Perl; tab-width: 4; -*-
 
+# Checks performed:
+# No previous Fink installation
+# User has write permission to target volume
+# Symlinks are possible
+# Permissions are enabled on volume (via diskutil)
+
 use File::Find;
 
-my $basedir = "/sw";
+my $basedir = "FINK_ROOT";
 my $PACKAGE_PATH = $ENV{PACKAGE_PATH};
 my $TARGET_VOLUME = $ARGV[0];
 my $targetdir = "$TARGET_VOLUME$basedir";
