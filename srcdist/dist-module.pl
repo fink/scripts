@@ -125,17 +125,7 @@ if ($vcstype eq 'CVS') {
 		exit 1;
 	}
 
-	# We need to treat "fink-mirrors" in a special way, because it currently is not
-	# in a repository of its own
-	# The first component ("fink" in the example) as a repository name,
-	# while the remaining components specify a subdirectory.
-	my $taropts;
-	$taropts = "-xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname";
-	if ($module eq 'fink-mirrors') {
-		$taropts .= " --strip-components 2 fink-fink-*/mirror";
-	} else {
-		$taropts .= " --strip-components 1";
-	}
+	my $taropts = "-xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname --strip-components 1";
 
 	`mkdir -p $tmpdir/$fullname && /usr/bin/tar $taropts`;
 
