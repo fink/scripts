@@ -121,7 +121,7 @@ print "Exporting module $module, tag $tag from $vcstype:\n";
 
 
 if ($vcstype eq 'github') {
-	# Why doesn't this (using '-o' instead of '-O') work with curl?
+	# Why doesn't this work with curl? (using '-o' instead of '-O') 
 	system("umask 022; wget $github_url/$tag -O $tmpdir/$tag.tar.gz");
 
 	if ($? or not -f "$tmpdir/$tag.tar.gz") {
@@ -145,6 +145,9 @@ if ($vcstype eq 'github') {
 
 	if (not -d "$tmpdir/$fullname") {
 	print "CVS export failed, directory $fullname doesn't exist!\n";
+
+	### remove any .cvsignore files
+	`find $tmpdir/$fullname -name .cvsignore -exec rm {} \\;`;
 	
 	system("gzip $tmpdir/$fullname");
 
