@@ -144,8 +144,9 @@ if ($vcstype eq 'github') {
 	system('umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module');
 
 	if (not -d "$tmpdir/$fullname") {
-	print "CVS export failed, directory $fullname doesn't exist!\n";
-
+		print "CVS export failed, directory $fullname doesn't exist!\n";
+		exit 1;
+	}
 	### remove any .cvsignore files
 	`find $tmpdir/$fullname -name .cvsignore -exec rm {} \\;`;
 	
