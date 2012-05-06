@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="unbuilt/dependency_failed">Failed: Dependency (.*) failed to build</filter>
 	<filter name="unbuilt/skipped">Failed: .* is on the skip list</filter>
 	<filter name="unbuilt/inconsistent_dependencies">Could not resolve inconsistent dependencies</filter>
+	<filter name="unbuilt/nodep-pm5123">Can't resolve dependency "(.*?-pm5123.*?)" for package</filter>
 	<filter name="unbuilt/nodep-pm5100">Can't resolve dependency "(.*?-pm5100.*?)" for package</filter>
 	<filter name="unbuilt/nodep-pm588">Can't resolve dependency "(.*?-pm588.*?)" for package</filter>
 	<filter name="unbuilt/nodep-pm586">Can't resolve dependency "(.*?-pm586.*?)" for package</filter>
@@ -39,7 +40,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/oneproj/exact">chown: smmsp: Invalid argument</filter>
 	<filter name="failures/oneproj/absoft">Absoft Fortran not installed.</filter>
 	<filter name="failures/oneproj/finch-pm">Can't locate object method "file_name_is_absolute" via package "ExtUtils::Liblist"</filter>
-	<filter name="failures/oneproj/fontconfig-path">error processing .*/sw/fink/dists/buildfink/binary-darwin-i386/fontconfig-path</filter>
+	<filter name="failures/oneproj/fontconfig-path">error processing .*/sw/fink/dists/buildfink/binary-darwin-x86_64/fontconfig-path</filter>
 	<filter name="failures/oneproj/fte">o_messages.cpp:23: error: non-local variable '&lt;anonymous struct&gt; CRegexp [32]' uses anonymous type</filter>
 	<filter name="failures/oneproj/gri">convert: Command not found</filter>
 	<filter name="failures/oneproj/hfstar">Please specify the source encoding through --from-code.</filter>
@@ -141,6 +142,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	<filter name="failures/project/setjmp">sorry, unimplemented: function '.*' can never be inlined</filter>
 	<filter name="failures/project/nostatic">error: '(.*)' may not be declared as static</filter>
 	<filter name="failures/project/empty_compiler_flag">  *\-[I]  *\-</filter>
+	<filter name="failures/project/f-p-p">Please fix build process to get consistent use</filter>
 
 	<filter name="failures/project/stricter/static">error: static declaration of '.*' follows non-static declaration</filter>
 	<filter name="failures/project/stricter/newinit">ISO C\+\+ forbids initialization in array new</filter>
