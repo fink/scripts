@@ -394,7 +394,7 @@ sub prepSystem {
   mkdir($RunDir);
   mkdir("$RunDir/$_") for qw(pkginfo logs src out validate nobody);
   mkdir("$RunDir/pkginfo/finkinfo");
-  mkdir("$RunDir/pkginfo/binary-darwin-i386");
+  mkdir("$RunDir/pkginfo/binary-darwin-x86_64");
 
   open(LOG, ">>", "$RunDir/log.txt") or die "Couldn't open log: $!\n";
 
@@ -815,11 +815,11 @@ sub recurseOnDepends {
       getDebFiles($_) foreach FinkLib::getRelatives($obj);
     }
 
-    my $dst = "$RunDir/pkginfo/binary-darwin-i386/$deb";
+    my $dst = "$RunDir/pkginfo/binary-darwin-x86_64/$deb";
     if ($src ne $dst) {
       move($src, $dst);
       unlink("$FinkDir/fink/debs/$deb");
-      symlink("$RunDir/pkginfo/binary-darwin-i386/$deb", "$FinkDir/fink/debs/$deb");
+      symlink("$RunDir/pkginfo/binary-darwin-x86_64/$deb", "$FinkDir/fink/debs/$deb");
     }
 
     my @okpkgs = $pkg;
@@ -828,11 +828,11 @@ sub recurseOnDepends {
 
       my $deb = $relative->get_debname();
       my $src = readlink("$FinkDir/fink/debs/$deb");
-      my $dst = "$RunDir/pkginfo/binary-darwin-i386/$deb";
+      my $dst = "$RunDir/pkginfo/binary-darwin-x86_64/$deb";
       if ($src ne $dst) {
 	move($src, $dst);
 	unlink("$FinkDir/fink/debs/$deb");
-	symlink("$RunDir/pkginfo/binary-darwin-i386/$deb", "$FinkDir/fink/debs/$deb");
+	symlink("$RunDir/pkginfo/binary-darwin-x86_64/$deb", "$FinkDir/fink/debs/$deb");
       }
     }
 
