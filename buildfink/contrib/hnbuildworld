@@ -22,8 +22,13 @@
 
 FINKDIR=/sw
 OUTDIR=/src/buildworld
-BFDIR=/src/fink/scripts/buildfink
+BFDIR=/src/Fink/scripts/buildfink
 BUILDNAME=`date "+%Y-%m-%d"`
+
+if [[ $UID != 0 ]];
+	then echo "Must be run as root!"
+	exit 1
+fi
 
 if [[ $# != 2 ]]
 	then echo "Usage: $0 [ new | continue | analysis ] buildname" >&2
@@ -41,8 +46,7 @@ fi
 analyze()
 {
 	echo "OS:" `sw_vers -productVersion` > $OUTDIR/$BUILDNAME/rundata.txt
-	$FINKDIR/bin/fink -V | head -2 >> $OUTDIR/$BUILDNAME/rundata.txt
-	grep "^Trees" $FINKDIR/etc/fink.conf >> $OUTDIR/$BUILDNAME/rundata.txt
+	$FINKDIR/bin/fink -V | head -3 >> $OUTDIR/$BUILDNAME/rundata.txt
 
 	# Start the analysis
 	echo "Running analysis scripts"
@@ -88,6 +92,7 @@ fi
 #	hangs:
 #		driftnet
 #	demands interactivity:
+#		ccp4 (asks to approve license)
 #		jacorb (hangs with either --b-a-n or no Console)
 #	purge demands interactivity:
 #	doesn't build and gets in inconsistent state:
@@ -102,11 +107,8 @@ fi
 # Assumes that packages in stable may not work.
 # Unstable is more up to date, and so may have a 'stable' package fixed.
 STABLE_PACKAGES="\
-	--skip commons-logging \
-	"
-
-UNSTABLE_PACKAGES="\
 	--skip clamav \
+	--skip ccp4 \
 	--skip driftnet \
 	--skip jacorb \
 	--skip nepenthes \
