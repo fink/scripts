@@ -15,6 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
+<!--
+This file contains the rules used to filter the build logs. Each filter 
+is a regular expression that is matched against the build logs. A build 
+log gets sorted into a category once a single filter is matched, even if 
+multiple rules could be matched.
+-->
 <filters>
 	<filter name="unbuilt/download" flags="m">^Failed: file download failed</filter>
 	<filter name="unbuilt/unbuildable">Failed: Can't figure out how to build(?:.*Unsatisfied dependencies: (.*)\.)?</filter>
