@@ -149,6 +149,8 @@ multiple rules could be matched.
 	<filter name="failures/project/nostatic">error: '(.*)' may not be declared as static</filter>
 	<filter name="failures/project/empty_compiler_flag">  *\-[I]  *\-</filter>
 	<filter name="failures/project/f-p-p">Please fix build process to get consistent use</filter>
+	<filter name="failures/project/insufficient_permission" flags="i">(?:install|rm|touch|cp|mv|rmdir|mkdir).*permission denied</filter>
+	<filter name="failures/project/chown">ch(?:own|mod|grp).*Operation not permitted</filter>
 
 	<filter name="failures/project/stricter/static">error: static declaration of '.*' follows non-static declaration</filter>
 	<filter name="failures/project/stricter/newinit">ISO C\+\+ forbids initialization in array new</filter>
