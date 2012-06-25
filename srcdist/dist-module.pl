@@ -42,12 +42,6 @@ sub print_usage_and_exit {
 
 ### configuration
 
-#my $gitroot='git@github.com:fink/';
-my $github_url='https://github.com/fink/fink/tarball';
-my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
-my $distribution = "10.4";  #default value
-my $vcstype;
-
 ### init
 
 my $result = GetOptions (
@@ -66,6 +60,7 @@ my $result = GetOptions (
 # The current default is --github.
 # TODO: add remote repository support using "git archive --remote=URI"
 
+my $vcstype;
 die "Only one of --local, --github, or --cvs may be specified.\n" if (($localdir && $github) || ($localdir && $cvs) || ($github && $cvs));
 $vcstype = 'github' if !($localdir || $cvs);
 $vcstype = 'local' if $localdir;
@@ -77,6 +72,13 @@ my $module = shift;
 my $version = shift;
 my $tmpdir = shift || "/tmp";
 my $tag = shift;
+
+#my $gitroot='git@github.com:fink/';
+my $github_url="https://github.com/fink/$module/tarball";
+my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
+my $distribution = "10.4";  #default value
+
+
 
 # Bail out if all of the mandatory parameters aren't set
 &print_usage_and_exit() if !($module && $version);
