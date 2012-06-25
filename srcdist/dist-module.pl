@@ -4,7 +4,7 @@
 #
 # Fink - a package manager that downloads source and installs it
 # Copyright (c) 2001 Christoph Pfisterer
-# Copyright (c) 2001-2011 The Fink Package Manager Team
+# Copyright (c) 2001-2012 The Fink Package Manager Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,44 +24,47 @@
 $| = 1;
 use 5.008_001;  # perl 5.8.1 or newer required
 use strict;
+use Getopt::Long;
+
+my ($github,$localdir,$cvs);
+my $usage=''; #Give usage message
 
 require Fink::Bootstrap;
 import Fink::Bootstrap qw(&modify_description &read_version_revision);
 
-
-### configuration
-
-#my $gitroot='git@github.com:fink/';
-my $github_url='https://github.com/fink/fink/tarball';
-my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
-my $distribution = "10.4";  #default value
-my $vcstype='CVS';
-
-
-### init
-
 sub print_usage_and_exit {
-	print "Usage: $0 [--cvs | --github] <module> <version-number> [<temporary-directory> [<tag>]]\n";
+	print "\nUsage:\n";
+	print "\t$0 [ --github | --local=<local-clone> | --cvs ] <module> <version-number> [<temporary-directory> [<tag>]]\n";
+	print "\n\t$0 --help\n\n";	
 	exit 1;
 }
 
-&print_usage_and_exit() if ($#ARGV < 1);
 
-# The first (optional) parameter can be used to specify the VCS (version control system)
-# to be used. We currently support two choices:
-# 1) --cvs gets the code from the Fink SF.net CVS repository
-# 2) --github gets the code from the Fink GitHub git repository
-# TODO: Consider adding a third option "--git=URI" which grabs everything from
-# a (local or remote) git repository using "git archive --remote=URI"
-if ($ARGV[0] eq '--cvs') {
-	shift;
-	$vcstype = 'CVS';
-} elsif ($ARGV[0] eq '--github') {
-	shift;
-	$vcstype = 'github';
-}
+### configuration
 
-&print_usage_and_exit() if ($#ARGV < 1);
+### init
+
+my $result = GetOptions (
+			'help' 		=> \$usage,
+			'github' 	=> \$github,
+			'local=s'	=> \$localdir,
+			'cvs'		=> \$cvs,	
+			);
+
+
+# An option flag can be used to specify the VCS (version control system)
+# to be used. We currently support three choices:
+# 1) --github gets the code from the Fink GitHub git repository
+# 2) --local=<local-clone> grabs everything from a local clone from the Fink Github git repository
+# 3) --cvs gets the code from the Fink SourceForge cvs repository
+# The current default is --github.
+# TODO: add remote repository support using "git archive --remote=URI"
+
+my $vcstype;
+die "Only one of --local, --github, or --cvs may be specified.\n" if (($localdir && $github) || ($localdir && $cvs) || ($github && $cvs));
+$vcstype = 'github' if !($localdir || $cvs);
+$vcstype = 'local' if $localdir;
+$vcstype = 'CVS' if $cvs;
 
 #print "Running in $vcstype mode\n";
 
@@ -69,6 +72,16 @@ my $module = shift;
 my $version = shift;
 my $tmpdir = shift || "/tmp";
 my $tag = shift;
+
+#my $gitroot='git@github.com:fink/';
+my $github_url="https://github.com/fink/$module/tarball";
+my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
+my $distribution = "10.4";  #default value
+
+
+
+# Bail out if all of the mandatory parameters aren't set
+&print_usage_and_exit() if !($module && $version);
 
 if (not defined($tag)) {
 	$tag = "release_" . $version;
@@ -90,7 +103,7 @@ print "packaging $module release $version, tag $tag\n";
 
 ### setup temp directory
 
-`mkdir -p $tmpdir`;
+system("mkdir -p $tmpdir");
 #cd $tmpdir
 umask 022;
 
@@ -104,66 +117,65 @@ if (-d "$tmpdir/$fullname") {
 
 print "Exporting module $module, tag $tag from $vcstype:\n";
 
-if ($vcstype eq 'CVS') {
-	# Original command using CVS:
-	`umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module`;
+	# TODO: Make this more robust, e.g. first check that we are in a proper checkout/clone of the fink repository,
+	# and if not, generate a more meaningful error.
+	# TODO: verify that the "git" is available in the first place
 
-	if (not -d "$tmpdir/$fullname") {
-		print "CVS export failed, directory $fullname doesn't exist!\n";
-		exit 1;
-	}
 
-	### remove any .cvsignore files
-	`find $tmpdir/$fullname -name .cvsignore -exec rm {} \\;`;
-
-} elsif ($vcstype eq 'github') {
-
-	`umask 022; wget $github_url/$tag -O $tmpdir/$tag.tar.gz`;
+if ($vcstype eq 'github') {
+	# Why doesn't this work with curl? (using '-o' instead of '-O') 
+	system("umask 022; wget $github_url/$tag -O $tmpdir/$tag.tar.gz");
 
 	if ($? or not -f "$tmpdir/$tag.tar.gz") {
 		print "github download failed, could not retrieve remote data!\n";
 		exit 1;
 	}
 
-	# We need to treat "fink-mirrors" in a special way, because it currently is not
-	# in a repository of its own
-	# The first component ("fink" in the example) as a repository name,
-	# while the remaining components specify a subdirectory.
-	my $taropts;
-	$taropts = "-xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname";
-	if ($module eq 'fink-mirrors') {
-		$taropts .= " --strip-components 2 fink-fink-*/mirror";
-	} else {
-		$taropts .= " --strip-components 1";
+} elsif ($vcstype eq 'local') {
+
+	system("cd $localdir; umask 022; git archive --format=tar.gz --prefix=$fullname/ -o $tmpdir/$tag.tar.gz $tag");
+
+	if ($? or not -f "$tmpdir/$tag.tar.gz") {
+		print "Could not generate $tag.tar.gz!\n";
+		exit 1;
 	}
+
+} elsif ($vcstype eq 'CVS') {
+
+	# Original command using CVS:
+	system('umask 022; cd $tmpdir; cvs -d "$cvsroot" export -r "$tag" -d $fullname $module');
+
+	if (not -d "$tmpdir/$fullname") {
+		print "CVS export failed, directory $fullname doesn't exist!\n";
+		exit 1;
+	}
+	### remove any .cvsignore files
+	`find $tmpdir/$fullname -name .cvsignore -exec rm {} \\;`;
+	
+	system("gzip $tmpdir/$fullname");
+
+} else {
+
+
+	print "unknown version control system '$vcstype'!\n";
+	exit 1;
+}
+	# TODO: Add a mode to allow specifying a "remote" repository
+	# via the git archive --remote option
+
+
+my $taropts = "-xvf $tmpdir/$tag.tar.gz -C $tmpdir/$fullname --strip-components 1";
 
 	`mkdir -p $tmpdir/$fullname && /usr/bin/tar $taropts`;
 
 	if (not -d "$tmpdir/$fullname") {
-		print "git export failed, directory $fullname doesn't exist!\n";
+		print "Export failed, directory $fullname doesn't exist!\n";
 		exit 1;
 	}
 
 	### remove any .gitignore files
 	# TODO: Really? There is only one, and it is harmless
 	`find $tmpdir/$fullname -name .gitignore -exec rm {} \\;`;
-	
-#} elsif ($vcstype eq 'git') {
-	# TODO: Add a mode which assumes that you have a checkout/clone of the fink
-	# git repository, with all tags in it:
-	#`umask 022; git archive --format=tar --prefix=$fullname/ -o $tmpdir/$fullname.tar $tag; cd $tmpdir; tar xf  $fullname.tar`;
-	# It could also (optionally?) allow specifying a "remote" repository
-	# via the git archive --remote option
-
-	# TODO: Make this more robust, e.g. first check that we are in a proper checkout/clone of the fink repository,
-	# and if not, generate a more meaningful error.
-	# TODO: verify that the "git" is available in the first place
-
-} else {
-	print "unknown version control system '$vcstype'!\n";
-	exit 1;
-}
-
 
 ### versioning
 
@@ -203,9 +215,6 @@ print `ls -l $tmpdir/*.tar.gz` . "\n";
 my $coda = <<CODA;
 CustomMirror: <<
 Primary: http://downloads.sourceforge.net/
-nam-US: http://easynews.dl.sourceforge.net/sourceforge/
-nam-US: http://superb-west.dl.sourceforge.net/sourceforge/
-nam-US: http://superb-east.dl.sourceforge.net/sourceforge/
 nam-US: http://voxel.dl.sourceforge.net/sourceforge/
 asi-JP: http://jaist.dl.sourceforge.net/sourceforge/
 asi-TW: http://nchc.dl.sourceforge.net/sourceforge/
