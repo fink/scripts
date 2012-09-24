@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# sanity check: package builder must be run as root
+if [[ `id -un` != "root" ]]; then
+	echo "$0 must be run as root"
+	echo "Use 'sudo ./buildpkg.sh' (sudo -E on 10.6+)"
+	exit 1
+fi
+
 # sanity check: presence of target directory
 if [[ ! -d $IN_BASEDIR ]]; then
     echo "IN_BASEDIR '$IN_BASEDIR' does not exist!"
