@@ -1,9 +1,28 @@
 #!/bin/bash
 
+### Program locations that might not necessarily be in the same location everywhere.
+CPMAC=/usr/bin/CpMac
+HDIUTIL=/usr/bin/hdiutil
+PACKAGEMAKER=/Applications/Xcode.app/Contents/Applications/PackageMaker.app/Contents/MacOS/PackageMaker
+
 # sanity check: package builder must be run as root
 if [[ `id -un` != "root" ]]; then
 	echo "$0 must be run as root"
 	echo "Use 'sudo ./buildpkg.sh' (sudo -E on 10.6+)"
+	exit 1
+fi
+
+# sanity check: check that these programs are present where we think they are
+if [[ ! -x $CPMAC ]]; then
+	echo "$CPMAC not found"
+	exit 1
+fi
+if [[ ! -x $HDIUTIL ]]; then
+	echo "$HDIUTIL not found"
+	exit 1
+fi
+if [[ ! -x $PACKAGEMAKER ]]; then
+	echo "$PACKAGEMAKER not found"
 	exit 1
 fi
 
@@ -97,7 +116,7 @@ chmod a+x $IN_BASEDIR/resources/postflight
 chmod a+x $IN_BASEDIR/resources/VolumeCheck
 
 cp -R $IN_BASEDIR/resources $RESDIR
-/Developer/Tools/CpMac -r $IN_BASEDIR/dmg $DMGDIR
+$CPMAC -r $IN_BASEDIR/dmg $DMGDIR
 cp $IN_BASEDIR/resources/ReadMe.rtf $DMGDIR/Fink\ ReadMe.rtf
 cp $IN_BASEDIR/resources/License.rtf $DMGDIR
 cp -Rp $IN_BASEDIR/contents $CONDIR
@@ -155,7 +174,7 @@ echo "running PackageMaker...";
 `find $DMGDIR -name '.DS_Store' -type d -exec rm -rf {} \; 2>> /dev/null`
 
 # Make the .pkg after clearing out unwanted files.
-/Developer/usr/bin/packagemaker \
+$PACKAGEMAKER \
 --root $CONDIR \
 --info Info.plist \
 --out "$DMGDIR/Fink $IN_VERSION Installer for $OSX_VERSION.pkg" \
@@ -172,7 +191,7 @@ chmod -R a+rX $DMGDIR
 #$IN_BASEDIR/mkdmg.pl -v "Fink-$IN_VERSION-Installer.dmg" $DMGDIR/*
 
 echo "Creating disk image..."
-hdiutil create \
+$HDIUTIL create \
 -srcfolder $DMGDIR \
 -fs HFS+ \
 -volname "Fink $IN_VERSION Installer" \
