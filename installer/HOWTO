@@ -25,55 +25,55 @@ TODO: figure out how to patch destined $target_OSX and $target_CPU
 into InstallationCheck and *.lproj/InstallationCheck.strings
 
 Step 1:
- Clear out /sw so that a fresh version can be installed there.
+ Clear out $FINK_ROOT so that a fresh version can be installed there.
 
 Step 2:
  Download fink-BINDIST_VERSION-full.tar.gz from sourceforge (or use the copy
  you generated when building the srcdist), unpack it and run "./bootstrap",
- installing into /sw.  Accept all default choices during configuration.
+ installing into $FINK_ROOT.  Accept all default choices during configuration.
 
 Step 2A:
  Make sure that the file CURRENT-FINK-$OSX_VERSION is present on the fink
- website, and run "/sw/bin/fink selfupdate", selecting option 3 (stick to
+ website, and run "$FINK_ROOT/bin/fink selfupdate", selecting option 3 (stick to
  point releases).
 
 Step 3:
- Run "/sw/bin/fink update-all" in case there were updates to base-packages 
+ Run "$FINK_ROOT/bin/fink update-all" in case there were updates to base-packages 
  since the last package manager release.
 
 Step 4:
- Remove all .deb's in /sw/fink/dists/stable/main/binary-darwin-x86_64/* , 
- and then remove all symlinks from /sw/fink/debs - you can do this by doing:
- "sudo find /sw/fink -name '*.deb' -exec rm -rf {} \;"
+ Remove all .deb's in $FINK_ROOT/fink/dists/stable/main/binary-darwin-x86_64/* , 
+ and then remove all symlinks from $FINK_ROOT/fink/debs - you can do this by doing:
+ "sudo find $FINK_ROOT/fink -name '*.deb' -exec rm -rf {} \;"
 
 Step 5:
- Remove /sw/src/*
+ Remove $FINK_ROOT/src/*
 
 Step 6:
- Run "/sw/bin/fink scanpackages", and then "sudo /sw/bin/apt-get update" to 
+ Run "$FINK_ROOT/bin/fink scanpackages", and then "sudo $FINK_ROOT/bin/apt-get update" to 
  properly prepare for distribution. 
 
 Step6a:
- Run "/sw/bin/fink list --installed" to be ready with the information when 
+ Run "$FINK_ROOT/bin/fink list --installed" to be ready with the information when 
  needed in step 8.
 
 Step 6b:
- Check permissions in your /sw directory to verify things are world-readable 
+ Check permissions in your $FINK_ROOT directory to verify things are world-readable 
  when appropriate
 
 Step 6c:
- Run "chmod 1755 IN_BASEDIR/contents" to get the permissions of the 
+ Run "chmod 1755 $IN_BASEDIR/contents" to get the permissions of the 
  "contents" directory to match those of / on the target machine.
 
 Step 7:
- Move the entire /sw directory into a subdirectory of IN_BASEDIR/contents 
- (that is, you should have a directory IN_BASEDIR/contents/sw/ when you are 
+ Move the entire $FINK_ROOT directory into a subdirectory of $IN_BASEDIR/contents 
+ (that is, you should have a directory $IN_BASEDIR/contents$FINK_ROOT/ when you are 
  finished).
- Run "sudo cp -Rp /sw $IN_BASEDIR/contents" to copy.  This preserves internal
+ Run "sudo cp -Rp $FINK_ROOT $IN_BASEDIR/contents" to copy.  This preserves internal
  file permissions.
 
 Step 7a:
- Update the copy of FinkCommander in IN_BASEDIR/dmg to the latest version.
+ Update the copy of FinkCommander in $IN_BASEDIR/dmg to the latest version.
 
 Step 8.
  Use TextEdit to examine the files in the resources and dmg subdirs of 
