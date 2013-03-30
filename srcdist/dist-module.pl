@@ -215,7 +215,6 @@ print `ls -l $tmpdir/*.tar.gz` . "\n";
 my $coda = <<CODA;
 CustomMirror: <<
 Primary: http://downloads.sourceforge.net/
-nam-US: http://voxel.dl.sourceforge.net/sourceforge/
 asi-JP: http://jaist.dl.sourceforge.net/sourceforge/
 asi-TW: http://nchc.dl.sourceforge.net/sourceforge/
 aus-AU: http://internode.dl.sourceforge.net/sourceforge/
