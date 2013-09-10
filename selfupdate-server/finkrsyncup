@@ -6,10 +6,14 @@ LOCKFILE="/var/run/finkrsyncup.lock"
 export HOME=/var/root
 export CVS_RSH=ssh
 
-lockfile -r 0 ${LOCKFILE} || exit 0
+lockfile -r 0 "${LOCKFILE}" || exit 0
 
-cd ${FIROOT} ; /usr/bin/cvs -d :ext:finkcvs@fink.cvs.sourceforge.net:/cvsroot/fink -z3 co -d finkinfo.tmp dists 
-rsync -a --delete --exclude=.cvsignore --exclude=CVS ${FIROOT}/finkinfo.tmp/ ${FIROOT}/finkinfo/
-echo `date -u +%s` > ${FIROOT}/finkinfo/TIMESTAMP
+cd "${FIROOT}"
 
-rm -f ${LOCKFILE}
+/usr/bin/cvs -d :ext:finkcvs@fink.cvs.sourceforge.net:/cvsroot/fink -z3 co -d finkinfo.tmp dists
+
+rsync -a --delete --exclude=.cvsignore --exclude=CVS "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
+
+echo "$(date -u +%s)" > "${FIROOT}/finkinfo/TIMESTAMP"
+
+rm -f "${LOCKFILE}"
