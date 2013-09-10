@@ -51,8 +51,13 @@ if ! git fetch origin; then
 	rm -f "${LOCKFILE}"
 	exit 1
 fi
-# Be sure we are in the right branch and then update.
+# Be sure we are on the right branch and then update.
 git checkout master
+if [ "$(git rev-parse master)" = "$(git rev-parse origin/master)" ]; then
+	# If we do not need to update the we are done.
+	rm -f "${LOCKFILE}"
+	exit 0
+fi
 git reset --hard origin/master
 
 # Exit the git repo
