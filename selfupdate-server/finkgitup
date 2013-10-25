@@ -64,7 +64,7 @@ git reset --hard origin/master
 cd "${FIROOT}"
 
 # Make a clean copy out of the git repo
-rsync -a --delete --exclude=".cvsignore" --exclude=".gitignore" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
+rsync -a --delete --exclude=".cvsignore" --exclude=".gitignore" --exclude=".git" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
 
 # Add the timestamp
 echo "$(date -u +%s)" > "${FIROOT}/finkinfo/TIMESTAMP"
