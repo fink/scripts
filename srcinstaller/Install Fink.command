@@ -1,18 +1,19 @@
 #!/bin/bash
 
 # Config
-XcodePath="$(osascript -e 'POSIX path of (path to application id "com.apple.dt.Xcode")')"
+OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
+XcodeURL="https://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
-FinkDirectorY="${FinkOutDir}-0.36.3.1"
+FinkVersion="0.36.3.1"
 FinkMD5Sum="0f16f23cba24ab2d7421cc3008b2efe2"
 FinkOutDir="fink"
+FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
 FinkSourceDLP="http://downloads.sourceforge.net/fink/${FinkFileName}"
 
 XQuartzVersion="2.7.5"
 XQuartzMD5Sum="8d44b11eb2e6948a3982408d7ecee043"
-XQuartzVolPath="/Volumes/XQuartz-${XQuartzVersion}"
-XQuartzPKGPath="${XQuartzVolPath}/XQuartz.pkg"
+XQuartzPKGPath="XQuartz.pkg"
 XQuartzFileName="XQuartz-${XQuartzVersion}.dmg"
 XQuartzSourceDLP="http://xquartz.macosforge.org/downloads/SL/${XQuartzFileName}"
 
@@ -41,16 +42,19 @@ function fetchBin {
 			echo "${OutDir} already exists, skipping" >&2
 			return
 		fi
+	elif [[ -f "${FileName}" ]]; then
+		MD5SumFle="$(md5 -q "${FileName}")"
+		if [ "${MD5SumFle}" != "${MD5Sum}" ]; then
+			rm -fR "${FileName}"
+		fi
 	fi
 
 	# Fetch
 	if [ ! -r "${FileName}" ]; then
 		echo "Fetching ${SourceDLP}"
 		if ! curl -Lfo "${FileName}" --connect-timeout "30" "${SourceDLP}"; then
-			if ! curl -LfOC - --connect-timeout "30" "${BackupDLP}${FileName}"; then
-				echo "error: Unable to fetch ${SourceDLP}" >&2
-				exit 1
-			fi
+			echo "error: Unable to fetch ${SourceDLP}" >&2
+			exit 1
 		fi
 	else
 		echo "${FileName} already exists, skipping" >&2
@@ -102,14 +106,19 @@ cd "~/Downloads"
 
 
 # Check for Xcode
-if [ -z "${XcodePath}" ]; then
-	
+XcodePath="$(osascript -e 'POSIX path of (path to application id "com.apple.dt.Xcode")' 2>/dev/null; osascript -e 'tell app id "com.apple.dt.Xcode" to quit' 2>/dev/null)"
+if [ ! -z "${XcodePath}" ]; then
+	sudo xcode-select -switch "${XcodePath}Contents/Developer"
+else
+	echo "You may want to install Xcode"
 fi
 
 # Check for java
 if ! pkgutil --pkg-info=com.apple.pkg.JavaEssentials; then
-	java -version
-	exit 0
+	VJava="$(java -version 2>&1>/dev/null)"
+	if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
+		exit 0
+	fi
 fi
 
 # Check for Command Line Tools
@@ -120,8 +129,19 @@ fi
 
 # Check for XQuartz
 if ! pkgutil --pkg-info=org.macosforge.xquartz.pkg; then
-	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "${DirectorY}" "${OutDir}"
+
+	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "-" "-"
+	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" | tr -d "\t")"
+	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])( +)::')"
+	open "${XQuartzVolPath}/${XQuartzPKGPath}"
+	exit 0
 fi
+
+# Check the xcode licence
+if [[ ! -f /Library/Preferences/com.apple.dt.Xcode.plist ]]; then
+	sudo xcodebuild -license accept
+if
+
 # Get Fink
 fetchBin "${FinkMD5Sum}" "${FinkSourceDLP}" "${FinkFileName}" "${FinkDirectorY}" "${FinkOutDir}"
 
@@ -133,8 +153,16 @@ if ! ./bootstrap /sw; then
 fi
 
 # Set up bindist
-/sw/etc/fink.conf
-UseBinaryDist: true
+sudo rm /sw/etc/fink.conf.bak
+sudo mv /sw/etc/fink.conf /sw/etc/fink.conf.bak
+sudo sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" > "/sw/etc/fink.conf"
 
-/sw/etc/apt/sources.list 
-deb http://bindist.finkproject.org/10.9 stable main
+sudo cat >> "/sw/etc/apt/sources.list" << EOF
+
+# Official bindist see http://bindist.finkmirrors.net/ for details.
+deb http://bindist.finkproject.org/${OSXVersion} stable main
+
+EOF
+
+# Set up paths
+/sw/bin/pathsetup.sh
