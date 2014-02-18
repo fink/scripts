@@ -2,7 +2,7 @@
 
 # Config
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
-XcodeURL="https://itunes.apple.com/us/app/xcode/id497799835?mt=12"
+XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 FinkVersion="0.36.3.1"
 FinkMD5Sum="0f16f23cba24ab2d7421cc3008b2efe2"
@@ -104,48 +104,145 @@ function fetchBin {
 # Make sure we are in the right place
 cd "~/Downloads"
 
+# Version check
+if [[ ! "${OSXVersion}" = "10.9" ]]; then
+	echo "This is for 10.9.x only."
+	exit 1
+fi
+
+# Intro Explanation
+cat > "/dev/stderr" << EOF
+This script will automate the instalation of fink, its prerequisets and
+help out a bit with initial setup; to do this an internet connection is
+required.
+
+Before fink can be installed you need to have java, the Command Line
+Tools, XQuartz and accepted the xcode licence. Additionally you should
+install the full Xcode app.
+
+After this script detects one of these requirements to be missing it
+will atempt to install it for you; in most cases this will mean the
+script will exit while it waits for the install to finish. After an
+install has completed just run this script again and it will pick up
+where it left off.
+
+EOF
+
+# Handle existing installs
+if [ -d "/sw" ]; then
+	FinkExisting="1"
+	cat > "/dev/stderr" << EOF
+It looks like you already have fink installed; if it did not finish or
+you are upgrading we will move it aside to /sw.old so you can delete it
+later if you like.
+
+EOF
+fi
+
+if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
+	exit 1
+fi
+
+if [ "${FinkExisting}" = "1" ]; then
+	sudo mv /sw /sw.old
+fi
+
 
 # Check for Xcode
+clear
+echo "Checking to see if xcode is installed..." >&2
 XcodePath="$(osascript -e 'POSIX path of (path to application id "com.apple.dt.Xcode")' 2>/dev/null; osascript -e 'tell app id "com.apple.dt.Xcode" to quit' 2>/dev/null)"
 if [ ! -z "${XcodePath}" ]; then
+	echo "Xcode is installed, setting up the defaults..." >&2
 	sudo xcode-select -switch "${XcodePath}Contents/Developer"
 else
-	echo "You may want to install Xcode"
+	echo "You do not have Xcode installed." >&2
+	read -rp $'Do you want to install xcode?\n[N|y] ' choice
+	if [[ "${choice}" = "y" ]] || [[ "${choice}" = "Y" ]]; then
+		open "${XcodeURL}"
+		exit 0
+	fi
 fi
 
 # Check for java
+clear
+echo "Checking for Java..." >&2
 if ! pkgutil --pkg-info=com.apple.pkg.JavaEssentials; then
 	VJava="$(java -version 2>&1>/dev/null)"
 	if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
+		echo "Java is installing, please rerun when it finishes." >&2
 		exit 0
 	fi
 fi
 
 # Check for Command Line Tools
+clear
+echo "Checking for the Xcode Command Line Tools..." >&2
 if ! pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; then
+	echo "The Xcode Command Line Tools are installing, waiting for it to finish." >&2
 	xcode-select --install
 	exit 0
 fi
 
 # Check for XQuartz
+clear
+echo "Checking for XQuartz..." >&2
 if ! pkgutil --pkg-info=org.macosforge.xquartz.pkg; then
-
+	echo "XQuartz is not installed, fetching..." >&2
 	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "-" "-"
+	echo "Mounting the XQuartz disk..." >&2
 	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" | tr -d "\t")"
 	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])( +)::')"
+	echo "Starting the XQuartz install; please rerun this script when it finishes." >&2
 	open "${XQuartzVolPath}/${XQuartzPKGPath}"
 	exit 0
 fi
 
 # Check the xcode licence
 if [[ ! -f /Library/Preferences/com.apple.dt.Xcode.plist ]]; then
-	sudo xcodebuild -license accept
-if
+	choice=""
+	while [[ ! "${choice}" = "1" ]] || [[ ! "${choice}" = "2" ]] || [[ ! "${choice}" = "3" ]]; do
+		clear
+		cat > "/dev/stderr" << EOF
+You need to accept the xcode licence to continue.
+You can:
+[1] Read the licence and accept it. (Default)
+[2] Accept the licence without reading it.
+[3] Quit.
+EOF
+		read -rp $'[1|2|3] ' choice
+		if [ -z "${choice}" ]; then
+			choice="1"
+		fi
+		case "${choice}" in
+			1) sudo xcodebuild -license ;;
+			2) sudo xcodebuild -license accept ;;
+			3) exit 0 ;;
+			*) echo "Not a valid choice." >&2 ;;
+		esac
+	done
+fi
 
 # Get Fink
+clear
+echo "Fetching Fink..." >&2
 fetchBin "${FinkMD5Sum}" "${FinkSourceDLP}" "${FinkFileName}" "${FinkDirectorY}" "${FinkOutDir}"
+clear
+read -rp $'Do you want to use the binary distribution instead of having to build all packages locally?\n[Y|n] ' choice
+if [[ "${choice}" = "y" ]] || [[ "${choice}" = "Y" ]] || [[ -z "${choice}" ]]; then
+	UseBinaryDist="1"
+fi
 
 # Build Fink
+cat > "/dev/stderr" << EOF
+We are about to start building Fink; this may take a bit, so feel free
+to grab a cup of you favort beverage while you wait.
+EOF
+
+if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
+	exit 1
+fi
+
 cd "${FinkOutDir}"
 
 if ! ./bootstrap /sw; then 
@@ -153,9 +250,13 @@ if ! ./bootstrap /sw; then
 fi
 
 # Set up bindist
-sudo rm /sw/etc/fink.conf.bak
-sudo mv /sw/etc/fink.conf /sw/etc/fink.conf.bak
-sudo sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" > "/sw/etc/fink.conf"
+if [ "UseBinaryDist" = "1" ]; then
+	clear
+	echo "Activating the Binary Distribution..." >&2
+	sudo rm /sw/etc/fink.conf.bak
+	sudo mv /sw/etc/fink.conf /sw/etc/fink.conf.bak
+	sudo sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" > "/sw/etc/fink.conf"
+fi
 
 sudo cat >> "/sw/etc/apt/sources.list" << EOF
 
@@ -165,4 +266,26 @@ deb http://bindist.finkproject.org/${OSXVersion} stable main
 EOF
 
 # Set up paths
+clear
+echo "Setting up Fink paths..." >&2
 /sw/bin/pathsetup.sh
+
+# First selfupdate
+source /sw/bin/init.sh
+clear
+cat > "/dev/stderr" << EOF
+Now the last thing we will do is run 'fink selfupdate' for the first
+time.
+
+It will ask you to choose a method; unless you have a really picky
+firewall you probaly want to choose rsync.
+
+EOF
+
+if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
+	exit 1
+fi
+
+fink selfupdate
+
+exit 0
