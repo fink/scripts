@@ -102,7 +102,7 @@ function fetchBin {
 }
 
 # Make sure we are in the right place
-cd "~/Downloads"
+cd "${HOME}/Downloads"
 
 # Version check
 if [[ ! "${OSXVersion}" = "10.9" ]]; then
@@ -264,10 +264,10 @@ if [ "${UseBinaryDist}" = "1" ]; then
 	echo "Activating the Binary Distribution..." >&2
 	sudo rm /sw/etc/fink.conf.bak
 	sudo mv /sw/etc/fink.conf /sw/etc/fink.conf.bak
-	sudo sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" > "/sw/etc/fink.conf"
+	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" | sudo tee "/sw/etc/fink.conf"
 fi
 
-sudo cat >> "/sw/etc/apt/sources.list" << EOF
+sudo tee -a "/sw/etc/apt/sources.list" << EOF
 
 # Official bindist see http://bindist.finkmirrors.net/ for details.
 deb http://bindist.finkproject.org/${OSXVersion} stable main
