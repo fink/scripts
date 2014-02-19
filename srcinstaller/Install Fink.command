@@ -134,7 +134,7 @@ if [ -d "/sw" ]; then
 	cat > "/dev/stderr" << EOF
 It looks like you already have fink installed; if it did not finish or
 you are upgrading we will move it aside to /sw.old so you can delete it
-later if you like.
+later if you like; otherwise you may want to exit.
 
 EOF
 fi
