@@ -244,7 +244,7 @@ fi
 clear
 cat > "/dev/stderr" << EOF
 We are about to start building Fink; this may take a bit, so feel free
-to grab a cup of you favort beverage while you wait.
+to grab a cup of you favorite beverage while you wait.
 EOF
 
 if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
