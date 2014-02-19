@@ -259,7 +259,7 @@ if ! ./bootstrap /sw; then
 fi
 
 # Set up bindist
-if [ "UseBinaryDist" = "1" ]; then
+if [ "${UseBinaryDist}" = "1" ]; then
 	clear
 	echo "Activating the Binary Distribution..." >&2
 	sudo rm /sw/etc/fink.conf.bak
