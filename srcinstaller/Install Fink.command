@@ -144,7 +144,14 @@ if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
 fi
 
 if [ "${FinkExisting}" = "1" ]; then
-	sudo mv /sw /sw.old
+	if ! sudo mv /sw /sw.old; then
+		clear
+		cat > "/dev/stderr" << EOF
+Could not move /sw to /sw.old; you may need to delete one or both these
+yourself.
+EOF
+		exit 1
+	fi
 fi
 
 
