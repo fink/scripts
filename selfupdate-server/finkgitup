@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Config
-FIROOT="/Volumes/src2/fink/selfupdate"
 REPO="https://github.com/danielj7/fink-dists.git"
+FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
 
 usage() {
@@ -32,7 +32,7 @@ lockfile -r 0 "${LOCKFILE}" || exit 0
 cd "${FIROOT}"
 
 if [ ! -d "${FIROOT}/finkinfo.tmp/.git" ]; then
-	if [ -d "${FIROOT}/finkinfo.tmp"]; then
+	if [ -d "${FIROOT}/finkinfo.tmp" ]; then
 		rm -fr "${FIROOT}/finkinfo.tmp"
 	fi
 	if ! git clone ${REPO} finkinfo.tmp; then
@@ -67,7 +67,7 @@ cd "${FIROOT}"
 rsync -a --delete --exclude=".cvsignore" --exclude=".gitignore" --exclude=".git" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
 
 # Add the timestamp
-echo "$(date -u +%s)" > "${FIROOT}/finkinfo/TIMESTAMP"
+date -u +%s > "${FIROOT}/finkinfo/TIMESTAMP"
 
 # Clean up
 rm -f "${LOCKFILE}"
