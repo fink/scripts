@@ -71,7 +71,7 @@ function fetchBin {
 	fi
 
 	# Unpack
-	local ExtensioN="$(echo "${FileName}" | sed -e 's:^.*\.\([^.]*\):\1:')"
+	local ExtensioN="${FileName##*.}"
 	if [[ "${ExtensioN}" = "gz" ]] || [[ "${ExtensioN}" = "tgz" ]]; then
 		if ! tar -zxf "${FileName}"; then
 			echo "error: Unpacking ${FileName} failed" >&2
