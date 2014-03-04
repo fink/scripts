@@ -1,6 +1,6 @@
 Q: How do I make a new source release of the Fink package manager?
 
-A: Assuming you want to release fink 0.34.8, you first need to get the "fink"
+A: Assuming you want to release fink 0.36.5, you first need to get the "fink"
 and "scripts" modules from github, if you don't have them already:
 
  $ git clone git@github.com:fink/fink.git
@@ -11,37 +11,37 @@ and "scripts" modules from github, if you don't have them already:
  $ git pull
  
  Now that you're in branch_0_34 and current:
-   -> edit VERSION so that it contains "0.34.8.git"
+   -> edit VERSION so that it contains "0.36.5.git"
    -> edit NEWS to provide a user-friendly indication of the changes that
    	  have been made since the last release.
    -> push your changes upstream and prepare for release	  
  
  $ git commit -a
- $ git tag -m "Release 0.34.8" release_0_34_8
+ $ git tag -m "Release 0.36.5" release_0_36_5
 
  You can push your changes upstream and do the release:
 
  $ git push origin release_0_34_0
  $ cd ../scripts/srcdist
- $ ./dist-module.pl --github fink 0.34.8
+ $ ./dist-module.pl --github fink 0.36.5
 
  or you can also do a test release from your clone:
  
  $ cd ../scripts/srcdist
- $ ./dist-module.pl --local=../../fink fink 0.34.8
+ $ ./dist-module.pl --local=../../fink fink 0.36.5
  
  (replace '../../fink' by the actual path to your fink clone).  This gives
  you the option to test a release out before pushing things upstream.
 
-This will create the file /tmp/fink-0.34.8.tar.gz, and also various files
+This will create the file /tmp/fink-0.36.5.tar.gz, and also various files
 such as /tmp/fink-10.7.info .
 
-The file fink-0.34.8.tar.gz now needs to be uploaded to the Sourceforge
+The file fink-0.36.5.tar.gz now needs to be uploaded to the Sourceforge
 File Release System.  (The instructions for that change rather frequently
 so they are not given here.  Ask on the #fink IRC channel or the
 fink-core mailing list.)
 
-Once fink-0.34.8.tar.gz has propagated to the Sourceforge FRS mirrors,
+Once fink-0.36.5.tar.gz has propagated to the Sourceforge FRS mirrors,
 test things using fink-10.7.info (or whatever the appropriate file is for
 your OS X version) on your local system.  Assuming all is OK, you can commit
 the various fink-NN.info files to their appropriate locations.
