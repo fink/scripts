@@ -123,7 +123,7 @@ print "Exporting module $module, tag $tag from $vcstype:\n";
 
 
 if ($vcstype eq 'github') {
-	system("umask 022; curl $github_url/$tag -o $tmpdir/$tag.tar.gz");
+	system("umask 022; curl -L -f $github_url/$tag -o $tmpdir/$tag.tar.gz");
 
 	if ($? or not -f "$tmpdir/$tag.tar.gz") {
 		print "github download failed, could not retrieve remote data!\n";
