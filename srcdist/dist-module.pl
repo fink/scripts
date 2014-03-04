@@ -74,7 +74,7 @@ my $tmpdir = shift || "/tmp";
 my $tag = shift;
 
 #my $gitroot='git@github.com:fink/';
-my $github_url="https://github.com/fink/$module/tarball";
+my $github_url="https://codeload.github.com/fink/$module/legacy.tar.gz";
 my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
 my $distribution = "10.4";  #default value
 
@@ -123,8 +123,7 @@ print "Exporting module $module, tag $tag from $vcstype:\n";
 
 
 if ($vcstype eq 'github') {
-	# Why doesn't this work with curl? (using '-o' instead of '-O') 
-	system("umask 022; wget $github_url/$tag -O $tmpdir/$tag.tar.gz");
+	system("umask 022; curl $github_url/$tag -o $tmpdir/$tag.tar.gz");
 
 	if ($? or not -f "$tmpdir/$tag.tar.gz") {
 		print "github download failed, could not retrieve remote data!\n";
