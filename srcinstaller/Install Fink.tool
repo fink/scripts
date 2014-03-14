@@ -267,12 +267,14 @@ if [ "${UseBinaryDist}" = "1" ]; then
 	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" | sudo tee "/sw/etc/fink.conf"
 fi
 
-sudo tee -a "/sw/etc/apt/sources.list" << EOF
+if grep -Fqx 'http://bindist.finkproject.org/' "/sw/etc/apt/sources.list"; then
+	sudo tee -a "/sw/etc/apt/sources.list" << EOF
 
 # Official bindist see http://bindist.finkmirrors.net/ for details.
 deb http://bindist.finkproject.org/${OSXVersion} stable main
 
 EOF
+fi
 
 # Set up paths
 clear
