@@ -2,6 +2,7 @@
 
 FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
+SSHUSER="finkcvs"
 
 usage() {
 	cat > "/dev/stderr" << EOF
@@ -10,13 +11,16 @@ EOF
 	exit
 }
 
-while getopts ":l:o:h" OPTION; do
+while getopts ":l:o:u:h" OPTION; do
 	case "${OPTION}" in
 		l)
 			LOCKFILE=${OPTARG}
 			;;
 		o)
 			FIROOT=${OPTARG}
+			;;
+		u)
+			SSHUSER=${OPTARG}
 			;;
 		h | ?)
 			usage
@@ -30,7 +34,7 @@ lockfile -r 0 "${LOCKFILE}" || exit 0
 
 cd "${FIROOT}"
 
-/usr/bin/cvs -d :ext:finkcvs@fink.cvs.sourceforge.net:/cvsroot/fink -z3 co -d finkinfo.tmp dists
+/usr/bin/cvs -d :ext:${SSHUSER}@fink.cvs.sourceforge.net:/cvsroot/fink -z3 co -d finkinfo.tmp dists
 
 rsync -a --delete --exclude=.cvsignore --exclude=CVS "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
 
