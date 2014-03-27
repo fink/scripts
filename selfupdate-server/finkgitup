@@ -8,6 +8,9 @@ LOCKFILE="/var/run/finkrsyncup.lock"
 usage() {
 	cat > "/dev/stderr" << EOF
 usage: ${0} [-l lockfile] [-o outputdir]
+Defaults:
+	Output: ${FIROOT}
+	Lockfile: ${LOCKFILE}
 EOF
 	exit 1
 }
@@ -31,11 +34,12 @@ lockfile -r 0 "${LOCKFILE}" || exit 0
 
 cd "${FIROOT}"
 
+# Check to see if the initial clone has been made
 if [ ! -d "${FIROOT}/finkinfo.tmp/.git" ]; then
 	if [ -d "${FIROOT}/finkinfo.tmp" ]; then
 		rm -fr "${FIROOT}/finkinfo.tmp"
 	fi
-	if ! git clone ${REPO} finkinfo.tmp; then
+	if ! git clone "${REPO}" finkinfo.tmp; then
 		echo "clone did not succeed, aborting." >&2
 		rm -fr "${LOCKFILE}" "${FIROOT}/finkinfo.tmp"
 		exit 1
@@ -55,6 +59,7 @@ fi
 git checkout master
 if [ "$(git rev-parse master)" = "$(git rev-parse origin/master)" ]; then
 	# If we do not need to update the we are done.
+	date -u +%s > "${FIROOT}/finkinfo/LOCAL"
 	rm -f "${LOCKFILE}"
 	exit 0
 fi
@@ -67,7 +72,7 @@ cd "${FIROOT}"
 rsync -a --delete --exclude=".cvsignore" --exclude=".gitignore" --exclude=".git" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
 
 # Add the timestamp
-date -u +%s > "${FIROOT}/finkinfo/TIMESTAMP"
+date -u +%s | tee "${FIROOT}/finkinfo/TIMESTAMP" > "${FIROOT}/finkinfo/LOCAL"
 
 # Clean up
 rm -f "${LOCKFILE}"
