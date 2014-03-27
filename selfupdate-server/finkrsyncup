@@ -3,7 +3,27 @@
 FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
 
-export HOME=/var/root
+usage() {
+	cat > "/dev/stderr" << EOF
+usage: $0 [-l lockfile] [-o outputdir]
+EOF
+	exit
+}
+
+while getopts ":l:o:h" OPTION; do
+	case "${OPTION}" in
+		l)
+			LOCKFILE=${OPTARG}
+			;;
+		o)
+			FIROOT=${OPTARG}
+			;;
+		h | ?)
+			usage
+			;;
+	esac
+done
+
 export CVS_RSH=ssh
 
 lockfile -r 0 "${LOCKFILE}" || exit 0
