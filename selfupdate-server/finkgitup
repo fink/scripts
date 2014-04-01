@@ -15,17 +15,17 @@ EOF
 	exit 1
 }
 
-while getopts ":l:o:h" OPTION; do
+while getopts ":l:o" OPTION; do
 	case "${OPTION}" in
 		l)
 			LOCKFILE="${OPTARG}"
-			;;
+		;;
 		o)
 			FIROOT="${OPTARG}"
-			;;
-		h | ?)
+		;;
+		?)
 			usage
-			;;
+		;;
 	esac
 done
 
