@@ -2,33 +2,28 @@
 
 FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
-SSHUSER="finkcvs"
-CVSARGS=""
 
 usage() {
 	cat > "/dev/stderr" << EOF
-usage: $0 [-l lockfile] [-o outputdir]
+usage: ${0} [ -l <lockfile> ] [ -o <outputdir> ]
+Defaults:
+	outputdir: ${FIROOT}
+	lockfile: ${LOCKFILE}
 EOF
-	exit
+	exit 1
 }
 
-while getopts ":l:o:u:hq" OPTION; do
+while getopts ":l:o" OPTION; do
 	case "${OPTION}" in
 		l)
 			LOCKFILE=${OPTARG}
-			;;
+		;;
 		o)
 			FIROOT=${OPTARG}
-			;;
-		u)
-			SSHUSER=${OPTARG}
-			;;
-		q)
-			CVSARGS=" -q "
-			;;
-		h | ?)
+		;;
+		?)
 			usage
-			;;
+		;;
 	esac
 done
 
