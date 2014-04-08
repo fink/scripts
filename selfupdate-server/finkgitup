@@ -69,7 +69,10 @@ git reset --hard origin/master
 cd "${FIROOT}"
 
 # Make a clean copy out of the git repo
-rsync -a --delete --exclude=".cvsignore" --exclude=".gitignore" --exclude=".git" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"
+if ! rsync -a --delete-after --exclude="LOCAL" --exclude="UPDATE" --exclude=".cvsignore" --exclude=".gitignore" --exclude=".git" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"; then
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
 
 # Add the timestamp
 date -u +%s | tee "${FIROOT}/finkinfo/TIMESTAMP" > "${FIROOT}/finkinfo/LOCAL"
