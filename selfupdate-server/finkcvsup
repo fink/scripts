@@ -7,28 +7,32 @@ CVSARGS=""
 
 usage() {
 	cat > "/dev/stderr" << EOF
-usage: $0 [-l lockfile] [-o outputdir]
+usage: ${0} [ -l <lockfile> ] [ -o <outputdir> ] [-u <sshuser> ] [ -q ]
+Defaults:
+	outputdir: ${FIROOT}
+	lockfile: ${LOCKFILE}
+	sshuser: ${SSHUSER}
 EOF
-	exit
+	exit 1
 }
 
-while getopts ":l:o:u:hq" OPTION; do
+while getopts ":l:o:u:q" OPTION; do
 	case "${OPTION}" in
 		l)
 			LOCKFILE=${OPTARG}
-			;;
+		;;
 		o)
 			FIROOT=${OPTARG}
-			;;
+		;;
 		u)
 			SSHUSER=${OPTARG}
-			;;
+		;;
 		q)
 			CVSARGS=" -q "
-			;;
-		h | ?)
+		;;
+		?)
 			usage
-			;;
+		;;
 	esac
 done
 
