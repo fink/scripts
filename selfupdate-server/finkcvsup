@@ -55,7 +55,7 @@ if ! ${TIMEOUT} --preserve-status -k 10s 10m cvs -d :ext:${SSHUSER}@fink.cvs.sou
 fi
 
 # Make a clean copy out of the cvs repo
-if ! rsync -a --delete-after --exclude="UPDATE" --exclude=".cvsignore" --exclude="CVS" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"; then
+if ! rsync -aq --delete-after --exclude="UPDATE" --exclude=".cvsignore" --exclude="CVS" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"; then
 	rm -f "${LOCKFILE}"
 	exit 1
 fi
