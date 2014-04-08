@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Config
+MASTER="rsync://distfiles.master.finkmirrors.net/finkinfo/"
 FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
 
@@ -27,16 +29,38 @@ while getopts ":l:o" OPTION; do
 	esac
 done
 
-export CVS_RSH=ssh
-
+# Prevent more than one concurrent update
 lockfile -r 0 "${LOCKFILE}" || exit 0
 
 cd "${FIROOT}"
 
-if /usr/bin/cvs -d :ext:${SSHUSER}@fink.cvs.sourceforge.net:/cvsroot/fink ${CVSARGS} -z3 co -d finkinfo.tmp dists; then
-	if rsync -a --delete --exclude=.cvsignore --exclude=CVS "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"; then
-		echo "$(date -u +%s)" > "${FIROOT}/finkinfo/TIMESTAMP";
-	fi;
+# Note the start time of a new fetch
+echo "$(date -u +%s)" > "${FIROOT}/finkinfo/UPDATE"
+
+# Update from rsync with a 10 min timeout
+if ! rsync -azq --timeout=600 --delete-after --exclude="TIMESTAMP" --exclude="LOCAL" --exclude="UPDATE" "${MASTER}" "${FIROOT}/finkinfo.tmp/"; then
+	rm -f "${LOCKFILE}"
+	exit 1
 fi
 
+# Fetch the timestamp file
+if ! rsync -azq --timeout=600 --delete-after "${MASTER}TIMESTAMP" "${FIROOT}/finkinfo.tmp/TIMESTAMP"; then
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
+
+# Make a clean copy out of the tmp dir
+if ! rsync -a --delete-after --exclude="LOCAL" --exclude="UPDATE" --exclude=".cvsignore" --exclude=".gitignore" --exclude=".git" --exclude=".DS_Store" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"; then
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
+
+# Add the local timestamp
+date -u +%s > "${FIROOT}/finkinfo/LOCAL"
+
+
+# Clean up
 rm -f "${LOCKFILE}"
+
+exit 0
+
