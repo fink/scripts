@@ -5,7 +5,7 @@ FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
 SSHUSER="finkcvs"
 CVSARGS=""
-TIMEOUT="timeout"
+: "${TIMEOUT:="timeout"}"
 export CVS_RSH=ssh
 
 usage() {
