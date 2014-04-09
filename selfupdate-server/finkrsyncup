@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Config
-MASTER="rsync://distfiles.master.finkmirrors.net/finkinfo/"
+: "${RSYNCPTH:="rsync://distfiles.master.finkmirrors.net/finkinfo/"}"
 FIROOT="/Volumes/src2/fink/selfupdate"
 LOCKFILE="/var/run/finkrsyncup.lock"
 
