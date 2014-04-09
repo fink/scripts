@@ -34,6 +34,9 @@ lockfile -r 0 "${LOCKFILE}" || exit 0
 
 cd "${FIROOT}"
 
+# Note the start time of a new fetch
+date -u +%s > "${FIROOT}/finkinfo/UPDATE"
+
 # Check to see if the initial clone has been made
 if [ ! -d "${FIROOT}/finkinfo.tmp/.git" ]; then
 	if [ -d "${FIROOT}/finkinfo.tmp" ]; then
