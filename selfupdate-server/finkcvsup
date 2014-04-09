@@ -45,7 +45,7 @@ lockfile -r 0 "${LOCKFILE}" || exit 0
 cd "${FIROOT}"
 
 # Note the start time of a new fetch
-echo "$(date -u +%s)" > "${FIROOT}/finkinfo/UPDATE"
+date -u +%s > "${FIROOT}/finkinfo/UPDATE"
 
 # Update from cvs with a 10 min timeout
 if ! ${TIMEOUT} --preserve-status -k 10s 10m cvs -d :ext:${SSHUSER}@fink.cvs.sourceforge.net:/cvsroot/fink ${CVSARGS} -z3 co -d finkinfo.tmp dists; then
