@@ -35,7 +35,7 @@ lockfile -r 0 "${LOCKFILE}" || exit 0
 cd "${FIROOT}"
 
 # Note the start time of a new fetch
-echo "$(date -u +%s)" > "${FIROOT}/finkinfo/UPDATE"
+date -u +%s > "${FIROOT}/finkinfo/UPDATE"
 
 # Update from rsync with a 10 min timeout
 if ! rsync -azq --timeout=600 --delete-after --exclude="TIMESTAMP" --exclude="LOCAL" --exclude="UPDATE" "${MASTER}" "${FIROOT}/finkinfo.tmp/"; then
