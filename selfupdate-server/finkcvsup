@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# Config
+FIROOT="/Volumes/src2/fink/selfupdate"
+LOCKFILE="/var/run/finkrsyncup.lock"
+SSHUSER="finkcvs"
+CVSARGS=""
+: "${TIMEOUT:="timeout"}"
+export CVS_RSH=ssh
+
+usage() {
+	cat > "/dev/stderr" << EOF
+usage: ${0} [ -l <lockfile> ] [ -o <outputdir> ] [-u <sshuser> ] [ -q ]
+Defaults:
+	outputdir: ${FIROOT}
+	lockfile: ${LOCKFILE}
+	sshuser: ${SSHUSER}
+EOF
+	exit 1
+}
+
+while getopts ":l:o:u:q" OPTION; do
+	case "${OPTION}" in
+		l)
+			LOCKFILE=${OPTARG}
+		;;
+		o)
+			FIROOT=${OPTARG}
+		;;
+		u)
+			SSHUSER=${OPTARG}
+		;;
+		q)
+			CVSARGS=" -q "
+		;;
+		?)
+			usage
+		;;
+	esac
+done
+
+# Prevent more than one concurrent update
+lockfile -r 0 "${LOCKFILE}" || exit 0
+
+cd "${FIROOT}"
+
+# Note the start time of a new fetch
+date -u +%s > "${FIROOT}/finkinfo/UPDATE"
+
+# Update from cvs with a 10 min timeout
+if ! ${TIMEOUT} --preserve-status -k 10s 10m cvs -d :ext:${SSHUSER}@fink.cvs.sourceforge.net:/cvsroot/fink ${CVSARGS} -z3 co -d finkinfo.tmp dists; then
+	echo "fetch did not succeed, aborting." >&2
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
+
+# Make a clean copy out of the cvs repo
+if ! rsync -aq --delete-after --exclude="UPDATE" --exclude=".cvsignore" --exclude="CVS" "${FIROOT}/finkinfo.tmp/" "${FIROOT}/finkinfo/"; then
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
+
+# Add the timestamp
+date -u +%s | tee "${FIROOT}/finkinfo/TIMESTAMP" > "${FIROOT}/finkinfo/LOCAL"
+
+# Clean up
+rm -f "${LOCKFILE}"
+
+exit 0
