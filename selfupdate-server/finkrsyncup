@@ -44,7 +44,7 @@ if ! rsync -azq --timeout=600 --delete-after --exclude="TIMESTAMP" --exclude="LO
 fi
 
 # Fetch the timestamp file
-if ! rsync -azq --timeout=600 --delete-after "${MASTER}TIMESTAMP" "${FIROOT}/finkinfo.tmp/TIMESTAMP"; then
+if ! rsync -azq --timeout=60 --delete-after "${MASTER}TIMESTAMP" "${FIROOT}/finkinfo.tmp/TIMESTAMP"; then
 	rm -f "${LOCKFILE}"
 	exit 1
 fi
