@@ -77,7 +77,7 @@ Must be set and publicly available by every mirror at the start of each update c
 
 ## DNS Structure
 
-Generally speaking the Fink mirror structure is as follows and please keep in mind these dns entries aren't typically for human use. `[yourairporttag].[state].[continent].finkmirrors.net` and `[yourairporttag].finkmirrors.net` as a shortcut will be used for rsync mirrors of the Fink info files.
+Generally speaking the Fink mirror structure is as follows and please keep in mind these dns entries aren't typically for human use. `distfiles.[yourairporttag].[state].[continent].finkmirrors.net` and `distfiles.[yourairporttag].finkmirrors.net` as a shortcut will be used for rsync mirrors of the Fink info files.
 
 ## Mailing List
 
