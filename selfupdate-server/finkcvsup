@@ -42,6 +42,15 @@ done
 # Prevent more than one concurrent update
 lockfile -r 0 "${LOCKFILE}" || exit 0
 
+# Make the directories if they do not already exist
+if [ ! -d "${FIROOT}/finkinfo" ]; then
+	mkdir -p "${FIROOT}/finkinfo"
+fi
+
+if [ ! -d "${FIROOT}/finkinfo.tmp" ]; then
+	mkdir -p "${FIROOT}/finkinfo.tmp"
+fi
+
 cd "${FIROOT}"
 
 # Note the start time of a new fetch
