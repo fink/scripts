@@ -15,7 +15,7 @@ EOF
 	exit 1
 }
 
-while getopts ":l:o" OPTION; do
+while getopts ":l:o:" OPTION; do
 	case "${OPTION}" in
 		l)
 			LOCKFILE="${OPTARG}"
@@ -47,7 +47,7 @@ if [ ! -d "${FIROOT}/finkinfo.tmp/.git" ]; then
 	if [ -d "${FIROOT}/finkinfo.tmp" ]; then
 		rm -fr "${FIROOT}/finkinfo.tmp"
 	fi
-	if ! git clone "${REPO}" finkinfo.tmp; then
+	if ! git clone "${REPOPTH}" finkinfo.tmp; then
 		echo "clone did not succeed, aborting." >&2
 		rm -fr "${LOCKFILE}" "${FIROOT}/finkinfo.tmp"
 		exit 1

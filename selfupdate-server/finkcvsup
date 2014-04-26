@@ -22,13 +22,13 @@ EOF
 while getopts ":l:o:u:q" OPTION; do
 	case "${OPTION}" in
 		l)
-			LOCKFILE=${OPTARG}
+			LOCKFILE="${OPTARG}"
 		;;
 		o)
-			FIROOT=${OPTARG}
+			FIROOT="${OPTARG}"
 		;;
 		u)
-			SSHUSER=${OPTARG}
+			SSHUSER="${OPTARG}"
 		;;
 		q)
 			CVSARGS=" -q "

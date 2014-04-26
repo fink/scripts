@@ -15,13 +15,13 @@ EOF
 	exit 1
 }
 
-while getopts ":l:o" OPTION; do
+while getopts ":l:o:" OPTION; do
 	case "${OPTION}" in
 		l)
-			LOCKFILE=${OPTARG}
+			LOCKFILE="${OPTARG}"
 		;;
 		o)
-			FIROOT=${OPTARG}
+			FIROOT="${OPTARG}"
 		;;
 		?)
 			usage
