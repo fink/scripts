@@ -27,6 +27,8 @@ multiple rules could be matched.
 	<filter name="unbuilt/dependency_failed">Failed: Dependency (.*) failed to build</filter>
 	<filter name="unbuilt/skipped">Failed: .* is on the skip list</filter>
 	<filter name="unbuilt/inconsistent_dependencies">Could not resolve inconsistent dependencies</filter>
+	<filter name="unbuilt/nodep-pm5162">Can't resolve dependency "(.*?-pm5162.*?)" for package</filter>
+	<filter name="unbuilt/nodep-pm5124">Can't resolve dependency "(.*?-pm5124.*?)" for package</filter>
 	<filter name="unbuilt/nodep-pm5123">Can't resolve dependency "(.*?-pm5123.*?)" for package</filter>
 	<filter name="unbuilt/nodep-pm5100">Can't resolve dependency "(.*?-pm5100.*?)" for package</filter>
 	<filter name="unbuilt/nodep-pm588">Can't resolve dependency "(.*?-pm588.*?)" for package</filter>
@@ -118,6 +120,8 @@ multiple rules could be matched.
 	<filter name="failures/project/exec-missing">error: (.*) not found or not executable</filter>
 	<filter name="failures/project/other-missing">error: Cannot find (.*)</filter>
 	<filter name="failures/project/header-missing">error: (.*\.h).*: No such file or directory</filter>
+
+	<filter name="failures/project/no-helper-tools">(flag-sort|fink-package-precendence): No such file or directory</filter>
 
 	<filter name="failures/project/bad-compiler-option">cc1: error: invalid option|bad value .* for -mtune</filter>
 	<filter name="failures/project/desktop-file-utils">No directories in update-desktop-database search path could be processed and updated.</filter>
