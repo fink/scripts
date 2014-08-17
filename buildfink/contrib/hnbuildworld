@@ -46,14 +46,14 @@ fi
 analyze()
 {
 	echo "OS:" `sw_vers -productVersion` > $OUTDIR/$BUILDNAME/rundata.txt
-	$FINKDIR/bin/fink -V | head -3 >> $OUTDIR/$BUILDNAME/rundata.txt
+	$FINKDIR/bin/fink -V | head -n 3 >> $OUTDIR/$BUILDNAME/rundata.txt
 
 	# Start the analysis
 	echo "Running analysis scripts"
 	$BFDIR/analysis/analyze $OUTDIR/$BUILDNAME
 
 	# create the fancy log outputs
-	$BFDIR/analysis/report --comments $OUTDIR/$BUILDNAME/rundata.txt --outdir $OUTDIR/$BUILDNAME/out --finkdir $FINKDIR
+	$BFDIR/analysis/report --comments $OUTDIR/$BUILDNAME/rundata.txt --catdescs $BFDIR/etc/catdescs --outdir $OUTDIR/$BUILDNAME/out --finkdir $FINKDIR
 
 	echo "Done analyzing"
 	exit 0
