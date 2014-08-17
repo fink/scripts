@@ -53,7 +53,7 @@ analyze()
 	$BFDIR/analysis/analyze $OUTDIR/$BUILDNAME
 
 	# create the fancy log outputs
-	$BFDIR/analysis/report --comments $OUTDIR/$BUILDNAME/rundata.txt --outdir $OUTDIR/$BUILDNAME/out --finkdir $FINKDIR
+	$BFDIR/analysis/report --comments $OUTDIR/$BUILDNAME/rundata.txt --catdescs $BFDIR/etc/catdescs --outdir $OUTDIR/$BUILDNAME/out --finkdir $FINKDIR
 
 	echo "Done analyzing"
 	exit 0
