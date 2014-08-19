@@ -12,7 +12,7 @@ FinkFileName="${FinkDirectorY}.tar.gz"
 FinkSourceDLP="http://downloads.sourceforge.net/fink/${FinkFileName}"
 
 XQuartzVersion="2.7.7"
-XQuartzMD5Sum="ab24c7490e99fa44060632d0eada0110"
+XQuartzMD5Sum="0da81910acfa33c2d9663deb0c8c98f7"
 XQuartzPKGPath="XQuartz.pkg"
 XQuartzFileName="XQuartz-${XQuartzVersion}.dmg"
 XQuartzSourceDLP="http://xquartz.macosforge.org/downloads/SL/${XQuartzFileName}"
