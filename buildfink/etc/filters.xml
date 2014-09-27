@@ -201,5 +201,43 @@ multiple rules could be matched.
 	<filter name="warnings/obsolete_headtail">(head|tail)\s+-[0-9]</filter>
 	<filter name="warnings/missing_include" flags="m">implicit declaration of function</filter>
 
+<!--
+Deb validator rules
+-->
+	<filter name="validator/essential_file">^Error: Overwriting essential system symlink pointing to (.*)</filter>
+	<filter name="validator/deprecated_directory">^Error: File installed into deprecated directory (.*)</filter>
+	<filter name="validator/disallowed_directory">^Error: File installed outside of allowable subdirectories</filter>
+	<filter name="validator/unversioned_framework">^Framework files not part of a specific library-version</filter>
+	<filter name="validator/perl_xs_module">^Error: Apparent perl XS module installed directly into</filter>
+	<filter name="validator/compiled_elc_file">^Error: Compiled .elc file installed</filter>
+	<filter name="validator/unversioned_dylib">^Error: Files with names less specifically versioned than ones in public Shlibs entries do not belong in this package</filter>
+	<filter name="validator/scrollkeeper_source">^Error: Scrollkeeper source file found, but scrollkeeper-update</filter>
+	<filter name="validator/icon_cache">^Error: Package overwrites a sitewide icon index</filter>
+	<filter name="validator/scrollkeeper_runtime">^Error: Runtime scrollkeeper file installed</filter>
+	<filter name="validator/daemonic">^Error: Package contains a DaemonicFile</filter>
+	<filter name="validator/daemonic_executable">^Error: DaemonicFile executable in this .deb does not have execute permissions</filter>
+	<filter name="validator/daemonic_exe_not_found">^Error: DaemonicFile executable (.*) does not exist</filter>
+	<filter name="validator/daemonic_exe_unrunnable">^Error: DaemonicFile executable (.*) does not have execute permissions</filter>
+	<filter name="validator/compiler_flag_temp_dir">^Error: Published compiler flag points to fink</filter>
+	<filter name="validator/compiled_python_temp_dir">^Error: Compiled python module points to fink</filter>
+	<filter name="validator/charset_alias">^Error: File should only exist in the "libgettextN</filter>
+	<filter name="validator/unversioned_language_file">^Error: File in a language-versioned package does not have a pathname specific</filter>
+	<filter name="validator/libtool_multi_word">^Error: The .* flag may get munged by (pkg-config|libtool)</filter>
+	<filter name="validator/texinfo">^Error: The texinfo table of contents file "(.*)</filter>
+	<filter name="validator/perllocal_pod">^Error: A global perllocal.pod must not be installed directly as part of the .deb</filter>
+	<filter name="validator/case_insensitive_filename">^Error: Pathname collision on case-insensitive filesystems</filter>
+	<filter name="validator/gtk_doc_url">^Error: Bad local URL (".*" does not look like a fink location</filter>
+	<filter name="validator/empty_deb">^Error: Package contains no files</filter>
+	<filter name="validator/no_bdo_flag">^Error: Headers installed (files in an include/ directory), as well as a .dylib file</filter>
+	<filter name="validator/rarian_compat">^Error: Calling scrollkeeper-update in </filter>
+	<filter name="validator/scrollkeeper_misplaced">^Warning: scrollkeeper-update in (preinst|prerm) is a no-op</filter>
+	<filter name="validator/debconf">^Error: Package appears to use debconf in (preinst|postinst|prerm|postrm) but does not depend</filter>
+	<filter name="validator/missing_private_dylib">^Warning: Shlibs field specifies private file '.*',</filter>
+	<filter name="validator/missing_dylib">^Error: Shlibs field specifies file '.*', but it does not exist</filter>
+	<filter name="validator/mismatch_install_name">^Error: File name '.*' specified in Shlibs does not match</filter>
+	<filter name="validator/mismatch_compat_version">Error: Shlibs field says compatibility version for (.*) is</filter>
+	<filter name="validator/relative_install_name">is not an absolute pathname</filter>
+	<filter name="validator/missing_shlibs_entry">but the corresponding install_name and compatibility_version</filter>
+
 	<filter name="successes">.$</filter>
 </filters>
