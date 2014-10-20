@@ -272,7 +272,7 @@ if grep -Fqx 'http://bindist.finkproject.org/' "/sw/etc/apt/sources.list"; then
 	sudo tee -a "/sw/etc/apt/sources.list" << EOF
 
 # Official bindist see http://bindist.finkmirrors.net/ for details.
-deb http://bindist.finkproject.org/${OSXVersion} stable main
+deb http://bindist.finkproject.org/10.9 stable main
 
 EOF
 fi
