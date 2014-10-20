@@ -4,8 +4,8 @@
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
-FinkVersion="0.37.1"
-FinkMD5Sum="c0e2f64fbd461e11827c4ffb2cb885e5"
+FinkVersion="0.38.0"
+FinkMD5Sum="a93035b6cb7b1ae0abae1b8acc9396fe"
 FinkOutDir="fink"
 FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
