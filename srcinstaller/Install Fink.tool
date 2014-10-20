@@ -2,6 +2,7 @@
 
 # Config
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
+DarwinVersion="$(uname -a | cut -d\  -f3)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 FinkVersion="0.38.0"
@@ -105,8 +106,8 @@ function fetchBin {
 cd "${HOME}/Downloads"
 
 # Version check
-if [[ ! "${OSXVersion}" = "10.9" ]]; then
-	echo "This is for 10.9.x only."
+if [[ "${DarwinVersion}" < "13" ]]; then
+	echo "This script is for use on OS 10.9+ only."
 	exit 1
 fi
 
