@@ -175,12 +175,10 @@ fi
 # Check for java
 clear
 echo "Checking for Java..." >&2
-if ! pkgutil --pkg-info=com.apple.pkg.JavaEssentials; then
-	VJava="$(java -version 2>&1>/dev/null)"
-	if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
-		echo "Java is installing, please rerun when it finishes." >&2
-		exit 0
-	fi
+VJava="$(java -version 2>&1>/dev/null)"
+if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
+	echo "Java is installing, please rerun when it finishes." >&2
+	exit 0
 fi
 
 # Check for Command Line Tools
