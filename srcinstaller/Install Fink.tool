@@ -185,7 +185,7 @@ fi
 clear
 echo "Checking for the Xcode Command Line Tools..." >&2
 if ! pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; then
-	echo "The Xcode Command Line Tools are installing, waiting for it to finish." >&2
+	echo "The Xcode Command Line Tools are installing, please rerun when it finishes." >&2
 	xcode-select --install
 	exit 0
 fi
