@@ -117,9 +117,9 @@ This script will automate the instalation of fink, its prerequisets and
 help out a bit with initial setup; to do this an internet connection is
 required.
 
-Before fink can be installed you need to have java, the Command Line Tools,
-XQuartz and accepted the xcode licence. Additionally you may wish to
-install the full Xcode app.
+Before fink can be installed you need to have java, the Command Line
+Tools, XQuartz and accepted the xcode licence. Additionally you may
+wish to install the full Xcode app.
 
 After this script detects one of these requirements to be missing it
 will atempt to install it for you; in most cases this will mean the
