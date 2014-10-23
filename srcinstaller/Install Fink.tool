@@ -197,8 +197,8 @@ if ! pkgutil --pkg-info=org.macosforge.xquartz.pkg; then
 	echo "XQuartz is not installed, fetching..." >&2
 	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "-" "-"
 	echo "Mounting the XQuartz disk..." >&2
-	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" | tr -d "\t")"
-	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])( +)::')"
+	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" | tr -d "\t" | grep -Fv 'GUID_partition_scheme')"
+	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])(s[0-9])?( +)?(Apple_HFS)?( +)::')"
 	echo "Starting the XQuartz install; please rerun this script when it finishes." >&2
 	open "${XQuartzVolPath}/${XQuartzPKGPath}"
 	exit 0
