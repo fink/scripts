@@ -205,7 +205,7 @@ if ! pkgutil --pkg-info=org.macosforge.xquartz.pkg; then
 fi
 
 # Check the xcode licence
-if [[ ! -f /Library/Preferences/com.apple.dt.Xcode.plist ]]; then
+if [[ ! -f /Library/Preferences/com.apple.dt.Xcode.plist ]] && [[ ! -z "${XcodePath}" ]]; then
 	choice=""
 	while [[ ! "${choice}" = "1" ]] || [[ ! "${choice}" = "2" ]] || [[ ! "${choice}" = "3" ]]; do
 		clear
