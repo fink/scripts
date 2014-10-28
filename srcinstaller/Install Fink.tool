@@ -2,7 +2,7 @@
 
 # Config
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
-DarwinVersion="$(uname -a | cut -d\  -f3)"
+DarwinVersion="$(uname -a | cut -d' ' -f3)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 FinkVersion="0.38.1"
@@ -113,13 +113,13 @@ fi
 
 # Intro Explanation
 cat > "/dev/stderr" << EOF
-This script will automate the instalation of fink, its prerequisets and
-help out a bit with initial setup; to do this an internet connection is
-required.
+This script will automate the installation of fink, its prerequisets
+and help out a bit with initial setup; to do this an internet
+connection is required.
 
-Before fink can be installed you need to have java, the Command Line Tools,
-XQuartz and accepted the xcode licence. Additionally you may wish to
-install the full Xcode app.
+Before fink can be installed you need to have java, the Command Line
+Tools, XQuartz and accepted the xcode licence. Additionally you may
+wish to install the full Xcode app.
 
 After this script detects one of these requirements to be missing it
 will atempt to install it for you; in most cases this will mean the
@@ -175,19 +175,17 @@ fi
 # Check for java
 clear
 echo "Checking for Java..." >&2
-if ! pkgutil --pkg-info=com.apple.pkg.JavaEssentials; then
-	VJava="$(java -version 2>&1>/dev/null)"
-	if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
-		echo "Java is installing, please rerun when it finishes." >&2
-		exit 0
-	fi
+VJava="$(java -version 2>&1>/dev/null)"
+if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
+	echo "Java is installing, please rerun when it finishes." >&2
+	exit 0
 fi
 
 # Check for Command Line Tools
 clear
 echo "Checking for the Xcode Command Line Tools..." >&2
 if ! pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; then
-	echo "The Xcode Command Line Tools are installing, waiting for it to finish." >&2
+	echo "The Xcode Command Line Tools are installing, please rerun when it finishes." >&2
 	xcode-select --install
 	exit 0
 fi
@@ -199,15 +197,15 @@ if ! pkgutil --pkg-info=org.macosforge.xquartz.pkg; then
 	echo "XQuartz is not installed, fetching..." >&2
 	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "-" "-"
 	echo "Mounting the XQuartz disk..." >&2
-	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" | tr -d "\t")"
-	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])( +)::')"
+	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" 2>/dev/null | tr -d "\t" | grep -F '/dev/disk' | grep -Fv 'GUID_partition_scheme')"
+	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])(s[0-9])?( +)?(Apple_HFS)?( +)::')"
 	echo "Starting the XQuartz install; please rerun this script when it finishes." >&2
 	open "${XQuartzVolPath}/${XQuartzPKGPath}"
 	exit 0
 fi
 
 # Check the xcode licence
-if [[ ! -f /Library/Preferences/com.apple.dt.Xcode.plist ]]; then
+if [[ ! -f /Library/Preferences/com.apple.dt.Xcode.plist ]] && [[ ! -z "${XcodePath}" ]]; then
 	choice=""
 	while [[ ! "${choice}" = "1" ]] || [[ ! "${choice}" = "2" ]] || [[ ! "${choice}" = "3" ]]; do
 		clear
@@ -268,11 +266,11 @@ if [ "${UseBinaryDist}" = "1" ]; then
 	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" | sudo tee "/sw/etc/fink.conf"
 fi
 
-if grep -Fqx 'http://bindist.finkproject.org/' "/sw/etc/apt/sources.list"; then
+if ! grep -Fqx 'http://bindist.finkproject.org/' "/sw/etc/apt/sources.list"; then
 	sudo tee -a "/sw/etc/apt/sources.list" << EOF
 
 # Official bindist see http://bindist.finkmirrors.net/ for details.
-deb http://bindist.finkproject.org/10.9 stable main
+deb http://bindist.finkproject.org/${OSXVersion} stable main
 
 EOF
 fi
