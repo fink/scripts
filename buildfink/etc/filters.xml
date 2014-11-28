@@ -232,9 +232,9 @@ Deb validator rules
 	<filter name="validator/rarian_compat">^Error: Calling scrollkeeper-update in </filter>
 	<filter name="validator/scrollkeeper_misplaced">^Warning: scrollkeeper-update in (preinst|prerm) is a no-op</filter>
 	<filter name="validator/debconf">^Error: Package appears to use debconf in (preinst|postinst|prerm|postrm) but does not depend</filter>
-	<filter name="validator/missing_private_dylib">^Warning: Shlibs field specifies private file '.*',</filter>
-	<filter name="validator/missing_dylib">^Error: Shlibs field specifies file '.*', but it does not exist</filter>
-	<filter name="validator/mismatch_install_name">^Error: File name '.*' specified in Shlibs does not match</filter>
+	<filter name="validator/missing_private_dylib">^Warning: Shlibs field specifies private install_name '.*',</filter>
+	<filter name="validator/missing_dylib">^Error: Shlibs field specifies install_name '.*', but it does not exist</filter>
+	<filter name="validator/mismatch_install_name">^Error: Name '.*' specified in Shlibs does not match</filter>
 	<filter name="validator/mismatch_compat_version">Error: Shlibs field says compatibility version for (.*) is</filter>
 	<filter name="validator/relative_install_name">is not an absolute pathname</filter>
 	<filter name="validator/missing_shlibs_entry">but the corresponding install_name and compatibility_version</filter>
