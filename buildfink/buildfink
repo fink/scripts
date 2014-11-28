@@ -51,7 +51,9 @@ The C<--skip> option, which may be specified multiple times, allows the given pa
 Skipped packages will not be built, nor will any packages which depend on them.
 
 The C<--validate> option, if specified, causes buildfink to validate packages
-as it builds them and run any test suites specified in an InfoTest section.
+as it builds them.
+
+The C<--tests> option runs any test suites specified in an InfoTest section (not yet implemented).
 
 The C<--find-orphan-files> option, if specified, will detect files installed
 into the prefix which aren't actually part of the binary package.
