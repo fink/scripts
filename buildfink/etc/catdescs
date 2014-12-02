@@ -51,3 +51,38 @@ insufficient_permission: Build process tried to access restricted files (--build
 chown: Attempted forbidden change in ownership (insufficient permissions)
 f-p-p: Uses system library/header over Fink provided file
 no-help-tools: flag-sort and/or fink-package-precedence are used but not present
+essential_file: Overwriting an essential system file
+deprecated_directory: Files installed into deprecated directory
+disallowed_directory: Files installed outside allowed directories
+perl_xs_module: Compiled perl module not installed into a perl-versioned subdirectory
+compiled_elc_file: Precompiled .elc file in package
+unversioned_framework: Unversioned framework files installed in a non-BuildDependsOnly package
+unversioned_dylib: Lesser versioned file present alongside Shlibs entry
+scrollkeeper_source: Scrollkeeper file found, but no scrollkeeper used
+icon_cache: Package overwrites a sitewide icon index
+scrollkeeper_runtime: Runtime scrollkeeper file installed
+daemonic: Package contains a DaemonicFile but doesn't call 'daemonic'
+daemonic_executable: DaemonicFile lacks execute permissions
+daemonic_exe_not_found: DaemonicFile executable does not exist
+daemonic_exe_unrunnable: DaemonicFile executable can't be run
+compiler_flag_temp_dir: Published compiler flag points to temp dir
+compiled_python_temp_dir: Compiled python module points to temp dir
+charset_alias: Illegal presence of charset.alias
+unversioned_language_file: File in a language-versioned package does not have a pathname specific to that version
+libtool_multi_word: Libtool can fail with multi-word flags
+texinfo: Misinstallation of texinfo table of contents file
+perllocal_pod: Misuse of UpdatepPOD
+case_insensitive_filename: File collision in case sensitive systems
+gtk_doc_url: Local URL outside Fink location
+empty_deb: Package contains no files
+no_bdo_flag: Missing BuildDependsOnly flag for headers/dylib package
+rarian_compat: Missing Depends on rarian-compat
+scrollkeeper_misplaced: Use of scrollkeeper-update in wrong Pre*Script
+debconf: Missing Depends on debconf
+missing_private_dylib: Private dylib declared but not found
+missing__dylib: Dylib declared but not found
+mismatch_install_name: Shlibs field and install_name are mismatched
+mismatch_compat_version: Shlibs field and compat_version are mismatched
+relative_install_name: Shared library does not have an absolute install_name path
+missing_shlibs_entry: Shared library not included in Shlibs field
+flat_namespace: Library misbuilt with a flat namespace

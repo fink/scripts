@@ -51,7 +51,9 @@ The C<--skip> option, which may be specified multiple times, allows the given pa
 Skipped packages will not be built, nor will any packages which depend on them.
 
 The C<--validate> option, if specified, causes buildfink to validate packages
-as it builds them and run any test suites specified in an InfoTest section.
+as it builds them.
+
+The C<--tests> option runs any test suites specified in an InfoTest section (not yet implemented).
 
 The C<--find-orphan-files> option, if specified, will detect files installed
 into the prefix which aren't actually part of the binary package.
@@ -373,18 +375,18 @@ sub prepSystem {
 
   # Test whether fink supports --tests/--validate
   if ($DoValidate) {
-    open(FINK, "-|", "fink -V --tests on 2>&1") or die "Couldn't launch fink: $!\n";
-    my $supportsTests = 1;
+    open(FINK, "-|", "fink -V --validate on 2>&1") or die "Couldn't launch fink: $!\n";
+    my $supportsValidation = 1;
     while (<FINK>) {
       if (/unknown option/i) {
-	$supportsTests = 0;
+	$supportsValidation = 0;
 	last;
       }
     }
     close(FINK);
 
-    if ($supportsTests) {
-      $FinkBuildFlags = " --tests warn --validate warn ";
+    if ($supportsValidation) {
+      $FinkBuildFlags = " --validate=warn ";
     } else {
       $FinkBuildFlags = " -m ";
     }
