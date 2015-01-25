@@ -159,10 +159,10 @@ fi
 # Check for Xcode
 clear
 echo "Checking to see if xcode is installed..." >&2
-XcodePath="$(osascript -e 'POSIX path of (path to application id "com.apple.dt.Xcode")' 2>/dev/null; osascript -e 'tell app id "com.apple.dt.Xcode" to quit' 2>/dev/null)"
+XcodePath="$(mdfind kMDItemCFBundleIdentifier = "com.apple.dt.Xcode")"
 if [ ! -z "${XcodePath}" ]; then
 	echo "Xcode is installed, setting up the defaults..." >&2
-	sudo xcode-select -switch "${XcodePath}Contents/Developer"
+	sudo xcode-select -switch "${XcodePath}/Contents/Developer"
 else
 	echo "You do not have Xcode installed." >&2
 	read -rp $'Do you want to install xcode?\n[N|y] ' choice
