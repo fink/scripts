@@ -5,6 +5,8 @@ OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
 DarwinVersion="$(uname -a | cut -d' ' -f3)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
+Jvers="1.6"
+
 FinkVersion="0.38.3"
 FinkMD5Sum="70472425b59b0775a5c66384f63fd854"
 FinkOutDir="fink"
@@ -159,10 +161,10 @@ fi
 # Check for Xcode
 clear
 echo "Checking to see if xcode is installed..." >&2
-XcodePath="$(osascript -e 'POSIX path of (path to application id "com.apple.dt.Xcode")' 2>/dev/null; osascript -e 'tell app id "com.apple.dt.Xcode" to quit' 2>/dev/null)"
+XcodePath="$(mdfind kMDItemCFBundleIdentifier = "com.apple.dt.Xcode")"
 if [ ! -z "${XcodePath}" ]; then
 	echo "Xcode is installed, setting up the defaults..." >&2
-	sudo xcode-select -switch "${XcodePath}Contents/Developer"
+	sudo xcode-select -switch "${XcodePath}/Contents/Developer"
 else
 	echo "You do not have Xcode installed." >&2
 	read -rp $'Do you want to install xcode?\n[N|y] ' choice
@@ -175,11 +177,12 @@ fi
 # Check for java
 clear
 echo "Checking for Java..." >&2
-VJava="$(java -version 2>&1>/dev/null)"
-if [ "${VJava}" = "No Java runtime present, requesting install." ]; then
-	echo "Java is installing, please rerun when it finishes." >&2
+if /usr/libexec/java_home -Fv "${Jvers}+"; then
+	java -version 2>&1>/dev/null
+	echo "Please install the JDK not the JRE, since we need it to build things against; please rerun this script when it finishes installing." >&2
 	exit 0
 fi
+echo "Found version $(java -version 2>&1>/dev/null | grep 'version' | sed -e 's:java version ::' -e 's:"::g')." >&2
 
 # Check for Command Line Tools
 clear
