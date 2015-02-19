@@ -177,7 +177,7 @@ fi
 # Check for java
 clear
 echo "Checking for Java..." >&2
-if /usr/libexec/java_home -Fv "${Jvers}+"; then
+if ! /usr/libexec/java_home -Fv "${Jvers}+"; then
 	java -version 2>&1>/dev/null
 	echo "Please install the JDK not the JRE, since we need it to build things against; please rerun this script when it finishes installing." >&2
 	exit 0
