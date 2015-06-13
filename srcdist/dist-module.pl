@@ -76,7 +76,7 @@ my $tag = shift;
 #my $gitroot='git@github.com:fink/';
 my $github_url="https://codeload.github.com/fink/$module/legacy.tar.gz";
 my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
-my $distribution = "10.4";  #default value
+my $distribution = "10.7";  #default value
 
 
 
