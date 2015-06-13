@@ -211,7 +211,7 @@ print `ls -l $tmpdir/*.tar.gz` . "\n";
 
 ### create package description files
 
-#Refreshed coda with current SF.net mirrors as of 14 April 2014
+#Refreshed coda with current SF.net mirrors as of 12 June 2014
 my $coda = <<CODA;
 CustomMirror: <<
 Primary: http://downloads.sourceforge.net
@@ -224,8 +224,6 @@ asi-TW: http://nchc.dl.sourceforge.net/sourceforge
 asi-TW: http://ncu.dl.sourceforge.net/sourceforge
 aus-AU: http://aarnet.dl.sourceforge.net/sourceforge
 aus-AU: http://internode.dl.sourceforge.net/sourceforge
-aus-AU: http://waia.dl.sourceforge.net/sourceforge
-eur-CH: http://switch.dl.sourceforge.net/sourceforge
 eur-CZ: http://cznic.dl.sourceforge.net/sourceforge
 eur-CZ: http://ignum.dl.sourceforge.net/sourceforge
 eur-DE: http://netcologne.dl.sourceforge.net/sourceforge
@@ -241,10 +239,13 @@ eur-UK: http://vorboss.dl.sourceforge.net/sourceforge
 nam-CA: http://iweb.dl.sourceforge.net/sourceforge
 nam-US: http://colocrossing.dl.sourceforge.net/sourceforge
 nam-US: http://downloads.sourceforge.net
+nam-US: http://hivelocity.dl.sourceforge.net/sourceforge
 nam-US: http://softlayer-ams.dl.sourceforge.net/sourceforge
 nam-US: http://softlayer-dal.dl.sourceforge.net/sourceforge
 nam-US: http://superb-dca2.dl.sourceforge.net/sourceforge
+nam-US: http://superb-dca3.dl.sourceforge.net/sourceforge
 nam-US: http://tcpdiag.dl.sourceforge.net/sourceforge
+sam-BR: http://nbtelecom.dl.sourceforge.net/sourceforge
 sam-BR: http://ufpr.dl.sourceforge.net/sourceforge
 <<
 CODA
