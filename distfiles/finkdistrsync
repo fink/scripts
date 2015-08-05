@@ -47,13 +47,13 @@ cd "${FIROOT}"
 date -u +%s > "${FIROOT}/distfiles/UPDATE"
 
 # Update from rsync with a 10 min timeout
-if ! rsync -aq --timeout=600 --delete-after --exclude="TIMESTAMP" --exclude="LOCAL" --exclude="UPDATE" --partial-dir="${FIROOT}/distfiles.tmp/" "${MASTER}" "${FIROOT}/distfiles/"; then
+if ! rsync -aq --timeout=600 --delete-after --exclude="TIMESTAMP" --exclude="LOCAL" --exclude="UPDATE" --partial-dir="${FIROOT}/distfiles.tmp/" "${RSYNCPTH}" "${FIROOT}/distfiles/"; then
 	rm -f "${LOCKFILE}"
 	exit 1
 fi
 
 # Fetch the timestamp file
-if ! rsync -azq --timeout=60 --delete-after "${MASTER}TIMESTAMP" "${FIROOT}/distfiles/TIMESTAMP"; then
+if ! rsync -azq --timeout=60 --delete-after "${RSYNCPTH}TIMESTAMP" "${FIROOT}/distfiles/TIMESTAMP"; then
 	rm -f "${LOCKFILE}"
 	exit 1
 fi
