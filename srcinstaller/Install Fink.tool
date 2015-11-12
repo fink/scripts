@@ -267,15 +267,20 @@ if [ "${UseBinaryDist}" = "1" ]; then
 	sudo rm /sw/etc/fink.conf.bak
 	sudo mv /sw/etc/fink.conf /sw/etc/fink.conf.bak
 	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" | sudo tee "/sw/etc/fink.conf"
-fi
 
-if ! grep -Fqx 'http://bindist.finkmirrors.net/' "/sw/etc/apt/sources.list"; then
-	sudo tee -a "/sw/etc/apt/sources.list" << EOF
+	if grep -Fqx 'bindist.finkmirrors.net' "/sw/etc/apt/sources.list"; then
+		# Fix wrong address.
+		sudo rm "/sw/etc/apt/sources.list.finkbak"
+		sudo mv "/sw/etc/apt/sources.list" "/sw/etc/apt/sources.list.finkbak"
+		sed -e 's:finkmirrors.net:finkproject.org:g' "/sw/etc/apt/sources.list.finkbak" | sudo tee "/sw/etc/apt/sources.list"
+	elif ! grep -Fqx 'http://bindist.finkproject.org/' "/sw/etc/apt/sources.list"; then
+		sudo tee -a "/sw/etc/apt/sources.list" << EOF
 
-# Official bindist see http://bindist.finkmirrors.net/ for details.
-deb http://bindist.finkmirrors.net/${OSXVersion} stable main
+# Official bindist see http://bindist.finkproject.org/ for details.
+deb http://bindist.finkproject.org/${OSXVersion} stable main
 
 EOF
+	fi
 fi
 
 # Set up paths
