@@ -7,8 +7,8 @@ XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 Jvers="1.6"
 
-FinkVersion="0.39.1"
-FinkMD5Sum="ecda4f8d4bf50171c3c7998c6bebe356"
+FinkVersion="0.39.2"
+FinkMD5Sum="59d17194bfbca83948ee51f3e7d60755"
 FinkOutDir="fink"
 FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
