@@ -1,0 +1,102 @@
+#!/bin/sh
+
+# Defaults
+RSYNCPTHS="/Volumes/src2/fink/dist-sync-paths"
+FIROOT="/Volumes/src2/fink/distfiles"
+LOCKFILE="/var/run/fink-dist-rsync-push.lock"
+
+usage() {
+	cat > "/dev/stderr" << EOF
+usage: ${0} [ -l <lockfile> ] [ -o <inputdir> ] [ -i <sync-paths> ]
+Defaults:
+	inputdir: ${FIROOT}
+	lockfile: ${LOCKFILE}
+	sync-paths: ${RSYNCPTHS}
+EOF
+	exit 1
+}
+
+while getopts ":l:o:i:" OPTION; do
+	case "${OPTION}" in
+		l)
+			LOCKFILE="${OPTARG}"
+		;;
+		o)
+			FIROOT="${OPTARG}"
+		;;
+		i)
+			RSYNCPTH="${OPTARG}"
+		;;
+		?)
+			usage
+		;;
+	esac
+done
+
+# Config
+pushDIR="${FIROOT}/push-dist"
+
+# Prevent more than one concurrent update
+lockfile -r "0" -l "28800" "${LOCKFILE}" || exit 0
+
+# Fail if things do not exist
+if [ ! -d "${FIROOT}/distfiles" ]; then
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
+if [ ! -z "${RSYNCPTHS}" ]; then
+	rm -f "${LOCKFILE}"
+	exit 1
+fi
+
+# Make the directories if they do not already exist
+if [ ! -d "${pushDIR}" ]; then
+	mkdir -p "${pushDIR}"
+fi
+
+cd "${FIROOT}"
+
+# Get the list of push sites; # at the start of line is a comment
+RSYNCPTHLIST="$(cat "${RSYNCPTHS}" | grep -v '^#')"
+
+# For each site do a push
+for RSYNCPTH in ${RSYNCPTHLIST}; do
+
+	# Skip blank lines
+	if [ -z "${RSYNCPTH}"]; then
+		continue
+	fi
+
+	# Note the start time of a new fetch
+	date -u +%s > "${pushDIR}/UPDATE"
+	if ! rsync -azq --timeout=60 --delete-after "${pushDIR}/UPDATE" "${RSYNCPTH}UPDATE"; then
+		echo "error: Fatal inability to contact server ${RSYNCPTH}." >&2
+		continue
+	fi
+
+	# Update from rsync with a 10 min timeout
+	if ! rsync -aq --timeout=600 --delete-after --exclude="TIMESTAMP" --exclude="LOCAL" --exclude="UPDATE" --partial-dir="../distfiles.tmp/" "${FIROOT}/distfiles/" "${RSYNCPTH}"; then
+		echo "error: unable to finish sync with ${RSYNCPTH}." >&2
+		continue
+	fi
+
+	# Push the timestamp file
+	if ! rsync -azq --timeout=60 --delete-after "${FIROOT}/distfiles/TIMESTAMP" "${RSYNCPTH}TIMESTAMP"; then
+		echo "error: unable to finish sync with ${RSYNCPTH}." >&2
+		continue
+	fi
+
+	# Add the local timestamp
+	date -u +%s > "${pushDIR}/LOCAL"
+	if ! rsync -azq --timeout=60 --delete-after "${pushDIR}/LOCAL" "${RSYNCPTH}LOCAL"; then
+		echo "error: Fatal inability to contact server ${RSYNCPTH}." >&2
+		continue
+	fi
+
+done
+
+# Clean up
+rm -f "${LOCKFILE}"
+
+exit 0
+
