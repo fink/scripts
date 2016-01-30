@@ -57,13 +57,13 @@ fi
 cd "${FIROOT}"
 
 # Get the list of push sites; # at the start of line is a comment
-RSYNCPTHLIST="$(cat "${RSYNCPTHS}" | grep -v '^#')"
+RSYNCPTHLIST="$(grep -v '^#' "${RSYNCPTHS}")"
 
 # For each site do a push
 for RSYNCPTH in ${RSYNCPTHLIST}; do
 
 	# Skip blank lines
-	if [ -z "${RSYNCPTH}"]; then
+	if [ -z "${RSYNCPTH}" ]; then
 		continue
 	fi
 
