@@ -220,15 +220,12 @@ afr-ZA: http://tenet.dl.sourceforge.net/sourceforge
 asi-JP: http://jaist.dl.sourceforge.net/sourceforge
 asi-KZ: http://kaz.dl.sourceforge.net/sourceforge
 asi-TW: http://nchc.dl.sourceforge.net/sourceforge
-asi-TW: http://ncu.dl.sourceforge.net/sourceforge
 aus-AU: http://internode.dl.sourceforge.net/sourceforge
-eur-CZ: http://cznic.dl.sourceforge.net/sourceforge
+eur-BG: http://netix.dl.sourceforge.net/sourceforge
 eur-CZ: http://ignum.dl.sourceforge.net/sourceforge
 eur-DE: http://netcologne.dl.sourceforge.net/sourceforge
-eur-DE: http://skylink.dl.sourceforge.net/sourceforge
 eur-FR: http://freefr.dl.sourceforge.net/sourceforge
 eur-IE: http://heanet.dl.sourceforge.net/sourceforge
-eur-IT: http://garr.dl.sourceforge.net/sourceforge
 eur-RU: http://citylan.dl.sourceforge.net/sourceforge
 eur-UA: http://netassist.dl.sourceforge.net/sourceforge
 eur-UK: http://kent.dl.sourceforge.net/sourceforge
@@ -238,8 +235,6 @@ nam-US: http://colocrossing.dl.sourceforge.net/sourceforge
 nam-US: http://downloads.sourceforge.net
 nam-US: http://superb-dca2.dl.sourceforge.net/sourceforge
 nam-US: http://superb-dca3.dl.sourceforge.net/sourceforge
-nam-US: http://superb-sea2.dl.sourceforge.net/sourceforge
-nam-US: http://tcpdiag.dl.sourceforge.net/sourceforge
 sam-BR: http://nbtelecom.dl.sourceforge.net/sourceforge
 sam-BR: http://ufpr.dl.sourceforge.net/sourceforge
 <<
