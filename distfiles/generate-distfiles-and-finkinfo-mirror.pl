@@ -3,17 +3,17 @@
 $|++;
 
 BEGIN {
-	# phinch
+	# www
 	our $CHANGELOG   = '/home/fink/log/change.log';
-	our $CHECKOUTDIR = '/var/www/finkinfo';
-	our $CVSROOT	 = ':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
-	our $DEBUG	 = 0;
-	our $DOWNLOADDIR = '/var/www/distfiles';
-	our $FINKROOT    = '/home/fink/cvs/fink';
+	our $CHECKOUTDIR = '/home/fink/finkinfo';
+	our $CVSROOT     = ':ext:gecko2@fink.cvs.sourceforge.net:/cvsroot/fink';
+	our $DEBUG       = 0;
+	our $DOWNLOADDIR = '/home/fink/distfiles';
+	our $FINKROOT    = '/home/fink/fink';
 	our $LOGFILE     = '/home/fink/log/mirror.log';
 	our $SVNROOT     = '/home/fink/svn';
-	our $VALIDATE_EXISTING_FILES = 0;
-	our $WORKDIR	 = '/home/fink/mirwork/mirror-work';
+	our $VALIDATE_EXISTING_FILES = 1;
+	our $WORKDIR     = '/home/fink/mirwork';
 }
 
 use lib $FINKROOT . '/perlmod';
@@ -112,16 +112,6 @@ if (not grep(/^--s/, @ARGV))
 		{
 			die "unable to write TIMESTAMP.new: $!";
 		}
-		if (open (FILEOUT, '>dists.public/LOCAL.new'))
-		{
-			print FILEOUT time(), "\n";
-			close (FILEOUT);
-			move('dists.public/LOCAL.new', 'dists.public/LOCAL');
-		}
-		else
-		{
-			die "unable to write LOCAL.new: $!";
-		}
 	}
 }
 
@@ -134,7 +124,7 @@ print LOG "- scanning info files\n";
 opendir(DIR, $CHECKOUTDIR . '/dists') or die "unable to read from $CHECKOUTDIR/dists: $!";
 for my $dir (readdir(DIR))
 {
-	if ($dir eq '10.3' or $dir eq '10.4' or $dir eq '10.7')
+	if ($dir eq '10.3' or $dir eq '10.4' or $dir eq '10.7' or $dir eq '10.9-libcxx')
 	{
 		print LOG "searching $dir\n";
 		finddepth( { wanted => \&find_fetch_infofile, follow => 1 }, $CHECKOUTDIR . '/dists/' . $dir);
@@ -153,6 +143,7 @@ sub find_fetch_infofile
 	my $all_downloads_passed = 1;
 
 	# dmacks ponders: doesn't the first of these make the second and third un-necessary?
+	return if     ( $File::Find::dir =~ m#/10\..-EOL$/# );
 	return unless ( $File::Find::name =~ m#\.info$# );
 	return if     ( $File::Find::name =~ m#/CVS/# );
 	return if     ( $File::Find::name =~ m#/10.2(-gcc3.3)?/# );
@@ -190,9 +181,9 @@ sub find_fetch_infofile
 		@arches = ('powerpc', 'i386');
 	}
 
-	if ($dist =~ /^10.4$/ or $dist =~ /^10.7/)
+	if ($dist =~ /^10.4$/ or $dist =~ /^10.7/ or $dist =~ /^10.9-libcxx/)
 	{
-		for my $dist ('10.4', '10.5', '10.6', '10.7')
+		for my $dist ('10.4', '10.5', '10.6', '10.7', '10.8', '10.9', '10.10', '10.11')
 		{
 			for my $arch (@arches)
 			{
@@ -203,7 +194,7 @@ sub find_fetch_infofile
 					#downloadmethod => 'lftpget',
 					downloadmethod => 'wget',
 					architecture   => $arch,
-					downloadtimeout => 900, # try up to 15 minutes to download something
+					downloadtimeout => 30, # try up to 30 seconds to download something
 					ProxyPassiveFTP => 'true', # DAMN passiv PORT vs. PASV
 					Verbose		=> 0,
 				});
