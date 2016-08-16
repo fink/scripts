@@ -1,0 +1,382 @@
+#!/usr/bin/perl
+
+BEGIN {
+	use Getopt::Long qw(:config no_ignore_case);
+
+	#keep args for verbose output
+	our @ARGV_SAVE = @ARGV;
+
+	our $DEBUG	 = 0;
+	our $DOWNLOADDIR = '/var/www/distfiles';
+	our $FINKROOT    = '/home/fink/cvs/fink';
+	our $DISTROOT    = '/home/fink/cvs/dists';
+	our $WORKDIR	 = '/home/fink/mirwork/mirror-work';
+	our $CHANGELOG   = $WORKDIR . '/log/change.log';
+	our $LOGFILE     = $WORKDIR . '/log/mirror.log';
+	our $VALIDATE_EXISTING_FILES = 0;
+	our $DLMETHOD    = 'wget'; # try lftpget maybe?
+	our $DLTIMEOUT   = 30; # try up to 30 seconds to download something
+
+	#read in command line arguments and init hash variables with the given
+	#values from argv
+	if ( !( GetOptions(
+		'f|finkroot=s'	=> \$FINKROOT,
+		'i|distsroot=s'	=> \$DISTROOT,
+		'o|output=s'	=> \$DOWNLOADDIR,
+		'w|workdir=s'	=> \$WORKDIR,
+		'd|debug'	=> \$DEBUG,
+		'x|validate'	=> \$VALIDATE_EXISTING_FILES,
+		'h|help'	=> sub{
+			print STDOUT get_usage();
+			print STDOUT "\n";
+			print STDOUT get_help();
+			exit(0)
+		},
+		'usage|?'	=> sub{
+			print STDOUT get_usage();
+			exit(3);
+		}
+	) ) ) {
+		#call usage if GetOptions failed
+		usage(1);
+	}
+
+}
+
+sub go_die {
+	my $msg = shift;
+	my $exitcode = shift || 3;
+
+	print STDERR "Error: $msg\n";
+	exit($exitcode);
+}
+
+sub get_usage {
+        return <<EOT;
+Usage:
+finkdistcvs
+  [-f <path>] [-i <path] [-o <path>] [-w <path>] [-d] [-x] [-h]
+EOT
+}
+
+sub get_help {
+        return <<EOT;
+  [-f] <path>
+       path to the fink checkout (Default: /home/fink/cvs/fink)
+  [-i] <path>
+       path to the fink dists checkout (Default: /home/fink/cvs/dists)
+  [-o] <path>
+       path to the distfiles output (Default: /var/www/distfiles)
+  [-w] <path>
+       path to the workdir (Default: /home/fink/mirwork/mirror-work)
+  [-d]
+       debug output
+  [-x]
+       Enable existing file validation
+  [-h]
+       show this help
+EOT
+}
+
+sub usage {
+	my ($arg) = @_; #the list of inputs
+	my ($exitcode);
+
+	if ( defined $arg ) {
+		if ( $arg =~ m/^\d+$/ ) {
+			$exitcode = $arg;
+		} else {
+			print STDOUT $arg, "\n";
+			$exitcode = 1;
+		}
+	}
+	print STDOUT get_usage();
+
+	exit($exitcode) if defined $exitcode;
+}
+
+sub find_fetch_infofile {
+	my $shortname = $_;
+	my $distdir;
+	my $all_downloads_passed = 1;
+
+	return unless ( $File::Find::name =~ m#\.info$# );
+
+	if ( $File::Find::name =~ m#^$DISTROOT/([^/]+)/# ) {
+		$distdir = $1;
+	} else {
+		return;
+	}
+
+	$COUNT++;
+	if ($DEBUG and $COUNT > 50) {
+		print LOG "debug: already tried $COUNT files\n";
+		return;
+	}
+
+	my @stat = stat($File::Find::name);
+	if (exists $LAST_UPDATE_CACHE->{$File::Find::name} and $LAST_UPDATE_CACHE->{$File::Find::name} == $stat[9]) {
+		print LOG $File::Find::name, " has not changed\n";
+		return;
+	}
+
+	my @arches;
+	my @dists;
+	if ($distdir =~ /^10\./) {
+		if ($distdir =~ /^10.1/) {
+			$dists = ('10.1');
+		} elsif ($distdir =~ /^10.2/) {
+			$dists = ('10.2');
+		} elsif ($distdir =~ /^10.3/) {
+			$dists = ('10.4');
+		} elsif ($distdir =~ /^10.4/) {
+			$dists = ('10.4', '10.5', '10.6');
+		} elsif ($distdir =~ /^10.7/) {
+			$dists = ('10.7', '10.8');
+		} else {
+			$dists = ('10.9', '10.10', '10.11', '10.12');
+		}
+		for my $dist ($dists) {
+			if ($dist eq '10.1' or $dist eq '10.2' or $dist eq '10.3') {
+				@arches = ('powerpc');
+			} elsif ($dist eq '10.4') {
+				@arches = ('powerpc', 'i386');
+			} elsif ($dist eq '10.5') {
+				@arches = ('powerpc', 'i386', 'x86_64');
+			} elsif ($dist eq '10.6') {
+				@arches = ('i386', 'x86_64');
+			} else {
+				@arches = ('x86_64');
+			}
+			for my $arch (@arches) {
+				$Fink::Config::libpath = $FINKROOT;
+				$Fink::Config::config = Fink::Config->new_from_properties({
+					basepath       => $WORKDIR,
+					distribution   => $dist,
+					downloadmethod => $DLMETHOD,
+					architecture   => $arch,
+					downloadtimeout => $DLTIMEOUT,
+					ProxyPassiveFTP => 'true', # DAMN passiv PORT vs. PASV
+					Verbose		=> $DEBUG,
+				});
+		
+				my ($tree) = $File::Find::name =~ m#$DISTROOT/[^/]+/([^/]+)/#;
+				print LOG "- fetching files for $shortname ($dist/$tree)\n";
+				for my $package ( Fink::PkgVersion->pkgversions_from_info_file( $File::Find::name ) ) {
+					next if ( $package->get_license() =~ /^(Commercial|Restrictive)$/i );
+					for my $suffix ($package->get_source_suffixes) {
+						my $tarball = $package->get_tarball($suffix);
+						print LOG "  - $tarball... ";
+						my $checksums = {};
+						$checksums->{'MD5'} = $package->param('Source' . $suffix . '-MD5');
+						my($checksum_type, $checksum) = Fink::Checksum->parse_checksum($package->get_checksum($suffix));
+						$checksums->{$checksum_type} = $checksum;
+			
+						if (not -l $DOWNLOADDIR . '/' . $tarball) {
+							my $file_checksums = Fink::Checksum->get_all_checksums($DOWNLOADDIR . '/' . $tarball);
+							my $master_checksum_type = 'MD5';
+							if (exists $file_checksums->{$master_checksum_type}) {
+								mkpath($DOWNLOADDIR . '/md5/' . $file_checksums->{$master_checksum_type});
+								move($DOWNLOADDIR . '/' . $tarball, $DOWNLOADDIR . '/md5/' . $file_checksums->{$master_checksum_type} . '/' . $tarball);
+								for my $checksum_type (keys %$file_checksums) {
+									next if ($key eq $master_checksum_type);
+									mkpath($DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($file_checksums->{$checksum_type}));
+									symlink(
+										'../../' . lc($master_checksum_type) . '/' . lc($file_checksums->{$master_checksum_type}) . '/' . $tarball,
+										$DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($file_checksums->{$checksum_type}) . '/' . $tarball
+									);
+									unlink( $DOWNLOADDIR . '/' . $tarball );
+									symlink(
+										lc($master_checksum_type) . '/' . lc($file_checksums->{$master_checksum_type}) . '/' . $tarball,
+										$DOWNLOADDIR . '/' . $tarball,
+									);
+			
+								}
+							}
+						}
+			
+						my $do_download = (not -e $DOWNLOADDIR . '/' . $tarball);
+						for $checksum_type (keys %$checksums) {
+							next if (not defined $checksum_type or $checksum_type =~ /^\s*$/);
+							my $check_file = $DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($checksums->{$checksum_type}) . '/' . $tarball;
+							if (not -f $check_file) {
+								print LOG "$check_file does not exist, downloading\n";
+								$do_download = 1;
+							} elsif ($VALIDATE_EXISTING_FILES) {
+								if (not Fink::Checksum->validate($check_file, $checksums->{$checksum_type}, $checksum_type)) {
+									print LOG "checksum on $check_file does not match, downloading\n";
+									$do_download = 1;
+								}
+							}
+						}
+						if ($do_download) {
+							print LOG "downloading\n";
+							my $master_checksum_type = 'MD5';
+							if (not exists $checksums->{'MD5'}) {
+								my @types = sort keys %$checksums;
+								$master_checksum_type = shift(@types);
+							}
+							my $download_path = $DOWNLOADDIR . '/' . lc($master_checksum_type) . '/' . $checksums->{$master_checksum_type};
+							my $url = $package->get_source($suffix);
+							my $returnval = &fetch_url_to_file({
+								url                => $url,
+								filename           => $tarball,
+								custom_mirror      => $package->get_custom_mirror($suffix),
+								skip_master_mirror => 1,
+								download_directory => $download_path,
+								checksum           => $checksums->{$master_checksum_type},
+								checksum_type      => $master_checksum_type,
+								try_all_mirrors    => 1,
+							});
+							if ($returnval != 0) {
+								unlink($download_path . '/' . $tarball);
+								print LOG "unable to download $url to $download_path\n";
+								$all_downloads_passed = 0;
+								next;
+							}
+			
+							my $file_checksums = Fink::Checksum->get_all_checksums($download_path . '/' . $tarball);
+							for my $checksum_type (keys %$file_checksums) {
+								if ($checksum_type eq $master_checksum_type) {
+									if ($file_checksums->{$checksum_type} ne $checksums->{$checksum_type}) {
+										print LOG "downloaded file has a different checksum than expected ($file_checksums->{$checksum_type} ne $checksums->{$checksum_type})\n";
+									}
+								} else {
+									mkpath($DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($file_checksums->{$checksum_type}));
+									symlink(
+										'../../' . lc($master_checksum_type) . '/' . lc($checksums->{$master_checksum_type}) . '/' . $tarball,
+										$DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($file_checksums->{$checksum_type}) . '/' . $tarball
+									);
+									unlink( $DOWNLOADDIR . '/' . $tarball );
+									symlink(
+										lc($master_checksum_type) . '/' . lc($checksums->{$master_checksum_type}) . '/' . $tarball,
+										$DOWNLOADDIR . '/' . $tarball,
+									);
+								}
+							}
+						} else {
+							print LOG "exists\n";
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if ($all_downloads_passed) {
+		$LAST_UPDATE_CACHE->{$File::Find::name} = $stat[9];
+	}
+}
+
+MAIN: {
+	#force a flush after every write or print
+	$| = 1;
+	my ($show_help);
+
+	#print usage if unknown arg list is left
+	usage(1) if @ARGV;
+
+	use Data::Dumper;
+	use Fcntl qw(:DEFAULT :flock);
+	use File::Copy;
+	use File::Find;
+	use File::Path;
+	use Storable;
+
+	if (! -d  $FINKROOT . '/perlmod') {
+		go_die("Fink root not found, can not load fink modules!");
+	} else {
+		use lib $FINKROOT . '/perlmod';
+		use lib $WORKDIR;
+
+		use Fink::NetAccess 1.10 qw(fetch_url_to_file);
+		use Fink::Package;
+		use Fink::PkgVersion;
+		use Fink::Services qw(&find_subpackages);
+
+		# set up Fink
+		require Fink::FinkVersion;
+		require Fink::Config;
+		$Fink::Config::ignore_errors++;
+	}
+
+	$CHANGELOG   = $WORKDIR . '/log/change.log';
+	$LOGFILE     = $WORKDIR . '/log/mirror.log';
+
+	if (! -d $WORKDIR . '/Fink') {
+		mkpath($WORKDIR . '/Fink');
+	}
+
+	if (! -d $WORKDIR . '/log') {
+		mkpath($WORKDIR . '/log');
+	}
+
+	open (LOCKFILE, '>>' . $WORKDIR . '/distfiles.lock')
+		or go_die("could not open lockfile for append: $!");
+
+	if (not flock(LOCKFILE, LOCK_EX | LOCK_NB)) {
+		my $msg = "Another process is already running.";
+		if (-f $LOGFILE && -r _) {
+			$msg .= "\nExisting logfile:";
+			$msg .= `\ngrep -ve 'has not changed' -e 'fetching files for' -e 'exists\$' $LOGFILE`;
+		}
+		go_die($msg);
+	}
+
+	open (LOG, '>', $LOGFILE)
+		or go_die("could not open $LOGFILE for write: $!");
+
+	print LOG "- $0 starting " . scalar(localtime(time)) . "\n";
+
+	use vars qw(
+		$COUNT
+		$DEBUG
+		$LAST_UPDATE_CACHE
+		$VALIDATE_EXISTING_FILES
+	);
+
+	$COUNT = 0;
+
+	if (-f $WORKDIR . '/update.cache') {
+		$LAST_UPDATE_CACHE = retrieve($WORKDIR . '/update.cache');
+	}
+
+	open (FILEIN, $FINKROOT . '/VERSION')
+		or go_die("could not read VERSION: $!");
+	chomp(my $finkversion = <FILEIN>);
+	close (FILEIN);
+
+	open (FILEIN, $FINKROOT . '/perlmod/Fink/FinkVersion.pm.in')
+		or go_die("could not read FinkVersion.pm.in: $!");
+	open (FILEOUT, '>' . $WORKDIR . '/Fink/FinkVersion.pm')
+		or go_die("could not write to FinkVersion.pm: $!");
+	while (<FILEIN>) {
+		$_ =~ s/\@VERSION\@/${finkversion}/gs;
+		$_ =~ s/\@ARCHITECTURE\@/0.28.0/gs;
+		print FILEOUT;
+	}
+	close (FILEOUT);
+	close (FILEIN);
+
+	mkpath($DOWNLOADDIR);
+
+	print LOG "- scanning info files\n";
+	opendir(DIR, $DISTROOT)
+		or go_die("unable to read from $DISTROOT: $!");
+	for my $dir (readdir(DIR)) {
+		if ($dir =~ '^10\.') {
+			print LOG "searching $dir\n";
+			finddepth( {
+				wanted => \&find_fetch_infofile,
+				follow => 1
+			}, $DISTROOT . '/' . $dir);
+		}
+	}
+	closedir(DIR);
+
+	if ($LAST_UPDATE_CACHE) {
+		store($LAST_UPDATE_CACHE, $WORKDIR . '/update.cache');
+	}
+
+	print LOG "- $0 finished " . scalar(localtime(time)) . "\n";
+}
