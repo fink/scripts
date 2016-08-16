@@ -136,6 +136,7 @@ sub find_fetch_infofile {
 		} else {
 			$dists = ('10.9', '10.10', '10.11', '10.12');
 		}
+		DIST:
 		for my $dist ($dists) {
 			if ($dist eq '10.1' or $dist eq '10.2' or $dist eq '10.3') {
 				@arches = ('powerpc');
@@ -148,6 +149,7 @@ sub find_fetch_infofile {
 			} else {
 				@arches = ('x86_64');
 			}
+			ARCH:
 			for my $arch (@arches) {
 				$Fink::Config::libpath = $FINKROOT;
 				$Fink::Config::config = Fink::Config->new_from_properties({
@@ -163,7 +165,10 @@ sub find_fetch_infofile {
 				my ($tree) = $File::Find::name =~ m#$DISTROOT/[^/]+/([^/]+)/#;
 				print LOG "- fetching files for $shortname ($dist/$tree)\n";
 				for my $package ( Fink::PkgVersion->pkgversions_from_info_file( $File::Find::name ) ) {
-					next if ( $package->get_license() =~ /^(Commercial|Restrictive)$/i );
+					if ( $package->get_license() =~ /^(Commercial|Restrictive)$/i ) {
+						print LOG "  - license does NOT permit redistribution\n";
+						next DIST;
+					}
 					for my $suffix ($package->get_source_suffixes) {
 						my $tarball = $package->get_tarball($suffix);
 						print LOG "  - $tarball... ";
