@@ -177,7 +177,7 @@ sub find_fetch_infofile {
 						my($checksum_type, $checksum) = Fink::Checksum->parse_checksum($package->get_checksum($suffix));
 						$checksums->{$checksum_type} = $checksum;
 			
-						if (not -l $DOWNLOADDIR . '/' . $tarball) {
+						if (-e $DOWNLOADDIR . '/' . $tarball && not -l $DOWNLOADDIR . '/' . $tarball) {
 							my $file_checksums = Fink::Checksum->get_all_checksums($DOWNLOADDIR . '/' . $tarball);
 							my $master_checksum_type = 'MD5';
 							if (exists $file_checksums->{$master_checksum_type}) {
@@ -205,11 +205,11 @@ sub find_fetch_infofile {
 							next if (not defined $checksum_type or $checksum_type =~ /^\s*$/);
 							my $check_file = $DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($checksums->{$checksum_type}) . '/' . $tarball;
 							if (not -f $check_file) {
-								print LOG "$check_file does not exist, downloading\n";
+								print LOG "$check_file does not exist, ";
 								$do_download = 1;
 							} elsif ($VALIDATE_EXISTING_FILES) {
 								if (not Fink::Checksum->validate($check_file, $checksums->{$checksum_type}, $checksum_type)) {
-									print LOG "checksum on $check_file does not match, downloading\n";
+									print LOG "checksum on $check_file does not match, ";
 									$do_download = 1;
 								}
 							}
