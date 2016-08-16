@@ -41,26 +41,33 @@ BEGIN {
 		usage(1);
 	}
 
-}
+	sub usage {
+		my ($arg) = @_; #the list of inputs
+		my ($exitcode);
 
-sub go_die {
-	my $msg = shift;
-	my $exitcode = shift || 3;
+		if ( defined $arg ) {
+			if ( $arg =~ m/^\d+$/ ) {
+				$exitcode = $arg;
+			} else {
+				print STDOUT $arg, "\n";
+				$exitcode = 1;
+			}
+		}
+		print STDOUT get_usage();
 
-	print STDERR "Error: $msg\n";
-	exit($exitcode);
-}
+		exit($exitcode) if defined $exitcode;
+	}
 
-sub get_usage {
-        return <<EOT;
+	sub get_usage {
+	        return <<EOT;
 Usage:
 finkdistcvs
   [-f <path>] [-i <path] [-o <path>] [-w <path>] [-d] [-x] [-h]
 EOT
-}
+	}
 
-sub get_help {
-        return <<EOT;
+	sub get_help {
+	        return <<EOT;
   [-f] <path>
        path to the fink checkout (Default: /home/fink/cvs/fink)
   [-i] <path>
@@ -76,23 +83,15 @@ sub get_help {
   [-h]
        show this help
 EOT
+	}
 }
 
-sub usage {
-	my ($arg) = @_; #the list of inputs
-	my ($exitcode);
+sub go_die {
+	my $msg = shift;
+	my $exitcode = shift || 3;
 
-	if ( defined $arg ) {
-		if ( $arg =~ m/^\d+$/ ) {
-			$exitcode = $arg;
-		} else {
-			print STDOUT $arg, "\n";
-			$exitcode = 1;
-		}
-	}
-	print STDOUT get_usage();
-
-	exit($exitcode) if defined $exitcode;
+	print STDERR "Error: $msg\n";
+	exit($exitcode);
 }
 
 sub find_fetch_infofile {
