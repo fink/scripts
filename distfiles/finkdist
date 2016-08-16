@@ -118,7 +118,7 @@ sub find_fetch_infofile {
 	$COUNT++;
 	if ($DEBUG and $COUNT > 50) {
 		print LOG "debug: already tried $COUNT files\n";
-		return;
+		last FIND;
 	}
 
 	my @arches;
@@ -329,8 +329,13 @@ MAIN: {
 		go_die($msg);
 	}
 
-	open (LOG, '>', $LOGFILE)
-		or go_die("could not open $LOGFILE for write: $!");
+	if ($DEBUG) {
+		open (LOG, "| tee -ia " . $LOGFILE)
+			or go_die("could not open $LOGFILE for write: $!");
+	} else {
+		open (LOG, '>', $LOGFILE)
+			or go_die("could not open $LOGFILE for write: $!");
+	}
 
 	print LOG "- $0 starting " . scalar(localtime(time)) . "\n";
 
@@ -372,7 +377,7 @@ MAIN: {
 	for my $dir (readdir(DIR)) {
 		if ($dir =~ '^10\.') {
 			print LOG "searching $dir\n";
-			finddepth( {
+			FIND: finddepth( {
 				wanted => \&find_fetch_infofile,
 				follow => 1
 			}, $DISTROOT . '/' . $dir);
