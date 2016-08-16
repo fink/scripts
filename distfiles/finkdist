@@ -114,6 +114,7 @@ sub find_fetch_infofile {
 		return;
 	}
 
+	### Why is this limit even here?
 	$COUNT++;
 	if ($DEBUG and $COUNT > 50) {
 		print LOG "debug: already tried $COUNT files\n";
