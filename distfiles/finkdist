@@ -108,15 +108,15 @@ sub find_fetch_infofile {
 		return;
 	}
 
-	$COUNT++;
-	if ($DEBUG and $COUNT > 50) {
-		print LOG "debug: already tried $COUNT files\n";
-		return;
-	}
-
 	my @stat = stat($File::Find::name);
 	if (exists $LAST_UPDATE_CACHE->{$File::Find::name} and $LAST_UPDATE_CACHE->{$File::Find::name} == $stat[9]) {
 		print LOG $File::Find::name, " has not changed\n";
+		return;
+	}
+
+	$COUNT++;
+	if ($DEBUG and $COUNT > 50) {
+		print LOG "debug: already tried $COUNT files\n";
 		return;
 	}
 
