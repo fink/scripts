@@ -14,7 +14,7 @@ BEGIN {
 	our $CHANGELOG   = $WORKDIR . '/log/change.log';
 	our $LOGFILE     = $WORKDIR . '/log/mirror.log';
 	our $VALIDATE_EXISTING_FILES = 0;
-	our $DLMETHOD    = 'wget'; # try lftpget maybe?
+	our $DLMETHOD    = 'curl';
 	our $DLTIMEOUT   = 30; # try up to 30 seconds to download something
 
 	#read in command line arguments and init hash variables with the given
