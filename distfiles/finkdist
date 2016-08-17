@@ -151,7 +151,6 @@ sub find_fetch_infofile {
 			}
 			ARCH:
 			for my $arch (@arches) {
-				$Fink::Config::libpath = $FINKROOT;
 				$Fink::Config::config = Fink::Config->new_from_properties({
 					basepath       => $WORKDIR,
 					distribution   => $dist,
@@ -161,6 +160,7 @@ sub find_fetch_infofile {
 					ProxyPassiveFTP => 'true', # DAMN passiv PORT vs. PASV
 					Verbose		=> $DEBUG,
 				});
+				$Fink::Config::libpath = $FINKROOT;
 		
 				my ($tree) = $File::Find::name =~ m#$DISTROOT/[^/]+/([^/]+)/#;
 				print LOG "- fetching files for $shortname ($dist/$tree)\n";
@@ -223,7 +223,7 @@ sub find_fetch_infofile {
 							}
 							my $download_path = $DOWNLOADDIR . '/' . lc($master_checksum_type) . '/' . $checksums->{$master_checksum_type};
 							my $url = $package->get_source($suffix);
-							my $returnval = &fetch_url_to_file({
+							my $fetchopts = {
 								url                => $url,
 								filename           => $tarball,
 								custom_mirror      => $package->get_custom_mirror($suffix),
@@ -231,8 +231,12 @@ sub find_fetch_infofile {
 								download_directory => $download_path,
 								checksum           => $checksums->{$master_checksum_type},
 								checksum_type      => $master_checksum_type,
-								try_all_mirrors    => 1,
-							});
+								try_all_mirrors    => 1
+							};
+							my $returnval = -1;
+							eval {
+								$returnval = fetch_url_to_file( $fetchopts );
+							};
 							if ($returnval != 0) {
 								unlink($download_path . '/' . $tarball);
 								print LOG "unable to download $url to $download_path\n";
@@ -335,6 +339,10 @@ MAIN: {
 		open (LOG, '>', $LOGFILE)
 			or go_die("could not open $LOGFILE for write: $!");
 	}
+	open(STDOUT, ">&" . LOG->fileno)
+		or go_die("could not redirect STDOUT to $LOGFILE: $!");
+	open(STDERR, ">&" . LOG->fileno)
+		or go_die("could not redirect STDERR to $LOGFILE: $!");
 
 	print LOG "- $0 starting " . scalar(localtime(time)) . "\n";
 
@@ -373,10 +381,10 @@ MAIN: {
 	print LOG "- scanning info files\n";
 	opendir(DIR, $DISTROOT)
 		or go_die("unable to read from $DISTROOT: $!");
-	for my $dir (readdir(DIR)) {
+	FIND: for my $dir (readdir(DIR)) {
 		if ($dir =~ '^10\.') {
 			print LOG "searching $dir\n";
-			FIND: finddepth( {
+			finddepth( {
 				wanted => \&find_fetch_infofile,
 				follow => 1
 			}, $DISTROOT . '/' . $dir);
@@ -389,4 +397,9 @@ MAIN: {
 	}
 
 	print LOG "- $0 finished " . scalar(localtime(time)) . "\n";
+	close(STDERR);
+	close(STDOUT);
+	close(LOG);
+
+	exit(0);
 }
