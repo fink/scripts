@@ -233,12 +233,14 @@ sub find_fetch_infofile {
 								checksum_type      => $master_checksum_type,
 								try_all_mirrors    => 1
 							};
+							{
 							my $origsig = $SIG{INT};
 							local $SIG{INT} = sub { die "CTRLC"; $SIG{INT} = $origsig; };
 							my $returnval = -1;
 							eval {
 								$returnval = fetch_url_to_file( $fetchopts );
 							};
+							}
 							print LOG "Warning: fetch_url_to_file returned $@\n" if $@;
 							if ($returnval != 0) {
 								unlink($download_path . '/' . $tarball);
