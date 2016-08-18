@@ -113,9 +113,8 @@ sub find_fetch_infofile {
 		return;
 	}
 
-	### Why is this limit even here?
 	$COUNT++;
-	if ($DEBUG and $COUNT > 50) {
+	if ($DEBUG and $COUNT > 10) {
 		print LOG "debug: already tried $COUNT files\n";
 		last FIND;
 	}
@@ -158,7 +157,7 @@ sub find_fetch_infofile {
 					architecture   => $arch,
 					downloadtimeout => $DLTIMEOUT,
 					ProxyPassiveFTP => 'true', # DAMN passiv PORT vs. PASV
-					Verbose		=> $DEBUG,
+					Verbose		=> 0,
 				});
 				$Fink::Config::libpath = $FINKROOT;
 		
@@ -234,21 +233,13 @@ sub find_fetch_infofile {
 								try_all_mirrors    => 1
 							};
 							my $returnval = -1;
-							{
-							my $origsig = $SIG{INT};
-							local $SIG{INT} = sub { die "CTRLC"; $SIG{INT} = $origsig; };
 							eval {
 								$returnval = fetch_url_to_file( $fetchopts );
 							};
-							}
-							print LOG "Warning: fetch_url_to_file returned $@\n" if $@;
 							if ($returnval != 0) {
 								unlink($download_path . '/' . $tarball);
 								print LOG "unable to download $url to $download_path\n";
 								$all_downloads_passed = 0;
-								if ($@ eq "CTRLC") {
-									last FIND;
-								}
 								next;
 							}
 			
