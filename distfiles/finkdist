@@ -237,6 +237,7 @@ sub find_fetch_infofile {
 							eval {
 								$returnval = fetch_url_to_file( $fetchopts );
 							};
+							print LOG "Warning: fetch_url_to_file returned $@\n" if $@;
 							if ($returnval != 0) {
 								unlink($download_path . '/' . $tarball);
 								print LOG "unable to download $url to $download_path\n";
