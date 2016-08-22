@@ -16,6 +16,9 @@ BEGIN {
 	our $VALIDATE_EXISTING_FILES = 0;
 	our $DLMETHOD    = 'curl';
 	our $DLTIMEOUT   = 30; # try up to 30 seconds to download something
+	our @DISTS       = [];
+	our $ALLDISTS    = 0;
+	our $CLEANUP     = 0;
 
 	#read in command line arguments and init hash variables with the given
 	#values from argv
@@ -24,6 +27,8 @@ BEGIN {
 		'i|distsroot=s'	=> \$DISTROOT,
 		'o|output=s'	=> \$DOWNLOADDIR,
 		'w|workdir=s'	=> \$WORKDIR,
+		'D|dists=s'	=> \$ALLDISTS,
+		'c|cleanup=i'	=> \$CLEANUP,
 		'd|debug'	=> \$DEBUG,
 		'x|validate'	=> \$VALIDATE_EXISTING_FILES,
 		'h|help'	=> sub{
@@ -76,6 +81,10 @@ EOT
        path to the distfiles output (Default: /var/www/distfiles)
   [-w] <path>
        path to the workdir (Default: /home/fink/mirwork/mirror-work)
+  [-D] <string>
+       space delimited dists to include, ie: "10.7 10.9-libcxx" (Default: 10.*)
+  [-c] <days>
+       delete old archives no longer refered to, in days (Default 0, no clean)
   [-d]
        debug output
   [-x]
@@ -107,9 +116,11 @@ sub find_fetch_infofile {
 		return;
 	}
 
+	my $shortfilewithpath = $File::Find::name;
+	$shortfilewithpath =~ s#^$DISTROOT/##;
 	my @stat = stat($File::Find::name);
 	if (exists $LAST_UPDATE_CACHE->{$File::Find::name} and $LAST_UPDATE_CACHE->{$File::Find::name} == $stat[9]) {
-		print LOG $File::Find::name, " has not changed\n";
+		print LOG $shortfilewithpath, " has not changed\n";
 		return;
 	}
 
@@ -121,7 +132,7 @@ sub find_fetch_infofile {
 
 	my @arches;
 	my @dists;
-	if ($distdir =~ /^10\./) {
+	if ( true ) {
 		if ($distdir =~ /^10.1/) {
 			$dists = ('10.1');
 		} elsif ($distdir =~ /^10.2/) {
@@ -204,11 +215,11 @@ sub find_fetch_infofile {
 							next if (not defined $checksum_type or $checksum_type =~ /^\s*$/);
 							my $check_file = $DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($checksums->{$checksum_type}) . '/' . $tarball;
 							if (not -f $check_file) {
-								print LOG "$check_file does not exist, ";
+								print LOG "does not exist, ";
 								$do_download = 1;
 							} elsif ($VALIDATE_EXISTING_FILES) {
 								if (not Fink::Checksum->validate($check_file, $checksums->{$checksum_type}, $checksum_type)) {
-									print LOG "checksum on $check_file does not match, ";
+									print LOG "checksum does not match, ";
 									$do_download = 1;
 								}
 							}
@@ -238,7 +249,8 @@ sub find_fetch_infofile {
 							};
 							if ($returnval != 0) {
 								unlink($download_path . '/' . $tarball);
-								print LOG "unable to download $url to $download_path\n";
+								undef $LAST_UPDATE_CACHE->{$tarball};
+								print LOG "unable to download $tarball\n";
 								$all_downloads_passed = 0;
 								next;
 							}
@@ -247,9 +259,11 @@ sub find_fetch_infofile {
 							for my $checksum_type (keys %$file_checksums) {
 								if ($checksum_type eq $master_checksum_type) {
 									if ($file_checksums->{$checksum_type} ne $checksums->{$checksum_type}) {
+										undef $LAST_UPDATE_CACHE->{$tarball};
 										print LOG "downloaded file has a different checksum than expected ($file_checksums->{$checksum_type} ne $checksums->{$checksum_type})\n";
 									}
 								} else {
+									$LAST_UPDATE_CACHE->{$tarball} = time();
 									mkpath($DOWNLOADDIR . '/' . lc($checksum_type) . '/' . lc($file_checksums->{$checksum_type}));
 									symlink(
 										'../../' . lc($master_checksum_type) . '/' . lc($checksums->{$master_checksum_type}) . '/' . $tarball,
@@ -264,6 +278,7 @@ sub find_fetch_infofile {
 							}
 						} else {
 							print LOG "exists\n";
+							$LAST_UPDATE_CACHE->{$tarball} = time();
 						}
 					}
 				}
@@ -276,6 +291,25 @@ sub find_fetch_infofile {
 	}
 }
 
+sub clean_old_archives {
+	my $shortname = $_;
+
+	return unless ( -f $File::Find::name );
+
+	unless (exists $LAST_UPDATE_CACHE->{$shortname}) {
+		print LOG $shortname . " not found in cache, cleaning\n";
+		return;
+	}
+
+	unless ($LAST_UPDATE_CACHE->{$shortname} > (time() - ($CLEANUP * 24 * 60 * 60))) {
+		print LOG $shortname . " has expired, cleaning\n";
+		undef $LAST_UPDATE_CACHE->{$shortname};
+		return;
+	}
+
+	return;
+}
+
 MAIN: {
 	#force a flush after every write or print
 	$| = 1;
@@ -283,6 +317,14 @@ MAIN: {
 
 	#print usage if unknown arg list is left
 	usage(1) if @ARGV;
+
+	if ($ALLDISTS ne "0") {
+		if ($ALLDISTS =~ m/\s+/) {
+			@DISTS = split(/\s+/, $ALLDISTS);
+		} else {
+			push @DISTS, $ALLDISTS;
+		}
+	}
 
 	use Data::Dumper;
 	use Fcntl qw(:DEFAULT :flock);
@@ -381,7 +423,7 @@ MAIN: {
 	opendir(DIR, $DISTROOT)
 		or go_die("unable to read from $DISTROOT: $!");
 	FIND: for my $dir (readdir(DIR)) {
-		if ($dir =~ '^10\.') {
+		if ($dir =~ '^10\.' and (grep $_ eq $dir, @DISTS or $ALLDISTS eq "0")) {
 			print LOG "searching $dir\n";
 			finddepth( {
 				wanted => \&find_fetch_infofile,
@@ -390,6 +432,21 @@ MAIN: {
 		}
 	}
 	closedir(DIR);
+
+	if ($CLEANUP > 0) {
+		print LOG "- cleaning up old archieves (not mentioned in $CLEANUP days)\n";
+		opendir(DIR, $DOWNLOADDIR)
+			or go_die("unable to read from $DOWNLOADDIR: $!");
+		for my $dir (readdir(DIR)) {
+			if ($dir !~ '^\.') {
+				finddepth( {
+					wanted => \&clean_old_archives,
+					follow => 1
+				}, $DOWNLOADDIR . '/' . $dir);
+			}
+		}
+		closedir(DIR);
+	}
 
 	if ($LAST_UPDATE_CACHE) {
 		store($LAST_UPDATE_CACHE, $WORKDIR . '/update.cache');
