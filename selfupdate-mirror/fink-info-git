@@ -3,7 +3,7 @@
 # Config
 : "${REPOPTH:="https://github.com/danielj7/fink-dists.git"}"
 FIROOT="/Volumes/src2/fink/selfupdate"
-LOCKFILE="/var/run/finkrsyncup.lock"
+LOCKFILE="/var/run/fink-info-git.lock"
 
 usage() {
 	cat > "/dev/stderr" << EOF
@@ -64,7 +64,7 @@ if ! git fetch origin; then
 	exit 1
 fi
 # Be sure we are on the right branch and then update.
-git checkout master
+git checkout -f master
 if [ "$(git rev-parse master)" = "$(git rev-parse origin/master)" ]; then
 	# If we do not need to update the we are done.
 	date -u +%s > "${FIROOT}/finkinfo/LOCAL"
