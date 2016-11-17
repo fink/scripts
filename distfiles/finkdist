@@ -450,6 +450,13 @@ MAIN: {
 
 	if ($LAST_UPDATE_CACHE) {
 		store($LAST_UPDATE_CACHE, $WORKDIR . '/update.cache');
+		if (open (FILEOUT, '>' . $DOWNLOADDIR . '/TIMESTAMP.new')) {
+			print FILEOUT time(), "\n";
+			close (FILEOUT);
+			move($DOWNLOADDIR . '/TIMESTAMP.new', $DOWNLOADDIR . '/TIMESTAMP');
+		} else {
+			print LOG "- unable to write TIMESTAMP.new: $!\n";
+		}
 	}
 
 	print LOG "- $0 finished " . scalar(localtime(time)) . "\n";
