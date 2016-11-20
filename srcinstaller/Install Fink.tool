@@ -18,7 +18,7 @@ XQuartzVersion="2.7.11"
 XQuartzMD5Sum="8e9dbfe2717c8d74c262b3a963597898"
 XQuartzPKGPath="XQuartz.pkg"
 XQuartzFileName="XQuartz-${XQuartzVersion}.dmg"
-XQuartzSourceDLP="http://xquartz.macosforge.org/downloads/SL/${XQuartzFileName}"
+XQuartzSourceDLP="https://dl.bintray.com/xquartz/downloads/${XQuartzFileName}"
 
 
 function fetchBin {
