@@ -1,4 +1,8 @@
 #!/bin/bash
+# shellcheck disable=SC2155
+# shellcheck disable=SC2164
+# shellcheck disable=SC1091
+# shellcheck disable=SC1117
 
 # Config
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
@@ -108,7 +112,7 @@ function fetchBin {
 cd "${HOME}/Downloads"
 
 # Version check
-if [[ "${DarwinVersion}" < "13" ]]; then
+if [[ "${DarwinVersion}" -lt "13" ]]; then
 	echo "This script is for use on OS 10.9+ only."
 	exit 1
 fi
@@ -178,11 +182,11 @@ fi
 clear
 echo "Checking for Java..." >&2
 if ! /usr/libexec/java_home -Fv "${Jvers}+"; then
-	java -version 2>&1>/dev/null
+	java -version > /dev/null 2>&1
 	echo "Please install the JDK not the JRE, since we need it to build things against; please rerun this script when it finishes installing." >&2
 	exit 0
 fi
-echo "Found version $(java -version 2>&1>/dev/null | grep 'version' | sed -e 's:java version ::' -e 's:"::g')." >&2
+echo "Found version $(java -version > /dev/null 2>&1 | grep 'version' | sed -e 's:java version ::' -e 's:"::g')." >&2
 
 # Check for Command Line Tools
 clear
@@ -261,6 +265,7 @@ if ! ./bootstrap /sw; then
 fi
 
 # Set up bindist
+# shellcheck disable=SC2154
 if [ "${UseBinaryDist}" = "1" ]; then
 	clear
 	echo "Activating the Binary Distribution..." >&2
