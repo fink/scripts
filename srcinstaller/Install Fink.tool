@@ -6,7 +6,7 @@
 
 # Config
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
-DarwinVersion="$(uname -a | cut -d' ' -f3)"
+DarwinVersion="$(uname -r | cut -d. -f1)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 Jvers="1.6"
