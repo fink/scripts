@@ -42,7 +42,7 @@ The official scripts will timeout on network operations after 10 minutes.
 ##### Environment Variables
 **`RSYNCPTH`:** Sets the uri to sync from; `rsync://distfiles.master.finkmirrors.net/finkinfo/` by default.
 
-#### `fink-info-cvs`
+#### `fink-info-cvs` (as an example for legacy use only)
 Requires coreutils to be installed to provide `timeout`.
 
 ##### Command Line Options
@@ -57,7 +57,7 @@ Requires coreutils to be installed to provide `timeout`.
 ##### Environment Variables
 **`TIMEOUT`:** Sets the name of the `timeout` command; `timeout` by default.
 
-#### `fink-info-git` (as an example for future use only)
+#### `fink-info-git`
 
 ##### Command Line Options
 **`-l`:** Sets the lockfile; `/var/run/fink-info-git.lock` by default.
@@ -65,7 +65,7 @@ Requires coreutils to be installed to provide `timeout`.
 **`-o`:** Sets the output directory; `/Volumes/src2/fink/selfupdate` by default.
 
 ##### Environment Variables
-**`REPOPTH`:** Sets the uri to sync from; `https://github.com/danielj7/fink-dists.git` by default.
+**`REPOPTH`:** Sets the uri to sync from; `https://github.com/fink/fink-distributions.git` by default.
 
 ### Dist Mirror Scripts
 
