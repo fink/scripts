@@ -128,7 +128,7 @@ Tools, XQuartz and accepted the xcode licence. Additionally you may
 wish to install the full Xcode app.
 
 After this script detects one of these requirements to be missing it
-will atempt to install it for you; in most cases this will mean the
+will attempt to install it for you; in most cases this will mean the
 script will exit while it waits for the install to finish. After an
 install has completed just run this script again and it will pick up
 where it left off.
