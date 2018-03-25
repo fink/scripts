@@ -103,7 +103,13 @@ echo " "
 echo "Creating package description file $modulename.info:"
 
 md5=`/sbin/md5 -q $fullname.tar.gz`
-/usr/bin/sed -e 's/\@VERSION\@/'$version'/' -e 's/\@REVISION\@/1/' -e 's/\@MD5\@/'$md5'/' -e 's,%n-%v.tar,mirror:custom:fink/%n-%v.tar.gz,' -e 's/NoSourceDirectory: true//' <$fullname/$modulename.info.in >$modulename.info
+/usr/bin/sed \
+    -e 's/\@VERSION\@/'$version'/' \
+    -e 's/\@REVISION\@/1/' \
+    -e 's/\@MD5\@/'$md5'/' \
+    -e 's,%n-%v.tar,mirror:custom:fink/%n-%v.tar.gz,' \
+    -e 's/NoSourceDirectory: true//' \
+    <$fullname/$modulename.info.in >$modulename.info
 
 echo "CustomMirror: <<"  >> $modulename.info
 echo " Primary: http://west.dl.sourceforge.net/sourceforge/" >> $modulename.info
