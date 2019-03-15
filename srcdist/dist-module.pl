@@ -76,7 +76,7 @@ my $tag = shift;
 #my $gitroot='git@github.com:fink/';
 my $github_url="https://codeload.github.com/fink/$module/legacy.tar.gz";
 my $cvsroot=':pserver:anonymous@fink.cvs.sourceforge.net:/cvsroot/fink';
-my $distribution = "10.7";  #default value
+my $distribution = "10.9-libcxx";  #default value
 
 
 
@@ -216,26 +216,29 @@ my $coda = <<CODA;
 CustomMirror: <<
 Primary: http://downloads.sourceforge.net
 afr-KE: http://liquidtelecom.dl.sourceforge.net/sourceforge
-afr-ZA: http://tenet.dl.sourceforge.net/sourceforge
+asi-IN: http://excellmedia.dl.sourceforge.net/sourceforge
 asi-JP: http://jaist.dl.sourceforge.net/sourceforge
-asi-KZ: http://kaz.dl.sourceforge.net/sourceforge
 asi-TW: http://nchc.dl.sourceforge.net/sourceforge
-aus-AU: http://internode.dl.sourceforge.net/sourceforge
 eur-BG: http://netix.dl.sourceforge.net/sourceforge
-eur-CZ: http://ignum.dl.sourceforge.net/sourceforge
 eur-DE: http://netcologne.dl.sourceforge.net/sourceforge
 eur-FR: http://freefr.dl.sourceforge.net/sourceforge
-eur-IE: http://heanet.dl.sourceforge.net/sourceforge
-eur-RU: http://citylan.dl.sourceforge.net/sourceforge
-eur-UA: http://netassist.dl.sourceforge.net/sourceforge
 eur-UK: http://kent.dl.sourceforge.net/sourceforge
 eur-UK: http://vorboss.dl.sourceforge.net/sourceforge
+nam-CA: http://astuteinternet.dl.sourceforge.net/sourceforge
 nam-CA: http://iweb.dl.sourceforge.net/sourceforge
-nam-US: http://colocrossing.dl.sourceforge.net/sourceforge
+nam-US: http://10gbps-io.dl.sourceforge.net/sourceforge
+nam-US: http://ayera.dl.sourceforge.net/sourceforge
+nam-US: http://cfhcable.dl.sourceforge.net/sourceforge
+nam-US: http://cytranet.dl.sourceforge.net/sourceforge
 nam-US: http://downloads.sourceforge.net
+nam-US: http://gigenet.dl.sourceforge.net/sourceforge
+nam-US: http://newcontinuum.dl.sourceforge.net/sourceforge
+nam-US: http://phoenixnap.dl.sourceforge.net/sourceforge
+nam-US: http://pilotfiber.dl.sourceforge.net/sourceforge
 nam-US: http://superb-dca2.dl.sourceforge.net/sourceforge
-nam-US: http://superb-dca3.dl.sourceforge.net/sourceforge
-sam-BR: http://nbtelecom.dl.sourceforge.net/sourceforge
+nam-US: http://svwh.dl.sourceforge.net/sourceforge
+nam-US: http://versaweb.dl.sourceforge.net/sourceforge
+sam-BR: http://razaoinfo.dl.sourceforge.net/sourceforge
 sam-BR: http://ufpr.dl.sourceforge.net/sourceforge
 <<
 CODA
