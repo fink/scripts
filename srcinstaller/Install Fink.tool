@@ -8,6 +8,7 @@
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
 DarwinVersion="$(uname -r | cut -d. -f1)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
+FinkPrefix="/opt/sw"
 
 Jvers="1.6"
 
@@ -136,11 +137,11 @@ where it left off.
 EOF
 
 # Handle existing installs
-if [ -d "/sw" ]; then
+if [ -d "${FinkPrefix}" ]; then
 	FinkExisting="1"
 	cat > "/dev/stderr" << EOF
 It looks like you already have fink installed; if it did not finish or
-you are upgrading we will move it aside to /sw.old so you can delete it
+you are upgrading we will move it aside to "${FinkPrefix}".old so you can delete it
 later if you like; otherwise you may want to exit.
 
 EOF
@@ -151,10 +152,10 @@ if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
 fi
 
 if [ "${FinkExisting}" = "1" ]; then
-	if ! sudo mv /sw /sw.old; then
+	if ! sudo mv "${FinkPrefix}" "${FinkPrefix}".old; then
 		clear
 		cat > "/dev/stderr" << EOF
-Could not move /sw to /sw.old; you may need to delete one or both these
+Could not move "${FinkPrefix}" to "${FinkPrefix}".old; you may need to delete one or both these
 yourself.
 EOF
 		exit 1
@@ -260,7 +261,7 @@ fi
 clear
 cd "${FinkOutDir}"
 
-if ! ./bootstrap /sw; then 
+if ! ./bootstrap "${FinkPrefix}"; then 
 	exit 1
 fi
 
@@ -269,17 +270,17 @@ fi
 if [ "${UseBinaryDist}" = "1" ]; then
 	clear
 	echo "Activating the Binary Distribution..." >&2
-	sudo rm /sw/etc/fink.conf.bak
-	sudo mv /sw/etc/fink.conf /sw/etc/fink.conf.bak
-	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "/sw/etc/fink.conf.bak" | sudo tee "/sw/etc/fink.conf"
+	sudo rm "${FinkPrefix}"/etc/fink.conf.bak
+	sudo mv "${FinkPrefix}"/etc/fink.conf "${FinkPrefix}"/etc/fink.conf.bak
+	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' ""${FinkPrefix}/etc/fink.conf.bak" | sudo tee "${FinkPrefix}/etc/fink.conf"
 
-	if grep -Fqx 'bindist.finkmirrors.net' "/sw/etc/apt/sources.list"; then
+	if grep -Fqx 'bindist.finkmirrors.net' "${FinkPrefix}/etc/apt/sources.list"; then
 		# Fix wrong address.
-		sudo rm "/sw/etc/apt/sources.list.finkbak"
-		sudo mv "/sw/etc/apt/sources.list" "/sw/etc/apt/sources.list.finkbak"
-		sed -e 's:finkmirrors.net:finkproject.org:g' "/sw/etc/apt/sources.list.finkbak" | sudo tee "/sw/etc/apt/sources.list"
-	elif ! grep -Fqx 'http://bindist.finkproject.org/' "/sw/etc/apt/sources.list"; then
-		sudo tee -a "/sw/etc/apt/sources.list" << EOF
+		sudo rm "${FinkPrefix}/etc/apt/sources.list.finkbak"
+		sudo mv "${FinkPrefix}/etc/apt/sources.list" "${FinkPrefix}/etc/apt/sources.list.finkbak"
+		sed -e 's:finkmirrors.net:finkproject.org:g' "${FinkPrefix}/etc/apt/sources.list.finkbak" | sudo tee "${FinkPrefix}/etc/apt/sources.list"
+	elif ! grep -Fqx 'http://bindist.finkproject.org/' "${FinkPrefix}/etc/apt/sources.list"; then
+		sudo tee -a "${FinkPrefix}/etc/apt/sources.list" << EOF
 
 # Official bindist see http://bindist.finkproject.org/ for details.
 deb http://bindist.finkproject.org/${OSXVersion} stable main
@@ -291,10 +292,10 @@ fi
 # Set up paths
 clear
 echo "Setting up Fink paths..." >&2
-/sw/bin/pathsetup.sh
+${FinkPrefix}/bin/pathsetup.sh
 
 # First selfupdate
-source /sw/bin/init.sh
+source ${FinkPrefix}/bin/init.sh
 clear
 cat > "/dev/stderr" << EOF
 Now the last thing we will do is run 'fink selfupdate' for the first
