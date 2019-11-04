@@ -141,7 +141,7 @@ if [ -d "${FinkPrefix}" ]; then
 	FinkExisting="1"
 	cat > "/dev/stderr" << EOF
 It looks like you already have fink installed; if it did not finish or
-you are upgrading we will move it aside to "${FinkPrefix}".old so you can delete it
+you are upgrading we will move it aside to ${FinkPrefix}.old so you can delete it
 later if you like; otherwise you may want to exit.
 
 EOF
@@ -155,7 +155,7 @@ if [ "${FinkExisting}" = "1" ]; then
 	if ! sudo mv "${FinkPrefix}" "${FinkPrefix}".old; then
 		clear
 		cat > "/dev/stderr" << EOF
-Could not move "${FinkPrefix}" to "${FinkPrefix}".old; you may need to delete one or both these
+Could not move ${FinkPrefix} to ${FinkPrefix}.old; you may need to delete one or both these
 yourself.
 EOF
 		exit 1
@@ -261,7 +261,7 @@ fi
 clear
 cd "${FinkOutDir}"
 
-if ! ./bootstrap "${FinkPrefix}"; then 
+if ! ./bootstrap "${FinkPrefix}"; then
 	exit 1
 fi
 
@@ -270,9 +270,9 @@ fi
 if [ "${UseBinaryDist}" = "1" ]; then
 	clear
 	echo "Activating the Binary Distribution..." >&2
-	sudo rm "${FinkPrefix}"/etc/fink.conf.bak
-	sudo mv "${FinkPrefix}"/etc/fink.conf "${FinkPrefix}"/etc/fink.conf.bak
-	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' ""${FinkPrefix}/etc/fink.conf.bak" | sudo tee "${FinkPrefix}/etc/fink.conf"
+	sudo rm "${FinkPrefix}/etc/fink.conf.bak"
+	sudo mv "${FinkPrefix}/etc/fink.conf" "${FinkPrefix}/etc/fink.conf.bak"
+	sed -e 's|UseBinaryDist: false|UseBinaryDist: true|' "${FinkPrefix}/etc/fink.conf.bak" | sudo tee "${FinkPrefix}/etc/fink.conf"
 
 	if grep -Fqx 'bindist.finkmirrors.net' "${FinkPrefix}/etc/apt/sources.list"; then
 		# Fix wrong address.
