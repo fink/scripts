@@ -1,0 +1,16 @@
+To make a release of the "Install Fink.tool" for a new Fink release:
+
+1. Update "Install Fink.tool" with the new version of Fink and the tarball MD5.
+
+2. Tag the release as "setup/0.45.0".
+2a. Git push to master.
+
+3. Run `make` in scripts/srcinstaller to create the tarball.
+
+4. From https://github.com/fink/scripts/releases, "Draft a new release".
+4a. Choose the new tag `setup/0.45.0`
+4b. Title the release "Install Fink 0.45.0".
+4c. Enter "setup/0.45.0" in the description.
+4d. Upload the InstallFink.tgz tarball created in step 3.
+
+5. Publish new release.
