@@ -12,8 +12,8 @@ FinkPrefix="/opt/sw"
 
 Jvers="1.6"
 
-FinkVersion="0.45.1"
-FinkMD5Sum="f6edf3472844a83934f0928ba780d0a8"
+FinkVersion="0.45.2"
+FinkMD5Sum="0a541b39033f0c0e20c50eedf529cf30"
 FinkOutDir="fink"
 FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
