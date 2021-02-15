@@ -3,6 +3,8 @@
 # shellcheck disable=SC2164
 # shellcheck disable=SC1091
 # shellcheck disable=SC1117
+# shellcheck disable=SC2236
+
 
 # Config
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
@@ -152,7 +154,7 @@ if ! read -n1 -rsp $'Press any key to continue or ctrl+c to exit.\n'; then
 fi
 
 if [ "${FinkExisting}" = "1" ]; then
-	if ! sudo mv "${FinkPrefix}" "${FinkPrefix}".old; then
+	if ! sudo mv "${FinkPrefix}" "${FinkPrefix}.old"; then
 		clear
 		cat > "/dev/stderr" << EOF
 Could not move ${FinkPrefix} to ${FinkPrefix}.old; you may need to delete one or both these
@@ -169,7 +171,7 @@ echo "Checking to see if xcode is installed..." >&2
 XcodePath="$(mdfind kMDItemCFBundleIdentifier = "com.apple.dt.Xcode")"
 if [ ! -z "${XcodePath}" ]; then
 	echo "Xcode is installed, setting up the defaults..." >&2
-	sudo xcode-select -switch "${XcodePath}/Contents/Developer"
+	sudo xcode-select --switch "${XcodePath}/Contents/Developer"
 else
 	echo "You do not have Xcode installed." >&2
 	read -rp $'Do you want to install xcode?\n[N|y] ' choice
