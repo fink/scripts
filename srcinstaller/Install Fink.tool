@@ -12,7 +12,14 @@ DarwinVersion="$(uname -r | cut -d. -f1)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 FinkPrefix="/opt/sw"
 
+# Java site: https://jdk.java.net/
 Jvers="1.6"
+JavaVersion="15.0.2"
+JavaMD5Sum="e60e98233fb2dea42ca53825e73355cd"
+JavaOutDir="jdk-${JavaVersion}.jdk"
+JavaDirectorY="${JavaOutDir}"
+JavaFileName="openjdk-${JavaVersion}_osx-x64_bin.tar.gz"
+JavaSourceDLP="https://download.java.net/java/GA/${JavaVersion}/0d1cfde4252546c6931946de8db48ee2/7/GPL/${JavaFileName}"
 
 FinkVersion="0.45.2"
 FinkMD5Sum="0a541b39033f0c0e20c50eedf529cf30"
@@ -186,8 +193,14 @@ clear
 echo "Checking for Java..." >&2
 if ! /usr/libexec/java_home -Fv "${Jvers}+"; then
 	java -version > /dev/null 2>&1
-	echo "Please install the JDK not the JRE, since we need it to build things against; please rerun this script when it finishes installing." >&2
-	exit 0
+	echo "JDK is not installed, fetching..." >&2
+	fetchBin "${JavaMD5Sum}" "${JavaSourceDLP}" "${JavaFileName}" "${JavaDirectorY}" "${JavaOutDir}"
+	if [ ! -d "/Library/Java/JavaVirtualMachines" ]; then
+		sudo install -d -o "root" -g "wheel" "/Library/Java/JavaVirtualMachines"
+	fi
+	sudo mv "${JavaOutDir}" "/Library/Java/JavaVirtualMachines/"
+	sudo chown -R root:wheel "/Library/Java/JavaVirtualMachines/${JavaOutDir}"
+	sudo rm "/Library/Java/JavaVirtualMachines/${JavaOutDir}/.MD5SumLoc"
 fi
 echo "Found version $(java -version > /dev/null 2>&1 | grep 'version' | sed -e 's:java version ::' -e 's:"::g')." >&2
 
