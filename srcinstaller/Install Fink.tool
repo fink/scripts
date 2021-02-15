@@ -19,7 +19,7 @@ JavaMD5Sum="e60e98233fb2dea42ca53825e73355cd"
 JavaOutDir="jdk-${JavaVersion}.jdk"
 JavaDirectorY="${JavaOutDir}"
 JavaFileName="openjdk-${JavaVersion}_osx-x64_bin.tar.gz"
-JavaSourceDLP="https://download.java.net/java/GA/${JavaVersion}/0d1cfde4252546c6931946de8db48ee2/7/GPL/${JavaFileName}"
+JavaSourceDLP="https://download.java.net/java/GA/jdk${JavaVersion}/0d1cfde4252546c6931946de8db48ee2/7/GPL/${JavaFileName}"
 
 FinkVersion="0.45.2"
 FinkMD5Sum="0a541b39033f0c0e20c50eedf529cf30"
