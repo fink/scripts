@@ -10,7 +10,13 @@
 OSXVersion="$(sw_vers -productVersion | cut -f -2 -d .)"
 DarwinVersion="$(uname -r | cut -d. -f1)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
-FinkPrefix="/opt/sw"
+
+# Starting with 10.15 we do not use /sw due to SIP.
+if [ "${DarwinVersion}" -le "18" ]; then 
+	FinkPrefix="/sw"
+else
+	FinkPrefix="/opt/sw"
+fi
 
 # Java site: https://jdk.java.net/
 Jvers="1.6"
