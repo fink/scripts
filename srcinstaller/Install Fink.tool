@@ -32,7 +32,7 @@ FinkMD5Sum="f97b838882e72aeca600fa9fd8c43634"
 FinkOutDir="fink"
 FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
-FinkSourceDLP="http://downloads.sourceforge.net/fink/${FinkFileName}"
+FinkSourceDLP="https://downloads.sourceforge.net/project/fink/fink/${FinkVersion}/${FinkFileName}"
 
 XQuartzVersion="2.7.11"
 XQuartzMD5Sum="8e9dbfe2717c8d74c262b3a963597898"
