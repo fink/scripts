@@ -34,11 +34,11 @@ FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
 FinkSourceDLP="https://downloads.sourceforge.net/project/fink/fink/${FinkVersion}/${FinkFileName}"
 
-XQuartzVersion="2.7.11"
-XQuartzMD5Sum="8e9dbfe2717c8d74c262b3a963597898"
+XQuartzVersion="2.8.0"
+XQuartzMD5Sum="33e7b4cd1e54c6d8eff5ba08c2c0afb9"
 XQuartzPKGPath="XQuartz.pkg"
 XQuartzFileName="XQuartz-${XQuartzVersion}.dmg"
-XQuartzSourceDLP="https://dl.bintray.com/xquartz/downloads/${XQuartzFileName}"
+XQuartzSourceDLP="https://github.com/XQuartz/XQuartz/releases/download/XQuartz-${XQuartzVersion9}/${XQuartzFileName9}"
 
 
 function fetchBin {
@@ -222,7 +222,7 @@ fi
 # Check for XQuartz
 clear
 echo "Checking for XQuartz..." >&2
-if ! pkgutil --pkg-info=org.macosforge.xquartz.pkg; then
+if ! pkgutil --pkg-info=org.xquartz.X11; then
 	echo "XQuartz is not installed, fetching..." >&2
 	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "-" "-"
 	echo "Mounting the XQuartz disk..." >&2
