@@ -75,7 +75,7 @@ function fetchBin {
 	# Fetch
 	if [ ! -r "${FileName}" ]; then
 		echo "Fetching ${SourceDLP}"
-		if ! curl -Lfo "${FileName}" --connect-timeout "30" "${SourceDLP}"; then
+		if ! curl -Lfo "${FileName}" --connect-timeout "30" -H 'referer:' -A "fink/${FinkVersion}" "${SourceDLP}"; then
 			echo "error: Unable to fetch ${SourceDLP}" >&2
 			exit 1
 		fi
