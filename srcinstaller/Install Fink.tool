@@ -34,11 +34,11 @@ FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
 FinkSourceDLP="https://downloads.sourceforge.net/project/fink/fink/${FinkVersion}/${FinkFileName}"
 
-XQuartzVersion="2.8.0"
-XQuartzMD5Sum="33e7b4cd1e54c6d8eff5ba08c2c0afb9"
+XQuartzVersion="2.8.1"
+XQuartzMD5Sum="40802a3bbd5ec72e96affd94be567680"
 XQuartzPKGPath="XQuartz.pkg"
 XQuartzFileName="XQuartz-${XQuartzVersion}.dmg"
-XQuartzSourceDLP="https://github.com/XQuartz/XQuartz/releases/download/XQuartz-${XQuartzVersion9}/${XQuartzFileName9}"
+XQuartzSourceDLP="https://github.com/XQuartz/XQuartz/releases/download/XQuartz-${XQuartzVersion}/${XQuartzFileName}"
 
 
 function fetchBin {
