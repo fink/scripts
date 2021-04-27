@@ -208,7 +208,7 @@ if ! /usr/libexec/java_home -Fv "${Jvers}+"; then
 	sudo chown -R root:wheel "/Library/Java/JavaVirtualMachines/${JavaOutDir}"
 	sudo rm "/Library/Java/JavaVirtualMachines/${JavaOutDir}/.MD5SumLoc"
 fi
-echo "Found version $(java -version > /dev/null 2>&1 | grep 'version' | sed -e 's:java version ::' -e 's:"::g')." >&2
+echo "Found version $(java -version 2>&1 | grep 'version' | sed -e 's:java version ::' -e 's:openjdk version ::')." >&2
 
 # Check for Command Line Tools
 clear
