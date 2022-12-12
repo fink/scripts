@@ -12,10 +12,15 @@ DarwinVersion="$(uname -r | cut -d. -f1)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 # Starting with 10.15 we do not use /sw due to SIP.
-if [ "${DarwinVersion}" -le "18" ]; then 
+if [ "${DarwinVersion}" -le "18" ]; then
 	FinkPrefix="/sw"
 else
 	FinkPrefix="/opt/sw"
+fi
+
+# Check if we may have a problem with certs
+if [ "${DarwinVersion}" -le "17" ]; then
+	OldCerts="true"
 fi
 
 # Java site: https://jdk.java.net/
@@ -34,10 +39,10 @@ FinkDirectorY="${FinkOutDir}-${FinkVersion}"
 FinkFileName="${FinkDirectorY}.tar.gz"
 FinkSourceDLP="https://downloads.sourceforge.net/project/fink/fink/${FinkVersion}/${FinkFileName}"
 
-XQuartzVersion="2.8.2"
-XQuartzMD5Sum="4282e404cf1a59ffda2fcbfbfcfde7f0"
-XQuartzPKGPath="XQuartz.pkg"
-XQuartzFileName="XQuartz-${XQuartzVersion}.dmg"
+XQuartzVersion="2.8.3"
+XQuartzMD5Sum="e46f28b5cbb85a41a56f0e8d82f1fdfb"
+XQuartzFileName="XQuartz-${XQuartzVersion}.pkg"
+XQuartzPKGPath="${XQuartzFileName}"
 XQuartzSourceDLP="https://github.com/XQuartz/XQuartz/releases/download/XQuartz-${XQuartzVersion}/${XQuartzFileName}"
 
 
@@ -48,6 +53,12 @@ function fetchBin {
 	local FileName="$3"
 	local DirectorY="$4"
 	local OutDir="$5"
+	local CurlOpt="$6"
+
+	if [ "${OldCerts}" = "true" ]; then
+		CurlOpt="-k"
+	fi
+
 
 	# Checks
 	if [[ -d "${OutDir}" ]] && [[ -f "${FileName}" ]]; then
@@ -75,7 +86,7 @@ function fetchBin {
 	# Fetch
 	if [ ! -r "${FileName}" ]; then
 		echo "Fetching ${SourceDLP}"
-		if ! curl -Lfo "${FileName}" --connect-timeout "30" -H 'referer:' -A "fink/${FinkVersion}" "${SourceDLP}"; then
+		if ! curl -Lfo "${FileName}" ${CurlOpt} --connect-timeout "30" -H 'referer:' -A "fink/${FinkVersion}" "${SourceDLP}"; then
 			echo "error: Unable to fetch ${SourceDLP}" >&2
 			exit 1
 		fi
@@ -105,7 +116,7 @@ function fetchBin {
 			echo "error: Unpacking ${FileName} failed" >&2
 			exit 1
 		fi
-	elif [ "${ExtensioN}" = "dmg" ]; then
+	elif [ "${ExtensioN}" = "dmg" ] || [ "${ExtensioN}" = "pkg" ]; then
 		return
 	else
 		echo "error: Unable to unpack ${FileName}" >&2
@@ -225,11 +236,8 @@ echo "Checking for XQuartz..." >&2
 if ! pkgutil --pkg-info=org.xquartz.X11; then
 	echo "XQuartz is not installed, fetching..." >&2
 	fetchBin "${XQuartzMD5Sum}" "${XQuartzSourceDLP}" "${XQuartzFileName}" "-" "-"
-	echo "Mounting the XQuartz disk..." >&2
-	hdiutilOut="$(hdiutil mount "${XQuartzFileName}" 2>/dev/null | tr -d "\t" | grep -F '/dev/disk' | grep -Fv 'GUID_partition_scheme')"
-	XQuartzVolPath="$(echo "${hdiutilOut}" | sed -E 's:(/dev/disk[0-9])(s[0-9])?( +)?(Apple_HFS)?( +)::')"
 	echo "Starting the XQuartz install; please rerun this script when it finishes." >&2
-	open "${XQuartzVolPath}/${XQuartzPKGPath}"
+	open "${XQuartzPKGPath}"
 	exit 0
 fi
 
