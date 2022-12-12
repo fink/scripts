@@ -12,10 +12,15 @@ DarwinVersion="$(uname -r | cut -d. -f1)"
 XcodeURL="macappstore://itunes.apple.com/us/app/xcode/id497799835?mt=12"
 
 # Starting with 10.15 we do not use /sw due to SIP.
-if [ "${DarwinVersion}" -le "18" ]; then 
+if [ "${DarwinVersion}" -le "18" ]; then
 	FinkPrefix="/sw"
 else
 	FinkPrefix="/opt/sw"
+fi
+
+# Check if we may have a problem with certs
+if [ "${DarwinVersion}" -le "17" ]; then
+	OldCerts="true"
 fi
 
 # Java site: https://jdk.java.net/
@@ -48,6 +53,12 @@ function fetchBin {
 	local FileName="$3"
 	local DirectorY="$4"
 	local OutDir="$5"
+	local CurlOpt="$6"
+
+	if [ "${OldCerts}" = "true" ]; then
+		CurlOpt="-k"
+	fi
+
 
 	# Checks
 	if [[ -d "${OutDir}" ]] && [[ -f "${FileName}" ]]; then
@@ -75,7 +86,7 @@ function fetchBin {
 	# Fetch
 	if [ ! -r "${FileName}" ]; then
 		echo "Fetching ${SourceDLP}"
-		if ! curl -Lfo "${FileName}" --connect-timeout "30" -H 'referer:' -A "fink/${FinkVersion}" "${SourceDLP}"; then
+		if ! curl -Lfo "${FileName}" ${CurlOpt} --connect-timeout "30" -H 'referer:' -A "fink/${FinkVersion}" "${SourceDLP}"; then
 			echo "error: Unable to fetch ${SourceDLP}" >&2
 			exit 1
 		fi
