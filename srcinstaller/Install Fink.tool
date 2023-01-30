@@ -270,11 +270,14 @@ fi
 clear
 echo "Fetching Fink..." >&2
 fetchBin "${FinkMD5Sum}" "${FinkSourceDLP}" "${FinkFileName}" "${FinkDirectorY}" "${FinkOutDir}"
-# clear
-# read -rp $'Do you want to use the binary distribution instead of having to build all packages locally?\n[Y|n] ' choice
-# if [[ "${choice}" = "y" ]] || [[ "${choice}" = "Y" ]] || [[ -z "${choice}" ]]; then
-# 	UseBinaryDist="1"
-# fi
+
+: <<'DISABLED'
+clear
+read -rp $'Do you want to use the binary distribution instead of having to build all packages locally?\n[Y|n] ' choice
+if [[ "${choice}" = "y" ]] || [[ "${choice}" = "Y" ]] || [[ -z "${choice}" ]]; then
+	UseBinaryDist="1"
+fi
+DISABLED
 
 # Build Fink
 clear
